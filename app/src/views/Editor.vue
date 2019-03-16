@@ -3,7 +3,7 @@
     <div class="maincolumn">
       <Toolbar />
       <div class="mainrow">
-        <Scene />
+        <Playground />
         <ObjectList />
         <PropertyEditor />
       </div>
@@ -29,7 +29,7 @@
 <script>
 // @ is an alias to /src
 import Toolbar from "@/components/Toolbar.vue";
-import Scene from "@/components/Scene.vue";
+import Playground from "@/components/Playground.vue";
 import ObjectList from "@/components/ObjectList.vue";
 import PropertyEditor from "@/components/PropertyEditor.vue";
 
@@ -37,7 +37,7 @@ export default {
   name: "editor",
   components: {
     Toolbar,
-    Scene,
+    Playground,
     ObjectList,
     PropertyEditor
   }
