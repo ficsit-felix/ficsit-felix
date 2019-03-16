@@ -6,10 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loading: false,
-    data: {
-
-    },
-    title: 'asdf'
+    data: {},
+    title: "asdf"
   },
   mutations: {},
   actions: {}

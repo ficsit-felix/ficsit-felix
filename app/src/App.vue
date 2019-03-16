@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    {{title}}
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/upload">Upload</router-link>
@@ -31,17 +30,15 @@
 </style>
 
 <script>
-import '@/assets/main.scss';
-import {mapState} from 'vuex';
+import "@/assets/main.scss";
+import { mapState } from "vuex";
 
 export default {
-  name: 'App',
-  computed: mapState([
-    'title'
-  ]),
+  name: "App",
+  computed: mapState(["title"]),
   methods: {
     testError: function() {
-      throw new Error('asdf');
+      throw new Error("asdf");
     }
   }
 };

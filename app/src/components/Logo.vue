@@ -1,6 +1,8 @@
 <template>
   <div class="logo">
-    <!-- Created with Inkscape (http://www.inkscape.org/)height="227.75391" -->
+    <!-- Created with Inkscape (http://www.inkscape.org/)
+          width="579.99609"
+    height="227.75391" -->
     <svg
       xmlns:dc="http://purl.org/dc/elements/1.1/"
       xmlns:cc="http://creativecommons.org/ns#"
@@ -9,7 +11,7 @@
       xmlns="http://www.w3.org/2000/svg"
       xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
       xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-      width="579.99609"
+
       :height="height"
       viewBox="0 0 153.4573 60.259887"
       version="1.1"
@@ -46,7 +48,9 @@
         <rdf:RDF>
           <cc:Work rdf:about>
             <dc:format>image/svg+xml</dc:format>
-            <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+            <dc:type
+              rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+            ></dc:type>
             <dc:title></dc:title>
           </cc:Work>
         </rdf:RDF>
@@ -138,9 +142,9 @@
 <script>
 export default {
   name: "Logo",
+  props: ['height'],
   data: function() {
     return {
-      height: 100,
       asdf: "asdf"
     };
   }

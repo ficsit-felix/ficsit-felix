@@ -1,11 +1,11 @@
 <template>
   <div class="editor">
     <div class="maincolumn">
-      <Toolbar/>
+      <Toolbar />
       <div class="mainrow">
-        <Scene/>
-        <ObjectList/>
-        <PropertyEditor/>
+        <Scene />
+        <ObjectList />
+        <PropertyEditor />
       </div>
     </div>
   </div>
@@ -22,7 +22,6 @@
   flex-grow: 1;
 }
 </style>
-
 
 <script>
 // @ is an alias to /src
