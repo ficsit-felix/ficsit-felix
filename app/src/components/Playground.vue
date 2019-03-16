@@ -1,6 +1,6 @@
 <template>
   <div class="scene" id="scene">
-    <Renderer>
+    <Renderer :width=400 :height=400>
       <Scene>
         <AmbientLight />
         <Camera />
