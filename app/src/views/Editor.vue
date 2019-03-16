@@ -12,6 +12,9 @@
 </template>
 
 <style lang="scss">
+.editor {
+  height: 100%;
+}
 .maincolumn {
   display: flex;
   flex-flow: column;

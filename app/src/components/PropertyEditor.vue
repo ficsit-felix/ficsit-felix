@@ -3,10 +3,10 @@
 </template>
 
 <style lang="scss">
-@import '@/assets/colors.scss';
+@import "@/assets/colors.scss";
 
 .property-editor {
-  width: 200px;
+  width: 300px;
   flex-shrink: 0;
   background: $middleGray;
   height: 100%;
