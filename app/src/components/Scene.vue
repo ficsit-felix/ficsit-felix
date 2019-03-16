@@ -2,7 +2,12 @@
   <div class="scene">
     <!--scene
     <div id="information">test</div>-->
-    <div id="glContainer" ref="container"></div>
+    <div
+      id="glContainer"
+      ref="container"
+      @mousedown="mouseDown"
+      @mousemove="mouseMove"
+    ></div>
 
     <!--	<script src="js/three.js"></script>
 
@@ -33,17 +38,15 @@
 import * as THREE from "three";
 import { OrbitControls } from "@/js/OrbitControls";
 import { SelectControls } from "@/js/SelectControls";
-
-import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   name: "Scene",
-  mounted: function() {
-    axios
-      .get("http://localhost:8000/big.json")
+  mounted() {
+    this.loadData()
       .then(response => {
         console.log(this);
-        this.addCubes(response.data);
+        this.addCubes(response);
       })
       .catch(err => {
         console.error(err);
@@ -101,16 +104,16 @@ export default {
     controls.rotateSpeed = 0.3;
     controls.panSpeed = 0.3;
 
-
-
     scene = new THREE.Scene();
     this.scene = scene;
     scene.background = new THREE.Color(0x16161d);
     scene.add(new THREE.AmbientLight(0xa0a0a0));
 
-    // currently does not need to be called
-    // eslint-disable-next-line
-    var selectControls = new SelectControls(scene, camera, renderer.domElement);
+    this.selectControls = new SelectControls(
+      scene,
+      camera,
+      renderer.domElement
+    );
 
     var light = new THREE.SpotLight(0xffffff, 1.5);
     light.position.set(0, 500, 2000);
@@ -120,7 +123,7 @@ export default {
 				light.shadow.camera.far = 4000;
 				light.shadow.mapSize.width = 1024;
 				light.shadow.mapSize.height = 1024;*/
-    scene.add( light );
+    // scene.add(light);
 
     container.appendChild(renderer.domElement); // TODO //
     /*    var dragControls = new THREE.DragControls(
@@ -166,10 +169,18 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["loadData", "select"]),
+    mouseDown(evt) {
+      this.selectControls.onMouseDown(this, evt);
+    },
+    mouseMove(evt) {
+      this.selectControls.onMouseMove(evt);
+    },
     addCubes: function(data) {
+      this.data = data;
       var colorMap = {};
 
-      var size = 500; // 800 is size of foundations
+      var size = 400; // 800 is size of foundations
       var geometry = new THREE.BoxBufferGeometry(size, size, size);
 
       for (var i = 0; i < data.objects.length; i++) {
@@ -194,9 +205,18 @@ export default {
           //object.rotation.x = Math.random() * 2 * Math.PI;
           //object.rotation.y = Math.random() * 2 * Math.PI;
           //object.rotation.z = Math.random() * 2 * Math.PI;
-          object.scale.x = obj.transform.scale3d[0];
-          object.scale.y = obj.transform.scale3d[1];
-          object.scale.z = obj.transform.scale3d[2];
+
+          var scaleMultiplier = 1;
+          switch (obj.className) {
+            case "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
+              scaleMultiplier = 0.15;
+              break;
+          }
+          // console.log(obj);
+
+          object.scale.x = obj.transform.scale3d[0] * scaleMultiplier;
+          object.scale.y = obj.transform.scale3d[1] * scaleMultiplier;
+          object.scale.z = obj.transform.scale3d[2] * scaleMultiplier;
           object.castShadow = true;
           object.receiveShadow = true;
 

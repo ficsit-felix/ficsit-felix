@@ -1,5 +1,17 @@
 <template>
-  <div class="object-list">Object List</div>
+  <div class="object-list">
+    Object List
+    <ul ref="list">
+      <li
+        v-for="(obj, index) in getNames"
+        v-bind:key="index"
+        v-bind:class="{ selected: index == selectedIndex }"
+        @click="select(index)"
+      >
+        {{ obj }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style lang="scss">
@@ -9,5 +21,42 @@
   flex-shrink: 0;
   background: $middleGray;
   border-right: 1px solid $toolbarGray;
+  overflow-y: scroll;
+  padding: 8px;
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+  direction: rtl; /* to show the right most of the text */
+}
+
+li.selected {
+  font-weight: bold;
+  color: $textWhite;
 }
 </style>
+
+<script>
+import { mapState, mapGetters, mapActions } from "vuex";
+
+export default {
+  name: "ObjectList",
+  computed: {
+    ...mapState(["selectedIndex"]),
+    ...mapGetters(["getNames"])
+  },
+  methods: {
+    ...mapActions(["select"])
+  },
+  watch: {
+    selectedIndex(val) {
+      // scroll to selected object in object list
+      this.$refs.list.children[val].scrollIntoView({
+        block: "start",
+        behavior: "auto"
+      });
+    }
+  }
+};
+</script>

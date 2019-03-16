@@ -10,6 +10,9 @@
 .toolbar {
   display: flex;
   background: $toolbarGray;
+  flex-shrink: 0;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .spacer {
   flex-grow: 1;
