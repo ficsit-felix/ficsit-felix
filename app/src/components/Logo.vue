@@ -11,7 +11,6 @@
       xmlns="http://www.w3.org/2000/svg"
       xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
       xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-
       :height="height"
       viewBox="0 0 153.4573 60.259887"
       version="1.1"
@@ -142,7 +141,7 @@
 <script>
 export default {
   name: "Logo",
-  props: ['height'],
+  props: ["height"],
   data: function() {
     return {
       asdf: "asdf"

@@ -5,7 +5,6 @@
       <router-link to="/upload">Upload</router-link>
     </div>
     <router-view />
-    <button @click="testError">TestError</button>
   </div>
 </template>
 
@@ -16,8 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #adadad;
+  height: 100%;
 }
 #nav {
+  position: absolute;
+  right: 20px;
   padding: 30px;
   a {
     font-weight: bold;

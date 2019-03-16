@@ -6,7 +6,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loading: false,
-    data: {},
+    data: {
+      saveVersion: 123,
+      objects: [
+        {
+          position: [0, 0, 0],
+          name: "test"
+        }
+      ]
+    },
     title: "asdf"
   },
   mutations: {},
