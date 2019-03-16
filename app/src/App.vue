@@ -6,6 +6,7 @@
       <router-link to="/upload">Upload</router-link>
     </div>
     <router-view />
+    <button @click="testError">TestError</button>
   </div>
 </template>
 
@@ -37,6 +38,11 @@ export default {
   name: 'App',
   computed: mapState([
     'title'
-  ])
+  ]),
+  methods: {
+    testError: function() {
+      throw new Error('asdf');
+    }
+  }
 };
 </script>
