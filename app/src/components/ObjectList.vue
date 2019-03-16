@@ -4,10 +4,9 @@
 
 <style lang="scss">
 .object-list {
-  @import "@/assets/colors.scss";
-  width: 300px;
+  @import "@/assets/main.scss";
+  width: 200px;
   flex-shrink: 0;
-  color: $textGray;
-  background: $boxWhite;
+  color: $textWhite;
 }
 </style>

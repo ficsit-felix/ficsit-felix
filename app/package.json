@@ -9,11 +9,7 @@
   },
   "dependencies": {
     "@sentry/browser": "^4.6.4",
-    "dat.gui": "^0.7.5",
-    "oimo": "^1.0.9",
-    "three": "^0.102.1",
     "vue": "^2.6.6",
-    "vue-gl": "^0.11.1",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
