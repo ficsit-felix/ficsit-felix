@@ -1,16 +1,17 @@
 <template>
-    <div class="scene">
-        <Renderer :width="400" :height="300">
-            <Scene>
-                <AmbientLight />
-                <Camera />
-                <Cube v-for="(obj,index) in getVisibleObjects" :key="index"
-                    :object="obj"
-                />
-                 
-            </Scene>
-        </Renderer>
-        {{getVisibleObjects.length}}
+  <div class="scene" id="scene">
+    <Renderer>
+      <Scene>
+        <AmbientLight />
+        <Camera />
+        <Cube
+          v-for="(obj, index) in getVisibleObjects"
+          :key="index"
+          :object="obj"
+        />
+      </Scene>
+    </Renderer>
+    {{ getVisibleObjects.length }}
     <!--<p v-for="(obj,index) in getVisibleObjects" :key="index">
         {{obj.type}}
     </p>-->
@@ -61,24 +62,24 @@ import AmbientLight from "@/components/scene/AmbientLight";
 export default {
   name: "Playground",
   components: {
-      Renderer,
-      Scene,
-      Cube,
-      Camera,
-      AmbientLight
+    Renderer,
+    Scene,
+    Cube,
+    Camera,
+    AmbientLight
   },
   computed: {
-      ...mapGetters(["getVisibleObjects"]),
+    ...mapGetters(["getVisibleObjects"])
   },
   mounted() {
-     this.loadData()
-       .then(response => {
-         console.log(this);
-    //     this.addCubes(response);
-       })
-       .catch(err => {
-         console.error(err);
-       });
+    this.loadData()
+      .then(response => {
+        console.log(this);
+        //     this.addCubes(response);
+      })
+      .catch(err => {
+        console.error(err);
+      });
 
     // var container; // , stats
     // var camera, scene, renderer, controls;
@@ -106,12 +107,12 @@ export default {
     // renderer.shadowMap.type = THREE.PCFShadowMap; // TODO
 
     // /*controls = new THREE.TrackballControls( camera );
-	// 			controls.rotateSpeed = 1.0;
-	// 			controls.zoomSpeed = 1.2;
-	// 			controls.panSpeed = 0.8;
-	// 			controls.noZoom = false;
-	// 			controls.noPan = false;
-	// 			controls.staticMoving = true;
+    // 			controls.rotateSpeed = 1.0;
+    // 			controls.zoomSpeed = 1.2;
+    // 			controls.panSpeed = 0.8;
+    // 			controls.noZoom = false;
+    // 			controls.noPan = false;
+    // 			controls.staticMoving = true;
     //             controls.dynamicDampingFactor = 0.3;*/
 
     // /*controls = new THREE.FlyControls(camera);
@@ -147,10 +148,10 @@ export default {
     // light.position.set(0, 500, 2000);
     // light.angle = Math.PI / 9;
     // /*#light.castShadow = false;
-	// 			light.shadow.camera.near = 1000;
-	// 			light.shadow.camera.far = 4000;
-	// 			light.shadow.mapSize.width = 1024;
-	// 			light.shadow.mapSize.height = 1024;*/
+    // 			light.shadow.camera.near = 1000;
+    // 			light.shadow.camera.far = 4000;
+    // 			light.shadow.mapSize.width = 1024;
+    // 			light.shadow.mapSize.height = 1024;*/
     // // scene.add(light);
 
     // container.appendChild(renderer.domElement); // TODO //
@@ -197,7 +198,6 @@ export default {
     // }
   },
   methods: {
-    
     ...mapActions(["loadData", "select"]),
     mouseDown(evt) {
       this.selectControls.onMouseDown(this, evt);

@@ -28,7 +28,7 @@
 ul {
   list-style: none;
   padding: 0px;
-  direction: rtl; /* to show the right most of the text */
+  // direction: rtl; // to show the right most of the text
 }
 
 li.selected {
