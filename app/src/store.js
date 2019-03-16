@@ -16,13 +16,20 @@ export default new Vuex.Store({
   },
   getters: {
     getNames: state => {
-      return state.data.objects.map(obj => obj.pathName.split(".")[1]).sort();
+      return state.data.objects.map(obj => obj.pathName.split(".")[1]);
     },
     getCount: state => {
       return state.data.objects.length;
     },
     getVisibleObjects: state => {
       return state.data.objects.filter(obj => obj.type === 1);
+    },
+    getSelectedObject: state => {
+        if (state.selectedIndex === -1) {
+            return null;
+        } else {
+            return state.data.objects[state.selectedIndex];
+        }
     }
   },
   mutations: {

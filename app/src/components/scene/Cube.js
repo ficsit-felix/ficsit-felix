@@ -1,10 +1,10 @@
-import { BoxGeometry, MeshPhongMaterial, Mesh } from "three";
+import { MeshPhongMaterial, Mesh } from "three";
 import Object3D from "./Object3D";
 
 export default {
   extends: Object3D,
 
-  props: ["color", "object"],
+  props: ["color", "object", "geometry", "index", "material"],
 
   /*watch: {
     object: {
@@ -15,12 +15,11 @@ export default {
   },*/
 
   beforeMount() {
-    this.geometry = new BoxGeometry(500, 500, 500); // TODO only create one shared geometry
-    this.material = new MeshPhongMaterial({
+    /*this.material = new MeshPhongMaterial({
       color: "#ffffff", //this.color,
       shininess: 150,
       specular: 0x222222
-    });
+    });*/
     this.obj = new Mesh(this.geometry, this.material);
     this.obj.castShadow = true;
     this.obj.receiveShadow = true;
@@ -44,5 +43,9 @@ export default {
     this.obj.scale.x = this.object.transform.scale3d[0] * scaleMultiplier;
     this.obj.scale.y = this.object.transform.scale3d[1] * scaleMultiplier;
     this.obj.scale.z = this.object.transform.scale3d[2] * scaleMultiplier;
+
+    this.obj.userData = {
+        id: this.index
+    }
   }
 };

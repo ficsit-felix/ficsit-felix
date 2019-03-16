@@ -1,4 +1,6 @@
 import { WebGLRenderer, BasicShadowMap } from 'three'
+import { SelectControls } from '../../js/SelectControls';
+import { mapActions } from 'vuex';
 
 // see https://github.com/posva/state-animation-demos/tree/master/components/three
 
@@ -18,15 +20,19 @@ export default {
     },
 
     mounted() {
+        var elem = document.getElementById("scene")
         var width = document.getElementById("scene").offsetWidth;
         var height = document.getElementById("scene").offsetHeight;
         this.renderer.setSize(width, height)
         this.camera.obj.aspect = width/height;
         this.camera.obj.updateProjectionMatrix();
         this.animate()
+        this.selectControls = new SelectControls(this.scene, this.camera.obj, elem, this);
+        this.camera.setupControl(elem);
     },
 
     methods: {
+        ...mapActions(["select"]),
         animate() {
             if (this.scene && this.camera) {
                 this.camera.updateControls();
@@ -40,8 +46,13 @@ export default {
 
     render(h) {
         this.$nextTick().then(() => {
+            
             this.$el.appendChild(this.renderer.domElement)
         })
         return h('div', this.$slots.default)
     },
+
+    beforeDestroy() {
+        this.selectControls.destroy();
+    }
 }

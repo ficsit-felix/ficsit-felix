@@ -1,15 +1,12 @@
 <template>
-  <div class="object-list">
-    Object List
+  <div class="object-list">Object List
     <ul ref="list">
       <li
         v-for="(obj, index) in getNames"
         v-bind:key="index"
         v-bind:class="{ selected: index == selectedIndex }"
         @click="select(index)"
-      >
-        {{ obj }}
-      </li>
+      >{{ obj }}</li>
     </ul>
   </div>
 </template>
@@ -51,11 +48,13 @@ export default {
   },
   watch: {
     selectedIndex(val) {
-      // scroll to selected object in object list
-      this.$refs.list.children[val].scrollIntoView({
-        block: "start",
-        behavior: "auto"
-      });
+      if (val !== -1) {
+        // scroll to selected object in object list
+        this.$refs.list.children[val].scrollIntoView({
+          block: "end",
+          behavior: "smooth", inline: 'nearest'
+        });
+      }
     }
   }
 };

@@ -1,17 +1,30 @@
 <template>
   <div class="scene" id="scene">
-    <Renderer :width=400 :height=400>
+    <Renderer :width="400" :height="400">
       <Scene>
-        <AmbientLight />
-        <Camera />
+        <AmbientLight/>
+        <Camera/>
+        <a v-for="(obj, index) in getVisibleObjects"
+          :key="index">
         <Cube
-          v-for="(obj, index) in getVisibleObjects"
-          :key="index"
+          v-if="index !== selectedIndex"
+          :index="index"
           :object="obj"
+          :geometry="geometry"
+          :material="unselected"
         />
+        <Cube
+          v-else
+          :key="index"
+          :index="index"
+          :object="obj"
+          :geometry="geometry"
+          :material="selected"
+        />
+        </a>
+
       </Scene>
     </Renderer>
-    {{ getVisibleObjects.length }}
     <!--<p v-for="(obj,index) in getVisibleObjects" :key="index">
         {{obj.type}}
     </p>-->
@@ -52,12 +65,13 @@
 import * as THREE from "three";
 import { OrbitControls } from "@/js/OrbitControls";
 import { SelectControls } from "@/js/SelectControls";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import Scene from "@/components/scene/Scene";
 import Renderer from "@/components/scene/Renderer";
 import Cube from "@/components/scene/Cube";
 import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
+import { BoxBufferGeometry } from "three";
 
 export default {
   name: "Playground",
@@ -69,7 +83,17 @@ export default {
     AmbientLight
   },
   computed: {
-    ...mapGetters(["getVisibleObjects"])
+    ...mapGetters(["getVisibleObjects"]),
+    ...mapState(["selectedIndex"]),
+    geometry() {
+      return new BoxBufferGeometry(400, 400, 400); // TODO only create one shared geometry
+    },
+    unselected() {
+        return new THREE.MeshLambertMaterial({ color: 0xcccccc })
+    },
+    selected() {
+        new THREE.MeshLambertMaterial({ color: 0xdc904f})
+    }
   },
   mounted() {
     this.loadData()
@@ -198,13 +222,13 @@ export default {
     // }
   },
   methods: {
-    ...mapActions(["loadData", "select"]),
-    mouseDown(evt) {
+    ...mapActions(["loadData"]),
+    /*mouseDown(evt) {
       this.selectControls.onMouseDown(this, evt);
     },
     mouseMove(evt) {
       this.selectControls.onMouseMove(evt);
-    },
+    },*/
     addCubes: function(data) {
       this.data = data;
       var colorMap = {};

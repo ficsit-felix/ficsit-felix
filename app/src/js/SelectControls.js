@@ -1,6 +1,6 @@
 import { MOUSE, Raycaster } from "three";
 
-var SelectControls = function (scene, camera, domElement) {
+var SelectControls = function (scene, camera, domElement, callback) {
     this.callback = null;
 
     this.bindCallback = function (callback) {
@@ -16,7 +16,11 @@ var SelectControls = function (scene, camera, domElement) {
 
     var raycaster = new Raycaster();
 
-    this.onMouseMove = event => {
+
+    var scope = this;
+    this.callback = callback;
+
+    function onMouseMove (event) {
         event.preventDefault();
         var rect = domElement.getBoundingClientRect();
 
@@ -24,7 +28,7 @@ var SelectControls = function (scene, camera, domElement) {
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     };
 
-    this.onMouseDown = (callback, event) => {
+    function onMouseDown (event) {
         event.preventDefault();
 
         if (event.button == MOUSE.LEFT) {
@@ -34,16 +38,21 @@ var SelectControls = function (scene, camera, domElement) {
 
             if (intersects.length > 0) {
                 var object = intersects[0].object;
-                object.material.emissive.setHex(0xff00ff);
-                callback.select(object.userData.id);
+                // object.material.emissive.setHex(0xff00ff);
+                scope.callback.select(object.userData.id);
             } else {
-                callback.select(-1);
+                scope.callback.select(-1);
             }
         }
     };
 
-    /*domElement.addEventListener("mousedown", onMouseDown, false);
-      domElement.addEventListener("mousemove", onMouseMove, false);*/
+    domElement.addEventListener("mousedown", onMouseDown, false);
+    domElement.addEventListener("mousemove", onMouseMove, false);
+
+    this.destroy = () => {
+        domElement.removeEventListener("mousedown", onMouseDown);
+        domElement.removeEventListener("mousemove", onMouseMove);
+    };
 };
 
 export { SelectControls };

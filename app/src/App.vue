@@ -15,6 +15,7 @@
   -moz-osx-font-smoothing: grayscale;
   color: #adadad;
   height: 100%;
+  overflow: hidden;
 }
 #nav {
   position: absolute;
