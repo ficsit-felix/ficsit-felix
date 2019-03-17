@@ -1,6 +1,6 @@
 <template>
   <div class="toolbar">
-    <Logo :height="48"></Logo>toolbar
+    <Logo :height="48"></Logo>
     <div class="spacer"></div>
   </div>
 </template>

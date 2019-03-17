@@ -26,6 +26,9 @@ export default new Vuex.Store({
       } else {
         return window.data.objects[state.selectedIndex];
       }
+    },
+    getVisibleObjects(state) {
+      return state.visibleObjects;
     }
   },
   mutations: {
@@ -33,7 +36,13 @@ export default new Vuex.Store({
       state.error = error;
     },
     SET_SELECTED(state, selectedIndex) {
+      if (state.selectedIndex !== -1) {
+        state.visibleObjects[state.selectedIndex].state = 0;
+      }
       state.selectedIndex = selectedIndex;
+      if (state.selectedIndex !== -1) {
+        state.visibleObjects[state.selectedIndex].state = 1;
+      }
     },
     SET_VISIBLE_OBJECTS(state, visibleObjects) {
       state.visibleObjects = visibleObjects;
@@ -53,7 +62,7 @@ export default new Vuex.Store({
             context.commit("SET_DATA_LOADED", true);
 
             // slowly fill visible objects
-            var visible = []
+            var visible = [];
             for (var i = 0; i < response.data.objects.length; i++) {
               var obj = response.data.objects[i];
               if (obj.type === 1) {
@@ -61,6 +70,7 @@ export default new Vuex.Store({
                   id: i,
                   className: obj.className,
                   transform: obj.transform,
+                  state: 0
                 });
               }
             }

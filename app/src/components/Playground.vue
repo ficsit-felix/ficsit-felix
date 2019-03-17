@@ -1,14 +1,14 @@
 <template>
   <div class="scene" id="scene">
     <Renderer>
-      <Scene>
-        <AmbientLight/>
-        <Camera/>
-        <a v-for="obj in visibleObjects"
-          :key="obj.id">
+      <Scene ref="scene">
+        <AmbientLight />
+        <Camera />
+        <!--<a v-for="(obj,index) in visibleObjects"
+          :key="index">
           
         <Cube
-          v-if="obj.id !== selectedIndex"
+          v-if="obj.state === 0"
           :object="obj"
           :geometry="geometry"
           :material="unselected"
@@ -19,8 +19,7 @@
           :geometry="geometry"
           :material="selected"
         />
-        </a>
-
+        </a>-->
       </Scene>
     </Renderer>
     <!--<p v-for="(obj,index) in getVisibleObjects" :key="index">
@@ -81,18 +80,46 @@ export default {
     AmbientLight
   },
   computed: {
-    ...mapState(["selectedIndex", "visibleObjects"]),
+    ...mapState(["selectedIndex", "dataLoaded"]),
+    ...mapGetters(["getVisibleObjects"]),
+
     geometry() {
       return new BoxBufferGeometry(400, 400, 400); // TODO only create one shared geometry
     },
     unselected() {
-        return new THREE.MeshLambertMaterial({ color: 0xcccccc })
+      return new THREE.MeshLambertMaterial({ color: 0xcccccc });
     },
     selected() {
-        return new THREE.MeshLambertMaterial({ color: 0xdc904f})
+      return new THREE.MeshLambertMaterial({ color: 0xdc904f });
+    }
+  },
+  watch: {
+    dataLoaded(val) {
+      if (val) {
+        this.addCubes();
+      }
+    },
+    selectedIndex(val) {
+      if (val != this.lastSelectedIndex) {
+        if (this.lastSelectedIndex != -1) {
+          this.objects[
+            this.lastSelectedIndex
+          ].material = this.unselectedMaterial;
+        }
+        this.lastSelectedIndex = val;
+        if (val != -1) {
+          this.objects[val].material = this.selectedMaterial;
+        }
+      }
     }
   },
   mounted() {
+    this.objects = [];
+    this.unselectedMaterial = new THREE.MeshLambertMaterial({
+      color: 0xcccccc
+    });
+    this.selectedMaterial = new THREE.MeshLambertMaterial({ color: 0xdc904f });
+    this.lastSelectedIndex = -1;
     this.loadData()
       .then(response => {
         console.log(this);
@@ -165,15 +192,15 @@ export default {
     //   renderer.domElement
     // );
 
-    // var light = new THREE.SpotLight(0xffffff, 1.5);
-    // light.position.set(0, 500, 2000);
-    // light.angle = Math.PI / 9;
+    var light = new THREE.DirectionalLight(0xffffff, 0.5);
+    light.position.set(-200, 500, 2000);
+    light.angle = Math.PI / 9;
     // /*#light.castShadow = false;
     // 			light.shadow.camera.near = 1000;
     // 			light.shadow.camera.far = 4000;
     // 			light.shadow.mapSize.width = 1024;
     // 			light.shadow.mapSize.height = 1024;*/
-    // // scene.add(light);
+    this.$refs.scene.scene.add(light);
 
     // container.appendChild(renderer.domElement); // TODO //
     // /*    var dragControls = new THREE.DragControls(
@@ -226,15 +253,14 @@ export default {
     mouseMove(evt) {
       this.selectControls.onMouseMove(evt);
     },*/
-    addCubes: function(data) {
-      this.data = data;
+    addCubes: function() {
       var colorMap = {};
 
       var size = 400; // 800 is size of foundations
       var geometry = new THREE.BoxBufferGeometry(size, size, size);
 
-      for (var i = 0; i < data.objects.length; i++) {
-        var obj = data.objects[i];
+      for (var i = 0; i < window.data.objects.length; i++) {
+        var obj = window.data.objects[i];
         if (obj.type == 1) {
           if (colorMap[obj.className] === undefined) {
             colorMap[obj.className] = Math.random() * 0xffffff;
@@ -242,7 +268,8 @@ export default {
 
           var object = new THREE.Mesh(
             geometry,
-            new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
+            this.unselectedMaterial
+            //new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
           );
           object.position.x = obj.transform.translation[0];
           object.position.y = obj.transform.translation[1];
@@ -252,26 +279,25 @@ export default {
           object.quaternion.z = obj.transform.rotation[2];
           object.quaternion.w = obj.transform.rotation[3];
 
-          //object.rotation.x = Math.random() * 2 * Math.PI;
-          //object.rotation.y = Math.random() * 2 * Math.PI;
-          //object.rotation.z = Math.random() * 2 * Math.PI;
-
-          var scaleMultiplier = 1;
+var scaleMultiplier = [1, 1, 1];
           switch (obj.className) {
             case "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
-              scaleMultiplier = 0.15;
+              scaleMultiplier = [0.15, 0.15, 0.15];
+              break;
+            case "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
+              scaleMultiplier = [2, 2, 0.25];
               break;
           }
           // console.log(obj);
 
-          object.scale.x = obj.transform.scale3d[0] * scaleMultiplier;
-          object.scale.y = obj.transform.scale3d[1] * scaleMultiplier;
-          object.scale.z = obj.transform.scale3d[2] * scaleMultiplier;
+          object.scale.x = obj.transform.scale3d[0] * scaleMultiplier[0];
+          object.scale.y = obj.transform.scale3d[1] * scaleMultiplier[1];
+          object.scale.z = obj.transform.scale3d[2] * scaleMultiplier[2];
           object.castShadow = true;
           object.receiveShadow = true;
 
           object.userData = { id: i };
-          this.scene.add(object);
+          this.$refs.scene.scene.add(object);
           this.objects.push(object);
         }
       }

@@ -137,18 +137,12 @@
         </g>
       </g>
     </svg>
-    asdf: {{ asdf }}
   </div>
 </template>
 
 <script>
 export default {
   name: "Logo",
-  props: ["height"],
-  data: function() {
-    return {
-      asdf: "asdf"
-    };
-  }
+  props: ["height"]
 };
 </script>

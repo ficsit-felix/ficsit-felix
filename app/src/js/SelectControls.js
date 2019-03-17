@@ -1,58 +1,57 @@
 import { MOUSE, Raycaster } from "three";
 
-var SelectControls = function (scene, camera, domElement, callback) {
-    this.callback = null;
+var SelectControls = function(scene, camera, domElement, callback) {
+  this.callback = null;
 
-    this.bindCallback = function (callback) {
-        console.log("callback:" + callback);
-        this.callback = callback;
-    };
-
-    // private
-    var mouse = {
-        x: 0,
-        y: 0
-    };
-
-    var raycaster = new Raycaster();
-
-
-    var scope = this;
+  this.bindCallback = function(callback) {
+    console.log("callback:" + callback);
     this.callback = callback;
+  };
 
-    function onMouseMove (event) {
-        event.preventDefault();
-        var rect = domElement.getBoundingClientRect();
+  // private
+  var mouse = {
+    x: 0,
+    y: 0
+  };
 
-        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    };
+  var raycaster = new Raycaster();
 
-    function onMouseDown (event) {
-        event.preventDefault();
+  var scope = this;
+  this.callback = callback;
 
-        if (event.button == MOUSE.LEFT) {
-            raycaster.setFromCamera(mouse, camera);
+  function onMouseMove(event) {
+    event.preventDefault();
+    var rect = domElement.getBoundingClientRect();
 
-            var intersects = raycaster.intersectObjects(scene.children);
+    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  }
 
-            if (intersects.length > 0) {
-                var object = intersects[0].object;
-                // object.material.emissive.setHex(0xff00ff);
-                scope.callback.select(object.userData.id);
-            } else {
-                scope.callback.select(-1);
-            }
-        }
-    };
+  function onMouseDown(event) {
+    event.preventDefault();
 
-    domElement.addEventListener("mousedown", onMouseDown, false);
-    domElement.addEventListener("mousemove", onMouseMove, false);
+    if (event.button == MOUSE.LEFT) {
+      raycaster.setFromCamera(mouse, camera);
 
-    this.destroy = () => {
-        domElement.removeEventListener("mousedown", onMouseDown);
-        domElement.removeEventListener("mousemove", onMouseMove);
-    };
+      var intersects = raycaster.intersectObjects(scene.children);
+
+      if (intersects.length > 0) {
+        var object = intersects[0].object;
+        // object.material.emissive.setHex(0xff00ff);
+        scope.callback.select(object.userData.id);
+      } else {
+        scope.callback.select(-1);
+      }
+    }
+  }
+
+  domElement.addEventListener("mousedown", onMouseDown, false);
+  domElement.addEventListener("mousemove", onMouseMove, false);
+
+  this.destroy = () => {
+    domElement.removeEventListener("mousedown", onMouseDown);
+    domElement.removeEventListener("mousemove", onMouseMove);
+  };
 };
 
 export { SelectControls };
