@@ -7,7 +7,32 @@
         <md-icon>search</md-icon>
       </md-field>
     </div>
-
+    <virtual-list :size="10" :remain="100" class="scroller">
+      <div
+        v-for="item of displayedNames"
+        :key="item.id"
+        v-bind:class="{ selected: item.id == selectedIndex }"
+        @click="select(item.id)"
+        class="item"
+      >
+        {{ item.text }}
+      </div>
+    </virtual-list>
+    <!-- <RecycleScroller
+    page-mode
+      class="scroller"
+      :items="displayedNames"
+      key-field="id"
+      :item-size="1"
+    >
+      <template v-slot="{ item }">
+        <div class="item"
+        v-bind:class="{ selected: item.id == selectedIndex }"
+        @click="select(item.id)"
+        >{{item.text}}</div>
+      </template>
+    </RecycleScroller> -->
+    <!--
     <ul ref="list" class="list">
       <li
         v-for="(obj, index) in displayedNames"
@@ -18,11 +43,22 @@
         {{ obj.text }}
       </li>
     </ul>
+    -->
   </div>
 </template>
 
 <style lang="scss">
 @import "@/assets/colors.scss";
+
+.scroller,
+.list {
+  height: 100%;
+  overflow-y: scroll;
+}
+.item {
+  height: 20px;
+  padding: 0px 8px;
+}
 
 .object-list {
   background: $middleGray;
@@ -39,9 +75,7 @@
     flex-shrink: 0;
   }
   .list {
-    overflow-y: scroll;
     padding: 8px;
-    flex-grow: 1;
     margin: 0px;
   }
 }
@@ -52,7 +86,7 @@ ul {
   // direction: rtl; // to show the right most of the text
 }
 
-li.selected {
+.selected {
   font-weight: bold;
   color: $textWhite;
 }
@@ -61,17 +95,26 @@ li.selected {
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 
+import virtualList from "vue-virtual-scroll-list";
 export default {
   name: "ObjectList",
+  components: {
+    virtualList
+  },
   data: function() {
     return {
-      filterTerm: "",
-      displayedNames: [],
+      filterTerm: ""
     };
   },
   computed: {
     ...mapState(["selectedIndex"]),
-    ...mapGetters(["getNames"])
+    ...mapGetters(["getNames"]),
+    displayedNames() {
+      return this.getNames.filter(
+        obj =>
+          obj.text.toLowerCase().indexOf(this.filterTerm.toLowerCase()) > -1
+      );
+    }
   },
   methods: {
     ...mapActions(["select"])
@@ -80,20 +123,22 @@ export default {
     selectedIndex(val) {
       if (val !== -1) {
         // scroll to selected object in object list
-        this.$refs.list.children[val].scrollIntoView({
+        /*this.$refs.list.children[val].scrollIntoView({
           block: "end",
           behavior: "smooth",
           inline: "nearest"
-        });
+        });*/
       }
     },
 
     // watch getNames as else we need to recompute it every time the search changes for some reason?
     getNames(val) {
-      if (this.filterTerm.length < 3) {
+      /*    if (this.filterTerm.length < 3) {
         this.displayedNames = val;
       }
-      this.displayedNames = val.filter(obj => obj.text.indexOf(this.filterTerm) > -1);
+      this.displayedNames = val.filter(
+        obj => obj.text.indexOf(this.filterTerm) > -1
+      );*/
     }
   }
 };

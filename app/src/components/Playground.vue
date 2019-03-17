@@ -313,7 +313,7 @@ export default {
       camera.position.x = obj.transform.translate[0];
       camera.position.y = obj.transform.translate[1];
       camera.position.z = obj.transform.translate[2];
-      
+
       console.log();
     }
   }

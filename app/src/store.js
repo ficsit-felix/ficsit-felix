@@ -18,10 +18,12 @@ export default new Vuex.Store({
       if (!state.dataLoaded) {
         return [];
       }
-      return window.data.objects.map((obj,index) => {return {
-        id: index,
-        text: obj.pathName.split(".")[1]
-      }});
+      return window.data.objects.map((obj, index) => {
+        return {
+          id: index,
+          text: obj.pathName.split(".")[1]
+        };
+      });
     },
     getSelectedObject: state => {
       if (state.selectedIndex === -1) {

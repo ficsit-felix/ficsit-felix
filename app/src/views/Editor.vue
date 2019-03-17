@@ -4,13 +4,13 @@
       <Toolbar />
       <div class="mainrow">
         <Split>
-          <SplitArea :size=60>
+          <SplitArea :size="60">
             <Playground />
           </SplitArea>
-          <SplitArea :size=20>
+          <SplitArea :size="17">
             <ObjectList />
           </SplitArea>
-          <SplitArea :size=20>
+          <SplitArea :size="23">
             <PropertyEditor />
           </SplitArea>
         </Split>
