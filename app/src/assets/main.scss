@@ -14,3 +14,15 @@ html, body {
 
     box-sizing: border-box;
 }
+
+
+// custom theme
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+@include md-register-theme("default", (
+  primary: md-get-palette-color(orange, A200), // The primary color of your application
+  accent: md-get-palette-color(cyan, 500), // The accent or secondary color
+  theme: dark
+));
+
+@import "~vue-material/dist/theme/all"; // Apply the theme

@@ -101,13 +101,16 @@ export default {
     },
     selectedIndex(val) {
       if (val != this.lastSelectedIndex) {
-        if (this.lastSelectedIndex != -1) {
+        if (
+          this.lastSelectedIndex != -1 &&
+          this.lastSelectedIndex < this.objects.length
+        ) {
           this.objects[
             this.lastSelectedIndex
           ].material = this.unselectedMaterial;
         }
         this.lastSelectedIndex = val;
-        if (val != -1) {
+        if (val != -1 && val < this.objects.length) {
           this.objects[val].material = this.selectedMaterial;
         }
       }
@@ -279,7 +282,7 @@ export default {
           object.quaternion.z = obj.transform.rotation[2];
           object.quaternion.w = obj.transform.rotation[3];
 
-var scaleMultiplier = [1, 1, 1];
+          var scaleMultiplier = [1, 1, 1];
           switch (obj.className) {
             case "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
               scaleMultiplier = [0.15, 0.15, 0.15];

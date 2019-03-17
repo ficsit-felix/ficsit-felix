@@ -36,13 +36,13 @@ export default new Vuex.Store({
       state.error = error;
     },
     SET_SELECTED(state, selectedIndex) {
-      if (state.selectedIndex !== -1) {
+      /*if (state.selectedIndex !== -1) {
         state.visibleObjects[state.selectedIndex].state = 0;
-      }
+      }*/
       state.selectedIndex = selectedIndex;
-      if (state.selectedIndex !== -1) {
+      /*if (state.selectedIndex !== -1) {
         state.visibleObjects[state.selectedIndex].state = 1;
-      }
+      }*/
     },
     SET_VISIBLE_OBJECTS(state, visibleObjects) {
       state.visibleObjects = visibleObjects;
@@ -69,8 +69,8 @@ export default new Vuex.Store({
                 visible.push({
                   id: i,
                   className: obj.className,
-                  transform: obj.transform,
-                  state: 0
+                  transform: obj.transform
+                  // state: 0
                 });
               }
             }
