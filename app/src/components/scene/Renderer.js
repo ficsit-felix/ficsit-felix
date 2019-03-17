@@ -7,7 +7,7 @@ import { mapActions } from "vuex";
 export default {
   props: {
     width: Number,
-    height: Number
+    height: Number,
   },
 
   provide() {
@@ -37,6 +37,14 @@ export default {
     this.camera.setupControl(elem);
   },
 
+  watch: {
+    width() {
+      this.resize();
+    },
+    height() {
+      this.resize();
+    }
+  },
   methods: {
     ...mapActions(["select"]),
     animate() {
@@ -47,6 +55,12 @@ export default {
         // console.warn('You need a scene and a camera inside of the renderer')
       }
       requestAnimationFrame(this.animate.bind(this));
+    },
+
+    resize() {
+      this.renderer.setSize(this.width, this.height);
+      this.camera.obj.aspect = this.width / this.height;
+      this.camera.obj.updateProjectionMatrix();
     }
   },
 

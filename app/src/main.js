@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
 // vue-material
 import { MdButton, MdField } from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css";
-/*import 'vue-material/dist/theme/default-dark.css'*/
+/*import 'vue-material/dist/theme/default-dark.css'*/ // use custom theme in @/assets/main.scss instead
 Vue.use(MdButton);
 Vue.use(MdField);
 

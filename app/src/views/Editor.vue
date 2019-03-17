@@ -3,12 +3,12 @@
     <div class="maincolumn">
       <Toolbar />
       <div class="mainrow">
-        <Split>
+        <Split @onDrag="onDrag">
           <SplitArea :size="60">
-            <Playground />
+            <Playground ref="playground"/>
           </SplitArea>
           <SplitArea :size="17">
-            <ObjectList />
+            <ObjectList/>
           </SplitArea>
           <SplitArea :size="23">
             <PropertyEditor />
@@ -48,6 +48,11 @@ export default {
     Playground,
     ObjectList,
     PropertyEditor
+  },
+  methods: {
+    onDrag() {
+      this.$refs.playground.handleResize();
+    }
   }
 };
 </script>

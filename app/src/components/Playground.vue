@@ -1,10 +1,10 @@
 <template>
   <div class="scene" id="scene">
-    <button v-on:click="focusSelectedObject">Focus</button>
-    <Renderer ref="renderer">
+    <!--<button v-on:click="focusSelectedObject">Focus</button> -->
+    <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
-        <AmbientLight />
-        <Camera />
+        <AmbientLight/>
+        <Camera/>
         <!--<a v-for="(obj,index) in visibleObjects"
           :key="index">
           
@@ -52,9 +52,12 @@
 
 <style lang="scss">
 .scene {
-  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 #glContainer {
+  width: 100%;
   height: 100%;
 }
 </style>
@@ -70,6 +73,7 @@ import Cube from "@/components/scene/Cube";
 import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
 import { BoxBufferGeometry } from "three";
+import { setTimeout } from 'timers';
 
 export default {
   name: "Playground",
@@ -79,6 +83,12 @@ export default {
     Cube,
     Camera,
     AmbientLight
+  },
+  data: function() {
+    return {
+      width: 100,
+      height: 100
+    };
   },
   computed: {
     ...mapState(["selectedIndex", "dataLoaded"]),
@@ -124,15 +134,18 @@ export default {
     });
     this.selectedMaterial = new THREE.MeshLambertMaterial({ color: 0xdc904f });
     this.lastSelectedIndex = -1;
-    this.loadData()
-      .then(response => {
-        console.log(this);
-        //     this.addCubes(response);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-
+    if (this.dataLoaded) {
+      this.addCubes();
+    } else { // load the data
+      this.loadData()
+        .then(response => {
+          console.log(this);
+          //     this.addCubes(response);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
     // var container; // , stats
     // var camera, scene, renderer, controls;
     // this.objects = [];
@@ -248,6 +261,10 @@ export default {
     //   // console.log('renderCalls: ' + renderer.info.render.calls)
     //   renderer.render(scene, camera);
     // }
+
+    // listen to window resize
+    window.addEventListener("resize", this.handleResize);
+    window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
   },
   methods: {
     ...mapActions(["loadData"]),
@@ -315,7 +332,21 @@ export default {
       camera.position.z = obj.transform.translate[2];
 
       console.log();
+    },
+
+    handleResize() {
+      // console.log("resize", this.$refs.renderer);
+      var elem = document.getElementById("scene");
+      var width = document.getElementById("scene").offsetWidth;
+      var height = document.getElementById("scene").offsetHeight;
+      this.width = width;
+      this.height = height;
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
   }
+
+
 };
 </script>
