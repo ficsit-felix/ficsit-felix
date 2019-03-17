@@ -44,6 +44,7 @@ import Toolbar from "@/components/Toolbar.vue";
 import Playground from "@/components/Playground.vue";
 import ObjectList from "@/components/ObjectList.vue";
 import PropertyEditor from "@/components/PropertyEditor.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "editor",
@@ -52,6 +53,17 @@ export default {
     Playground,
     ObjectList,
     PropertyEditor
+  },
+  computed: {
+    ...mapState(["dataLoaded"]),
+  },
+
+  
+  created() {
+    /*if (!this.dataLoaded) { // The user needs to upload a file first
+      this.$router.push('upload');
+    }*/
+    
   },
   methods: {
     onDrag() {

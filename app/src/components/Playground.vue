@@ -338,8 +338,11 @@ export default {
     handleResize() {
       // console.log("resize", this.$refs.renderer);
       var elem = document.getElementById("scene");
-      var width = document.getElementById("scene").offsetWidth;
-      var height = document.getElementById("scene").offsetHeight;
+      if (elem === undefined) {
+        return;
+      }
+      var width = elem.offsetWidth;
+      var height = elem.offsetHeight;
       this.width = width;
       this.height = height;
     }

@@ -1,12 +1,12 @@
 <template>
   <div class="toolbar">
-    <Logo :height="48"></Logo>
+    <Logo :height="48" black="#707070"></Logo>
 
     <ul>
-      <li>
+      <li @click="open">
         <md-icon>folder_open</md-icon>Open
       </li>
-      <li>
+      <li @click="save">
         <md-icon>save</md-icon>Save
       </li>
       <li @click="showHelpDialog=true">
@@ -79,8 +79,16 @@ export default {
   },
   data: function() {
     return {
-      showHelpDialog: true
+      showHelpDialog: false
     };
+  },
+  methods: {
+    open() {
+      this.$router.push("upload");
+    },
+    save() {
+
+    }
   }
 };
 </script>
