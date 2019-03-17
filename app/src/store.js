@@ -91,6 +91,29 @@ export default new Vuex.Store({
     },
     select(context, selectIndex) {
       context.commit("SET_SELECTED", selectIndex);
+    },
+    setLoadedData(context, data) {
+      return new Promise((resolve, reject) => {
+        window.data = data;
+
+        context.commit("SET_DATA_LOADED", true);
+
+        // slowly fill visible objects
+        var visible = [];
+        for (var i = 0; i < data.objects.length; i++) {
+          var obj = data.objects[i];
+          if (obj.type === 1) {
+            visible.push({
+              id: i,
+              className: obj.className,
+              transform: obj.transform
+              // state: 0
+            });
+          }
+        }
+        context.commit("SET_VISIBLE_OBJECTS", visible);
+        resolve();
+      });
     }
   }
 });
