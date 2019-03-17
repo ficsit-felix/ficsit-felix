@@ -11,7 +11,7 @@
             <ObjectList/>
           </SplitArea>
           <SplitArea :size="23">
-            <PropertyEditor />
+            <PropertyEditor @focusSelectedObject="focusSelectedObject"/>
           </SplitArea>
         </Split>
       </div>
@@ -52,6 +52,9 @@ export default {
   methods: {
     onDrag() {
       this.$refs.playground.handleResize();
+    },
+    focusSelectedObject() {
+      this.$refs.playground.focusSelectedObject();
     }
   }
 };

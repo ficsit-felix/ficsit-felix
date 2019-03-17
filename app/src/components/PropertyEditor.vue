@@ -1,11 +1,8 @@
 <template>
   <div class="property-editor">
-    <textarea
-      v-model="selectedJson"
-      class="json-editor"
-      placeholder="JSON View"
-      readonly
-    ></textarea>
+    <md-button class="md-raised" :disabled="this.getSelectedObject == null" @click="focusSelectedObject">Focus</md-button>
+
+    <textarea v-model="selectedJson" class="json-editor" placeholder="JSON View" readonly></textarea>
   </div>
 </template>
 
@@ -54,6 +51,13 @@ export default {
       } else {
         this.selectedJson = JSON.stringify(this.getSelectedObject, null, 2);
       }
+    }
+  },
+
+  methods: {
+    focusSelectedObject() {
+      console.log("ay");
+      this.$emit('focusSelectedObject')
     }
   }
 };

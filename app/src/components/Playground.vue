@@ -325,13 +325,15 @@ export default {
     },
 
     focusSelectedObject() {
-      var camera = this.$refs.renderer.camera;
+      var camera = this.$refs.renderer.camera.controls;
       var obj = window.data.objects[this.selectedIndex];
-      camera.position.x = obj.transform.translate[0];
-      camera.position.y = obj.transform.translate[1];
-      camera.position.z = obj.transform.translate[2];
+      if (obj.type === 1) {
+        camera.target.x = obj.transform.translation[0];
+        camera.target.y = obj.transform.translation[1];
+        camera.target.z = obj.transform.translation[2];
+      }
 
-      console.log();
+      
     },
 
     handleResize() {
