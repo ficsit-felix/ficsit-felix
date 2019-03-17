@@ -1,22 +1,20 @@
 <template>
   <div class="scene" id="scene">
-    <Renderer :width="400" :height="400">
+    <Renderer>
       <Scene>
         <AmbientLight/>
         <Camera/>
-        <a v-for="(obj, index) in getVisibleObjects"
-          :key="index">
+        <a v-for="obj in visibleObjects"
+          :key="obj.id">
+          
         <Cube
-          v-if="index !== selectedIndex"
-          :index="index"
+          v-if="obj.id !== selectedIndex"
           :object="obj"
           :geometry="geometry"
           :material="unselected"
         />
         <Cube
           v-else
-          :key="index"
-          :index="index"
           :object="obj"
           :geometry="geometry"
           :material="selected"
@@ -83,8 +81,7 @@ export default {
     AmbientLight
   },
   computed: {
-    ...mapGetters(["getVisibleObjects"]),
-    ...mapState(["selectedIndex"]),
+    ...mapState(["selectedIndex", "visibleObjects"]),
     geometry() {
       return new BoxBufferGeometry(400, 400, 400); // TODO only create one shared geometry
     },
@@ -92,7 +89,7 @@ export default {
         return new THREE.MeshLambertMaterial({ color: 0xcccccc })
     },
     selected() {
-        new THREE.MeshLambertMaterial({ color: 0xdc904f})
+        return new THREE.MeshLambertMaterial({ color: 0xdc904f})
     }
   },
   mounted() {

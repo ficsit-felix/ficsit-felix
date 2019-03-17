@@ -7,40 +7,39 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loading: false,
-    data: {
-      objects: []
-    },
     selectedIndex: -1,
     error: null,
-    title: "asdf"
+    title: "asdf",
+    dataLoaded: false,
+    visibleObjects: []
   },
   getters: {
     getNames: state => {
-      return state.data.objects.map(obj => obj.pathName.split(".")[1]);
-    },
-    getCount: state => {
-      return state.data.objects.length;
-    },
-    getVisibleObjects: state => {
-      return state.data.objects.filter(obj => obj.type === 1);
+      if (!state.dataLoaded) {
+        return [];
+      }
+      return window.data.objects.map(obj => obj.pathName.split(".")[1]);
     },
     getSelectedObject: state => {
-        if (state.selectedIndex === -1) {
-            return null;
-        } else {
-            return state.data.objects[state.selectedIndex];
-        }
+      if (state.selectedIndex === -1) {
+        return null;
+      } else {
+        return window.data.objects[state.selectedIndex];
+      }
     }
   },
   mutations: {
-    SET_DATA(state, data) {
-      state.data = data;
-    },
     SET_ERROR(state, error) {
       state.error = error;
     },
     SET_SELECTED(state, selectedIndex) {
       state.selectedIndex = selectedIndex;
+    },
+    SET_VISIBLE_OBJECTS(state, visibleObjects) {
+      state.visibleObjects = visibleObjects;
+    },
+    SET_DATA_LOADED(state, dataLoaded) {
+      state.dataLoaded = dataLoaded;
     }
   },
   actions: {
@@ -49,7 +48,24 @@ export default new Vuex.Store({
         axios
           .get("http://localhost:8000/big.json")
           .then(response => {
-            context.commit("SET_DATA", response.data);
+            window.data = response.data;
+
+            context.commit("SET_DATA_LOADED", true);
+
+            // slowly fill visible objects
+            var visible = []
+            for (var i = 0; i < response.data.objects.length; i++) {
+              var obj = response.data.objects[i];
+              if (obj.type === 1) {
+                visible.push({
+                  id: i,
+                  className: obj.className,
+                  transform: obj.transform,
+                });
+              }
+            }
+            context.commit("SET_VISIBLE_OBJECTS", visible);
+
             resolve(response.data);
           })
           .catch(err => {

@@ -43,9 +43,9 @@ export default {
     this.obj.scale.x = this.object.transform.scale3d[0] * scaleMultiplier;
     this.obj.scale.y = this.object.transform.scale3d[1] * scaleMultiplier;
     this.obj.scale.z = this.object.transform.scale3d[2] * scaleMultiplier;
-
+    // console.log(this.obj.id);
     this.obj.userData = {
-        id: this.index
+        id: this.object.id
     }
   }
 };
