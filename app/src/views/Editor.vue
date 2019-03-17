@@ -3,9 +3,17 @@
     <div class="maincolumn">
       <Toolbar />
       <div class="mainrow">
-        <Playground />
-        <ObjectList />
-        <PropertyEditor />
+        <Split>
+          <SplitArea :size=60>
+            <Playground />
+          </SplitArea>
+          <SplitArea :size=20>
+            <ObjectList />
+          </SplitArea>
+          <SplitArea :size=20>
+            <PropertyEditor />
+          </SplitArea>
+        </Split>
       </div>
     </div>
   </div>

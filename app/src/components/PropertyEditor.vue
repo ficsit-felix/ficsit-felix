@@ -13,10 +13,11 @@
 @import "@/assets/colors.scss";
 
 .property-editor {
-  width: 300px;
+  /*width: 300px;
   flex-shrink: 0;
-  background: $middleGray;
+  background: $middleGray;*/
   height: 100%;
+  overflow: hidden;
 }
 .json-editor {
   width: 100%;

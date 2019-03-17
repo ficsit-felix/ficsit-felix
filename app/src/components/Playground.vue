@@ -1,6 +1,7 @@
 <template>
   <div class="scene" id="scene">
-    <Renderer>
+    <button v-on:click="focusSelectedObject">Focus</button>
+    <Renderer ref="renderer">
       <Scene ref="scene">
         <AmbientLight />
         <Camera />
@@ -304,6 +305,16 @@ export default {
           this.objects.push(object);
         }
       }
+    },
+
+    focusSelectedObject() {
+      var camera = this.$refs.renderer.camera;
+      var obj = window.data.objects[this.selectedIndex];
+      camera.position.x = obj.transform.translate[0];
+      camera.position.y = obj.transform.translate[1];
+      camera.position.z = obj.transform.translate[2];
+      
+      console.log();
     }
   }
 };

@@ -538,7 +538,7 @@ var OrbitControls = function(object, domElement) {
 
     if (needsUpdate) {
       // prevent the browser from scrolling on cursor keys
-      event.preventDefault();
+      // event.preventDefault();
 
       scope.update();
     }

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "vue-split-panel": "^1.0.4"
+  }
+}

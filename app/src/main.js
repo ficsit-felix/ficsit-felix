@@ -24,6 +24,11 @@ import "vue-material/dist/vue-material.min.css";
 Vue.use(MdButton);
 Vue.use(MdField);
 
+
+// vue-split-panel
+import VueSplit from 'vue-split-panel'
+Vue.use(VueSplit)
+
 Vue.config.productionTip = false;
 
 new Vue({
