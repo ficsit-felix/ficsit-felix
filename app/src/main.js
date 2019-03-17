@@ -18,11 +18,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // vue-material
-import { MdButton, MdField } from "vue-material/dist/components";
-import "vue-material/dist/vue-material.min.css";
-/*import 'vue-material/dist/theme/default-dark.css'*/ // use custom theme in @/assets/main.scss instead
-Vue.use(MdButton);
+import { MdButton, MdField, MdSnackbar } from "vue-material/dist/components";
+import "vue-material/dist/vue-material.min.css"; // use custom theme in @/assets/main.scss instead
+/*import 'vue-material/dist/theme/default-dark.css'*/ Vue.use(MdButton);
 Vue.use(MdField);
+Vue.use(MdSnackbar);
 
 // vue-split-panel
 import VueSplit from "vue-split-panel";

@@ -1,8 +1,32 @@
 <template>
   <div class="property-editor">
-    <md-button class="md-raised" :disabled="this.getSelectedObject == null" @click="focusSelectedObject">Focus</md-button>
+    <div class="buttons">
+      <md-button
+        class="md-raised"
+        :disabled="this.getSelectedObject == null"
+        @click="focusSelectedObject"
+        >Focus</md-button
+      >
+      <md-button
+        class="md-raised md-accent"
+        :disabled="this.getSelectedObject == null"
+        @click="saveJson"
+        >Save JSON</md-button
+      >
+    </div>
+    <md-field :class="jsonClass">
+      <label>JSON</label>
+      <md-textarea
+        v-model="selectedJson"
+        :disabled="this.selectedJson == ''"
+        rows="200"
+      ></md-textarea>
+      <span class="md-error">{{ jsonError }}</span>
+    </md-field>
 
-    <textarea v-model="selectedJson" class="json-editor" placeholder="JSON View" readonly></textarea>
+    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar"
+      >Object saved.</md-snackbar
+    >
   </div>
 </template>
 
@@ -11,30 +35,44 @@
 
 .property-editor {
   /*width: 300px;
-  flex-shrink: 0;
-  background: $middleGray;*/
+  flex-shrink: 0;*/
+  background: $middleGray;
   height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  flex-shrink: 0;
 }
 .json-editor {
   width: 100%;
   height: 100%;
   color: $textGray;
   border: 0px;
-  padding: 8px;
+}
+textarea {
+  height: 100% !important;
+  max-height: none !important;
+  font-family: monospace !important;
 }
 </style>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "PropertyEditor",
   data: function() {
     return {
-      selectedJson: ""
+      selectedJson: "",
+      jsonClass: "",
+      jsonError: "",
+      showSnackbar: false
     };
   },
   computed: {
+    ...mapState(["selectedIndex"]),
     ...mapGetters(["getSelectedObject"])
     /*selectedJson() {
             if (this.getSelectedObject == null) {
@@ -45,19 +83,38 @@ export default {
         }*/
   },
   watch: {
-    getSelectedObject(val) {
-      if (this.getSelectedObject == null) {
-        this.selectedJson = "";
-      } else {
-        this.selectedJson = JSON.stringify(this.getSelectedObject, null, 2);
+    getSelectedObject: {
+      immediate: true,
+      handler(val) {
+        if (this.getSelectedObject == null) {
+          this.selectedJson = "";
+        } else {
+          this.selectedJson = JSON.stringify(this.getSelectedObject, null, 2);
+
+          this.jsonClass = "";
+          this.jsonError = "";
+        }
       }
     }
   },
 
   methods: {
     focusSelectedObject() {
-      console.log("ay");
-      this.$emit('focusSelectedObject')
+      this.$emit("focusSelectedObject");
+    },
+
+    saveJson() {
+      console.log("save json");
+      try {
+        var obj = JSON.parse(this.selectedJson);
+        window.data.objects[this.selectedIndex] = obj;
+        this.jsonClass = "";
+        this.jsonError = "";
+        this.showSnackbar = true;
+      } catch (e) {
+        this.jsonClass = "md-invalid";
+        this.jsonError = e;
+      }
     }
   }
 };

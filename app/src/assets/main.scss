@@ -19,10 +19,21 @@ html, body {
 // custom theme
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
+
+
+
 @include md-register-theme("default", (
   primary: md-get-palette-color(orange, A200), // The primary color of your application
   accent: md-get-palette-color(cyan, 500), // The accent or secondary color
   theme: dark
 ));
-
 @import "~vue-material/dist/theme/all"; // Apply the theme
+// @import "~vue-material/dist/components/MdButton/theme"; // Apply the theme
+// @import "~vue-material/dist/components/MdField/theme"; // Apply the theme
+
+@include md-register-theme("default", (
+    primary: md-get-palette-color(orange, A200), // The primary color of your application
+    accent: md-get-palette-color(cyan, 500), // The accent or secondary color
+    theme: light
+));
+@import "~vue-material/dist/components/MdSnackbar/theme"; // Apply the theme

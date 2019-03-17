@@ -7,7 +7,13 @@
         <md-icon>search</md-icon>
       </md-field>
     </div>
-    <virtual-list :size="10" :remain="100" class="scroller" ref="list" :start="listStart">
+    <virtual-list
+      :size="10"
+      :remain="100"
+      class="scroller"
+      ref="list"
+      :start="listStart"
+    >
       <div
         v-for="item of displayedNames"
         :key="item.id"
@@ -122,7 +128,7 @@ export default {
     focusSelectedObject() {
       console.log("asdf", this.$refs.list);
       this.listStart = this.selectedIndex;
-/*      this.$refs.list.$el.children[0].$el.children[this.selectedIndex].scrollIntoView({
+      /*      this.$refs.list.$el.children[0].$el.children[this.selectedIndex].scrollIntoView({
           block: "start",
           // behavior: "smooth",
           //inline: "nearest"

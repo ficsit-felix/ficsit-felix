@@ -5,13 +5,13 @@
       <div class="mainrow">
         <Split @onDrag="onDrag">
           <SplitArea :size="60">
-            <Playground ref="playground"/>
+            <Playground ref="playground" />
           </SplitArea>
           <SplitArea :size="17">
-            <ObjectList ref="objectList"/>
+            <ObjectList ref="objectList" />
           </SplitArea>
           <SplitArea :size="23">
-            <PropertyEditor @focusSelectedObject="focusSelectedObject"/>
+            <PropertyEditor @focusSelectedObject="focusSelectedObject" />
           </SplitArea>
         </Split>
       </div>
@@ -20,6 +20,7 @@
 </template>
 
 <style lang="scss">
+@import "@/assets/colors.scss";
 .editor {
   height: 100%;
 }
@@ -31,6 +32,9 @@
 .mainrow {
   display: flex;
   flex-grow: 1;
+}
+.gutter {
+  background-color: $toolbarGray !important;
 }
 </style>
 

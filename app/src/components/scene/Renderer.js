@@ -7,7 +7,7 @@ import { mapActions } from "vuex";
 export default {
   props: {
     width: Number,
-    height: Number,
+    height: Number
   },
 
   provide() {

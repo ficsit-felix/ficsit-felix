@@ -3,8 +3,8 @@
     <!--<button v-on:click="focusSelectedObject">Focus</button> -->
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
-        <AmbientLight/>
-        <Camera/>
+        <AmbientLight />
+        <Camera />
         <!--<a v-for="(obj,index) in visibleObjects"
           :key="index">
           
@@ -73,7 +73,7 @@ import Cube from "@/components/scene/Cube";
 import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
 import { BoxBufferGeometry } from "three";
-import { setTimeout } from 'timers';
+import { setTimeout } from "timers";
 
 export default {
   name: "Playground",
@@ -136,7 +136,8 @@ export default {
     this.lastSelectedIndex = -1;
     if (this.dataLoaded) {
       this.addCubes();
-    } else { // load the data
+    } else {
+      // load the data
       this.loadData()
         .then(response => {
           console.log(this);
@@ -332,8 +333,6 @@ export default {
         camera.target.y = obj.transform.translation[1];
         camera.target.z = obj.transform.translation[2];
       }
-
-      
     },
 
     handleResize() {
@@ -348,7 +347,5 @@ export default {
   beforeDestroy() {
     window.removeEventListener("resize", this.handleResize);
   }
-
-
 };
 </script>
