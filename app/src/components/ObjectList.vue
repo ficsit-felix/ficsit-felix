@@ -7,7 +7,7 @@
         <md-icon>search</md-icon>
       </md-field>
     </div>
-    <virtual-list :size="10" :remain="100" class="scroller">
+    <virtual-list :size="10" :remain="100" class="scroller" ref="list" :start="listStart">
       <div
         v-for="item of displayedNames"
         :key="item.id"
@@ -103,7 +103,8 @@ export default {
   },
   data: function() {
     return {
-      filterTerm: ""
+      filterTerm: "",
+      listStart: 0
     };
   },
   computed: {
@@ -117,7 +118,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["select"])
+    ...mapActions(["select"]),
+    focusSelectedObject() {
+      console.log("asdf", this.$refs.list);
+      this.listStart = this.selectedIndex;
+/*      this.$refs.list.$el.children[0].$el.children[this.selectedIndex].scrollIntoView({
+          block: "start",
+          // behavior: "smooth",
+          //inline: "nearest"
+        });*/
+    }
   },
   watch: {
     selectedIndex(val) {

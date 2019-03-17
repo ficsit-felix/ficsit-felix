@@ -8,7 +8,7 @@
             <Playground ref="playground"/>
           </SplitArea>
           <SplitArea :size="17">
-            <ObjectList/>
+            <ObjectList ref="objectList"/>
           </SplitArea>
           <SplitArea :size="23">
             <PropertyEditor @focusSelectedObject="focusSelectedObject"/>
@@ -55,6 +55,7 @@ export default {
     },
     focusSelectedObject() {
       this.$refs.playground.focusSelectedObject();
+      this.$refs.objectList.focusSelectedObject();
     }
   }
 };
