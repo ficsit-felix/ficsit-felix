@@ -100,6 +100,7 @@ class DataBuffer {
 
 
 interface SaveGame {
+    uuid: string,
     saveHeaderType: number;
     saveVersion: number;
     buildVersion: number;
@@ -251,6 +252,7 @@ class Sav2Json {
                     this.buffer = buffer;
 
                     var saveJson: SaveGame = {
+                        uuid: this.uuid,
                         saveHeaderType: buffer.readInt(),
                         saveVersion: buffer.readInt(),
                         buildVersion: buffer.readInt(),

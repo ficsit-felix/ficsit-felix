@@ -47,6 +47,10 @@
         
         <script src="big.js"></script>
     -->
+    <div class="info">
+      {{filename}}<br />
+      {{uuid}}
+    </div>
   </div>
 </template>
 
@@ -59,6 +63,15 @@
 #glContainer {
   width: 100%;
   height: 100%;
+}
+
+.info {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  color: rgba(255,255,255, 0.6);
+  padding: 5px;
+  text-shadow: 1px 1px 1px #000;
 }
 </style>
 
@@ -91,7 +104,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex", "dataLoaded"]),
+    ...mapState(["selectedIndex", "dataLoaded", "uuid", "filename"]),
     ...mapGetters(["getVisibleObjects"]),
 
     geometry() {
@@ -118,7 +131,9 @@ export default {
         ) {
           this.objects[
             this.lastSelectedIndex
-          ].material = this.unselectedMaterial;
+          ].material = this.getMaterial(window.data.objects[
+            this.lastSelectedIndex
+          ].className);
         }
         this.lastSelectedIndex = val;
         if (val != -1 && val < this.objects.length) {
@@ -127,25 +142,123 @@ export default {
       }
     }
   },
+
   mounted() {
     this.objects = [];
     this.unselectedMaterial = new THREE.MeshLambertMaterial({
       color: 0xcccccc
     });
     this.selectedMaterial = new THREE.MeshLambertMaterial({ color: 0xdc904f });
+
+    // create materials
+    const colors = {
+      // stones and materials (gray)
+      "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleLargeRock.BP_DestructibleLargeRock_C": 0xaaaaaa,
+      "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleSmallRock.BP_DestructibleSmallRock_C": 0x777777,
+      "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C": 0x444444,
+      "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C": 0x333333,
+
+      // creatures (red)
+      "/Game/FactoryGame/Character/Creature/BP_CreatureSpawner.BP_CreatureSpawner_C": 0xef1d1d,
+      "/Game/FactoryGame/Resource/Environment/AnimalParts/BP_CrabEggParts.BP_CrabEggParts_C": 0xbd6e41,
+      "/Game/FactoryGame/Resource/Environment/AnimalParts/BP_HogParts.BP_HogParts_C": 0xa93c2c,
+      
+      // nature (green)
+      "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C": 0x43d854,
+      "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C": 0x2dba20,
+      "/Game/FactoryGame/World/Benefit/NutBush/BP_NutBush.BP_NutBush_C": 0x08850e,
+      "/Game/FactoryGame/Resource/BP_ResourceNodeGeyser.BP_ResourceNodeGeyser_C": 0x3caa74,
+      // player (blue)
+      "/Game/FactoryGame/Character/Player/BP_DeathMarker.BP_DeathMarker_C": 0x3a5eff,
+      "/Game/FactoryGame/-Shared/Crate/BP_Crate.BP_Crate_C": 0x0c2a89,
+      "/Game/FactoryGame/Equipment/Chainsaw/Equip_Chainsaw.Equip_Chainsaw_C": 0x0c2889,
+      "/Game/FactoryGame/Equipment/RebarGun/Equip_RebarGun_Projectile.Equip_RebarGun_Projectile_C": 0x0c2289,
+      "/Game/FactoryGame/Equipment/ColorGun/Equip_ColorGun.Equip_ColorGun_C": 0x0c1289,
+      "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C": 0x001dff,
+      "/Game/FactoryGame/Buildable/Vehicle/BP_VehicleTargetPoint.BP_VehicleTargetPoint_C": 0x4157bd,
+
+      // buildings (purple)
+      "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C": 0x3c21c0,
+      "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C": 0x6042d5,
+      "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C": 0x5549bf,
+      "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": 0x5c3ba5,
+      "/Game/FactoryGame/Buildable/Factory/Workshop/Build_Workshop.Build_Workshop_C": 0x310c89,
+      "/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C": 0x472596,
+      "/Game/FactoryGame/Buildable/Factory/Mam/Build_MamIntegrated.Build_MamIntegrated_C": 0x4e2596,
+      "/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBenchIntegrated.Build_WorkBenchIntegrated_C": 0x543a83,
+      "/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C": 0x693fb2,
+      "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayStraight.Build_WalkwayStraight_C": 0x7337c6,
+      "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayRamp.Build_WalkwayRamp_C": 0x6b29aa,
+      "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayCross.Build_WalkwayCross_C": 0x7c25ce,
+      "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set02/Build_Wall_2a.Build_Wall_2a_C": 0x9525ce,
+      "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C": 0xab51d8,
+      "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_02.Build_Wall_Door_8x4_02_C": 0xcc81e3,
+      "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_03.Build_Wall_Conveyor_8x4_03_C": 0xc658e6,
+      "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_01.Build_Wall_Conveyor_8x4_01_C": 0xb714e8,
+      "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1c.Build_Wall_1c_C": 0xc514e8,
+      "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x4_01.Build_Foundation_8x4_01_C": 0xcb4ae4,
+      "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C": 0xd682e7,
+      "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C": 0xac74b7,
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C": 0x8d6096,
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C": 0x894896,
+      "/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPad.Build_JumpPad_C": 0x872f98,
+      "/Game/FactoryGame/Buildable/Factory/LookoutTower/Build_LookoutTower.Build_LookoutTower_C": 0x811396,
+      "/Game/FactoryGame/Buildable/Factory/TradingPost/Build_TradingPost.Build_TradingPost_C": 0x710586,
+      "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C": 0x5d046e,
+      "/Game/FactoryGame/Buildable/Factory/StoragePlayer/Build_StoragePlayer.Build_StoragePlayer_C": 0x450352,
+      "/Game/FactoryGame/Buildable/Factory/StoragePlayer/Build_StorageIntegrated.Build_StorageIntegrated_C": 0x502459,
+      "/Game/FactoryGame/Buildable/Factory/SpaceElevator/Build_SpaceElevator.Build_SpaceElevator_C": 0xcb43be,
+      "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C": 0xac139e,
+      "/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorBiomass.Build_GeneratorBiomass_C": 0xaa3da0,
+      "/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorIntegratedBiomass.Build_GeneratorIntegratedBiomass_C": 0x91498a,
+      "/Game/FactoryGame/Buildable/Factory/GeneratorCoal/Build_GeneratorCoal.Build_GeneratorCoal_C": 0x8b2f82,
+      "/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C": 0x830477,
+      "/Game/FactoryGame/Buildable/Factory/ConstructorMk1/Build_ConstructorMk1.Build_ConstructorMk1_C": 0x63075a,
+      "/Game/FactoryGame/Buildable/Factory/AssemblerMk1/Build_AssemblerMk1.Build_AssemblerMk1_C": 0x41063c,
+      "/Game/FactoryGame/Buildable/Factory/CA_Splitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C": 0x5f1c59,
+      "/Game/FactoryGame/Buildable/Factory/CA_Merger/Build_ConveyorAttachmentMerger.Build_ConveyorAttachmentMerger_C": 0x693d65,
+      "/Game/FactoryGame/Equipment/Beacon/BP_Beacon.BP_Beacon_C":  0xa80cff,
+      "/Game/FactoryGame/Buildable/Vehicle/Tractor/BP_Tractor.BP_Tractor_C": 0x7f28b0,
+
+
+      // items (cyan)
+      "/Script/FactoryGame.FGItemPickup_Spawnable": 0x51d5e4,
+
+      // specials (yellow)
+      "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal_mk3.BP_Crystal_mk3_C": 0xc7b317,
+      "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal.BP_Crystal_C": 0xdccc4e,
+      "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal_mk2.BP_Crystal_mk2_C": 0xe4da51,
+      "/Game/FactoryGame/Prototype/WAT/BP_WAT1.BP_WAT1_C": 0xaa5e2f,
+      "/Game/FactoryGame/Prototype/WAT/BP_WAT2.BP_WAT2_C": 0x963f1e,
+      "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C": 0xfffd00,
+
+      // ??? (pink)
+      "/Script/FactoryGame.FGFoliageRemoval": 0x721884,
+      "undefined": 0xff00ff
+    };
+
+    this.materials = {};
+    for (var prop in colors) {
+      this.materials[prop] = new THREE.MeshLambertMaterial({color: colors[prop]});
+
+    }
+
+
     this.lastSelectedIndex = -1;
     if (this.dataLoaded) {
       this.addCubes();
     } else {
       // load the data
-      this.loadData()
+
+      // should not happen anymore
+      /*this.loadData()
         .then(response => {
           console.log(this);
           //     this.addCubes(response);
         })
         .catch(err => {
           console.error(err);
-        });
+        });*/
     }
     // var container; // , stats
     // var camera, scene, renderer, controls;
@@ -275,6 +388,14 @@ export default {
     mouseMove(evt) {
       this.selectControls.onMouseMove(evt);
     },*/
+      getMaterial(className) {
+    if (this.materials[className] === undefined) {
+      console.log(className);
+      return this.materials["undefined"];
+    } else {
+      return this.materials[className];
+    }
+  },
     addCubes: function() {
       var colorMap = {};
 
@@ -290,7 +411,7 @@ export default {
 
           var object = new THREE.Mesh(
             geometry,
-            this.unselectedMaterial
+            this.getMaterial(obj.className)
             //new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
           );
           object.position.x = obj.transform.translation[0];

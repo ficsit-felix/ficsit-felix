@@ -11,7 +11,9 @@ export default new Vuex.Store({
     error: null,
     title: "asdf",
     dataLoaded: false,
-    visibleObjects: []
+    visibleObjects: [],
+    uuid: "",
+    filename: ""
   },
   getters: {
     getNames: state => {
@@ -54,6 +56,12 @@ export default new Vuex.Store({
     },
     SET_DATA_LOADED(state, dataLoaded) {
       state.dataLoaded = dataLoaded;
+    },
+    SET_FILENAME(state, filename) {
+      state.filename = filename;
+    },
+    SET_UUID(state, uuid) {
+      state.uuid = uuid;
     }
   },
   actions: {
@@ -114,6 +122,12 @@ export default new Vuex.Store({
         context.commit("SET_VISIBLE_OBJECTS", visible);
         resolve();
       });
+    },
+    setFilename(context, filename) {
+      context.commit("SET_FILENAME", filename);
+    },
+    setUUID(context, uuid) {
+      context.commit("SET_UUID", uuid);
     }
   }
 });

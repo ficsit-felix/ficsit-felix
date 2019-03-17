@@ -18,13 +18,14 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // vue-material
-import { MdButton, MdField, MdSnackbar, MdDialog } from "vue-material/dist/components";
+import { MdButton, MdField, MdSnackbar, MdDialog, MdDialogConfirm } from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css"; // use custom theme in @/assets/main.scss instead
 // import 'vue-material/dist/theme/default-dark.css'
 Vue.use(MdButton);
 Vue.use(MdField);
 Vue.use(MdSnackbar);
 Vue.use(MdDialog);
+Vue.use(MdDialogConfirm);
 
 // vue-split-panel
 import VueSplit from "vue-split-panel";
@@ -37,3 +38,4 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
+

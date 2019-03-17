@@ -60,9 +60,9 @@ export default {
 
   
   created() {
-    /*if (!this.dataLoaded) { // The user needs to upload a file first
+    if (!this.dataLoaded) { // The user needs to upload a file first
       this.$router.push('upload');
-    }*/
+    }
     
   },
   methods: {

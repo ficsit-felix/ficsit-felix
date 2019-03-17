@@ -113,7 +113,7 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(["setLoadedData"]),
+    ...mapActions(["setLoadedData", "setFilename", "setUUID"]),
     handleError(errorMessage) {
         this.showErrorDialog = true;
         this.errorText = errorMessage;
@@ -124,33 +124,36 @@ export default {
       this.isSaving = true;
       this.infoText = "reading file...";
       console.log("Uploading...", file);
+      this.setFilename(file.name);
 
-      // dev
-      //const uri = "http://localhost:5000/ficsit-felix/us-central1/sav2json";
-      // production
-      const uri = "https://us-central1-ficsit-felix.cloudfunctions.net/sav2json";
-
+     const uri = process.env.NODE_ENV === "production" ?
+     "https://us-central1-ficsit-felix.cloudfunctions.net/sav2json"
+      : "http://localhost:5000/ficsit-felix/us-central1/sav2json";
+      
+    
       var data = file;
       var config = {
         onUploadProgress: e => {
-          console.log('upload', e);
+          //console.log('upload', e);
           if (e.lengthComputable) {
             const percentage = Math.round((e.loaded * 100) / e.total);
-            console.log(percentage);
+            // console.log(percentage);
             if (percentage == 100) {
               this.infoText = "processing file...";
             }
             this.progress = percentage / 3;
+          } else {
+            this.progress += 1;
           }
         },
         onDownloadProgress: e=> {
-
-          
-          console.log('download', e);
+          //console.log('download', e);
           if (e.lengthComputable) {
             const percentage = Math.round((e.loaded * 100) / e.total);
-            console.log(percentage);
+            //console.log(percentage);
             this.progress = percentage / 3 + 33;
+          } else {
+            this.progress += 1;
           }
         },
         headers: {
@@ -167,6 +170,8 @@ export default {
             // TODO sentry
             this.handleError(response.data.text);
           } else {
+            this.setUUID(response.data.uuid);
+            console.log(response.data.uuid);
             this.infoText = "building world...";
             // give us some time to build the 3d world while animating the progress bar
             this.setLoadedData(response.data).then(() => {

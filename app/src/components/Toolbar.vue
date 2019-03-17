@@ -3,7 +3,7 @@
     <Logo :height="48" black="#707070"></Logo>
 
     <ul>
-      <li @click="open">
+      <li @click="showOpenDialog=true">
         <md-icon>folder_open</md-icon>Open
       </li>
       <li @click="save">
@@ -13,6 +13,15 @@
         <md-icon>help</md-icon>Help
       </li>
     </ul>
+
+    <md-dialog-confirm
+      :md-active.sync="showOpenDialog"
+      md-title="Open save file"
+      md-content="Do you really want to open a new save file and lose any changes in the current one?"
+      md-confirm-text="Yes"
+      md-cancel-text="No"
+      @md-cancel="showOpenDialog=false"
+      @md-confirm="open" />
 
     <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>Help</md-dialog-title>
@@ -79,7 +88,8 @@ export default {
   },
   data: function() {
     return {
-      showHelpDialog: false
+      showHelpDialog: false,
+      showOpenDialog: false
     };
   },
   methods: {
