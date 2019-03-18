@@ -60,7 +60,7 @@ textarea {
 </style>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   name: "PropertyEditor",
   data: function() {
@@ -72,7 +72,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex", "selectedObject"]),
+    ...mapState(["selectedIndex", "selectedObject"])
     // ...mapGetters(["getSelectedObject"])
     /*selectedJson() {
             if (this.getSelectedObject == null) {
@@ -101,6 +101,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(["setSelectedObject"]),
     focusSelectedObject() {
       this.$emit("focusSelectedObject");
     },
@@ -109,7 +110,7 @@ export default {
       console.log("save json");
       try {
         var obj = JSON.parse(this.selectedJson);
-        window.data.objects[this.selectedIndex] = obj;
+        this.setSelectedObject(obj);
         this.jsonClass = "";
         this.jsonError = "";
         this.showSnackbar = true;

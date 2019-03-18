@@ -84,7 +84,7 @@ export default new Vuex.Store({
       state.uuid = uuid;
     },
     SET_VISIBILITY(state, { name, visible }) {
-      console.log("mutation", name, visible);
+      // console.log("mutation", name, visible);
       for (var i = 0; i < state.classes.length; i++) {
         if (state.classes[i].name === name) {
           state.classes[i].visible = visible;
@@ -93,7 +93,7 @@ export default new Vuex.Store({
       }
     },
     SET_SELECTED_OBJECT(state, obj) {
-      console.log("STATE CHANGE", obj);
+      // console.log("STATE CHANGE", obj);
       window.data.objects[state.selectedIndex] = obj;
       state.selectedObject = obj;
     }

@@ -137,7 +137,7 @@ export default {
       this.infoText = "reading file...";
       console.log("Uploading...", file);
       this.setFilename(file.name);
-      Sentry.configureScope((scope) => {
+      Sentry.configureScope(scope => {
         scope.setExtra("filename", file.name);
       });
 
@@ -185,7 +185,7 @@ export default {
             Sentry.captureMessage(response.data.text);
             this.handleError(response.data.text);
           } else {
-            Sentry.configureScope((scope) => {
+            Sentry.configureScope(scope => {
               scope.setExtra("uuid", response.data.uuid);
               scope.setExtra("filename", file.name);
             });

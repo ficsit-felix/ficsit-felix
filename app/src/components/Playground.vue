@@ -106,7 +106,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex", "dataLoaded", "uuid", "filename", "classes", "selectedObject"]),
+    ...mapState([
+      "selectedIndex",
+      "dataLoaded",
+      "uuid",
+      "filename",
+      "classes",
+      "selectedObject"
+    ]),
     ...mapGetters(["getVisibleObjects"]),
 
     geometry() {
@@ -144,6 +151,14 @@ export default {
           this.transformControl.attach(this.getObjWithId(val));
         } else {
           this.transformControl.detach();
+        }
+      }
+    },
+    selectedObject(val) {
+      if (val !== null) {
+        var obj = this.getObjWithId(this.selectedIndex);
+        if (obj !== null) {
+          this.updateObjectVisuals(obj, val);
         }
       }
     },
@@ -190,7 +205,10 @@ export default {
     this.unselectedMaterial = new THREE.MeshLambertMaterial({
       color: 0xcccccc
     });
-    this.selectedMaterial = new THREE.MeshLambertMaterial({ color: 0xdc904f, emissive: 0xdc904f });
+    this.selectedMaterial = new THREE.MeshLambertMaterial({
+      color: 0xdc904f,
+      emissive: 0xdc904f
+    });
 
     // create materials
     const colors = {
@@ -377,18 +395,20 @@ export default {
     // 			light.shadow.mapSize.height = 1024;*/
     this.$refs.scene.scene.add(light);
 
-
-    this.transformControl = new TransformControls(this.$refs.renderer.camera.obj, this.$refs.renderer.renderer.domElement);
+    this.transformControl = new TransformControls(
+      this.$refs.renderer.camera.obj,
+      this.$refs.renderer.renderer.domElement
+    );
     // correct way to to this, but i don't want that many updates
     /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
     })*/
-    this.transformControl.addEventListener( 'dragging-changed', ( event ) => {
+    this.transformControl.addEventListener("dragging-changed", event => {
       this.$refs.renderer.selectControls.disabled = event.value;
       if (event.value == false) {
         this.objectChanged();
       }
-				} );
+    });
     this.$refs.scene.scene.add(this.transformControl);
     // container.appendChild(renderer.domElement); // TODO //
     // /*    var dragControls = new THREE.DragControls(
@@ -466,7 +486,7 @@ export default {
       console.error("No object found with id " + id);
     },
     getObjWithId(id) {
-        for (var i = 0; i < this.objects.length; i++) {
+      for (var i = 0; i < this.objects.length; i++) {
         const obj = this.objects[i];
         if (obj.userData.id === id) {
           return obj;
@@ -478,6 +498,7 @@ export default {
           return obj;
         }
       }
+      return null;
     },
     addCubes: function() {
       var colorMap = {};
@@ -497,30 +518,8 @@ export default {
             this.getMaterial(obj.className)
             //new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
           );
-          object.position.x = obj.transform.translation[0];
-          object.position.y = obj.transform.translation[1];
-          object.position.z = obj.transform.translation[2];
-          object.quaternion.x = obj.transform.rotation[0];
-          object.quaternion.y = obj.transform.rotation[1];
-          object.quaternion.z = obj.transform.rotation[2];
-          object.quaternion.w = obj.transform.rotation[3];
 
-          var scaleMultiplier = [1, 1, 1];
-          switch (obj.className) {
-            case "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
-              scaleMultiplier = [0.15, 0.15, 0.15];
-              break;
-            case "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
-              scaleMultiplier = [2, 2, 0.25];
-              break;
-          }
-          // console.log(obj);
-
-          object.scale.x = obj.transform.scale3d[0] * scaleMultiplier[0];
-          object.scale.y = obj.transform.scale3d[1] * scaleMultiplier[1];
-          object.scale.z = obj.transform.scale3d[2] * scaleMultiplier[2];
-          object.castShadow = true;
-          object.receiveShadow = true;
+          this.updateObjectVisuals(object, obj);
 
           object.userData = { id: i };
           this.$refs.scene.scene.add(object);
@@ -529,6 +528,30 @@ export default {
       }
     },
 
+    updateObjectVisuals(object, obj) {
+      object.position.x = obj.transform.translation[0];
+      object.position.y = obj.transform.translation[1];
+      object.position.z = obj.transform.translation[2];
+      object.quaternion.x = obj.transform.rotation[0];
+      object.quaternion.y = obj.transform.rotation[1];
+      object.quaternion.z = obj.transform.rotation[2];
+      object.quaternion.w = obj.transform.rotation[3];
+
+      var scaleMultiplier = [1, 1, 1];
+      switch (obj.className) {
+        case "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
+          scaleMultiplier = [0.15, 0.15, 0.15];
+          break;
+        case "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
+          scaleMultiplier = [2, 2, 0.25];
+          break;
+      }
+      // console.log(obj);
+
+      object.scale.x = obj.transform.scale3d[0] * scaleMultiplier[0];
+      object.scale.y = obj.transform.scale3d[1] * scaleMultiplier[1];
+      object.scale.z = obj.transform.scale3d[2] * scaleMultiplier[2];
+    },
     focusSelectedObject() {
       var camera = this.$refs.renderer.camera.controls;
       var obj = window.data.objects[this.selectedIndex];
@@ -555,13 +578,13 @@ export default {
 
       // TODO need to clone, else change is not detected?
       // find more intelligent way
-      var clone = Object.assign({}, this.selectedObject)
+      var clone = Object.assign({}, this.selectedObject);
       clone.transform.translation[0] = obj.position.x;
       clone.transform.translation[1] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
 
       this.setSelectedObject(clone);
-      
+
       console.log("changed", clone.transform.translation);
     }
   },

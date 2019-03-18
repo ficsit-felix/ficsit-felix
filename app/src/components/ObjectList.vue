@@ -73,8 +73,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden; 
-  user-select: none; 
+  overflow: hidden;
+  user-select: none;
 
   .filter-field {
     margin-top: -10px;

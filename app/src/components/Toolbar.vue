@@ -79,7 +79,7 @@
       padding-right: 12px;
     }
     color: #e3d3d3;
-    transition: color .4s cubic-bezier(.4,0,.2,1);
+    transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   li:hover {
     color: $primaryOrange;
@@ -119,7 +119,7 @@ export default {
       this.$router.push("download");
     },
     openGithub() {
-      window.location.href='https://github.com/bitowl/ficsit-felix';
+      window.location.href = "https://github.com/bitowl/ficsit-felix";
     }
   }
 };
