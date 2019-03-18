@@ -3,13 +3,13 @@
     <div class="buttons">
       <md-button
         class="md-raised"
-        :disabled="this.getSelectedObject == null"
+        :disabled="this.selectedObject == null"
         @click="focusSelectedObject"
         >Focus</md-button
       >
       <md-button
         class="md-raised md-accent"
-        :disabled="this.getSelectedObject == null"
+        :disabled="this.selectedObject == null"
         @click="saveJson"
         >Save JSON</md-button
       >
@@ -72,8 +72,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex"]),
-    ...mapGetters(["getSelectedObject"])
+    ...mapState(["selectedIndex", "selectedObject"]),
+    // ...mapGetters(["getSelectedObject"])
     /*selectedJson() {
             if (this.getSelectedObject == null) {
                 return "";
@@ -83,13 +83,15 @@ export default {
         }*/
   },
   watch: {
-    getSelectedObject: {
+    selectedObject: {
       immediate: true,
+      deep: true,
       handler(val) {
-        if (this.getSelectedObject == null) {
+        console.log("SELECTED CHANGED", val);
+        if (this.selectedObject == null) {
           this.selectedJson = "";
         } else {
-          this.selectedJson = JSON.stringify(this.getSelectedObject, null, 2);
+          this.selectedJson = JSON.stringify(this.selectedObject, null, 2);
 
           this.jsonClass = "";
           this.jsonError = "";

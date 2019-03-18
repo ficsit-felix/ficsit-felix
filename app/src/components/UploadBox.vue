@@ -138,7 +138,7 @@ export default {
       console.log("Uploading...", file);
       this.setFilename(file.name);
       Sentry.configureScope((scope) => {
-        scope.setTag("filename", file.name);
+        scope.setExtra("filename", file.name);
       });
 
       const uri =
@@ -179,15 +179,15 @@ export default {
       axios
         .post(uri, data, config)
         .then(response => {
-          console.log(response);
+          // console.log(response);
 
           if (response.data.type === "error") {
             Sentry.captureMessage(response.data.text);
             this.handleError(response.data.text);
           } else {
             Sentry.configureScope((scope) => {
-              scope.setTag("filename", file.name);
-              scope.setTag("uuid", response.data.uuid);
+              scope.setExtra("uuid", response.data.uuid);
+              scope.setExtra("filename", file.name);
             });
             this.setUUID(response.data.uuid);
             // console.log(response.data.uuid);

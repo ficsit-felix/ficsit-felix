@@ -10,6 +10,8 @@
       <li @click="showHelpDialog = true"><md-icon>help</md-icon>Help</li>
     </ul>
 
+    <div class="spacer"></div>
+    <li @click="openGithub()">GitHub</li>
     <md-dialog-confirm
       :md-active.sync="showOpenDialog"
       md-title="Open save file"
@@ -48,7 +50,6 @@
     <!--    <md-icon class="md-size-2x">axis_arrow</md-icon>
     <md-icon class="md-size-2x">sync</md-icon>
     <md-icon class="md-size-2x">swap_horiz</md-icon>-->
-    <div class="spacer"></div>
   </div>
 </template>
 
@@ -116,6 +117,9 @@ export default {
     },
     save() {
       this.$router.push("download");
+    },
+    openGithub() {
+      window.location.href='https://github.com/bitowl/ficsit-felix';
     }
   }
 };

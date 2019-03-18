@@ -233,6 +233,7 @@ class Sav2Json {
 
     uploadAndTransform() {
         try {
+            console.info(process.env.PWD);
             if (process.env.PWD === "/user_code") {
                 console.info("UPLOADING");
 

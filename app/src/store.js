@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import { stat } from "fs";
 
 Vue.use(Vuex);
 
@@ -8,6 +9,7 @@ export default new Vuex.Store({
   state: {
     loading: false,
     selectedIndex: -1,
+    selectedObject: null,
     error: null,
     title: "asdf",
     dataLoaded: false,
@@ -48,11 +50,17 @@ export default new Vuex.Store({
         state.visibleObjects[state.selectedIndex].state = 0;
       }*/
       state.selectedIndex = selectedIndex;
+      if (selectedIndex != -1) {
+        state.selectedObject = window.data.objects[selectedIndex];
+      } else {
+        state.selectedObject = null;
+      }
       /*if (state.selectedIndex !== -1) {
         state.visibleObjects[state.selectedIndex].state = 1;
       }*/
     },
     SET_VISIBLE_OBJECTS(state, visibleObjects) {
+      state.selectedIndex = -1;
       state.visibleObjects = visibleObjects;
 
       state.classes = state.visibleObjects
@@ -83,6 +91,11 @@ export default new Vuex.Store({
           break;
         }
       }
+    },
+    SET_SELECTED_OBJECT(state, obj) {
+      console.log("STATE CHANGE", obj);
+      window.data.objects[state.selectedIndex] = obj;
+      state.selectedObject = obj;
     }
   },
   actions: {
@@ -153,6 +166,9 @@ export default new Vuex.Store({
     setVisibility(context, payload) {
       console.log("action", payload);
       context.commit("SET_VISIBILITY", payload);
+    },
+    setSelectedObject(context, payload) {
+      context.commit("SET_SELECTED_OBJECT", payload);
     }
   }
 });

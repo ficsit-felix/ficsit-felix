@@ -2,6 +2,7 @@ import { MOUSE, Raycaster } from "three";
 
 var SelectControls = function(scene, camera, domElement, callback) {
   this.callback = null;
+  this.disabled = false;
 
   this.bindCallback = function(callback) {
     console.log("callback:" + callback);
@@ -28,7 +29,10 @@ var SelectControls = function(scene, camera, domElement, callback) {
   }
 
   function onMouseDown(event) {
-    event.preventDefault();
+    console.log("select " +scope.disabled);
+    if (scope.disabled) {
+      return;
+    }
 
     if (event.button == MOUSE.LEFT) {
       raycaster.setFromCamera(mouse, camera);
@@ -40,7 +44,9 @@ var SelectControls = function(scene, camera, domElement, callback) {
         // object.material.emissive.setHex(0xff00ff);
         scope.callback.select(object.userData.id);
       } else {
-        scope.callback.select(-1);
+      
+          scope.callback.select(-1);
+        
       }
     }
   }

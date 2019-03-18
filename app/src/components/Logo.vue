@@ -162,7 +162,6 @@ export default {
   },
   mounted() {
     const hammer = this.$refs.hammer;
-    console.log(hammer);
     this.tl = new TimelineLite({
       onComplete: () => {
         if (this.animating) {

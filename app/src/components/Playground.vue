@@ -80,6 +80,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "@/js/OrbitControls";
 import { SelectControls } from "@/js/SelectControls";
+import { TransformControls } from "@/js/TransformControls";
 import { mapActions, mapGetters, mapState } from "vuex";
 import Scene from "@/components/scene/Scene";
 import Renderer from "@/components/scene/Renderer";
@@ -105,7 +106,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex", "dataLoaded", "uuid", "filename", "classes"]),
+    ...mapState(["selectedIndex", "dataLoaded", "uuid", "filename", "classes", "selectedObject"]),
     ...mapGetters(["getVisibleObjects"]),
 
     geometry() {
@@ -139,6 +140,10 @@ export default {
         if (val != -1) {
           //  && val < this.objects.length
           this.setMaterial(val, this.selectedMaterial);
+
+          this.transformControl.attach(this.getObjWithId(val));
+        } else {
+          this.transformControl.detach();
         }
       }
     },
@@ -372,6 +377,19 @@ export default {
     // 			light.shadow.mapSize.height = 1024;*/
     this.$refs.scene.scene.add(light);
 
+
+    this.transformControl = new TransformControls(this.$refs.renderer.camera.obj, this.$refs.renderer.renderer.domElement);
+    // correct way to to this, but i don't want that many updates
+    /*this.transformControl.addEventListener('objectChange', () => {
+      this.objectChanged();
+    })*/
+    this.transformControl.addEventListener( 'dragging-changed', ( event ) => {
+      this.$refs.renderer.selectControls.disabled = event.value;
+      if (event.value == false) {
+        this.objectChanged();
+      }
+				} );
+    this.$refs.scene.scene.add(this.transformControl);
     // container.appendChild(renderer.domElement); // TODO //
     // /*    var dragControls = new THREE.DragControls(
     //     objects,
@@ -420,7 +438,7 @@ export default {
     window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
   },
   methods: {
-    ...mapActions(["loadData"]),
+    ...mapActions(["loadData", "setSelectedObject"]),
 
     getMaterial(className) {
       if (this.materials[className] === undefined) {
@@ -446,6 +464,20 @@ export default {
         }
       }
       console.error("No object found with id " + id);
+    },
+    getObjWithId(id) {
+        for (var i = 0; i < this.objects.length; i++) {
+        const obj = this.objects[i];
+        if (obj.userData.id === id) {
+          return obj;
+        }
+      }
+      for (var i = 0; i < this.invisibleObjects.length; i++) {
+        const obj = this.invisibleObjects[i];
+        if (obj.userData.id === id) {
+          return obj;
+        }
+      }
     },
     addCubes: function() {
       var colorMap = {};
@@ -517,9 +549,24 @@ export default {
       var height = elem.offsetHeight;
       this.width = width;
       this.height = height;
+    },
+    objectChanged() {
+      var obj = this.getObjWithId(this.selectedIndex);
+
+      // TODO need to clone, else change is not detected?
+      // find more intelligent way
+      var clone = Object.assign({}, this.selectedObject)
+      clone.transform.translation[0] = obj.position.x;
+      clone.transform.translation[1] = obj.position.y;
+      clone.transform.translation[2] = obj.position.z;
+
+      this.setSelectedObject(clone);
+      
+      console.log("changed", clone.transform.translation);
     }
   },
   beforeDestroy() {
+    this.transformControl.dispose();
     window.removeEventListener("resize", this.handleResize);
     for (var i = 0; i < this.objects.length; i++) {
       this.$refs.scene.scene.remove(this.objects[i]);
