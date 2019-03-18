@@ -33,7 +33,7 @@ html, body {
 
 @include md-register-theme("default", (
     primary: md-get-palette-color(orange, A200), // The primary color of your application
-    accent: md-get-palette-color(cyan, 500), // The accent or secondary color
+    accent: md-get-palette-color(cyan, 400), // The accent or secondary color
     theme: light
 ));
 @import "~vue-material/dist/components/MdSnackbar/theme"; // Apply the theme

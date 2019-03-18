@@ -8,7 +8,14 @@
             <Playground ref="playground" />
           </SplitArea>
           <SplitArea :size="17">
-            <ObjectList ref="objectList" />
+            <Split direction="vertical">
+              <SplitArea :size="70">
+              <ObjectList ref="objectList" />
+              </SplitArea>
+              <SplitArea :size="30">
+                <ClassList />
+              </SplitArea>
+            </Split>
           </SplitArea>
           <SplitArea :size="23">
             <PropertyEditor @focusSelectedObject="focusSelectedObject" />
@@ -44,6 +51,7 @@ import Toolbar from "@/components/Toolbar.vue";
 import Playground from "@/components/Playground.vue";
 import ObjectList from "@/components/ObjectList.vue";
 import PropertyEditor from "@/components/PropertyEditor.vue";
+import ClassList from "@/components/ClassList.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -52,7 +60,8 @@ export default {
     Toolbar,
     Playground,
     ObjectList,
-    PropertyEditor
+    PropertyEditor,
+    ClassList
   },
   computed: {
     ...mapState(["dataLoaded"]),

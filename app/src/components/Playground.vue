@@ -105,7 +105,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex", "dataLoaded", "uuid", "filename"]),
+    ...mapState(["selectedIndex", "dataLoaded", "uuid", "filename", "classes"]),
     ...mapGetters(["getVisibleObjects"]),
 
     geometry() {
@@ -130,15 +130,48 @@ export default {
           this.lastSelectedIndex != -1 &&
           this.lastSelectedIndex < this.objects.length
         ) {
-          this.objects[
-            this.lastSelectedIndex
-          ].material = this.getMaterial(window.data.objects[
-            this.lastSelectedIndex
-          ].className);
+          this.objects[this.lastSelectedIndex].material = this.getMaterial(
+            window.data.objects[this.lastSelectedIndex].className
+          );
         }
         this.lastSelectedIndex = val;
         if (val != -1 && val < this.objects.length) {
           this.objects[val].material = this.selectedMaterial;
+        }
+      }
+    },
+    classes: {
+      deep: true,
+      handler(val) {
+        console.log("change");
+        for (var i = 0; i < val.length; i++) {
+          const item = val[i];
+          if (item.visible) {
+            // make invisible objects visible again
+            for (var j = this.invisibleObjects.length-1; j >=0; j--) {
+              const obj = this.invisibleObjects[j];
+
+              if (
+                window.data.objects[obj.userData.id].className === item.name
+              ) {
+                this.$refs.scene.scene.add(obj);
+                this.invisibleObjects.splice(j,1);
+                this.objects.push(obj);
+              }
+            }
+          } else {
+            for (var j = this.objects.length-1; j >=0; j--) {
+              const obj = this.objects[j];
+
+              if (
+                window.data.objects[obj.userData.id].className === item.name
+              ) {
+                this.$refs.scene.scene.remove(obj);
+                this.objects.splice(j,1);
+                this.invisibleObjects.push(obj);
+              }
+            }
+          }
         }
       }
     }
@@ -146,6 +179,7 @@ export default {
 
   mounted() {
     this.objects = [];
+    this.invisibleObjects = [];
     this.unselectedMaterial = new THREE.MeshLambertMaterial({
       color: 0xcccccc
     });
@@ -163,13 +197,11 @@ export default {
       "/Game/FactoryGame/Character/Creature/BP_CreatureSpawner.BP_CreatureSpawner_C": 0xef1d1d,
       "/Game/FactoryGame/Resource/Environment/AnimalParts/BP_CrabEggParts.BP_CrabEggParts_C": 0xbd6e41,
       "/Game/FactoryGame/Resource/Environment/AnimalParts/BP_HogParts.BP_HogParts_C": 0xa93c2c,
-      "/Game/FactoryGame/Character/Creature/Enemy/Hog/Char_Hog.Char_Hog_C":0xd80e2c,
-      "/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C":0xda3950,
-      "/Game/FactoryGame/Character/Creature/Wildlife/NonFlyingBird/Char_NonFlyingBird.Char_NonFlyingBird_C":0xbc0f28,
+      "/Game/FactoryGame/Character/Creature/Enemy/Hog/Char_Hog.Char_Hog_C": 0xd80e2c,
+      "/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C": 0xda3950,
+      "/Game/FactoryGame/Character/Creature/Wildlife/NonFlyingBird/Char_NonFlyingBird.Char_NonFlyingBird_C": 0xbc0f28,
       "/Game/FactoryGame/Character/Creature/Wildlife/SpaceGiraffe/Char_SpaceGiraffe.Char_SpaceGiraffe_C": 0xc20f0f,
 
-      
-      
       // nature (green)
       "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C": 0x43d854,
       "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C": 0x2dba20,
@@ -224,9 +256,8 @@ export default {
       "/Game/FactoryGame/Buildable/Factory/AssemblerMk1/Build_AssemblerMk1.Build_AssemblerMk1_C": 0x41063c,
       "/Game/FactoryGame/Buildable/Factory/CA_Splitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C": 0x5f1c59,
       "/Game/FactoryGame/Buildable/Factory/CA_Merger/Build_ConveyorAttachmentMerger.Build_ConveyorAttachmentMerger_C": 0x693d65,
-      "/Game/FactoryGame/Equipment/Beacon/BP_Beacon.BP_Beacon_C":  0xa80cff,
+      "/Game/FactoryGame/Equipment/Beacon/BP_Beacon.BP_Beacon_C": 0xa80cff,
       "/Game/FactoryGame/Buildable/Vehicle/Tractor/BP_Tractor.BP_Tractor_C": 0x7f28b0,
-
 
       // items (cyan)
       "/Script/FactoryGame.FGItemPickup_Spawnable": 0x51d5e4,
@@ -241,22 +272,21 @@ export default {
 
       // ??? (pink)
       "/Script/FactoryGame.FGFoliageRemoval": 0x721884,
-      "undefined": 0xff00ff
+      undefined: 0xff00ff
     };
 
     this.materials = {};
     for (var prop in colors) {
-      this.materials[prop] = new THREE.MeshLambertMaterial({color: colors[prop]});
-
+      this.materials[prop] = new THREE.MeshLambertMaterial({
+        color: colors[prop]
+      });
     }
-
 
     this.lastSelectedIndex = -1;
     if (this.dataLoaded) {
       this.addCubes();
     } else {
       // load the data
-
       // should not happen anymore
       /*this.loadData()
         .then(response => {
@@ -389,20 +419,15 @@ export default {
   },
   methods: {
     ...mapActions(["loadData"]),
-    /*mouseDown(evt) {
-      this.selectControls.onMouseDown(this, evt);
+
+    getMaterial(className) {
+      if (this.materials[className] === undefined) {
+        console.log(className);
+        return this.materials["undefined"];
+      } else {
+        return this.materials[className];
+      }
     },
-    mouseMove(evt) {
-      this.selectControls.onMouseMove(evt);
-    },*/
-      getMaterial(className) {
-    if (this.materials[className] === undefined) {
-      console.log(className);
-      return this.materials["undefined"];
-    } else {
-      return this.materials[className];
-    }
-  },
     addCubes: function() {
       var colorMap = {};
 

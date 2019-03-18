@@ -65,31 +65,33 @@
   flex-shrink: 0;
   padding-left: 30px;
   padding-right: 30px;
-}
-.spacer {
-  flex-grow: 1;
-}
-ul {
-  margin: 0px;
-  margin-left: 30px;
-}
-li {
-  display: inline-block;
-  padding: 10px 10px;
-  padding-right: 20px;
-  font-size: 16px;
-  line-height: 32px;
-  i {
-    padding-right: 12px;
+
+  .spacer {
+    flex-grow: 1;
+  }
+  ul {
+    margin: 0px;
+    margin-left: 30px;
+  }
+  li {
+    display: inline-block;
+    padding: 10px 10px;
+    padding-right: 20px;
+    font-size: 16px;
+    line-height: 32px;
+    i {
+      padding-right: 12px;
+    }
+  }
+  li:hover {
+    color: $primaryOrange;
+    cursor: pointer;
   }
 }
-li:hover {
-  color: $primaryOrange;
-  cursor: pointer;
-}
-p,b {
-  padding: 0px 16px;
-}
+
+  p,b {
+    padding: 0px 16px;
+  }
 </style>
 
 <script>
