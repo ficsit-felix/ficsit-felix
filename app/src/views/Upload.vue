@@ -1,9 +1,9 @@
 <template>
   <div class="upload">
     <div class="centered">
-      <Logo height=180 black="#000" />
+      <Logo height=180 black="#000" :animating="logoAnimating" />
       <h1>Upload save file</h1>
-      <UploadBox />
+      <UploadBox @startAnimating="logoAnimating=true" @stopAnimating="logoAnimating=false"/>
     </div>
   </div>
 </template>
@@ -32,6 +32,11 @@ export default {
   name: "Upload",
   components: {
     Logo, UploadBox
+  },
+  data: function() {
+    return {
+      logoAnimating: false
+    }
   }
 }
 </script>

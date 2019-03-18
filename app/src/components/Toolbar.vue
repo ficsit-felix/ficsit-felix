@@ -1,6 +1,6 @@
 <template>
   <div class="toolbar">
-    <Logo :height="48" black="#707070"></Logo>
+    <Logo :height="48" black="#707070" :animating="false"></Logo>
 
     <ul>
       <li @click="showOpenDialog=true">

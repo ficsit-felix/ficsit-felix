@@ -1,9 +1,9 @@
 <template>
   <div class="download">
     <div class="centered">
-      <Logo height=180 black="#000" />
+      <Logo height=180 black="#000" :animate="logoAnimating" />
       <h1>Download save file</h1>
-      <DownloadBox />
+      <DownloadBox @startAnimating="logoAnimating=true" @stopAnimating="logoAnimating=false"/>
     </div>
   </div>
 </template>
@@ -32,6 +32,11 @@ export default {
   name: "Download",
   components: {
     Logo, DownloadBox
+  },
+  data: function() {
+    return {
+      logoAnimating: true
+    };
   }
 }
 </script>

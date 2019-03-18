@@ -104,6 +104,19 @@ export default {
       errorText: ""
     };
   },
+  watch: {
+    isSaving: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          this.$emit ("startAnimating");
+        } else {
+          this.$emit ("stopAnimating");
+        }
+        
+      }
+    }
+  },
   computed: {
     ...mapState(["dataLoaded", "filename"]),
   },
@@ -141,7 +154,7 @@ export default {
             if (percentage == 100) {
               this.infoText = "processing file...";
             }
-            this.progress = percentage / 3;
+            this.progress = percentage / 2;
           } else {
             this.progress += 1;
           }
@@ -151,7 +164,7 @@ export default {
           if (e.lengthComputable) {
             const percentage = Math.round((e.loaded * 100) / e.total);
             //console.log(percentage);
-            this.progress = percentage / 3 + 33;
+            this.progress = percentage / 2 + 50;
           } else {
             this.progress += 1;
           }
@@ -168,15 +181,15 @@ export default {
           if (response.data.type === "error") {
             // TODO sentry
             this.handleError(response.data.text);
-          } else {
+          } else { 
             this.isSaving = false;
             console.log(typeof response.data);
-            console.log(Buffer.from(response.data).toString('hex'));
-            // start download
+            console.log(Buffer.from(response.data, 'binary').toString('hex').substring(0,20));
+            // start download 
             // saveAs(response.data, this.filename);
             var element = document.createElement('a');
 
-            var blob = new Blob([response.data], {type:'application/octet-stream'});
+            var blob = new Blob([Buffer.from(response.data, 'binary')], {type:'application/octet-stream'});
             element.href= window.URL.createObjectURL(blob);
             element.download = this.filename;
             //element.href = URL.createObjectURL(response.data);

@@ -10,6 +10,7 @@
   "dependencies": {
     "@sentry/browser": "^4.6.4",
     "axios": "^0.18.0",
+    "gsap": "^2.1.2",
     "three": "^0.102.1",
     "vue": "^2.6.6",
     "vue-material": "^1.0.0-beta-10.2",

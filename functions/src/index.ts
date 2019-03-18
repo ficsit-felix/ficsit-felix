@@ -125,8 +125,8 @@ interface Actor {
         rotation: number[];
         translation: number[];
         scale3d: number[];
-        wasPlacedInLevel: number
     }
+    wasPlacedInLevel: number;
     entity?: Entity
 }
 
@@ -339,9 +339,9 @@ class Sav2Json {
                     buffer.readFloat(),
                     buffer.readFloat(),
                     buffer.readFloat()
-                ],
-                wasPlacedInLevel: buffer.readInt()
-            }
+                ]
+            },
+            wasPlacedInLevel: buffer.readInt()
         };
     }
 
@@ -589,6 +589,15 @@ class Sav2Json {
                         const props: Property[] = []
                         while (this.readProperty(buffer, props)) {
                         }
+                        properties.push({
+                            name: name,
+                            type: prop,
+                            structUnknown: unknown,
+                            value: {
+                                type: type,
+                                properties: props
+                            }
+                        });
                         break;
                     }
                     case 'InventoryItem': {
@@ -677,7 +686,7 @@ class Sav2Json {
                             structType: structType,
                             structInnerType: type,
                             value: {
-                                type: type,
+                                type: itemType,
                                 values: values
                             }
                         });
@@ -758,33 +767,29 @@ class Sav2Json {
 
 // TODO find a way to optimize this more!
 interface OutputBufferBuffer {
-    bytes: number[];
+    bytes: string;
     length: number;
 }
 class OutputBuffer {
-    bytes: number[] = [];
+    bytes: string ="";
     buffers: OutputBufferBuffer[] = [];
 
     constructor() {
     }
 
-    write(bytes: number[], count = true) {
+    write(bytes: string, count = true) {
         if (this.buffers.length == 0) {
-            for (var i = 0; i < bytes.length; i++) {
-                this.bytes.push(bytes[i]);
-            }
-
+            this.bytes += bytes;
         } else {
-            for (var i = 0; i < bytes.length; i++) {
-                this.buffers[this.buffers.length - 1].bytes.push(bytes[i]);
+            this.buffers[this.buffers.length - 1].bytes += bytes;
+            if (count) {
+                this.buffers[this.buffers.length - 1].length += bytes.length;
             }
-
-            this.buffers[this.buffers.length - 1].length += bytes.length;
         }
     }
 
     addBuffer() {
-        this.buffers.push({ bytes: [], length: 0 });
+        this.buffers.push({ bytes: "", length: 0 });
     }
 
     endBufferAndWriteSize() {
@@ -798,7 +803,7 @@ class OutputBuffer {
     writeInt(value: number, count = true) {
         let buffer = Buffer.alloc(4);
         buffer.writeInt32LE(value, 0);
-        this.write([...buffer], count);
+        this.write(buffer.toString('binary'), count);
     }
 
     writeLong(value: string) {
@@ -806,18 +811,18 @@ class OutputBuffer {
     }
 
     writeByte(value: number, count = true) {
-        this.write([value], count);
+        this.write(String.fromCharCode(value), count);
     }
 
     writeFloat(value: number) {
         let buffer = Buffer.alloc(4);
         buffer.writeFloatLE(value, 0);
-        this.write([...buffer]);
+        this.write(buffer.toString('binary'));
     }
 
     writeHex(value: string, count = true) {
         let buffer = Buffer.from(value, 'hex');
-        this.write([...buffer], count);
+        this.write(buffer.toString('binary'), count);
     }
 
     writeLengthPrefixedString(value: string, count = true) {
@@ -825,9 +830,7 @@ class OutputBuffer {
             this.writeInt(0, count);
         } else {
             this.writeInt(value.length + 1, count);
-            for (var i = 0; i < value.length; i++) {
-                this.writeByte(value.charCodeAt(i), count);
-            }
+            this.write(value);
             this.writeByte(0, count);
         }
     }
@@ -855,17 +858,6 @@ class Json2Sav {
             // console.log(json);
             if (saveJson) { }
 
-
-            let buffer = Buffer.alloc(4);
-            buffer.writeInt32LE(66297, 0);
-            this.buffer.write([...buffer]);
-            console.log(buffer.toString("binary"));
-            console.log(Buffer.from([...buffer]));
-            console.log([...Buffer.from([...buffer])]);
-            console.log(this.buffer.bytes);
-            console.log(Buffer.from(this.buffer.bytes));
-            console.log([...Buffer.from(this.buffer.bytes)]);
-            console.log(saveJson.buildVersion);
 
 
             // Header
@@ -901,14 +893,17 @@ class Json2Sav {
                     this.writeEntity(obj.entity, true);
                 } else if (obj.type == 0) {
                     this.writeEntity(obj.entity, false);
+                    if (obj.pathName=="Persistent_Exploration_2:PersistentLevel.BP_DropPod_1145.inventory") {
+                        console.log("wrote");
+                    }
                 }
             }
 
             this.buffer.writeHex(saveJson.missing);
 
-            console.log('..'+Buffer.from(Buffer.from(this.buffer.bytes).toString('binary').substring(0, 20)).toString('hex'));
-            this.response.writeHead(200, {'Content-Type': 'application/octet-stream'});
-            this.response.end(Buffer.from(this.buffer.bytes).toString('utf8'), 'binary');
+            this.response.writeHead(200, {'Content-Type': 'application/octet-stream',
+        'Content-Length': this.buffer.bytes.length});
+            this.response.end(Buffer.from(this.buffer.bytes), 'binary');
 
         } catch (e) {
             console.error(e.stack);
@@ -955,6 +950,7 @@ class Json2Sav {
         for (var i = 0; i < obj.properties.length; i++) {
             this.writeProperty(obj.properties[i]);
         }
+
         this.writeNone();
 
         this.buffer.writeHex(obj.missing);
@@ -1046,7 +1042,7 @@ class Json2Sav {
                         break;
                     case 'Transform':
                         for (var i = 0; i < property.value.properties.length; i++) {
-                            this.writeProperty(property.values.properties[i]);
+                            this.writeProperty(property.value.properties[i]);
                         }
                         this.writeNone();
                         break;
@@ -1055,10 +1051,12 @@ class Json2Sav {
                         this.buffer.writeFloat(property.value.b);
                         this.buffer.writeFloat(property.value.c);
                         this.buffer.writeFloat(property.value.d);
+                        break;
                     case 'RemovedInstanceArray':
                     case 'InventoryStack':
+                        console.log(property);
                         for (var i = 0; i < property.value.properties.length; i++) {
-                            this.writeProperty(property.values.properties[i]);
+                            this.writeProperty(property.value.properties[i]);
                         }
                         this.writeNone();
                         break;

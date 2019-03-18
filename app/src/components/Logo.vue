@@ -99,6 +99,7 @@
         ></path>
         <g
           id="logo-hammer"
+          ref="hammer"
           transform-origin="74% 25%"
           inkscape:transform-center-x="8.1517208"
           inkscape:transform-center-y="-3.8754082"
@@ -141,14 +142,45 @@
       </g>
     </svg>
   </div>
+  
 </template>
 
 
 <script>
+import {TimelineLite} from "gsap";
+
 export default {
   name: "Logo",
   props: [
     "height",
-    "black"]
+    "black",
+    "animating"
+    ],
+    watch: {
+      animating: {
+        imediate: true,
+        handler(val) {
+          if (val) {
+            this.tl.play();
+          }
+        }
+      }
+    },
+    mounted() {
+      const hammer = this.$refs.hammer;
+      console.log(hammer);
+      this.tl = new TimelineLite({
+        onComplete: () => {
+          if (this.animating) {
+            this.tl.restart();
+          }
+        },
+        paused: !this.animating
+      });
+      this.tl.set(hammer, {transformOrigin:"80% 64%"});
+      this.tl.to(hammer, .5, {rotation:50, ease: Power2.easeIn});
+      this.tl.to(hammer, .3, {rotation:-10, ease: Power3.easeIn});
+      this.tl.to(hammer, .4, {rotation:0, ease: Power2.easeOut});
+    }
 };
 </script>

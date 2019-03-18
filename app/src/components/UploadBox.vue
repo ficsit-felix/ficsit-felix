@@ -111,6 +111,19 @@ export default {
       errorText: ""
     };
   },
+    watch: {
+    isSaving: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          this.$emit ("startAnimating");
+        } else {
+          this.$emit ("stopAnimating");
+        }
+        
+      }
+    }
+  },
   mounted() {},
   methods: {
     ...mapActions(["setLoadedData", "setFilename", "setUUID"]),
