@@ -3,8 +3,8 @@
     <!--<button v-on:click="focusSelectedObject">Focus</button> -->
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
-        <AmbientLight />
-        <Camera />
+        <AmbientLight/>
+        <Camera/>
         <!--<a v-for="(obj,index) in visibleObjects"
           :key="index">
           
@@ -48,7 +48,8 @@
         <script src="big.js"></script>
     -->
     <div class="info">
-      {{filename}}<br />
+      {{filename}}
+      <br>
       {{uuid}}
     </div>
   </div>
@@ -69,7 +70,7 @@
   position: absolute;
   bottom: 0px;
   left: 0px;
-  color: rgba(255,255,255, 0.6);
+  color: rgba(255, 255, 255, 0.6);
   padding: 5px;
   text-shadow: 1px 1px 1px #000;
 }
@@ -162,6 +163,12 @@ export default {
       "/Game/FactoryGame/Character/Creature/BP_CreatureSpawner.BP_CreatureSpawner_C": 0xef1d1d,
       "/Game/FactoryGame/Resource/Environment/AnimalParts/BP_CrabEggParts.BP_CrabEggParts_C": 0xbd6e41,
       "/Game/FactoryGame/Resource/Environment/AnimalParts/BP_HogParts.BP_HogParts_C": 0xa93c2c,
+      "/Game/FactoryGame/Character/Creature/Enemy/Hog/Char_Hog.Char_Hog_C":0xd80e2c,
+      "/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C":0xda3950,
+      "/Game/FactoryGame/Character/Creature/Wildlife/NonFlyingBird/Char_NonFlyingBird.Char_NonFlyingBird_C":0xbc0f28,
+      "/Game/FactoryGame/Character/Creature/Wildlife/SpaceGiraffe/Char_SpaceGiraffe.Char_SpaceGiraffe_C": 0xc20f0f,
+
+      
       
       // nature (green)
       "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C": 0x43d854,
@@ -390,7 +397,7 @@ export default {
     },*/
       getMaterial(className) {
     if (this.materials[className] === undefined) {
-      // console.log(className);
+      console.log(className);
       return this.materials["undefined"];
     } else {
       return this.materials[className];

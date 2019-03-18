@@ -303,6 +303,9 @@ class Sav2Json {
                         }
                     }
 
+                    // read missing bytes
+                    saveJson.missing = this.buffer.readHex(this.buffer.buffer.length - this.buffer.cursor);
+
                     this.response.send(JSON.stringify(saveJson));
 
                 } catch (e) {
@@ -830,7 +833,7 @@ class OutputBuffer {
             this.writeInt(0, count);
         } else {
             this.writeInt(value.length + 1, count);
-            this.write(value);
+            this.write(value, count);
             this.writeByte(0, count);
         }
     }
@@ -893,17 +896,15 @@ class Json2Sav {
                     this.writeEntity(obj.entity, true);
                 } else if (obj.type == 0) {
                     this.writeEntity(obj.entity, false);
-                    if (obj.pathName=="Persistent_Exploration_2:PersistentLevel.BP_DropPod_1145.inventory") {
-                        console.log("wrote");
-                    }
                 }
             }
 
             this.buffer.writeHex(saveJson.missing);
-
+            const response = Buffer.from(this.buffer.bytes);
+            
             this.response.writeHead(200, {'Content-Type': 'application/octet-stream',
-        'Content-Length': this.buffer.bytes.length});
-            this.response.end(Buffer.from(this.buffer.bytes), 'binary');
+        'Content-Length': response.byteLength});
+            this.response.end(response, 'binary');
 
         } catch (e) {
             console.error(e.stack);
@@ -1054,7 +1055,6 @@ class Json2Sav {
                         break;
                     case 'RemovedInstanceArray':
                     case 'InventoryStack':
-                        console.log(property);
                         for (var i = 0; i < property.value.properties.length; i++) {
                             this.writeProperty(property.value.properties[i]);
                         }
@@ -1107,23 +1107,26 @@ class Json2Sav {
                         }
                         this.buffer.endBufferAndWriteSize();
                         break;
-                    case 'MapProperty':
-                        this.buffer.writeLengthPrefixedString(property.value.name, false);
-                        this.buffer.writeLengthPrefixedString(property.value.type, false);
-                        this.buffer.writeByte(0, false);
-                        this.buffer.writeInt(0);  // for some reason this counts towards the length
-
-                        this.buffer.writeInt(property.value.values.length);
-                        property.value.values.forEach((value: any, key: any) => {
-                            this.buffer.writeInt(key);
-                            for (var i = 0; i < value.length; i++) {
-                                this.writeProperty(value[i]);
-                            }
-                            this.writeNone()
-                        });
-
-                        break;
                 }
+                break;
+            case 'MapProperty':
+                this.buffer.writeLengthPrefixedString(property.value.name, false);
+                this.buffer.writeLengthPrefixedString(property.value.type, false);
+                this.buffer.writeByte(0, false);
+                this.buffer.writeInt(0);  // for some reason this counts towards the length
+
+                const keys = Object.keys(property.value.values);
+                this.buffer.writeInt(keys.length);
+                for (var i = 0; i < keys.length; i++) {//(let [key, value] of property.value.values) {
+                    const key = keys[i];
+                    const value = property.value.values[key];
+                    this.buffer.writeInt(+key); // parse key to int
+                    for (var j = 0; j < value.length; j++) {
+                        this.writeProperty(value[j]);
+                    }
+                    this.writeNone()
+                }
+
                 break;
         }
         this.buffer.endBufferAndWriteSize();
@@ -1155,7 +1158,10 @@ class Json2Sav {
 
 export const sav2json = functions.https.onRequest((request, response) => {
     cors(options)(request, response, () => {
-
+        if (request.method !== 'POST') {
+            response.send('');
+            return;
+        }
         if ((typeof request.body) !== 'object') {
             // console.log(request);
             let error: Error = {
@@ -1174,6 +1180,10 @@ export const sav2json = functions.https.onRequest((request, response) => {
 
 export const json2sav = functions.https.onRequest((request, response) => {
     cors(options)(request, response, () => {
+        if (request.method !== 'POST') {
+            response.send('');
+            return;
+        }
         if ((typeof request.body) !== 'object') {
             // console.log(request);
             let error: Error = {

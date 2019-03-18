@@ -23,7 +23,7 @@ export default new Vuex.Store({
       return window.data.objects.map((obj, index) => {
         return {
           id: index,
-          text: obj.pathName.split(".")[1]
+          text: obj.pathName.substring(obj.pathName.indexOf(".")+1) // everything after the first .
         };
       });
     },

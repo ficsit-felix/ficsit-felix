@@ -179,8 +179,8 @@ export default {
       });
       this.tl.set(hammer, {transformOrigin:"80% 64%"});
       this.tl.to(hammer, .5, {rotation:50, ease: Power2.easeIn});
-      this.tl.to(hammer, .3, {rotation:-10, ease: Power3.easeIn});
-      this.tl.to(hammer, .4, {rotation:0, ease: Power2.easeOut});
+      this.tl.to(hammer, .2, {rotation:-10, ease: Power3.easeIn});
+      this.tl.to(hammer, .3, {rotation:0, ease: Power2.easeOut});
     }
 };
 </script>

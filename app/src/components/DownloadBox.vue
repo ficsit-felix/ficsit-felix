@@ -93,6 +93,7 @@
 <script>
 import * as axios from "axios";
 import {mapActions, mapState} from "vuex";
+import { setTimeout } from 'timers';
 export default {
   name: "DownloadBox",
   data: function() {
@@ -177,35 +178,39 @@ export default {
         .post(uri, data, config)
         .then(response => {
           // console.log(response);
-
+          this.progress = 100;
           if (response.data.type === "error") {
             // TODO sentry
             this.handleError(response.data.text);
           } else { 
-            this.isSaving = false;
-            console.log(typeof response.data);
-            console.log(Buffer.from(response.data, 'binary').toString('hex').substring(0,20));
-            // start download 
-            // saveAs(response.data, this.filename);
-            var element = document.createElement('a');
+            this.infoText = "opening downloaded file...";
+            setTimeout(() => {
 
-            var blob = new Blob([Buffer.from(response.data, 'binary')], {type:'application/octet-stream'});
-            element.href= window.URL.createObjectURL(blob);
-            element.download = this.filename;
-            //element.href = URL.createObjectURL(response.data);
-            /*element.setAttribute('href', 'data:application/octet-stream,' + encodeURIComponent(response.data));
-            element.setAttribute('download', this.filename);*/
+            
+              this.isSaving = false;
+              console.log(typeof response.data);
+              console.log(Buffer.from(response.data, 'binary').toString('hex').substring(0,20));
+              // start download 
+              // saveAs(response.data, this.filename);
+              var element = document.createElement('a');
 
-            //element.style.display = 'none';asdf
-            document.body.appendChild(element);
+              var blob = new Blob([Buffer.from(response.data, 'binary')], {type:'application/octet-stream'});
+              element.href= window.URL.createObjectURL(blob);
+              element.download = this.filename;
+              //element.href = URL.createObjectURL(response.data);
+              /*element.setAttribute('href', 'data:application/octet-stream,' + encodeURIComponent(response.data));
+              element.setAttribute('download', this.filename);*/
 
-            element.click();
+              //element.style.display = 'none';asdf
+              document.body.appendChild(element);
 
-            document.body.removeChild(element);
+              element.click();
+
+              document.body.removeChild(element);
 
             // TODO
             // console.log(response.data);
- 
+            }, 100);
           }
         })
         .catch(error => {

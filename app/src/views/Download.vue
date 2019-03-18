@@ -1,7 +1,7 @@
 <template>
   <div class="download">
     <div class="centered">
-      <Logo height=180 black="#000" :animate="logoAnimating" />
+      <Logo height=180 black="#000" :animating="logoAnimating" />
       <h1>Download save file</h1>
       <DownloadBox @startAnimating="logoAnimating=true" @stopAnimating="logoAnimating=false"/>
     </div>

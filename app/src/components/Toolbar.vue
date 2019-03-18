@@ -1,6 +1,10 @@
 <template>
   <div class="toolbar">
-    <Logo :height="48" black="#707070" :animating="false"></Logo>
+    <div
+    @mouseover="logoAnimating=true"
+    @mouseleave="logoAnimating=false">
+    <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
+    </div>
 
     <ul>
       <li @click="showOpenDialog=true">
@@ -97,6 +101,7 @@ export default {
   },
   data: function() {
     return {
+      logoAnimating: false,
       showHelpDialog: false,
       showOpenDialog: false,
       showSaveDialog: false
