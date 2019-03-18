@@ -233,9 +233,9 @@ class Sav2Json {
 
     uploadAndTransform() {
         try {
-            console.info(process.env.PWD);
+            // console.info(process.env.PWD);
             if (process.env.PWD === "/user_code") {
-                console.info("UPLOADING");
+                // console.info("UPLOADING");
 
 
                 const fileName = this.uuid + '.sav';

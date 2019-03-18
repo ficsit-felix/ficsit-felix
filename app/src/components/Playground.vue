@@ -147,8 +147,12 @@ export default {
         if (val != -1) {
           //  && val < this.objects.length
           this.setMaterial(val, this.selectedMaterial);
-
-          this.transformControl.attach(this.getObjWithId(val));
+          var obj = this.getObjWithId(val);
+          if (obj != null) {
+            this.transformControl.attach(obj);
+          } else {
+            this.transformControl.detach();
+          }
         } else {
           this.transformControl.detach();
         }
@@ -165,7 +169,6 @@ export default {
     classes: {
       deep: true,
       handler(val) {
-        console.log("change");
         for (var i = 0; i < val.length; i++) {
           const item = val[i];
           if (item.visible) {
@@ -462,7 +465,7 @@ export default {
 
     getMaterial(className) {
       if (this.materials[className] === undefined) {
-        console.log(className);
+        // console.log(className);
         return this.materials["undefined"];
       } else {
         return this.materials[className];
@@ -483,7 +486,7 @@ export default {
           return;
         }
       }
-      console.error("No object found with id " + id);
+      // console.error("No object found with id " + id);
     },
     getObjWithId(id) {
       for (var i = 0; i < this.objects.length; i++) {
@@ -584,8 +587,6 @@ export default {
       clone.transform.translation[2] = obj.position.z;
 
       this.setSelectedObject(clone);
-
-      console.log("changed", clone.transform.translation);
     }
   },
   beforeDestroy() {

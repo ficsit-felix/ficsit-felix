@@ -3,7 +3,7 @@
     <div class="buttons">
       <md-button
         class="md-raised"
-        :disabled="this.selectedObject == null"
+        :disabled="focusDisabled"
         @click="focusSelectedObject"
         >Focus</md-button
       >
@@ -72,7 +72,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex", "selectedObject"])
+    ...mapState(["selectedIndex", "selectedObject"]),
+    focusDisabled() {
+      return this.selectedObject == null || this.selectedObject.type !== 1;
+    }
     // ...mapGetters(["getSelectedObject"])
     /*selectedJson() {
             if (this.getSelectedObject == null) {

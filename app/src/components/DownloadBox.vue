@@ -149,12 +149,12 @@ export default {
         process.env.NODE_ENV === "production"
           ? "https://us-central1-ficsit-felix.cloudfunctions.net/json2sav"
           : "http://localhost:5000/ficsit-felix/us-central1/json2sav";
-      console.log("start download");
+      // console.log("start download");
 
       var data = JSON.stringify(window.data);
       var config = {
         onUploadProgress: e => {
-          console.log("upload", e);
+          //console.log("upload", e);
           if (e.lengthComputable) {
             const percentage = Math.round((e.loaded * 100) / e.total);
             // console.log(percentage);
@@ -167,7 +167,7 @@ export default {
           }
         },
         onDownloadProgress: e => {
-          console.log("download", e);
+          //console.log("download", e);
           if (e.lengthComputable) {
             const percentage = Math.round((e.loaded * 100) / e.total);
             //console.log(percentage);
@@ -192,12 +192,12 @@ export default {
             this.infoText = "opening downloaded file...";
             setTimeout(() => {
               this.isSaving = false;
-              console.log(typeof response.data);
-              console.log(
+              //console.log(typeof response.data);
+              /*console.log(
                 Buffer.from(response.data, "binary")
                   .toString("hex")
                   .substring(0, 20)
-              );
+              );*/
               // start download
               // saveAs(response.data, this.filename);
               var element = document.createElement("a");

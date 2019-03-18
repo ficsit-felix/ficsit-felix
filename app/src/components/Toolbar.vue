@@ -41,6 +41,9 @@
         Scroll wheel: zoom<br />
         Left mouse: select objects
       </p>
+      <p>
+        If you change the JSON you need to save it before clicking <br />anywhere in the scene, else it will be overwritten!
+      </p>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showHelpDialog = false"
           >Close</md-button
@@ -74,7 +77,7 @@
     padding: 10px 10px;
     padding-right: 20px;
     font-size: 16px;
-    line-height: 32px;
+    line-height: 33px;
     i {
       padding-right: 12px;
     }
