@@ -100,7 +100,7 @@
 <script>
 import * as axios from "axios";
 import { mapActions } from "vuex";
-
+import * as Sentry from "@sentry/browser";
 export default {
   data: function() {
     return {
@@ -137,6 +137,9 @@ export default {
       this.infoText = "reading file...";
       console.log("Uploading...", file);
       this.setFilename(file.name);
+      Sentry.configureScope((scope) => {
+        scope.setTag("filename", file.name);
+      });
 
       const uri =
         process.env.NODE_ENV === "production"
@@ -179,11 +182,15 @@ export default {
           console.log(response);
 
           if (response.data.type === "error") {
-            // TODO sentry
+            Sentry.captureMessage(response.data.text);
             this.handleError(response.data.text);
           } else {
+            Sentry.configureScope((scope) => {
+              scope.setTag("filename", file.name);
+              scope.setTag("uuid", response.data.uuid);
+            });
             this.setUUID(response.data.uuid);
-            console.log(response.data.uuid);
+            // console.log(response.data.uuid);
             this.infoText = "building world...";
             // give us some time to build the 3d world while animating the progress bar
             this.setLoadedData(response.data).then(() => {
@@ -202,7 +209,7 @@ export default {
           }
         })
         .catch(error => {
-          // TODO sentry
+          Sentry.captureException(error);
           this.handleError(error.message);
           console.error(error);
         });

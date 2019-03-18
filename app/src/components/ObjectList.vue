@@ -64,6 +64,7 @@
 .item {
   height: 20px;
   padding: 0px 8px;
+  cursor: pointer;
 }
 
 .object-list {
@@ -72,7 +73,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden; 
+  user-select: none; 
 
   .filter-field {
     margin-top: -10px;

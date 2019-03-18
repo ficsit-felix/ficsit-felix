@@ -98,6 +98,7 @@
 import * as axios from "axios";
 import { mapActions, mapState } from "vuex";
 import { setTimeout } from "timers";
+import * as Sentry from "@sentry/browser";
 export default {
   name: "DownloadBox",
   data: function() {
@@ -185,7 +186,7 @@ export default {
           // console.log(response);
           this.progress = 100;
           if (response.data.type === "error") {
-            // TODO sentry
+            Sentry.captureMessage(response.data.text);
             this.handleError(response.data.text);
           } else {
             this.infoText = "opening downloaded file...";
@@ -223,7 +224,7 @@ export default {
           }
         })
         .catch(error => {
-          // TODO sentry
+          Sentry.captureException(error);
           this.handleError(error.message);
           console.error(error);
         });

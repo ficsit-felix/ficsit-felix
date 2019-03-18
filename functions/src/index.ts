@@ -230,93 +230,106 @@ class Sav2Json {
         this.uuid = v4();
     }
 
-    transform() {
+
+    uploadAndTransform() {
         try {
-            const fileName = this.uuid + '.sav';
-            const tempFile = path.join(os.tmpdir(), fileName);
+            if (process.env.PWD === "/user_code") {
+                console.info("UPLOADING");
 
-            fs.writeFile(tempFile, this.request.body, (err) => {
-                if (err) {
-                    this.error(err.message);
-                    return;
-                }
-                try {
-                    // upload to cloud storage
-                    const bucket = new gcs.Storage().bucket('ficsit-felix.appspot.com')
-                    bucket.upload(tempFile, {
-                        destination: 'saves/' + fileName,
-                        resumable: false
-                    });
 
-                    let data = this.request.body as Buffer;
-                    var buffer = new DataBuffer(data);
-                    this.buffer = buffer;
+                const fileName = this.uuid + '.sav';
+                const tempFile = path.join(os.tmpdir(), fileName);
 
-                    var saveJson: SaveGame = {
-                        uuid: this.uuid,
-                        saveHeaderType: buffer.readInt(),
-                        saveVersion: buffer.readInt(),
-                        buildVersion: buffer.readInt(),
-                        mapName: buffer.readLengthPrefixedString(),
-                        mapOptions: buffer.readLengthPrefixedString(),
-                        sessionName: buffer.readLengthPrefixedString(),
-                        playDurationSeconds: buffer.readInt(),
-                        saveDateTime: buffer.readLong(),
-                        sessionVisibility: buffer.readByte(),
-                        objects: [],
-                        missing: ''
-                    };
-
-                    const entryCount = buffer.readInt();
-
-                    for (var i = 0; i < entryCount; i++) {
-                        if (this.hadError) {
-                            return;
-                        }
-                        const type = buffer.readInt()
-                        if (type == 1) {
-                            saveJson['objects'].push(this.readActor(buffer));
-                        } else if (type == 0) {
-                            saveJson['objects'].push(this.readObject(buffer));
-                        } else {
-                            this.error('Unknown type ' + type);
-                            return;
-                        }
-                    }
-
-                    const elementCount = buffer.readInt();
-
-                    // # So far these counts have always been the same and the entities seem to belong 1 to 1 to the actors/objects read above
-                    if (elementCount != entryCount) {
-                        this.error('elementCount (' + elementCount + ') != entryCount(' + entryCount + ')');
+                fs.writeFile(tempFile, this.request.body, (err) => {
+                    if (err) {
+                        this.error(err.message);
                         return;
                     }
+                    try {
+                        // upload to cloud storage
+                        const bucket = new gcs.Storage().bucket('ficsit-felix.appspot.com')
+                        bucket.upload(tempFile, {
+                            destination: 'saves/' + fileName,
+                            resumable: false
+                        });
 
-                    for (var i = 0; i < elementCount; i++) {
-                        if (this.hadError) {
-                            return;
-                        }
-                        if (saveJson.objects[i].type == 1) {
-                            saveJson.objects[i].entity = this.readEntity(buffer, true);
-                        } else { // type == 0
-                            saveJson.objects[i].entity = this.readEntity(buffer, false);
-                        }
+                        this.transform();
+                    } catch (e) {
+                        console.error(e.stack);
+                        this.error(e.message);
                     }
+                });
+            } else {
+                this.transform();
+            }
 
-                    // read missing bytes
-                    saveJson.missing = this.buffer.readHex(this.buffer.buffer.length - this.buffer.cursor);
-
-                    this.response.send(JSON.stringify(saveJson));
-
-                } catch (e) {
-                    console.error(e.stack);
-                    this.error(e.message);
-                }
-            });
         } catch (e) {
             console.error(e.stack);
             this.error(e.message);
         }
+    }
+
+    transform() {
+        let data = this.request.body as Buffer;
+        var buffer = new DataBuffer(data);
+        this.buffer = buffer;
+
+        var saveJson: SaveGame = {
+            uuid: this.uuid,
+            saveHeaderType: buffer.readInt(),
+            saveVersion: buffer.readInt(),
+            buildVersion: buffer.readInt(),
+            mapName: buffer.readLengthPrefixedString(),
+            mapOptions: buffer.readLengthPrefixedString(),
+            sessionName: buffer.readLengthPrefixedString(),
+            playDurationSeconds: buffer.readInt(),
+            saveDateTime: buffer.readLong(),
+            sessionVisibility: buffer.readByte(),
+            objects: [],
+            missing: ''
+        };
+
+        const entryCount = buffer.readInt();
+
+        for (var i = 0; i < entryCount; i++) {
+            if (this.hadError) {
+                return;
+            }
+            const type = buffer.readInt()
+            if (type == 1) {
+                saveJson['objects'].push(this.readActor(buffer));
+            } else if (type == 0) {
+                saveJson['objects'].push(this.readObject(buffer));
+            } else {
+                this.error('Unknown type ' + type);
+                return;
+            }
+        }
+
+        const elementCount = buffer.readInt();
+
+        // # So far these counts have always been the same and the entities seem to belong 1 to 1 to the actors/objects read above
+        if (elementCount != entryCount) {
+            this.error('elementCount (' + elementCount + ') != entryCount(' + entryCount + ')');
+            return;
+        }
+
+        for (var i = 0; i < elementCount; i++) {
+            if (this.hadError) {
+                return;
+            }
+            if (saveJson.objects[i].type == 1) {
+                saveJson.objects[i].entity = this.readEntity(buffer, true);
+            } else { // type == 0
+                saveJson.objects[i].entity = this.readEntity(buffer, false);
+            }
+        }
+
+        // read missing bytes
+        saveJson.missing = this.buffer.readHex(this.buffer.buffer.length - this.buffer.cursor);
+
+        this.response.send(JSON.stringify(saveJson));
+
     }
 
     readActor(buffer: DataBuffer): Actor {
@@ -774,7 +787,7 @@ interface OutputBufferBuffer {
     length: number;
 }
 class OutputBuffer {
-    bytes: string ="";
+    bytes: string = "";
     buffers: OutputBufferBuffer[] = [];
 
     constructor() {
@@ -901,9 +914,11 @@ class Json2Sav {
 
             this.buffer.writeHex(saveJson.missing);
             const response = Buffer.from(this.buffer.bytes);
-            
-            this.response.writeHead(200, {'Content-Type': 'application/octet-stream',
-        'Content-Length': response.byteLength});
+
+            this.response.writeHead(200, {
+                'Content-Type': 'application/octet-stream',
+                'Content-Length': response.byteLength
+            });
             this.response.end(response, 'binary');
 
         } catch (e) {
@@ -1173,7 +1188,7 @@ export const sav2json = functions.https.onRequest((request, response) => {
             return;
         }
 
-        new Sav2Json(request, response).transform();
+        new Sav2Json(request, response).uploadAndTransform();
 
     });
 });

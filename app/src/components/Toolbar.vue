@@ -60,7 +60,7 @@
   flex-shrink: 0;
   padding-left: 30px;
   padding-right: 30px;
-
+  user-select: none;
   .spacer {
     flex-grow: 1;
   }
@@ -77,10 +77,15 @@
     i {
       padding-right: 12px;
     }
+    color: #e3d3d3;
+    transition: color .4s cubic-bezier(.4,0,.2,1);
   }
   li:hover {
     color: $primaryOrange;
     cursor: pointer;
+    .md-icon.md-theme-default.md-icon-font {
+      color: $primaryOrange;
+    }
   }
 }
 

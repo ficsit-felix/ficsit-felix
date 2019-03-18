@@ -19,7 +19,7 @@
   background: $middleGray;
   height: 100%;
   overflow: scroll;
-
+    user-select: none;
   .md-checkbox {
     margin: 3px 8px;
     white-space: nowrap;

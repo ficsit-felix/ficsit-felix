@@ -185,7 +185,7 @@ export default {
     this.unselectedMaterial = new THREE.MeshLambertMaterial({
       color: 0xcccccc
     });
-    this.selectedMaterial = new THREE.MeshLambertMaterial({ color: 0xdc904f });
+    this.selectedMaterial = new THREE.MeshLambertMaterial({ color: 0xdc904f, emissive: 0xdc904f });
 
     // create materials
     const colors = {
