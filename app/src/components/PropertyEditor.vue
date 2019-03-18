@@ -90,7 +90,6 @@ export default {
       immediate: true,
       deep: true,
       handler(val) {
-        console.log("SELECTED CHANGED", val);
         if (this.selectedObject == null) {
           this.selectedJson = "";
         } else {

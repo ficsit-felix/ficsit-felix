@@ -147,7 +147,7 @@ export default {
         if (val != -1) {
           //  && val < this.objects.length
           this.setMaterial(val, this.selectedMaterial);
-          var obj = this.getObjWithId(val);
+          var obj = this.getVisibleObjWithId(val);
           if (obj != null) {
             this.transformControl.attach(obj);
           } else {
@@ -197,6 +197,14 @@ export default {
               }
             }
           }
+        }
+
+        // fix transform helper
+        var obj = this.getVisibleObjWithId(this.selectedIndex);
+        if (obj == null) {
+          this.transformControl.detach();
+        } else {
+          this.transformControl.attach(obj);
         }
       }
     }
@@ -503,6 +511,15 @@ export default {
       }
       return null;
     },
+    getVisibleObjWithId(id) {
+      for (var i = 0; i < this.objects.length; i++) {
+        const obj = this.objects[i];
+        if (obj.userData.id === id) {
+          return obj;
+        }
+      }
+      return null;
+    },
     addCubes: function() {
       var colorMap = {};
 
@@ -590,6 +607,7 @@ export default {
     }
   },
   beforeDestroy() {
+    this.transformControl.detach();
     this.transformControl.dispose();
     window.removeEventListener("resize", this.handleResize);
     for (var i = 0; i < this.objects.length; i++) {

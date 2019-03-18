@@ -164,7 +164,6 @@ export default new Vuex.Store({
       context.commit("SET_UUID", uuid);
     },
     setVisibility(context, payload) {
-      console.log("action", payload);
       context.commit("SET_VISIBILITY", payload);
     },
     setSelectedObject(context, payload) {

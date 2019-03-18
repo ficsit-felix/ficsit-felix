@@ -42,7 +42,8 @@
         Left mouse: select objects
       </p>
       <p>
-        If you change the JSON you need to save it before clicking <br />anywhere in the scene, else it will be overwritten!
+        If you change the JSON you need to save it before clicking
+        <br />anywhere in the scene, else it will be overwritten!
       </p>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showHelpDialog = false"
