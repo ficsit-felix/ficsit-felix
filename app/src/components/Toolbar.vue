@@ -6,7 +6,7 @@
       <li @click="showOpenDialog=true">
         <md-icon>folder_open</md-icon>Open
       </li>
-      <li @click="save">
+      <li @click="showSaveDialog=true">
         <md-icon>save</md-icon>Save
       </li>
       <li @click="showHelpDialog=true">
@@ -22,6 +22,15 @@
       md-cancel-text="No"
       @md-cancel="showOpenDialog=false"
       @md-confirm="open" />
+
+    <md-dialog-confirm
+      :md-active.sync="showSaveDialog"
+      md-title="Save save file"
+      md-content="Do you want to download this save as a .sav file?"
+      md-confirm-text="Yes"
+      md-cancel-text="No"
+      @md-cancel="showSaveDialog=false"
+      @md-confirm="save" />
 
     <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>Help</md-dialog-title>
@@ -89,7 +98,8 @@ export default {
   data: function() {
     return {
       showHelpDialog: false,
-      showOpenDialog: false
+      showOpenDialog: false,
+      showSaveDialog: false
     };
   },
   methods: {
@@ -97,7 +107,7 @@ export default {
       this.$router.push("upload");
     },
     save() {
-
+      this.$router.push("download");
     }
   }
 };

@@ -390,7 +390,7 @@ export default {
     },*/
       getMaterial(className) {
     if (this.materials[className] === undefined) {
-      console.log(className);
+      // console.log(className);
       return this.materials["undefined"];
     } else {
       return this.materials[className];
@@ -459,7 +459,7 @@ export default {
     handleResize() {
       // console.log("resize", this.$refs.renderer);
       var elem = document.getElementById("scene");
-      if (elem === undefined) {
+      if (elem === undefined || elem === null) {
         return;
       }
       var width = elem.offsetWidth;
@@ -470,6 +470,9 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.handleResize);
+    for (var i = 0; i < this.objects.length; i++) {
+      this.$refs.scene.scene.remove(this.objects[i]);
+    }
   }
 };
 </script>

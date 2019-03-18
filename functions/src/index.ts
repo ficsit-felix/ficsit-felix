@@ -35,12 +35,13 @@ class DataBuffer {
         return result;
     }
 
-    readLong(): number {
-        let result = this.buffer.readInt32LE(this.cursor);
+    readLong(): string {
+        /*let result = this.buffer.readInt32LE(this.cursor);
         // TODO figure out how to actually deal with longs in JS!
         this.cursor += 8;
         this.bytesRead += 8;
-        return result;
+        return result;*/
+        return this.readHex(8);
     }
 
     readByte(): number {
@@ -70,11 +71,11 @@ class DataBuffer {
             return '';
         }
         if (this.cursor + length > this.buffer.length) {
-            // throw new Error("TOO LONG: " +length + " | " + this.readHex(32) + ": " + this.cursor + " / " + this.buffer.length );
+            // throw new Error('TOO LONG: ' +length + ' | ' + this.readHex(32) + ': ' + this.cursor + ' / ' + this.buffer.length );
             // console.error(this.readHex(this.buffer.length - this.cursor -1));
-            // return "";
-            console.trace("buffer < " + length);
-            throw new Error("cannot read string of length: " + length);
+            // return '';
+            console.trace('buffer < ' + length);
+            throw new Error('cannot read string of length: ' + length);
         }
         let result = this.buffer.slice(this.cursor, this.cursor + length - 1).toString('utf8');
         this.cursor += length - 1;
@@ -85,7 +86,7 @@ class DataBuffer {
     }
     assertNullByte() {
         if (this.buffer.readInt8(this.cursor) != 0) {
-            throw new Error("string does not end with 0 byte");
+            throw new Error('string does not end with 0 byte');
             // TODO return error
         }
         this.cursor += 1;
@@ -108,7 +109,7 @@ interface SaveGame {
     mapOptions: string;
     sessionName: string;
     playDurationSeconds: number;
-    saveDateTime: number;
+    saveDateTime: string;
     sessionVisibility: number;
     objects: ActorOrObject[];
     missing: string
@@ -305,10 +306,12 @@ class Sav2Json {
                     this.response.send(JSON.stringify(saveJson));
 
                 } catch (e) {
+                    console.error(e.stack);
                     this.error(e.message);
                 }
             });
         } catch (e) {
+            console.error(e.stack);
             this.error(e.message);
         }
     }
@@ -436,13 +439,6 @@ class Sav2Json {
                 });
                 break;
             case 'StrProperty':
-                buffer.assertNullByte();
-                properties.push({
-                    name: name,
-                    type: prop,
-                    value: buffer.readLengthPrefixedString()
-                });
-                break;
             case 'NameProperty':
                 buffer.assertNullByte();
                 properties.push({
@@ -463,19 +459,23 @@ class Sav2Json {
             case 'ByteProperty':
                 const unk1 = buffer.readLengthPrefixedString();
                 buffer.assertNullByte();
-                if (unk1 === "None") {
+                if (unk1 === 'None') {
                     properties.push({
                         name: name,
                         type: prop,
-                        unk1: unk1,
-                        unk2: buffer.readByte()
+                        value: {
+                            unk1: unk1,
+                            unk2: buffer.readByte()
+                        }
                     });
                 } else {
                     properties.push({
                         name: name,
                         type: prop,
-                        unk1: unk1,
-                        unk2: buffer.readLengthPrefixedString()
+                        value: {
+                            unk1: unk1,
+                            unk2: buffer.readLengthPrefixedString()
+                        }
                     });
                 }
                 break;
@@ -485,8 +485,10 @@ class Sav2Json {
                 properties.push({
                     name: name,
                     type: prop,
-                    enum: enumName,
-                    value: buffer.readLengthPrefixedString()
+                    value: {
+                        enum: enumName,
+                        value: buffer.readLengthPrefixedString()
+                    }
                 });
                 break;
             case 'ObjectProperty':
@@ -494,8 +496,10 @@ class Sav2Json {
                 properties.push({
                     name: name,
                     type: prop,
-                    levelName: buffer.readLengthPrefixedString(),
-                    pathName: buffer.readLengthPrefixedString()
+                    value: {
+                        levelName: buffer.readLengthPrefixedString(),
+                        pathName: buffer.readLengthPrefixedString()
+                    }
                 });
                 break;
             case 'StructProperty':
@@ -751,6 +755,406 @@ class Sav2Json {
     }
 }
 
+
+// TODO find a way to optimize this more!
+interface OutputBufferBuffer {
+    bytes: number[];
+    length: number;
+}
+class OutputBuffer {
+    bytes: number[] = [];
+    buffers: OutputBufferBuffer[] = [];
+
+    constructor() {
+    }
+
+    write(bytes: number[], count = true) {
+        if (this.buffers.length == 0) {
+            for (var i = 0; i < bytes.length; i++) {
+                this.bytes.push(bytes[i]);
+            }
+
+        } else {
+            for (var i = 0; i < bytes.length; i++) {
+                this.buffers[this.buffers.length - 1].bytes.push(bytes[i]);
+            }
+
+            this.buffers[this.buffers.length - 1].length += bytes.length;
+        }
+    }
+
+    addBuffer() {
+        this.buffers.push({ bytes: [], length: 0 });
+    }
+
+    endBufferAndWriteSize() {
+        let buffer = this.buffers[this.buffers.length - 1];
+        this.buffers.pop(); // remove last element
+        this.writeInt(buffer.length);
+        this.write(buffer.bytes); // TODO check if correct
+        return buffer.length;
+    }
+
+    writeInt(value: number, count = true) {
+        let buffer = Buffer.alloc(4);
+        buffer.writeInt32LE(value, 0);
+        this.write([...buffer], count);
+    }
+
+    writeLong(value: string) {
+        this.writeHex(value);
+    }
+
+    writeByte(value: number, count = true) {
+        this.write([value], count);
+    }
+
+    writeFloat(value: number) {
+        let buffer = Buffer.alloc(4);
+        buffer.writeFloatLE(value, 0);
+        this.write([...buffer]);
+    }
+
+    writeHex(value: string, count = true) {
+        let buffer = Buffer.from(value, 'hex');
+        this.write([...buffer], count);
+    }
+
+    writeLengthPrefixedString(value: string, count = true) {
+        if (value.length == 0) {
+            this.writeInt(0, count);
+        } else {
+            this.writeInt(value.length + 1, count);
+            for (var i = 0; i < value.length; i++) {
+                this.writeByte(value.charCodeAt(i), count);
+            }
+            this.writeByte(0, count);
+        }
+    }
+
+}
+
+class Json2Sav {
+    request: functions.Request;
+    response: functions.Response;
+    uuid?: string;
+    hadError = false;
+    buffer: OutputBuffer;
+
+    constructor(request: functions.Request, response: functions.Response) {
+        this.request = request;
+        this.response = response;
+        this.buffer = new OutputBuffer();
+    }
+
+    transform() {
+        try {
+            let data = this.request.body as Buffer;
+            let text = data.toString('utf8');
+            let saveJson = JSON.parse(text);
+            // console.log(json);
+            if (saveJson) { }
+
+
+            let buffer = Buffer.alloc(4);
+            buffer.writeInt32LE(66297, 0);
+            this.buffer.write([...buffer]);
+            console.log(buffer.toString("binary"));
+            console.log(Buffer.from([...buffer]));
+            console.log([...Buffer.from([...buffer])]);
+            console.log(this.buffer.bytes);
+            console.log(Buffer.from(this.buffer.bytes));
+            console.log([...Buffer.from(this.buffer.bytes)]);
+            console.log(saveJson.buildVersion);
+
+
+            // Header
+            this.buffer.writeInt(saveJson.saveHeaderType);
+            this.buffer.writeInt(saveJson.saveVersion);
+            this.buffer.writeInt(saveJson.buildVersion);
+            this.buffer.writeLengthPrefixedString(saveJson.mapName);
+            this.buffer.writeLengthPrefixedString(saveJson.mapOptions);
+            this.buffer.writeLengthPrefixedString(saveJson.sessionName);
+            this.buffer.writeInt(saveJson.playDurationSeconds);
+            this.buffer.writeLong(saveJson.saveDateTime);
+            this.buffer.writeByte(saveJson.sessionVisibility);
+
+            this.buffer.writeInt(saveJson.objects.length);
+
+            for (var i = 0; i < saveJson.objects.length; i++) {
+                const obj = saveJson.objects[i];
+                this.buffer.writeInt(obj.type);
+                if (obj.type == 1) {
+                    this.writeActor(obj);
+                } else if (obj.type == 0) {
+                    this.writeObject(obj);
+                } else {
+                    this.error('uknown type ' + obj.type);
+                }
+            }
+
+            this.buffer.writeInt(saveJson.objects.length);
+            for (var i = 0; i < saveJson.objects.length; i++) {
+                const obj = saveJson.objects[i];
+                // console.log('Entity' + i);
+                if (obj.type == 1) {
+                    this.writeEntity(obj.entity, true);
+                } else if (obj.type == 0) {
+                    this.writeEntity(obj.entity, false);
+                }
+            }
+
+            this.buffer.writeHex(saveJson.missing);
+
+            console.log('..'+Buffer.from(Buffer.from(this.buffer.bytes).toString('binary').substring(0, 20)).toString('hex'));
+            this.response.writeHead(200, {'Content-Type': 'application/octet-stream'});
+            this.response.end(Buffer.from(this.buffer.bytes).toString('utf8'), 'binary');
+
+        } catch (e) {
+            console.error(e.stack);
+            this.error(e.message);
+        }
+    }
+
+    writeActor(obj: any) {
+        this.buffer.writeLengthPrefixedString(obj.className);
+        this.buffer.writeLengthPrefixedString(obj.levelName);
+        this.buffer.writeLengthPrefixedString(obj.pathName);
+        this.buffer.writeInt(obj.needTransform);
+        this.buffer.writeFloat(obj.transform.rotation[0]);
+        this.buffer.writeFloat(obj.transform.rotation[1]);
+        this.buffer.writeFloat(obj.transform.rotation[2]);
+        this.buffer.writeFloat(obj.transform.rotation[3]);
+        this.buffer.writeFloat(obj.transform.translation[0]);
+        this.buffer.writeFloat(obj.transform.translation[1]);
+        this.buffer.writeFloat(obj.transform.translation[2]);
+        this.buffer.writeFloat(obj.transform.scale3d[0]);
+        this.buffer.writeFloat(obj.transform.scale3d[1]);
+        this.buffer.writeFloat(obj.transform.scale3d[2]);
+        this.buffer.writeInt(obj.wasPlacedInLevel);
+    }
+
+    writeObject(obj: any) {
+        this.buffer.writeLengthPrefixedString(obj.className);
+        this.buffer.writeLengthPrefixedString(obj.levelName);
+        this.buffer.writeLengthPrefixedString(obj.pathName);
+        this.buffer.writeLengthPrefixedString(obj.outerPathName);
+    }
+
+    writeEntity(obj: any, withNames: boolean) {
+        this.buffer.addBuffer(); // size will be written at this place later
+        if (withNames) {
+            this.buffer.writeLengthPrefixedString(obj.levelName);
+            this.buffer.writeLengthPrefixedString(obj.pathName);
+            this.buffer.writeInt(obj.children.length);
+            for (var i = 0; i < obj.children.length; i++) {
+                this.buffer.writeLengthPrefixedString(obj.children[i].levelName);
+                this.buffer.writeLengthPrefixedString(obj.children[i].pathName);
+            }
+        }
+        for (var i = 0; i < obj.properties.length; i++) {
+            this.writeProperty(obj.properties[i]);
+        }
+        this.writeNone();
+
+        this.buffer.writeHex(obj.missing);
+        this.buffer.endBufferAndWriteSize();
+    }
+
+    writeNone() {
+        this.buffer.writeLengthPrefixedString('None');
+    }
+
+    writeProperty(property: any) {
+        this.buffer.writeLengthPrefixedString(property.name);
+        const type = property.type;
+        this.buffer.writeLengthPrefixedString(property.type);
+        this.buffer.addBuffer();
+        this.buffer.writeInt(0, false);
+        switch (type) {
+            case 'IntProperty':
+                this.buffer.writeByte(0, false);
+                this.buffer.writeInt(property.value);
+                break;
+            case 'BoolProperty':
+                this.buffer.writeByte(property.value, false);
+                this.buffer.writeByte(0, false);
+                break;
+            case 'FloatProperty':
+                this.buffer.writeByte(0, false);
+                this.buffer.writeFloat(property.value);
+                break;
+            case 'StrProperty':
+            case 'NameProperty':
+                this.buffer.writeByte(0, false);
+                this.buffer.writeLengthPrefixedString(property.value);
+                break;
+            case 'TextProperty':
+                this.buffer.writeByte(0, false);
+                this.buffer.writeHex(property.textUnknown);
+                this.buffer.writeLengthPrefixedString(property.value);
+                break;
+            case 'ByteProperty':
+                this.buffer.writeLengthPrefixedString(property.value.unk1, false);
+                if (property.value.unk1 === 'None') {
+                    this.buffer.writeByte(0, false);
+                    this.buffer.writeByte(property.value.unk2);
+                } else {
+                    this.buffer.writeByte(0, false);
+                    this.buffer.writeLengthPrefixedString(property.value.unk2);
+                }
+                break;
+
+            case 'EnumProperty':
+                this.buffer.writeLengthPrefixedString(property.value.enum, false);
+                this.buffer.writeByte(0, false);
+                this.buffer.writeLengthPrefixedString(property.value.value);
+                break;
+
+            case 'ObjectProperty':
+                this.buffer.writeByte(0, false);
+                this.buffer.writeLengthPrefixedString(property.value.levelName);
+                this.buffer.writeLengthPrefixedString(property.value.pathName);
+                break;
+
+            case 'StructProperty':
+                this.buffer.writeLengthPrefixedString(property.value.type, false);
+                this.buffer.writeHex(property.structUnknown, false);
+
+                const type = property.value.type;
+                switch (type) {
+                    case 'Vector':
+                    case 'Rotator':
+                        this.buffer.writeFloat(property.value.x);
+                        this.buffer.writeFloat(property.value.y);
+                        this.buffer.writeFloat(property.value.z);
+                        break;
+                    case 'Box':
+                        this.buffer.writeFloat(property.value.min[0]);
+                        this.buffer.writeFloat(property.value.min[1]);
+                        this.buffer.writeFloat(property.value.min[2]);
+                        this.buffer.writeFloat(property.value.max[0]);
+                        this.buffer.writeFloat(property.value.max[1]);
+                        this.buffer.writeFloat(property.value.max[2]);
+                        this.buffer.writeByte(property.value.isValid);
+                        break;
+                    case 'LinearColor':
+                        this.buffer.writeFloat(property.value.r);
+                        this.buffer.writeFloat(property.value.g);
+                        this.buffer.writeFloat(property.value.b);
+                        this.buffer.writeFloat(property.value.a);
+                        break;
+                    case 'Transform':
+                        for (var i = 0; i < property.value.properties.length; i++) {
+                            this.writeProperty(property.values.properties[i]);
+                        }
+                        this.writeNone();
+                        break;
+                    case 'Quat':
+                        this.buffer.writeFloat(property.value.a);
+                        this.buffer.writeFloat(property.value.b);
+                        this.buffer.writeFloat(property.value.c);
+                        this.buffer.writeFloat(property.value.d);
+                    case 'RemovedInstanceArray':
+                    case 'InventoryStack':
+                        for (var i = 0; i < property.value.properties.length; i++) {
+                            this.writeProperty(property.values.properties[i]);
+                        }
+                        this.writeNone();
+                        break;
+                    case 'InventoryItem':
+                        this.buffer.writeLengthPrefixedString(property.value.unk1, false);
+                        this.buffer.writeLengthPrefixedString(property.value.itemName);
+                        this.buffer.writeLengthPrefixedString(property.value.levelName);
+                        this.buffer.writeLengthPrefixedString(property.value.pathName);
+                        const oldval = this.buffer.buffers[this.buffer.buffers.length - 1].length;
+                        this.writeProperty(property.value.properties[0]);
+                        // Dirty hack to make in this one case the inner property only take up 4 bytes
+                        this.buffer.buffers[this.buffer.buffers.length - 1].length = oldval + 4
+                        break;
+                }
+                break;
+            case 'ArrayProperty':
+                const itemType = property.value.type;
+                this.buffer.writeLengthPrefixedString(itemType, false);
+                this.buffer.writeByte(0, false);
+                this.buffer.writeInt(property.value.values.length);
+                switch (itemType) {
+                    case 'IntProperty':
+                        for (var i = 0; i < property.value.values.length; i++) {
+                            this.buffer.writeInt(property.value.values[i]);
+                        }
+                        break;
+
+                    case 'ObjectProperty':
+                        for (var i = 0; i < property.value.values.length; i++) {
+                            const obj = property.value.values[i];
+                            this.buffer.writeLengthPrefixedString(obj.levelName);
+                            this.buffer.writeLengthPrefixedString(obj.pathName);
+                        }
+                        break;
+                    case 'StructProperty':
+                        this.buffer.writeLengthPrefixedString(property.structName);
+                        this.buffer.writeLengthPrefixedString(property.structType);
+                        this.buffer.addBuffer();
+                        this.buffer.writeInt(0, false);
+                        this.buffer.writeLengthPrefixedString(property.structInnerType, false);
+                        this.buffer.writeHex(property.structUnknown, false);
+                        for (var i = 0; i < property.value.values.length; i++) {
+                            const obj = property.value.values[i];
+                            for (var j = 0; j < obj.properties.length; j++) {
+                                this.writeProperty(obj.properties[j]);
+                            }
+                            this.writeNone();
+                        }
+                        this.buffer.endBufferAndWriteSize();
+                        break;
+                    case 'MapProperty':
+                        this.buffer.writeLengthPrefixedString(property.value.name, false);
+                        this.buffer.writeLengthPrefixedString(property.value.type, false);
+                        this.buffer.writeByte(0, false);
+                        this.buffer.writeInt(0);  // for some reason this counts towards the length
+
+                        this.buffer.writeInt(property.value.values.length);
+                        property.value.values.forEach((value: any, key: any) => {
+                            this.buffer.writeInt(key);
+                            for (var i = 0; i < value.length; i++) {
+                                this.writeProperty(value[i]);
+                            }
+                            this.writeNone()
+                        });
+
+                        break;
+                }
+                break;
+        }
+        this.buffer.endBufferAndWriteSize();
+
+    }
+
+
+    error(message: string) {
+
+
+        console.trace('error: ' + message);
+        if (this.uuid) {
+            console.error('uuid: ' + this.uuid);
+        }
+        if (!this.hadError) { // we cannot send two error messages
+            this.response.send(JSON.stringify({
+                type: 'error',
+                uuid: this.uuid,
+                text: message
+            }));
+        }
+        this.hadError = true;
+    }
+}
+
+
+
+
+
 export const sav2json = functions.https.onRequest((request, response) => {
     cors(options)(request, response, () => {
 
@@ -766,6 +1170,24 @@ export const sav2json = functions.https.onRequest((request, response) => {
         }
 
         new Sav2Json(request, response).transform();
+
+    });
+});
+
+export const json2sav = functions.https.onRequest((request, response) => {
+    cors(options)(request, response, () => {
+        if ((typeof request.body) !== 'object') {
+            // console.log(request);
+            let error: Error = {
+                type: 'error',
+                text: 'wrong request type: ' + (typeof request.body)
+
+            };
+            response.send(JSON.stringify(error));
+            return;
+        }
+
+        new Json2Sav(request, response).transform();
 
     });
 });
