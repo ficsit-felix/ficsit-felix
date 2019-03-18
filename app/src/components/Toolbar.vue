@@ -1,21 +1,13 @@
 <template>
   <div class="toolbar">
-    <div
-    @mouseover="logoAnimating=true"
-    @mouseleave="logoAnimating=false">
-    <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
+    <div @mouseover="logoAnimating = true" @mouseleave="logoAnimating = false">
+      <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
     </div>
 
     <ul>
-      <li @click="showOpenDialog=true">
-        <md-icon>folder_open</md-icon>Open
-      </li>
-      <li @click="showSaveDialog=true">
-        <md-icon>save</md-icon>Save
-      </li>
-      <li @click="showHelpDialog=true">
-        <md-icon>help</md-icon>Help
-      </li>
+      <li @click="showOpenDialog = true"><md-icon>folder_open</md-icon>Open</li>
+      <li @click="showSaveDialog = true"><md-icon>save</md-icon>Save</li>
+      <li @click="showHelpDialog = true"><md-icon>help</md-icon>Help</li>
     </ul>
 
     <md-dialog-confirm
@@ -24,8 +16,9 @@
       md-content="Do you really want to open a new save file and lose any changes in the current one?"
       md-confirm-text="Yes"
       md-cancel-text="No"
-      @md-cancel="showOpenDialog=false"
-      @md-confirm="open" />
+      @md-cancel="showOpenDialog = false"
+      @md-confirm="open"
+    />
 
     <md-dialog-confirm
       :md-active.sync="showSaveDialog"
@@ -33,21 +26,23 @@
       md-content="Do you want to download this save as a .sav file?"
       md-confirm-text="Yes"
       md-cancel-text="No"
-      @md-cancel="showSaveDialog=false"
-      @md-confirm="save" />
+      @md-cancel="showSaveDialog = false"
+      @md-confirm="save"
+    />
 
     <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>Help</md-dialog-title>
       <b> Controls</b>
       <p>
-        
         Middle mouse pressed: move<br />
         Right mouse: rotate<br />
         Scroll wheel: zoom<br />
         Left mouse: select objects
-        </p>
+      </p>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showHelpDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
     <!--    <md-icon class="md-size-2x">axis_arrow</md-icon>
@@ -89,9 +84,10 @@
   }
 }
 
-  p,b {
-    padding: 0px 16px;
-  }
+p,
+b {
+  padding: 0px 16px;
+}
 </style>
 
 <script>

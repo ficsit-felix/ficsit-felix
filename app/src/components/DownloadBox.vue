@@ -1,28 +1,32 @@
 <template>
   <div>
     <div v-if="!isSaving" class="infobox">
-      <p v-if="errorText==''">
+      <p v-if="errorText == ''">
         File should be downloaded.
       </p>
       <p v-else>
         An error occured.
       </p>
       <br /><br />
-      <md-button class="md-raised" @click="$router.push('/')">Back to editor</md-button>
+      <md-button class="md-raised" @click="$router.push('/')"
+        >Back to editor</md-button
+      >
     </div>
     <div v-else class="infobox">
       <p>Downloading save file...</p>
       <div class="progressbar">
-        <div class="content" v-bind:style="{width: progress+'%'}"></div>
+        <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
-      <p class="secondary">{{infoText}}</p>
+      <p class="secondary">{{ infoText }}</p>
     </div>
 
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>Error</md-dialog-title>
-      <span class="dialog-content">{{errorText}}</span>
+      <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false;">Close</md-button>
+        <md-button class="md-primary" @click="showErrorDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -92,8 +96,8 @@
 
 <script>
 import * as axios from "axios";
-import {mapActions, mapState} from "vuex";
-import { setTimeout } from 'timers';
+import { mapActions, mapState } from "vuex";
+import { setTimeout } from "timers";
 export default {
   name: "DownloadBox",
   data: function() {
@@ -110,20 +114,20 @@ export default {
       immediate: true,
       handler(val) {
         if (val) {
-          this.$emit ("startAnimating");
+          this.$emit("startAnimating");
         } else {
-          this.$emit ("stopAnimating");
+          this.$emit("stopAnimating");
         }
-        
       }
     }
   },
   computed: {
-    ...mapState(["dataLoaded", "filename"]),
+    ...mapState(["dataLoaded", "filename"])
   },
   created() {
-    if (!this.dataLoaded) { // The user needs to upload a file first
-      this.$router.push('upload');
+    if (!this.dataLoaded) {
+      // The user needs to upload a file first
+      this.$router.push("upload");
     }
   },
   mounted() {
@@ -131,24 +135,25 @@ export default {
   },
   methods: {
     handleError(errorMessage) {
-        this.showErrorDialog = true;
-        this.errorText = errorMessage;
-        this.isSaving = false;
-        this.progress = 0;
+      this.showErrorDialog = true;
+      this.errorText = errorMessage;
+      this.isSaving = false;
+      this.progress = 0;
     },
     uploadFile() {
       this.isSaving = true;
       this.infoText = "reading file...";
 
-     const uri = process.env.NODE_ENV === "production" ?
-     "https://us-central1-ficsit-felix.cloudfunctions.net/json2sav"
-      : "http://localhost:5000/ficsit-felix/us-central1/json2sav";
+      const uri =
+        process.env.NODE_ENV === "production"
+          ? "https://us-central1-ficsit-felix.cloudfunctions.net/json2sav"
+          : "http://localhost:5000/ficsit-felix/us-central1/json2sav";
       console.log("start download");
-    
+
       var data = JSON.stringify(window.data);
       var config = {
         onUploadProgress: e => {
-          console.log('upload', e);
+          console.log("upload", e);
           if (e.lengthComputable) {
             const percentage = Math.round((e.loaded * 100) / e.total);
             // console.log(percentage);
@@ -160,8 +165,8 @@ export default {
             this.progress += 1;
           }
         },
-        onDownloadProgress: e=> {
-          console.log('download', e);
+        onDownloadProgress: e => {
+          console.log("download", e);
           if (e.lengthComputable) {
             const percentage = Math.round((e.loaded * 100) / e.total);
             //console.log(percentage);
@@ -171,7 +176,7 @@ export default {
           }
         },
         headers: {
-          'Content-Type': 'application/octet-stream'
+          "Content-Type": "application/octet-stream"
         }
       };
       axios
@@ -182,20 +187,24 @@ export default {
           if (response.data.type === "error") {
             // TODO sentry
             this.handleError(response.data.text);
-          } else { 
+          } else {
             this.infoText = "opening downloaded file...";
             setTimeout(() => {
-
-            
               this.isSaving = false;
               console.log(typeof response.data);
-              console.log(Buffer.from(response.data, 'binary').toString('hex').substring(0,20));
-              // start download 
+              console.log(
+                Buffer.from(response.data, "binary")
+                  .toString("hex")
+                  .substring(0, 20)
+              );
+              // start download
               // saveAs(response.data, this.filename);
-              var element = document.createElement('a');
+              var element = document.createElement("a");
 
-              var blob = new Blob([Buffer.from(response.data, 'binary')], {type:'application/octet-stream'});
-              element.href= window.URL.createObjectURL(blob);
+              var blob = new Blob([Buffer.from(response.data, "binary")], {
+                type: "application/octet-stream"
+              });
+              element.href = window.URL.createObjectURL(blob);
               element.download = this.filename;
               //element.href = URL.createObjectURL(response.data);
               /*element.setAttribute('href', 'data:application/octet-stream,' + encodeURIComponent(response.data));
@@ -208,8 +217,8 @@ export default {
 
               document.body.removeChild(element);
 
-            // TODO
-            // console.log(response.data);
+              // TODO
+              // console.log(response.data);
             }, 100);
           }
         })
@@ -218,9 +227,7 @@ export default {
           this.handleError(error.message);
           console.error(error);
         });
-        
     }
-    
   }
 };
 </script>

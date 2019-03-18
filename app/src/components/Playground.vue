@@ -3,8 +3,8 @@
     <!--<button v-on:click="focusSelectedObject">Focus</button> -->
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
-        <AmbientLight/>
-        <Camera/>
+        <AmbientLight />
+        <Camera />
         <!--<a v-for="(obj,index) in visibleObjects"
           :key="index">
           
@@ -48,9 +48,9 @@
         <script src="big.js"></script>
     -->
     <div class="info">
-      {{filename}}
-      <br>
-      {{uuid}}
+      {{ filename }}
+      <br />
+      {{ uuid }}
     </div>
   </div>
 </template>
@@ -126,17 +126,19 @@ export default {
     },
     selectedIndex(val) {
       if (val != this.lastSelectedIndex) {
-        if (
-          this.lastSelectedIndex != -1 &&
-          this.lastSelectedIndex < this.objects.length
-        ) {
-          this.objects[this.lastSelectedIndex].material = this.getMaterial(
-            window.data.objects[this.lastSelectedIndex].className
+        if (this.lastSelectedIndex != -1) {
+          //  && this.lastSelectedIndex < this.objects.length
+          this.setMaterial(
+            this.lastSelectedIndex,
+            this.getMaterial(
+              window.data.objects[this.lastSelectedIndex].className
+            )
           );
         }
         this.lastSelectedIndex = val;
-        if (val != -1 && val < this.objects.length) {
-          this.objects[val].material = this.selectedMaterial;
+        if (val != -1) {
+          //  && val < this.objects.length
+          this.setMaterial(val, this.selectedMaterial);
         }
       }
     },
@@ -148,26 +150,26 @@ export default {
           const item = val[i];
           if (item.visible) {
             // make invisible objects visible again
-            for (var j = this.invisibleObjects.length-1; j >=0; j--) {
+            for (var j = this.invisibleObjects.length - 1; j >= 0; j--) {
               const obj = this.invisibleObjects[j];
 
               if (
                 window.data.objects[obj.userData.id].className === item.name
               ) {
                 this.$refs.scene.scene.add(obj);
-                this.invisibleObjects.splice(j,1);
+                this.invisibleObjects.splice(j, 1);
                 this.objects.push(obj);
               }
             }
           } else {
-            for (var j = this.objects.length-1; j >=0; j--) {
+            for (var j = this.objects.length - 1; j >= 0; j--) {
               const obj = this.objects[j];
 
               if (
                 window.data.objects[obj.userData.id].className === item.name
               ) {
                 this.$refs.scene.scene.remove(obj);
-                this.objects.splice(j,1);
+                this.objects.splice(j, 1);
                 this.invisibleObjects.push(obj);
               }
             }
@@ -427,6 +429,23 @@ export default {
       } else {
         return this.materials[className];
       }
+    },
+    setMaterial(id, material) {
+      for (var i = 0; i < this.objects.length; i++) {
+        const obj = this.objects[i];
+        if (obj.userData.id === id) {
+          obj.material = material;
+          return;
+        }
+      }
+      for (var i = 0; i < this.invisibleObjects.length; i++) {
+        const obj = this.invisibleObjects[i];
+        if (obj.userData.id === id) {
+          obj.material = material;
+          return;
+        }
+      }
+      console.error("No object found with id " + id);
     },
     addCubes: function() {
       var colorMap = {};

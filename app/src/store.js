@@ -57,15 +57,14 @@ export default new Vuex.Store({
 
       state.classes = state.visibleObjects
         .map(obj => obj.className)
-        .filter((value, index, self) => self.indexOf(value) === index).sort().map(
-          name => {
-            return {
-              name: name,
-              visible: true
-            };
-          }
-        );
-
+        .filter((value, index, self) => self.indexOf(value) === index)
+        .sort()
+        .map(name => {
+          return {
+            name: name,
+            visible: true
+          };
+        });
     },
     SET_DATA_LOADED(state, dataLoaded) {
       state.dataLoaded = dataLoaded;
@@ -76,9 +75,9 @@ export default new Vuex.Store({
     SET_UUID(state, uuid) {
       state.uuid = uuid;
     },
-    SET_VISIBILITY(state, {name, visible}) {
-      console.log("mutation",name,visible);
-      for (var i = 0; i< state.classes.length; i++) {
+    SET_VISIBILITY(state, { name, visible }) {
+      console.log("mutation", name, visible);
+      for (var i = 0; i < state.classes.length; i++) {
         if (state.classes[i].name === name) {
           state.classes[i].visible = visible;
           break;
@@ -152,7 +151,7 @@ export default new Vuex.Store({
       context.commit("SET_UUID", uuid);
     },
     setVisibility(context, payload) {
-      console.log("action",payload);
+      console.log("action", payload);
       context.commit("SET_VISIBILITY", payload);
     }
   }

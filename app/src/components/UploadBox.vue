@@ -8,28 +8,28 @@
           accept=".sav"
           class="input-file"
           @change="uploadFile($event.target.files[0])"
-        >
+        />
         <!--
             
         @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
-        <p>Drag your save file here to begin
-          <br>or click to browse
-        </p>
+        <p>Drag your save file here to begin <br />or click to browse</p>
       </div>
     </form>
     <div v-else class="infobox">
       <p>Uploading save file...</p>
       <div class="progressbar">
-        <div class="content" v-bind:style="{width: progress+'%'}"></div>
+        <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
-      <p class="secondary">{{infoText}}</p>
+      <p class="secondary">{{ infoText }}</p>
     </div>
 
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>Error</md-dialog-title>
-      <span class="dialog-content">{{errorText}}</span>
+      <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false;">Close</md-button>
+        <md-button class="md-primary" @click="showErrorDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -99,7 +99,7 @@
 
 <script>
 import * as axios from "axios";
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   data: function() {
@@ -111,16 +111,15 @@ export default {
       errorText: ""
     };
   },
-    watch: {
+  watch: {
     isSaving: {
       immediate: true,
       handler(val) {
         if (val) {
-          this.$emit ("startAnimating");
+          this.$emit("startAnimating");
         } else {
-          this.$emit ("stopAnimating");
+          this.$emit("stopAnimating");
         }
-        
       }
     }
   },
@@ -128,10 +127,10 @@ export default {
   methods: {
     ...mapActions(["setLoadedData", "setFilename", "setUUID"]),
     handleError(errorMessage) {
-        this.showErrorDialog = true;
-        this.errorText = errorMessage;
-        this.isSaving = false;
-        this.progress = 0;
+      this.showErrorDialog = true;
+      this.errorText = errorMessage;
+      this.isSaving = false;
+      this.progress = 0;
     },
     uploadFile(file) {
       this.isSaving = true;
@@ -139,11 +138,11 @@ export default {
       console.log("Uploading...", file);
       this.setFilename(file.name);
 
-     const uri = process.env.NODE_ENV === "production" ?
-     "https://us-central1-ficsit-felix.cloudfunctions.net/sav2json"
-      : "http://localhost:5000/ficsit-felix/us-central1/sav2json";
-      
-    
+      const uri =
+        process.env.NODE_ENV === "production"
+          ? "https://us-central1-ficsit-felix.cloudfunctions.net/sav2json"
+          : "http://localhost:5000/ficsit-felix/us-central1/sav2json";
+
       var data = file;
       var config = {
         onUploadProgress: e => {
@@ -159,7 +158,7 @@ export default {
             this.progress += 1;
           }
         },
-        onDownloadProgress: e=> {
+        onDownloadProgress: e => {
           //console.log('download', e);
           if (e.lengthComputable) {
             const percentage = Math.round((e.loaded * 100) / e.total);
@@ -170,7 +169,7 @@ export default {
           }
         },
         headers: {
-          'Content-Type': 'application/octet-stream'
+          "Content-Type": "application/octet-stream"
         }
       };
 
@@ -193,13 +192,12 @@ export default {
                 if (this.progress >= 100) {
                   this.progress = 100;
                   clearInterval(this.buildInterval);
-                  setTimeout(() => { // let the user at least see the full bar
+                  setTimeout(() => {
+                    // let the user at least see the full bar
                     this.$router.push("/");
                   }, 100);
-                  
                 }
               }, 30);
-              
             });
           }
         })

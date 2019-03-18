@@ -65,7 +65,7 @@
           id="path4787"
           d="M 76.019762,9.3264115 V 42.546312 c 0,2.087274 0.760107,3.890674 2.281353,5.411909 1.521225,1.521234 3.325649,2.282379 5.412924,2.282379 H 90.4008 V 42.121709 H 84.192114 V 9.3264115 Z"
           style="font-style:normal;font-weight:normal;font-size:26.67330933px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;opacity:1;fill-opacity:1;stroke:none;stroke-width:1.32665777"
-          v-bind:style="{fill: black}"
+          v-bind:style="{ fill: black }"
           inkscape:connector-curvature="0"
         ></path>
         <!-- F -->
@@ -73,7 +73,7 @@
           id="path4789"
           d="M 2.64646,12.032366 V 41.05557 l 8.330675,8.330679 V 35.275604 H 32.681308 V 26.99736 H 10.977135 v -6.686749 h 26.957762 v -8.278245 z"
           style="font-style:normal;font-weight:normal;font-size:26.67330933px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;opacity:1;fill-opacity:1;stroke:none;stroke-width:1.32665777"
-          v-bind:style="{fill: black}"
+          v-bind:style="{ fill: black }"
           inkscape:connector-curvature="0"
         ></path>
         <path
@@ -88,7 +88,7 @@
           id="path4793"
           d="m 48.317652,19.462429 c -2.087274,0 -3.890668,0.760115 -5.411893,2.281349 -1.521244,1.521231 -2.282383,3.325661 -2.282383,5.412936 v 15.389598 c 0,2.087274 0.761139,3.890674 2.282383,5.411909 1.521225,1.521234 3.324619,2.282379 5.411893,2.282379 H 71.826154 V 42.121709 H 48.742269 v -3.18402 H 71.826154 V 27.156714 c 0,-2.087275 -0.760123,-3.891705 -2.281347,-5.412936 -1.485872,-1.521234 -3.290302,-2.281349 -5.41295,-2.281349 z m 0.424617,8.11889 h 14.964989 v 4.245017 H 48.742269 Z"
           style="font-style:normal;font-weight:normal;font-size:26.67330933px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;opacity:1;fill-opacity:1;stroke:none;stroke-width:1.32665777"
-          v-bind:style="{fill: black}"
+          v-bind:style="{ fill: black }"
           inkscape:connector-curvature="0"
         ></path>
         <path
@@ -142,45 +142,39 @@
       </g>
     </svg>
   </div>
-  
 </template>
 
-
 <script>
-import {TimelineLite} from "gsap";
+import { TimelineLite } from "gsap";
 
 export default {
   name: "Logo",
-  props: [
-    "height",
-    "black",
-    "animating"
-    ],
-    watch: {
-      animating: {
-        imediate: true,
-        handler(val) {
-          if (val) {
-            this.tl.play();
-          }
+  props: ["height", "black", "animating"],
+  watch: {
+    animating: {
+      imediate: true,
+      handler(val) {
+        if (val) {
+          this.tl.play();
         }
       }
-    },
-    mounted() {
-      const hammer = this.$refs.hammer;
-      console.log(hammer);
-      this.tl = new TimelineLite({
-        onComplete: () => {
-          if (this.animating) {
-            this.tl.restart();
-          }
-        },
-        paused: !this.animating
-      });
-      this.tl.set(hammer, {transformOrigin:"80% 64%"});
-      this.tl.to(hammer, .5, {rotation:50, ease: Power2.easeIn});
-      this.tl.to(hammer, .2, {rotation:-10, ease: Power3.easeIn});
-      this.tl.to(hammer, .3, {rotation:0, ease: Power2.easeOut});
     }
+  },
+  mounted() {
+    const hammer = this.$refs.hammer;
+    console.log(hammer);
+    this.tl = new TimelineLite({
+      onComplete: () => {
+        if (this.animating) {
+          this.tl.restart();
+        }
+      },
+      paused: !this.animating
+    });
+    this.tl.set(hammer, { transformOrigin: "80% 64%" });
+    this.tl.to(hammer, 0.5, { rotation: 50, ease: Power2.easeIn });
+    this.tl.to(hammer, 0.2, { rotation: -10, ease: Power3.easeIn });
+    this.tl.to(hammer, 0.3, { rotation: 0, ease: Power2.easeOut });
+  }
 };
 </script>

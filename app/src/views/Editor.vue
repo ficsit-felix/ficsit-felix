@@ -10,7 +10,7 @@
           <SplitArea :size="17">
             <Split direction="vertical">
               <SplitArea :size="70">
-              <ObjectList ref="objectList" />
+                <ObjectList ref="objectList" />
               </SplitArea>
               <SplitArea :size="30">
                 <ClassList />
@@ -64,15 +64,14 @@ export default {
     ClassList
   },
   computed: {
-    ...mapState(["dataLoaded"]),
+    ...mapState(["dataLoaded"])
   },
 
-  
   created() {
-    if (!this.dataLoaded) { // The user needs to upload a file first
-      this.$router.push('upload');
+    if (!this.dataLoaded) {
+      // The user needs to upload a file first
+      this.$router.push("upload");
     }
-    
   },
   methods: {
     onDrag() {
