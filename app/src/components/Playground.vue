@@ -90,6 +90,7 @@ import AmbientLight from "@/components/scene/AmbientLight";
 import { BoxBufferGeometry } from "three";
 import { setTimeout } from "timers";
 import { GLTFLoader } from "@/js/GLTFLoader";
+import { modelHelper} from "@/helpers/modelHelper";
 
 export default {
   name: "Playground",
@@ -660,17 +661,12 @@ export default {
           };
 
           if (models[className] !== undefined) {
-            this.loader.load(
-              "/models/" + models[className],
-              gltf => {
-                this.geometries[className] = gltf.scene.children[0].geometry;
+
+            modelHelper.loadModel(
+              "/models/" + models[className]
+            ).then((geometry) => {
+                this.geometries[className] = geometry;
                 resolve(this.geometries[className]);
-                // console.log(gltf); asdf
-                // scene.add(gltf.scene);xyc
-              },
-              undefined,
-              error => {
-                console.error(error);
               }
             );
           } else {
