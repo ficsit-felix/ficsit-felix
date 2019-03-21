@@ -1,5 +1,5 @@
 import * as THREE from "three";
-
+/* eslint-disable */ 
 /**
  * @author arodic / https://github.com/arodic
  */

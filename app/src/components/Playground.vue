@@ -89,6 +89,7 @@ import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
 import { BoxBufferGeometry } from "three";
 import { setTimeout } from "timers";
+import { GLTFLoader } from "@/js/GLTFLoader"
 
 export default {
   name: "Playground",
@@ -159,6 +160,7 @@ export default {
       }
     },
     selectedObject(val) {
+
       if (val !== null) {
         var obj = this.getObjWithId(this.selectedIndex);
         if (obj !== null) {
@@ -306,17 +308,19 @@ export default {
       "/Game/FactoryGame/Prototype/WAT/BP_WAT2.BP_WAT2_C": 0x963f1e,
       "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C": 0xfffd00,
 
-      // ??? (pink)
+      // ??? (pink)   
       "/Script/FactoryGame.FGFoliageRemoval": 0x721884,
       undefined: 0xff00ff
     };
 
+    this.loader = new GLTFLoader();
     this.materials = {};
     for (var prop in colors) {
       this.materials[prop] = new THREE.MeshLambertMaterial({
         color: colors[prop]
       });
     }
+    this.geometries = {};
 
     this.lastSelectedIndex = -1;
     if (this.dataLoaded) {
@@ -396,15 +400,20 @@ export default {
     //   renderer.domElement
     // );
 
+
+    var scene = this.$refs.scene.scene;
+
+    
+
+
     var light = new THREE.DirectionalLight(0xffffff, 0.5);
     light.position.set(-200, 500, 2000);
-    light.angle = Math.PI / 9;
-    // /*#light.castShadow = false;
-    // 			light.shadow.camera.near = 1000;
-    // 			light.shadow.camera.far = 4000;
-    // 			light.shadow.mapSize.width = 1024;
-    // 			light.shadow.mapSize.height = 1024;*/
     this.$refs.scene.scene.add(light);
+
+    // darker light from the oposite direction to fake shadows?  
+    var light2 = new THREE.DirectionalLight(0xaaaaff, 0.3 );
+    light2.position.set(200, -500, -2000);
+    this.$refs.scene.scene.add(light2); 
 
     this.transformControl = new TransformControls(
       this.$refs.renderer.camera.obj,
@@ -461,7 +470,7 @@ export default {
     // function render() {
     //   controls.update();
     //   // console.log('renderCalls: ' + renderer.info.render.calls)
-    //   renderer.render(scene, camera);
+    //   renderer.render(scene, camera); asdf
     // }
 
     // listen to window resize
@@ -516,7 +525,7 @@ export default {
         const obj = this.objects[i];
         if (obj.userData.id === id) {
           return obj;
-        }
+        } 
       }
       return null;
     },
@@ -526,29 +535,37 @@ export default {
       var size = 400; // 800 is size of foundations
       var geometry = new THREE.BoxBufferGeometry(size, size, size);
 
-      for (var i = 0; i < window.data.objects.length; i++) {
-        var obj = window.data.objects[i];
+      // needs to be a let, so that we can access i in the lambda function further down
+      for (let i = 0; i < window.data.objects.length; i++) {
+        let obj = window.data.objects[i];
         if (obj.type == 1) {
           if (colorMap[obj.className] === undefined) {
             colorMap[obj.className] = Math.random() * 0xffffff;
           }
 
-          var object = new THREE.Mesh(
-            geometry,
-            this.getMaterial(obj.className)
-            //new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
-          );
 
-          this.updateObjectVisuals(object, obj);
+          this.getGeometry(obj.className).then(geometry => {
+            var object = new THREE.Mesh(
+              geometry,
+              this.getMaterial(obj.className)
+              //new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
+            );
 
-          object.userData = { id: i };
-          this.$refs.scene.scene.add(object);
-          this.objects.push(object);
+            this.updateObjectVisuals(object, obj);
+
+            object.userData = { id: i };
+            this.$refs.scene.scene.add(object);
+            this.objects.push(object);
+          });
+
+          
         }
       }
     },
 
     updateObjectVisuals(object, obj) {
+
+      // console.log(obj);
       object.position.x = obj.transform.translation[0];
       object.position.y = obj.transform.translation[1];
       object.position.z = obj.transform.translation[2];
@@ -558,14 +575,14 @@ export default {
       object.quaternion.w = obj.transform.rotation[3];
 
       var scaleMultiplier = [1, 1, 1];
-      switch (obj.className) {
+      /*switch (obj.className) {
         case "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
           scaleMultiplier = [0.15, 0.15, 0.15];
           break;
         case "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
-          scaleMultiplier = [2, 2, 0.25];
+          // scaleMultiplier = [2, 2, 0.25];
           break;
-      }
+      }*/
       // console.log(obj);
 
       object.scale.x = obj.transform.scale3d[0] * scaleMultiplier[0];
@@ -603,9 +620,54 @@ export default {
       clone.transform.translation[1] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
 
+      console.log('clone: ' + clone);
       this.setSelectedObject(clone);
-    }
-  },
+    },
+
+  getGeometry(className) {
+    return new Promise((resolve, reject) => {
+      if (this.geometries[className] === undefined) {
+
+
+        var models = {
+          "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C": "Build_Foundation_8x2_01_C.glb",
+          "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C": "Build_StorageContainerMk1_C.glb",
+          "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C": "BP_ResourceNode_C.glb",
+          "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C" : "BP_ResourceDeposit_C.glb",
+          "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C": "Build_Stairs_Left_01_C.glb",
+          "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C": "Build_Wall_1a_C.glb",
+          "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C": "Build_Ramp_8x4_01_C.glb",
+        };
+ 
+        if (models[className] !== undefined) {
+          this.loader.load("/models/" + models[className], (gltf) => {
+            this.geometries[className] = gltf.scene.children[0].geometry;
+            resolve(this.geometries[className]);
+            // console.log(gltf);
+            // scene.add(gltf.scene);xyc  dsf
+          }, undefined, (error) => {
+            console.error(error);
+          });
+        } else {
+          var size = 400; // 800 is size of foundations
+          var geometry = new THREE.BoxBufferGeometry(size, size, size);
+          this.geometries[className] = geometry;
+          resolve(this.geometries[className]);
+        }
+        
+      
+
+
+      } else {
+        resolve(this.geometries[className]);
+      }
+    });
+  }
+  }, // END OF METHODS
+
+
+
+
   beforeDestroy() {
     this.transformControl.detach();
     this.transformControl.dispose();
@@ -614,5 +676,6 @@ export default {
       this.$refs.scene.scene.remove(this.objects[i]);
     }
   }
+
 };
 </script>
