@@ -12,7 +12,7 @@ export default {
       70,
       this.renderer.width / this.renderer.height,
       1,
-      5000000
+      200000
     );
     camera.position.x = -17810;
     camera.position.z = 247550;
