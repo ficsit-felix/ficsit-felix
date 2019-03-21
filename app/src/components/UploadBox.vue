@@ -102,7 +102,7 @@ import * as axios from "axios";
 import { mapActions } from "vuex";
 import * as Sentry from "@sentry/browser";
 
-import {Sav2Json} from "@/transformation/index";
+import { Sav2Json } from "@/transformation/index";
 
 export default {
   data: function() {
@@ -144,26 +144,28 @@ export default {
         scope.setExtra("filename", file.name);
       });
 
-
       var reader = new FileReader();
-      reader.onload = (response) => {
+      reader.onload = response => {
         console.log(response.target.result);
-        
-        let sav2Json = new Sav2Json(Buffer.from(response.target.result));
-        let json = sav2Json.transform();
 
-        this.setLoadedData(json).then(() => {
-          this.$router.push("/");
-          console.log("finished");
-        });
+        try {
+          console.log(response.target.result);
+          let sav2Json = new Sav2Json(Buffer.from(response.target.result));
+          let json = sav2Json.transform();
 
+          this.setLoadedData(json).then(() => {
+            this.$router.push("/");
+            console.log("finished");
+          });
+        } catch (error) {
+          Sentry.captureException(error);
+          this.handleError(error.message);
+          console.error(error);
+        }
       };
       reader.readAsArrayBuffer(file);
 
-
-
-
-/*
+      /*
       const uri =
         process.env.NODE_ENV === "production"
           ? "https://us-central1-ficsit-felix.cloudfunctions.net/sav2json"

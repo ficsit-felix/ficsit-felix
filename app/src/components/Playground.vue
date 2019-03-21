@@ -89,7 +89,7 @@ import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
 import { BoxBufferGeometry } from "three";
 import { setTimeout } from "timers";
-import { GLTFLoader } from "@/js/GLTFLoader"
+import { GLTFLoader } from "@/js/GLTFLoader";
 
 export default {
   name: "Playground",
@@ -160,7 +160,6 @@ export default {
       }
     },
     selectedObject(val) {
-
       if (val !== null) {
         var obj = this.getObjWithId(this.selectedIndex);
         if (obj !== null) {
@@ -308,7 +307,7 @@ export default {
       "/Game/FactoryGame/Prototype/WAT/BP_WAT2.BP_WAT2_C": 0x963f1e,
       "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C": 0xfffd00,
 
-      // ??? (pink)   
+      // ??? (pink)
       "/Script/FactoryGame.FGFoliageRemoval": 0x721884,
       undefined: 0xff00ff
     };
@@ -400,20 +399,16 @@ export default {
     //   renderer.domElement
     // );
 
-
     var scene = this.$refs.scene.scene;
-
-    
-
 
     var light = new THREE.DirectionalLight(0xffffff, 0.5);
     light.position.set(-200, 500, 2000);
     this.$refs.scene.scene.add(light);
 
-    // darker light from the oposite direction to fake shadows?  
-    var light2 = new THREE.DirectionalLight(0xaaaaff, 0.3 );
+    // darker light from the oposite direction to fake shadows?
+    var light2 = new THREE.DirectionalLight(0xaaaaff, 0.3);
     light2.position.set(200, -500, -2000);
-    this.$refs.scene.scene.add(light2); 
+    this.$refs.scene.scene.add(light2);
 
     this.transformControl = new TransformControls(
       this.$refs.renderer.camera.obj,
@@ -525,7 +520,7 @@ export default {
         const obj = this.objects[i];
         if (obj.userData.id === id) {
           return obj;
-        } 
+        }
       }
       return null;
     },
@@ -543,7 +538,6 @@ export default {
             colorMap[obj.className] = Math.random() * 0xffffff;
           }
 
-
           this.getGeometry(obj.className).then(geometry => {
             var object = new THREE.Mesh(
               geometry,
@@ -557,14 +551,11 @@ export default {
             this.$refs.scene.scene.add(object);
             this.objects.push(object);
           });
-
-          
         }
       }
     },
 
     updateObjectVisuals(object, obj) {
-
       // console.log(obj);
       object.position.x = obj.transform.translation[0];
       object.position.y = obj.transform.translation[1];
@@ -620,65 +611,80 @@ export default {
       clone.transform.translation[1] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
 
-      console.log('clone: ' + clone);
+      console.log("clone: " + clone);
       this.setSelectedObject(clone);
     },
 
-  getGeometry(className) {
-    return new Promise((resolve, reject) => {
-      if (this.geometries[className] === undefined) {
+    getGeometry(className) {
+      return new Promise((resolve, reject) => {
+        if (this.geometries[className] === undefined) {
+          var models = {
+            "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
+              "Build_Foundation_8x2_01_C.glb",
+            "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C":
+              "Build_StorageContainerMk1_C.glb",
+            "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
+              "BP_ResourceNode_C.glb",
+            "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C":
+              "BP_ResourceDeposit_C.glb",
+            "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C":
+              "Build_Stairs_Left_01_C.glb", // rotate z 180 z+100
+            "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_02.Build_Wall_8x4_02_C":
+              "Build_Wall_1a_C.glb",
+            "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C":
+              "Build_Ramp_8x4_01_C.glb", // z -200
+            "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x4_01.Build_Foundation_8x4_01_C":
+              "Build_Foundation_8x4_01_C.glb", // z -200
+            "/Game/FactoryGame/Buildable/Vehicle/BP_VehicleTargetPoint.BP_VehicleTargetPoint_C":
+              "BP_VehicleTargetPoint_C.glb",
+            "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C":
+              "Build_ConveyorPole_C.glb",
+            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C":
+              "Build_ConveyorBelt.glb",
+            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C":
+              "Build_ConveyorBelt.glb",
+            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C":
+              "Build_ConveyorBelt.glb",
+            "/Game/FactoryGame/World/Benefit/NutBush/BP_NutBush.BP_NutBush_C":
+              "BP_NutBush_C.glb",
+            "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C":
+              "BP_Shroom_01_C.glb",
+            "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C":
+              "BP_BerryBush_C.glb",
+            "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C":
+              "Build_PowerPoleMk1_C.glb",
+            "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C":
+              "Build_PowerLine_C.glb",
+            "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C":
+              "Build_MinerMk1_C.glb" // r z 180
+          };
 
-
-        var models = {
-          "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C": "Build_Foundation_8x2_01_C.glb",
-          "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C": "Build_StorageContainerMk1_C.glb",
-          "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C": "BP_ResourceNode_C.glb",
-          "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C" : "BP_ResourceDeposit_C.glb",
-          "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C": "Build_Stairs_Left_01_C.glb", // rotate z 180 z+100
-          "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_02.Build_Wall_8x4_02_C": "Build_Wall_1a_C.glb", 
-          "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C": "Build_Ramp_8x4_01_C.glb", // z -200
-          "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x4_01.Build_Foundation_8x4_01_C" : "Build_Foundation_8x4_01_C.glb", // z -200 
-          "/Game/FactoryGame/Buildable/Vehicle/BP_VehicleTargetPoint.BP_VehicleTargetPoint_C": "BP_VehicleTargetPoint_C.glb",
-          "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": "Build_ConveyorPole_C.glb",
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C": "Build_ConveyorBelt.glb",
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C": "Build_ConveyorBelt.glb",
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C": "Build_ConveyorBelt.glb",
-          "/Game/FactoryGame/World/Benefit/NutBush/BP_NutBush.BP_NutBush_C": "BP_NutBush_C.glb",
-          "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C": "BP_Shroom_01_C.glb",
-          "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C": "BP_BerryBush_C.glb", 
-          "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C": "Build_PowerPoleMk1_C.glb",
-          "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C": "Build_PowerLine_C.glb",
-          "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C": "Build_MinerMk1_C.glb", // r z 180
-        };
- 
-        if (models[className] !== undefined) {
-          this.loader.load("/models/" + models[className], (gltf) => {
-            this.geometries[className] = gltf.scene.children[0].geometry;
+          if (models[className] !== undefined) {
+            this.loader.load(
+              "/models/" + models[className],
+              gltf => {
+                this.geometries[className] = gltf.scene.children[0].geometry;
+                resolve(this.geometries[className]);
+                // console.log(gltf); asdf
+                // scene.add(gltf.scene);xyc
+              },
+              undefined,
+              error => {
+                console.error(error);
+              }
+            );
+          } else {
+            var size = 400; // 800 is size of foundations
+            var geometry = new THREE.BoxBufferGeometry(size, size, size);
+            this.geometries[className] = geometry;
             resolve(this.geometries[className]);
-            // console.log(gltf); asdf
-            // scene.add(gltf.scene);xyc  
-          }, undefined, (error) => {
-            console.error(error);
-          });
+          }
         } else {
-          var size = 400; // 800 is size of foundations
-          var geometry = new THREE.BoxBufferGeometry(size, size, size);
-          this.geometries[className] = geometry;
           resolve(this.geometries[className]);
         }
-        
-      
-
-
-      } else {
-        resolve(this.geometries[className]);
-      }
-    });
-  }
+      });
+    }
   }, // END OF METHODS
-
-
-
 
   beforeDestroy() {
     this.transformControl.detach();
@@ -688,6 +694,5 @@ export default {
       this.$refs.scene.scene.remove(this.objects[i]);
     }
   }
-
 };
 </script>

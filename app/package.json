@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@sentry/browser": "^4.6.4",
+    "@types/uuid": "^3.4.4",
     "axios": "^0.18.0",
     "gsap": "^2.1.2",
     "three": "^0.102.1",

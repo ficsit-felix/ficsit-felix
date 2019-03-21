@@ -1,13 +1,10 @@
 <template>
   <div>
     <div v-if="!isSaving" class="infobox">
-      <p v-if="errorText == ''">
-        File should be downloaded.
-      </p>
-      <p v-else>
-        An error occured.
-      </p>
-      <br /><br />
+      <p v-if="errorText == ''">File should be downloaded.</p>
+      <p v-else>An error occured.</p>
+      <br />
+      <br />
       <md-button class="md-raised" @click="$router.push('/')"
         >Back to editor</md-button
       >
@@ -99,6 +96,9 @@ import * as axios from "axios";
 import { mapActions, mapState } from "vuex";
 import { setTimeout } from "timers";
 import * as Sentry from "@sentry/browser";
+
+import { Json2Sav } from "@/transformation/index";
+
 export default {
   name: "DownloadBox",
   data: function() {
@@ -145,6 +145,26 @@ export default {
       this.isSaving = true;
       this.infoText = "reading file...";
 
+      var data = new Json2Sav(window.data).transform();
+      this.isSaving = false;
+      var element = document.createElement("a");
+
+      console.log(data.length);
+      /*var blob = new Blob([Buffer.from(data, "binary")], {
+        type: "application/octet-stream"
+      });
+      element.href = window.URL.createObjectURL(blob);
+      element.download = this.filename;
+
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);*/
+
+
+      
+      /*
       const uri =
         process.env.NODE_ENV === "production"
           ? "https://us-central1-ficsit-felix.cloudfunctions.net/json2sav"
@@ -193,30 +213,10 @@ export default {
             setTimeout(() => {
               this.isSaving = false;
               //console.log(typeof response.data);
-              /*console.log(
-                Buffer.from(response.data, "binary")
-                  .toString("hex")
-                  .substring(0, 20)
-              );*/
+
               // start download
               // saveAs(response.data, this.filename);
-              var element = document.createElement("a");
 
-              var blob = new Blob([Buffer.from(response.data, "binary")], {
-                type: "application/octet-stream"
-              });
-              element.href = window.URL.createObjectURL(blob);
-              element.download = this.filename;
-              //element.href = URL.createObjectURL(response.data);
-              /*element.setAttribute('href', 'data:application/octet-stream,' + encodeURIComponent(response.data));
-              element.setAttribute('download', this.filename);*/
-
-              //element.style.display = 'none';asdf
-              document.body.appendChild(element);
-
-              element.click();
-
-              document.body.removeChild(element);
 
               // TODO
               // console.log(response.data);
@@ -227,7 +227,7 @@ export default {
           Sentry.captureException(error);
           this.handleError(error.message);
           console.error(error);
-        });
+        });*/
     }
   }
 };
