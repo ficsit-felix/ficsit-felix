@@ -149,8 +149,7 @@ export default {
       this.isSaving = false;
       var element = document.createElement("a");
 
-      console.log(data.length);
-      /*var blob = new Blob([Buffer.from(data, "binary")], {
+      var blob = new Blob([Buffer.from(data, "binary")], {
         type: "application/octet-stream"
       });
       element.href = window.URL.createObjectURL(blob);
@@ -160,10 +159,10 @@ export default {
 
       element.click();
 
-      document.body.removeChild(element);*/
+      document.body.removeChild(element);
 
 
-      
+
       /*
       const uri =
         process.env.NODE_ENV === "production"

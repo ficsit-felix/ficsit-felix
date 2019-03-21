@@ -83,7 +83,6 @@ class DataBuffer {
   assertNullByte() {
     const zero = this.buffer.readInt8(this.cursor);
     if (zero != 0) {
-      console.log(this.readHex(32));
       throw new Error("string does not end with 0 byte, but " + zero);
       // TODO return error
     }
@@ -845,7 +844,6 @@ export class Json2Sav {
       this.buffer.writeInt(saveJson.objects.length);
       for (var i = 0; i < saveJson.objects.length; i++) {
         const obj = saveJson.objects[i];
-        console.log("Entity" + i);
         if (obj.type == 1) {
           this.writeEntity(obj.entity, true);
         } else if (obj.type == 0) {
@@ -974,8 +972,8 @@ export class Json2Sav {
         this.buffer.writeLengthPrefixedString(property.value.type, false);
         this.buffer.writeHex(property.structUnknown, false);
 
-        const type = property.value.type;
-        switch (type) {
+        const structType = property.value.type;
+        switch (structType) {
           case "Vector":
           case "Rotator":
             this.buffer.writeFloat(property.value.x);
@@ -1068,6 +1066,9 @@ export class Json2Sav {
             }
             this.buffer.endBufferAndWriteSize();
             break;
+          default:
+            this.error("Unknown array type: " + itemType);
+            break;
         }
         break;
       case "MapProperty":
@@ -1090,6 +1091,8 @@ export class Json2Sav {
         }
 
         break;
+      default:
+        this.error("Unknown property type " + type);
     }
     this.buffer.endBufferAndWriteSize();
   }
