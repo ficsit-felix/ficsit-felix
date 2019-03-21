@@ -101,6 +101,9 @@
 import * as axios from "axios";
 import { mapActions } from "vuex";
 import * as Sentry from "@sentry/browser";
+
+import {Sav2Json} from "@/transformation/index";
+
 export default {
   data: function() {
     return {
@@ -141,6 +144,26 @@ export default {
         scope.setExtra("filename", file.name);
       });
 
+
+      var reader = new FileReader();
+      reader.onload = (response) => {
+        console.log(response.target.result);
+        
+        let sav2Json = new Sav2Json(Buffer.from(response.target.result));
+        let json = sav2Json.transform();
+
+        this.setLoadedData(json).then(() => {
+          this.$router.push("/");
+          console.log("finished");
+        });
+
+      };
+      reader.readAsArrayBuffer(file);
+
+
+
+
+/*
       const uri =
         process.env.NODE_ENV === "production"
           ? "https://us-central1-ficsit-felix.cloudfunctions.net/sav2json"
@@ -212,32 +235,7 @@ export default {
           Sentry.captureException(error);
           this.handleError(error.message);
           console.error(error);
-        });
-      /*    const xhr = new XMLHttpRequest();
-      this.xhr = xhr;
-      
-      const self = this;
-      this.xhr.upload.addEventListener("progress", (e) => {
-              if (e.lengthComputable) {
-              const percentage = Math.round((e.loaded * 100) / e.total);
-              console.log(percentage);
-              this.progress = percentage / 2;
-              }
-          }, false);
-      
-      xhr.upload.addEventListener("load", (e) => {
-
-          console.log('finished');
-          }, false);
-      xhr.open("POST", uri);
-      xhr.overrideMimeType('application/octet-stream');
-      xhr.onreadystatechange = function() {
-        console.log(xhr);
-          if (xhr.readyState == 4 && xhr.status == 200) {
-              alert(xhr.responseText); // handle response.
-          }
-      };
-      xhr.send(file);*/
+        });*/
     }
   }
 };
