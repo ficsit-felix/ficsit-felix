@@ -5,7 +5,26 @@ import { stat } from "fs";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+// Add the data object to the window interface
+// see https://stackoverflow.com/a/12709880
+declare global {
+  interface Window { data: any; }
+}
+
+interface RootState {
+  loading: boolean,
+  selectedIndex: number,
+  selectedObject: any,
+  error: any,
+  title: string,
+  dataLoaded: boolean,
+  visibleObjects: any[],
+  uuid: string,
+  filename: string,
+  classes: any[]
+}
+
+export default new Vuex.Store<RootState>({
   state: {
     loading: false,
     selectedIndex: -1,
@@ -23,7 +42,7 @@ export default new Vuex.Store({
       if (!state.dataLoaded) {
         return [];
       }
-      return window.data.objects.map((obj, index) => {
+      return window.data.objects.map((obj:any, index:any) => {
         return {
           id: index,
           text: obj.pathName.substring(obj.pathName.indexOf(".") + 1) // everything after the first .
@@ -63,7 +82,7 @@ export default new Vuex.Store({
       state.selectedIndex = -1;
       state.visibleObjects = visibleObjects;
 
-      state.classes = state.visibleObjects
+      state.classes = (state.visibleObjects as any[])
         .map(obj => obj.className)
         .filter((value, index, self) => self.indexOf(value) === index)
         .sort()
