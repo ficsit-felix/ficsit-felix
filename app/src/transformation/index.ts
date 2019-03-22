@@ -235,17 +235,20 @@ export class Sav2Json {
   transform() {
     var buffer = this.buffer;
 
+    const saveHeaderType = buffer.readInt();
+    const saveVersion = buffer.readInt();
+
     var saveJson: SaveGame = {
       uuid: this.uuid,
-      saveHeaderType: buffer.readInt(),
-      saveVersion: buffer.readInt(),
+      saveHeaderType: saveHeaderType,
+      saveVersion: saveVersion,
       buildVersion: buffer.readInt(),
       mapName: buffer.readLengthPrefixedString(),
       mapOptions: buffer.readLengthPrefixedString(),
       sessionName: buffer.readLengthPrefixedString(),
       playDurationSeconds: buffer.readInt(),
       saveDateTime: buffer.readLong(),
-      sessionVisibility: buffer.readByte(),
+      sessionVisibility: saveHeaderType > 4 ? buffer.readByte() : 0,
       objects: [],
       missing: ""
     };
@@ -826,7 +829,9 @@ export class Json2Sav {
       this.buffer.writeLengthPrefixedString(saveJson.sessionName);
       this.buffer.writeInt(saveJson.playDurationSeconds);
       this.buffer.writeLong(saveJson.saveDateTime);
-      this.buffer.writeByte(saveJson.sessionVisibility);
+      if (saveJson.saveHeaderType > 4) {
+        this.buffer.writeByte(saveJson.sessionVisibility);
+      }
 
       this.buffer.writeInt(saveJson.objects.length);
 
