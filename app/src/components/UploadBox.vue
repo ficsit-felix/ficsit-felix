@@ -128,53 +128,52 @@ export default {
     }
   },
   mounted() {
+    Sentry.captureMessage("visit upload page");
 
-
-          var models = {
-            "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
-              "Build_Foundation_8x2_01_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C":
-              "Build_StorageContainerMk1_C.glb",
-            "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
-              "BP_ResourceNode_C.glb",
-            "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C":
-              "BP_ResourceDeposit_C.glb",
-            "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C":
-              "Build_Stairs_Left_01_C.glb", // rotate z 180 z+100
-            "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_02.Build_Wall_8x4_02_C":
-              "Build_Wall_1a_C.glb",
-            "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C":
-              "Build_Ramp_8x4_01_C.glb", // z -200
-            "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x4_01.Build_Foundation_8x4_01_C":
-              "Build_Foundation_8x4_01_C.glb", // z -200
-            "/Game/FactoryGame/Buildable/Vehicle/BP_VehicleTargetPoint.BP_VehicleTargetPoint_C":
-              "BP_VehicleTargetPoint_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C":
-              "Build_ConveyorPole_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C":
-              "Build_ConveyorBelt.glb",
-            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C":
-              "Build_ConveyorBelt.glb",
-            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C":
-              "Build_ConveyorBelt.glb",
-            "/Game/FactoryGame/World/Benefit/NutBush/BP_NutBush.BP_NutBush_C":
-              "BP_NutBush_C.glb",
-            "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C":
-              "BP_Shroom_01_C.glb",
-            "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C":
-              "BP_BerryBush_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C":
-              "Build_PowerPoleMk1_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C":
-              "Build_PowerLine_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C":
-              "Build_MinerMk1_C.glb" // r z 180
-          };
-          for (var a in models) {
-            modelHelper.loadModel("/models/" + models[a]);
-          }
-          requestAnimationFrame(this.loadMore.bind(this));
-    
+    var models = {
+      "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
+        "Build_Foundation_8x2_01_C.glb",
+      "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C":
+        "Build_StorageContainerMk1_C.glb",
+      "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
+        "BP_ResourceNode_C.glb",
+      "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C":
+        "BP_ResourceDeposit_C.glb",
+      "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C":
+        "Build_Stairs_Left_01_C.glb", // rotate z 180 z+100
+      "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_02.Build_Wall_8x4_02_C":
+        "Build_Wall_1a_C.glb",
+      "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C":
+        "Build_Ramp_8x4_01_C.glb", // z -200
+      "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x4_01.Build_Foundation_8x4_01_C":
+        "Build_Foundation_8x4_01_C.glb", // z -200
+      "/Game/FactoryGame/Buildable/Vehicle/BP_VehicleTargetPoint.BP_VehicleTargetPoint_C":
+        "BP_VehicleTargetPoint_C.glb",
+      "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C":
+        "Build_ConveyorPole_C.glb",
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C":
+        "Build_ConveyorBelt.glb",
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C":
+        "Build_ConveyorBelt.glb",
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C":
+        "Build_ConveyorBelt.glb",
+      "/Game/FactoryGame/World/Benefit/NutBush/BP_NutBush.BP_NutBush_C":
+        "BP_NutBush_C.glb",
+      "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C":
+        "BP_Shroom_01_C.glb",
+      "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C":
+        "BP_BerryBush_C.glb",
+      "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C":
+        "Build_PowerPoleMk1_C.glb",
+      "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C":
+        "Build_PowerLine_C.glb",
+      "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C":
+        "Build_MinerMk1_C.glb" // r z 180
+    };
+    for (var a in models) {
+      modelHelper.loadModel("/models/" + models[a]);
+    }
+    requestAnimationFrame(this.loadMore.bind(this));
   },
   methods: {
     ...mapActions(["setLoadedData", "setFilename", "setUUID"]),
@@ -199,6 +198,8 @@ export default {
         scope.setExtra("filename", file.name);
       });
 
+      Sentry.captureMessage("uploaded file");
+
       var reader = new FileReader();
       reader.onload = response => {
         this.infoText = "processing file...";
@@ -206,9 +207,9 @@ export default {
         try {
           let sav2Json = new Sav2Json(Buffer.from(response.target.result));
           let json = sav2Json.transform();
-          
+
           this.infoText = "building world...";
-            // give us some time to build the 3d world while animating the progress bar
+          // give us some time to build the 3d world while animating the progress bar
           this.setLoadedData(json).then(() => {
             this.buildInterval = setInterval(() => {
               this.progress += 1;
@@ -222,7 +223,6 @@ export default {
               }
             }, 30);
           });
-
         } catch (error) {
           Sentry.captureException(error);
           this.handleError(error.message);

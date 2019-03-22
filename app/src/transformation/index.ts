@@ -726,6 +726,7 @@ export class Sav2Json {
             }));*/
     }
     this.hadError = true;
+    throw new Error(message);
   }
 }
 
@@ -1112,5 +1113,6 @@ export class Json2Sav {
       // TODO
     }
     this.hadError = true;
+    throw new Error(message);
   }
 }

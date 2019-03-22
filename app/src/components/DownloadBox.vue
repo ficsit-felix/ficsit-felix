@@ -3,11 +3,9 @@
     <div v-if="!isSaving" class="infobox">
       <p v-if="errorText == ''">File should be downloaded.</p>
       <p v-else>An error occured.</p>
-      <br />
-      <br />
-      <md-button class="md-raised" @click="$router.push('/')"
-        >Back to editor</md-button
-      >
+      <br>
+      <br>
+      <md-button class="md-raised" @click="$router.push('/')">Back to editor</md-button>
     </div>
     <div v-else class="infobox">
       <p>Downloading save file...</p>
@@ -21,9 +19,7 @@
       <md-dialog-title>Error</md-dialog-title>
       <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false"
-          >Close</md-button
-        >
+        <md-button class="md-primary" @click="showErrorDialog = false">Close</md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -142,26 +138,45 @@ export default {
       this.progress = 0;
     },
     uploadFile() {
-      this.isSaving = true;
-      this.infoText = "reading file...";
+      try {
+        this.isSaving = true;
+        this.infoText = "reading file...";
 
-      var data = new Json2Sav(window.data).transform();
-      this.isSaving = false;
-      var element = document.createElement("a");
+        var data = new Json2Sav(window.data).transform();
 
-      var blob = new Blob([Buffer.from(data, "binary")], {
-        type: "application/octet-stream"
-      });
-      element.href = window.URL.createObjectURL(blob);
-      element.download = this.filename;
+        var element = document.createElement("a");
 
-      document.body.appendChild(element);
+        var blob = new Blob([Buffer.from(data, "binary")], {
+          type: "application/octet-stream"
+        });
 
-      element.click();
+        this.infoText = "processing file...";
+        this.progress = 50;
+        this.buildInterval = setInterval(() => {
+          this.progress += 1;
+          if (this.progress >= 100) {
+            this.progress = 100;
+            clearInterval(this.buildInterval);
+            setTimeout(() => {
+              Sentry.captureMessage("downloaded file");
 
-      document.body.removeChild(element);
+              element.href = window.URL.createObjectURL(blob);
+              element.download = this.filename;
 
+              document.body.appendChild(element);
 
+              element.click();
+
+              document.body.removeChild(element);
+              this.isSaving = false;
+            }, 100);
+          }
+        }, 30);
+      } catch (error) {
+        Sentry.captureException(error);
+        this.handleError(error.message);
+        console.error(error);
+      }
 
       /*
       const uri =

@@ -90,7 +90,7 @@ import AmbientLight from "@/components/scene/AmbientLight";
 import { BoxBufferGeometry } from "three";
 import { setTimeout } from "timers";
 import { GLTFLoader } from "@/js/GLTFLoader";
-import { modelHelper} from "@/helpers/modelHelper";
+import { modelHelper } from "@/helpers/modelHelper";
 
 export default {
   name: "Playground",
@@ -661,14 +661,12 @@ export default {
           };
 
           if (models[className] !== undefined) {
-
-            modelHelper.loadModel(
-              "/models/" + models[className]
-            ).then((geometry) => {
+            modelHelper
+              .loadModel("/models/" + models[className])
+              .then(geometry => {
                 this.geometries[className] = geometry;
                 resolve(this.geometries[className]);
-              }
-            );
+              });
           } else {
             var size = 400; // 800 is size of foundations
             var geometry = new THREE.BoxBufferGeometry(size, size, size);
