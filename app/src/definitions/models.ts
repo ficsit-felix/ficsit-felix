@@ -16,11 +16,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0x777777
     },
     "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C": {
-        model: "",
+        model: "BP_ResourceNode_C.glb",
         color: 0x444444
     },
     "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C": {
-        model: "",
+        model: "BP_ResourceDeposit_C.glb",
         color: 0x333333
     },
 
@@ -56,15 +56,15 @@ let modelConfig: { [id: string]: ModelConfig } = {
 
     // nature (green)
     "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C": {
-        model: "",
+        model: "BP_Shroom_01_C.glb",
         color: 0x43d854
     },
     "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C": {
-        model: "",
+        model: "BP_BerryBush_C.glb",
         color: 0x2dba20
     },
     "/Game/FactoryGame/World/Benefit/NutBush/BP_NutBush.BP_NutBush_C": {
-        model: "",
+        model: "BP_NutBush_C.glb",
         color: 0x08850e
     },
     "/Game/FactoryGame/Resource/BP_ResourceNodeGeyser.BP_ResourceNodeGeyser_C": {
@@ -97,25 +97,25 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0x001dff
     },
     "/Game/FactoryGame/Buildable/Vehicle/BP_VehicleTargetPoint.BP_VehicleTargetPoint_C": {
-        model: "",
+        model: "BP_VehicleTargetPoint_C.glb", //z+100
         color: 0x4157bd
     },
 
     // buildings (purple)
     "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C": {
-        model: "",
+        model: "Build_Foundation_8x2_01_C.glb",
         color: 0x3c21c0
     },
     "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C": {
-        model: "",
+        model: "Build_PowerPoleMk1_C.glb",
         color: 0x6042d5
     },
     "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C": {
-        model: "",
+        model: "Build_PowerLine_C.glb",
         color: 0x5549bf
     },
     "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": {
-        model: "",
+        model: "Build_ConveyorPole_C.glb",
         color: 0x5c3ba5
     },
     "/Game/FactoryGame/Buildable/Factory/Workshop/Build_Workshop.Build_Workshop_C": {
@@ -139,60 +139,68 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0x693fb
     },
     "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayStraight.Build_WalkwayStraight_C": {
-        model: "",
+        model: "Build_WalkwayStraight_C.glb", // x + 200
         color: 0x7337c6
     },
     "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayRamp.Build_WalkwayRamp_C": {
-        model: "",
+        model: "Build_WalkwayRamp_C.glb",  // x - 200
         color: 0x6b29aa
     },
     "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayCross.Build_WalkwayCross_C": {
-        model: "",
+        model: "Build_WalkwayCross_C.glb",
         color: 0x7c25ce
     },
+    "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayT.Build_WalkwayT_C": {
+        model: "Build_WalkwayT_C.glb", // x -200
+        color: 0x7231af
+    },
+    "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayTrun.Build_WalkwayTrun_C": {
+        model: "Build_WalkwayTrun_C.glb", // x -200 r z 90
+        color: 0x7231af
+    },
     "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set02/Build_Wall_2a.Build_Wall_2a_C": {
-        model: "",
+        model: "Build_Wall_1a_C.glb", // TODO
         color: 0x9525ce
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C": {
-        model: "",
+        model: "Build_Wall_1a_C.glb",
         color:
             0xab51d8
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_02.Build_Wall_Door_8x4_02_C": {
-        model: "",
+        model: "Build_Wall_1a_C.glb", // TODO
         color: 0xcc81e3
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_03.Build_Wall_Conveyor_8x4_03_C": {
-        model: "",
+        model: "Build_Wall_1a_C.glb", // TODO
         color: 0xc658e6
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_01.Build_Wall_Conveyor_8x4_01_C": {
-        model: "",
+        model: "Build_Wall_1a_C.glb", // TODO
         color: 0xb714e8
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1c.Build_Wall_1c_C": {
-        model: "",
+        model: "Build_Wall_1a_C.glb", // TODO
         color: 0xc514e8
     },
     "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x4_01.Build_Foundation_8x4_01_C": {
-        model: "",
+        model: "Build_Foundation_8x4_01_C.glb", // z-200
         color: 0xcb4ae4
     },
     "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C": {
-        model: "",
+        model: "Build_Ramp_8x4_01_C.glb", // z-200
         color: 0xd682e7
     },
     "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C": {
-        model: "",
+        model: "Build_Stairs_Left_01_C.glb", // rotate z 180 z+100
         color: 0xac74b7
     },
     "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C": {
-        model: "",
+        model: "Build_ConveyorPole_C.glb",
         color: 0x8d6096
     },
     "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C": {
-        model: "",
+        model: "Build_ConveyorPole_C.glb",
         color: 0x894896
     },
     "/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPad.Build_JumpPad_C": {
@@ -209,7 +217,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0x710586
     },
     "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C": {
-        model: "",
+        model: "Build_StorageContainerMk1_C.glb",
         color: 0x5d046e
     },
     "/Game/FactoryGame/Buildable/Factory/StoragePlayer/Build_StoragePlayer.Build_StoragePlayer_C": {
@@ -225,7 +233,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0xcb43be
     },
     "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C": {
-        model: "",
+        model: "Build_MinerMk1_C.glb", // r z 180
         color: 0xac139e
     },
     "/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorBiomass.Build_GeneratorBiomass_C": {
@@ -322,48 +330,3 @@ let modelConfig: { [id: string]: ModelConfig } = {
 };
 
 export { modelConfig };
-
-/*
-          var models = {
-            "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
-              "Build_Foundation_8x2_01_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C":
-              "Build_StorageContainerMk1_C.glb",
-            "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
-              "BP_ResourceNode_C.glb",
-            "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C":
-              "BP_ResourceDeposit_C.glb",
-            "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C":
-              "Build_Stairs_Left_01_C.glb", // rotate z 180 z+100
-            "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_02.Build_Wall_8x4_02_C":
-              "Build_Wall_1a_C.glb",
-            "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C":
-              "Build_Ramp_8x4_01_C.glb", // z -200
-            "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x4_01.Build_Foundation_8x4_01_C":
-              "Build_Foundation_8x4_01_C.glb", // z -200
-            "/Game/FactoryGame/Buildable/Vehicle/BP_VehicleTargetPoint.BP_VehicleTargetPoint_C":
-              "BP_VehicleTargetPoint_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C":
-              "Build_ConveyorPole_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C":
-              "Build_ConveyorBelt.glb",
-            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C":
-              "Build_ConveyorBelt.glb",
-            "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C":
-              "Build_ConveyorBelt.glb",
-            "/Game/FactoryGame/World/Benefit/NutBush/BP_NutBush.BP_NutBush_C":
-              "BP_NutBush_C.glb",
-            "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C":
-              "BP_Shroom_01_C.glb",
-            "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C":
-              "BP_BerryBush_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C":
-              "Build_PowerPoleMk1_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C":
-              "Build_PowerLine_C.glb",
-            "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C":
-              "Build_MinerMk1_C.glb", // r z 180
-            "/Game/FactoryGame/Buildable/Factory/SpaceElevator/Build_SpaceElevator.Build_SpaceElevator_C":
-            "Build_SpaceElevator_C.glb",
-          };
-*/
