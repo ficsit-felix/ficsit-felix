@@ -9,13 +9,7 @@ It uses JavaScript, Vue, three.js and some other libraries for the frontend and 
 You can find python scripts to transform save files to json and back at https://github.com/bitowl/satisfactory-save-format.
 
 ## Development
-Both the backend and the frontend servers need to be running for smooth development.
-### Start functions backend
-```
-cd functions
-sudo yarn serve
-```
-### Start Vue frontend
+To run the application with hot reloading simply execute:
 ```
 cd app
 yarn serve
