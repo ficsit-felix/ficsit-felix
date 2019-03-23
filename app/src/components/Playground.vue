@@ -469,13 +469,17 @@ export default {
 
     updateObjectVisuals(object, obj) {
       // console.log(obj);
-      object.position.x = obj.transform.translation[0];
-      object.position.y = obj.transform.translation[1];
+
+      // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)
+      object.position.x = obj.transform.translation[1];
+      object.position.y = obj.transform.translation[0];
       object.position.z = obj.transform.translation[2];
       object.quaternion.x = obj.transform.rotation[0];
       object.quaternion.y = obj.transform.rotation[1];
-      object.quaternion.z = obj.transform.rotation[2];
+      object.quaternion.z = -obj.transform.rotation[2];
       object.quaternion.w = obj.transform.rotation[3];
+
+      object.rotateZ(1.5708); // 90 deg in radians
 
       var scaleMultiplier = [1, 1, 1];
       /*switch (obj.className) {
@@ -496,8 +500,9 @@ export default {
       var camera = this.$refs.renderer.camera.controls;
       var obj = window.data.objects[this.selectedIndex];
       if (obj.type === 1) {
-        camera.target.x = obj.transform.translation[0];
-        camera.target.y = obj.transform.translation[1];
+        // changed because of coordinate system change
+        camera.target.x = obj.transform.translation[1];
+        camera.target.y = obj.transform.translation[0];
         camera.target.z = obj.transform.translation[2];
       }
     },
@@ -519,8 +524,9 @@ export default {
       // TODO need to clone, else change is not detected?
       // find more intelligent way
       var clone = Object.assign({}, this.selectedObject);
-      clone.transform.translation[0] = obj.position.x;
-      clone.transform.translation[1] = obj.position.y;
+      // switched to accord for coordinate system change!
+      clone.transform.translation[1] = obj.position.x;
+      clone.transform.translation[0] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
 
       console.log("clone: " + clone);
