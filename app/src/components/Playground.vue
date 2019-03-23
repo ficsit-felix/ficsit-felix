@@ -92,6 +92,7 @@ import { setTimeout } from "timers";
 import { GLTFLoader } from "@/js/GLTFLoader";
 import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig} from "@/definitions/models";
+import * as Sentry from "@sentry/browser";
 
 export default {
   name: "Playground",
@@ -544,6 +545,12 @@ export default {
                 resolve(this.geometries[className]);
               });
           } else {
+
+            if (modelConfig[className] === undefined) {
+              console.error("missing model definition: " + className);
+              Sentry.captureMessage("missing model definition: " + className);
+            }
+
             var size = 400; // 800 is size of foundations
             var geometry = new THREE.BoxBufferGeometry(size, size, size);
             this.geometries[className] = geometry;

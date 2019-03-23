@@ -6,6 +6,41 @@ interface ModelConfig {
 
 // This list is sorted alphabetically to ease adding new entries and seeing wether ones exist already
 let modelConfig: { [id: string]: ModelConfig } = {
+    "/Game/FactoryGame/-Shared/Blueprint/BP_BuildableSubsystem.BP_BuildableSubsystem_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/-Shared/Blueprint/BP_CircuitSubsystem.BP_CircuitSubsystem_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/-Shared/Blueprint/BP_GameMode.BP_GameMode_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/-Shared/Blueprint/BP_GameState.BP_GameState_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/-Shared/Blueprint/BP_RailroadSubsystem.BP_RailroadSubsystem_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/-Shared/Blueprint/BP_StorySubsystem.BP_StorySubsystem_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/-Shared/Blueprint/BP_TimeOfDaySubsystem.BP_TimeOfDaySubsystem_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/-Shared/Blueprint/BP_TutorialIntroManager.BP_TutorialIntroManager_C": {
+        model: "",
+        color: 0xff00ff
+    },
+
+
+
     "/Game/FactoryGame/-Shared/Crate/BP_Crate.BP_Crate_C": {
         model: "Build_StoragePlayer_C.glb",
         color: 0x0c2a89
@@ -18,7 +53,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "Build_Foundation_8x4_01_C.glb", // z-200
         color: 0xcb4ae4
     },
-
+    "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x2_01.Build_Ramp_8x2_01_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C": {
         model: "Build_Ramp_8x4_01_C.glb", // z-200
         color: 0xd682e7
@@ -27,6 +65,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C": {
         model: "Build_Stairs_Left_01_C.glb", // z+100
         color: 0xac74b7
+    },
+    "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Right_01.Build_Stairs_Right_01_C": {
+        model: "",
+        color: 0xff00ff
     },
 
     "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayCross.Build_WalkwayCross_C": {
@@ -58,14 +100,39 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "Build_Wall_1a_C.glb", // TODO
         color: 0xc514e8
     },
+    "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_01_Steel.Build_Wall_Conveyor_8x4_01_Steel_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_01.Build_Wall_Conveyor_8x4_01_C": {
         model: "Build_Wall_1a_C.glb", // TODO
         color: 0xb714e8
     },
+    "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_02_Steel.Build_Wall_Conveyor_8x4_02_Steel_C": {
+        model: "",
+        color: 0xff00ff
+    },
+"/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_02.Build_Wall_Conveyor_8x4_02_C": {
+    model: "",
+    color: 0xff00ff
+},
+"/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_03_Steel.Build_Wall_Conveyor_8x4_03_Steel_C": {
+    model: "",
+    color: 0xff00ff
+},
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_03.Build_Wall_Conveyor_8x4_03_C": {
         model: "Build_Wall_1a_C.glb", // TODO
         color: 0xc658e6
     },
+    "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_04_Steel.Build_Wall_Conveyor_8x4_04_Steel_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_04.Build_Wall_Conveyor_8x4_04_C": {
+        model: "",
+        color: 0xff00ff
+    },
+
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_01_Steel.Build_Wall_Door_8x4_01_Steel_C": {
         model: "Build_Wall_1a_C.glb", // TODO
         color: 0xc514e8
@@ -121,9 +188,42 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x5f1c59
     },
+    "/Game/FactoryGame/Buildable/Factory/CA_SplitterProgrammable/Build_ConveyorAttachmentSplitterProgrammable.Build_ConveyorAttachmentSplitterProgrammable_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Factory/CA_SplitterSmart/Build_ConveyorAttachmentSplitterSmart.Build_ConveyorAttachmentSplitterSmart_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Factory/CheatPowerSink/Build_CheatPowerSink.Build_CheatPowerSink_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Factory/CheatPowerSource/Build_CheatPowerSource.Build_CheatPowerSource_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Factory/CheatResourceSink/Build_CheatResourceSink.Build_CheatResourceSink_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Factory/CheatResourceSpawner/Build_CheatResourceSpawner.Build_CheatResourceSpawner_C": {
+        model: "",
+        color: 0xff00ff
+    },
+
     "/Game/FactoryGame/Buildable/Factory/ConstructorMk1/Build_ConstructorMk1.Build_ConstructorMk1_C": {
         model: "",
         color: 0x63075a
+    },
+    "/Game/FactoryGame/Buildable/Factory/ConveyoAttachmentSplitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Factory/ConveyorAttachmentMerger/Build_ConveyorAttachmentMerger.Build_ConveyorAttachmentMerger_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C": {
         model: "Build_ConveyorBelt.glb",
@@ -137,11 +237,18 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "Build_ConveyorBelt.glb", // TODO
         color: 0x8d6096
     },
+    "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk4/Build_ConveyorBeltMk4.Build_ConveyorBeltMk4_C": {
+        model: "Build_ConveyorBelt.glb", // TODO
+        color: 0x8d6096
+    },
     "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": {
         model: "Build_ConveyorPole_C.glb",
         color: 0x5c3ba5
     },
-
+    "/Game/FactoryGame/Buildable/Factory/ConveyorPoleStackable/Build_ConveyorPoleStackable.Build_ConveyorPoleStackable_C": {
+        model: "Build_ConveyorPoleStackable_C.glb",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/Elevator/Build_Elevator.Build_Elevator_C": { // TODO what is this?
         model: "",
         color: 0xcb43be
@@ -159,6 +266,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x8b2f82
     },
+    "/Game/FactoryGame/Buildable/Factory/GeneratorFuel/Build_GeneratorFuel.Build_GeneratorFuel_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C": {
         model: "",
         color: 0x693fb
@@ -166,6 +277,14 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPad.Build_JumpPad_C": {
         model: "",
         color: 0x872f98
+    },
+    "/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadTilted.Build_JumpPadTilted_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Factory/LandingPad/Build_LandingPad.Build_LandingPad_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Buildable/Factory/LookoutTower/Build_LookoutTower.Build_LookoutTower_C":
     {
@@ -176,9 +295,17 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x4e2596
     },
+    "/Game/FactoryGame/Buildable/Factory/ManufacturerMk1/Build_ManufacturerMk1.Build_ManufacturerMk1_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C": {
         model: "Build_MinerMk1_C.glb",
         color: 0xac139e
+    },
+    "/Game/FactoryGame/Buildable/Factory/OilPump/Build_OilPump.Build_OilPump_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C": {
         model: "Build_PowerLine_C.glb",
@@ -188,7 +315,14 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "Build_PowerPoleMk1_C.glb",
         color: 0x6042d5
     },
-
+    "/Game/FactoryGame/Buildable/Factory/PowerPoleMk2/Build_PowerPoleMk2.Build_PowerPoleMk2_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/Factory/PowerPoleMk3/Build_PowerPoleMk3.Build_PowerPoleMk3_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C": {
         model: "",
         color: 0x830477
@@ -202,6 +336,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C": {
         model: "Build_StorageContainerMk1_C.glb",
         color: 0x5d046e
+    },
+    "/Game/FactoryGame/Buildable/Factory/StorageContainerMk2/Build_StorageContainerMk2.Build_StorageContainerMk2_C": {
+        model: "",
+        color: 0xff00ff
     },
 
     "/Game/FactoryGame/Buildable/Factory/StoragePlayer/Build_StorageIntegrated.Build_StorageIntegrated_C": {
@@ -218,7 +356,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x710586
     },
-
+    "/Game/FactoryGame/Buildable/Factory/TruckStation/Build_TruckStation.Build_TruckStation_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C": {
         model: "",
         color: 0x472596
@@ -242,11 +383,18 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x7f28b0
     },
+    "/Game/FactoryGame/Buildable/Vehicle/Truck/BP_Truck.BP_Truck_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Character/Creature/BP_CreatureSpawner.BP_CreatureSpawner_C": {
         model: "",
         color: 0xef1d1d
     },
-
+    "/Game/FactoryGame/Character/Creature/Enemy/Crab/BabyCrab/Char_BabyCrab.Char_BabyCrab_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Character/Creature/Enemy/Hog/Char_Hog.Char_Hog_C": {
         model: "",
         color: 0xd80e2c
@@ -269,6 +417,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x3a5eff
     },
+    "/Game/FactoryGame/Character/Player/BP_PlayerState.BP_PlayerState_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C": {
         model: "",
         color: 0x001dff
@@ -277,6 +429,14 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Equipment/Beacon/BP_Beacon.BP_Beacon_C": {
         model: "",
         color: 0xa80cff
+    },
+    "/Game/FactoryGame/Equipment/Beacon/Equip_Beacon.Equip_Beacon_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Equipment/C4Dispenser/BP_C4Explosive.BP_C4Explosive_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleLargeRock.BP_DestructibleLargeRock_C": {
         model: "",
@@ -296,10 +456,33 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x0c1289
     },
-
+    "/Game/FactoryGame/Equipment/GasMask/Equip_GasMask.Equip_GasMask_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Equipment/JetPack/Equip_JetPack.Equip_JetPack_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Equipment/JumpingStilts/Equip_JumpingStilts.Equip_JumpingStilts_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Equipment/ObjectScanner/Equip_ObjectScanner.Equip_ObjectScanner_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Equipment/PortableMiner/BP_PortableMiner.BP_PortableMiner_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Equipment/RebarGun/Equip_RebarGun_Projectile.Equip_RebarGun_Projectile_C": {
         model: "",
         color: 0x0c2289
+    },
+    "/Game/FactoryGame/Equipment/StunSpear/Equip_StunSpear.Equip_StunSpear_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Prototype/WAT/BP_WAT1.BP_WAT1_C": {
         model: "",
@@ -310,7 +493,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x963f1e
     },
-
+    "/Game/FactoryGame/Recipes/Research/BP_ResearchManager.BP_ResearchManager_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Resource/BP_ResourceDeposit.BP_ResourceDeposit_C": {
         model: "BP_ResourceDeposit_C.glb",
         color: 0x333333
@@ -346,6 +532,14 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xdccc4e
     },
+    "/Game/FactoryGame/Schematics/Progression/BP_GamePhaseManager.BP_GamePhaseManager_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Schematics/Progression/BP_SchematicManager.BP_SchematicManager_C": {
+        model: "",
+        color: 0xff00ff
+    },
 
     "/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C": {
         model: "BP_BerryBush_C.glb",
@@ -368,11 +562,23 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x721884
     },
+    "/Script/FactoryGame.FGFoundationSubsystem": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Script/FactoryGame.FGItemPickup_Spawnable": {
         model: "",
         color: 0x51d5e4
     },
-    
+    "/Script/FactoryGame.FGRecipeManager": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Script/FactoryGame.FGWorldSettings": {
+        model: "",
+        color: 0xff00ff
+    },
+
     // stones and materials (gray)
     // creatures (red)
     // nature (green)
