@@ -19,7 +19,7 @@
           </SplitArea>
           <SplitArea :size="23">
             <PropertyEditor @focusSelectedObject="focusSelectedObject" />
-          </SplitArea>
+          </SplitArea>a
         </Split>
       </div>
     </div>
@@ -31,14 +31,27 @@
 .editor {
   height: 100%;
 }
+
 .maincolumn {
   display: flex;
   flex-flow: column;
+  overflow: auto;
   height: 100%;
+}
+.toolbar {
+  flex-grow: 0;
+  flex-shrink: 0; 
+  flex-basis: 0;
 }
 .mainrow {
   display: flex;
   flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  min-height: 0px; // needed for Firefox, else this can become HUUGE
+}
+.split {
+  overflow: hidden !important;
 }
 .gutter {
   background-color: $toolbarGray !important;
