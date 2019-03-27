@@ -4,6 +4,10 @@ interface ModelConfig {
     color: number
 }
 
+// Color palette 
+let wallMetalColor = 0x797979;
+let wallWoodColor = 0xecb96c;
+
 // This list is sorted alphabetically to ease adding new entries and seeing wether ones exist already
 let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/-Shared/Blueprint/BP_BuildableSubsystem.BP_BuildableSubsystem_C": {
@@ -54,8 +58,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0xcb4ae4
     },
     "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x2_01.Build_Ramp_8x2_01_C": {
-        model: "",
-        color: 0xff00ff
+        model: "Build_Ramp_8x2_01_C.glb", // z-100
+        color: 0xd682e7
     },
     "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C": {
         model: "Build_Ramp_8x4_01_C.glb", // z-200
@@ -93,86 +97,85 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0x7231af
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_01.Build_Wall_8x4_01_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        model: "Build_Wall_1a_C.glb",
+        color: wallWoodColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_02.Build_Wall_8x4_02_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        model: "Build_Wall_1a_C.glb",
+        color: wallMetalColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_01_Steel.Build_Wall_Conveyor_8x4_01_Steel_C": {
-        model: "",
-        color: 0xff00ff
+        model: "Build_Wall_Conveyor_8x4_01_C.glb", // TODO
+        color: wallMetalColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_01.Build_Wall_Conveyor_8x4_01_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xb714e8
+        model: "Build_Wall_Conveyor_8x4_01_C.glb",
+        color: wallWoodColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_02_Steel.Build_Wall_Conveyor_8x4_02_Steel_C": {
-        model: "",
-        color: 0xff00ff
+        model: "Build_Wall_Conveyor_8x4_02_C.glb", // TODO
+        color: wallMetalColor
     },
-"/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_02.Build_Wall_Conveyor_8x4_02_C": {
-    model: "",
-    color: 0xff00ff
-},
-"/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_03_Steel.Build_Wall_Conveyor_8x4_03_Steel_C": {
-    model: "",
-    color: 0xff00ff
-},
+    "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_02.Build_Wall_Conveyor_8x4_02_C": {
+        model: "Build_Wall_Conveyor_8x4_02_C.glb",
+        color: wallWoodColor
+    },
+    "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_03_Steel.Build_Wall_Conveyor_8x4_03_Steel_C": {
+        model: "Build_Wall_Conveyor_8x4_03_C.glb", // TODO
+        color: wallMetalColor
+    },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_03.Build_Wall_Conveyor_8x4_03_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc658e6
+        model: "Build_Wall_Conveyor_8x4_03_C.glb",
+        color: wallWoodColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_04_Steel.Build_Wall_Conveyor_8x4_04_Steel_C": {
-        model: "",
-        color: 0xff00ff
+        model: "Build_Wall_Conveyor_8x4_04_C.glb", // TODO
+        color: wallMetalColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Conveyor_8x4_04.Build_Wall_Conveyor_8x4_04_C": {
-        model: "",
-        color: 0xff00ff
+        model: "Build_Wall_Conveyor_8x4_04_C.glb",
+        color: wallWoodColor
     },
 
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_01_Steel.Build_Wall_Door_8x4_01_Steel_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        model: "Build_Wall_Door_8x4_01_C.glb", // TODO
+        color: wallMetalColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_01.Build_Wall_Door_8x4_01_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        model: "Build_Wall_Door_8x4_01_C.glb",
+        color: wallWoodColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_02_Steel.Build_Wall_Door_8x4_02_Steel_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        model: "Build_Wall_Door_8x4_02_C.glb", // TODO
+        color: wallMetalColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_02.Build_Wall_Door_8x4_02_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xcc81e3
+        model: "Build_Wall_Door_8x4_02_C.glb",
+        color: wallWoodColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_03_Steel.Build_Wall_Door_8x4_03_Steel_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        model: "Build_Wall_Door_8x4_03_C.glb", // TODO
+        color: wallMetalColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_03.Build_Wall_Door_8x4_03_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        model: "Build_Wall_Door_8x4_03_C.glb",
+        color: wallWoodColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Gate_8x4_01.Build_Wall_Gate_8x4_01_C": {
-        model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        model: "Build_Wall_Gate_8x4_01_C.glb",
+        color: wallWoodColor
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C": {
         model: "Build_Wall_1a_C.glb",
-        color:
-            0xab51d8
+        color: 0xab51d8
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1c.Build_Wall_1c_C": {
         model: "Build_Wall_1a_C.glb", // TODO
-        color: 0xc514e8
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set02/Build_Wall_2a.Build_Wall_2a_C": {
         model: "Build_Wall_1a_C.glb", // TODO
-        color: 0x9525ce
+        color: 0xff00ff
     },
 
     "/Game/FactoryGame/Buildable/Factory/AssemblerMk1/Build_AssemblerMk1.Build_AssemblerMk1_C": {
