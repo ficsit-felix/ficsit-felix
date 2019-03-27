@@ -67,7 +67,8 @@ class DataBuffer {
     }
     if (this.cursor + length > this.buffer.length) {
       // throw new Error('TOO LONG: ' +length + ' | ' + this.readHex(32) + ': ' + this.cursor + ' / ' + this.buffer.length );
-      // console.error(this.readHex(this.buffer.length - this.cursor -1));
+       //console.error(this.readHex(this.buffer.length - this.cursor -1));
+       console.log(this.readHex(32));
       // return '';
       console.trace("buffer < " + length);
       throw new Error("cannot read string of length: " + length);
@@ -77,6 +78,10 @@ class DataBuffer {
       .toString("utf8");
     this.cursor += length - 1;
     this.bytesRead += length - 1;
+
+    if (this.cursor < 0) {
+      throw new Error('Cursor overflowed to ' + this.cursor + ' by ' + length);
+    }
     this.assertNullByte();
     return result;
   }
@@ -517,6 +522,18 @@ export class Sav2Json {
                 isValid: buffer.readByte()
               }
             });
+            break;
+          case "Color":
+            properties.push({
+              name: name,
+              type: prop,
+              structUnknown: unknown,
+              value: {
+                type: type,
+                color: buffer.readHex(4)
+              }
+            });
+
             break;
           case "LinearColor":
             properties.push({
@@ -994,6 +1011,9 @@ export class Json2Sav {
             this.buffer.writeFloat(property.value.max[1]);
             this.buffer.writeFloat(property.value.max[2]);
             this.buffer.writeByte(property.value.isValid);
+            break;
+          case "Color":
+            this.buffer.writeHex(property.value.color);
             break;
           case "LinearColor":
             this.buffer.writeFloat(property.value.r);

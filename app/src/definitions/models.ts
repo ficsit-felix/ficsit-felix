@@ -298,6 +298,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xff00ff
     },
+    "/Game/FactoryGame/Buildable/Factory/GeneratorGeoThermal/Build_GeneratorGeoThermal.Build_GeneratorGeoThermal_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/GeneratorNuclear/Build_GeneratorNuclear.Build_GeneratorNuclear_C": {
         model: "",
         color: 0xff00ff
@@ -423,7 +427,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xff00ff
     },
-    "/Game/FactoryGame/Buildable/FactoryTrading/TradingPost/Build_TradingPost.Build_TradingPost_C": {
+    "/Game/FactoryGame/Buildable/Factory/TradingPost/Build_TradingPost.Build_TradingPost_C": {
         model: "",
         color: 0x710586
     },
@@ -478,6 +482,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xd80e2c
     },
+    "/Game/FactoryGame/Character/Creature/Enemy/Spitter/AlternativeSpitter/Char_Spitter_Alternative.Char_Spitter_Alternative_C": {
+        model: "",
+        color: 0xff00ff
+    },
+
     "/Game/FactoryGame/Character/Creature/Enemy/Spitter/Char_Spitter.Char_Spitter_C": {
         model: "",
         color: 0xff00ff
@@ -486,10 +495,20 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xda3950
     },
+    "/Game/FactoryGame/Character/Creature/Enemy/Stinger/Char_Stinger.Char_Stinger_C": {
+        model: "",
+        color: 0xff00ff
+    },
+
     "/Game/FactoryGame/Character/Creature/Enemy/Stinger/SmallStinger/Char_CaveStinger_Child.Char_CaveStinger_Child_C": {
         model: "",
         color: 0xff00ff
     },
+    "/Game/FactoryGame/Character/Creature/Enemy/Stinger/SmallStinger/Char_Stinger_Child.Char_Stinger_Child_C": {
+        model: "",
+        color: 0xff00ff
+    },
+
     "/Game/FactoryGame/Character/Creature/Wildlife/Giraffe/Char_Giraffe.Char_Giraffe_C": {
         model: "",
         color: 0xc20f0f

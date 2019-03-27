@@ -25,7 +25,10 @@
 
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>Error</md-dialog-title>
-      <span class="dialog-content">{{ errorText }}</span>
+      <span class="dialog-content">{{ errorText }}
+        <br /><br />
+        Please send this save file to me at bitowl#0552 on Discord or per Mail to <a href="mailto:felix@owl.yt">felix@owl.yt</a>.
+      </span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false"
           >Close</md-button
