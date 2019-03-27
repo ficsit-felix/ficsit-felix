@@ -183,6 +183,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xff00ff
     },
+    "/Game/FactoryGame/Buildable/Factory/Converter/Build_Converter.Build_Converter_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/CA_Merger/Build_ConveyorAttachmentMerger.Build_ConveyorAttachmentMerger_C": {
         model: "",
         color: 0x693d65
@@ -302,6 +306,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0x693fb
     },
+    "/Game/FactoryGame/Buildable/Factory/HadronCollider/Build_HadronCollider.Build_HadronCollider_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPad.Build_JumpPad_C": {
         model: "",
         color: 0x872f98
@@ -375,6 +383,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xff00ff
     },
+    "/Game/FactoryGame/Buildable/Factory/RadarTower/Build_RadarTower.Build_RadarTower_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C": {
         model: "",
         color: 0x830477
@@ -407,8 +419,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "Build_StoragePlayer_C.glb", // r z 90
         color: 0x450352
     },
-
-    "/Game/FactoryGame/Buildable/Factory/TradingPost/Build_TradingPost.Build_TradingPost_C": {
+    "/Game/FactoryGame/Buildable/Factory/TradingPost/BP_StartingPod.BP_StartingPod_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Buildable/FactoryTrading/TradingPost/Build_TradingPost.Build_TradingPost_C": {
         model: "",
         color: 0x710586
     },
@@ -451,15 +466,30 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xff00ff
     },
+    "/Game/FactoryGame/Character/Creature/Enemy/CrabHatcher/Char_CrabHatcher.Char_CrabHatcher_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Character/Creature/Enemy/Hog/AlphaHog/Char_AlphaHog.Char_AlphaHog_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Character/Creature/Enemy/Hog/Char_Hog.Char_Hog_C": {
         model: "",
         color: 0xd80e2c
+    },
+    "/Game/FactoryGame/Character/Creature/Enemy/Spitter/Char_Spitter.Char_Spitter_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C": {
         model: "",
         color: 0xda3950
     },
-
+    "/Game/FactoryGame/Character/Creature/Enemy/Stinger/SmallStinger/Char_CaveStinger_Child.Char_CaveStinger_Child_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Character/Creature/Wildlife/Giraffe/Char_Giraffe.Char_Giraffe_C": {
         model: "",
         color: 0xc20f0f
@@ -468,6 +498,14 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Character/Creature/Wildlife/NonFlyingBird/Char_NonFlyingBird.Char_NonFlyingBird_C": {
         model: "",
         color: 0xbc0f28
+    },
+    "/Game/FactoryGame/Character/Creature/Wildlife/SpaceGiraffe/Char_SpaceGiraffe.Char_SpaceGiraffe_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Character/Creature/Wildlife/SpaceRabbit/Char_SpaceRabbit.Char_SpaceRabbit_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Character/Player/BP_DeathMarker.BP_DeathMarker_C": {
         model: "",
@@ -482,6 +520,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0x001dff
     },
 
+    "/Game/FactoryGame/Equipment/-Shared/Consumeable/BP_ConsumeableEquipment.BP_ConsumeableEquipment_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Equipment/Beacon/BP_Beacon.BP_Beacon_C": {
         model: "",
         color: 0xa80cff
@@ -502,6 +544,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleSmallRock.BP_DestructibleSmallRock_C": {
         model: "",
         color: 0x777777
+    },
+    "/Game/FactoryGame/Equipment/C4Dispenser/Equip_C4Dispenser.Equip_C4Dispenser_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Equipment/Chainsaw/Equip_Chainsaw.Equip_Chainsaw_C": {
         model: "",
@@ -524,6 +570,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xff00ff
     },
+    "/Game/FactoryGame/Equipment/Machinegun/Equip_Machinegun.Equip_Machinegun_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Equipment/ObjectScanner/Equip_ObjectScanner.Equip_ObjectScanner_C": {
         model: "",
         color: 0xff00ff
@@ -535,6 +585,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Equipment/RebarGun/Equip_RebarGun_Projectile.Equip_RebarGun_Projectile_C": {
         model: "",
         color: 0x0c2289
+    },
+    "/Game/FactoryGame/Equipment/RebarScatterGun/Equip_RebarScatterGun_Projectile.Equip_RebarScatterGun_Projectile_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Equipment/Rifle/Equip_Rifle_Mk2.Equip_Rifle_Mk2_C": {
         model: "",
@@ -579,7 +633,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0x3caa74
     },
 
-
+    "/Game/FactoryGame/Resource/Environment/AnimalParts/BP_AlphaHogParts.BP_AlphaHogParts_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Resource/Environment/AnimalParts/BP_CrabEggParts.BP_CrabEggParts_C": {
         model: "",
         color: 0xbd6e41
