@@ -12,5 +12,6 @@ You can find python scripts to transform save files to json and back at https://
 To run the application with hot reloading simply execute:
 ```
 cd app
+yarn install
 yarn serve
 ```
