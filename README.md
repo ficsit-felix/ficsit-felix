@@ -9,9 +9,15 @@ It uses JavaScript, Vue, three.js and some other libraries for the frontend and 
 You can find python scripts to transform save files to json and back at https://github.com/bitowl/satisfactory-save-format.
 
 ## Development
+Install the dependencies:
+```
+cd app
+yarn global add @vue/cli
+yarn install
+```
+
 To run the application with hot reloading simply execute:
 ```
 cd app
-yarn install
 yarn serve
 ```
