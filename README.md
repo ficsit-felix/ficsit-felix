@@ -8,6 +8,8 @@ It uses JavaScript, Vue, three.js and some other libraries for the frontend and 
 
 You can find python scripts to transform save files to json and back at https://github.com/bitowl/satisfactory-save-format.
 
+There is a save file editor for Windows in development at https://github.com/Goz3rr/SatisfactorySaveEditor.
+
 ## Development
 Install the dependencies:
 ```
