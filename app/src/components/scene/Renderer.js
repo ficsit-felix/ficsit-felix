@@ -11,9 +11,7 @@ export default {
   },
 
   provide() {
-    this.renderer = new WebGLRenderer();
-    /*this.renderer.shadowMap.enabled = true
-        this.renderer.shadowMap.type = BasicShadowMap*/
+    this.renderer = new WebGLRenderer({ antialias: true });
 
     return {
       renderer: this
