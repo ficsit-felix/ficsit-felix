@@ -60,11 +60,33 @@ class DataBuffer {
     return result;
   }
 
+  // https://stackoverflow.com/a/14601808
+  decodeUTF16LE( binaryStr: string ): string {
+    var cp = [];
+    for( var i = 0; i < binaryStr.length; i+=2) {
+        cp.push( 
+             binaryStr.charCodeAt(i) |
+            ( binaryStr.charCodeAt(i+1) << 8 )
+        );
+    }
+
+    return String.fromCharCode.apply( String, cp );
+}
+
   readLengthPrefixedString(): string {
     let length = this.readInt();
     if (length == 0) {
       return "";
     }
+
+    var utf16 = false;
+    if (length < 0) { // Thanks to @Goz3rr we know that this is now an utf16 based string
+      // throw new Error("length of string < 0: " + length);
+      length = -2 * length;
+      utf16 = true;
+    }
+
+
     if (this.cursor + length > this.buffer.length) {
       // throw new Error('TOO LONG: ' +length + ' | ' + this.readHex(32) + ': ' + this.cursor + ' / ' + this.buffer.length );
        //console.error(this.readHex(this.buffer.length - this.cursor -1));
@@ -73,17 +95,32 @@ class DataBuffer {
       console.trace("buffer < " + length);
       throw new Error("cannot read string of length: " + length);
     }
-    let result = this.buffer
-      .slice(this.cursor, this.cursor + length - 1)
-      .toString("utf8");
-    this.cursor += length - 1;
-    this.bytesRead += length - 1;
+  
+      var resultStr;
+    if (utf16) {
+      var result = this.buffer
+      .slice(this.cursor, this.cursor + length - 2);
+      resultStr = this.decodeUTF16LE(result.toString("binary"));
+      
+      this.cursor += length - 2;
+      this.bytesRead += length - 2;
+    } else {
+      var result = this.buffer
+      .slice(this.cursor, this.cursor + length - 1);
+      resultStr = result.toString("utf8");
+      
+      this.cursor += length - 1;
+      this.bytesRead += length - 1;
+    }
 
     if (this.cursor < 0) {
       throw new Error('Cursor overflowed to ' + this.cursor + ' by ' + length);
     }
+    if (utf16) {
+      this.assertNullByte(); // two null bytes for utf16
+    }
     this.assertNullByte();
-    return result;
+    return resultStr;
   }
   assertNullByte() {
     const zero = this.buffer.readInt8(this.cursor);
@@ -809,13 +846,37 @@ class OutputBuffer {
     this.write(buffer.toString("binary"), count);
   }
 
+  // https://stackoverflow.com/a/14313213
+  isASCII(str: string): boolean {
+    return /^[\x00-\x7F]*$/.test(str);
+  }
+
+  // https://stackoverflow.com/a/24391376
+  encodeUTF16LE(text: string) {
+    var byteArray = new Uint8Array(text.length * 2);
+    for (var i = 0; i < text.length; i++) {
+        byteArray[i*2] = text.charCodeAt(i)  & 0xff;
+        byteArray[i*2+1] = text.charCodeAt(i) >> 8  & 0xff;
+    }
+
+    return String.fromCharCode.apply( String, byteArray as any );
+}
+    
+
   writeLengthPrefixedString(value: string, count = true) {
     if (value.length == 0) {
       this.writeInt(0, count);
     } else {
-      this.writeInt(value.length + 1, count);
-      this.write(value, count);
-      this.writeByte(0, count);
+      if (this.isASCII(value)) {
+        this.writeInt(value.length + 1, count);
+        this.write(value, count);
+        this.writeByte(0, count);
+      } else {
+        this.writeInt(-value.length - 1, count);
+        this.write(this.encodeUTF16LE(value));
+        this.writeByte(0, count);
+        this.writeByte(0, count);
+      }
     }
   }
 }
