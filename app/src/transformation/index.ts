@@ -567,7 +567,10 @@ export class Sav2Json {
               structUnknown: unknown,
               value: {
                 type: type,
-                color: buffer.readHex(4)
+                r: buffer.readByte(),
+                g: buffer.readByte(),
+                b: buffer.readByte(),
+                a: buffer.readByte()
               }
             });
 
@@ -651,6 +654,20 @@ export class Sav2Json {
             });
             break;
           }
+          case "RailroadTrack":
+            properties.push({
+              name: name,
+              type: prop,
+              structUnknown: unknown,
+              value: {
+                type: type,
+                levelName: buffer.readLengthPrefixedString(),
+                pathName: buffer.readLengthPrefixedString(),
+                offset: buffer.readFloat(),
+                forward: buffer.readFloat()
+              }
+            });
+            break;
           default:
             this.error("Unknown struct type: " + type);
             break;
@@ -1074,7 +1091,10 @@ export class Json2Sav {
             this.buffer.writeByte(property.value.isValid);
             break;
           case "Color":
-            this.buffer.writeHex(property.value.color);
+            this.buffer.writeByte(property.value.r);
+            this.buffer.writeByte(property.value.g);
+            this.buffer.writeByte(property.value.b);
+            this.buffer.writeByte(property.value.a);
             break;
           case "LinearColor":
             this.buffer.writeFloat(property.value.r);
@@ -1112,6 +1132,12 @@ export class Json2Sav {
             // Dirty hack to make in this one case the inner property only take up 4 bytes
             this.buffer.buffers[this.buffer.buffers.length - 1].length =
               oldval + 4;
+            break;
+          case "RailroadTrackPosition":
+            this.buffer.writeLengthPrefixedString(property.value.levelName);
+            this.buffer.writeLengthPrefixedString(property.value.pathName);
+            this.buffer.writeFloat(property.value.offset);
+            this.buffer.writeFloat(property.value.forward);
             break;
         }
         break;
