@@ -8,7 +8,8 @@
       <md-button class="md-raised" @click="$router.push('/')">Back to editor</md-button>
     </div>
     <div v-else class="infobox">
-      <p>Downloading save file...</p>
+      <p v-if="exportJson">Downloading JSON file...</p>
+      <p v-else>Downloading save file...</p>
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
@@ -103,7 +104,8 @@ export default {
       progress: 0,
       infoText: "initializing...",
       showErrorDialog: false,
-      errorText: ""
+      errorText: "",
+      exportJson: false
     };
   },
   watch: {
@@ -124,10 +126,11 @@ export default {
   created() {
     if (!this.dataLoaded) {
       // The user needs to upload a file first
-      this.$router.push("upload");
+      this.$router.push("upload/sav");
     }
   },
   mounted() {
+    this.exportJson = this.$route.path === "/download/json";
     this.uploadFile();
   },
   methods: {
@@ -142,7 +145,12 @@ export default {
         this.isSaving = true;
         this.infoText = "reading file...";
 
-        var data = new Json2Sav(window.data).transform();
+        var data;
+        if (this.exportJson) {
+          data = JSON.stringify(window.data);
+        } else {
+          data = new Json2Sav(window.data).transform();
+        }
 
         var element = document.createElement("a");
 
@@ -161,7 +169,13 @@ export default {
               Sentry.captureMessage("downloaded file");
 
               element.href = window.URL.createObjectURL(blob);
-              element.download = this.filename;
+              if (this.exportJson) {
+                // TODO make sure we only cut of the extension
+                element.download = this.filename.replace(".json", "").replace(".sav", "") + ".json";
+              } else {
+                element.download = this.filename.replace(".json", "").replace(".sav", "") + ".sav";
+              }
+              
 
               document.body.appendChild(element);
 

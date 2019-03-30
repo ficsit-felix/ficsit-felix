@@ -12,7 +12,7 @@ export default new Router({
       component: Editor
     },
     {
-      path: "/upload",
+      path: "/upload/*",
       name: "upload",
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
@@ -21,7 +21,7 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/Upload.vue")
     },
     {
-      path: "/download",
+      path: "/download/*",
       name: "download",
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route

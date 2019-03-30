@@ -8,6 +8,11 @@
       <li @click="showOpenDialog = true"><md-icon>folder_open</md-icon>Open</li>
       <li @click="showSaveDialog = true"><md-icon>save</md-icon>Save</li>
       <li @click="showHelpDialog = true"><md-icon>help</md-icon>Help</li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li @click="showOpenJsonDialog = true"><md-icon>file_upload</md-icon>Import JSON</li>
+      <li @click="showSaveJsonDialog = true"><md-icon>file_download</md-icon>Export JSON</li>
     </ul>
 
     <div class="spacer"></div>
@@ -30,6 +35,26 @@
       md-cancel-text="No"
       @md-cancel="showSaveDialog = false"
       @md-confirm="save"
+    />
+
+    <md-dialog-confirm
+      :md-active.sync="showOpenJsonDialog"
+      md-title="Import JSON file"
+      md-content="Do you really want to import a JSON file and lose any changes in the current one?"
+      md-confirm-text="Yes"
+      md-cancel-text="No"
+      @md-cancel="showOpenJsonDialog = false"
+      @md-confirm="openJson"
+    />
+
+    <md-dialog-confirm
+      :md-active.sync="showSaveJsonDialog"
+      md-title="Export JSON file"
+      md-content="Do you want to export this save as a JSON file?"
+      md-confirm-text="Yes"
+      md-cancel-text="No"
+      @md-cancel="showSaveJsonDialog = false"
+      @md-confirm="saveJson"
     />
 
     <md-dialog :md-active.sync="showHelpDialog">
@@ -112,15 +137,23 @@ export default {
       logoAnimating: false,
       showHelpDialog: false,
       showOpenDialog: false,
-      showSaveDialog: false
+      showSaveDialog: false,
+      showOpenJsonDialog: false,
+      showSaveJsonDialog: false,
     };
   },
   methods: {
     open() {
-      this.$router.push("upload");
+      this.$router.push("upload/sav");
+    },
+    openJson() {
+      this.$router.push("upload/json");
     },
     save() {
-      this.$router.push("download");
+      this.$router.push("download/sav");
+    },
+    saveJson() {
+      this.$router.push("download/json");
     },
     openGithub() {
       window.location.href = "https://github.com/bitowl/ficsit-felix";

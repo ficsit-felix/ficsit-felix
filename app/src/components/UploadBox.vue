@@ -2,7 +2,14 @@
   <div>
     <form enctype="multipart/form-data" novalidate v-if="!isSaving">
       <div class="dropbox">
-        <input
+        <input v-if="importJson"
+          type="file"
+          name="uploadField"
+          accept=".json"
+          class="input-file"
+          @change="uploadFile($event.target.files[0])"
+        />
+        <input v-else
           type="file"
           name="uploadField"
           accept=".sav"
@@ -12,11 +19,13 @@
         <!--
             
         @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
-        <p>Drag your save file here to begin <br />or click to browse</p>
+        <p v-if="importJson">Drag your JSON file here to begin <br />or click to browse</p>
+        <p v-else>Drag your save file here to begin <br />or click to browse</p>
       </div>
     </form>
     <div v-else class="infobox">
-      <p>Uploading save file...</p>
+      <p v-if="importJson">Importing JSON file...</p>
+      <p v-else>Uploading save file...</p>
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
@@ -116,7 +125,8 @@ export default {
       progress: 0,
       infoText: "initializing...",
       showErrorDialog: false,
-      errorText: ""
+      errorText: "",
+      importJson: false,
     };
   },
   watch: {
@@ -132,6 +142,8 @@ export default {
     }
   },
   mounted() {
+    this.importJson = this.$route.path === "/upload/json";
+
     Sentry.captureMessage("visit upload page");
 
     for (var a in modelConfig) {
@@ -171,8 +183,15 @@ export default {
         this.infoText = "processing file...";
         this.progress = 50;
         try {
-          let sav2Json = new Sav2Json(Buffer.from(response.target.result));
-          let json = sav2Json.transform();
+          var json;
+          if (this.importJson) {
+            json = JSON.parse(Buffer.from(response.target.result).toString("utf-8"));
+          } else {
+            let sav2Json = new Sav2Json(Buffer.from(response.target.result));
+            json = sav2Json.transform();
+          }
+          
+          
 
           this.infoText = "building world...";
           // give us some time to build the 3d world while animating the progress bar
