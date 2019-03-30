@@ -654,7 +654,7 @@ export class Sav2Json {
             });
             break;
           }
-          case "RailroadTrack":
+          case "RailroadTrackPosition":
             properties.push({
               name: name,
               type: prop,

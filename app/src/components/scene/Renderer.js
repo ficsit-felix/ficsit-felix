@@ -11,7 +11,7 @@ export default {
   },
 
   provide() {
-    this.renderer = new WebGLRenderer({ antialias: true });
+    this.renderer = new WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true });
 
     return {
       renderer: this
