@@ -327,6 +327,7 @@ export default {
       this.$refs.renderer.camera.obj,
       this.$refs.renderer.renderer.domElement
     );
+    this.transformControl.space = 'local';
     // correct way to to this, but i don't want that many updates
     /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();

@@ -41,7 +41,7 @@
 .toolbar {
   flex-grow: 0;
   flex-shrink: 0; 
-  flex-basis: 0;
+  flex-basis: auto;
 }
 .mainrow {
   display: flex;
