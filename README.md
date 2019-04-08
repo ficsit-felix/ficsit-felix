@@ -6,10 +6,6 @@ FeliX is a webapp to inspect save files of the game Satisfactory. [You can try i
 
 It uses JavaScript, Vue, three.js and some other libraries for the frontend and TypeScript for Firebase functions on the backend. It is currently in the prototype stage. Any contributions are greatly appreciated!
 
-You can find python scripts to transform save files to json and back at https://github.com/bitowl/satisfactory-save-format.
-
-There is a save file editor for Windows in development at https://github.com/Goz3rr/SatisfactorySaveEditor.
-
 ## Development
 Install the dependencies:
 ```
@@ -23,3 +19,18 @@ To run the application with hot reloading simply execute:
 cd app
 yarn serve
 ```
+
+## Licensing
+All script files are distributed unter the [MIT license](LICENSE).
+
+All models in `app/public/models` are distributed under the [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/) license. For attribution see the corresponding [AUTHORS file](app/public/models/AUTHORS).
+
+## Other useful repositories
+https://github.com/bitowl/satisfactory-save-format  
+Scripts to convert save files to json and back written in Python
+
+https://github.com/Vilsol/satisfactory-tool  
+Save file to json converter written in Go
+
+https://github.com/Goz3rr/SatisfactorySaveEditor  
+Save file editor for Windows written in C#

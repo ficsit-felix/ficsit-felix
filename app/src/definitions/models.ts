@@ -207,6 +207,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xff00ff
     },
+    "/Game/FactoryGame/Buildable/Factory/CentralStorage/Build_CentralStorage.Build_CentralStorage_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Factory/CheatPowerSink/Build_CheatPowerSink.Build_CheatPowerSink_C": {
         model: "",
         color: 0xff00ff
@@ -259,6 +263,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk5/Build_ConveyorBeltMk5.Build_ConveyorBeltMk5_C": {
         model: "Build_ConveyorBelt.glb", // TODO
         color: 0x8d6096
+    },
+    "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk4.Build_ConveyorBeltMk6_C": { // TODO does this exist in real saves?
+        model: "Build_ConveyorBelt.glb", // TODO 
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk6.Build_ConveyorBeltMk6_C": {
         model: "Build_ConveyorBelt.glb", // TODO
@@ -457,6 +465,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "BP_VehicleTargetPoint_C.glb", //z+100
         color: 0x4157bd
     },
+    "/Game/FactoryGame/Buildable/Vehicle/Explorer/BP_Explorer.BP_Explorer_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Buildable/Vehicle/Tractor/BP_Tractor.BP_Tractor_C": {
         model: "",
         color: 0x7f28b0
@@ -497,6 +509,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     "/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C": {
         model: "",
         color: 0xda3950
+    },
+    "/Game/FactoryGame/Character/Creature/Enemy/Stinger/Char_CaveStinger.Char_CaveStinger_C": {
+        model: "",
+        color: 0xff00ff
     },
     "/Game/FactoryGame/Character/Creature/Enemy/Stinger/Char_Stinger.Char_Stinger_C": {
         model: "",
@@ -596,7 +612,15 @@ let modelConfig: { [id: string]: ModelConfig } = {
         model: "",
         color: 0xff00ff
     },
+    "/Game/FactoryGame/Equipment/Medkit/Equip_MedKit.Equip_MedKit_C": {
+        model: "",
+        color: 0xff00ff
+    },
     "/Game/FactoryGame/Equipment/ObjectScanner/Equip_ObjectScanner.Equip_ObjectScanner_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Equipment/Parachute/Equip_Parachute.Equip_Parachute_C": {
         model: "",
         color: 0xff00ff
     },
@@ -621,6 +645,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
         color: 0xff00ff
     },
     "/Game/FactoryGame/Equipment/StunSpear/Equip_StunSpear.Equip_StunSpear_C": {
+        model: "",
+        color: 0xff00ff
+    },
+    "/Game/FactoryGame/Prototype/PrototypeEquipment/SprintingStilts/BP_SprintingStilts.BP_SprintingStilts_C": {
         model: "",
         color: 0xff00ff
     },
