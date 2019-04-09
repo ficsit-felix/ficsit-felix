@@ -149,6 +149,7 @@ interface SaveGame {
   saveDateTime: string;
   sessionVisibility: number;
   objects: ActorOrObject[];
+  collected: ObjectReference[];
   missing: string;
 }
 
@@ -292,6 +293,7 @@ export class Sav2Json {
       saveDateTime: buffer.readLong(),
       sessionVisibility: saveHeaderType > 4 ? buffer.readByte() : 0,
       objects: [],
+      collected: [],
       missing: ""
     };
 
@@ -332,6 +334,14 @@ export class Sav2Json {
         // type == 0
         saveJson.objects[i].entity = this.readEntity(buffer, false);
       }
+    }
+
+    const collectedCount = buffer.readInt();
+    for (var i = 0; i < collectedCount; i++) {
+      saveJson.collected.push({
+        levelName: buffer.readLengthPrefixedString(),
+        pathName: buffer.readLengthPrefixedString()
+      });
     }
 
     // read missing bytes
@@ -950,6 +960,13 @@ export class Json2Sav {
         } else if (obj.type == 0) {
           this.writeEntity(obj.entity, false);
         }
+      }
+
+      this.buffer.writeInt(saveJson.collected.length);
+      for (var i = 0; i < saveJson.collected.length; i++) {
+        const obj = saveJson.collected[i];
+        this.buffer.writeLengthPrefixedString(obj.levelName);
+        this.buffer.writeLengthPrefixedString(obj.pathName);
       }
 
       this.buffer.writeHex(saveJson.missing);
