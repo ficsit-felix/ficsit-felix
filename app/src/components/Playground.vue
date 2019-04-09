@@ -138,7 +138,7 @@ export default {
     },
     selectedIndex(val) {
       if (val != this.lastSelectedIndex) {
-        if (this.lastSelectedIndex != -1) {
+        if (this.lastSelectedIndex >= 0) {
           //  && this.lastSelectedIndex < this.objects.length
           this.setMaterial(
             this.lastSelectedIndex,
@@ -148,7 +148,7 @@ export default {
           );
         }
         this.lastSelectedIndex = val;
-        if (val != -1) {
+        if (val >= 0) {
           //  && val < this.objects.length
           this.setMaterial(val, this.selectedMaterial);
           var obj = this.getVisibleObjWithId(val);

@@ -7,22 +7,19 @@
         <md-icon>search</md-icon>
       </md-field>
     </div>
-    <virtual-list
-      :size="10"
-      :remain="100"
-      class="scroller"
-      ref="list"
-      :start="listStart"
-    >
+    <virtual-list :size="10" :remain="100" class="scroller" ref="list" :start="listStart">
+      <div
+        v-bind:class="{ selected: selectedIndex == -2}"
+        @click="select(-2)"
+        class="item"
+      >___Save_Header___</div>
       <div
         v-for="item of displayedNames"
         :key="item.id"
         v-bind:class="{ selected: item.id == selectedIndex }"
         @click="select(item.id)"
         class="item"
-      >
-        {{ item.text }}
-      </div>
+      >{{ item.text }}</div>
     </virtual-list>
     <!-- <RecycleScroller
     page-mode
@@ -37,7 +34,7 @@
         @click="select(item.id)"
         >{{item.text}}</div>
       </template>
-    </RecycleScroller> -->
+    </RecycleScroller>-->
     <!--
     <ul ref="list" class="list">
       <li

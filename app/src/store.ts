@@ -49,13 +49,6 @@ export default new Vuex.Store<RootState>({
         };
       });
     },
-    getSelectedObject: state => {
-      if (state.selectedIndex === -1) {
-        return null;
-      } else {
-        return window.data.objects[state.selectedIndex];
-      }
-    },
     getVisibleObjects(state) {
       return state.visibleObjects;
     }
@@ -69,6 +62,23 @@ export default new Vuex.Store<RootState>({
         state.visibleObjects[state.selectedIndex].state = 0;
       }*/
       state.selectedIndex = selectedIndex;
+      if (selectedIndex == -2) {
+        // selected save header
+        const header = {
+          saveHeaderType: window.data.saveHeaderType,
+          saveVersion: window.data.saveVersion,
+          buildVersion: window.data.buildVersion,
+          mapName: window.data.mapName,
+          mapOptions: window.data.mapOptions,
+          sessionName: window.data.sessionName,
+          playDurationSeconds: window.data.playDurationSeconds,
+          saveDateTime: window.data.saveDateTime,
+          sessionVisibility: window.data.sessionVisibility,
+          collected: window.data.collected,
+          missing: window.data.missing
+        };
+        state.selectedObject = header;
+      } else 
       if (selectedIndex != -1) {
         state.selectedObject = window.data.objects[selectedIndex];
       } else {
@@ -113,7 +123,21 @@ export default new Vuex.Store<RootState>({
     },
     SET_SELECTED_OBJECT(state, obj) {
       // console.log("STATE CHANGE", obj);
-      window.data.objects[state.selectedIndex] = obj;
+      if (state.selectedIndex === -2) { // header
+        window.data.saveHeaderType = obj.saveHeaderType;
+        window.data.saveVersion = obj.saveVersion;
+        window.data.buildVersion = obj.buildVersion;
+        window.data.mapName = obj.mapName;
+        window.data.mapOptions = obj.mapOptions;
+        window.data.sessionName = obj.sessionName;
+        window.data.playDurationSeconds = obj.playDurationSeconds;
+        window.data.saveDateTime = obj.saveDateTime;
+        window.data.sessionVisibility = obj.sessionVisibility;
+        window.data.collected = obj.collected;
+        window.data.missing = obj.missing;
+      } else {
+        window.data.objects[state.selectedIndex] = obj;
+      }
       state.selectedObject = obj;
     }
   },
