@@ -3,9 +3,11 @@
     <div v-if="!isSaving" class="infobox">
       <p v-if="errorText == ''">File should be downloaded.</p>
       <p v-else>An error occured.</p>
-      <br>
-      <br>
-      <md-button class="md-raised" @click="$router.push('/')">Back to editor</md-button>
+      <br />
+      <br />
+      <md-button class="md-raised" @click="$router.push('/')"
+        >Back to editor</md-button
+      >
     </div>
     <div v-else class="infobox">
       <p v-if="exportJson">Downloading JSON file...</p>
@@ -20,7 +22,9 @@
       <md-dialog-title>Error</md-dialog-title>
       <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showErrorDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -171,11 +175,14 @@ export default {
               element.href = window.URL.createObjectURL(blob);
               if (this.exportJson) {
                 // TODO make sure we only cut of the extension
-                element.download = this.filename.replace(".json", "").replace(".sav", "") + ".json";
+                element.download =
+                  this.filename.replace(".json", "").replace(".sav", "") +
+                  ".json";
               } else {
-                element.download = this.filename.replace(".json", "").replace(".sav", "") + ".sav";
+                element.download =
+                  this.filename.replace(".json", "").replace(".sav", "") +
+                  ".sav";
               }
-              
 
               document.body.appendChild(element);
 

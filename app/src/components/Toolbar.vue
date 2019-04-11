@@ -11,8 +11,12 @@
       <li></li>
       <li></li>
       <li></li>
-      <li @click="showOpenJsonDialog = true"><md-icon>file_upload</md-icon>Import JSON</li>
-      <li @click="showSaveJsonDialog = true"><md-icon>file_download</md-icon>Export JSON</li>
+      <li @click="showOpenJsonDialog = true">
+        <md-icon>file_upload</md-icon>Import JSON
+      </li>
+      <li @click="showSaveJsonDialog = true">
+        <md-icon>file_download</md-icon>Export JSON
+      </li>
     </ul>
 
     <div class="spacer"></div>
@@ -139,7 +143,7 @@ export default {
       showOpenDialog: false,
       showSaveDialog: false,
       showOpenJsonDialog: false,
-      showSaveJsonDialog: false,
+      showSaveJsonDialog: false
     };
   },
   methods: {

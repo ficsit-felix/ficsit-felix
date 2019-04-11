@@ -2,14 +2,16 @@
   <div>
     <form enctype="multipart/form-data" novalidate v-if="!isSaving">
       <div class="dropbox">
-        <input v-if="importJson"
+        <input
+          v-if="importJson"
           type="file"
           name="uploadField"
           accept=".json"
           class="input-file"
           @change="uploadFile($event.target.files[0])"
         />
-        <input v-else
+        <input
+          v-else
           type="file"
           name="uploadField"
           accept=".sav"
@@ -19,7 +21,9 @@
         <!--
             
         @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
-        <p v-if="importJson">Drag your JSON file here to begin <br />or click to browse</p>
+        <p v-if="importJson">
+          Drag your JSON file here to begin <br />or click to browse
+        </p>
         <p v-else>Drag your save file here to begin <br />or click to browse</p>
       </div>
     </form>
@@ -34,9 +38,10 @@
 
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>Error</md-dialog-title>
-      <span class="dialog-content">{{ errorText }}
-        <br /><br />
-        Please send this save file to me at bitowl#0552 on Discord or per Mail to <a href="mailto:felix@owl.yt">felix@owl.yt</a>.
+      <span class="dialog-content"
+        >{{ errorText }} <br /><br />
+        Please send this save file to me at bitowl#0552 on Discord or per Mail
+        to <a href="mailto:felix@owl.yt">felix@owl.yt</a>.
       </span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false"
@@ -116,7 +121,7 @@ import * as Sentry from "@sentry/browser";
 
 import { Sav2Json } from "@/transformation/index";
 import { modelHelper } from "@/helpers/modelHelper";
-import {modelConfig} from "@/definitions/models";
+import { modelConfig } from "@/definitions/models";
 
 export default {
   data: function() {
@@ -126,7 +131,7 @@ export default {
       infoText: "initializing...",
       showErrorDialog: false,
       errorText: "",
-      importJson: false,
+      importJson: false
     };
   },
   watch: {
@@ -185,13 +190,13 @@ export default {
         try {
           var json;
           if (this.importJson) {
-            json = JSON.parse(Buffer.from(response.target.result).toString("utf-8"));
+            json = JSON.parse(
+              Buffer.from(response.target.result).toString("utf-8")
+            );
           } else {
             let sav2Json = new Sav2Json(Buffer.from(response.target.result));
             json = sav2Json.transform();
           }
-          
-          
 
           this.infoText = "building world...";
           // give us some time to build the 3d world while animating the progress bar

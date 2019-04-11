@@ -18,8 +18,10 @@
             </Split>
           </SplitArea>
           <SplitArea :size="23">
-            <PropertyEditor @focusSelectedObject="focusSelectedObject" />
-          </SplitArea>a
+            <PropertyEditor
+              @focusSelectedObject="focusSelectedObject"
+            /> </SplitArea
+          >a
         </Split>
       </div>
     </div>
@@ -40,7 +42,7 @@
 }
 .toolbar {
   flex-grow: 0;
-  flex-shrink: 0; 
+  flex-shrink: 0;
   flex-basis: auto;
 }
 .mainrow {

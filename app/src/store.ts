@@ -8,20 +8,22 @@ Vue.use(Vuex);
 // Add the data object to the window interface
 // see https://stackoverflow.com/a/12709880
 declare global {
-  interface Window { data: any; }
+  interface Window {
+    data: any;
+  }
 }
 
 interface RootState {
-  loading: boolean,
-  selectedIndex: number,
-  selectedObject: any,
-  error: any,
-  title: string,
-  dataLoaded: boolean,
-  visibleObjects: any[],
-  uuid: string,
-  filename: string,
-  classes: any[]
+  loading: boolean;
+  selectedIndex: number;
+  selectedObject: any;
+  error: any;
+  title: string;
+  dataLoaded: boolean;
+  visibleObjects: any[];
+  uuid: string;
+  filename: string;
+  classes: any[];
 }
 
 export default new Vuex.Store<RootState>({
@@ -42,7 +44,7 @@ export default new Vuex.Store<RootState>({
       if (!state.dataLoaded) {
         return [];
       }
-      return window.data.objects.map((obj:any, index:any) => {
+      return window.data.objects.map((obj: any, index: any) => {
         return {
           id: index,
           text: obj.pathName.substring(obj.pathName.indexOf(".") + 1) // everything after the first .
@@ -78,8 +80,7 @@ export default new Vuex.Store<RootState>({
           missing: window.data.missing
         };
         state.selectedObject = header;
-      } else 
-      if (selectedIndex != -1) {
+      } else if (selectedIndex != -1) {
         state.selectedObject = window.data.objects[selectedIndex];
       } else {
         state.selectedObject = null;
@@ -123,7 +124,8 @@ export default new Vuex.Store<RootState>({
     },
     SET_SELECTED_OBJECT(state, obj) {
       // console.log("STATE CHANGE", obj);
-      if (state.selectedIndex === -2) { // header
+      if (state.selectedIndex === -2) {
+        // header
         window.data.saveHeaderType = obj.saveHeaderType;
         window.data.saveVersion = obj.saveVersion;
         window.data.buildVersion = obj.buildVersion;

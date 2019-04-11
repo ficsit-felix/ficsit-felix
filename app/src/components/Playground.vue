@@ -91,7 +91,7 @@ import { BoxBufferGeometry } from "three";
 import { setTimeout } from "timers";
 import { GLTFLoader } from "@/js/GLTFLoader";
 import { modelHelper } from "@/helpers/modelHelper";
-import { modelConfig} from "@/definitions/models";
+import { modelConfig } from "@/definitions/models";
 import * as Sentry from "@sentry/browser";
 
 export default {
@@ -327,7 +327,7 @@ export default {
       this.$refs.renderer.camera.obj,
       this.$refs.renderer.renderer.domElement
     );
-    this.transformControl.space = 'local';
+    this.transformControl.space = "local";
     // correct way to to this, but i don't want that many updates
     /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
@@ -538,7 +538,10 @@ export default {
     getGeometry(className) {
       return new Promise((resolve, reject) => {
         if (this.geometries[className] === undefined) {
-          if (modelConfig[className] !== undefined && modelConfig[className].model !== "") {
+          if (
+            modelConfig[className] !== undefined &&
+            modelConfig[className].model !== ""
+          ) {
             modelHelper
               .loadModel("/models/" + modelConfig[className].model)
               .then(geometry => {
@@ -546,7 +549,6 @@ export default {
                 resolve(this.geometries[className]);
               });
           } else {
-
             if (modelConfig[className] === undefined) {
               console.error("missing model definition: " + className);
               Sentry.captureMessage("missing model definition: " + className);

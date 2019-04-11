@@ -1,20 +1,32 @@
 <template>
   <div class="property-editor">
     <div class="buttons">
-      <md-button class="md-raised" :disabled="focusDisabled" @click="focusSelectedObject">Focus</md-button>
+      <md-button
+        class="md-raised"
+        :disabled="focusDisabled"
+        @click="focusSelectedObject"
+        >Focus</md-button
+      >
       <md-button
         class="md-raised md-accent"
         :disabled="this.selectedObject == null"
         @click="saveJson"
-      >Save JSON</md-button>
+        >Save JSON</md-button
+      >
     </div>
     <md-field :class="jsonClass">
       <label>JSON</label>
-      <md-textarea v-model="selectedJson" :disabled="this.selectedJson == ''" rows="200"></md-textarea>
+      <md-textarea
+        v-model="selectedJson"
+        :disabled="this.selectedJson == ''"
+        rows="200"
+      ></md-textarea>
       <span class="md-error">{{ jsonError }}</span>
     </md-field>
 
-    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">Object saved.</md-snackbar>
+    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar"
+      >Object saved.</md-snackbar
+    >
   </div>
 </template>
 
