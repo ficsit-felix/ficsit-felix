@@ -243,32 +243,32 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C": {
     model: "Build_ConveyorBelt.glb",
-    color: 0x894896
+    color: 0x9750a6
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x8d6096
+    color: 0x7b50a6
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x8d6096
+    color: 0x5e50a6
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk4/Build_ConveyorBeltMk4.Build_ConveyorBeltMk4_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x8d6096
+    color: 0x505ea6
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk5/Build_ConveyorBeltMk5.Build_ConveyorBeltMk5_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x8d6096
+    color: 0x507ba6
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk4.Build_ConveyorBeltMk6_C": {
     // TODO does this exist in real saves?
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0xff00ff
+    color: 0x5097a6
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk6.Build_ConveyorBeltMk6_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x8d6096
+    color: 0x5097a6
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": {
     model: "Build_ConveyorPole_C.glb",

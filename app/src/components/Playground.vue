@@ -87,7 +87,7 @@ import Renderer from "@/components/scene/Renderer";
 import Cube from "@/components/scene/Cube";
 import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
-import { BoxBufferGeometry } from "three";
+import { BoxBufferGeometry, LineCurve3 } from "three";
 import { setTimeout } from "timers";
 import { GLTFLoader } from "@/js/GLTFLoader";
 import { modelHelper } from "@/helpers/modelHelper";
@@ -452,7 +452,7 @@ export default {
             colorMap[obj.className] = Math.random() * 0xffffff;
           }
 
-          this.getGeometry(obj.className).then(geometry => {
+          this.getGeometry(obj).then(geometry => {
             var object = new THREE.Mesh(
               geometry,
               this.getMaterial(obj.className)
@@ -469,6 +469,113 @@ export default {
       }
     },
 
+    createConveyorBeltGeometry(obj) {
+      const translation = obj.transform.translation;
+      const splineData = obj.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
+      console.log(splineData);
+
+      const splinePoints = splineData.value.values.length;
+
+      const extrusionSegments = splinePoints;
+      const radius = 100;
+      const radiusSegments = 3;
+      const closed = false;
+
+      const points = [];
+
+      const extrudePath = new THREE.CurvePath(); //new THREE.CatmullRomCurve3(points);
+
+      var lastOut = null;
+      var lastLoc = null;
+
+      for (let i = 0; i < splinePoints; i++) {
+        const splinePoint = splineData.value.values[i];
+        const location = splinePoint.properties[0]; // TODO make sure this is Location
+        const arriveTangent = splinePoint.properties[0]; // TODO make sure this is arriveTangent
+        const leaveTangent = splinePoint.properties[0]; // TODO make sure this is leaveTangent
+        points.push(
+          new THREE.Vector3(
+            arriveTangent.value.y,
+            arriveTangent.value.x,
+            arriveTangent.value.z
+          )
+        );
+        points.push(
+          new THREE.Vector3(
+            location.value.y,
+            location.value.x,
+            location.value.z
+          )
+        );
+
+        points.push(
+          new THREE.Vector3(
+            leaveTangent.value.y,
+            leaveTangent.value.x,
+            leaveTangent.value.z
+          )
+        );
+
+        if (lastOut != null) {
+          extrudePath.add(
+            new LineCurve3(
+              new THREE.Vector3(
+                lastLoc.value.y,
+                lastLoc.value.x,
+                lastLoc.value.z
+              ),
+              new THREE.Vector3(
+                location.value.y,
+                location.value.x,
+                location.value.z
+              )
+            )
+          );
+          // TODO find out how exactly to use arriveTangent and leaveTangent
+          /*extrudePath.add(
+            new THREE.QuadraticBezierCurve3(
+              new THREE.Vector3(
+                lastLoc.value.y, 
+                lastLoc.value.x, 
+                lastLoc.value.z),
+                new THREE.Vector3(
+                lastOut.value.y, 
+                lastOut.value.x, 
+                lastOut.value.z),
+              new THREE.Vector3(
+                arriveTangent.value.y, 
+                arriveTangent.value.x, 
+                arriveTangent.value.z),
+              new THREE.Vector3(
+                location.value.y, 
+                location.value.x, 
+                location.value.z)
+            )
+          );*/
+        }
+
+        lastOut = leaveTangent;
+        lastLoc = location;
+      }
+
+      // const extrudePath2 = new THREE.CatmullRomCurve3(points);
+
+      const geometry = new THREE.TubeBufferGeometry(
+        extrudePath,
+        extrusionSegments,
+        radius,
+        radiusSegments,
+        closed
+      );
+
+      /*const mesh = new THREE.Mesh(geometry, this.unselectedMaterial);
+      mesh.position.x = obj.transform.translation[1];
+      mesh.position.y = obj.transform.translation[0];
+      mesh.position.z = obj.transform.translation[2]
+      this.$refs.scene.scene.add(mesh);*/
+      return geometry;
+    },
+
     updateObjectVisuals(object, obj) {
       // console.log(obj);
 
@@ -481,7 +588,9 @@ export default {
       object.quaternion.z = -obj.transform.rotation[2];
       object.quaternion.w = obj.transform.rotation[3];
 
-      object.rotateZ(1.5708); // 90 deg in radians
+      if (!this.isConveyorBelt(obj)) {
+        object.rotateZ(1.5708); // 90 deg in radians
+      } // TODO conveyor belt coordinates are given without rotation?
 
       var scaleMultiplier = [1, 1, 1];
       /*switch (obj.className) {
@@ -535,8 +644,32 @@ export default {
       this.setSelectedObject(clone);
     },
 
-    getGeometry(className) {
+    isConveyorBelt(obj) {
+      return (
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C" ||
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C" ||
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C" ||
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk4/Build_ConveyorBeltMk4.Build_ConveyorBeltMk4_C" ||
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk5/Build_ConveyorBeltMk5.Build_ConveyorBeltMk5_C" ||
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk6.Build_ConveyorBeltMk6_C"
+      );
+    },
+
+    getGeometry(obj) {
+      const className = obj.className;
+
       return new Promise((resolve, reject) => {
+        if (this.isConveyorBelt(obj)) {
+          resolve(this.createConveyorBeltGeometry(obj));
+          return;
+        }
+
         if (this.geometries[className] === undefined) {
           if (
             modelConfig[className] !== undefined &&
