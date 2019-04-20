@@ -56,6 +56,7 @@ interface ObjectReference {
 interface BaseProperty {
   name: string;
   type: string;
+  index: number;
 }
 
 interface IntProperty extends BaseProperty {

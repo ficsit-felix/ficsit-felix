@@ -222,7 +222,7 @@ export class Json2Sav {
     const type = property.type;
     this.buffer.writeLengthPrefixedString(property.type);
     this.buffer.addBuffer();
-    this.buffer.writeInt(0, false);
+    this.buffer.writeInt(property.index, false);
     switch (type) {
       case "IntProperty":
         this.buffer.writeByte(0, false);

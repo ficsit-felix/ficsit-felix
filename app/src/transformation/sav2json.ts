@@ -291,18 +291,15 @@ export class Sav2Json {
       // TODO remove, only there so that length is used
     }
 
-    const zero = buffer.readInt();
-    if (zero != 0) {
-      this.error("not null: " + zero);
-      return false;
-    }
-
+    const index = buffer.readInt();
+    
     switch (prop) {
       case "IntProperty":
         buffer.assertNullByte();
         properties.push({
           name: name,
           type: prop,
+          index: index,
           value: buffer.readInt()
         });
         break;
@@ -310,6 +307,7 @@ export class Sav2Json {
         properties.push({
           name: name,
           type: prop,
+          index: index,
           value: buffer.readByte()
         });
         buffer.assertNullByte();
@@ -319,6 +317,7 @@ export class Sav2Json {
         properties.push({
           name: name,
           type: prop,
+          index: index,
           value: buffer.readFloat()
         });
         break;
@@ -328,6 +327,7 @@ export class Sav2Json {
         properties.push({
           name: name,
           type: prop,
+          index: index,
           value: buffer.readLengthPrefixedString()
         });
         break;
@@ -336,6 +336,7 @@ export class Sav2Json {
         properties.push({
           name: name,
           type: prop,
+          index: index,
           textUnknown: buffer.readHex(13),
           value: buffer.readLengthPrefixedString()
         });
@@ -347,6 +348,7 @@ export class Sav2Json {
           properties.push({
             name: name,
             type: prop,
+            index: index,
             value: {
               unk1: unk1,
               unk2: buffer.readByte()
@@ -356,6 +358,7 @@ export class Sav2Json {
           properties.push({
             name: name,
             type: prop,
+            index: index,
             value: {
               unk1: unk1,
               unk2: buffer.readLengthPrefixedString()
@@ -369,6 +372,7 @@ export class Sav2Json {
         properties.push({
           name: name,
           type: prop,
+          index: index,
           value: {
             enum: enumName,
             value: buffer.readLengthPrefixedString()
@@ -380,6 +384,7 @@ export class Sav2Json {
         properties.push({
           name: name,
           type: prop,
+          index: index,
           value: {
             levelName: buffer.readLengthPrefixedString(),
             pathName: buffer.readLengthPrefixedString()
@@ -396,6 +401,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -409,6 +415,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -430,6 +437,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -445,6 +453,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -461,6 +470,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -472,6 +482,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -489,6 +500,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -508,6 +520,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -524,6 +537,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               value: {
                 type: type,
@@ -592,6 +606,7 @@ export class Sav2Json {
             properties.push({
               name: name,
               type: prop,
+              index: index,
               structUnknown: unknown,
               structName: structName,
               structType: structType,
@@ -610,6 +625,7 @@ export class Sav2Json {
         properties.push({
           name: name,
           type: prop,
+          index: index,
           value: {
             type: itemType,
             values: values
@@ -635,6 +651,7 @@ export class Sav2Json {
         properties.push({
           name: name,
           type: prop,
+          index: index,
           value: {
             name: mapName,
             type: valueType,

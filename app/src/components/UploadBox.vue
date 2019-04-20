@@ -40,8 +40,8 @@
       <md-dialog-title>Error</md-dialog-title>
       <span class="dialog-content"
         >{{ errorText }} <br /><br />
-        Please send this save file to me at bitowl#0552 on Discord or per Mail
-        to <a href="mailto:felix@owl.yt">felix@owl.yt</a>.
+        Please send this save file to me <a href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj">via this Dropbox form</a><br />or per Mail
+        to <a href="mailto:felix@owl.yt">felix@owl.yt</a> so that I can fix this.
       </span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false"
