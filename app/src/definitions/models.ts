@@ -270,6 +270,23 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "Build_ConveyorBelt.glb", // TODO
     color: 0x5097a6
   },
+
+  "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C": {
+    model: "",
+    color: 0xff00ff
+  },
+  "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C": {
+    model: "",
+    color: 0xff00ff
+  },
+  "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C": {
+    model: "",
+    color: 0xff00ff
+  },
+  "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C": {
+    model: "",
+    color: 0xff00ff
+  },
   "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": {
     model: "Build_ConveyorPole_C.glb",
     color: 0x5c3ba5
@@ -614,6 +631,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "",
     color: 0xff00ff
   },
+  "/Game/FactoryGame/Equipment/NobeliskDetonator/Equip_NobeliskDetonator.Equip_NobeliskDetonator_C": {
+    model: "",
+    color: 0xff00ff
+  },
   "/Game/FactoryGame/Equipment/ObjectScanner/Equip_ObjectScanner.Equip_ObjectScanner_C": {
     model: "",
     color: 0xff00ff
@@ -733,6 +754,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "BP_NutBush_C.glb",
     color: 0x08850e
   },
+  "/Game/FactoryGame/World/Hazard/SporeCloudPlant/BP_SporeFlower.BP_SporeFlower_C": {
+    model: "",
+    color: 0xff00ff
+  },
   "/Script/FactoryGame.FGFoliageRemoval": {
     model: "",
     color: 0x721884
@@ -744,6 +769,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
   "/Script/FactoryGame.FGItemPickup_Spawnable": {
     model: "",
     color: 0x51d5e4
+  },
+  "/Script/FactoryGame.FGMapManager": {
+    model: "",
+    color: 0xff00ff
   },
   "/Script/FactoryGame.FGRecipeManager": {
     model: "",
