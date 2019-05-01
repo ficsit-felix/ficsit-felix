@@ -188,12 +188,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/CA_Merger/Build_ConveyorAttachmentMerger.Build_ConveyorAttachmentMerger_C": {
-    model: "",
+    model: "Build_ConveyorAttachmentMerger_C.glb",
     color: 0x693d65
   },
 
   "/Game/FactoryGame/Buildable/Factory/CA_Splitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C": {
-    model: "",
+    model: "Build_ConveyorAttachmentMerger_C.glb", // TODO visually differentiate splitters and mergers
     color: 0x5f1c59
   },
   "/Game/FactoryGame/Buildable/Factory/CA_SplitterProgrammable/Build_ConveyorAttachmentSplitterProgrammable.Build_ConveyorAttachmentSplitterProgrammable_C": {
@@ -226,7 +226,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Factory/ConstructorMk1/Build_ConstructorMk1.Build_ConstructorMk1_C": {
-    model: "",
+    model: "Build_ConstructorMk1_C.glb",
     color: 0x63075a
   },
   "/Game/FactoryGame/Buildable/Factory/ConstructorMk2/Build_ConstructorMk2.Build_ConstructorMk2_C": {
@@ -418,7 +418,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C": {
-    model: "",
+    model: "Build_SmelterMk1_C.glb",
     color: 0x830477
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk2/Build_SmelterMk2.Build_SmelterMk2_C": {
