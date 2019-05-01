@@ -352,7 +352,11 @@ export class Json2Sav {
               this.buffer.writeInt(property.value.values[i]);
             }
             break;
-
+          case "ByteProperty":
+            for (var i = 0; i < property.value.values.length; i++) {
+              this.buffer.writeByte(property.value.values[i]);
+            }
+            break;
           case "ObjectProperty":
             for (var i = 0; i < property.value.values.length; i++) {
               const obj = property.value.values[i];

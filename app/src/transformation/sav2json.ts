@@ -567,6 +567,11 @@ export class Sav2Json {
               values.push(buffer.readInt());
             }
             break;
+          case "ByteProperty":
+            for (var j = 0; j < count; j++) {
+              values.push(buffer.readByte());
+            }
+            break;
           case "ObjectProperty":
             for (var j = 0; j < count; j++) {
               values.push({
