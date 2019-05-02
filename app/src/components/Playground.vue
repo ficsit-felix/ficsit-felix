@@ -339,6 +339,17 @@ export default {
       }
     });
     this.$refs.scene.scene.add(this.transformControl);
+
+    const scene = this.$refs.scene.scene;
+
+    // load map
+    modelHelper
+      .loadScene("/models/map.glb")
+      .then(model => {
+        scene.add(model);
+      });
+
+
     // container.appendChild(renderer.domElement); // TODO //
     // /*    var dragControls = new THREE.DragControls(
     //     objects,
@@ -472,7 +483,6 @@ export default {
     createConveyorBeltGeometry(obj) {
       const translation = obj.transform.translation;
       const splineData = obj.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
-      console.log(splineData);
 
       const splinePoints = splineData.value.values.length;
 

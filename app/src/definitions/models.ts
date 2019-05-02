@@ -659,6 +659,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "",
     color: 0xff00ff
   },
+  "/Game/FactoryGame/Equipment/Rifle/Equip_Rifle.Equip_Rifle_C": {
+    model: "",
+    color: 0xff00ff
+  },
   "/Game/FactoryGame/Equipment/ShockShank/Equip_ShockShank.Equip_ShockShank_C": {
     model: "",
     color: 0xff00ff
