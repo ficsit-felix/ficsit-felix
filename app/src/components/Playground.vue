@@ -228,8 +228,11 @@ export default {
     this.loader = new GLTFLoader();
     this.materials = {};
     for (var prop in modelConfig) {
-      this.materials[prop] = new THREE.MeshLambertMaterial({
-        color: modelConfig[prop].color
+      this.materials[prop] = new THREE.MeshStandardMaterial({
+        color: modelConfig[prop].color,
+        roughness: 0.4,
+        metalness: .5,
+        flatShading: true, // to not make the conveyor belt cylinders look to much like pipes
       });
     }
     this.geometries = {};
@@ -315,12 +318,12 @@ export default {
     var scene = this.$refs.scene.scene;
 
     var light = new THREE.DirectionalLight(0xffffff, 0.5);
-    light.position.set(-200, 500, 2000);
+    light.position.set(-20000, 500, 20000);
     this.$refs.scene.scene.add(light);
 
     // darker light from the oposite direction to fake shadows?
     var light2 = new THREE.DirectionalLight(0xaaaaff, 0.3);
-    light2.position.set(200, -500, -2000);
+    light2.position.set(20000, -500, 20000);
     this.$refs.scene.scene.add(light2);
 
     this.transformControl = new TransformControls(
