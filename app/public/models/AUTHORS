@@ -9,6 +9,14 @@ CVex2150J
 - Build_Wall_Door_8x4_03_C.glb
 - Build_Wall_Gate_8x4_01_C.glb
 
+Cale Flanagan
+- AssemblerMk1.glb
+- PowerPoleMk1.glb
+- PowerPoleMk2.glb
+- PowerPoleMk3.glb
+- RadarTower.glb
+- ConveyorSplitter.glb
+
 bitowl
 - BP_BerryPush_C.glb
 - BP_NutBush_C.glb
@@ -23,7 +31,6 @@ bitowl
 - Build_Foundation_8x4_01_C.glb
 - Build_MinerMk1_C.glb
 - Build_PowerLine_C.glb
-- Build_PowerPoleMk1_C.glb
 - Build_Ramp_8x4_01_C.glb
 - Build_SpaceElevator_C.glb
 - Build_Stairs_Left_01_C.glb
