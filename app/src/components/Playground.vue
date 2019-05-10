@@ -343,7 +343,6 @@ export default {
     });
     this.$refs.scene.scene.add(this.transformControl);
 
-    const scene = this.$refs.scene.scene;
 
     // load map
     modelHelper

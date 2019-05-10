@@ -176,7 +176,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Factory/AssemblerMk1/Build_AssemblerMk1.Build_AssemblerMk1_C": {
-    model: "",
+    model: "AssemblerMk1.glb",
     color: 0x41063c
   },
   "/Game/FactoryGame/Buildable/Factory/AssemblerMk2/Build_AssemblerMk2.Build_AssemblerMk2_C": {
@@ -193,7 +193,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Factory/CA_Splitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C": {
-    model: "Build_ConveyorAttachmentMerger_C.glb", // TODO visually differentiate splitters and mergers
+    model: "ConveyorSplitter.glb",
     color: 0x5f1c59
   },
   "/Game/FactoryGame/Buildable/Factory/CA_SplitterProgrammable/Build_ConveyorAttachmentSplitterProgrammable.Build_ConveyorAttachmentSplitterProgrammable_C": {
@@ -394,15 +394,15 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x5549bf
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C": {
-    model: "Build_PowerPoleMk1_C.glb",
+    model: "PowerPoleMk1.glb",
     color: 0x6042d5
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk2/Build_PowerPoleMk2.Build_PowerPoleMk2_C": {
-    model: "",
+    model: "PowerPoleMk2.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk3/Build_PowerPoleMk3.Build_PowerPoleMk3_C": {
-    model: "",
+    model: "PowerPoleMk3.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C": {
