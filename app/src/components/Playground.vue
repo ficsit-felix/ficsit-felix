@@ -230,8 +230,10 @@ export default {
     for (var prop in modelConfig) {
       this.materials[prop] = new THREE.MeshStandardMaterial({
         color: modelConfig[prop].color,
-        roughness: 0.4,
-        metalness: .5,
+        emissive: modelConfig[prop].color,
+
+        roughness: 0.6,
+        metalness: .8,
         flatShading: true, // to not make the conveyor belt cylinders look to much like pipes
       });
     }
