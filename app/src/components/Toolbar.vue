@@ -74,6 +74,12 @@
         If you change the JSON you need to save it before clicking
         <br />anywhere in the scene, else it will be overwritten!
       </p>
+      <br />
+      <b>Attribution</b>
+      <p>
+        The low-poly models used by FeliX were created by the respective <a href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS">authors</a>.
+      </p>
+
       <md-dialog-actions>
         <md-button class="md-primary" @click="showHelpDialog = false"
           >Close</md-button

@@ -647,6 +647,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "",
     color: 0xff00ff
   },
+  "/Game/FactoryGame/Equipment/PortableMiner/Equip_PortableMinerDispenser.Equip_PortableMinerDispenser_C": {
+    model: "",
+    color: 0xff00ff
+  },
   "/Game/FactoryGame/Equipment/RebarGun/Equip_RebarGun_Projectile.Equip_RebarGun_Projectile_C": {
     model: "",
     color: 0x0c2289
