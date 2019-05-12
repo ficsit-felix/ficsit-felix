@@ -11,7 +11,7 @@ export default {
     const camera = new PerspectiveCamera(
       70,
       this.renderer.width / this.renderer.height,
-      1,
+      100,
       200000
     );
     camera.position.x = -17810;
