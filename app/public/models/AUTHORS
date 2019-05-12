@@ -11,11 +11,22 @@ CVex2150J
 
 Cale Flanagan
 - AssemblerMk1.glb
+- ConstructorMk1.glb
+- FoundryMk1.glb
+- LookoutTower.glb
+- ManufacturerMk1.glb
 - PowerPoleMk1.glb
 - PowerPoleMk2.glb
 - PowerPoleMk3.glb
+- SmelterMk1.glb
+- StorageContainerMk2.glb
 - RadarTower.glb
 - ConveyorSplitter.glb
+- Walkway_Cross.glb
+- Walkway_Ramp.glb
+- Walkway_Straight.glb
+- Walkway_T.glb
+- Walkway_Turn.glb
 
 bitowl
 - BP_BerryPush_C.glb

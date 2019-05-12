@@ -73,28 +73,28 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayCross.Build_WalkwayCross_C": {
-    model: "Build_WalkwayCross_C.glb",
-    color: 0x7c25ce
+    model: "Walkway_Cross.glb",
+    color: 0x71777a
   },
   "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayRamp.Build_WalkwayRamp_C": {
-    model: "Build_WalkwayRamp_C.glb", // x - 200
-    color: 0x6b29aa
+    model: "Walkway_Ramp.glb", // x - 200
+    color: 0x71777a
   },
   "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayStraight.Build_WalkwayStraight_C": {
-    model: "Build_WalkwayStraight_C.glb", // x + 200
-    color: 0x7337c6
+    model: "Walkway_Straight.glb", // x + 200
+    color: 0x71777a
   },
 
   "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayT.Build_WalkwayT_C": {
-    model: "Build_WalkwayT_C.glb", // x -200
-    color: 0x7231af
+    model: "Walkway_T.glb", // x -200
+    color: 0x71777a
   },
   "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayTrun.Build_WalkwayTrun_C": {
-    model: "Build_WalkwayTrun_C.glb", // x -200 r z 90
-    color: 0x7231af
+    model: "Walkway_Turn.glb", // x -200 r z 90
+    color: 0x71777a
   },
   "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_01.Build_Wall_8x4_01_C": {
-    model: "Build_Wall_1a_C.glb",
+    model: "Build_Wall_1a_C.glb", 
     color: wallWoodColor
   },
   "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_02.Build_Wall_8x4_02_C": {
@@ -226,7 +226,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Factory/ConstructorMk1/Build_ConstructorMk1.Build_ConstructorMk1_C": {
-    model: "Build_ConstructorMk1_C.glb",
+    model: "ConstructorMk1.glb",
     color: 0x63075a
   },
   "/Game/FactoryGame/Buildable/Factory/ConstructorMk2/Build_ConstructorMk2.Build_ConstructorMk2_C": {
@@ -301,12 +301,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xcb43be
   },
   "/Game/FactoryGame/Buildable/Factory/FoundryMk1/Build_FoundryMk1.Build_FoundryMk1_C": {
-    model: "",
-    color: 0xff00ff
+    model: "FoundryMk1.glb",
+    color: 0x91498a
   },
   "/Game/FactoryGame/Buildable/Factory/FoundryMk2/Build_FoundryMk2.Build_FoundryMk2_C": {
     model: "",
-    color: 0xff00ff
+    color: 0x91498a
   },
 
   "/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorBiomass.Build_GeneratorBiomass_C": {
@@ -354,7 +354,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/LookoutTower/Build_LookoutTower.Build_LookoutTower_C": {
-    model: "",
+    model: "LookoutTower.glb",
     color: 0x811396
   },
   "/Game/FactoryGame/Buildable/Factory/Mam/Build_MamIntegrated.Build_MamIntegrated_C": {
@@ -362,12 +362,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x4e2596
   },
   "/Game/FactoryGame/Buildable/Factory/ManufacturerMk1/Build_ManufacturerMk1.Build_ManufacturerMk1_C": {
-    model: "",
-    color: 0xff00ff
+    model: "ManufacturerMk1.glb",
+    color: 0x4e2596
   },
   "/Game/FactoryGame/Buildable/Factory/ManufacturerMk2/Build_ManufacturerMk2.Build_ManufacturerMk2_C": {
     model: "",
-    color: 0xff00ff
+    color: 0x4e2596
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C": {
     model: "Build_MinerMk1_C.glb",
@@ -418,7 +418,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C": {
-    model: "Build_SmelterMk1_C.glb",
+    model: "SmelterMk1.glb",
     color: 0x830477
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk2/Build_SmelterMk2.Build_SmelterMk2_C": {
@@ -436,8 +436,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x5d046e
   },
   "/Game/FactoryGame/Buildable/Factory/StorageContainerMk2/Build_StorageContainerMk2.Build_StorageContainerMk2_C": {
-    model: "",
-    color: 0xff00ff
+    model: "StorageContainerMk2.glb",
+    color: 0x5d046e
   },
 
   "/Game/FactoryGame/Buildable/Factory/StoragePlayer/Build_StorageIntegrated.Build_StorageIntegrated_C": {

@@ -15,7 +15,7 @@ export default {
   // overwrite existing mounted
   mounted() {
     this.renderer.scene = this.scene;
-    this.scene.background = new Color(0x111111);
+    this.scene.background = new Color(0x000000);
     // console.log('scene', this.scene)
   }
 };
