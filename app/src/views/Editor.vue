@@ -85,7 +85,9 @@ export default {
   created() {
     if (!this.dataLoaded) {
       // The user needs to upload a file first
-      this.$router.push("upload/sav");
+      this.$router.push( {
+        name: "landingpage"
+      });
     }
   },
   methods: {

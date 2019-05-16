@@ -208,7 +208,9 @@ export default {
                 clearInterval(this.buildInterval);
                 setTimeout(() => {
                   // let the user at least see the full bar
-                  this.$router.push("/");
+                  this.$router.push( {
+                    name: "editor"
+                  });
                 }, 100);
               }
             }, 30);

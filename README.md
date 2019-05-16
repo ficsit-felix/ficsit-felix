@@ -1,6 +1,6 @@
 # FICSIT - FeliX
 
-![Screenshot of FeliX](screenshot.png)
+![Screenshot of FeliX](app/public/screenshot.png)
 
 FeliX is a webapp to inspect save files of the game Satisfactory. [You can try it out online.](https://ficsit-felix.firebaseapp.com/)
 
