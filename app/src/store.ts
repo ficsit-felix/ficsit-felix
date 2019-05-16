@@ -144,40 +144,12 @@ export default new Vuex.Store<RootState>({
     }
   },
   actions: {
-    loadData: context => {
-      return new Promise((resolve, reject) => {
-        axios
-          .get("http://localhost:8000/big.json")
-          .then(response => {
-            window.data = response.data;
-
-            context.commit("SET_DATA_LOADED", true);
-
-            // slowly fill visible objects
-            var visible = [];
-            for (var i = 0; i < response.data.objects.length; i++) {
-              var obj = response.data.objects[i];
-              if (obj.type === 1) {
-                visible.push({
-                  id: i,
-                  className: obj.className,
-                  transform: obj.transform
-                  // state: 0
-                });
-              }
-            }
-            context.commit("SET_VISIBLE_OBJECTS", visible);
-
-            resolve(response.data);
-          })
-          .catch(err => {
-            context.commit("SET_ERROR", err);
-            reject(err);
-          });
-      });
-    },
     select(context, selectIndex) {
       context.commit("SET_SELECTED", selectIndex);
+    },
+    setLoading(context, value) {
+      // this is needed so that the objects list will be updated when we set the dataLoaded state back to true
+      context.commit("SET_DATA_LOADED", value);
     },
     setLoadedData(context, data) {
       return new Promise((resolve, reject) => {

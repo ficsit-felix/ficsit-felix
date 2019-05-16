@@ -159,7 +159,7 @@ export default {
     requestAnimationFrame(this.loadMore.bind(this));
   },
   methods: {
-    ...mapActions(["setLoadedData", "setFilename", "setUUID"]),
+    ...mapActions(["setLoadedData", "setFilename", "setUUID", "setLoading"]),
 
     loadMore() {
       modelHelper.loadFrame().then(() => {
@@ -182,7 +182,7 @@ export default {
       });
 
       Sentry.captureMessage("uploaded file");
-
+      this.setLoading(false).then(()=>{});
       var reader = new FileReader();
       reader.onload = response => {
         this.infoText = "processing file...";
