@@ -1,5 +1,9 @@
 <template>
   <div class="class-list">
+    <md-checkbox
+          :model="allVisible"
+          @change="changeVisibilityOfAllClasses($event)"
+        >all classes</md-checkbox>
     <ul>
       <li v-for="item in classes" v-bind:key="item.name">
         <md-checkbox
@@ -39,14 +43,21 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "ClassList",
   computed: {
-    ...mapState(["classes"])
+    ...mapState(["classes"]),
+    allVisible: function() {
+      return this.classes.every(item => item.visible == true);
+    }
   },
   methods: {
     ...mapActions(["setVisibility"]),
     changeVisibility(name, visible) {
       this.setVisibility({ name, visible });
-      console.log("visibility" + name + "," + visible);
-    }
+    },
+    changeVisibilityOfAllClasses(visible) {
+      this.classes.forEach(item => {
+        this.setVisibility({name: item.name, visible});
+      });
+    },
   }
 };
 </script>

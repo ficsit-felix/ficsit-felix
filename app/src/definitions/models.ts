@@ -197,11 +197,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x5f1c59
   },
   "/Game/FactoryGame/Buildable/Factory/CA_SplitterProgrammable/Build_ConveyorAttachmentSplitterProgrammable.Build_ConveyorAttachmentSplitterProgrammable_C": {
-    model: "",
+    model: "ConveyorSplitter.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/CA_SplitterSmart/Build_ConveyorAttachmentSplitterSmart.Build_ConveyorAttachmentSplitterSmart_C": {
-    model: "",
+    model: "ConveyorSplitter.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/CentralStorage/Build_CentralStorage.Build_CentralStorage_C": {
