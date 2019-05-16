@@ -180,8 +180,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x41063c
   },
   "/Game/FactoryGame/Buildable/Factory/AssemblerMk2/Build_AssemblerMk2.Build_AssemblerMk2_C": {
-    model: "",
-    color: 0xff00ff
+    model: "AssemblerMk1.glb",
+    color: 0x630f53
   },
   "/Game/FactoryGame/Buildable/Factory/Converter/Build_Converter.Build_Converter_C": {
     model: "",
@@ -230,8 +230,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x63075a
   },
   "/Game/FactoryGame/Buildable/Factory/ConstructorMk2/Build_ConstructorMk2.Build_ConstructorMk2_C": {
-    model: "",
-    color: 0xff00ff
+    model: "ConstructorMk1.glb",
+    color: 0x7a0f6e
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyoAttachmentSplitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C": {
     model: "",
@@ -305,29 +305,29 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x91498a
   },
   "/Game/FactoryGame/Buildable/Factory/FoundryMk2/Build_FoundryMk2.Build_FoundryMk2_C": {
-    model: "",
+    model: "FoundryMk1.glb",
     color: 0x91498a
   },
 
   "/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorBiomass.Build_GeneratorBiomass_C": {
-    model: "",
+    model: "GeneratorBiomass.glb",
     color: 0xaa3da0
   },
   "/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorIntegratedBiomass.Build_GeneratorIntegratedBiomass_C": {
-    model: "",
+    model: "GeneratorBiomass.glb",
     color: 0x91498a
   },
   "/Game/FactoryGame/Buildable/Factory/GeneratorCoal/Build_GeneratorCoal.Build_GeneratorCoal_C": {
-    model: "",
+    model: "GeneratorCoal.glb",
     color: 0x8b2f82
   },
   "/Game/FactoryGame/Buildable/Factory/GeneratorFuel/Build_GeneratorFuel.Build_GeneratorFuel_C": {
-    model: "",
-    color: 0xff00ff
+    model: "GeneratorFuel.glb",
+    color: 0x693fb
   },
   "/Game/FactoryGame/Buildable/Factory/GeneratorGeoThermal/Build_GeneratorGeoThermal.Build_GeneratorGeoThermal_C": {
-    model: "",
-    color: 0xff00ff
+    model: "GeneratorGeoThermal.glb",
+    color: 0x693fb
   },
   "/Game/FactoryGame/Buildable/Factory/GeneratorNuclear/Build_GeneratorNuclear.Build_GeneratorNuclear_C": {
     model: "",
@@ -366,28 +366,28 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x4e2596
   },
   "/Game/FactoryGame/Buildable/Factory/ManufacturerMk2/Build_ManufacturerMk2.Build_ManufacturerMk2_C": {
-    model: "",
-    color: 0x4e2596
+    model: "ManufacturerMk1.glb",
+    color: 0x6e309c
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C": {
     model: "Build_MinerMk1_C.glb",
     color: 0xac139e
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMk2/Build_MinerMk2.Build_MinerMk2_C": {
-    model: "",
-    color: 0xff00ff
+    model: "Build_MinerMk1_C.glb",
+    color: 0xce2abb
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMk3/Build_MinerMk3.Build_MinerMk3_C": {
-    model: "",
-    color: 0xff00ff
+    model: "Build_MinerMk1_C.glb",
+    color: 0xd638af
   },
   "/Game/FactoryGame/Buildable/Factory/OilPump/Build_OilPump.Build_OilPump_C": {
-    model: "",
-    color: 0xff00ff
+    model: "OilPump.glb",
+    color: 0x5549bf
   },
   "/Game/FactoryGame/Buildable/Factory/OilRefinery/Build_OilRefinery.Build_OilRefinery_C": {
-    model: "",
-    color: 0xff00ff
+    model: "OilRefinery.glb",
+    color: 0x5549bf
   },
   "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C": {
     model: "Build_PowerLine_C.glb",
@@ -422,8 +422,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x830477
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk2/Build_SmelterMk2.Build_SmelterMk2_C": {
-    model: "",
-    color: 0xff00ff
+    model: "SmelterMk1.glb",
+    color: 0x970c87
   },
 
   "/Game/FactoryGame/Buildable/Factory/SpaceElevator/Build_SpaceElevator.Build_SpaceElevator_C": {
@@ -458,21 +458,21 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x710586
   },
   "/Game/FactoryGame/Buildable/Factory/TruckStation/Build_TruckStation.Build_TruckStation_C": {
-    model: "",
-    color: 0xff00ff
+    model: "TruckStation.glb",
+    color: 0x472596
   },
   "/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C": {
-    model: "",
+    model: "Workbench.glb",
     color: 0x472596
   },
 
   "/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBenchIntegrated.Build_WorkBenchIntegrated_C": {
-    model: "",
+    model: "Workbench.glb",
     color: 0x543a83
   },
 
   "/Game/FactoryGame/Buildable/Factory/Workshop/Build_Workshop.Build_Workshop_C": {
-    model: "",
+    model: "Workshop.glb",
     color: 0x310c89
   },
 
@@ -498,15 +498,15 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Crab/BabyCrab/Char_BabyCrab.Char_BabyCrab_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xff00ff,
   },
   "/Game/FactoryGame/Character/Creature/Enemy/CrabHatcher/Char_CrabHatcher.Char_CrabHatcher_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xd80e2c
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Hog/AlphaHog/Char_AlphaHog.Char_AlphaHog_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xd80e2c
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Hog/Char_Hog.Char_Hog_C": {
     model: "",
@@ -514,12 +514,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Spitter/AlternativeSpitter/Char_Spitter_Alternative.Char_Spitter_Alternative_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xff00ff,
   },
 
   "/Game/FactoryGame/Character/Creature/Enemy/Spitter/Char_Spitter.Char_Spitter_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xff00ff,
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C": {
     model: "",
@@ -527,20 +527,20 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Stinger/Char_CaveStinger.Char_CaveStinger_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xff00ff,
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Stinger/Char_Stinger.Char_Stinger_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xff00ff,
   },
 
   "/Game/FactoryGame/Character/Creature/Enemy/Stinger/SmallStinger/Char_CaveStinger_Child.Char_CaveStinger_Child_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xff00ff,
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Stinger/SmallStinger/Char_Stinger_Child.Char_Stinger_Child_C": {
     model: "",
-    color: 0xff00ff
+    color: 0xff00ff,
   },
 
   "/Game/FactoryGame/Character/Creature/Wildlife/Giraffe/Char_Giraffe.Char_Giraffe_C": {

@@ -11,12 +11,12 @@
         Upload .sav file
       </md-button>
       <p>
-        <img src="/screenshot.png" />
+        <a href="/screenshot.png"><img src="/screenshot.png" /></a>
       </p>
       <p>
         FeliX also has some basic editing capabilities. It can convert the .sav format to a human-readable .json format. You can edit the .json file externally and then upload it again to convert it back to a .sav file:
       </p>
-      <md-button class="md-flat md-primary" @click="$router.push({ path: '/upload/json'})">
+      <md-button class="md-flat md-accent" @click="$router.push({ path: '/upload/json'})">
         Upload .json file
       </md-button>
 
@@ -57,6 +57,7 @@ p {
 
 <script>
 import Logo from "@/components/Logo";
+import * as Sentry from "@sentry/browser";
 
 export default {
   name: "LandingPage",
@@ -67,6 +68,9 @@ export default {
     return {
       logoAnimating: false
     };
+  },
+  mounted() {
+    Sentry.captureMessage("visit landing page");
   }
 };
 </script>
