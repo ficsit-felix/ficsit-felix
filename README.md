@@ -4,7 +4,7 @@
 
 FeliX is a webapp to inspect save files of the game Satisfactory. [You can try it out online.](https://ficsit-felix.firebaseapp.com/)
 
-It uses JavaScript, Vue, three.js and some other libraries for the frontend and TypeScript for Firebase functions on the backend. It is currently in the prototype stage. Any contributions are greatly appreciated!
+It uses JavaScript, TypeScript, Vue, three.js and some other libraries. It is currently in the prototype stage. Any contributions are greatly appreciated!
 
 ## Development
 Install the dependencies:

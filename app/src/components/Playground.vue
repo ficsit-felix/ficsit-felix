@@ -1,5 +1,18 @@
 <template>
   <div class="scene" id="scene">
+    <ToolPanel 
+      :mode="mode"
+      :local="local"
+      @setLocal="setLocal(true)"
+      @setWorld="setLocal(false)"
+      @setTranslate="setMode('translate')"
+      @setRotate="setMode('rotate')"
+      @setScale="setMode('scale')"
+    />
+
+
+
+
     <!--<button v-on:click="focusSelectedObject">Focus</button> -->
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
@@ -60,6 +73,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 #glContainer {
   width: 100%;
@@ -93,6 +107,7 @@ import { GLTFLoader } from "@/js/GLTFLoader";
 import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 import * as Sentry from "@sentry/browser";
+import ToolPanel from "@/components/ToolPanel";
 
 export default {
   name: "Playground",
@@ -101,12 +116,15 @@ export default {
     Scene,
     Cube,
     Camera,
-    AmbientLight
+    AmbientLight,
+    ToolPanel
   },
   data: function() {
     return {
       width: 100,
-      height: 100
+      height: 100,
+      mode: "translate",
+      local: false,
     };
   },
   computed: {
@@ -254,68 +272,6 @@ export default {
           console.error(err);
         });*/
     }
-    // var container; // , stats
-    // var camera, scene, renderer, controls;
-    // this.objects = [];
-
-    // container = this.$refs.container;
-    // console.log(this.$refs);
-
-    // camera = new THREE.PerspectiveCamera(
-    //   70,
-    //   container.offsetWidth / container.offsetHeight,
-    //   1,
-    //   5000000
-    // );
-    // camera.position.x = -17810;
-    // camera.position.z = 247550;
-    // camera.position.y = -1000;
-    // camera.up.y = 0;
-    // camera.up.z = 1;
-
-    // renderer = new THREE.WebGLRenderer({ antialias: true, height: "100%" });
-    // renderer.setPixelRatio(window.devicePixelRatio);
-    // renderer.setSize(container.offsetWidth, container.offsetHeight);
-    // renderer.shadowMap.enabled = false;
-    // renderer.shadowMap.type = THREE.PCFShadowMap; // TODO
-
-    // /*controls = new THREE.TrackballControls( camera );
-    // 			controls.rotateSpeed = 1.0;
-    // 			controls.zoomSpeed = 1.2;
-    // 			controls.panSpeed = 0.8;
-    // 			controls.noZoom = false;
-    // 			controls.noPan = false;
-    // 			controls.staticMoving = true;
-    //             controls.dynamicDampingFactor = 0.3;*/
-
-    // /*controls = new THREE.FlyControls(camera);
-    //             controls.movementSpeed = 1000;
-    //             controls.domElement = renderer.domElement;
-    //             controls.rollSpeed = Math.PI / 24;
-    //             controls.autoForward = false;
-    //             controls.dragToLook = true;*/
-
-    // controls = new OrbitControls(camera, renderer.domElement);
-    // //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
-    // controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-    // controls.dampingFactor = 0.25;
-    // controls.screenSpacePanning = false;
-    // controls.minDistance = 1000;
-    // controls.maxDistance = 100000;
-    // controls.maxPolarAngle = Math.PI / 2;
-    // controls.rotateSpeed = 0.3;
-    // controls.panSpeed = 0.3;
-
-    // scene = new THREE.Scene();
-    // this.scene = scene;
-    // scene.background = new THREE.Color(0x16161d);
-    // scene.add(new THREE.AmbientLight(0xa0a0a0));
-
-    // this.selectControls = new SelectControls(
-    //   scene,
-    //   camera,
-    //   renderer.domElement
-    // );
 
     var scene = this.$refs.scene.scene;
 
@@ -332,7 +288,7 @@ export default {
       this.$refs.renderer.camera.obj,
       this.$refs.renderer.renderer.domElement
     );
-    this.transformControl.space = "local";
+    this.transformControl.space = "world";
     // correct way to to this, but i don't want that many updates
     /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
@@ -606,20 +562,11 @@ export default {
         object.rotateZ(1.5708); // 90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
 
-      var scaleMultiplier = [1, 1, 1];
-      /*switch (obj.className) {
-        case "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C":
-          scaleMultiplier = [0.15, 0.15, 0.15];
-          break;
-        case "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C":
-          // scaleMultiplier = [2, 2, 0.25];
-          break;
-      }*/
-      // console.log(obj);
 
-      object.scale.x = obj.transform.scale3d[0] * scaleMultiplier[0];
-      object.scale.y = obj.transform.scale3d[1] * scaleMultiplier[1];
-      object.scale.z = obj.transform.scale3d[2] * scaleMultiplier[2];
+      // TODO are those on the correct axes? Or do the need to be switched like the positions
+      object.scale.x = obj.transform.scale3d[0];
+      object.scale.y = obj.transform.scale3d[1];
+      object.scale.z = obj.transform.scale3d[2];
     },
     focusSelectedObject() {
       var camera = this.$refs.renderer.camera.controls;
@@ -653,8 +600,20 @@ export default {
       clone.transform.translation[1] = obj.position.x;
       clone.transform.translation[0] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
+      
+      if (!this.isConveyorBelt(obj)) {
+        obj.rotateZ(-1.5708); // -90 deg in radians
+      } // TODO conveyor belt coordinates are given without rotation?
+      clone.transform.rotation[0] = obj.quaternion.x;
+      clone.transform.rotation[1] = obj.quaternion.y;
+      clone.transform.rotation[2] = -obj.quaternion.z;
+      clone.transform.rotation[3] = obj.quaternion.w;
 
-      console.log("clone: " + clone);
+
+      clone.transform.scale3d[0] = obj.scale.x;
+      clone.transform.scale3d[1] = obj.scale.y;
+      clone.transform.scale3d[2] = obj.scale.z;
+
       this.setSelectedObject(clone);
     },
 
@@ -710,7 +669,24 @@ export default {
           resolve(this.geometries[className]);
         }
       });
+    },
+
+
+    // transform control
+    setLocal(local) {
+      this.local = local;
+      if (local) {
+        this.transformControl.space = "local";
+      } else {
+        this.transformControl.space = "world";
+      }
+    },
+
+    setMode(mode) {
+      this.mode = mode;
+      this.transformControl.mode = mode;
     }
+    
   }, // END OF METHODS
 
   beforeDestroy() {
