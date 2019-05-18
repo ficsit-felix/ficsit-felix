@@ -1,25 +1,26 @@
 <template>
   <div class="class-list">
-    <md-checkbox
-          :model="allVisible"
-          @change="changeVisibilityOfAllClasses($event)"
-        >all classes</md-checkbox>
+    <md-checkbox :model="allVisible" @change="changeVisibilityOfAllClasses($event)">all classes</md-checkbox>
     <ul>
       <li v-for="item in classes" v-bind:key="item.name">
         <md-checkbox
           :model="item.visible"
           @change="changeVisibility(item.name, $event)"
-        >
-          {{ item.name }}
-        </md-checkbox>
+        >{{ item.name }}</md-checkbox>
       </li>
     </ul>
   </div>
 </template>
-<style lang="scss">
+
+<style lang="scss" scoped>
 @import "@/assets/colors.scss";
 
 .class-list {
+  ul {
+    list-style-type: none;
+    padding: 0px;
+  }
+
   background: $middleGray;
   height: 100%;
   overflow: scroll;
@@ -55,9 +56,9 @@ export default {
     },
     changeVisibilityOfAllClasses(visible) {
       this.classes.forEach(item => {
-        this.setVisibility({name: item.name, visible});
+        this.setVisibility({ name: item.name, visible });
       });
-    },
+    }
   }
 };
 </script>

@@ -28,8 +28,8 @@
   </div>
 </template>
 
-<style lang="scss">
-@import "@/assets/colors.scss";
+<style lang="scss" scoped>
+
 .editor {
   height: 100%;
 }
@@ -52,6 +52,11 @@
   flex-basis: auto;
   min-height: 0px; // needed for Firefox, else this can become HUUGE
 }
+</style>
+
+<style lang="scss">
+@import "@/assets/colors.scss";
+/* non scoped styles to control split bars */
 .split {
   overflow: hidden !important;
 }
@@ -59,6 +64,7 @@
   background-color: $toolbarGray !important;
 }
 </style>
+
 
 <script>
 // @ is an alias to /src

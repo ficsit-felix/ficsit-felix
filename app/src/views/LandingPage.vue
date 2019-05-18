@@ -2,28 +2,29 @@
   <div class="landingpage">
     <div class="centered">
       <div @mouseover="logoAnimating = true" @mouseleave="logoAnimating = false">
-        <Logo height="180" black="#000" :animating="logoAnimating" />
+        <Logo height="180" black="#000" :animating="logoAnimating"/>
       </div>
+      <p>FeliX is a save file visualizer for the game Satisfactory. When you upload your .sav file here, you can view a low poly 3D representation of your factory and the surrounding area.</p>
       <p>
-        FeliX is a save file visualizer for the game Satisfactory. When you upload your .sav file here, you can view a low poly 3D representation of your factory and the surrounding area.
+        <md-button class="md-raised" @click="$router.push({ path: '/upload/sav'})">Upload .sav file</md-button>
       </p>
-      <md-button class="md-raised" @click="$router.push({ path: '/upload/sav'})">
-        Upload .sav file
-      </md-button>
-      <p>
-        <a href="/screenshot.png"><img src="/screenshot.png" /></a>
-      </p>
-      <p>
-        FeliX also has some basic editing capabilities. It can convert the .sav format to a human-readable .json format. You can edit the .json file externally and then upload it again to convert it back to a .sav file:
-      </p>
-      <md-button class="md-flat md-accent" @click="$router.push({ path: '/upload/json'})">
-        Upload .json file
-      </md-button>
+      <a href="/screenshot.png">
+        <img src="/screenshot.png">
+      </a>
+      <p>FeliX also has some basic editing capabilities. It can convert the .sav format to a human-readable .json format. You can edit the .json file externally and then upload it again to convert it back to a .sav file:</p>
+      <md-button
+        class="md-flat md-accent"
+        @click="$router.push({ path: '/upload/json'})"
+      >Upload .json file</md-button>
 
       <p class="left">
-        The source code for this application is available on <a href="https://github.com/bitowl/ficsit-felix">GitHub</a>.
+        The source code for this application is available on
+        <a href="https://github.com/bitowl/ficsit-felix">GitHub</a>.
         We are happy about any contributions.
-        The low poly models were created by the respective <a href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS">authors</a>.
+        The low poly models were created by the respective
+        <a
+          href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
+        >authors</a>.
       </p>
     </div>
   </div>
@@ -49,10 +50,11 @@
 
 p {
   color: $textGray;
+  padding: 0px 15px;
 }
 .left {
-    text-align: left;
-  }  
+  text-align: left;
+}
 </style>
 
 <script>

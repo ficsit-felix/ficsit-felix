@@ -31,36 +31,10 @@
         {{ item.text }}
       </div>
     </virtual-list>
-    <!-- <RecycleScroller
-    page-mode
-      class="scroller"
-      :items="displayedNames"
-      key-field="id"
-      :item-size="1"
-    >
-      <template v-slot="{ item }">
-        <div class="item"
-        v-bind:class="{ selected: item.id == selectedIndex }"
-        @click="select(item.id)"
-        >{{item.text}}</div>
-      </template>
-    </RecycleScroller>-->
-    <!--
-    <ul ref="list" class="list">
-      <li
-        v-for="(obj, index) in displayedNames"
-        v-bind:key="obj.id"
-        v-bind:class="{ selected: obj.id == selectedIndex }"
-        @click="select(obj.id)"
-      >
-        {{ obj.text }}
-      </li>
-    </ul>
-    -->
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/colors.scss";
 
 .scroller,
