@@ -109,7 +109,6 @@ export default {
   methods: {
     ...mapActions(["select"]),
     focusSelectedObject() {
-      console.log("asdf", this.$refs.list);
       this.listStart = this.selectedIndex;
       /*      this.$refs.list.$el.children[0].$el.children[this.selectedIndex].scrollIntoView({
           block: "start",
