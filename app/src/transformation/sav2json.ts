@@ -1,4 +1,3 @@
-import { v4 } from "uuid";
 class DataBuffer {
   buffer: Buffer;
   cursor: number;
@@ -121,14 +120,12 @@ class DataBuffer {
 }
 
 export class Sav2Json {
-  uuid: string;
   hadError = false;
   buffer: DataBuffer;
 
   constructor(data: Buffer) {
     var buffer = new DataBuffer(data);
     this.buffer = buffer;
-    this.uuid = v4();
   }
 
   transform() {
@@ -138,7 +135,6 @@ export class Sav2Json {
     const saveVersion = buffer.readInt();
 
     var saveJson: SaveGame = {
-      uuid: this.uuid,
       saveHeaderType: saveHeaderType,
       saveVersion: saveVersion,
       buildVersion: buffer.readInt(),
@@ -675,17 +671,11 @@ export class Sav2Json {
 
   error(message: string) {
     console.trace("error: " + message);
-    console.error("uuid: " + this.uuid);
     if (this.buffer) {
       console.error("cursor: " + this.buffer.cursor);
     }
     if (!this.hadError) {
       // we cannot send two error messages
-      /*this.response.send(JSON.stringify({
-                  type: 'error',
-                  uuid: this.uuid,
-                  text: message
-              }));*/
     }
     this.hadError = true;
     throw new Error(message);

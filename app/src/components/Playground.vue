@@ -64,6 +64,8 @@
       {{ filename }}
       <br />
       {{ uuid }}
+      <br />
+      {{ commithash }}
     </div>
   </div>
 </template>
@@ -84,9 +86,11 @@
   position: absolute;
   bottom: 0px;
   left: 0px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.4);
   padding: 5px;
   text-shadow: 1px 1px 1px #000;
+  line-height: 1.1;
+  font-size: 14px;
 }
 </style>
 
@@ -108,6 +112,7 @@ import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 import * as Sentry from "@sentry/browser";
 import ToolPanel from "@/components/ToolPanel";
+import { commithash } from "@/js/commithash";
 
 export default {
   name: "Playground",
@@ -125,6 +130,7 @@ export default {
       height: 100,
       mode: "translate",
       local: false,
+      commithash,
     };
   },
   computed: {

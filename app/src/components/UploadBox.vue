@@ -118,6 +118,7 @@
 import * as axios from "axios";
 import { mapActions } from "vuex";
 import * as Sentry from "@sentry/browser";
+import { v4 } from "uuid";
 
 import { Sav2Json } from "@/transformation/index";
 import { modelHelper } from "@/helpers/modelHelper";
@@ -177,8 +178,12 @@ export default {
       this.infoText = "reading file...";
       console.log("Uploading...", file);
       this.setFilename(file.name);
+      const uuid = v4();
+      this.setUUID(uuid);
+
       Sentry.configureScope(scope => {
         scope.setExtra("filename", file.name);
+        scope.setExtra("uuid", uuid);
       });
 
       Sentry.captureMessage("uploaded file");
@@ -196,6 +201,7 @@ export default {
           } else {
             let sav2Json = new Sav2Json(Buffer.from(response.target.result));
             json = sav2Json.transform();
+
           }
 
           this.infoText = "building world...";

@@ -1,5 +1,4 @@
 interface SaveGame {
-  uuid: string;
   saveHeaderType: number;
   saveVersion: number;
   buildVersion: number;

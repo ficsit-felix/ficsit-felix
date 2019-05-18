@@ -27,6 +27,9 @@
         >authors</a>.
       </p>
     </div>
+    <div class="commithash">
+      {{ commithash }}
+    </div>
   </div>
 </template>
 
@@ -37,6 +40,7 @@
   overflow: auto;
   display: flex;
   height: 100%;
+  flex-direction: column;
 }
 
 .centered {
@@ -55,11 +59,20 @@ p {
 .left {
   text-align: left;
 }
+
+.commithash {
+  color: rgba(255,255,255,0.2);
+  text-align: center;
+  font-size: 12px;
+
+}
+
 </style>
 
 <script>
 import Logo from "@/components/Logo";
 import * as Sentry from "@sentry/browser";
+import { commithash } from "@/js/commithash";
 
 export default {
   name: "LandingPage",
@@ -68,7 +81,8 @@ export default {
   },
   data: function() {
     return {
-      logoAnimating: false
+      logoAnimating: false,
+      commithash: commithash
     };
   },
   mounted() {
