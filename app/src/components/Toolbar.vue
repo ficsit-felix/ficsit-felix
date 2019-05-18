@@ -5,9 +5,9 @@
     </div>
 
     <ul>
-      <li @click="showOpenDialog = true"><md-icon>folder_open</md-icon>Open</li>
-      <li @click="showSaveDialog = true"><md-icon>save</md-icon>Save</li>
-      <li @click="showHelpDialog = true"><md-icon>help</md-icon>Help</li>
+      <li @click="showOpenDialog = true"><md-icon>folder_open</md-icon>Open<md-tooltip md-delay="500">Ctrl+O</md-tooltip></li>
+      <li @click="showSaveDialog = true"><md-icon>save</md-icon>Save<md-tooltip md-delay="500">Ctrl+S</md-tooltip></li>
+      <li @click="showHelpDialog = true"><md-icon>help</md-icon>Help<md-tooltip md-delay="500">F1</md-tooltip></li>
       <li></li>
       <li></li>
       <li></li>
