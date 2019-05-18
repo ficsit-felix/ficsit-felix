@@ -188,7 +188,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/CA_Merger/Build_ConveyorAttachmentMerger.Build_ConveyorAttachmentMerger_C": {
-    model: "Build_ConveyorAttachmentMerger_C.glb",
+    model: "ConveyorSplitter.glb",
     color: 0x693d65
   },
 
@@ -399,11 +399,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk2/Build_PowerPoleMk2.Build_PowerPoleMk2_C": {
     model: "PowerPoleMk2.glb",
-    color: 0xff00ff
+    color: 0x6042d5
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk3/Build_PowerPoleMk3.Build_PowerPoleMk3_C": {
     model: "PowerPoleMk3.glb",
-    color: 0xff00ff
+    color: 0x6042d5
   },
   "/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C": {
     model: "",
@@ -414,7 +414,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/RadarTower/Build_RadarTower.Build_RadarTower_C": {
-    model: "",
+    model: "RadarTower.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C": {
