@@ -105,7 +105,7 @@ import Renderer from "@/components/scene/Renderer";
 import Cube from "@/components/scene/Cube";
 import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
-import { BoxBufferGeometry, LineCurve3 } from "three";
+import { BoxBufferGeometry, LineCurve3, Mesh } from "three";
 import { setTimeout } from "timers";
 import { GLTFLoader } from "@/js/GLTFLoader";
 import { modelHelper } from "@/helpers/modelHelper";
@@ -167,7 +167,7 @@ export default {
           this.setMaterial(
             this.lastSelectedIndex,
             this.getMaterial(
-              window.data.objects[this.lastSelectedIndex].className
+              window.data.objects[this.lastSelectedIndex]
             )
           );
         }
@@ -251,6 +251,8 @@ export default {
 
     this.loader = new GLTFLoader();
     this.materials = {};
+    this.coloredMaterials = [];
+    this.setupColoredMaterials();
     for (var prop in modelConfig) {
       this.materials[prop] = new THREE.MeshStandardMaterial({
         color: modelConfig[prop].color,
@@ -348,7 +350,7 @@ export default {
     //   renderer.setSize(window.innerWidth, window.innerHeight);*/
     // }
     // //
-    // function animate() {
+    // function animate() { 
     //   requestAnimationFrame(animate);
     //   render();
     //   // stats.update(); // TODO
@@ -366,12 +368,85 @@ export default {
   methods: {
     ...mapActions(["loadData", "setSelectedObject"]),
 
-    getMaterial(className) {
-      if (this.materials[className] === undefined) {
+    // setup to use the primary colors of painted buildings
+    setupColoredMaterials() {
+      const defaultColors = [
+        new THREE.Color("#fcb26b"),
+        new THREE.Color("#73a9d2"),
+        new THREE.Color("#dd7550"),
+        new THREE.Color("#666375"),
+
+        new THREE.Color("#e1e1e9"),
+        new THREE.Color("#bfe798"),
+        new THREE.Color("#f890e2"),
+        new THREE.Color("#bbf6ec"),
+
+        new THREE.Color("#b59c5e"),
+        new THREE.Color("#f9ecd9"),
+        new THREE.Color("#c490f9"),
+        new THREE.Color("#84dbb8"),
+
+        new THREE.Color("#f5f09e"),
+        new THREE.Color("#97978f"),
+        new THREE.Color("#b048aa"),
+        new THREE.Color("#838283")
+      ];
+      for(let i = 0; i < defaultColors.length; i++) {
+        const color = defaultColors[i];
+        // TODO check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
+        this.coloredMaterials[i] = new THREE.MeshStandardMaterial({
+          color: color,
+          //emissive: color,
+
+          roughness: 0.6,
+          metalness: 0.8,
+          flatShading: true, // to not make the conveyor belt cylinders look to much like pipes
+        });;
+      }
+    },
+
+    getMaterial(obj) {
+
+      // mPrimaryColor attribute is no longer used, replaced with mColorSlot
+      // if object contains property with name "mPrimaryColor"
+      /*for (let i = 0; i < obj.entity.properties.length; i++) {
+        const element = obj.entity.properties[i];
+        if (element.name === "mPrimaryColor") {
+          // generate material with this color
+
+          const color = new THREE.Color(element.value.r, element.value.g, element.value.b);
+          
+          if (this.coloredMaterials[color.getHex()] === undefined) {
+            console.log("new material: " + color.getHexString());
+            this.coloredMaterials[color.getHex()] = new THREE.MeshStandardMaterial({
+              color: color,
+              emissive: color,
+
+              roughness: 0.6,
+              metalness: 0.8,
+              flatShading: true, // to not make the conveyor belt cylinders look to much like pipes
+            });
+          }
+          return this.coloredMaterials[color.getHex()];
+        }
+      }*/
+
+      for (let i = 0; i < obj.entity.properties.length; i++) {
+        const element = obj.entity.properties[i];
+        if (element.name === "mColorSlot") {
+          return this.coloredMaterials[element.value.unk2];
+        }
+      }
+
+
+      if (obj.entity.properties)
+
+      // fetch material based on class name
+      if (this.materials[obj.className] === undefined) {
         // console.log(className);
         return this.materials["undefined"];
       } else {
-        return this.materials[className];
+        return this.materials[obj.className];
       }
     },
     setMaterial(id, material) {
@@ -432,7 +507,7 @@ export default {
           this.getGeometry(obj).then(geometry => {
             var object = new THREE.Mesh(
               geometry,
-              this.getMaterial(obj.className)
+              this.getMaterial(obj)
               //new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
             );
 
