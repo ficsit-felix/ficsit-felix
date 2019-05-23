@@ -1,5 +1,5 @@
 <template>
-  <div class="scene" id="scene">
+  <div class="scene" id="scene" tabindex="0" @mouseover="focusScene()">
     <ToolPanel 
       :mode="mode"
       :local="local"
@@ -77,6 +77,7 @@
   overflow: hidden;
   position: relative;
 }
+
 #glContainer {
   width: 100%;
   height: 100%;
@@ -239,6 +240,7 @@ export default {
   },
 
   mounted() {
+
     this.objects = [];
     this.invisibleObjects = [];
     this.unselectedMaterial = new THREE.MeshLambertMaterial({
@@ -766,8 +768,16 @@ export default {
     setMode(mode) {
       this.mode = mode;
       this.transformControl.mode = mode;
+    },
+
+    focusScene() {
+      // focus the scene div so no text fields get key inputs
+      // needs a tabindex on the div, see https://stackoverflow.com/a/3656524
+      document.getElementById("scene").focus();
     }
     
+
+
   }, // END OF METHODS
 
   beforeDestroy() {
