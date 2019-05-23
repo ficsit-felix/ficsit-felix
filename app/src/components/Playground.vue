@@ -1,13 +1,17 @@
 <template>
-  <div class="scene" id="scene" tabindex="0" @mouseover="focusScene()"
-  
-  @keyup.l="setLocal(true)"
-  @keyup.w="setLocal(false)"
-  @keyup.g="setMode('translate')"
-  @keyup.r="setMode('rotate')"
-  @keyup.s="setMode('scale')"
-  @keyup.f="focusSelectedObject()">
-    <ToolPanel 
+  <div
+    class="scene"
+    id="scene"
+    tabindex="0"
+    @mouseover="focusScene()"
+    @keyup.l="setLocal(true)"
+    @keyup.w="setLocal(false)"
+    @keyup.g="setMode('translate')"
+    @keyup.r="setMode('rotate')"
+    @keyup.s="setMode('scale')"
+    @keyup.f="focusSelectedObject()"
+  >
+    <ToolPanel
       :mode="mode"
       :local="local"
       @setLocal="setLocal(true)"
@@ -17,14 +21,11 @@
       @setScale="setMode('scale')"
     />
 
-
-
-
     <!--<button v-on:click="focusSelectedObject">Focus</button> -->
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
-        <AmbientLight />
-        <Camera />
+        <AmbientLight/>
+        <Camera/>
         <!--<a v-for="(obj,index) in visibleObjects"
           :key="index">
           
@@ -69,9 +70,9 @@
     -->
     <div class="info">
       {{ filename }}
-      <br />
+      <br>
       {{ uuid }}
-      <br />
+      <br>
       {{ commithash }}
     </div>
   </div>
@@ -138,7 +139,7 @@ export default {
       height: 100,
       mode: "translate",
       local: false,
-      commithash,
+      commithash
     };
   },
   computed: {
@@ -150,8 +151,7 @@ export default {
       "classes",
       "selectedObject"
     ]),
-    ...mapGetters(["getVisibleObjects"]),
-
+    ...mapGetters(["getVisibleObjects"])
   },
   watch: {
     dataLoaded(val) {
@@ -165,9 +165,7 @@ export default {
           //  && this.lastSelectedIndex < this.objects.length
           this.setMaterial(
             this.lastSelectedIndex,
-            this.getMaterial(
-              window.data.objects[this.lastSelectedIndex]
-            )
+            this.getMaterial(window.data.objects[this.lastSelectedIndex])
           );
         }
         this.lastSelectedIndex = val;
@@ -238,11 +236,12 @@ export default {
   },
 
   mounted() {
-
     var textureLoader = new THREE.TextureLoader();
-    this.matcap = textureLoader.load( 'textures/matcap-white.png', function () {
-      this.matcap.encoding = THREE.sRGBEncoding;
-    } );
+    this.matcap = textureLoader.load("textures/matcap-white.png", function(
+      matcap
+    ) {
+      matcap.encoding = THREE.sRGBEncoding;
+    });
 
     this.objects = [];
     this.invisibleObjects = [];
@@ -258,7 +257,7 @@ export default {
     for (var prop in modelConfig) {
       this.materials[prop] = new THREE.MeshMatcapMaterial({
         color: modelConfig[prop].color,
-        matcap: this.matcap,
+        matcap: this.matcap
         /*emissive: modelConfig[prop].color,
 
         roughness: 0.6,
@@ -312,14 +311,10 @@ export default {
     });
     this.$refs.scene.scene.add(this.transformControl);
 
-
     // load map
-    modelHelper
-      .loadScene("/models/map.glb")
-      .then(model => {
-        scene.add(model);
-      });
-
+    modelHelper.loadScene("/models/map.glb").then(model => {
+      scene.add(model);
+    });
 
     // container.appendChild(renderer.domElement); // TODO //
     // /*    var dragControls = new THREE.DragControls(
@@ -353,7 +348,7 @@ export default {
     //   renderer.setSize(window.innerWidth, window.innerHeight);*/
     // }
     // //
-    // function animate() { 
+    // function animate() {
     //   requestAnimationFrame(animate);
     //   render();
     //   // stats.update(); // TODO
@@ -394,23 +389,22 @@ export default {
         new THREE.Color("#b048aa"),
         new THREE.Color("#838283")
       ];
-      for(let i = 0; i < defaultColors.length; i++) {
+      for (let i = 0; i < defaultColors.length; i++) {
         const color = defaultColors[i];
         // TODO check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
         this.coloredMaterials[i] = new THREE.MeshMatcapMaterial({
           color: color,
-          matcap: this.matcap,
+          matcap: this.matcap
           //emissive: color,
 
           /*roughness: 0.6,
           metalness: 0.8,
           flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
-        });;
+        });
       }
     },
 
     getMaterial(obj) {
-
       // mPrimaryColor attribute is no longer used, replaced with mColorSlot
       // if object contains property with name "mPrimaryColor"
       /*for (let i = 0; i < obj.entity.properties.length; i++) {
@@ -442,16 +436,14 @@ export default {
         }
       }
 
-
       if (obj.entity.properties)
-
-      // fetch material based on class name
-      if (this.materials[obj.className] === undefined) {
-        // console.log(className);
-        return this.materials["undefined"];
-      } else {
-        return this.materials[obj.className];
-      }
+        if (this.materials[obj.className] === undefined) {
+          // fetch material based on class name
+          // console.log(className);
+          return this.materials["undefined"];
+        } else {
+          return this.materials[obj.className];
+        }
     },
     setMaterial(id, material) {
       for (var i = 0; i < this.objects.length; i++) {
@@ -647,7 +639,6 @@ export default {
         object.rotateZ(1.5708); // 90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
 
-
       // TODO are those on the correct axes? Or do the need to be switched like the positions
       object.scale.x = obj.transform.scale3d[0];
       object.scale.y = obj.transform.scale3d[1];
@@ -685,7 +676,7 @@ export default {
       clone.transform.translation[1] = obj.position.x;
       clone.transform.translation[0] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
-      
+
       if (!this.isConveyorBelt(obj)) {
         obj.rotateZ(-1.5708); // -90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
@@ -693,7 +684,6 @@ export default {
       clone.transform.rotation[1] = obj.quaternion.y;
       clone.transform.rotation[2] = -obj.quaternion.z;
       clone.transform.rotation[3] = obj.quaternion.w;
-
 
       clone.transform.scale3d[0] = obj.scale.x;
       clone.transform.scale3d[1] = obj.scale.y;
@@ -756,7 +746,6 @@ export default {
       });
     },
 
-
     // transform control
     setLocal(local) {
       this.local = local;
@@ -777,9 +766,6 @@ export default {
       // needs a tabindex on the div, see https://stackoverflow.com/a/3656524
       document.getElementById("scene").focus();
     }
-    
-
-
   }, // END OF METHODS
 
   beforeDestroy() {
