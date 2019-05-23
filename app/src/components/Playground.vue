@@ -152,15 +152,6 @@ export default {
     ]),
     ...mapGetters(["getVisibleObjects"]),
 
-    geometry() {
-      return new BoxBufferGeometry(400, 400, 400); // TODO only create one shared geometry
-    },
-    unselected() {
-      return new THREE.MeshLambertMaterial({ color: 0xcccccc });
-    },
-    selected() {
-      return new THREE.MeshLambertMaterial({ color: 0xdc904f });
-    }
   },
   watch: {
     dataLoaded(val) {
@@ -248,14 +239,16 @@ export default {
 
   mounted() {
 
+    var textureLoader = new THREE.TextureLoader();
+    this.matcap = textureLoader.load( 'textures/matcap-white.png', function () {
+      this.matcap.encoding = THREE.sRGBEncoding;
+    } );
+
     this.objects = [];
     this.invisibleObjects = [];
-    this.unselectedMaterial = new THREE.MeshLambertMaterial({
-      color: 0xcccccc
-    });
-    this.selectedMaterial = new THREE.MeshLambertMaterial({
-      color: 0xdc904f,
-      emissive: 0xdc904f
+    this.selectedMaterial = new THREE.MeshMatcapMaterial({
+      color: 0xffffff,
+      matcap: this.matcap
     });
 
     this.loader = new GLTFLoader();
@@ -263,13 +256,14 @@ export default {
     this.coloredMaterials = [];
     this.setupColoredMaterials();
     for (var prop in modelConfig) {
-      this.materials[prop] = new THREE.MeshStandardMaterial({
+      this.materials[prop] = new THREE.MeshMatcapMaterial({
         color: modelConfig[prop].color,
-        emissive: modelConfig[prop].color,
+        matcap: this.matcap,
+        /*emissive: modelConfig[prop].color,
 
         roughness: 0.6,
         metalness: .8,
-        flatShading: true, // to not make the conveyor belt cylinders look to much like pipes
+        flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
       });
     }
     this.geometries = {};
@@ -292,14 +286,14 @@ export default {
 
     var scene = this.$refs.scene.scene;
 
-    var light = new THREE.DirectionalLight(0xffffff, 0.5);
+    /*var light = new THREE.DirectionalLight(0xffffff, 0.5);
     light.position.set(-20000, 500, 20000);
     this.$refs.scene.scene.add(light);
 
     // darker light from the oposite direction to fake shadows?
     var light2 = new THREE.DirectionalLight(0xaaaaff, 0.3);
     light2.position.set(20000, -500, 20000);
-    this.$refs.scene.scene.add(light2);
+    this.$refs.scene.scene.add(light2);*/
 
     this.transformControl = new TransformControls(
       this.$refs.renderer.camera.obj,
@@ -403,13 +397,14 @@ export default {
       for(let i = 0; i < defaultColors.length; i++) {
         const color = defaultColors[i];
         // TODO check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
-        this.coloredMaterials[i] = new THREE.MeshStandardMaterial({
+        this.coloredMaterials[i] = new THREE.MeshMatcapMaterial({
           color: color,
+          matcap: this.matcap,
           //emissive: color,
 
-          roughness: 0.6,
+          /*roughness: 0.6,
           metalness: 0.8,
-          flatShading: true, // to not make the conveyor belt cylinders look to much like pipes
+          flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
         });;
       }
     },
