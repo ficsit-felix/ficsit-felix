@@ -553,10 +553,6 @@ export class Sav2Json {
               structUnknown: unknown,
               value: {
                 type: type,
-                levelName: buffer.readLengthPrefixedString(),
-                pathName: buffer.readLengthPrefixedString(),
-                offset: buffer.readFloat(),
-                forward: buffer.readFloat()
               }
             });
             break;
