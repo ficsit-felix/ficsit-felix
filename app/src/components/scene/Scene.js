@@ -1,5 +1,5 @@
 import Object3D from "./Object3D";
-import { Scene, Color } from "three";
+import { Scene, Color, Fog } from "three";
 
 export default {
   ...Object3D,
@@ -16,6 +16,7 @@ export default {
   mounted() {
     this.renderer.scene = this.scene;
     this.scene.background = new Color(0x000000);
+    this.scene.fog = new Fog(0x000000, 150000, 200000);
     // console.log('scene', this.scene)
   }
 };
