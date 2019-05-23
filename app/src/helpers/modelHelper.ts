@@ -73,7 +73,7 @@ class ModelHelper {
             let geometry = (gltf.scene.children[0] as THREE.Mesh)
               .geometry as THREE.BufferGeometry;
             this.loadedModels.set(model, geometry);
-            console.log("loaded model");
+            console.log("loaded model " + model);
             for (let resolveX of this.requestedModels.get(model)!) {
               resolveX(geometry);
             }

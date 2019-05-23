@@ -157,16 +157,10 @@ export default {
         modelHelper.loadModel("/models/" + modelConfig[a].model);
       }
     }
-    requestAnimationFrame(this.loadMore.bind(this));
   },
   methods: {
     ...mapActions(["setLoadedData", "setFilename", "setUUID", "setLoading"]),
 
-    loadMore() {
-      modelHelper.loadFrame().then(() => {
-        requestAnimationFrame(this.loadMore.bind(this));
-      });
-    },
     handleError(errorMessage) {
       this.showErrorDialog = true;
       this.errorText = errorMessage;
