@@ -1,5 +1,12 @@
 <template>
-  <div class="scene" id="scene" tabindex="0" @mouseover="focusScene()">
+  <div class="scene" id="scene" tabindex="0" @mouseover="focusScene()"
+  
+  @keyup.l="setLocal(true)"
+  @keyup.w="setLocal(false)"
+  @keyup.g="setMode('translate')"
+  @keyup.r="setMode('rotate')"
+  @keyup.s="setMode('scale')"
+  @keyup.f="focusSelectedObject()">
     <ToolPanel 
       :mode="mode"
       :local="local"
