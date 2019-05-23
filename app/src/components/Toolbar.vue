@@ -1,26 +1,32 @@
 <template>
   <div class="toolbar">
-    <div @mouseover="logoAnimating = true" @mouseleave="logoAnimating = false">
+    <div
+      @mouseover="logoAnimating = true"
+      @mouseleave="logoAnimating = false"
+      class="logoContainer"
+    >
       <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
     </div>
 
-    <ul>
-      <li @click="showOpenDialog = true"><md-icon>folder_open</md-icon>Open</li>
-      <li @click="showSaveDialog = true"><md-icon>save</md-icon>Save</li>
-      <li @click="showHelpDialog = true"><md-icon>help</md-icon>Help</li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li @click="showOpenJsonDialog = true">
-        <md-icon>file_upload</md-icon>Import JSON
-      </li>
-      <li @click="showSaveJsonDialog = true">
-        <md-icon>file_download</md-icon>Export JSON
-      </li>
-    </ul>
+    <span @click="showOpenDialog = true">
+      <md-icon>folder_open</md-icon>Open
+    </span>
+    <span @click="showSaveDialog = true">
+      <md-icon>save</md-icon>Save
+    </span>
+    <span @click="showHelpDialog = true">
+      <md-icon>help</md-icon>Help
+    </span>
+    <div class="spacer"></div>
+    <span @click="showOpenJsonDialog = true">
+      <md-icon>file_upload</md-icon>Import JSON
+    </span>
+    <span @click="showSaveJsonDialog = true">
+      <md-icon>file_download</md-icon>Export JSON
+    </span>
 
     <div class="spacer"></div>
-    <li @click="openGithub()">GitHub</li>
+    <span @click="openGithub()">GitHub</span>
     <md-dialog-confirm
       :md-active.sync="showOpenDialog"
       md-title="Open save file"
@@ -63,27 +69,28 @@
 
     <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>Help</md-dialog-title>
-      <b> Controls</b>
+      <b>Controls</b>
       <p>
-        Middle mouse pressed: move<br />
-        Right mouse: rotate<br />
-        Scroll wheel: zoom<br />
-        Left mouse: select objects
+        Middle mouse pressed: move
+        <br>Right mouse: rotate
+        <br>Scroll wheel: zoom
+        <br>Left mouse: select objects
       </p>
       <p>
         If you change the JSON you need to save it before clicking
-        <br />anywhere in the scene, else it will be overwritten!
+        <br>anywhere in the scene, else it will be overwritten!
       </p>
-      <br />
+      <br>
       <b>Attribution</b>
       <p>
-        The low-poly models used by FeliX were created by the respective <a href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS">authors</a>.
+        The low-poly models used by FeliX were created by the respective
+        <a
+          href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
+        >authors</a>.
       </p>
 
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false"
-          >Close</md-button
-        >
+        <md-button class="md-primary" @click="showHelpDialog = false">Close</md-button>
       </md-dialog-actions>
     </md-dialog>
     <!--    <md-icon class="md-size-2x">axis_arrow</md-icon>
@@ -101,14 +108,14 @@
   padding-left: 30px;
   padding-right: 30px;
   user-select: none;
+  .logoContainer {
+    margin-right: 60px;
+  }
+
   .spacer {
     flex-grow: 1;
   }
-  ul {
-    margin: 0px;
-    margin-left: 30px;
-  }
-  li {
+  span {
     display: inline-block;
     padding: 10px 10px;
     padding-right: 20px;
@@ -120,7 +127,7 @@
     color: #e3d3d3;
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  li:hover {
+  span:hover {
     color: $primaryOrange;
     cursor: pointer;
     .md-icon.md-theme-default.md-icon-font {
