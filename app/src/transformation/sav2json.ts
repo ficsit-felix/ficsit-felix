@@ -544,7 +544,24 @@ export class Sav2Json {
               }
             });
             break;
+          case "TimerHandle":
+            // no data
+            properties.push({
+              name: name,
+              type: prop,
+              index: index,
+              structUnknown: unknown,
+              value: {
+                type: type,
+                levelName: buffer.readLengthPrefixedString(),
+                pathName: buffer.readLengthPrefixedString(),
+                offset: buffer.readFloat(),
+                forward: buffer.readFloat()
+              }
+            });
+            break;
           default:
+            console.log(buffer.readHex(32));
             this.error("Unknown struct type: " + type);
             break;
         }

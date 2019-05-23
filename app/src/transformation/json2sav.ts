@@ -339,6 +339,9 @@ export class Json2Sav {
             this.buffer.writeFloat(property.value.offset);
             this.buffer.writeFloat(property.value.forward);
             break;
+          case "TimerHandle":
+            // no data
+            break;
         }
         break;
       case "ArrayProperty":
