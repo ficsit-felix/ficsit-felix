@@ -7,13 +7,13 @@
     >
       <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
     </div>
-    <span @click="showOpenDialog = true">
-      <md-icon>folder_open</md-icon>Open<md-tooltip md-delay="500">Ctrl+O</md-tooltip><
+    <span @click="showOpenDialog = true" v-shortkey.once="['ctrl', 'o']" @shortkey="showOpenDialog = true">
+      <md-icon>folder_open</md-icon>Open<md-tooltip md-delay="500">Ctrl+O</md-tooltip>
     </span>
-    <span @click="showSaveDialog = true">
+    <span @click="showSaveDialog = true" v-shortkey.once="['ctrl', 's']" @shortkey="showSaveDialog = true">
       <md-icon>save</md-icon>Save<md-tooltip md-delay="500">Ctrl+S</md-tooltip>
     </span>
-    <span @click="showHelpDialog = true">
+    <span @click="showHelpDialog = true" v-shortkey.once="['f1']" @shortkey="showHelpDialog = true">
       <md-icon>help</md-icon>Help<md-tooltip md-delay="500">F1</md-tooltip>
     </span>
     <div class="spacer"></div>
@@ -67,6 +67,7 @@
 
     <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>Help</md-dialog-title>
+      <md-dialog-content>
       <b>Controls</b>
       <p>
         Middle mouse pressed: move
@@ -87,6 +88,7 @@
         >authors</a>.
       </p>
 
+      </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showHelpDialog = false">Close</md-button>
       </md-dialog-actions>

@@ -43,6 +43,9 @@ Vue.use(MdTooltip);
 import VueSplit from "vue-split-panel";
 Vue.use(VueSplit);
 
+// vue-shortkey
+Vue.use(require("vue-shortkey"));
+
 Vue.config.productionTip = false;
 
 new Vue({
