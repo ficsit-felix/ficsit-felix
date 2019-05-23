@@ -7,15 +7,14 @@
     >
       <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
     </div>
-
     <span @click="showOpenDialog = true">
-      <md-icon>folder_open</md-icon>Open
+      <md-icon>folder_open</md-icon>Open<md-tooltip md-delay="500">Ctrl+O</md-tooltip><
     </span>
     <span @click="showSaveDialog = true">
-      <md-icon>save</md-icon>Save
+      <md-icon>save</md-icon>Save<md-tooltip md-delay="500">Ctrl+S</md-tooltip>
     </span>
     <span @click="showHelpDialog = true">
-      <md-icon>help</md-icon>Help
+      <md-icon>help</md-icon>Help<md-tooltip md-delay="500">F1</md-tooltip>
     </span>
     <div class="spacer"></div>
     <span @click="showOpenJsonDialog = true">
@@ -24,7 +23,6 @@
     <span @click="showSaveJsonDialog = true">
       <md-icon>file_download</md-icon>Export JSON
     </span>
-
     <div class="spacer"></div>
     <span @click="openGithub()">GitHub</span>
     <md-dialog-confirm

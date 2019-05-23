@@ -5,7 +5,7 @@
         class="md-raised"
         :disabled="focusDisabled"
         @click="focusSelectedObject"
-        >Focus</md-button
+        >Focus<md-tooltip md-delay="500">F</md-tooltip></md-button
       >
       <md-button
         class="md-raised md-accent"
