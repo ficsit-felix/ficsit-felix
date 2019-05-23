@@ -314,7 +314,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xaa3da0
   },
   "/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorIntegratedBiomass.Build_GeneratorIntegratedBiomass_C": {
-    model: "GeneratorBiomass.glb",
+    model: "GeneratorIntegratedBiomass.glb",
     color: 0x91498a
   },
   "/Game/FactoryGame/Buildable/Factory/GeneratorCoal/Build_GeneratorCoal.Build_GeneratorCoal_C": {
@@ -334,7 +334,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C": {
-    model: "",
+    model: "HubTerminal.glb",
     color: 0x693fb
   },
   "/Game/FactoryGame/Buildable/Factory/HadronCollider/Build_HadronCollider.Build_HadronCollider_C": {
@@ -358,7 +358,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x811396
   },
   "/Game/FactoryGame/Buildable/Factory/Mam/Build_MamIntegrated.Build_MamIntegrated_C": {
-    model: "",
+    model: "MamIntegrated.glb",
     color: 0x4e2596
   },
   "/Game/FactoryGame/Buildable/Factory/ManufacturerMk1/Build_ManufacturerMk1.Build_ManufacturerMk1_C": {
@@ -441,7 +441,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Factory/StoragePlayer/Build_StorageIntegrated.Build_StorageIntegrated_C": {
-    model: "Build_StoragePlayer_C.glb",
+    model: "StorageIntegrated.glb",
     color: 0x502459
   },
 
@@ -454,7 +454,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/TradingPost/Build_TradingPost.Build_TradingPost_C": {
-    model: "",
+    model: "TradingPost.glb",
     color: 0x710586
   },
   "/Game/FactoryGame/Buildable/Factory/TruckStation/Build_TruckStation.Build_TruckStation_C": {
@@ -467,7 +467,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBenchIntegrated.Build_WorkBenchIntegrated_C": {
-    model: "Workbench.glb",
+    model: "WorkbenchIntegrated.glb",
     color: 0x543a83
   },
 
