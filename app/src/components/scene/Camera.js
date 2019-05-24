@@ -2,6 +2,7 @@ import Object3D from "./Object3D";
 import { PerspectiveCamera } from "three";
 // import { OrbitControls } from '~/plugins/three'
 import { OrbitControls } from "@/js/OrbitControls";
+import { mapActions, mapState } from "vuex";
 
 export default {
   extends: Object3D,
@@ -14,17 +15,31 @@ export default {
       100,
       200000
     );
-    camera.position.x = -17810;
-    camera.position.z = 247550;
-    camera.position.y = -1000;
+
+    if (this.cameraPosition !== undefined) {
+      camera.position.x = this.cameraPosition.x;// -17810;
+      camera.position.z = this.cameraPosition.z;//247550;
+      camera.position.y = this.cameraPosition.y;//-1000;
+    } else {
+      camera.position.x = -17810;
+      camera.position.z = 247550;
+      camera.position.y = -1000;
+    }
     camera.up.y = 0;
     camera.up.z = 1;
     this.obj = camera;
 
-    // new OrbitControls(this.camera)
+    //new OrbitControls(this.camera)
     return {
       camera: this.obj
     };
+  },
+
+  computed: {
+    ...mapState([
+      'cameraPosition',
+      'cameraTarget'
+    ])
   },
 
   watch: {
@@ -45,6 +60,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(["setCameraData"]),
+
     setupControl(domElement) {
       const controls = new OrbitControls(this.obj, domElement);
       //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
@@ -54,9 +71,20 @@ export default {
       controls.minDistance = 1000;
       controls.maxDistance = 100000;
       controls.maxPolarAngle = Math.PI / 2;
-      controls.rotateSpeed = 0.3;
+      controls.rotateSpeed = 0.3; 
       controls.panSpeed = 0.3;
+      if (this.cameraTarget !== undefined) {
+        controls.target = this.cameraTarget;
+      }
+
+      // controls.addEventListener('end', this.updateCameraState);
       this.controls = controls;
+    },
+    updateCameraState() {
+      this.setCameraData({
+        target: this.controls.target,
+        position: this.obj.position
+      });
     },
     updateControls() {
       if (this.controls) {

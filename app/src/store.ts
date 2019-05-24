@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import { stat } from "fs";
+import { Vector3 } from "three";
 
 Vue.use(Vuex);
 
@@ -24,7 +25,10 @@ interface RootState {
   uuid: string;
   filename: string;
   classes: any[];
-}
+
+  cameraTarget?: Vector3;
+  cameraPosition?: Vector3;
+} 
 
 export default new Vuex.Store<RootState>({
   state: {
@@ -37,7 +41,7 @@ export default new Vuex.Store<RootState>({
     visibleObjects: [],
     uuid: "",
     filename: "",
-    classes: []
+    classes: [],
   },
   getters: {
     getNames: state => {
@@ -141,7 +145,11 @@ export default new Vuex.Store<RootState>({
         window.data.objects[state.selectedIndex] = obj;
       }
       state.selectedObject = obj;
-    }
+    },
+    SET_CAMERA_DATA(state, data) {
+      state.cameraPosition = data.position;
+      state.cameraTarget = data.target;
+    },
   },
   actions: {
     select(context, selectIndex) {
@@ -185,6 +193,9 @@ export default new Vuex.Store<RootState>({
     },
     setSelectedObject(context, payload) {
       context.commit("SET_SELECTED_OBJECT", payload);
-    }
+    },
+    setCameraData(context, payload) {
+      context.commit("SET_CAMERA_DATA", payload);
+    },
   }
 });
