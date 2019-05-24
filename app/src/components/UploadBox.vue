@@ -171,6 +171,9 @@ export default {
       this.isSaving = true;
       this.infoText = "reading file...";
       console.log("Uploading...", file);
+      console.log("name: " + file.name);
+      console.log("last modified: " + file.lastModifiedDate);
+      console.log("size: " + file.size);
       this.setFilename(file.name);
       const uuid = v4();
       this.setUUID(uuid);

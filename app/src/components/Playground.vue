@@ -607,13 +607,28 @@ export default {
       }
 
       // const extrudePath2 = new THREE.CatmullRomCurve3(points);
+      var length = 38, width = 200;
+      var shape = new THREE.Shape();
+      shape.moveTo( -length/2,-width/2 );
+      shape.lineTo( -length/2, width/2 );
+      shape.lineTo( length/2, width/2 );
+      shape.lineTo( length/2, -width/2 );
+      shape.lineTo( -length/2, -width/2 );
 
-      const geometry = new THREE.TubeBufferGeometry(
-        extrudePath,
-        extrusionSegments,
+
+      var extrudeSettings = {
+        steps: splinePoints,
+        bevelEnabled: false,
+        extrudePath: extrudePath
+      };
+
+      const geometry = new THREE.ExtrudeBufferGeometry(
+        shape,
+        extrudeSettings,
+/*        extrusionSegments,
         radius,
         radiusSegments,
-        closed
+        closed*/
       );
 
       /*const mesh = new THREE.Mesh(geometry, this.unselectedMaterial);
