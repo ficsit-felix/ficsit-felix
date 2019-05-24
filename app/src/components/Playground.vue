@@ -557,14 +557,29 @@ export default {
             .then(topGeometry => {
 
               const material = this.getMaterial(obj);
-              const isReversedProp = getProperty(obj, "mIsReversed");
-              const isReversed = isReversedProp !== undefined && isReversedProp.value;
+              // const isReversedProp = getProperty(obj, "mIsReversed");
+              // const isReversed = isReversedProp !== undefined && isReversedProp.value;
+
+              // if the role of top and bottom are reversed does not seem to depend on the mIsReversed property, but on the sign of the z coordinate of the translation
+              var topPartTranslationZ = 0;
+              for (let i = 0; i < obj.entity.properties.length; i++) {
+                const element = obj.entity.properties[i];
+                if (element.name === "mTopTransform") {
+                  for (let i = 0; i < element.value.properties.length; i++) {
+                    const elem = element.value.properties[i];
+                    if (elem.name === "Translation") {
+                      topPartTranslationZ = elem.value.z;
+                    }
+                  }
+                }
+              }
+              const isReversed = topPartTranslationZ < 0;
+                    
 
               var object = new THREE.Mesh(isReversed ? topGeometry : bottomGeometry, material);
 
               var topObject = new THREE.Mesh(isReversed ? bottomGeometry : topGeometry, material);
 
-              var topPartTranslationZ = 0;
 
               for (let i = 0; i < obj.entity.properties.length; i++) {
                 const element = obj.entity.properties[i];
