@@ -124,6 +124,7 @@ import * as Sentry from "@sentry/browser";
 import ToolPanel from "@/components/ToolPanel";
 import { commithash } from "@/js/commithash";
 import { getProperty, findActorByPathName } from "@/helpers/entityHelper";
+import { version } from 'punycode';
 
 export default {
   name: "Playground",
@@ -395,21 +396,27 @@ export default {
         const color = defaultColors[i];
 
         // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
-        const buildableSubsystem = findActorByPathName("Persistent_Level:PersistentLevel.BuildableSubsystem");
+        const buildableSubsystem = findActorByPathName(
+          "Persistent_Level:PersistentLevel.BuildableSubsystem"
+        );
         if (buildableSubsystem !== undefined) {
-          for (let i = 0; i < buildableSubsystem.entity.properties.length; i++) {
+          for (
+            let i = 0;
+            i < buildableSubsystem.entity.properties.length;
+            i++
+          ) {
             const element = buildableSubsystem.entity.properties[i];
             if (element.name === "mColorSlotsPrimary") {
               // this primary color was changed by the user
               defaultColors[element.index] = new THREE.Color(
-                element.value.r/255,
-                element.value.g/255,
-                element.value.b/255
+                element.value.r / 255,
+                element.value.g / 255,
+                element.value.b / 255
               );
             }
           }
         }
-        
+
         this.coloredMaterials[i] = new THREE.MeshMatcapMaterial({
           color: color,
           matcap: this.matcap
@@ -518,6 +525,11 @@ export default {
             colorMap[obj.className] = Math.random() * 0xffffff;
           }
 
+          if (this.isConveyorLift(obj)) {
+            this.addConveyorLift(obj, i);
+            continue;
+          }
+
           this.getGeometry(obj).then(geometry => {
             var object = new THREE.Mesh(
               geometry,
@@ -530,53 +542,81 @@ export default {
             object.userData = { id: i };
             this.$refs.scene.scene.add(object);
             this.objects.push(object);
-
-            if (this.isConveyorLift(obj)) {
-              // add other parts to conveyor lift
-              
-              modelHelper
-                .loadModel("/models/ConveyorLift_Top.glb")
-                .then(geometry => {
-                  var topObject = new THREE.Mesh(
-                    geometry,
-                    this.getMaterial(obj)
-                  );
-
-                  var topPartTranslationZ = 0;
-
-                  for (let i = 0; i < obj.entity.properties.length; i++) {
-                    const element = obj.entity.properties[i];
-                    if (element.name === "mTopTransform") {
-                      for (let i = 0; i < element.value.properties.length; i++) {
-                        const elem = element.value.properties[i];
-                        if (elem.name === "Rotation") {
-                          this.applyRotation(topObject, [elem.value.a, elem.value.b, elem.value.c, elem.value.d]);
-                        } else if (elem.name === "Translation") {
-                          this.applyTranslation(topObject, [elem.value.x, elem.value.y, elem.value.z]);
-                          topPartTranslationZ = elem.value.z;
-                        }
-                      }
-                    }
-                  }
-
-                  object.add(topObject);
-
-
-                  // Fake the middle part of the conveyor lift
-                  const middleGeometry = new THREE.BoxBufferGeometry(38, 198, topPartTranslationZ > 0 ? topPartTranslationZ: - topPartTranslationZ);
-                  var middleObject = new THREE.Mesh(
-                    middleGeometry,
-                    this.getMaterial(obj)
-                  );
-                  middleObject.position.z = topPartTranslationZ / 2;
-                  object.add(middleObject);
-                  
-
-              });
-            }
           });
         }
       }
+    },
+
+    addConveyorLift(obj, index) {
+      // add other parts to conveyor lift
+      modelHelper
+        .loadModel("/models/ConveyorLift_Bottom.glb")
+        .then(bottomGeometry => {
+          modelHelper
+            .loadModel("/models/ConveyorLift_Top.glb")
+            .then(topGeometry => {
+
+              const material = this.getMaterial(obj);
+              const isReversedProp = getProperty(obj, "mIsReversed");
+              const isReversed = isReversedProp !== undefined && isReversedProp.value;
+
+              var object = new THREE.Mesh(isReversed ? topGeometry : bottomGeometry, material);
+
+              var topObject = new THREE.Mesh(isReversed ? bottomGeometry : topGeometry, material);
+
+              var topPartTranslationZ = 0;
+
+              for (let i = 0; i < obj.entity.properties.length; i++) {
+                const element = obj.entity.properties[i];
+                if (element.name === "mTopTransform") {
+                  for (let i = 0; i < element.value.properties.length; i++) {
+                    const elem = element.value.properties[i];
+                    if (elem.name === "Rotation") {
+                      this.applyRotation(topObject, [
+                        elem.value.a,
+                        elem.value.b,
+                        elem.value.c,
+                        elem.value.d
+                      ]);
+                    } else if (elem.name === "Translation") {
+                      this.applyTranslation(topObject, [
+                        elem.value.x,
+                        elem.value.y,
+                        elem.value.z
+                      ]);
+                      topPartTranslationZ = elem.value.z;
+                    }
+                  }
+                }
+              }
+
+              object.add(topObject);
+
+              // Fake the middle part of the conveyor lift
+              const middleGeometry = new THREE.BoxBufferGeometry(
+                38,
+                198,
+                topPartTranslationZ > 0
+                  ? topPartTranslationZ
+                  : -topPartTranslationZ
+              );
+              var middleObject = new THREE.Mesh(
+                middleGeometry,
+                this.getMaterial(obj)
+              );
+              middleObject.position.x = -60;
+              middleObject.position.z = topPartTranslationZ / 2;
+              object.add(middleObject);
+
+
+              // the usual steps to add the object to the scene
+              this.updateObjectVisuals(object, obj);
+
+              object.userData = { id: index };
+              this.$refs.scene.scene.add(object);
+              this.objects.push(object);
+            });
+        });
     },
 
     createConveyorBeltGeometry(obj) {
@@ -668,14 +708,14 @@ export default {
       }
 
       // const extrudePath2 = new THREE.CatmullRomCurve3(points);
-      var length = 38, width = 200;
+      var length = 38,
+        width = 200;
       var shape = new THREE.Shape();
-      shape.moveTo( -length/2,-width/2 );
-      shape.lineTo( -length/2, width/2 );
-      shape.lineTo( length/2, width/2 );
-      shape.lineTo( length/2, -width/2 );
-      shape.lineTo( -length/2, -width/2 );
-
+      shape.moveTo(-length / 2, -width / 2);
+      shape.lineTo(-length / 2, width / 2);
+      shape.lineTo(length / 2, width / 2);
+      shape.lineTo(length / 2, -width / 2);
+      shape.lineTo(-length / 2, -width / 2);
 
       var extrudeSettings = {
         steps: splinePoints,
@@ -685,8 +725,8 @@ export default {
 
       const geometry = new THREE.ExtrudeBufferGeometry(
         shape,
-        extrudeSettings,
-/*        extrusionSegments,
+        extrudeSettings
+        /*        extrusionSegments,
         radius,
         radiusSegments,
         closed*/
@@ -740,7 +780,6 @@ export default {
         camera.target.x = obj.transform.translation[1];
         camera.target.y = obj.transform.translation[0];
         camera.target.z = obj.transform.translation[2];
-  
       }
     },
     storeCameraState() {
@@ -802,10 +841,16 @@ export default {
     },
 
     isConveyorLift(obj) {
-      return (obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C" ||
-      obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C" ||
-      obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C" ||
-      obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C");
+      return (
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C" ||
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C" ||
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C" ||
+        obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C"
+      );
     },
 
     getGeometry(obj) {
@@ -817,25 +862,31 @@ export default {
           resolve(this.createConveyorBeltGeometry(obj));
           return;
         }
-        if (obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C") { // Conveyor Pole
+        if (
+          obj.className ===
+          "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C"
+        ) {
+          // Conveyor Pole
           const poleMesh = getProperty(obj, "mPoleMesh");
           if (poleMesh !== undefined) {
-            switch(poleMesh.value.pathName) {
+            switch (poleMesh.value.pathName) {
               case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_01_static.ConveyorPole_01_static":
                 break;
               case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_02_static.ConveyorPole_02_static":
-                className = "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_2";
+                className =
+                  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_2";
                 break;
               case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_03_static.ConveyorPole_03_static":
-                className = "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_3";
+                className =
+                  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_3";
                 break;
               case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_04_static.ConveyorPole_04_static":
-                className = "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_4";
+                className =
+                  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_4";
                 break;
             }
           }
         }
-
 
         if (this.geometries[className] === undefined) {
           if (
