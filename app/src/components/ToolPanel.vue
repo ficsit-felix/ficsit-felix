@@ -1,7 +1,7 @@
 <template>
     <div class="toolpanel">
         <div class="section">
-        <a @mousedown.stop="$emit('setTranslate');" :class="{active:translateActive}" v-shortkey.focus="['a']" @shortkey="$emit('setTranslate')">Translate<md-tooltip md-direction="bottom" md-delay="500">G</md-tooltip>
+        <a @mousedown.stop="$emit('setTranslate');" :class="{active:translateActive}">Translate<md-tooltip md-direction="bottom" md-delay="500">G</md-tooltip>
         </a>
         <a @mousedown.stop="$emit('setRotate')" :class="{active:rotateActive}">Rotate<md-tooltip md-direction="bottom" md-delay="500">R</md-tooltip>
         </a>

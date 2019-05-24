@@ -123,6 +123,7 @@ import { modelConfig } from "@/definitions/models";
 import * as Sentry from "@sentry/browser";
 import ToolPanel from "@/components/ToolPanel";
 import { commithash } from "@/js/commithash";
+import { getProperty, findActorByPathName } from "@/helpers/entityHelper";
 
 export default {
   name: "Playground",
@@ -392,7 +393,23 @@ export default {
       ];
       for (let i = 0; i < defaultColors.length; i++) {
         const color = defaultColors[i];
-        // TODO check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
+
+        // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
+        const buildableSubsystem = findActorByPathName("Persistent_Level:PersistentLevel.BuildableSubsystem");
+        if (buildableSubsystem !== null) {
+          for (let i = 0; i < buildableSubsystem.entity.properties.length; i++) {
+            const element = buildableSubsystem.entity.properties[i];
+            if (element.name === "mColorSlotsPrimary") {
+              // this primary color was changed by the user
+              defaultColors[element.index] = new THREE.Color(
+                element.value.r/255,
+                element.value.g/255,
+                element.value.b/255
+              );
+            }
+          }
+        }
+        
         this.coloredMaterials[i] = new THREE.MeshMatcapMaterial({
           color: color,
           matcap: this.matcap
@@ -729,20 +746,6 @@ export default {
       );
     },
 
-    getProperty(obj, propertyName) {
-      if (obj.entity !== undefined) {
-        if (obj.entity.properties !== undefined) {
-          for (let i = 0; i < obj.entity.properties.length; i++) {
-            const property = obj.entity.properties[i];
-            if (property.name === propertyName) {
-              return property;
-            }
-          }
-        }
-      }
-      return undefined;
-    },
-
     getGeometry(obj) {
       var className = obj.className;
 
@@ -753,7 +756,7 @@ export default {
           return;
         }
         if (obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C") { // Conveyor Pole
-          const poleMesh = this.getProperty(obj, "mPoleMesh");
+          const poleMesh = getProperty(obj, "mPoleMesh");
           if (poleMesh !== undefined) {
             switch(poleMesh.value.pathName) {
               case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_01_static.ConveyorPole_01_static":
