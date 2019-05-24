@@ -475,6 +475,10 @@ export default {
         const obj = this.objects[i];
         if (obj.userData.id === id) {
           obj.material = material;
+          for (let i = 0; i < obj.children.length; i++) {
+            const element = obj.children[i];
+            element.material = material;
+          }
           return;
         }
       }
@@ -482,6 +486,10 @@ export default {
         const obj = this.invisibleObjects[i];
         if (obj.userData.id === id) {
           obj.material = material;
+          for (let i = 0; i < obj.children.length; i++) {
+            const element = obj.children[i];
+            element.material = material;
+          }
           return;
         }
       }
@@ -599,7 +607,6 @@ export default {
                         elem.value.y,
                         elem.value.z
                       ]);
-                      topPartTranslationZ = elem.value.z;
                     }
                   }
                 }
@@ -645,84 +652,130 @@ export default {
       const radiusSegments = 3;
       const closed = false;
 
-      const points = [];
-
       const extrudePath = new THREE.CurvePath(); //new THREE.CatmullRomCurve3(points);
 
-      var lastOut = null;
+      var lastArrive = null;
       var lastLoc = null;
+      var lastLeave = null;
 
       for (let i = 0; i < splinePoints; i++) {
         const splinePoint = splineData.value.values[i];
         const location = splinePoint.properties[0]; // TODO make sure this is Location
-        const arriveTangent = splinePoint.properties[0]; // TODO make sure this is arriveTangent
-        const leaveTangent = splinePoint.properties[0]; // TODO make sure this is leaveTangent
-        points.push(
-          new THREE.Vector3(
-            arriveTangent.value.y,
-            arriveTangent.value.x,
-            arriveTangent.value.z
-          )
-        );
-        points.push(
-          new THREE.Vector3(
-            location.value.y,
-            location.value.x,
-            location.value.z
-          )
-        );
+        const arriveTangent = splinePoint.properties[1]; // TODO make sure this is arriveTangent
+        const leaveTangent = splinePoint.properties[2]; // TODO make sure this is leaveTangent
 
-        points.push(
-          new THREE.Vector3(
-            leaveTangent.value.y,
-            leaveTangent.value.x,
-            leaveTangent.value.z
-          )
-        );
+        /*var size = 40;
+        var geom = new THREE.BoxBufferGeometry(size, size, size);
+        var mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial(
+          {
+            color: new THREE.Color(i/splinePoints/2 +0.5, 0, 0)
+          }
+        ));
+        this.updateObjectVisuals(mesh, obj);
+        mesh.translateX(location.value.y);
+        mesh.translateY(location.value.x);
+        mesh.translateZ(location.value.z);
+        this.$refs.scene.scene.add(mesh);
 
-        if (lastOut != null) {
-          extrudePath.add(
-            new LineCurve3(
+        size = 30;
+        var geom = new THREE.SphereBufferGeometry(size);
+        var mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial(
+          {
+            color: new THREE.Color(0, i/splinePoints/2 +0.5, 0)
+          }
+        ));
+        this.updateObjectVisuals(mesh, obj);
+        mesh.translateX(location.value.y+arriveTangent.value.y);
+        mesh.translateY(location.value.x+arriveTangent.value.x);
+        mesh.translateZ(location.value.z+arriveTangent.value.z);
+        this.$refs.scene.scene.add(mesh);
+
+        size = 30;
+        var geom = new THREE.SphereBufferGeometry(size);
+        var mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial(
+          {
+            color: new THREE.Color(0,0,i/splinePoints/2 +0.5)
+          }
+        ));
+        this.updateObjectVisuals(mesh, obj);
+        mesh.translateX(location.value.y-leaveTangent.value.y);
+        mesh.translateY(location.value.x-leaveTangent.value.x); 
+        mesh.translateZ(location.value.z-leaveTangent.value.z + 10);
+        this.$refs.scene.scene.add(mesh);*/
+
+          if (lastLoc != null) {
+
+            /*extrudePath.add(
+              new THREE.LineCurve3(
               new THREE.Vector3(
-                lastLoc.value.y,
-                lastLoc.value.x,
-                lastLoc.value.z
-              ),
-              new THREE.Vector3(
-                location.value.y,
-                location.value.x,
-                location.value.z
+                lastLoc.value.y, 
+                lastLoc.value.x, 
+                lastLoc.value.z),  
+                new THREE.Vector3(
+                location.value.y, 
+                location.value.x, 
+                location.value.z)
               )
-            )
-          );
+            );*/
           // TODO find out how exactly to use arriveTangent and leaveTangent
-          /*extrudePath.add(
-            new THREE.QuadraticBezierCurve3(
+          // I'm still not 100% sure, how the tangents in Unreal are calculated. The division by three is still a guess and based on the first answer here: https://answers.unrealengine.com/questions/330317/which-algorithm-is-used-for-spline-components-in-u.html#
+          extrudePath.add(
+            new THREE.CubicBezierCurve3(
               new THREE.Vector3(
                 lastLoc.value.y, 
                 lastLoc.value.x, 
                 lastLoc.value.z),
                 new THREE.Vector3(
-                lastOut.value.y, 
-                lastOut.value.x, 
-                lastOut.value.z),
+                lastLoc.value.y+lastLeave.value.y/3, 
+                lastLoc.value.x+lastLeave.value.x/3, 
+                lastLoc.value.z+lastLeave.value.z/3),
               new THREE.Vector3(
-                arriveTangent.value.y, 
-                arriveTangent.value.x, 
-                arriveTangent.value.z),
+                location.value.y-arriveTangent.value.y/3, 
+                location.value.x-arriveTangent.value.x/3, 
+                location.value.z-arriveTangent.value.z/3),
               new THREE.Vector3(
                 location.value.y, 
                 location.value.x, 
                 location.value.z)
             )
+          );
+
+          /*extrudePath.add(
+            new THREE.CatmullRomCurve3([
+              new THREE.Vector3(
+                lastArrive.value.y, 
+                lastArrive.value.x, 
+                lastArrive.value.z),
+                new THREE.Vector3(
+                lastLoc.value.y, 
+                lastLoc.value.x, 
+                lastLoc.value.z),
+                new THREE.Vector3(
+                lastLeave.value.y, 
+                lastLeave.value.x, 
+                lastLeave.value.z),
+                new THREE.Vector3(
+                arriveTangent.value.y, 
+                arriveTangent.value.x, 
+                arriveTangent.value.z),
+                new THREE.Vector3(
+                location.value.y, 
+                location.value.x, 
+                location.value.z),
+                new THREE.Vector3(
+                leaveTangent.value.y, 
+                leaveTangent.value.x, 
+                leaveTangent.value.z),]
+            )
           );*/
         }
-
-        lastOut = leaveTangent;
+ 
+        lastArrive = arriveTangent;
         lastLoc = location;
+        lastLeave = leaveTangent;
       }
 
-      // const extrudePath2 = new THREE.CatmullRomCurve3(points);
+      // const extrudePa th2 = new THREE.CatmullRomCurve3(points);
       var length = 38,
         width = 200;
       var shape = new THREE.Shape();
@@ -733,7 +786,9 @@ export default {
       shape.lineTo(-length / 2, -width / 2);
 
       var extrudeSettings = {
-        steps: splinePoints,
+
+        curveSegments: splinePoints * 2,
+        steps: splinePoints * 4,
         bevelEnabled: false,
         extrudePath: extrudePath
       };
@@ -741,11 +796,15 @@ export default {
       const geometry = new THREE.ExtrudeBufferGeometry(
         shape,
         extrudeSettings
-        /*        extrusionSegments,
-        radius,
-        radiusSegments,
-        closed*/
       );
+
+      /*const geometry = new THREE.TubeBufferGeometry(
+        extrudePath,
+        100,
+        10,
+        3,
+        false
+      );*/
 
       /*const mesh = new THREE.Mesh(geometry, this.unselectedMaterial);
       mesh.position.x = obj.transform.translation[1];

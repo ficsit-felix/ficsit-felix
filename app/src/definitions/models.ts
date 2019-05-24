@@ -7,6 +7,13 @@ interface ModelConfig {
 let wallMetalColor = 0x797979;
 let wallWoodColor = 0xecb96c;
 
+let conveyorMk1 = 0x9750a6;
+let conveyorMk2 = 0x7b50a6;
+let conveyorMk3 = 0x5e50a6;
+let conveyorMk4 = 0x505ea6;
+let conveyorMk5 = 0x507ba6;
+let conveyorMk6 = 0x5097a6;
+
 // This list is sorted alphabetically to ease adding new entries and seeing wether ones exist already
 let modelConfig: { [id: string]: ModelConfig } = {
   "/Game/FactoryGame/-Shared/Blueprint/BP_BuildableSubsystem.BP_BuildableSubsystem_C": {
@@ -243,49 +250,49 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C": {
     model: "Build_ConveyorBelt.glb",
-    color: 0x9750a6
+    color: conveyorMk1,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x7b50a6
+    color: conveyorMk2,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x5e50a6
+    color: conveyorMk3,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk4/Build_ConveyorBeltMk4.Build_ConveyorBeltMk4_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x505ea6
+    color: conveyorMk4,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk5/Build_ConveyorBeltMk5.Build_ConveyorBeltMk5_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x507ba6
+    color: conveyorMk5,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk4.Build_ConveyorBeltMk6_C": {
     // TODO does this exist in real saves?
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x5097a6
+    color: conveyorMk6,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk6.Build_ConveyorBeltMk6_C": {
     model: "Build_ConveyorBelt.glb", // TODO
-    color: 0x5097a6
+    color: conveyorMk6,
   },
 
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C": {
     model: "ConveyorLift_Bottom.glb",
-    color: 0xff00ff
+    color: conveyorMk1,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C": {
     model: "ConveyorLift_Bottom.glb",
-    color: 0xff00ff
+    color: conveyorMk2,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C": {
     model: "ConveyorLift_Bottom.glb",
-    color: 0xff00ff
+    color: conveyorMk3,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C": {
     model: "ConveyorLift_Bottom.glb",
-    color: 0xff00ff
+    color: conveyorMk4,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": {
     model: "Build_ConveyorPole_C.glb",
