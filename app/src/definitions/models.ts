@@ -272,19 +272,19 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C": {
-    model: "",
+    model: "ConveyorLift_Bottom.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C": {
-    model: "",
+    model: "ConveyorLift_Bottom.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C": {
-    model: "",
+    model: "ConveyorLift_Bottom.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C": {
-    model: "",
+    model: "ConveyorLift_Bottom.glb",
     color: 0xff00ff
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": {
@@ -335,7 +335,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C": {
     model: "HubTerminal.glb",
-    color: 0x693fb
+    color: 0x693fb0
   },
   "/Game/FactoryGame/Buildable/Factory/HadronCollider/Build_HadronCollider.Build_HadronCollider_C": {
     model: "",
@@ -433,11 +433,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
 
   "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C": {
     model: "Build_StorageContainerMk1_C.glb",
-    color: 0x5d046e
+    color: 0x4a4c4a
   },
   "/Game/FactoryGame/Buildable/Factory/StorageContainerMk2/Build_StorageContainerMk2.Build_StorageContainerMk2_C": {
     model: "StorageContainerMk2.glb",
-    color: 0x5d046e
+    color: 0x4a4c4a
   },
 
   "/Game/FactoryGame/Buildable/Factory/StoragePlayer/Build_StorageIntegrated.Build_StorageIntegrated_C": {
@@ -455,7 +455,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/TradingPost/Build_TradingPost.Build_TradingPost_C": {
     model: "TradingPost.glb",
-    color: 0x710586
+    color: 0xcd8734
   },
   "/Game/FactoryGame/Buildable/Factory/TruckStation/Build_TruckStation.Build_TruckStation_C": {
     model: "TruckStation.glb",

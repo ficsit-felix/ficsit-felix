@@ -17,9 +17,9 @@ export default {
     );
 
     if (this.cameraPosition !== undefined) {
-      camera.position.x = this.cameraPosition.x;// -17810;
-      camera.position.z = this.cameraPosition.z;//247550;
-      camera.position.y = this.cameraPosition.y;//-1000;
+      camera.position.x = this.cameraPosition.x;
+      camera.position.z = this.cameraPosition.z;
+      camera.position.y = this.cameraPosition.y;
     } else {
       camera.position.x = 70000;
       camera.position.y = 0;

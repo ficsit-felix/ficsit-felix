@@ -652,7 +652,8 @@ export default {
         // changed because of coordinate system change
         camera.target.x = obj.transform.translation[1];
         camera.target.y = obj.transform.translation[0];
-        camera.target.z = obj.transform.translation[2];  
+        camera.target.z = obj.transform.translation[2];
+  
       }
     },
     storeCameraState() {
