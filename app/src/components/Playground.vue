@@ -396,7 +396,7 @@ export default {
 
         // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
         const buildableSubsystem = findActorByPathName("Persistent_Level:PersistentLevel.BuildableSubsystem");
-        if (buildableSubsystem !== null) {
+        if (buildableSubsystem !== undefined) {
           for (let i = 0; i < buildableSubsystem.entity.properties.length; i++) {
             const element = buildableSubsystem.entity.properties[i];
             if (element.name === "mColorSlotsPrimary") {
@@ -530,6 +530,50 @@ export default {
             object.userData = { id: i };
             this.$refs.scene.scene.add(object);
             this.objects.push(object);
+
+            if (this.isConveyorLift(obj)) {
+              // add other parts to conveyor lift
+              
+              modelHelper
+                .loadModel("/models/ConveyorLift_Top.glb")
+                .then(geometry => {
+                  var topObject = new THREE.Mesh(
+                    geometry,
+                    this.getMaterial(obj)
+                  );
+
+                  var topPartTranslationZ = 0;
+
+                  for (let i = 0; i < obj.entity.properties.length; i++) {
+                    const element = obj.entity.properties[i];
+                    if (element.name === "mTopTransform") {
+                      for (let i = 0; i < element.value.properties.length; i++) {
+                        const elem = element.value.properties[i];
+                        if (elem.name === "Rotation") {
+                          this.applyRotation(topObject, [elem.value.a, elem.value.b, elem.value.c, elem.value.d]);
+                        } else if (elem.name === "Translation") {
+                          this.applyTranslation(topObject, [elem.value.x, elem.value.y, elem.value.z]);
+                          topPartTranslationZ = elem.value.z;
+                        }
+                      }
+                    }
+                  }
+
+                  object.add(topObject);
+
+
+                  // Fake the middle part of the conveyor lift
+                  const middleGeometry = new THREE.BoxBufferGeometry(38, 198, topPartTranslationZ > 0 ? topPartTranslationZ: - topPartTranslationZ);
+                  var middleObject = new THREE.Mesh(
+                    middleGeometry,
+                    this.getMaterial(obj)
+                  );
+                  middleObject.position.z = topPartTranslationZ / 2;
+                  object.add(middleObject);
+                  
+
+              });
+            }
           });
         }
       }
@@ -656,26 +700,37 @@ export default {
       return geometry;
     },
 
+    applyTranslation(object, translation) {
+      // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)
+      object.position.x = translation[1];
+      object.position.y = translation[0];
+      object.position.z = translation[2];
+    },
+
+    applyRotation(object, rotation) {
+      object.quaternion.x = rotation[0];
+      object.quaternion.y = rotation[1];
+      object.quaternion.z = -rotation[2];
+      object.quaternion.w = rotation[3];
+    },
+
+    applyScale(object, scale) {
+      // TODO are those on the correct axes? Or do the need to be switched like the positions
+      object.scale.x = scale[0];
+      object.scale.y = scale[1];
+      object.scale.z = scale[2];
+    },
+
     updateObjectVisuals(object, obj) {
       // console.log(obj);
-
-      // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)
-      object.position.x = obj.transform.translation[1];
-      object.position.y = obj.transform.translation[0];
-      object.position.z = obj.transform.translation[2];
-      object.quaternion.x = obj.transform.rotation[0];
-      object.quaternion.y = obj.transform.rotation[1];
-      object.quaternion.z = -obj.transform.rotation[2];
-      object.quaternion.w = obj.transform.rotation[3];
+      this.applyTranslation(object, obj.transform.translation);
+      this.applyRotation(object, obj.transform.rotation);
 
       if (!this.isConveyorBelt(obj)) {
         object.rotateZ(1.5708); // 90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
 
-      // TODO are those on the correct axes? Or do the need to be switched like the positions
-      object.scale.x = obj.transform.scale3d[0];
-      object.scale.y = obj.transform.scale3d[1];
-      object.scale.z = obj.transform.scale3d[2];
+      this.applyScale(object, obj.transform.scale3d);
     },
     focusSelectedObject() {
       var camera = this.$refs.renderer.camera.controls;
@@ -714,7 +769,7 @@ export default {
       clone.transform.translation[0] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
 
-      if (!this.isConveyorBelt(obj)) {
+      if (!this.isConveyorBelt(this.selectedObject)) {
         obj.rotateZ(-1.5708); // -90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
       clone.transform.rotation[0] = obj.quaternion.x;
@@ -744,6 +799,13 @@ export default {
         obj.className ===
           "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk6.Build_ConveyorBeltMk6_C"
       );
+    },
+
+    isConveyorLift(obj) {
+      return (obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C" ||
+      obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C" ||
+      obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C" ||
+      obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C");
     },
 
     getGeometry(obj) {
