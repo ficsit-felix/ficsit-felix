@@ -21,9 +21,9 @@ export default {
       camera.position.z = this.cameraPosition.z;//247550;
       camera.position.y = this.cameraPosition.y;//-1000;
     } else {
-      camera.position.x = -17810;
-      camera.position.z = 247550;
-      camera.position.y = -1000;
+      camera.position.x = 70000;
+      camera.position.y = 0;
+      camera.position.z = 60000;
     }
     camera.up.y = 0;
     camera.up.z = 1;
