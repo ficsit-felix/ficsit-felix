@@ -291,6 +291,20 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "Build_ConveyorPole_C.glb",
     color: 0x5c3ba5
   },
+  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_2": {
+    model: "Build_ConveyorPole_2.glb",
+    color: 0x5c3ba5
+  },
+  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_3": {
+    model: "Build_ConveyorPole_3.glb",
+    color: 0x5c3ba5
+  },
+  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_4": {
+    model: "Build_ConveyorPole_4.glb",
+    color: 0x5c3ba5
+  },
+
+
   "/Game/FactoryGame/Buildable/Factory/ConveyorPoleStackable/Build_ConveyorPoleStackable.Build_ConveyorPoleStackable_C": {
     model: "Build_ConveyorPoleStackable_C.glb",
     color: 0xff00ff

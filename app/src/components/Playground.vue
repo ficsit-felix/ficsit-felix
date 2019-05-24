@@ -729,14 +729,48 @@ export default {
       );
     },
 
+    getProperty(obj, propertyName) {
+      if (obj.entity !== undefined) {
+        if (obj.entity.properties !== undefined) {
+          for (let i = 0; i < obj.entity.properties.length; i++) {
+            const property = obj.entity.properties[i];
+            if (property.name === propertyName) {
+              return property;
+            }
+          }
+        }
+      }
+      return undefined;
+    },
+
     getGeometry(obj) {
-      const className = obj.className;
+      var className = obj.className;
 
       return new Promise((resolve, reject) => {
+        // special cases for geometry
         if (this.isConveyorBelt(obj)) {
           resolve(this.createConveyorBeltGeometry(obj));
           return;
         }
+        if (obj.className === "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C") { // Conveyor Pole
+          const poleMesh = this.getProperty(obj, "mPoleMesh");
+          if (poleMesh !== undefined) {
+            switch(poleMesh.value.pathName) {
+              case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_01_static.ConveyorPole_01_static":
+                break;
+              case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_02_static.ConveyorPole_02_static":
+                className = "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_2";
+                break;
+              case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_03_static.ConveyorPole_03_static":
+                className = "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_3";
+                break;
+              case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_04_static.ConveyorPole_04_static":
+                className = "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_4";
+                break;
+            }
+          }
+        }
+
 
         if (this.geometries[className] === undefined) {
           if (
