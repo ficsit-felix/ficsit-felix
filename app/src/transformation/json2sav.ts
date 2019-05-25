@@ -139,9 +139,9 @@ export class Json2Sav {
       for (var i = 0; i < saveJson.objects.length; i++) {
         const obj = saveJson.objects[i];
         if (obj.type == 1) {
-          this.writeEntity(obj.entity, true);
+          this.writeEntity(obj.entity, true, obj.className);
         } else if (obj.type == 0) {
-          this.writeEntity(obj.entity, false);
+          this.writeEntity(obj.entity, false. obj.className);
         }
       }
 
@@ -192,24 +192,29 @@ export class Json2Sav {
     this.buffer.writeLengthPrefixedString(obj.outerPathName);
   }
 
-  writeEntity(obj: any, withNames: boolean) {
+  writeEntity(entity: any, withNames: boolean, className: string) {
     this.buffer.addBuffer(); // size will be written at this place later
     if (withNames) {
-      this.buffer.writeLengthPrefixedString(obj.levelName);
-      this.buffer.writeLengthPrefixedString(obj.pathName);
-      this.buffer.writeInt(obj.children.length);
-      for (var i = 0; i < obj.children.length; i++) {
-        this.buffer.writeLengthPrefixedString(obj.children[i].levelName);
-        this.buffer.writeLengthPrefixedString(obj.children[i].pathName);
+      this.buffer.writeLengthPrefixedString(entity.levelName);
+      this.buffer.writeLengthPrefixedString(entity.pathName);
+      this.buffer.writeInt(entity.children.length);
+      for (var i = 0; i < entity.children.length; i++) {
+        this.buffer.writeLengthPrefixedString(entity.children[i].levelName);
+        this.buffer.writeLengthPrefixedString(entity.children[i].pathName);
       }
     }
-    for (var i = 0; i < obj.properties.length; i++) {
-      this.writeProperty(obj.properties[i]);
+    for (var i = 0; i < entity.properties.length; i++) {
+      this.writeProperty(entity.properties[i]);
     }
 
     this.writeNone();
+    this.buffer.writeInt(0); // extra object count?
 
-    this.buffer.writeHex(obj.missing);
+    this.writeExtra(className, entity);
+
+    if (entity.missing !== undefined) {
+      this.buffer.writeHex(entity.missing);
+    }
     this.buffer.endBufferAndWriteSize();
   }
 
@@ -415,6 +420,21 @@ export class Json2Sav {
         this.error("Unknown property type " + type);
     }
     this.buffer.endBufferAndWriteSize();
+  }
+
+  writeExtra(entity: Entity, className: string) {
+    switch(className) {
+      case "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C":
+        this.writePowerLineExtra(entity);
+        break;
+    }
+  }
+
+  writePowerLineExtra(entity: Entity) {
+    this.buffer.writeLengthPrefixedString(entity.extra.sourceLevelName);
+    this.buffer.writeLengthPrefixedString(entity.extra.sourcePathName);
+    this.buffer.writeLengthPrefixedString(entity.extra.targetLevelName);
+    this.buffer.writeLengthPrefixedString(entity.extra.targetPathName);
   }
 
   error(message: string) {

@@ -45,6 +45,7 @@ interface Entity {
   children?: ObjectReference[];
   properties: Property[];
   missing?: string;
+  extra?: any;
 }
 
 interface ObjectReference {

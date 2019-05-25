@@ -181,10 +181,10 @@ export class Sav2Json {
         return;
       }
       if (saveJson.objects[i].type == 1) {
-        saveJson.objects[i].entity = this.readEntity(buffer, true);
+        saveJson.objects[i].entity = this.readEntity(buffer, true, saveJson.objects[i].className);
       } else {
         // type == 0
-        saveJson.objects[i].entity = this.readEntity(buffer, false);
+        saveJson.objects[i].entity = this.readEntity(buffer, false, saveJson.objects[i].className);
       }
     }
 
@@ -239,7 +239,7 @@ export class Sav2Json {
     };
   }
 
-  readEntity(buffer: DataBuffer, withNames: boolean): Entity {
+  readEntity(buffer: DataBuffer, withNames: boolean, className: string): Entity {
     const length = buffer.readInt();
     buffer.resetBytesRead();
 
@@ -262,6 +262,13 @@ export class Sav2Json {
 
     // read properties
     while (this.readProperty(buffer, entity.properties)) {}
+
+    const zero = buffer.readInt();
+    if (zero !== 0) {
+      this.error("extra object count not zero: " + zero);
+    }
+
+    this.readExtra(entity, className);
 
     const missing = length - buffer.bytesRead;
     if (missing > 0) {
@@ -680,6 +687,23 @@ export class Sav2Json {
     }
 
     return true;
+  }
+
+  readExtra(entity: Entity, className: string) {
+    switch(className) {
+      case "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C":
+        this.readPowerLineExtra(entity);
+        break;
+    }
+  }
+
+  readPowerLineExtra(entity: Entity) {
+    entity.extra = {
+      sourceLevelName: this.buffer.readLengthPrefixedString(),
+      sourcePathName: this.buffer.readLengthPrefixedString(),
+      targetLevelName: this.buffer.readLengthPrefixedString(),
+      targetPathName: this.buffer.readLengthPrefixedString()
+    };
   }
 
   error(message: string) {
