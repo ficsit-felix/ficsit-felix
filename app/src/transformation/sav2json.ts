@@ -265,7 +265,7 @@ export class Sav2Json {
 
     const zero = buffer.readInt();
     if (zero !== 0) {
-      this.error("extra object count not zero: " + zero);
+      this.error("extra object count not zero: " + zero + " className: " + className);
     }
 
     this.readExtra(entity, className);
@@ -552,7 +552,6 @@ export class Sav2Json {
             });
             break;
           case "TimerHandle":
-            // no data
             properties.push({
               name: name,
               type: prop,
@@ -560,6 +559,7 @@ export class Sav2Json {
               structUnknown: unknown,
               value: {
                 type: type,
+                handle: this.buffer.readLengthPrefixedString(),
               }
             });
             break;

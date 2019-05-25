@@ -490,6 +490,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "Build_MinerMk1_C.glb",
     color: 0xac139e,
     paintable: false,
+    powerLineOffset: {x: 120, y: 0, z: 1800},
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMk2/Build_MinerMk2.Build_MinerMk2_C": {
     model: "Build_MinerMk1_C.glb",
@@ -551,11 +552,13 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "SmelterMk1.glb",
     color: 0x830477,
     paintable: true,
+    powerLineOffset: {x: -140, y: -290, z: 400},
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk2/Build_SmelterMk2.Build_SmelterMk2_C": {
     model: "SmelterMk1.glb",
     color: 0x970c87,
     paintable: true,
+    powerLineOffset: {x: -140, y: -290, z: 400},
   },
 
   "/Game/FactoryGame/Buildable/Factory/SpaceElevator/Build_SpaceElevator.Build_SpaceElevator_C": {

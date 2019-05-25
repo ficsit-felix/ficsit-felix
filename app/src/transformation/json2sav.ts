@@ -141,7 +141,7 @@ export class Json2Sav {
         if (obj.type == 1) {
           this.writeEntity(obj.entity, true, obj.className);
         } else if (obj.type == 0) {
-          this.writeEntity(obj.entity, false. obj.className);
+          this.writeEntity(obj.entity, false, obj.className);
         }
       }
 
@@ -210,7 +210,7 @@ export class Json2Sav {
     this.writeNone();
     this.buffer.writeInt(0); // extra object count?
 
-    this.writeExtra(className, entity);
+    this.writeExtra(entity, className);
 
     if (entity.missing !== undefined) {
       this.buffer.writeHex(entity.missing);
@@ -345,7 +345,7 @@ export class Json2Sav {
             this.buffer.writeFloat(property.value.forward);
             break;
           case "TimerHandle":
-            // no data
+            this.buffer.writeLengthPrefixedString(property.value.handle);
             break;
         }
         break;

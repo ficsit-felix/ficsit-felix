@@ -825,25 +825,28 @@ export default {
         // TODO error
         console.error("target of power line " + targetConnection.outerPathName + " not found.")
       }
-      console.log(source);
       var sourceOffset = {x:0, y:0, z:0};
       if (modelConfig[source.className].powerLineOffset !== undefined) {
         sourceOffset = modelConfig[source.className].powerLineOffset;
+        const transformedSourceOffset =   new THREE.Vector3(sourceOffset.y, sourceOffset.x, sourceOffset.z).applyQuaternion(new THREE.Quaternion(source.transform.rotation[0], source.transform.rotation[1], -source.transform.rotation[2], source.transform.rotation[3]));
+        sourceOffset = {x:transformedSourceOffset.x, y:transformedSourceOffset.y, z:transformedSourceOffset.z};        
       }
       var targetOffset = {x:0, y:0, z:0};
       if (modelConfig[target.className].powerLineOffset !== undefined) {
         targetOffset = modelConfig[target.className].powerLineOffset;
+        const transformedTargetOffset =   new THREE.Vector3(targetOffset.y, targetOffset.x, targetOffset.z).applyQuaternion(new THREE.Quaternion(target.transform.rotation[0], target.transform.rotation[1], -target.transform.rotation[2], target.transform.rotation[3]));
+        targetOffset = {x:transformedTargetOffset.x, y:transformedTargetOffset.y, z:transformedTargetOffset.z};        
       }
 
       const extrudePath = new LineCurve3(
         new THREE.Vector3(
-          source.transform.translation[1] - obj.transform.translation[1] + sourceOffset.y,
-          source.transform.translation[0] - obj.transform.translation[0] + sourceOffset.x,
+          source.transform.translation[1] - obj.transform.translation[1] + sourceOffset.x,
+          source.transform.translation[0] - obj.transform.translation[0] + sourceOffset.y,
           source.transform.translation[2] - obj.transform.translation[2] + sourceOffset.z
         ),
         new THREE.Vector3(
-          target.transform.translation[1] - obj.transform.translation[1] + targetOffset.y,
-          target.transform.translation[0] - obj.transform.translation[0] + targetOffset.x,
+          target.transform.translation[1] - obj.transform.translation[1] + targetOffset.x,
+          target.transform.translation[0] - obj.transform.translation[0] + targetOffset.y,
           target.transform.translation[2] - obj.transform.translation[2] + targetOffset.z
         )
       );
@@ -888,12 +891,12 @@ export default {
     updateObjectVisuals(object, obj) {
       // console.log(obj);
       this.applyTranslation(object, obj.transform.translation);
-      
+      this.applyRotation(object, obj.transform.rotation);
       if (!this.isConveyorBelt(obj) && !this.isPowerLine(obj)) {
-        this.applyRotation(object, obj.transform.rotation);
+        
         object.rotateZ(1.5708); // 90 deg in radians
       } else {// TODO conveyor belt coordinates are given without rotation?
-        this.applyRotation(object, [0,0,0,1]);
+        //this.applyRotation(object, [0,0,0,1]);
       }
 
       this.applyScale(object, obj.transform.scale3d);
