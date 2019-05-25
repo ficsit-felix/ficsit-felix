@@ -657,7 +657,7 @@ export default {
     },
 
     cleanUpZero(value) {
-      if (value > 0.1) {
+      if (value > 0.1 || value < -0.1) {
         return value;
       }
       return 0;
