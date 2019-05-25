@@ -891,12 +891,11 @@ export default {
     updateObjectVisuals(object, obj) {
       // console.log(obj);
       this.applyTranslation(object, obj.transform.translation);
-      this.applyRotation(object, obj.transform.rotation);
       if (!this.isConveyorBelt(obj) && !this.isPowerLine(obj)) {
-        
+        this.applyRotation(object, obj.transform.rotation);        
         object.rotateZ(1.5708); // 90 deg in radians
       } else {// TODO conveyor belt coordinates are given without rotation?
-        //this.applyRotation(object, [0,0,0,1]);
+        this.applyRotation(object, [0,0,0,1]);
       }
 
       this.applyScale(object, obj.transform.scale3d);

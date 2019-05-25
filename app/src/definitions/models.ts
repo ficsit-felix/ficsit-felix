@@ -301,12 +301,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyoAttachmentSplitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C": {
-    model: "",
+    model: "ConveyorSplitter.glb",
     color: 0xff00ff,
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorAttachmentMerger/Build_ConveyorAttachmentMerger.Build_ConveyorAttachmentMerger_C": {
-    model: "",
+    model: "ConveyorSplitter.glb",
     color: 0xff00ff,
     paintable: false,
   },
@@ -489,18 +489,20 @@ let modelConfig: { [id: string]: ModelConfig } = {
   "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C": {
     model: "Build_MinerMk1_C.glb",
     color: 0xac139e,
-    paintable: false,
+    paintable: true,
     powerLineOffset: {x: 120, y: 0, z: 1800},
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMk2/Build_MinerMk2.Build_MinerMk2_C": {
     model: "Build_MinerMk1_C.glb",
     color: 0xce2abb,
-    paintable: false,
+    paintable: true,
+    powerLineOffset: {x: 120, y: 0, z: 1800},
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMk3/Build_MinerMk3.Build_MinerMk3_C": {
     model: "Build_MinerMk1_C.glb",
     color: 0xd638af,
-    paintable: false,
+    paintable: true,
+    powerLineOffset: {x: 120, y: 0, z: 1800},
   },
   "/Game/FactoryGame/Buildable/Factory/OilPump/Build_OilPump.Build_OilPump_C": {
     model: "OilPump.glb",
@@ -830,8 +832,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false,
   },
   "/Game/FactoryGame/Equipment/PortableMiner/BP_PortableMiner.BP_PortableMiner_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "PortableMiner.glb",
+    color: 0x5321cd,
     paintable: false,
   },
   "/Game/FactoryGame/Equipment/PortableMiner/Equip_PortableMinerDispenser.Equip_PortableMinerDispenser_C": {
