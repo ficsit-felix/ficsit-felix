@@ -115,7 +115,7 @@ import Renderer from "@/components/scene/Renderer";
 import Cube from "@/components/scene/Cube";
 import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
-import { BoxBufferGeometry, LineCurve3, Mesh } from "three";
+import { BoxBufferGeometry, LineCurve3, Mesh, error } from "three";
 import { setTimeout } from "timers";
 import { GLTFLoader } from "@/js/GLTFLoader";
 import { modelHelper } from "@/helpers/modelHelper";
@@ -123,7 +123,7 @@ import { modelConfig } from "@/definitions/models";
 import * as Sentry from "@sentry/browser";
 import ToolPanel from "@/components/ToolPanel";
 import { commithash } from "@/js/commithash";
-import { getProperty, findActorByPathName } from "@/helpers/entityHelper";
+import { getProperty, findActorByName } from "@/helpers/entityHelper";
 import { version } from 'punycode';
 
 export default {
@@ -394,7 +394,8 @@ export default {
       ];
 
       // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
-      const buildableSubsystem = findActorByPathName(
+      const buildableSubsystem = findActorByName(
+        "Persistent_Level",
         "Persistent_Level:PersistentLevel.BuildableSubsystem"
       );
       if (buildableSubsystem !== undefined) {
@@ -800,6 +801,69 @@ export default {
       return geometry;
     },
 
+    createPowerLineGeometry(obj) {
+
+      const sourceConnection = findActorByName(obj.entity.extra.sourceLevelName, obj.entity.extra.sourcePathName);
+      if (sourceConnection === null) {
+        // TODO error
+        console.error("source connection of power line " + obj.entity.extra.sourcePathName + " not found.")
+      }
+      const targetConnection = findActorByName(obj.entity.extra.targetLevelName, obj.entity.extra.targetPathName);
+      if (targetConnection === null) {
+        // TODO error
+        console.error("target connection of power line " + obj.entity.extra.targetPathName + " not found.")
+      }
+
+      const source = findActorByName(sourceConnection.levelName, sourceConnection.outerPathName);
+      if (source === null) {
+        // TODO error
+        console.error("source of power line " + sourceConnection.outerPathName + " not found.")
+      }
+
+      const target = findActorByName(targetConnection.levelName, targetConnection.outerPathName);
+      if (target === null) {
+        // TODO error
+        console.error("target of power line " + targetConnection.outerPathName + " not found.")
+      }
+      console.log(source);
+      var sourceOffset = {x:0, y:0, z:0};
+      if (modelConfig[source.className].powerLineOffset !== undefined) {
+        sourceOffset = modelConfig[source.className].powerLineOffset;
+      }
+      var targetOffset = {x:0, y:0, z:0};
+      if (modelConfig[target.className].powerLineOffset !== undefined) {
+        targetOffset = modelConfig[target.className].powerLineOffset;
+      }
+
+      const extrudePath = new LineCurve3(
+        new THREE.Vector3(
+          source.transform.translation[1] - obj.transform.translation[1] + sourceOffset.y,
+          source.transform.translation[0] - obj.transform.translation[0] + sourceOffset.x,
+          source.transform.translation[2] - obj.transform.translation[2] + sourceOffset.z
+        ),
+        new THREE.Vector3(
+          target.transform.translation[1] - obj.transform.translation[1] + targetOffset.y,
+          target.transform.translation[0] - obj.transform.translation[0] + targetOffset.x,
+          target.transform.translation[2] - obj.transform.translation[2] + targetOffset.z
+        )
+      );
+
+      const extrusionSegments = 1;
+      const radius = 10;
+      const radiusSegments = 3;
+      const closed = false;
+
+      // const extrudePath2 = new THREE.CatmullRomCurve3(points);
+      const geometry = new THREE.TubeBufferGeometry(
+        extrudePath,
+        extrusionSegments,
+        radius,
+        radiusSegments,
+        closed
+      );
+      return geometry;
+    },
+
     applyTranslation(object, translation) {
       // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)
       object.position.x = translation[1];
@@ -824,11 +888,13 @@ export default {
     updateObjectVisuals(object, obj) {
       // console.log(obj);
       this.applyTranslation(object, obj.transform.translation);
-      this.applyRotation(object, obj.transform.rotation);
-
-      if (!this.isConveyorBelt(obj)) {
+      
+      if (!this.isConveyorBelt(obj) && !this.isPowerLine(obj)) {
+        this.applyRotation(object, obj.transform.rotation);
         object.rotateZ(1.5708); // 90 deg in radians
-      } // TODO conveyor belt coordinates are given without rotation?
+      } else {// TODO conveyor belt coordinates are given without rotation?
+        this.applyRotation(object, [0,0,0,1]);
+      }
 
       this.applyScale(object, obj.transform.scale3d);
     },
@@ -868,7 +934,7 @@ export default {
       clone.transform.translation[0] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
 
-      if (!this.isConveyorBelt(this.selectedObject)) {
+      if (!this.isConveyorBelt(this.selectedObject)  && !this.isPowerLine(this.selectedObject)) {
         obj.rotateZ(-1.5708); // -90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
       clone.transform.rotation[0] = obj.quaternion.x;
@@ -913,6 +979,10 @@ export default {
       );
     },
 
+    isPowerLine(obj) {
+      return obj.className === "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C";
+    },
+
     getGeometry(obj) {
       var className = obj.className;
 
@@ -922,6 +992,11 @@ export default {
           resolve(this.createConveyorBeltGeometry(obj));
           return;
         }
+        if (this.isPowerLine(obj)) {
+          resolve(this.createPowerLineGeometry(obj));
+          return;
+        }
+
         if (
           obj.className ===
           "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C"

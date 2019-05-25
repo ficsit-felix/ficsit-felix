@@ -14,12 +14,13 @@ export function getProperty(actor: ActorOrObject, propertyName: string): Propert
   return undefined;
 }
 
-export function findActorByPathName(pathName: string): ActorOrObject | undefined {
+export function findActorByName(levelName: string, pathName: string): ActorOrObject | undefined {
   if (window.data !== undefined) {
     // TODO might be worth optimizing using hashmap or the like
     for (let i = 0; i < window.data.objects.length; i++) {
       const element = window.data.objects[i];
-      if (element.pathName === pathName) {
+      if (element.pathName === pathName && // compare by pathName first as if they are the same, the levelName will very probably be the same, too.
+          element.levelName === levelName) {
         return element;
       }
     }

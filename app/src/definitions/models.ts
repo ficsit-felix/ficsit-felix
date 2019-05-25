@@ -3,6 +3,7 @@ interface ModelConfig {
   color: number;
   // true if this actor can be painted with the color gun
   paintable: boolean;
+  powerLineOffset?: {x: number, y: number, z: number};
 }
 
 // Color palette
@@ -512,13 +513,14 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C": {
     model: "Build_PowerLine_C.glb",
-    color: 0x5549bf,
+    color: 0xaaaaaa,
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C": {
     model: "PowerPoleMk1.glb",
     color: 0x6042d5,
     paintable: false,
+    powerLineOffset: {x: 0, y: 0, z: 600},
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk2/Build_PowerPoleMk2.Build_PowerPoleMk2_C": {
     model: "PowerPoleMk2.glb",
