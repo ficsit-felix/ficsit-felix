@@ -414,7 +414,7 @@ export default {
           }
         }
       }
-      
+
       for (let i = 0; i < defaultColors.length; i++) {
         const color = defaultColors[i];
 
@@ -655,6 +655,20 @@ export default {
         });
     },
 
+    cleanUpZero(value) {
+      if (value > 0.1) {
+        return value;
+      }
+      return 0;
+    },
+
+    cleanUpZeros(property) {
+      property.value.x = this.cleanUpZero(property.value.x);
+      property.value.y = this.cleanUpZero(property.value.y);
+      property.value.z = this.cleanUpZero(property.value.z);
+      return property;
+    },
+
     createConveyorBeltGeometry(obj) {
       const translation = obj.transform.translation;
       const splineData = obj.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
@@ -674,9 +688,9 @@ export default {
 
       for (let i = 0; i < splinePoints; i++) {
         const splinePoint = splineData.value.values[i];
-        const location = splinePoint.properties[0]; // TODO make sure this is Location
-        const arriveTangent = splinePoint.properties[1]; // TODO make sure this is arriveTangent
-        const leaveTangent = splinePoint.properties[2]; // TODO make sure this is leaveTangent
+        const location = this.cleanUpZeros(splinePoint.properties[0]); // TODO make sure this is Location
+        const arriveTangent = this.cleanUpZeros(splinePoint.properties[1]); // TODO make sure this is arriveTangent
+        const leaveTangent = this.cleanUpZeros(splinePoint.properties[2]); // TODO make sure this is leaveTangent
 
         /*var size = 40;
         var geom = new THREE.BoxBufferGeometry(size, size, size);
@@ -719,18 +733,6 @@ export default {
 
           if (lastLoc != null) {
 
-            /*extrudePath.add(
-              new THREE.LineCurve3(
-              new THREE.Vector3(
-                lastLoc.value.y, 
-                lastLoc.value.x, 
-                lastLoc.value.z),  
-                new THREE.Vector3(
-                location.value.y, 
-                location.value.x, 
-                location.value.z)
-              )
-            );*/
           // TODO find out how exactly to use arriveTangent and leaveTangent
           // I'm still not 100% sure, how the tangents in Unreal are calculated. The division by three is still a guess and based on the first answer here: https://answers.unrealengine.com/questions/330317/which-algorithm-is-used-for-spline-components-in-u.html#
           extrudePath.add(
@@ -753,42 +755,12 @@ export default {
                 location.value.z)
             )
           );
-
-          /*extrudePath.add(
-            new THREE.CatmullRomCurve3([
-              new THREE.Vector3(
-                lastArrive.value.y, 
-                lastArrive.value.x, 
-                lastArrive.value.z),
-                new THREE.Vector3(
-                lastLoc.value.y, 
-                lastLoc.value.x, 
-                lastLoc.value.z),
-                new THREE.Vector3(
-                lastLeave.value.y, 
-                lastLeave.value.x, 
-                lastLeave.value.z),
-                new THREE.Vector3(
-                arriveTangent.value.y, 
-                arriveTangent.value.x, 
-                arriveTangent.value.z),
-                new THREE.Vector3(
-                location.value.y, 
-                location.value.x, 
-                location.value.z),
-                new THREE.Vector3(
-                leaveTangent.value.y, 
-                leaveTangent.value.x, 
-                leaveTangent.value.z),]
-            )
-          );*/
         }
  
         lastArrive = arriveTangent;
         lastLoc = location;
         lastLeave = leaveTangent;
       }
-
       // const extrudePa th2 = new THREE.CatmullRomCurve3(points);
       var length = 38,
         width = 200;

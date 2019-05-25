@@ -17,6 +17,7 @@ let conveyorMk5 = 0x507ba6;
 let conveyorMk6 = 0x5097a6;
 
 let foundationColor = 0x756f6c;
+let rampColor = 0x5f6264;
 
 // This list is sorted alphabetically to ease adding new entries and seeing wether ones exist already
 let modelConfig: { [id: string]: ModelConfig } = {
@@ -78,12 +79,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x2_01.Build_Ramp_8x2_01_C": {
     model: "Build_Ramp_8x2_01_C.glb", // z-100
-    color: 0xd682e7,
+    color: rampColor,
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C": {
     model: "Build_Ramp_8x4_01_C.glb", // z-200
-    color: 0xd682e7,
+    color: rampColor,
     paintable: false,
   },
 
