@@ -392,30 +392,33 @@ export default {
         new THREE.Color("#b048aa"),
         new THREE.Color("#838283")
       ];
+
+      // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
+      const buildableSubsystem = findActorByPathName(
+        "Persistent_Level:PersistentLevel.BuildableSubsystem"
+      );
+      if (buildableSubsystem !== undefined) {
+        for (
+          let i = 0;
+          i < buildableSubsystem.entity.properties.length;
+          i++
+        ) {
+          const element = buildableSubsystem.entity.properties[i];
+          if (element.name === "mColorSlotsPrimary") {
+            // this primary color was changed by the user
+            defaultColors[element.index] = new THREE.Color(
+              element.value.r / 255,
+              element.value.g / 255,
+              element.value.b / 255
+            );
+          }
+        }
+      }
+      
       for (let i = 0; i < defaultColors.length; i++) {
         const color = defaultColors[i];
 
-        // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
-        const buildableSubsystem = findActorByPathName(
-          "Persistent_Level:PersistentLevel.BuildableSubsystem"
-        );
-        if (buildableSubsystem !== undefined) {
-          for (
-            let i = 0;
-            i < buildableSubsystem.entity.properties.length;
-            i++
-          ) {
-            const element = buildableSubsystem.entity.properties[i];
-            if (element.name === "mColorSlotsPrimary") {
-              // this primary color was changed by the user
-              defaultColors[element.index] = new THREE.Color(
-                element.value.r / 255,
-                element.value.g / 255,
-                element.value.b / 255
-              );
-            }
-          }
-        }
+
 
         this.coloredMaterials[i] = new THREE.MeshMatcapMaterial({
           color: color,
@@ -454,11 +457,22 @@ export default {
         }
       }*/
 
+      const isPaintable = modelConfig[obj.className] !== undefined ? modelConfig[obj.className].paintable : false;
+
       for (let i = 0; i < obj.entity.properties.length; i++) {
         const element = obj.entity.properties[i];
         if (element.name === "mColorSlot") {
+          if (!isPaintable) {
+            console.error("paintable should be true for: " + obj.className);
+            Sentry.captureMessage("paintable should be true for: " + obj.className);
+          }
           return this.coloredMaterials[element.value.unk2];
         }
+      }
+
+      // mColorSlot is not set if it is colored with material 0
+      if (isPaintable) {
+        return this.coloredMaterials[0];
       }
 
       if (obj.entity.properties)
@@ -979,7 +993,7 @@ export default {
               Sentry.captureMessage("missing model definition: " + className);
             }
 
-            var size = 400; // 800 is size of foundations
+            var size = 200; // 800 is size of foundations
             var geometry = new THREE.BoxBufferGeometry(size, size, size);
             this.geometries[className] = geometry;
             resolve(this.geometries[className]);
