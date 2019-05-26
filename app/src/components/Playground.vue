@@ -76,6 +76,7 @@
       <br>
       {{ commithash }}
     </div>
+    <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
   </div>
 </template>
 
@@ -125,6 +126,7 @@ import ToolPanel from "@/components/ToolPanel";
 import { commithash } from "@/js/commithash";
 import { getProperty, findActorByName } from "@/helpers/entityHelper";
 import { version } from 'punycode';
+import Compass from "@/components/Compass";
 
 export default {
   name: "Playground",
@@ -134,7 +136,8 @@ export default {
     Cube,
     Camera,
     AmbientLight,
-    ToolPanel
+    ToolPanel,
+    Compass
   },
   data: function() {
     return {
@@ -142,7 +145,9 @@ export default {
       height: 100,
       mode: "translate",
       local: false,
-      commithash
+      commithash,
+      rotateX: 0,
+      rotateZ: 0
     };
   },
   computed: {
@@ -365,9 +370,29 @@ export default {
     // listen to window resize
     window.addEventListener("resize", this.handleResize);
     window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
+
+    this.updateCompass();
   },
   methods: {
     ...mapActions(["loadData", "setSelectedObject"]),
+
+    updateCompass() {
+      // TODO move to a onCameraChanged to only update when necessary
+      const camera = this.$refs.renderer.camera.obj;
+      var position = new THREE.Vector3();
+      var quaternion = new THREE.Quaternion();
+      var scale = new THREE.Vector3();
+
+      camera.matrixWorldInverse.decompose( position, quaternion, scale);
+      const euler = new THREE.Euler().setFromQuaternion(quaternion);
+
+      this.rotateX = euler.x;
+      this.rotateZ = -euler.z - 3.14/2; // point correctly to north
+      if (this.rotateX < -1.3) { // don't go invisible at very small angle to map
+        this.rotateX = -1.3;
+      }
+      requestAnimationFrame(this.updateCompass);
+    },
 
     // setup to use the primary colors of painted buildings
     setupColoredMaterials() {
@@ -632,7 +657,7 @@ export default {
               // Fake the middle part of the conveyor lift
               const middleGeometry = new THREE.BoxBufferGeometry(
                 38,
-                198,
+                190,
                 topPartTranslationZ > 0
                   ? topPartTranslationZ
                   : -topPartTranslationZ
@@ -764,7 +789,7 @@ export default {
       }
       // const extrudePa th2 = new THREE.CatmullRomCurve3(points);
       var length = 38,
-        width = 200;
+        width = 190;
       var shape = new THREE.Shape();
       shape.moveTo(-length / 2, -width / 2);
       shape.lineTo(-length / 2, width / 2);
@@ -989,7 +1014,7 @@ export default {
       var className = obj.className;
 
       return new Promise((resolve, reject) => {
-        // special cases for geometry
+        // sp    ecial cases for geometry
         if (this.isConveyorBelt(obj)) {
           resolve(this.createConveyorBeltGeometry(obj));
           return;
