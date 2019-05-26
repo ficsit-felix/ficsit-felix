@@ -248,7 +248,10 @@ export class Json2Sav {
         break;
       case "TextProperty":
         this.buffer.writeByte(0, false);
-        this.buffer.writeHex(property.textUnknown);
+        this.buffer.writeInt(property.unkown1);
+        this.buffer.writeByte(property.unkown2);
+        this.buffer.writeInt(property.unkown3);
+        this.buffer.writeLengthPrefixedString(property.unknown4);
         this.buffer.writeLengthPrefixedString(property.value);
         break;
       case "ByteProperty":

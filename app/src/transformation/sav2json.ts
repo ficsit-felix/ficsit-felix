@@ -340,7 +340,10 @@ export class Sav2Json {
           name: name,
           type: prop,
           index: index,
-          textUnknown: buffer.readHex(13),
+          unknown1: buffer.readInt(),
+          unknown2: buffer.readByte(),
+          unknown3: buffer.readInt(),
+          unknown4: buffer.readLengthPrefixedString(),
           value: buffer.readLengthPrefixedString()
         });
         break;

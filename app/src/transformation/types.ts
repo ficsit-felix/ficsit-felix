@@ -80,7 +80,10 @@ interface NameProperty extends BaseProperty {
 }
 
 interface TextProperty extends BaseProperty {
-  textUnknown: string;
+  unknown1: number;
+  unknown2: number;
+  unknown3: number;
+  unknown4: number;
   value: string;
 }
 
