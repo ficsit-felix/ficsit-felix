@@ -12,7 +12,7 @@
     @keyup.s="setMode('scale')"
     @keyup.f="focusSelectedObject()"
   >
-    <ToolPanel
+    <Toolbar
       :mode="mode"
       :local="local"
       @setLocal="setLocal(true)"
@@ -122,7 +122,7 @@ import { GLTFLoader } from "@/js/GLTFLoader";
 import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 import * as Sentry from "@sentry/browser";
-import ToolPanel from "@/components/ToolPanel";
+import Toolbar from "@/components/Toolbar";
 import { commithash } from "@/js/commithash";
 import { getProperty, findActorByName } from "@/helpers/entityHelper";
 import { version } from 'punycode';
@@ -136,7 +136,7 @@ export default {
     Cube,
     Camera,
     AmbientLight,
-    ToolPanel,
+    Toolbar,
     Compass
   },
   data: function() {

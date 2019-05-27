@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <div class="maincolumn">
-      <Toolbar />
+      <Menubar />
       <div class="mainrow">
         <Split @onDrag="onDrag">
           <SplitArea :size="60">
@@ -40,7 +40,7 @@
   overflow: auto;
   height: 100%;
 }
-.toolbar {
+.menubar {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: auto;
@@ -68,7 +68,7 @@
 
 <script>
 // @ is an alias to /src
-import Toolbar from "@/components/Toolbar.vue";
+import Menubar from "@/components/Menubar.vue";
 import Playground from "@/components/Playground.vue";
 import ObjectList from "@/components/ObjectList.vue";
 import PropertyEditor from "@/components/PropertyEditor.vue";
@@ -78,7 +78,7 @@ import { mapState } from "vuex";
 export default {
   name: "editor",
   components: {
-    Toolbar,
+    Menubar,
     Playground,
     ObjectList,
     PropertyEditor,
