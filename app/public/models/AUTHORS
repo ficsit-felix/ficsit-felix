@@ -1,14 +1,3 @@
-CVex2150J
-- Build_Ramp_8x2_01_C.glb
-- Build_Wall_Conveyor_8x4_01_C.glb
-- Build_Wall_Conveyor_8x4_02_C.glb
-- Build_Wall_Conveyor_8x4_03_C.glb
-- Build_Wall_Conveyor_8x4_04_C.glb
-- Build_Wall_Door_8x4_01_C.glb
-- Build_Wall_Door_8x4_02_C.glb
-- Build_Wall_Door_8x4_03_C.glb
-- Build_Wall_Gate_8x4_01_C.glb
-
 Cale Flanagan
 - AssemblerMk1.glb
 - ConstructorMk1.glb
@@ -43,6 +32,19 @@ Cale Flanagan
 - WorkbenchIntegrated.glb
 - StorageIntegrated.glb
 - SpaceElevator.glb
+- Stairs_Right.glb
+- Stairs_Left.glb
+
+CVex2150J
+- Build_Ramp_8x2_01_C.glb
+- Build_Wall_Conveyor_8x4_01_C.glb
+- Build_Wall_Conveyor_8x4_02_C.glb
+- Build_Wall_Conveyor_8x4_03_C.glb
+- Build_Wall_Conveyor_8x4_04_C.glb
+- Build_Wall_Door_8x4_01_C.glb
+- Build_Wall_Door_8x4_02_C.glb
+- Build_Wall_Door_8x4_03_C.glb
+- Build_Wall_Gate_8x4_01_C.glb
 
 bitowl
 - BP_BerryPush_C.glb
@@ -59,8 +61,6 @@ bitowl
 - Build_MinerMk1_C.glb
 - Build_PowerLine_C.glb
 - Build_Ramp_8x4_01_C.glb
-- Build_SpaceElevator_C.glb
-- Build_Stairs_Left_01_C.glb
 - Build_StorageContainerMk1_C.glb
 - Build_StoragePlayer_C.glb
 - Build_Wall_1a_C.glb

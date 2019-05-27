@@ -14,7 +14,6 @@ ConveyorCurvePath.prototype.constructor = ConveyorCurvePath;
 	Changed to fix conveyor belt roll (see https://github.com/bitowl/ficsit-felix/issues/36) by always setting the normal to point up in z direction
 */
 ConveyorCurvePath.prototype.computeFrenetFrames = function (segments, closed) {
-	console.log("COMPUTE FRENET FRAMES.");
 	// see http://www.cs.indiana.edu/pub/techreports/TR425.pdf
 
 	var normal = new Vector3();
@@ -47,8 +46,6 @@ ConveyorCurvePath.prototype.computeFrenetFrames = function (segments, closed) {
 
 	// ONLY CHANGE TO ORIGINAL CODE: conveyor belts always face upwards
 	normal.set(0, 0, 1);
-
-	console.log(normal);
 
 	vec.crossVectors(tangents[0], normal).normalize();
 

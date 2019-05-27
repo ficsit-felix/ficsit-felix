@@ -90,13 +90,13 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C": {
-    model: "Build_Stairs_Left_01_C.glb", // z+100
+    model: "Stairs_Left.glb", // z+100
     color: 0xac74b7,
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Right_01.Build_Stairs_Right_01_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "Stairs_Right.glb",
+    color: 0xac74b7,
     paintable: false,
   },
 
@@ -523,17 +523,19 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "PowerPoleMk1.glb",
     color: 0x6042d5,
     paintable: false,
-    powerLineOffset: {x: 0, y: 0, z: 600},
+    powerLineOffset: {x: 0, y: 0, z: 615},
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk2/Build_PowerPoleMk2.Build_PowerPoleMk2_C": {
     model: "PowerPoleMk2.glb",
     color: 0x6042d5,
     paintable: false,
+    powerLineOffset: {x: 0, y: 0, z: 715},
   },
   "/Game/FactoryGame/Buildable/Factory/PowerPoleMk3/Build_PowerPoleMk3.Build_PowerPoleMk3_C": {
     model: "PowerPoleMk3.glb",
     color: 0x6042d5,
     paintable: false,
+    powerLineOffset: {x: 0, y: 0, z: 850},
   },
   "/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C": {
     model: "",
@@ -599,7 +601,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   "/Game/FactoryGame/Buildable/Factory/TradingPost/Build_TradingPost.Build_TradingPost_C": {
     model: "TradingPost.glb",
     color: 0xcd8734,
-    paintable: false,
+    paintable: true,
   },
   "/Game/FactoryGame/Buildable/Factory/TruckStation/Build_TruckStation.Build_TruckStation_C": {
     model: "TruckStation.glb",
