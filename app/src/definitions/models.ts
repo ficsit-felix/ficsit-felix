@@ -564,7 +564,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Buildable/Factory/SpaceElevator/Build_SpaceElevator.Build_SpaceElevator_C": {
-    model: "Build_SpaceElevator_C.glb",
+    model: "SpaceElevator.glb",
     color: 0x77108a,
     paintable: true,
   },
