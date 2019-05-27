@@ -21,10 +21,12 @@
             <PropertyEditor
               @focusSelectedObject="focusSelectedObject"
             /> </SplitArea
-          >a
+          >
         </Split>
       </div>
     </div>
+ 
+
   </div>
 </template>
 

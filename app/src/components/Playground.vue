@@ -127,6 +127,7 @@ import { commithash } from "@/js/commithash";
 import { getProperty, findActorByName } from "@/helpers/entityHelper";
 import { version } from 'punycode';
 import Compass from "@/components/Compass";
+import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
 
 export default {
   name: "Playground",
@@ -681,20 +682,6 @@ export default {
         });
     },
 
-    cleanUpZero(value) {
-      if (value > 0.1 || value < -0.1) {
-        return value;
-      }
-      return 0;
-    },
-
-    cleanUpZeros(property) {
-      property.value.x = this.cleanUpZero(property.value.x);
-      property.value.y = this.cleanUpZero(property.value.y);
-      property.value.z = this.cleanUpZero(property.value.z);
-      return property;
-    },
-
     createConveyorBeltGeometry(obj) {
       const translation = obj.transform.translation;
       const splineData = obj.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
@@ -706,7 +693,7 @@ export default {
       const radiusSegments = 3;
       const closed = false;
 
-      const extrudePath = new THREE.CurvePath(); //new THREE.CatmullRomCurve3(points);
+      const extrudePath = new ConveyorCurvePath(); //new THREE.CatmullRomCurve3(points);
 
       var lastArrive = null;
       var lastLoc = null;
@@ -714,48 +701,9 @@ export default {
 
       for (let i = 0; i < splinePoints; i++) {
         const splinePoint = splineData.value.values[i];
-        const location = this.cleanUpZeros(splinePoint.properties[0]); // TODO make sure this is Location
-        const arriveTangent = this.cleanUpZeros(splinePoint.properties[1]); // TODO make sure this is arriveTangent
-        const leaveTangent = this.cleanUpZeros(splinePoint.properties[2]); // TODO make sure this is leaveTangent
-
-        /*var size = 40;
-        var geom = new THREE.BoxBufferGeometry(size, size, size);
-        var mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial(
-          {
-            color: new THREE.Color(i/splinePoints/2 +0.5, 0, 0)
-          }
-        ));
-        this.updateObjectVisuals(mesh, obj);
-        mesh.translateX(location.value.y);
-        mesh.translateY(location.value.x);
-        mesh.translateZ(location.value.z);
-        this.$refs.scene.scene.add(mesh);
-
-        size = 30;
-        var geom = new THREE.SphereBufferGeometry(size);
-        var mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial(
-          {
-            color: new THREE.Color(0, i/splinePoints/2 +0.5, 0)
-          }
-        ));
-        this.updateObjectVisuals(mesh, obj);
-        mesh.translateX(location.value.y+arriveTangent.value.y);
-        mesh.translateY(location.value.x+arriveTangent.value.x);
-        mesh.translateZ(location.value.z+arriveTangent.value.z);
-        this.$refs.scene.scene.add(mesh);
-
-        size = 30;
-        var geom = new THREE.SphereBufferGeometry(size);
-        var mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial(
-          {
-            color: new THREE.Color(0,0,i/splinePoints/2 +0.5)
-          }
-        ));
-        this.updateObjectVisuals(mesh, obj);
-        mesh.translateX(location.value.y-leaveTangent.value.y);
-        mesh.translateY(location.value.x-leaveTangent.value.x); 
-        mesh.translateZ(location.value.z-leaveTangent.value.z + 10);
-        this.$refs.scene.scene.add(mesh);*/
+        const location = splinePoint.properties[0]; // TODO make sure this is Location
+        const arriveTangent = splinePoint.properties[1]; // TODO make sure this is arriveTangent
+        const leaveTangent = splinePoint.properties[2]; // TODO make sure this is leaveTangent
 
           if (lastLoc != null) {
 
@@ -810,19 +758,6 @@ export default {
         extrudeSettings
       );
 
-      /*const geometry = new THREE.TubeBufferGeometry(
-        extrudePath,
-        100,
-        10,
-        3,
-        false
-      );*/
-
-      /*const mesh = new THREE.Mesh(geometry, this.unselectedMaterial);
-      mesh.position.x = obj.transform.translation[1];
-      mesh.position.y = obj.transform.translation[0];
-      mesh.position.z = obj.transform.translation[2]
-      this.$refs.scene.scene.add(mesh);*/
       return geometry;
     },
 
