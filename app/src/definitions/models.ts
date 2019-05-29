@@ -452,19 +452,19 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPad.Build_JumpPad_C": {
-    model: "",
+    model: "JumpPad.glb",
     color: 0x872f98,
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadTilted.Build_JumpPadTilted_C": {
-    model: "",
+    model: "JumpPadTilted.glb",
     color: 0xff00ff,
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Factory/LandingPad/Build_LandingPad.Build_LandingPad_C": {
-    model: "",
+    model: "LandingPad.glb",
     color: 0xff00ff,
-    paintable: true,
+    paintable: false,
   },
   "/Game/FactoryGame/Buildable/Factory/LookoutTower/Build_LookoutTower.Build_LookoutTower_C": {
     model: "LookoutTower.glb",
@@ -879,12 +879,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false,
   },
   "/Game/FactoryGame/Prototype/WAT/BP_WAT1.BP_WAT1_C": {
-    model: "",
+    model: "WAT1_Sommersloop.glb",
     color: 0xaa5e2f,
     paintable: false,
   },
   "/Game/FactoryGame/Prototype/WAT/BP_WAT2.BP_WAT2_C": {
-    model: "",
+    model: "WAT2_MercerSphere.glb",
     color: 0x963f1e,
     paintable: false,
   },
@@ -910,7 +910,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   "/Game/FactoryGame/Resource/BP_ResourceNodeGeyser.BP_ResourceNodeGeyser_C": {
-    model: "",
+    model: "ResourceNodeGeyser.glb",
     color: 0x3caa74,
     paintable: false,
   },
@@ -967,7 +967,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false,
   },
   "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C": {
-    model: "",
+    model: "DropPod.glb",
     color: 0xfffd00,
     paintable: false,
   },
