@@ -109,7 +109,7 @@
     <md-dialog :md-active.sync="showSettingsDialog">
       <md-dialog-title>Settings</md-dialog-title>
       <md-dialog-content>
-        asdf
+        <Settings></Settings>
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showSettingsDialog = false">Close</md-button>
@@ -220,11 +220,14 @@ b {
 <script>
 import Logo from "@/components/Logo";
 import LicensesDialog from "@/components/LicensesDialog";
+import Settings from "@/components/Settings";
+
 export default {
   name: "Menubar",
   components: {
     Logo,
-    LicensesDialog
+    LicensesDialog,
+    Settings
   },
   data: function() {
     return {
