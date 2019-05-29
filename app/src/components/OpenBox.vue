@@ -5,18 +5,18 @@
         <input
           v-if="importJson"
           type="file"
-          name="uploadField"
+          name="openField"
           accept=".json"
           class="input-file"
-          @change="uploadFile($event.target.files[0])"
+          @change="openFile($event.target.files[0])"
         />
         <input
           v-else
           type="file"
-          name="uploadField"
+          name="openField"
           accept=".sav"
           class="input-file"
-          @change="uploadFile($event.target.files[0])"
+          @change="openFile($event.target.files[0])"
         />
         <!--
             
@@ -29,7 +29,7 @@
     </form>
     <div v-else class="infobox">
       <p v-if="importJson">Importing JSON file...</p>
-      <p v-else>Uploading save file...</p>
+      <p v-else>Reading save file...</p>
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
@@ -148,9 +148,9 @@ export default {
     }
   },
   mounted() {
-    this.importJson = this.$route.path === "/upload/json";
+    this.importJson = this.$route.path === "/open/json";
 
-    Sentry.captureMessage("visit upload page");
+    Sentry.captureMessage("visit open page");
 
     for (var a in modelConfig) {
       if (modelConfig[a].model !== "") {
@@ -167,10 +167,10 @@ export default {
       this.isSaving = false;
       this.progress = 0;
     },
-    uploadFile(file) {
+    openFile(file) {
       this.isSaving = true;
       this.infoText = "reading file...";
-      console.log("Uploading...", file);
+      console.log("Opening...", file);
       console.log("name: " + file.name);
       console.log("last modified: " + file.lastModifiedDate);
       console.log("size: " + file.size);
@@ -183,7 +183,7 @@ export default {
         scope.setExtra("uuid", uuid);
       });
 
-      Sentry.captureMessage("uploaded file");
+      Sentry.captureMessage("opened file");
       this.setLoading(false).then(()=>{});
       var reader = new FileReader();
       reader.onload = response => {

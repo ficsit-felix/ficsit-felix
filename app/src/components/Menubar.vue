@@ -161,16 +161,16 @@ export default {
   },
   methods: {
     open() {
-      this.$router.push("upload/sav");
+      this.$router.push("open/sav");
     },
     openJson() {
-      this.$router.push("upload/json");
+      this.$router.push("open/json");
     },
     save() {
-      this.$router.push("download/sav");
+      this.$router.push("save/sav");
     },
     saveJson() {
-      this.$router.push("download/json");
+      this.$router.push("save/json");
     },
     openGithub() {
       window.location.href = "https://github.com/bitowl/ficsit-felix";

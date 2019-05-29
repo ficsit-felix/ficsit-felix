@@ -1,9 +1,9 @@
 <template>
-  <div class="download">
+  <div class="open">
     <div class="centered">
       <Logo height="180" black="#000" :animating="logoAnimating" />
-      <h1>Download save file</h1>
-      <DownloadBox
+      <h1>Open save file</h1>
+      <OpenBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"
       />
@@ -12,7 +12,7 @@
 </template>
 <style lang="scss" scoped>
 @import "@/assets/colors.scss";
-.download {
+.open {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,17 +29,17 @@
 
 <script>
 import Logo from "@/components/Logo";
-import DownloadBox from "@/components/DownloadBox";
+import OpenBox from "@/components/OpenBox";
 
 export default {
-  name: "Download",
+  name: "Open",
   components: {
     Logo,
-    DownloadBox
+    OpenBox
   },
   data: function() {
     return {
-      logoAnimating: true
+      logoAnimating: false
     };
   }
 };

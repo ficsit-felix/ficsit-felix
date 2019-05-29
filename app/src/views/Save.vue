@@ -1,9 +1,9 @@
 <template>
-  <div class="upload">
+  <div class="save">
     <div class="centered">
       <Logo height="180" black="#000" :animating="logoAnimating" />
-      <h1>Upload save file</h1>
-      <UploadBox
+      <h1>Download save file</h1>
+      <SaveBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"
       />
@@ -12,7 +12,7 @@
 </template>
 <style lang="scss" scoped>
 @import "@/assets/colors.scss";
-.upload {
+.save {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,17 +29,17 @@
 
 <script>
 import Logo from "@/components/Logo";
-import UploadBox from "@/components/UploadBox";
+import SaveBox from "@/components/SaveBox";
 
 export default {
-  name: "Upload",
+  name: "Save",
   components: {
     Logo,
-    UploadBox
+    SaveBox
   },
   data: function() {
     return {
-      logoAnimating: false
+      logoAnimating: true
     };
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!isSaving" class="infobox">
-      <p v-if="errorText == ''">File should be downloaded.</p>
+      <p v-if="errorText == ''">File should be saved.</p>
       <p v-else>An error occured.</p>
       <br />
       <br />
@@ -10,8 +10,8 @@
       >
     </div>
     <div v-else class="infobox">
-      <p v-if="exportJson">Downloading JSON file...</p>
-      <p v-else>Downloading save file...</p>
+      <p v-if="exportJson">Saving JSON file...</p>
+      <p v-else>Saving save file...</p>
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
@@ -101,7 +101,7 @@ import * as Sentry from "@sentry/browser";
 import { Json2Sav } from "@/transformation/index";
 
 export default {
-  name: "DownloadBox",
+  name: "SaveBox",
   data: function() {
     return {
       isSaving: true,
@@ -129,15 +129,15 @@ export default {
   },
   created() {
     if (!this.dataLoaded) {
-      // The user needs to upload a file first
+      // The user needs to load a file first
       this.$router.push( {
         name: "landingpage"
       });
     }
   },
   mounted() {
-    this.exportJson = this.$route.path === "/download/json";
-    this.uploadFile();
+    this.exportJson = this.$route.path === "/save/json";
+    this.saveFile();
   },
   methods: {
     handleError(errorMessage) {
@@ -146,7 +146,7 @@ export default {
       this.isSaving = false;
       this.progress = 0;
     },
-    uploadFile() {
+    saveFile() {
       try {
         this.isSaving = true;
         this.infoText = "reading file...";
@@ -172,7 +172,7 @@ export default {
             this.progress = 100;
             clearInterval(this.buildInterval);
             setTimeout(() => {
-              Sentry.captureMessage("downloaded file");
+              Sentry.captureMessage("saved file");
 
               element.href = window.URL.createObjectURL(blob);
               if (this.exportJson) {

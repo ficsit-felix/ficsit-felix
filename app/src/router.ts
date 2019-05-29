@@ -18,22 +18,22 @@ export default new Router({
       component: Editor
     },
     {
-      path: "/upload/*",
-      name: "upload",
+      path: "/open/*",
+      name: "open",
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/Upload.vue")
+        import(/* webpackChunkName: "about" */ "./views/Open.vue")
     },
     {
-      path: "/download/*",
-      name: "download",
+      path: "/save/*",
+      name: "save",
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/Download.vue")
+        import(/* webpackChunkName: "about" */ "./views/Save.vue")
     }
   ]
 });

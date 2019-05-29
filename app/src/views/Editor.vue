@@ -92,7 +92,7 @@ export default {
 
   created() {
     if (!this.dataLoaded) {
-      // The user needs to upload a file first
+      // The user needs to load a file first
       this.$router.push( {
         name: "landingpage"
       });

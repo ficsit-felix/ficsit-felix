@@ -2,7 +2,7 @@
 
 ![Screenshot of FeliX](app/public/screenshot.png)
 
-FeliX is a webapp to inspect save files of the game Satisfactory. [You can try it out online.](https://ficsit-felix.firebaseapp.com/)
+FeliX is a webapp to inspect save files of the game Satisfactory. [You can try it out online.](https://ficsit-felix.web.app/)
 
 It uses JavaScript, TypeScript, Vue, three.js and some other libraries. It is currently in the prototype stage. Any contributions are greatly appreciated!
 
