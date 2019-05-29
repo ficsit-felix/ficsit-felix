@@ -104,7 +104,8 @@ export default new Vuex.Store<RootState>({
         .map(name => {
           return {
             name: name,
-            visible: true
+            visible: true,
+            color: "#123456", // TODO fetch default color
           };
         });
     },
