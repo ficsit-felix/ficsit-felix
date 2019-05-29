@@ -658,7 +658,7 @@ export default {
               // Fake the middle part of the conveyor lift
               const middleGeometry = new THREE.BoxBufferGeometry(
                 38,
-                190,
+                180,
                 topPartTranslationZ > 0
                   ? topPartTranslationZ
                   : -topPartTranslationZ
@@ -737,7 +737,7 @@ export default {
       }
       // const extrudePa th2 = new THREE.CatmullRomCurve3(points);
       var length = 38,
-        width = 190;
+        width = 180;
       var shape = new THREE.Shape();
       shape.moveTo(-length / 2, -width / 2);
       shape.lineTo(-length / 2, width / 2);

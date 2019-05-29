@@ -632,18 +632,18 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Vehicle/Explorer/BP_Explorer.BP_Explorer_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "Explorer.glb",
+    color: 0x7f28b0,
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Vehicle/Tractor/BP_Tractor.BP_Tractor_C": {
-    model: "",
+    model: "Tractor.glb",
     color: 0x7f28b0,
     paintable: false,
   },
   "/Game/FactoryGame/Buildable/Vehicle/Truck/BP_Truck.BP_Truck_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "Truck.glb",
+    color: 0x7f28b0,
     paintable: false,
   },
   "/Game/FactoryGame/Character/Creature/BP_CreatureSpawner.BP_CreatureSpawner_C": {
