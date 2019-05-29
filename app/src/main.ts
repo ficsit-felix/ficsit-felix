@@ -28,7 +28,9 @@ import {
   MdDialog,
   MdDialogConfirm,
   MdCheckbox,
-  MdTooltip
+  MdTooltip,
+  MdMenu,
+  MdList
 } from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css"; // use custom theme in @/assets/main.scss instead
 // import 'vue-material/dist/theme/default-dark.css'
@@ -39,6 +41,8 @@ Vue.use(MdDialog);
 Vue.use(MdDialogConfirm);
 Vue.use(MdCheckbox);
 Vue.use(MdTooltip);
+Vue.use(MdMenu);
+Vue.use(MdList);
 // vue-split-panel
 import VueSplit from "vue-split-panel";
 Vue.use(VueSplit);

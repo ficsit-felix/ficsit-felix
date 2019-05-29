@@ -16,7 +16,26 @@
     <span @click="showHelpDialog = true" v-shortkey.once="['f1']" @shortkey="showHelpDialog = true">
       <md-icon>help</md-icon>Help<md-tooltip md-delay="500">F1</md-tooltip>
     </span>
+    <span @click="showSettingsDialog = true">
+      <md-icon>settings</md-icon>Settings
+    </span>
     <div class="spacer"></div>
+    <md-menu md-direction="bottom-end">
+      <md-button md-menu-trigger>
+      <md-icon>menu</md-icon> More
+      </md-button>
+
+      <md-menu-content class="menubar-content">
+        <md-menu-item @click="showOpenJsonDialog = true"><md-icon>file_upload</md-icon>Import JSON</md-menu-item>
+        <md-menu-item @click="showSaveJsonDialog = true"><md-icon>file_download</md-icon>Export JSON</md-menu-item>
+        <md-menu-item @click="openGithub()"><md-icon>code</md-icon>GitHub</md-menu-item>
+        <md-menu-item @click="showLicensesDialog = true"><md-icon>view_headline</md-icon>Open Source Licenses</md-menu-item>
+        <md-menu-item @click="showAboutDialog = true"><md-icon>info_outline</md-icon>About</md-icon></md-menu-item>
+      </md-menu-content>
+    </md-menu>
+
+    
+    <!--<div class="spacer"></div>
     <span @click="showOpenJsonDialog = true">
       <md-icon>file_upload</md-icon>Import JSON
     </span>
@@ -24,7 +43,7 @@
       <md-icon>file_download</md-icon>Export JSON
     </span>
     <div class="spacer"></div>
-    <span @click="openGithub()">GitHub</span>
+    <span @click="openGithub()">GitHub</span>-->
     <md-dialog-confirm
       :md-active.sync="showOpenDialog"
       md-title="Open save file"
@@ -65,7 +84,7 @@
       @md-confirm="saveJson"
     />
 
-    <md-dialog :md-active.sync="showHelpDialog">
+  <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>Help</md-dialog-title>
       <md-dialog-content>
       <b>Controls</b>
@@ -80,22 +99,50 @@
         <br>anywhere in the scene, else it will be overwritten!
       </p>
       <br>
-      <b>Attribution</b>
-      <p>
-        The low-poly models used by FeliX were created by the respective
-        <a
-          href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
-        >authors</a>.
-      </p>
 
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showHelpDialog = false">Close</md-button>
       </md-dialog-actions>
     </md-dialog>
-    <!--    <md-icon class="md-size-2x">axis_arrow</md-icon>
-    <md-icon class="md-size-2x">sync</md-icon>
-    <md-icon class="md-size-2x">swap_horiz</md-icon>-->
+
+    <md-dialog :md-active.sync="showSettingsDialog">
+      <md-dialog-title>Settings</md-dialog-title>
+      <md-dialog-content>
+        asdf
+      </md-dialog-content>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showSettingsDialog = false">Close</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
+    <md-dialog :md-active.sync="showLicensesDialog">
+      <md-dialog-title>Open Source Licenses</md-dialog-title>
+      <md-dialog-content>
+        <LicensesDialog></LicensesDialog>
+      </md-dialog-content>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showLicensesDialog = false">Close</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
+    <md-dialog :md-active.sync="showAboutDialog">
+      <md-dialog-title>About</md-dialog-title>
+      <md-dialog-content>
+        <p>FeliX is a save file visualizer for the game Satisfactory.</p>
+        <p>You can view the source code and contribute to the development on <a href="https://github.com/bitowl/ficsit-felix">GitHub</a>.</p>
+              <p>
+        The low-poly models used by FeliX were created by the respective
+        <a
+          href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
+        >authors</a>.
+      </p>
+      </md-dialog-content>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showAboutDialog = false">Close</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
   </div>
 </template>
 
@@ -134,20 +181,50 @@
       color: $primaryOrange;
     }
   }
-}
 
+
+}
+ 
 p,
 b {
   padding: 0px 16px;
 }
 </style>
 
+<style lang="scss">
+.menubar {
+  .md-menu > .md-button {
+    margin: 8px;
+    text-transform: none;
+    font-size: 16px;
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    color: #e3d3d3;
+  }
+}
+.menubar-content {
+  .md-list-item-content {
+    justify-content: left !important;
+  }
+  .md-list-item-content>.md-icon:last-child {
+    margin-left: 0px;
+  }
+  .md-list-item-content>.md-icon:first-child {
+    margin-right: 12px;
+  }
+
+
+}
+</style>
+
+
 <script>
 import Logo from "@/components/Logo";
+import LicensesDialog from "@/components/LicensesDialog";
 export default {
   name: "Menubar",
   components: {
-    Logo
+    Logo,
+    LicensesDialog
   },
   data: function() {
     return {
@@ -156,7 +233,10 @@ export default {
       showOpenDialog: false,
       showSaveDialog: false,
       showOpenJsonDialog: false,
-      showSaveJsonDialog: false
+      showSaveJsonDialog: false,
+      showSettingsDialog: false,
+      showLicensesDialog: false,
+      showAboutDialog: false
     };
   },
   methods: {
@@ -173,7 +253,7 @@ export default {
       this.$router.push("save/json");
     },
     openGithub() {
-      window.location.href = "https://github.com/bitowl/ficsit-felix";
+      window.open("https://github.com/bitowl/ficsit-felix", "_blank");
     }
   }
 };
