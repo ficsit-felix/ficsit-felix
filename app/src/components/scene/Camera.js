@@ -12,9 +12,10 @@ export default {
     const camera = new PerspectiveCamera(
       70,
       this.renderer.width / this.renderer.height,
-      100,
-      200000
+      this.nearPlane,
+      this.farPlane
     );
+    console.log("near", this.nearPlane);
 
     if (this.cameraPosition !== undefined) {
       camera.position.x = this.cameraPosition.x;
@@ -36,7 +37,8 @@ export default {
   },
 
   computed: {
-    ...mapState(["cameraPosition", "cameraTarget"])
+    ...mapState(["cameraPosition", "cameraTarget"]),
+    ...mapState("settings", ["nearPlane", "farPlane"])
   },
 
   watch: {
@@ -46,6 +48,14 @@ export default {
         this.obj.lookAt(this.scene.position);
       },
       deep: true
+    },
+    nearPlane(value) {
+      this.obj.near = value;
+      this.obj.updateProjectionMatrix();
+    },
+    farPlane(value) {
+      this.obj.far = value;
+      this.obj.updateProjectionMatrix();
     }
   },
 

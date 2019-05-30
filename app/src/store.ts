@@ -47,8 +47,8 @@ function updateLocalStorage(state: SettingsRootState) {
 const settingsModule: Module<SettingsRootState, RootState> = {
   namespaced: true,
   state: {
-    nearPlane: 10000,
-    farPlane: 1000000,
+    nearPlane: 100,
+    farPlane: 200000,
     showModels: true,
     showCustomPaints: true,
     showMap: true,
@@ -63,11 +63,11 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
 
     SET_NEAR_PLANE(state, payload) {
-      state.nearPlane = parseInt(payload);
+      state.nearPlane = parseFloat(payload);
       updateLocalStorage(state);
     },
     SET_FAR_PLANE(state, payload) {
-      state.farPlane = parseInt(payload);
+      state.farPlane = parseFloat(payload);
       updateLocalStorage(state);
     },
     SET_SHOW_MODELS(state, payload) {
