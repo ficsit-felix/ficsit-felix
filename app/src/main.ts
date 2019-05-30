@@ -5,14 +5,16 @@ import store from "./store";
 import { ComponentOptions } from "vue";
 import { commithash } from "@/js/commithash";
 
-import * as Sentry from "@sentry/browser";
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
+
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
     dsn: "https://4bee35ee7cba4ba194c9e1a575948656@sentry.io/1416938",
     release: commithash,
     integrations: [
-      new Sentry.Integrations.Vue({
+      new Integrations.Vue({
         Vue,
         attachProps: true
       })

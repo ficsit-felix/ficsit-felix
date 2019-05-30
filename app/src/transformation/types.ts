@@ -83,7 +83,7 @@ interface TextProperty extends BaseProperty {
   unknown1: number;
   unknown2: number;
   unknown3: number;
-  unknown4: number;
+  unknown4: string;
   value: string;
 }
 
