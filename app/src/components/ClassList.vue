@@ -7,11 +7,11 @@
     >
     <ul>
       <li v-for="item in classes" v-bind:key="item.name">
-        <div
+        <!--<div
           class="color"
           v-bind:style="{ background: item.color }"
           @click="showColor(item.name)"
-        ></div>
+        ></div>-->
         <md-checkbox
           :model="item.visible"
           @change="changeVisibility(item.name, $event)"

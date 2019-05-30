@@ -16,9 +16,9 @@
     <span @click="showHelpDialog = true" v-shortkey.once="['f1']" @shortkey="showHelpDialog = true">
       <md-icon>help</md-icon>Help<md-tooltip md-delay="500">F1</md-tooltip>
     </span>
-    <span @click="showSettingsDialog = true">
+    <!--<span @click="showSettingsDialog = true">
       <md-icon>settings</md-icon>Settings
-    </span>
+    </span>-->
     <div class="spacer"></div>
     <md-menu md-direction="bottom-end">
       <md-button md-menu-trigger>
