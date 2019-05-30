@@ -181,10 +181,18 @@ export class Sav2Json {
         return;
       }
       if (saveJson.objects[i].type == 1) {
-        saveJson.objects[i].entity = this.readEntity(buffer, true, saveJson.objects[i].className);
+        saveJson.objects[i].entity = this.readEntity(
+          buffer,
+          true,
+          saveJson.objects[i].className
+        );
       } else {
         // type == 0
-        saveJson.objects[i].entity = this.readEntity(buffer, false, saveJson.objects[i].className);
+        saveJson.objects[i].entity = this.readEntity(
+          buffer,
+          false,
+          saveJson.objects[i].className
+        );
       }
     }
 
@@ -239,7 +247,11 @@ export class Sav2Json {
     };
   }
 
-  readEntity(buffer: DataBuffer, withNames: boolean, className: string): Entity {
+  readEntity(
+    buffer: DataBuffer,
+    withNames: boolean,
+    className: string
+  ): Entity {
     const length = buffer.readInt();
     buffer.resetBytesRead();
 
@@ -265,7 +277,9 @@ export class Sav2Json {
 
     const zero = buffer.readInt();
     if (zero !== 0) {
-      this.error("extra object count not zero: " + zero + " className: " + className);
+      this.error(
+        "extra object count not zero: " + zero + " className: " + className
+      );
     }
 
     this.readExtra(entity, className);
@@ -295,7 +309,7 @@ export class Sav2Json {
     }
 
     const index = buffer.readInt();
-    
+
     switch (prop) {
       case "IntProperty":
         buffer.assertNullByte();
@@ -562,7 +576,7 @@ export class Sav2Json {
               structUnknown: unknown,
               value: {
                 type: type,
-                handle: this.buffer.readLengthPrefixedString(),
+                handle: this.buffer.readLengthPrefixedString()
               }
             });
             break;
@@ -693,7 +707,7 @@ export class Sav2Json {
   }
 
   readExtra(entity: Entity, className: string) {
-    switch(className) {
+    switch (className) {
       case "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C":
         this.readPowerLineExtra(entity);
         break;

@@ -25,8 +25,8 @@
     <!--<button v-on:click="focusSelectedObject">Focus</button> -->
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
-        <AmbientLight/>
-        <Camera/>
+        <AmbientLight />
+        <Camera />
         <!--<a v-for="(obj,index) in visibleObjects"
           :key="index">
           
@@ -71,9 +71,9 @@
     -->
     <div class="info">
       {{ filename }}
-      <br>
+      <br />
       {{ uuid }}
-      <br>
+      <br />
       {{ commithash }}
     </div>
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
@@ -125,7 +125,7 @@ import * as Sentry from "@sentry/browser";
 import Toolbar from "@/components/Toolbar";
 import { commithash } from "@/js/commithash";
 import { getProperty, findActorByName } from "@/helpers/entityHelper";
-import { version } from 'punycode';
+import { version } from "punycode";
 import Compass from "@/components/Compass";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
 
@@ -384,12 +384,13 @@ export default {
       var quaternion = new THREE.Quaternion();
       var scale = new THREE.Vector3();
 
-      camera.matrixWorldInverse.decompose( position, quaternion, scale);
+      camera.matrixWorldInverse.decompose(position, quaternion, scale);
       const euler = new THREE.Euler().setFromQuaternion(quaternion);
 
       this.rotateX = euler.x;
-      this.rotateZ = -euler.z - 3.14/2; // point correctly to north
-      if (this.rotateX < -1.3) { // don't go invisible at very small angle to map
+      this.rotateZ = -euler.z - 3.14 / 2; // point correctly to north
+      if (this.rotateX < -1.3) {
+        // don't go invisible at very small angle to map
         this.rotateX = -1.3;
       }
       requestAnimationFrame(this.updateCompass);
@@ -425,11 +426,7 @@ export default {
         "Persistent_Level:PersistentLevel.BuildableSubsystem"
       );
       if (buildableSubsystem !== undefined) {
-        for (
-          let i = 0;
-          i < buildableSubsystem.entity.properties.length;
-          i++
-        ) {
+        for (let i = 0; i < buildableSubsystem.entity.properties.length; i++) {
           const element = buildableSubsystem.entity.properties[i];
           if (element.name === "mColorSlotsPrimary") {
             // this primary color was changed by the user
@@ -444,8 +441,6 @@ export default {
 
       for (let i = 0; i < defaultColors.length; i++) {
         const color = defaultColors[i];
-
-
 
         this.coloredMaterials[i] = new THREE.MeshMatcapMaterial({
           color: color,
@@ -484,14 +479,19 @@ export default {
         }
       }*/
 
-      const isPaintable = modelConfig[obj.className] !== undefined ? modelConfig[obj.className].paintable : false;
+      const isPaintable =
+        modelConfig[obj.className] !== undefined
+          ? modelConfig[obj.className].paintable
+          : false;
 
       for (let i = 0; i < obj.entity.properties.length; i++) {
         const element = obj.entity.properties[i];
         if (element.name === "mColorSlot") {
           if (!isPaintable) {
             console.error("paintable should be true for: " + obj.className);
-            Sentry.captureMessage("paintable should be true for: " + obj.className);
+            Sentry.captureMessage(
+              "paintable should be true for: " + obj.className
+            );
           }
           return this.coloredMaterials[element.value.unk2];
         }
@@ -604,7 +604,6 @@ export default {
           modelHelper
             .loadModel("/models/ConveyorLift_Top.glb")
             .then(topGeometry => {
-
               const material = this.getMaterial(obj);
               // const isReversedProp = getProperty(obj, "mIsReversed");
               // const isReversed = isReversedProp !== undefined && isReversedProp.value;
@@ -623,12 +622,16 @@ export default {
                 }
               }
               const isReversed = topPartTranslationZ < 0;
-                    
 
-              var object = new THREE.Mesh(isReversed ? topGeometry : bottomGeometry, material);
+              var object = new THREE.Mesh(
+                isReversed ? topGeometry : bottomGeometry,
+                material
+              );
 
-              var topObject = new THREE.Mesh(isReversed ? bottomGeometry : topGeometry, material);
-
+              var topObject = new THREE.Mesh(
+                isReversed ? bottomGeometry : topGeometry,
+                material
+              );
 
               for (let i = 0; i < obj.entity.properties.length; i++) {
                 const element = obj.entity.properties[i];
@@ -671,7 +674,6 @@ export default {
               middleObject.position.z = topPartTranslationZ / 2;
               object.add(middleObject);
 
-
               // the usual steps to add the object to the scene
               this.updateObjectVisuals(object, obj);
 
@@ -705,32 +707,35 @@ export default {
         const arriveTangent = splinePoint.properties[1]; // TODO make sure this is arriveTangent
         const leaveTangent = splinePoint.properties[2]; // TODO make sure this is leaveTangent
 
-          if (lastLoc != null) {
-
+        if (lastLoc != null) {
           // TODO find out how exactly to use arriveTangent and leaveTangent
           // I'm still not 100% sure, how the tangents in Unreal are calculated. The division by three is still a guess and based on the first answer here: https://answers.unrealengine.com/questions/330317/which-algorithm-is-used-for-spline-components-in-u.html#
           extrudePath.add(
             new THREE.CubicBezierCurve3(
               new THREE.Vector3(
-                lastLoc.value.y, 
-                lastLoc.value.x, 
-                lastLoc.value.z),
-                new THREE.Vector3(
-                lastLoc.value.y+lastLeave.value.y/3, 
-                lastLoc.value.x+lastLeave.value.x/3, 
-                lastLoc.value.z+lastLeave.value.z/3),
+                lastLoc.value.y,
+                lastLoc.value.x,
+                lastLoc.value.z
+              ),
               new THREE.Vector3(
-                location.value.y-arriveTangent.value.y/3, 
-                location.value.x-arriveTangent.value.x/3, 
-                location.value.z-arriveTangent.value.z/3),
+                lastLoc.value.y + lastLeave.value.y / 3,
+                lastLoc.value.x + lastLeave.value.x / 3,
+                lastLoc.value.z + lastLeave.value.z / 3
+              ),
               new THREE.Vector3(
-                location.value.y, 
-                location.value.x, 
-                location.value.z)
+                location.value.y - arriveTangent.value.y / 3,
+                location.value.x - arriveTangent.value.x / 3,
+                location.value.z - arriveTangent.value.z / 3
+              ),
+              new THREE.Vector3(
+                location.value.y,
+                location.value.x,
+                location.value.z
+              )
             )
           );
         }
- 
+
         lastArrive = arriveTangent;
         lastLoc = location;
         lastLeave = leaveTangent;
@@ -746,68 +751,133 @@ export default {
       shape.lineTo(-length / 2, -width / 2);
 
       var extrudeSettings = {
-
         curveSegments: splinePoints * 2,
         steps: splinePoints * 4,
         bevelEnabled: false,
         extrudePath: extrudePath
       };
 
-      const geometry = new THREE.ExtrudeBufferGeometry(
-        shape,
-        extrudeSettings
-      );
+      const geometry = new THREE.ExtrudeBufferGeometry(shape, extrudeSettings);
 
       return geometry;
     },
 
     createPowerLineGeometry(obj) {
-
-      const sourceConnection = findActorByName(obj.entity.extra.sourceLevelName, obj.entity.extra.sourcePathName);
+      const sourceConnection = findActorByName(
+        obj.entity.extra.sourceLevelName,
+        obj.entity.extra.sourcePathName
+      );
       if (sourceConnection === null) {
         // TODO error
-        console.error("source connection of power line " + obj.entity.extra.sourcePathName + " not found.")
+        console.error(
+          "source connection of power line " +
+            obj.entity.extra.sourcePathName +
+            " not found."
+        );
       }
-      const targetConnection = findActorByName(obj.entity.extra.targetLevelName, obj.entity.extra.targetPathName);
+      const targetConnection = findActorByName(
+        obj.entity.extra.targetLevelName,
+        obj.entity.extra.targetPathName
+      );
       if (targetConnection === null) {
         // TODO error
-        console.error("target connection of power line " + obj.entity.extra.targetPathName + " not found.")
+        console.error(
+          "target connection of power line " +
+            obj.entity.extra.targetPathName +
+            " not found."
+        );
       }
 
-      const source = findActorByName(sourceConnection.levelName, sourceConnection.outerPathName);
+      const source = findActorByName(
+        sourceConnection.levelName,
+        sourceConnection.outerPathName
+      );
       if (source === null) {
         // TODO error
-        console.error("source of power line " + sourceConnection.outerPathName + " not found.")
+        console.error(
+          "source of power line " +
+            sourceConnection.outerPathName +
+            " not found."
+        );
       }
 
-      const target = findActorByName(targetConnection.levelName, targetConnection.outerPathName);
+      const target = findActorByName(
+        targetConnection.levelName,
+        targetConnection.outerPathName
+      );
       if (target === null) {
         // TODO error
-        console.error("target of power line " + targetConnection.outerPathName + " not found.")
+        console.error(
+          "target of power line " +
+            targetConnection.outerPathName +
+            " not found."
+        );
       }
-      var sourceOffset = {x:0, y:0, z:0};
+      var sourceOffset = { x: 0, y: 0, z: 0 };
       if (modelConfig[source.className].powerLineOffset !== undefined) {
         sourceOffset = modelConfig[source.className].powerLineOffset;
-        const transformedSourceOffset =   new THREE.Vector3(sourceOffset.y, sourceOffset.x, sourceOffset.z).applyQuaternion(new THREE.Quaternion(source.transform.rotation[0], source.transform.rotation[1], -source.transform.rotation[2], source.transform.rotation[3]));
-        sourceOffset = {x:transformedSourceOffset.x, y:transformedSourceOffset.y, z:transformedSourceOffset.z};        
+        const transformedSourceOffset = new THREE.Vector3(
+          sourceOffset.y,
+          sourceOffset.x,
+          sourceOffset.z
+        ).applyQuaternion(
+          new THREE.Quaternion(
+            source.transform.rotation[0],
+            source.transform.rotation[1],
+            -source.transform.rotation[2],
+            source.transform.rotation[3]
+          )
+        );
+        sourceOffset = {
+          x: transformedSourceOffset.x,
+          y: transformedSourceOffset.y,
+          z: transformedSourceOffset.z
+        };
       }
-      var targetOffset = {x:0, y:0, z:0};
+      var targetOffset = { x: 0, y: 0, z: 0 };
       if (modelConfig[target.className].powerLineOffset !== undefined) {
         targetOffset = modelConfig[target.className].powerLineOffset;
-        const transformedTargetOffset =   new THREE.Vector3(targetOffset.y, targetOffset.x, targetOffset.z).applyQuaternion(new THREE.Quaternion(target.transform.rotation[0], target.transform.rotation[1], -target.transform.rotation[2], target.transform.rotation[3]));
-        targetOffset = {x:transformedTargetOffset.x, y:transformedTargetOffset.y, z:transformedTargetOffset.z};        
+        const transformedTargetOffset = new THREE.Vector3(
+          targetOffset.y,
+          targetOffset.x,
+          targetOffset.z
+        ).applyQuaternion(
+          new THREE.Quaternion(
+            target.transform.rotation[0],
+            target.transform.rotation[1],
+            -target.transform.rotation[2],
+            target.transform.rotation[3]
+          )
+        );
+        targetOffset = {
+          x: transformedTargetOffset.x,
+          y: transformedTargetOffset.y,
+          z: transformedTargetOffset.z
+        };
       }
 
       const extrudePath = new LineCurve3(
         new THREE.Vector3(
-          source.transform.translation[1] - obj.transform.translation[1] + sourceOffset.x,
-          source.transform.translation[0] - obj.transform.translation[0] + sourceOffset.y,
-          source.transform.translation[2] - obj.transform.translation[2] + sourceOffset.z
+          source.transform.translation[1] -
+            obj.transform.translation[1] +
+            sourceOffset.x,
+          source.transform.translation[0] -
+            obj.transform.translation[0] +
+            sourceOffset.y,
+          source.transform.translation[2] -
+            obj.transform.translation[2] +
+            sourceOffset.z
         ),
         new THREE.Vector3(
-          target.transform.translation[1] - obj.transform.translation[1] + targetOffset.x,
-          target.transform.translation[0] - obj.transform.translation[0] + targetOffset.y,
-          target.transform.translation[2] - obj.transform.translation[2] + targetOffset.z
+          target.transform.translation[1] -
+            obj.transform.translation[1] +
+            targetOffset.x,
+          target.transform.translation[0] -
+            obj.transform.translation[0] +
+            targetOffset.y,
+          target.transform.translation[2] -
+            obj.transform.translation[2] +
+            targetOffset.z
         )
       );
 
@@ -852,10 +922,11 @@ export default {
       // console.log(obj);
       this.applyTranslation(object, obj.transform.translation);
       if (!this.isConveyorBelt(obj) && !this.isPowerLine(obj)) {
-        this.applyRotation(object, obj.transform.rotation);        
+        this.applyRotation(object, obj.transform.rotation);
         object.rotateZ(1.5708); // 90 deg in radians
-      } else {// TODO conveyor belt coordinates are given without rotation?
-        this.applyRotation(object, [0,0,0,1]);
+      } else {
+        // TODO conveyor belt coordinates are given without rotation?
+        this.applyRotation(object, [0, 0, 0, 1]);
       }
 
       this.applyScale(object, obj.transform.scale3d);
@@ -896,7 +967,10 @@ export default {
       clone.transform.translation[0] = obj.position.y;
       clone.transform.translation[2] = obj.position.z;
 
-      if (!this.isConveyorBelt(this.selectedObject)  && !this.isPowerLine(this.selectedObject)) {
+      if (
+        !this.isConveyorBelt(this.selectedObject) &&
+        !this.isPowerLine(this.selectedObject)
+      ) {
         obj.rotateZ(-1.5708); // -90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
       clone.transform.rotation[0] = obj.quaternion.x;
@@ -942,7 +1016,10 @@ export default {
     },
 
     isPowerLine(obj) {
-      return obj.className === "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C";
+      return (
+        obj.className ===
+        "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C"
+      );
     },
 
     getGeometry(obj) {

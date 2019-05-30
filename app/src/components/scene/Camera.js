@@ -36,10 +36,7 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      'cameraPosition',
-      'cameraTarget'
-    ])
+    ...mapState(["cameraPosition", "cameraTarget"])
   },
 
   watch: {
@@ -71,7 +68,7 @@ export default {
       controls.minDistance = 1000;
       controls.maxDistance = 100000;
       controls.maxPolarAngle = Math.PI / 2;
-      controls.rotateSpeed = 0.3; 
+      controls.rotateSpeed = 0.3;
       controls.panSpeed = 0.3;
       if (this.cameraTarget !== undefined) {
         controls.target = this.cameraTarget;

@@ -40,8 +40,11 @@
       <md-dialog-title>Error</md-dialog-title>
       <span class="dialog-content"
         >{{ errorText }} <br /><br />
-        Please send this save file to me <a href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj">via this Dropbox form</a><br />or per Mail
-        to <a href="mailto:felix@owl.yt">felix@owl.yt</a> so that I can fix this.
+        Please send this save file to me
+        <a href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
+          >via this Dropbox form</a
+        ><br />or per Mail to <a href="mailto:felix@owl.yt">felix@owl.yt</a> so
+        that I can fix this.
       </span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false"
@@ -183,7 +186,7 @@ export default {
       });
 
       Sentry.captureMessage("opened file");
-      this.setLoading(false).then(()=>{});
+      this.setLoading(false).then(() => {});
       var reader = new FileReader();
       reader.onload = response => {
         this.infoText = "processing file...";
@@ -197,7 +200,6 @@ export default {
           } else {
             let sav2Json = new Sav2Json(Buffer.from(response.target.result));
             json = sav2Json.transform();
-
           }
 
           this.infoText = "building world...";
@@ -210,7 +212,7 @@ export default {
                 clearInterval(this.buildInterval);
                 setTimeout(() => {
                   // let the user at least see the full bar
-                  this.$router.push( {
+                  this.$router.push({
                     name: "editor"
                   });
                 }, 100);

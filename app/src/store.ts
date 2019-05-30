@@ -26,7 +26,7 @@ interface RootState {
 
   cameraTarget?: Vector3;
   cameraPosition?: Vector3;
-} 
+}
 
 export default new Vuex.Store<RootState>({
   state: {
@@ -39,7 +39,7 @@ export default new Vuex.Store<RootState>({
     visibleObjects: [],
     uuid: "",
     filename: "",
-    classes: [],
+    classes: []
   },
   getters: {
     getNames: state => {
@@ -103,7 +103,7 @@ export default new Vuex.Store<RootState>({
           return {
             name: name,
             visible: true,
-            color: "#123456", // TODO fetch default color
+            color: "#123456" // TODO fetch default color
           };
         });
     },
@@ -148,7 +148,7 @@ export default new Vuex.Store<RootState>({
     SET_CAMERA_DATA(state, data) {
       state.cameraPosition = data.position;
       state.cameraTarget = data.target;
-    },
+    }
   },
   actions: {
     select(context, selectIndex) {
@@ -195,6 +195,6 @@ export default new Vuex.Store<RootState>({
     },
     setCameraData(context, payload) {
       context.commit("SET_CAMERA_DATA", payload);
-    },
+    }
   }
 });

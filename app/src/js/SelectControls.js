@@ -37,9 +37,9 @@ var SelectControls = function(scene, camera, domElement, callback) {
     if (event.button == MOUSE.LEFT) {
       raycaster.setFromCamera(mouse, camera);
 
-      var intersects = raycaster.intersectObjects(scene.children, true); 
+      var intersects = raycaster.intersectObjects(scene.children, true);
       // recursive, so that we also get intersections with the other parts of a conveyor lift
-      
+
       if (intersects.length > 0) {
         var object = intersects[0].object;
 
@@ -49,18 +49,23 @@ var SelectControls = function(scene, camera, domElement, callback) {
           // TODO find a better way to fix this?
           setTimeout(() => {
             onMouseDown(event);
-          }, 100)
+          }, 100);
           return;
         }
 
-        while (object !== null && object.userData.id === undefined && object.parent !== undefined) { // the id is only defined on the topmost object
+        while (
+          object !== null &&
+          object.userData.id === undefined &&
+          object.parent !== undefined
+        ) {
+          // the id is only defined on the topmost object
           object = object.parent;
         }
         // object.material.emissive.setHex(0xff00ff);
         if (object !== null && object.userData.id !== undefined) {
           scope.callback.select(object.userData.id);
         } else {
-          scope.callback.select(-1);  
+          scope.callback.select(-1);
         }
       } else {
         scope.callback.select(-1);

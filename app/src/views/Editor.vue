@@ -18,20 +18,15 @@
             </Split>
           </SplitArea>
           <SplitArea :size="23">
-            <PropertyEditor
-              @focusSelectedObject="focusSelectedObject"
-            /> </SplitArea
-          >
+            <PropertyEditor @focusSelectedObject="focusSelectedObject" />
+          </SplitArea>
         </Split>
       </div>
     </div>
- 
-
   </div>
 </template>
 
 <style lang="scss" scoped>
-
 .editor {
   height: 100%;
 }
@@ -67,7 +62,6 @@
 }
 </style>
 
-
 <script>
 // @ is an alias to /src
 import Menubar from "@/components/Menubar.vue";
@@ -93,7 +87,7 @@ export default {
   created() {
     if (!this.dataLoaded) {
       // The user needs to load a file first
-      this.$router.push( {
+      this.$router.push({
         name: "landingpage"
       });
     }

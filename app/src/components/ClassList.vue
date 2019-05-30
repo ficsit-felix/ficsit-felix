@@ -1,25 +1,34 @@
 <template>
   <div class="class-list">
-    <md-checkbox :model="allVisible" @change="changeVisibilityOfAllClasses($event)">all classes</md-checkbox>
+    <md-checkbox
+      :model="allVisible"
+      @change="changeVisibilityOfAllClasses($event)"
+      >all classes</md-checkbox
+    >
     <ul>
       <li v-for="item in classes" v-bind:key="item.name">
-        <div class="color" v-bind:style=" {background: item.color}" @click="showColor(item.name)"></div>
+        <div
+          class="color"
+          v-bind:style="{ background: item.color }"
+          @click="showColor(item.name)"
+        ></div>
         <md-checkbox
           :model="item.visible"
           @change="changeVisibility(item.name, $event)"
-        >{{ item.name }}</md-checkbox>
+          >{{ item.name }}</md-checkbox
+        >
       </li>
     </ul>
 
     <md-dialog :md-active.sync="showColorDialog">
       <md-dialog-title>Select color</md-dialog-title>
       <md-dialog-content class="colorPickerDialogContent">
-        <colorPicker
-          :color="selectedColor"
-        ></colorPicker>
+        <colorPicker :color="selectedColor"></colorPicker>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showColorDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showColorDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -65,8 +74,6 @@
   .md-checkbox .md-checkbox-label {
     padding-left: 10px;
   }
-
-  
 }
 </style>
 
@@ -75,10 +82,12 @@
   .hu-color-picker {
     width: 218px !important;
   }
-  .alpha { // don't display alpha
+  .alpha {
+    // don't display alpha
     display: none;
   }
-  .color-type:nth-child(4) { // don't display rgba type
+  .color-type:nth-child(4) {
+    // don't display rgba type
     display: none !important;
   }
 }
@@ -117,8 +126,8 @@ export default {
     },
     showColor(className) {
       // alert(className);
-       // TODO set correct color in color dialog
-      
+      // TODO set correct color in color dialog
+
       this.showColorDialog = true;
     }
   }

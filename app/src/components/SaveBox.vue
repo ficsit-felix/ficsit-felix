@@ -5,7 +5,7 @@
       <p v-else>An error occured.</p>
       <br />
       <br />
-      <md-button class="md-raised" @click="$router.push( {name: 'editor'});"
+      <md-button class="md-raised" @click="$router.push({ name: 'editor' })"
         >Back to editor</md-button
       >
     </div>
@@ -129,7 +129,7 @@ export default {
   created() {
     if (!this.dataLoaded) {
       // The user needs to load a file first
-      this.$router.push( {
+      this.$router.push({
         name: "landingpage"
       });
     }

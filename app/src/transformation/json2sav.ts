@@ -426,7 +426,7 @@ export class Json2Sav {
   }
 
   writeExtra(entity: Entity, className: string) {
-    switch(className) {
+    switch (className) {
       case "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C":
         this.writePowerLineExtra(entity);
         break;

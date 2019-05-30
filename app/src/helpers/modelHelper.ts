@@ -39,17 +39,17 @@ class ModelHelper {
 
   loadScene(path: string): Promise<THREE.Scene> {
     return new Promise((resolve, reject) => {
-    this.loader.load(
-      path,
-      gltf => {
-        resolve(gltf.scene);
-      },
-      undefined, // TODO use the progress function as well?
-      error => {
-        console.error(error); // TODO global error
-        this.isLoading = false;
-      }
-    );
+      this.loader.load(
+        path,
+        gltf => {
+          resolve(gltf.scene);
+        },
+        undefined, // TODO use the progress function as well?
+        error => {
+          console.error(error); // TODO global error
+          this.isLoading = false;
+        }
+      );
     });
   }
 

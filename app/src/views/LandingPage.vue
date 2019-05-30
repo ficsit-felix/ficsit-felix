@@ -1,30 +1,48 @@
 <template>
   <div class="landingpage">
     <div class="centered">
-      <div @mouseover="logoAnimating = true" @mouseleave="logoAnimating = false">
-        <Logo height="180" black="#000" :animating="logoAnimating"/>
+      <div
+        @mouseover="logoAnimating = true"
+        @mouseleave="logoAnimating = false"
+      >
+        <Logo height="180" black="#000" :animating="logoAnimating" />
       </div>
-      <p>FeliX is a save file visualizer for the game Satisfactory. Open the .sav file and you can view a low poly 3D representation of your factory and the surrounding area. The save file is processed in your browser and not uploaded to a server.</p>
       <p>
-        <md-button class="md-raised" @click="$router.push({ path: '/open/sav'})">Open .sav file</md-button>
+        FeliX is a save file visualizer for the game Satisfactory. Open the .sav
+        file and you can view a low poly 3D representation of your factory and
+        the surrounding area. The save file is processed in your browser and not
+        uploaded to a server.
+      </p>
+      <p>
+        <md-button
+          class="md-raised"
+          @click="$router.push({ path: '/open/sav' })"
+          >Open .sav file</md-button
+        >
       </p>
       <a href="/screenshot.png">
-        <img src="/screenshot.png">
+        <img src="/screenshot.png" />
       </a>
-      <p>FeliX also has some basic editing capabilities. It can convert the .sav format to a human-readable .json format. You can edit the .json file externally and then open it in FeliX to convert it back to a .sav file:</p>
+      <p>
+        FeliX also has some basic editing capabilities. It can convert the .sav
+        format to a human-readable .json format. You can edit the .json file
+        externally and then open it in FeliX to convert it back to a .sav file:
+      </p>
       <md-button
         class="md-flat md-accent"
-        @click="$router.push({ path: '/open/json'})"
-      >Open .json file</md-button>
+        @click="$router.push({ path: '/open/json' })"
+        >Open .json file</md-button
+      >
 
       <p class="left">
         The source code for this application is available on
-        <a href="https://github.com/bitowl/ficsit-felix">GitHub</a>.
-        We are happy about any contributions.
-        The low poly models were created by the respective
+        <a href="https://github.com/bitowl/ficsit-felix">GitHub</a>. We are
+        happy about any contributions. The low poly models were created by the
+        respective
         <a
           href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
-        >authors</a>.
+          >authors</a
+        >.
       </p>
     </div>
     <div class="commithash">
@@ -61,12 +79,10 @@ p {
 }
 
 .commithash {
-  color: rgba(255,255,255,0.2);
+  color: rgba(255, 255, 255, 0.2);
   text-align: center;
   font-size: 12px;
-
 }
-
 </style>
 
 <script>

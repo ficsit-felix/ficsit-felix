@@ -10,7 +10,7 @@ export default new Router({
     {
       path: "/",
       name: "landingpage",
-      component: LandingPage,
+      component: LandingPage
     },
     {
       path: "/editor",
