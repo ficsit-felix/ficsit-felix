@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <h3>Graphics</h3>
+    <!--<h3>Graphics</h3>-->
     <md-checkbox :model="showMap" @change="updateShowMap">Show map</md-checkbox>
     <md-checkbox :model="showModels" @change="updateShowModels"
       >Show models</md-checkbox
@@ -8,7 +8,7 @@
     <md-checkbox :model="showCustomPaints" @change="updateShowCustomPaints"
       >Show custom paints</md-checkbox
     >
-
+    <h4>Advanced</h4>
     <md-field>
       <label>Far Plane</label>
       <md-input
@@ -43,6 +43,9 @@
 </template>
 
 <style lang="css" scoped>
+.settings {
+  width: 400px;
+}
 .settings >>> .md-checkbox {
   display:flex !important;
 }
@@ -88,6 +91,9 @@ export default {
       this.setShowMap(value);
     },
     updateConveyorBeltResolution(value) {
+      if (value > 10) {
+        value = 10;
+      }
       this.setConveyorBeltResolution(value);
     }
   }

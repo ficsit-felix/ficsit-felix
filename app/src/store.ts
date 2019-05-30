@@ -52,7 +52,7 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     showModels: true,
     showCustomPaints: true,
     showMap: true,
-    conveyorBeltResolution: 5
+    conveyorBeltResolution: 4
   },
   getters: {},
   mutations: {

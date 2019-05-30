@@ -160,6 +160,12 @@ export default {
       "classes",
       "selectedObject"
     ]),
+    ...mapState("settings", [
+      "showCustomPaints",
+      "showModels",
+      "showMap",
+      "conveyorBeltResolution"
+    ]),
     ...mapGetters(["getVisibleObjects"])
   },
   watch: {
@@ -239,6 +245,49 @@ export default {
           this.transformControl.detach();
         } else {
           this.transformControl.attach(obj);
+        }
+      }
+    },
+
+    showCustomPaints(value) {
+      // update materials
+      this.updateAllMaterials();
+    },
+
+    showModels(value) {
+      for (let i = 0; i < this.objects.length; i++) {
+        const object = this.objects[i];
+        const obj = window.data.objects[object.userData.id];
+
+        // TODO should we dispose of the old models? or keep them in case the user changes the setting again
+        this.getGeometry(obj).then(geometry => (object.geometry = geometry));
+        //scene.add(object);
+      }
+    },
+    conveyorBeltResolution(value) {
+      if (!this.showModels) {
+        // Conveyor belts are not displayed
+        return;
+      }
+      for (let i = 0; i < this.objects.length; i++) {
+        const object = this.objects[i];
+        const obj = window.data.objects[object.userData.id];
+
+        object.geometry.dispose();
+        // TODO here we should certainly dispose of the old conveyor belts
+        if (this.isConveyorBelt(obj)) {
+          this.getGeometry(obj).then(geometry => (object.geometry = geometry));
+        }
+        //scene.add(object);
+      }
+    },
+    showMap(value) {
+      if (value) {
+        this.loadMap();
+      } else {
+        if (this.mapModel !== undefined) {
+          var scene = this.$refs.scene.scene;
+          scene.remove(this.mapModel);
         }
       }
     }
@@ -321,9 +370,9 @@ export default {
     this.$refs.scene.scene.add(this.transformControl);
 
     // load map
-    modelHelper.loadScene("/models/map.glb").then(model => {
-      scene.add(model);
-    });
+    if (this.showMap) {
+      this.loadMap();
+    }
 
     // container.appendChild(renderer.domElement); // TODO //
     // /*    var dragControls = new THREE.DragControls(
@@ -394,6 +443,24 @@ export default {
         this.rotateX = -1.3;
       }
       requestAnimationFrame(this.updateCompass);
+    },
+
+    loadMap() {
+      var scene = this.$refs.scene.scene;
+      if (this.mapModel === undefined) {
+        modelHelper.loadScene("/models/map.glb").then(model => {
+          this.mapModel = model;
+          if (this.showMap) {
+            scene.add(model);
+          }
+        });
+      } else {
+        if (this.showMap) {
+          scene.add(this.mapModel);
+        } else {
+          scene.remove(this.mapModel);
+        }
+      }
     },
 
     // setup to use the primary colors of painted buildings
@@ -479,27 +546,29 @@ export default {
         }
       }*/
 
-      const isPaintable =
-        modelConfig[obj.className] !== undefined
-          ? modelConfig[obj.className].paintable
-          : false;
+      if (this.showCustomPaints) {
+        const isPaintable =
+          modelConfig[obj.className] !== undefined
+            ? modelConfig[obj.className].paintable
+            : false;
 
-      for (let i = 0; i < obj.entity.properties.length; i++) {
-        const element = obj.entity.properties[i];
-        if (element.name === "mColorSlot") {
-          if (!isPaintable) {
-            console.warn("paintable should be true for: " + obj.className);
-            /*Sentry.captureMessage(
-              "paintable should be true for: " + obj.className
-            );*/
+        for (let i = 0; i < obj.entity.properties.length; i++) {
+          const element = obj.entity.properties[i];
+          if (element.name === "mColorSlot") {
+            if (!isPaintable) {
+              console.warn("paintable should be true for: " + obj.className);
+              /*Sentry.captureMessage(
+                "paintable should be true for: " + obj.className
+              );*/
+            }
+            return this.coloredMaterials[element.value.unk2];
           }
-          return this.coloredMaterials[element.value.unk2];
         }
-      }
 
-      // mColorSlot is not set if it is colored with material 0
-      if (isPaintable) {
-        return this.coloredMaterials[0];
+        // mColorSlot is not set if it is colored with material 0
+        if (isPaintable) {
+          return this.coloredMaterials[0];
+        }
       }
 
       if (obj.entity.properties)
@@ -535,6 +604,15 @@ export default {
         }
       }
       // console.error("No object found with id " + id);
+    },
+    updateAllMaterials() {
+      // TODO should keep the selected material?
+      for (let i = 0; i < this.objects.length; i++) {
+        const object = this.objects[i];
+        const obj = window.data.objects[object.userData.id];
+        const material = this.getMaterial(obj);
+        object.material = material;
+      }
     },
     getObjWithId(id) {
       for (var i = 0; i < this.objects.length; i++) {
@@ -751,8 +829,9 @@ export default {
       shape.lineTo(-length / 2, -width / 2);
 
       var extrudeSettings = {
-        curveSegments: splinePoints * 2,
-        steps: splinePoints * 4,
+        // TODO find better values for this?
+        curveSegments: (splinePoints * this.conveyorBeltResolution) / 2,
+        steps: splinePoints * this.conveyorBeltResolution,
         bevelEnabled: false,
         extrudePath: extrudePath
       };
@@ -1026,7 +1105,18 @@ export default {
       var className = obj.className;
 
       return new Promise((resolve, reject) => {
-        // sp    ecial cases for geometry
+        if (!this.showModels) {
+          // return single sized cube
+          if (this.geometries["box"] === undefined) {
+            var size = 400; // 800 is size of foundations
+            var geometry = new THREE.BoxBufferGeometry(size, size, size);
+            this.geometries["box"] = geometry;
+          }
+          resolve(this.geometries["box"]);
+          return;
+        }
+
+        // special cases for geometry
         if (this.isConveyorBelt(obj)) {
           resolve(this.createConveyorBeltGeometry(obj));
           return;
