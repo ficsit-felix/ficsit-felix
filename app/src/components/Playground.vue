@@ -488,10 +488,10 @@ export default {
         const element = obj.entity.properties[i];
         if (element.name === "mColorSlot") {
           if (!isPaintable) {
-            console.error("paintable should be true for: " + obj.className);
-            Sentry.captureMessage(
+            console.warn("paintable should be true for: " + obj.className);
+            /*Sentry.captureMessage(
               "paintable should be true for: " + obj.className
-            );
+            );*/
           }
           return this.coloredMaterials[element.value.unk2];
         }
