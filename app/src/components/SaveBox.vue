@@ -93,7 +93,6 @@
 </style>
 
 <script>
-import * as axios from "axios";
 import { mapActions, mapState } from "vuex";
 import { setTimeout } from "timers";
 import * as Sentry from "@sentry/browser";

@@ -115,7 +115,6 @@
 </style>
 
 <script>
-import * as axios from "axios";
 import { mapActions } from "vuex";
 import * as Sentry from "@sentry/browser";
 import { v4 } from "uuid";
