@@ -5,9 +5,8 @@ import store from "./store";
 import { ComponentOptions } from "vue";
 import { commithash } from "@/js/commithash";
 
-import * as Sentry from '@sentry/browser';
-import * as Integrations from '@sentry/integrations';
-
+import * as Sentry from "@sentry/browser";
+import * as Integrations from "@sentry/integrations";
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
@@ -57,5 +56,9 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  beforeCreate() {
+    this.$store.commit;
+    this.$store.commit("settings/INIT_STORE_FROM_LOCAL_DATA");
+  },
   render: h => h(App)
 }).$mount("#app");

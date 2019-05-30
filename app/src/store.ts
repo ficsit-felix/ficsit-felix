@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { Module } from "vuex";
 import { Vector3 } from "three";
 
 Vue.use(Vuex);
@@ -28,7 +29,90 @@ interface RootState {
   cameraPosition?: Vector3;
 }
 
+interface SettingsRootState {
+  nearPlane: number;
+  farPlane: number;
+  showModels: boolean;
+  showCustomPaints: boolean;
+  showMap: boolean;
+  conveyorBeltResolution: number;
+}
+
+// updates the local storage on settings mutations
+// TODO do this in a better way?
+function updateLocalStorage(state: SettingsRootState) {
+  localStorage.setItem("settings", JSON.stringify(state));
+}
+
+const settingsModule: Module<SettingsRootState, RootState> = {
+  namespaced: true,
+  state: {
+    nearPlane: 10000,
+    farPlane: 1000000,
+    showModels: true,
+    showCustomPaints: true,
+    showMap: true,
+    conveyorBeltResolution: 5
+  },
+  getters: {},
+  mutations: {
+    INIT_STORE_FROM_LOCAL_DATA(state) {
+      if (localStorage.getItem("settings")) {
+        Object.assign(state, JSON.parse(localStorage.getItem("settings")!));
+      }
+    },
+
+    SET_NEAR_PLANE(state, payload) {
+      state.nearPlane = parseInt(payload);
+      updateLocalStorage(state);
+    },
+    SET_FAR_PLANE(state, payload) {
+      state.farPlane = parseInt(payload);
+      updateLocalStorage(state);
+    },
+    SET_SHOW_MODELS(state, payload) {
+      state.showModels = payload;
+      updateLocalStorage(state);
+    },
+    SET_SHOW_CUSTOM_PAINTS(state, payload) {
+      state.showCustomPaints = payload;
+      updateLocalStorage(state);
+    },
+    SET_SHOW_MAP(state, payload) {
+      state.showMap = payload;
+      updateLocalStorage(state);
+    },
+    SET_CONVEYOR_BELT_RESOLUTION(state, payload) {
+      state.conveyorBeltResolution = payload;
+      updateLocalStorage(state);
+    }
+  },
+  actions: {
+    setNearPlane(context, payload) {
+      context.commit("SET_NEAR_PLANE", payload);
+    },
+    setFarPlane(context, payload) {
+      context.commit("SET_FAR_PLANE", payload);
+    },
+    setShowModels(context, payload) {
+      context.commit("SET_SHOW_MODELS", payload);
+    },
+    setShowCustomPaints(context, payload) {
+      context.commit("SET_SHOW_CUSTOM_PAINTS", payload);
+    },
+    setShowMap(context, payload) {
+      context.commit("SET_SHOW_MAP", payload);
+    },
+    setConveyorBeltResolution(context, payload) {
+      context.commit("SET_CONVEYOR_BELT_RESOLUTION", payload);
+    }
+  }
+};
+
 export default new Vuex.Store<RootState>({
+  modules: {
+    settings: settingsModule
+  },
   state: {
     loading: false,
     selectedIndex: -1,
@@ -195,6 +279,13 @@ export default new Vuex.Store<RootState>({
     },
     setCameraData(context, payload) {
       context.commit("SET_CAMERA_DATA", payload);
+    },
+
+    setSettingsNearPlane(context, payload) {
+      context.commit("SET_SETTINGS_NEAR_PLANE", payload);
+    },
+    setSettingsFarPlane(context, payload) {
+      context.commit("SET_SETTINGS_FAR_PLANE", payload);
     }
   }
 });

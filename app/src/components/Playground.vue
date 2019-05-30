@@ -372,7 +372,7 @@ export default {
     window.addEventListener("resize", this.handleResize);
     window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
 
-    this.updateCompass();
+    window.setTimeout(this.updateCompass, 1000); // update later when the camera is set
   },
   methods: {
     ...mapActions(["loadData", "setSelectedObject"]),
