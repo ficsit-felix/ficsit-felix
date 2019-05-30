@@ -299,9 +299,9 @@ export class Json2Sav {
             this.buffer.writeByte(property.value.isValid);
             break;
           case "Color":
-            this.buffer.writeByte(property.value.r);
-            this.buffer.writeByte(property.value.g);
             this.buffer.writeByte(property.value.b);
+            this.buffer.writeByte(property.value.g);
+            this.buffer.writeByte(property.value.r);
             this.buffer.writeByte(property.value.a);
             break;
           case "LinearColor":

@@ -461,9 +461,9 @@ export class Sav2Json {
               structUnknown: unknown,
               value: {
                 type: type,
-                r: buffer.readByte(),
-                g: buffer.readByte(),
                 b: buffer.readByte(),
+                g: buffer.readByte(),
+                r: buffer.readByte(),
                 a: buffer.readByte()
               }
             });
