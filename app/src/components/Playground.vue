@@ -164,7 +164,8 @@ export default {
       "showCustomPaints",
       "showModels",
       "showMap",
-      "conveyorBeltResolution"
+      "conveyorBeltResolution",
+      "classColors"
     ]),
     ...mapGetters(["getVisibleObjects"])
   },
@@ -290,6 +291,13 @@ export default {
           scene.remove(this.mapModel);
         }
       }
+    },
+    classColors: {
+      deep: true,
+      handler(value) {
+        this.setupDefaultMaterials();
+        this.updateAllMaterials();
+      }
     }
   },
 
@@ -312,17 +320,8 @@ export default {
     this.materials = {};
     this.coloredMaterials = [];
     this.setupColoredMaterials();
-    for (var prop in modelConfig) {
-      this.materials[prop] = new THREE.MeshMatcapMaterial({
-        color: modelConfig[prop].color,
-        matcap: this.matcap
-        /*emissive: modelConfig[prop].color,
+    this.setupDefaultMaterials();
 
-        roughness: 0.6,
-        metalness: .8,
-        flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
-      });
-    }
     this.geometries = {};
 
     this.lastSelectedIndex = -1;
@@ -464,6 +463,24 @@ export default {
     },
 
     // setup to use the primary colors of painted buildings
+    setupDefaultMaterials() {
+      for (var prop in modelConfig) {
+        var color = modelConfig[prop].color;
+        if (this.classColors[prop] !== undefined) {
+          color = new THREE.Color(this.classColors[prop]);
+        }
+
+        this.materials[prop] = new THREE.MeshMatcapMaterial({
+          color: color,
+          matcap: this.matcap
+          /*emissive: modelConfig[prop].color,
+
+        roughness: 0.6,
+        metalness: .8,
+        flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
+        });
+      }
+    },
     setupColoredMaterials() {
       const defaultColors = [
         new THREE.Color("#fcb26b"),

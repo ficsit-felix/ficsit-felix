@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <!--<h3>Graphics</h3>-->
+    <h3>Graphics</h3>
     <md-checkbox :model="showMap" @change="updateShowMap">Show map</md-checkbox>
     <md-checkbox :model="showModels" @change="updateShowModels"
       >Show models</md-checkbox
@@ -35,10 +35,23 @@
         @input="updateConveyorBeltResolution"
         type="number"
       ></md-input>
+
       <span class="md-helper-text"
         >High values can cause very low framerate</span
       >
     </md-field>
+    <br />
+    <h3>Develop</h3>
+
+    <md-checkbox :model="editClassColors" @change="updateEditClassColors"
+      >Edit class colors</md-checkbox
+    >
+    <md-button class="md-raised" @click="exportClassColors"
+      >Copy class colors to clipboard</md-button
+    >
+    <md-button class="md-raised" @click="clearClassColors"
+      >Clear class colors</md-button
+    >
   </div>
 </template>
 
@@ -63,7 +76,9 @@ export default {
       "showModels",
       "showCustomPaints",
       "showMap",
-      "conveyorBeltResolution"
+      "conveyorBeltResolution",
+      "classColors",
+      "editClassColors"
     ])
   },
   methods: {
@@ -73,7 +88,9 @@ export default {
       "setShowModels",
       "setShowCustomPaints",
       "setShowMap",
-      "setConveyorBeltResolution"
+      "setConveyorBeltResolution",
+      "setEditClassColors",
+      "clearClassColors"
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);
@@ -94,7 +111,21 @@ export default {
       if (value > 10) {
         value = 10;
       }
+      if (value < 1) {
+        value = 1;
+      }
       this.setConveyorBeltResolution(value);
+    },
+    updateEditClassColors(value) {
+      this.setEditClassColors(value);
+    },
+    exportClassColors() {
+      var input = document.createElement("textarea");
+      input.value = JSON.stringify(this.classColors);
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
     }
   }
 };

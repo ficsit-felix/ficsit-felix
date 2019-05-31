@@ -36,6 +36,8 @@ interface SettingsRootState {
   showCustomPaints: boolean;
   showMap: boolean;
   conveyorBeltResolution: number;
+  editClassColors: boolean;
+  classColors: { [id: string]: string };
 }
 
 // updates the local storage on settings mutations
@@ -52,7 +54,9 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     showModels: true,
     showCustomPaints: true,
     showMap: true,
-    conveyorBeltResolution: 4
+    conveyorBeltResolution: 4,
+    editClassColors: false,
+    classColors: {}
   },
   getters: {},
   mutations: {
@@ -85,6 +89,19 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     SET_CONVEYOR_BELT_RESOLUTION(state, payload) {
       state.conveyorBeltResolution = payload;
       updateLocalStorage(state);
+    },
+    SET_CLASS_COLOR(state, payload) {
+      Vue.set(state.classColors, payload.className, payload.color);
+      // state.classColors[payload.className] = payload.color;
+      updateLocalStorage(state);
+    },
+    SET_EDIT_CLASS_COLORS(state, payload) {
+      state.editClassColors = payload;
+      updateLocalStorage(state);
+    },
+    CLEAR_CLASS_COLORS(state, payload) {
+      state.classColors = {};
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -105,6 +122,15 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setConveyorBeltResolution(context, payload) {
       context.commit("SET_CONVEYOR_BELT_RESOLUTION", payload);
+    },
+    setClassColor(context, payload) {
+      context.commit("SET_CLASS_COLOR", payload);
+    },
+    setEditClassColors(context, payload) {
+      context.commit("SET_EDIT_CLASS_COLORS", payload);
+    },
+    clearClassColors(context, payload) {
+      context.commit("CLEAR_CLASS_COLORS", payload);
     }
   }
 };

@@ -7,11 +7,12 @@
     >
     <ul>
       <li v-for="item in classes" v-bind:key="item.name">
-        <!--<div
+        <div
+          v-if="editClassColors"
           class="color"
-          v-bind:style="{ background: item.color }"
+          v-bind:style="{ background: classColorStrings[item.name] }"
           @click="showColor(item.name)"
-        ></div>-->
+        ></div>
         <md-checkbox
           :model="item.visible"
           @change="changeVisibility(item.name, $event)"
@@ -23,7 +24,10 @@
     <md-dialog :md-active.sync="showColorDialog">
       <md-dialog-title>Select color</md-dialog-title>
       <md-dialog-content class="colorPickerDialogContent">
-        <colorPicker :color="selectedColor"></colorPicker>
+        <colorPicker
+          :color="selectedColor"
+          @changeColor="changeColor"
+        ></colorPicker>
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showColorDialog = false"
@@ -58,6 +62,7 @@
     border: 1px solid #eee;
     display: inline-block;
     margin-left: 8px;
+    margin-right: 8px;
     border-radius: 3px;
     cursor: pointer;
   }
@@ -96,6 +101,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import colorPicker from "@caohenghu/vue-colorpicker";
+import { modelConfig } from "@/definitions/models";
 
 export default {
   name: "ClassList",
@@ -105,17 +111,37 @@ export default {
   data: function() {
     return {
       showColorDialog: false,
+      selectedClassName: "",
       selectedColor: "#ff00ff"
     };
   },
   computed: {
     ...mapState(["classes"]),
+    ...mapState("settings", ["classColors", "editClassColors"]),
     allVisible: function() {
       return this.classes.every(item => item.visible == true);
+    },
+    classColorStrings() {
+      // https://stackoverflow.com/a/37796055
+      function getHexColor(number) {
+        return "#" + (number >>> 0).toString(16).slice(-6);
+      }
+      var result = {};
+
+      this.classes.forEach(clazz => {
+        if (this.classColors[clazz.name] !== undefined) {
+          result[clazz.name] = this.classColors[clazz.name];
+          return;
+        }
+
+        result[clazz.name] = getHexColor(modelConfig[clazz.name].color);
+      });
+      return result;
     }
   },
   methods: {
     ...mapActions(["setVisibility"]),
+    ...mapActions("settings", ["setClassColor"]),
     changeVisibility(name, visible) {
       this.setVisibility({ name, visible });
     },
@@ -127,8 +153,18 @@ export default {
     showColor(className) {
       // alert(className);
       // TODO set correct color in color dialog
+      this.selectedClassName = className;
+      this.selectedColor = this.classColorStrings[className];
 
       this.showColorDialog = true;
+    },
+    changeColor(color) {
+      // TODO debounce this color change a bit
+
+      this.setClassColor({
+        className: this.selectedClassName,
+        color: color.rgba.toHexString()
+      });
     }
   }
 };
