@@ -1,3 +1,5 @@
+import {ActorOrObject, Property} from "satisfactory-json";
+
 export function getProperty(
   actor: ActorOrObject,
   propertyName: string

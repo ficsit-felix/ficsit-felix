@@ -778,12 +778,12 @@
     tslib "^1.9.3"
 
 "@sentry/integrations@^5.3.1":
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.3.1.tgz#d883f6017229daca91bd937986b058b414bc3d34"
-  integrity sha512-TdjSH088nCa4C7vHprx/44wX3/PIz25233tTWzgi+5T+K+KwsSmtpEiWAJiAAejY+Kqf4FMDD5ILDJga1VjUEQ==
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.4.0.tgz#af2c5b3894fe920ee1be8558803315a4893ade92"
+  integrity sha512-8jnO7Rac+qdhiRGhtFy0znmAjaT9OI88Z5rrQVAjfJArTgDQ7YmqAFlR0603IMC0PGItMdQcZth/1XjCKfjQqw==
   dependencies:
-    "@sentry/types" "5.2.0"
-    "@sentry/utils" "5.3.0"
+    "@sentry/types" "5.4.0"
+    "@sentry/utils" "5.4.0"
     tslib "^1.9.3"
 
 "@sentry/minimal@5.3.0":
@@ -800,12 +800,25 @@
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.2.0.tgz#e42f2ad95c1c10f50656e6b668ff8c8aa06b99d5"
   integrity sha512-QzMVYgONsScAiEGY5XRtSeMwH8464oRdaxCMTtXBuYfF9muvxHqQyF094GVRiconpgKelok5ke9HwrbNUEiE7w==
 
+"@sentry/types@5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.4.0.tgz#340854be18618e4435f9c168adfa2c9e407fbcb3"
+  integrity sha512-R8IFM77rzp0ngR/XQFLsXUK2uE7jLf21MsU9mpUwLtxcJp8rs7I77HgzA5MEerdG9Sbxw5RaLq9wO7noHGfUmQ==
+
 "@sentry/utils@5.3.0":
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.3.0.tgz#9f86b6addcb762e53c7b659bba9298ac498ccb6b"
   integrity sha512-4nfv6p2/PPWt7jk/AE73K7YydFHiBs3GvJLpO+PHgNyU3GBtQGST5HggdkGy+mCbtoBdkCIf1CRNeabCxTZ92g==
   dependencies:
     "@sentry/types" "5.2.0"
+    tslib "^1.9.3"
+
+"@sentry/utils@5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.4.0.tgz#32882f16cd516f341ba1dafeb020614aaf6d4b5c"
+  integrity sha512-NlYMAyiI9iIItLDxJ17tLMtuu7261t93tcOGSMdDQZlmryR6ZAMenbCKTf5MrpA2iHfX84gyfmr67lh8uSHkPg==
+  dependencies:
+    "@sentry/types" "5.4.0"
     tslib "^1.9.3"
 
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
@@ -2095,26 +2108,7 @@ check-types@^7.3.0:
   resolved "https://registry.yarnpkg.com/check-types/-/check-types-7.4.0.tgz#0378ec1b9616ec71f774931a3c6516fad8c152f4"
   integrity sha512-YbulWHdfP99UfZ73NcUDlNJhEIDgm9Doq9GhpyXbF+7Aegi3CVV7qqMCKTTqJxlvEvnQBp9IA+dxsGN6xK/nSg==
 
-chokidar@^2.0.0:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.5.tgz#0ae8434d962281a5f56c72869e79cb6d9d86ad4d"
-  integrity sha512-i0TprVWp+Kj4WRPtInjexJ8Q+BqTE909VpH8xVhXrJkoc5QC8VO9TryGOqTr+2hljzc1sC62t22h5tZePodM/A==
-  dependencies:
-    anymatch "^2.0.0"
-    async-each "^1.0.1"
-    braces "^2.3.2"
-    glob-parent "^3.1.0"
-    inherits "^2.0.3"
-    is-binary-path "^1.0.0"
-    is-glob "^4.0.0"
-    normalize-path "^3.0.0"
-    path-is-absolute "^1.0.0"
-    readdirp "^2.2.1"
-    upath "^1.1.1"
-  optionalDependencies:
-    fsevents "^1.2.7"
-
-chokidar@^2.0.2, chokidar@^2.0.4, chokidar@^2.1.6:
+chokidar@^2.0.0, chokidar@^2.0.2, chokidar@^2.0.4, chokidar@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.6.tgz#b6cad653a929e244ce8a834244164d241fa954c5"
   integrity sha512-V2jUo67OKkc6ySiRpJrjlpJKl9kDuG+Xb8VgsGzb+aEouhgS1D0weyPU4lEzdAcsCAvrih2J2BqyXqHWvVLw5g==
@@ -7264,11 +7258,16 @@ sass-loader@^7.1.0:
     semver "^5.5.0"
 
 sass@^1.17.2:
-  version "1.20.1"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.20.1.tgz#737b901fe072336da540b6d00ec155e2267420da"
-  integrity sha512-BnCawee/L5kVG3B/5Jg6BFwASqUwFVE6fj2lnkVuSXDgQ7gMAhY9a2yPeqsKhJMCN+Wgx0r2mAW7XF/aTF5qtA==
+  version "1.20.3"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.20.3.tgz#18284a7bac6eab9cbb80453288473194f29efb84"
+  integrity sha512-kvf+w5XT7FrmFrCKz1gPHqegufG+gxifC8oQesX/s8gkShdeiTqiuvP0c8TvfBwMAuI1YGOgobZQ2KIJGn//jA==
   dependencies:
     chokidar "^2.0.0"
+
+satisfactory-json@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.4.tgz#90002bc089bd62d88ad0eba1d211ad2605db4c5b"
+  integrity sha512-P6saAuObFJuG3VOLiu85nl/DtsBEJaqCaiQ6wFWFNRSQitd52scvO4zPN1S0T1anH0cC67U03BcUSv+xkTasCQ==
 
 sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"

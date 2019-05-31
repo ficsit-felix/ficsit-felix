@@ -97,7 +97,7 @@ import { mapActions, mapState } from "vuex";
 import { setTimeout } from "timers";
 import * as Sentry from "@sentry/browser";
 
-import { Json2Sav } from "@/transformation/index";
+import { Json2Sav } from "satisfactory-json";
 
 export default {
   name: "SaveBox",

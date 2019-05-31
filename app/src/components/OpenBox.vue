@@ -122,7 +122,7 @@ import { mapActions } from "vuex";
 import * as Sentry from "@sentry/browser";
 import { v4 } from "uuid";
 
-import { Sav2Json } from "@/transformation/index";
+import { Sav2Json } from "satisfactory-json";
 import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 
