@@ -89,6 +89,9 @@ import Compass from "@/components/Compass";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
 import GeometryFactory from "@/graphics/GeometryFactory";
 import MaterialFactory from "@/graphics/MaterialFactory";
+import MeshFactory from "@/graphics/MeshFactory";
+import { updateActorMeshTransform } from "@/helpers/meshHelper";
+
 import {
   isConveyorBelt,
   isConveyorLift,
@@ -137,7 +140,7 @@ export default {
   watch: {
     dataLoaded(val) {
       if (val) {
-        this.addCubes();
+        this.createMeshesForActors();
       }
     },
     selectedIndex(val) {
@@ -187,20 +190,20 @@ export default {
               if (
                 window.data.objects[obj.userData.id].className === item.name
               ) {
-                this.$refs.scene.scene.add(obj);
+                this.scene.add(obj);
                 this.invisibleObjects.splice(j, 1);
                 this.objects.push(obj);
               }
             }
           } else {
-            for (var j = this.objects.length - 1; j >= 0; j--) {
-              const obj = this.objects[j];
+            for (var k = this.objects.length - 1; k >= 0; k--) {
+              const obj = this.objects[k];
 
               if (
                 window.data.objects[obj.userData.id].className === item.name
               ) {
-                this.$refs.scene.scene.remove(obj);
-                this.objects.splice(j, 1);
+                this.scene.remove(obj);
+                this.objects.splice(k, 1);
                 this.invisibleObjects.push(obj);
               }
             }
@@ -261,8 +264,7 @@ export default {
         this.loadMap();
       } else {
         if (this.mapModel !== undefined) {
-          var scene = this.$refs.scene.scene;
-          scene.remove(this.mapModel);
+          this.scene.remove(this.mapModel);
         }
       }
     },
@@ -292,6 +294,10 @@ export default {
       this.matcap,
       this.showCustomPaints
     );
+    this.meshFactory = new MeshFactory(
+      this.geometryFactory,
+      this.materialFactory
+    );
 
     this.objects = [];
     this.invisibleObjects = [];
@@ -300,36 +306,16 @@ export default {
       matcap: this.matcap
     });
 
+    this.scene = this.$refs.scene.scene;
+
     this.loader = new GLTFLoader();
 
     this.geometries = {};
 
     this.lastSelectedIndex = -1;
     if (this.dataLoaded) {
-      this.addCubes();
-    } else {
-      // load the data
-      // should not happen anymore
-      /*this.loadData()
-        .then(response => {
-          console.log(this);
-          //     this.addCubes(response);
-        })
-        .catch(err => {
-          console.error(err);
-        });*/
+      this.createMeshesForActors();
     }
-
-    var scene = this.$refs.scene.scene;
-
-    /*var light = new THREE.DirectionalLight(0xffffff, 0.5);
-    light.position.set(-20000, 500, 20000);
-    this.$refs.scene.scene.add(light);
-
-    // darker light from the oposite direction to fake shadows?
-    var light2 = new THREE.DirectionalLight(0xaaaaff, 0.3);
-    light2.position.set(20000, -500, 20000);
-    this.$refs.scene.scene.add(light2);*/
 
     this.transformControl = new TransformControls(
       this.$refs.renderer.camera.obj,
@@ -346,7 +332,7 @@ export default {
         this.objectChanged();
       }
     });
-    this.$refs.scene.scene.add(this.transformControl);
+    this.scene.add(this.transformControl);
 
     // load map
     if (this.showMap) {
@@ -379,41 +365,53 @@ export default {
     },
 
     loadMap() {
-      var scene = this.$refs.scene.scene;
       if (this.mapModel === undefined) {
         modelHelper.loadScene("/models/map.glb").then(model => {
           this.mapModel = model;
           if (this.showMap) {
-            scene.add(model);
+            this.scene.add(model);
           }
         });
       } else {
         if (this.showMap) {
-          scene.add(this.mapModel);
+          this.scene.add(this.mapModel);
         } else {
-          scene.remove(this.mapModel);
+          this.scene.remove(this.mapModel);
+        }
+      }
+    },
+
+    createMeshesForActors() {
+      for (let i = 0; i < window.data.objects.length; i++) {
+        let actor = window.data.objects[i];
+        if (actor.type == 1) {
+          this.meshFactory.createMesh(actor, i).then(mesh => {
+            updateActorMeshTransform(mesh, actor);
+            this.scene.add(mesh);
+            this.objects.push(mesh);
+          });
         }
       }
     },
 
     setMaterial(id, material) {
-      for (var i = 0; i < this.objects.length; i++) {
-        const obj = this.objects[i];
+      for (const obj of this.objects) {
         if (obj.userData.id === id) {
           obj.material = material;
-          for (let i = 0; i < obj.children.length; i++) {
-            const element = obj.children[i];
+          for (let j = 0; j < obj.children.length; j++) {
+            const element = obj.children[j];
             element.material = material;
           }
           return;
         }
       }
-      for (var i = 0; i < this.invisibleObjects.length; i++) {
+
+      for (const obj of this.invisibleObjects) {
         const obj = this.invisibleObjects[i];
         if (obj.userData.id === id) {
           obj.material = material;
-          for (let i = 0; i < obj.children.length; i++) {
-            const element = obj.children[i];
+          for (let j = 0; j < obj.children.length; j++) {
+            const element = obj.children[j];
             element.material = material;
           }
           return;
@@ -432,14 +430,12 @@ export default {
       }
     },
     getObjWithId(id) {
-      for (var i = 0; i < this.objects.length; i++) {
-        const obj = this.objects[i];
+      for (const obj of this.objects) {
         if (obj.userData.id === id) {
           return obj;
         }
       }
-      for (var i = 0; i < this.invisibleObjects.length; i++) {
-        const obj = this.invisibleObjects[i];
+      for (const obj of this.invisibleObjects) {
         if (obj.userData.id === id) {
           return obj;
         }
@@ -455,164 +451,7 @@ export default {
       }
       return null;
     },
-    addCubes: function() {
-      var colorMap = {};
 
-      var size = 400; // 800 is size of foundations
-      var geometry = new THREE.BoxBufferGeometry(size, size, size);
-
-      // needs to be a let, so that we can access i in the lambda function further down
-      for (let i = 0; i < window.data.objects.length; i++) {
-        let obj = window.data.objects[i];
-        if (obj.type == 1) {
-          if (colorMap[obj.className] === undefined) {
-            colorMap[obj.className] = Math.random() * 0xffffff;
-          }
-
-          if (isConveyorLift(obj)) {
-            this.addConveyorLift(obj, i);
-            continue;
-          }
-
-          this.geometryFactory.createGeometry(obj).then(geometry => {
-            var object = new THREE.Mesh(
-              geometry,
-              this.materialFactory.createMaterial(obj)
-              //new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
-            );
-
-            this.updateObjectVisuals(object, obj);
-
-            object.userData = { id: i };
-            this.$refs.scene.scene.add(object);
-            this.objects.push(object);
-          });
-        }
-      }
-    },
-
-    addConveyorLift(obj, index) {
-      // add other parts to conveyor lift
-      modelHelper
-        .loadModel("/models/ConveyorLift_Bottom.glb")
-        .then(bottomGeometry => {
-          modelHelper
-            .loadModel("/models/ConveyorLift_Top.glb")
-            .then(topGeometry => {
-              const material = this.materialFactory.createMaterial(obj);
-              // const isReversedProp = getProperty(obj, "mIsReversed");
-              // const isReversed = isReversedProp !== undefined && isReversedProp.value;
-
-              // if the role of top and bottom are reversed does not seem to depend on the mIsReversed property, but on the sign of the z coordinate of the translation
-              var topPartTranslationZ = 0;
-              for (let i = 0; i < obj.entity.properties.length; i++) {
-                const element = obj.entity.properties[i];
-                if (element.name === "mTopTransform") {
-                  for (let i = 0; i < element.value.properties.length; i++) {
-                    const elem = element.value.properties[i];
-                    if (elem.name === "Translation") {
-                      topPartTranslationZ = elem.value.z;
-                    }
-                  }
-                }
-              }
-              const isReversed = topPartTranslationZ < 0;
-
-              var object = new THREE.Mesh(
-                isReversed ? topGeometry : bottomGeometry,
-                material
-              );
-
-              var topObject = new THREE.Mesh(
-                isReversed ? bottomGeometry : topGeometry,
-                material
-              );
-
-              for (let i = 0; i < obj.entity.properties.length; i++) {
-                const element = obj.entity.properties[i];
-                if (element.name === "mTopTransform") {
-                  for (let i = 0; i < element.value.properties.length; i++) {
-                    const elem = element.value.properties[i];
-                    if (elem.name === "Rotation") {
-                      this.applyRotation(topObject, [
-                        elem.value.a,
-                        elem.value.b,
-                        elem.value.c,
-                        elem.value.d
-                      ]);
-                    } else if (elem.name === "Translation") {
-                      this.applyTranslation(topObject, [
-                        elem.value.x,
-                        elem.value.y,
-                        elem.value.z
-                      ]);
-                    }
-                  }
-                }
-              }
-
-              object.add(topObject);
-
-              // Fake the middle part of the conveyor lift
-              const middleGeometry = new THREE.BoxBufferGeometry(
-                38,
-                180,
-                topPartTranslationZ > 0
-                  ? topPartTranslationZ
-                  : -topPartTranslationZ
-              );
-              var middleObject = new THREE.Mesh(
-                middleGeometry,
-                this.materialFactory.createMaterial(obj)
-              );
-              middleObject.position.x = -60;
-              middleObject.position.z = topPartTranslationZ / 2;
-              object.add(middleObject);
-
-              // the usual steps to add the object to the scene
-              this.updateObjectVisuals(object, obj);
-
-              object.userData = { id: index };
-              this.$refs.scene.scene.add(object);
-              this.objects.push(object);
-            });
-        });
-    },
-
-    applyTranslation(object, translation) {
-      // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)
-      object.position.x = translation[1];
-      object.position.y = translation[0];
-      object.position.z = translation[2];
-    },
-
-    applyRotation(object, rotation) {
-      object.quaternion.x = rotation[0];
-      object.quaternion.y = rotation[1];
-      object.quaternion.z = -rotation[2];
-      object.quaternion.w = rotation[3];
-    },
-
-    applyScale(object, scale) {
-      // TODO are those on the correct axes? Or do the need to be switched like the positions
-      object.scale.x = scale[0];
-      object.scale.y = scale[1];
-      object.scale.z = scale[2];
-    },
-
-    updateObjectVisuals(object, obj) {
-      // console.log(obj);
-      this.applyTranslation(object, obj.transform.translation);
-      if (!isConveyorBelt(obj) && !isPowerLine(obj)) {
-        this.applyRotation(object, obj.transform.rotation);
-        object.rotateZ(1.5708); // 90 deg in radians
-      } else {
-        // TODO conveyor belt coordinates are given without rotation?
-        this.applyRotation(object, [0, 0, 0, 1]);
-      }
-
-      this.applyScale(object, obj.transform.scale3d);
-    },
     focusSelectedObject() {
       var camera = this.$refs.renderer.camera.controls;
       var obj = window.data.objects[this.selectedIndex];
@@ -694,7 +533,7 @@ export default {
     this.transformControl.dispose();
     window.removeEventListener("resize", this.handleResize);
     for (var i = 0; i < this.objects.length; i++) {
-      this.$refs.scene.scene.remove(this.objects[i]);
+      this.scene.remove(this.objects[i]);
     }
   }
 };

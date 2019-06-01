@@ -1,7 +1,7 @@
-import { Actor, ActorOrObject, Property } from "satisfactory-json";
+import { Actor, ActorOrComponent, Property } from "satisfactory-json";
 
 export function getProperty(
-  actor: ActorOrObject,
+  actor: ActorOrComponent,
   propertyName: string
 ): Property | undefined {
   if (actor.entity !== undefined) {
@@ -20,7 +20,7 @@ export function getProperty(
 export function findActorByName(
   levelName: string,
   pathName: string
-): ActorOrObject | undefined {
+): ActorOrComponent | undefined {
   if (window.data !== undefined) {
     // TODO might be worth optimizing using hashmap or the like
     for (let i = 0; i < window.data.objects.length; i++) {

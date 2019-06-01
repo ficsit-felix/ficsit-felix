@@ -1,7 +1,7 @@
 import { modelConfig } from "@/definitions/models";
 import { Color, MeshMatcapMaterial, Material, Texture } from "three";
 import { findActorByName } from "@/helpers/entityHelper";
-import { Actor, ByteProperty } from "satisfactory-json";
+import { Actor, ByteProperty, StructProperty } from "satisfactory-json";
 
 /**
  * Factory that creates and caches materials
@@ -73,8 +73,10 @@ export default class MaterialFactory {
       "Persistent_Level:PersistentLevel.BuildableSubsystem"
     );
     if (buildableSubsystem !== undefined) {
-      for (let i = 0; i < buildableSubsystem.entity.properties.length; i++) {
-        const element = buildableSubsystem.entity.properties[i];
+      for (let i = 0; i < buildableSubsystem.entity!.properties.length; i++) {
+        const element = buildableSubsystem.entity!.properties[
+          i
+        ] as StructProperty;
         if (element.name === "mColorSlotsPrimary") {
           // this primary color was changed by the user
           defaultColors[element.index] = new Color(

@@ -47,9 +47,8 @@ export default class GeometryFactory {
       if (!this.showModels) {
         // return single sized cube
         if (this.geometries["box"] === undefined) {
-          var size = 400; // 800 is size of foundations
-          var geometry = new BoxBufferGeometry(size, size, size);
-          this.geometries["box"] = geometry;
+          // 800 is size of foundations
+          this.geometries["box"] = this.createBoxGeometry(400);
         }
         resolve(this.geometries["box"]);
         return;
@@ -108,9 +107,9 @@ export default class GeometryFactory {
             Sentry.captureMessage("missing model definition: " + className);
           }
 
-          var size = 200; // 800 is size of foundations
-          var geometry = new BoxBufferGeometry(size, size, size);
-          this.geometries[className] = geometry;
+          var boxSize = 200; // 800 is size of foundations
+
+          this.geometries[className] = this.createBoxGeometry(200);
           resolve(this.geometries[className]);
         }
       } else {
@@ -186,9 +185,7 @@ export default class GeometryFactory {
       extrudePath: extrudePath
     };
 
-    const geometry = new ExtrudeBufferGeometry(shape, extrudeSettings);
-
-    return geometry;
+    return new ExtrudeBufferGeometry(shape, extrudeSettings);
   }
 
   createPowerLineGeometry(actor: Actor) {
@@ -208,7 +205,7 @@ export default class GeometryFactory {
     const targetConnection = findActorByName(
       actor.entity!.extra.targetLevelName,
       actor.entity!.extra.targetPathName
-    );
+    ) as Component;
     if (targetConnection === undefined) {
       // TODO error
       console.error(
@@ -222,7 +219,7 @@ export default class GeometryFactory {
     const source = findActorByName(
       sourceConnection.levelName,
       sourceConnection.outerPathName
-    );
+    ) as Actor;
     if (source === undefined) {
       // TODO error
       console.error(
@@ -315,13 +312,16 @@ export default class GeometryFactory {
     const radiusSegments = 3;
     const closed = false;
 
-    const geometry = new TubeBufferGeometry(
+    return new TubeBufferGeometry(
       extrudePath,
       extrusionSegments,
       radius,
       radiusSegments,
       closed
     );
-    return geometry;
+  }
+
+  createBoxGeometry(size: number): BoxBufferGeometry {
+    return new BoxBufferGeometry(size, size, size);
   }
 }
