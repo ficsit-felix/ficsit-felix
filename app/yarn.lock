@@ -7264,10 +7264,10 @@ sass@^1.17.2:
   dependencies:
     chokidar "^2.0.0"
 
-satisfactory-json@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.6.tgz#7aeae0ed444e41500a0f53769e045d6538d1f4bb"
-  integrity sha512-V3/cg/dtqItC2LMj5Oh9eEnAbDme9Ob4IT4QKk7vXGGklzzOzww7dxhCIBj6bTPQQhz54O9rJCV8/ZSjmFWFrg==
+satisfactory-json@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.7.tgz#ca032ee4ecdf2937dfaf5449c48eed1c46c53f0c"
+  integrity sha512-KAdfhge5L/bUVGpH4Hqg7zIe9RQzmdm5j2c5zNMkLemeaIlH3OzDc25xIlBW2aSOMTHpSzo2ecgVGQSTHoTWdQ==
 
 sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"

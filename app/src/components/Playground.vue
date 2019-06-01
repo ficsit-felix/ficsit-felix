@@ -150,7 +150,7 @@ export default {
           this.setMaterial(
             this.lastSelectedIndex,
             this.materialFactory.createMaterial(
-              window.data.objects[this.lastSelectedIndex]
+              window.data.actors[this.lastSelectedIndex]
             )
           );
         }
@@ -188,7 +188,7 @@ export default {
               const obj = this.invisibleObjects[j];
 
               if (
-                window.data.objects[obj.userData.id].className === item.name
+                window.data.actors[obj.userData.id].className === item.name
               ) {
                 this.scene.add(obj);
                 this.invisibleObjects.splice(j, 1);
@@ -200,7 +200,7 @@ export default {
               const obj = this.objects[k];
 
               if (
-                window.data.objects[obj.userData.id].className === item.name
+                window.data.actors[obj.userData.id].className === item.name
               ) {
                 this.scene.remove(obj);
                 this.objects.splice(k, 1);
@@ -230,7 +230,7 @@ export default {
       this.geometryFactory.showModels = value;
       for (let i = 0; i < this.objects.length; i++) {
         const object = this.objects[i];
-        const obj = window.data.objects[object.userData.id];
+        const obj = window.data.actors[object.userData.id];
 
         // TODO should we dispose of the old models? or keep them in case the user changes the setting again
         this.geometryFactory
@@ -247,7 +247,7 @@ export default {
       }
       for (let i = 0; i < this.objects.length; i++) {
         const object = this.objects[i];
-        const obj = window.data.objects[object.userData.id];
+        const obj = window.data.actors[object.userData.id];
 
         object.geometry.dispose();
         // TODO here we should certainly dispose of the old conveyor belts
@@ -382,8 +382,8 @@ export default {
     },
 
     createMeshesForActors() {
-      for (let i = 0; i < window.data.objects.length; i++) {
-        let actor = window.data.objects[i];
+      for (let i = 0; i < window.data.actors.length; i++) {
+        let actor = window.data.actors[i];
         if (actor.type == 1) {
           this.meshFactory.createMesh(actor, i).then(mesh => {
             updateActorMeshTransform(mesh, actor);
@@ -407,7 +407,6 @@ export default {
       }
 
       for (const obj of this.invisibleObjects) {
-        const obj = this.invisibleObjects[i];
         if (obj.userData.id === id) {
           obj.material = material;
           for (let j = 0; j < obj.children.length; j++) {
@@ -424,7 +423,7 @@ export default {
       // TODO should keep the selected material?
       for (let i = 0; i < this.objects.length; i++) {
         const object = this.objects[i];
-        const obj = window.data.objects[object.userData.id];
+        const obj = window.data.actors[object.userData.id];
         const material = this.materialFactory.createMaterial(obj);
         object.material = material;
       }
@@ -454,12 +453,12 @@ export default {
 
     focusSelectedObject() {
       var camera = this.$refs.renderer.camera.controls;
-      var obj = window.data.objects[this.selectedIndex];
-      if (obj.type === 1) {
+      var actor = window.data.actors[this.selectedIndex];
+      if (actor.type === 1) {
         // changed because of coordinate system change
-        camera.target.x = obj.transform.translation[1];
-        camera.target.y = obj.transform.translation[0];
-        camera.target.z = obj.transform.translation[2];
+        camera.target.x = actor.transform.translation[1];
+        camera.target.y = actor.transform.translation[0];
+        camera.target.z = actor.transform.translation[2];
       }
     },
     storeCameraState() {

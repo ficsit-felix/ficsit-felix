@@ -156,7 +156,7 @@ export default new Vuex.Store<RootState>({
       if (!state.dataLoaded) {
         return [];
       }
-      return window.data.objects.map((obj: any, index: any) => {
+      return window.data.actors.map((obj: any, index: any) => { // TODO do we want the name of all components as well?
         return {
           id: index,
           text: obj.pathName.substring(obj.pathName.indexOf(".") + 1) // everything after the first .
@@ -193,7 +193,8 @@ export default new Vuex.Store<RootState>({
         };
         state.selectedObject = header;
       } else if (selectedIndex != -1) {
-        state.selectedObject = window.data.objects[selectedIndex];
+        // TODO handle components here as well
+        state.selectedObject = window.data.actors[selectedIndex];
       } else {
         state.selectedObject = null;
       }
@@ -251,7 +252,8 @@ export default new Vuex.Store<RootState>({
         window.data.collected = obj.collected;
         window.data.missing = obj.missing;
       } else {
-        window.data.objects[state.selectedIndex] = obj;
+        // TODO handle components as well
+        window.data.actors[state.selectedIndex] = obj;
       }
       state.selectedObject = obj;
     },
@@ -274,18 +276,16 @@ export default new Vuex.Store<RootState>({
 
         context.commit("SET_DATA_LOADED", true);
 
-        // slowly fill visible objects
+        // slowly fill visible actors
         var visible = [];
-        for (var i = 0; i < data.objects.length; i++) {
-          var obj = data.objects[i];
-          if (obj.type === 1) {
+        for (var i = 0; i < data.actors.length; i++) {
+          var actor = data.actors[i];
             visible.push({
               id: i,
-              className: obj.className,
-              transform: obj.transform
+              className: actor.className,
+              transform: actor.transform
               // state: 0
             });
-          }
         }
         context.commit("SET_VISIBLE_OBJECTS", visible);
         resolve();

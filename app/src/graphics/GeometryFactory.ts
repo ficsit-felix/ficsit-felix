@@ -3,7 +3,8 @@ import {
   findActorByName,
   getProperty,
   isConveyorBelt,
-  isPowerLine
+  isPowerLine,
+  findComponentByName
 } from "@/helpers/entityHelper";
 import { modelHelper } from "@/helpers/modelHelper";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
@@ -107,7 +108,7 @@ export default class GeometryFactory {
             Sentry.captureMessage("missing model definition: " + className);
           }
 
-          var boxSize = 200; // 800 is size of foundations
+          // 800 is size of foundations
 
           this.geometries[className] = this.createBoxGeometry(200);
           resolve(this.geometries[className]);
@@ -119,20 +120,13 @@ export default class GeometryFactory {
   }
 
   createConveyorBeltGeometry(actor: Actor) {
-    const translation = actor.transform.translation;
     const splineData = getProperty(actor, "mSplineData") as ArrayProperty;
     //actor.entity!.properties[0]; // TODO actually search for mSplineData as it might not be the first
 
     const splinePoints = splineData.value.values.length;
 
-    const extrusionSegments = splinePoints;
-    const radius = 100;
-    const radiusSegments = 3;
-    const closed = false;
-
     const extrudePath = new ConveyorCurvePath<Vector3>();
 
-    var lastArrive = null;
     var lastLoc = null;
     var lastLeave = null;
 
@@ -163,7 +157,6 @@ export default class GeometryFactory {
         );
       }
 
-      lastArrive = arriveTangent;
       lastLoc = location;
       lastLeave = leaveTangent;
     }
@@ -189,10 +182,10 @@ export default class GeometryFactory {
   }
 
   createPowerLineGeometry(actor: Actor) {
-    const sourceConnection = findActorByName(
+    const sourceConnection = findComponentByName(
       actor.entity!.extra.sourceLevelName,
       actor.entity!.extra.sourcePathName
-    ) as Component;
+    );
     if (sourceConnection === undefined) {
       // TODO error
       console.error(
@@ -202,10 +195,10 @@ export default class GeometryFactory {
       );
       return;
     }
-    const targetConnection = findActorByName(
+    const targetConnection = findComponentByName(
       actor.entity!.extra.targetLevelName,
       actor.entity!.extra.targetPathName
-    ) as Component;
+    );
     if (targetConnection === undefined) {
       // TODO error
       console.error(
@@ -219,7 +212,7 @@ export default class GeometryFactory {
     const source = findActorByName(
       sourceConnection.levelName,
       sourceConnection.outerPathName
-    ) as Actor;
+    );
     if (source === undefined) {
       // TODO error
       console.error(
@@ -231,7 +224,7 @@ export default class GeometryFactory {
     const target = findActorByName(
       targetConnection.levelName,
       targetConnection.outerPathName
-    ) as Actor;
+    );
     if (target === undefined) {
       // TODO error
       console.error(

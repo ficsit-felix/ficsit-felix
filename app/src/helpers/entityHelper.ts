@@ -1,7 +1,8 @@
-import { Actor, ActorOrComponent, Property } from "satisfactory-json";
+import { Actor, Component, Property } from "satisfactory-json";
+
 
 export function getProperty(
-  actor: ActorOrComponent,
+  actor: Actor,
   propertyName: string
 ): Property | undefined {
   if (actor.entity !== undefined) {
@@ -16,15 +17,32 @@ export function getProperty(
   }
   return undefined;
 }
+export function getPropertyFromComponent(
+  component: Component,
+  propertyName: string
+): Property | undefined {
+  if (component.entity !== undefined) {
+    if (component.entity.properties !== undefined) {
+      for (let i = 0; i < component.entity.properties.length; i++) {
+        const property = component.entity.properties[i];
+        if (property.name === propertyName) {
+          return property;
+        }
+      }
+    }
+  }
+  return undefined;
+}
+
 
 export function findActorByName(
   levelName: string,
   pathName: string
-): ActorOrComponent | undefined {
+): Actor | undefined {
   if (window.data !== undefined) {
     // TODO might be worth optimizing using hashmap or the like
-    for (let i = 0; i < window.data.objects.length; i++) {
-      const element = window.data.objects[i];
+    for (let i = 0; i < window.data.actors.length; i++) {
+      const element = window.data.actors[i];
       if (
         element.pathName === pathName && // compare by pathName first as if they are the same, the levelName will very probably be the same, too.
         element.levelName === levelName
@@ -35,6 +53,26 @@ export function findActorByName(
   }
   return undefined;
 }
+
+export function findComponentByName(
+  levelName: string,
+  pathName: string
+): Component | undefined {
+  if (window.data !== undefined) {
+    // TODO might be worth optimizing using hashmap or the like
+    for (let i = 0; i < window.data.components.length; i++) {
+      const element = window.data.components[i];
+      if (
+        element.pathName === pathName && // compare by pathName first as if they are the same, the levelName will very probably be the same, too.
+        element.levelName === levelName
+      ) {
+        return element;
+      }
+    }
+  }
+  return undefined;
+}
+
 
 /**
  * Returns true if the passed actor is a conveyor belt
