@@ -5,7 +5,6 @@ var SelectControls = function(scene, camera, domElement, callback) {
   this.disabled = false;
 
   this.bindCallback = function(callback) {
-    // console.log("callback:" + callback);
     this.callback = callback;
   };
 
@@ -29,7 +28,6 @@ var SelectControls = function(scene, camera, domElement, callback) {
   }
 
   function onMouseDown(event) {
-    // console.log("select " +scope.disabled);
     if (scope.disabled) {
       return;
     }

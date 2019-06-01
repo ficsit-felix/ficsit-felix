@@ -8,7 +8,7 @@
       </md-field>
     </div>
     <virtual-list
-      :size="10"
+      :size="20"
       :remain="100"
       class="scroller"
       ref="list"
@@ -114,7 +114,8 @@ export default {
         // TODO optimize
         for (let i = 0; i < this.displayedNames.length; i++) {
           if (this.displayedNames[i].pathName === this.selectedPathNames[0]) {
-            this.listStart = i;
+            console.log("focus object", i, this.displayedNames[i]);
+            this.listStart = i + 1;
             return;
           }
         }
@@ -123,16 +124,6 @@ export default {
     }
   },
   watch: {
-    selectedIndex(val) {
-      if (val !== -1) {
-        // scroll to selected object in object list
-        /*this.$refs.list.children[val].scrollIntoView({
-          block: "end",
-          behavior: "smooth",
-          inline: "nearest"
-        });*/
-      }
-    },
 
     // watch getNames as else we need to recompute it every time the search changes for some reason?
     getNames(val) {

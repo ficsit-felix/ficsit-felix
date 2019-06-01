@@ -473,7 +473,6 @@ export default {
     },
 
     handleResize() {
-      // console.log("resize", this.$refs.renderer);
       var elem = document.getElementById("scene");
       if (elem === undefined || elem === null) {
         return;

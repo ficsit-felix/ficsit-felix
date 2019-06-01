@@ -1033,5 +1033,4 @@ let modelConfig: { [id: string]: ModelConfig } = {
   }
 };
 
-console.log(modelConfig);
 export { modelConfig };
