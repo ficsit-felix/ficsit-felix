@@ -778,9 +778,9 @@
     tslib "^1.9.3"
 
 "@sentry/integrations@^5.3.1":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.4.0.tgz#af2c5b3894fe920ee1be8558803315a4893ade92"
-  integrity sha512-8jnO7Rac+qdhiRGhtFy0znmAjaT9OI88Z5rrQVAjfJArTgDQ7YmqAFlR0603IMC0PGItMdQcZth/1XjCKfjQqw==
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.4.1.tgz#c88a010d3eb8b73c45bc535d322cb168f79c57ef"
+  integrity sha512-969+4ZK2mTbBnNkonVIlj6b/jUdvo69qxDquUEl/6mBZJ5iOh43wOtlBm7FpzSQ3vAfHhFGv226QHEsacmKypw==
   dependencies:
     "@sentry/types" "5.4.0"
     "@sentry/utils" "5.4.0"
@@ -7264,10 +7264,10 @@ sass@^1.17.2:
   dependencies:
     chokidar "^2.0.0"
 
-satisfactory-json@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.4.tgz#90002bc089bd62d88ad0eba1d211ad2605db4c5b"
-  integrity sha512-P6saAuObFJuG3VOLiu85nl/DtsBEJaqCaiQ6wFWFNRSQitd52scvO4zPN1S0T1anH0cC67U03BcUSv+xkTasCQ==
+satisfactory-json@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.6.tgz#7aeae0ed444e41500a0f53769e045d6538d1f4bb"
+  integrity sha512-V3/cg/dtqItC2LMj5Oh9eEnAbDme9Ob4IT4QKk7vXGGklzzOzww7dxhCIBj6bTPQQhz54O9rJCV8/ZSjmFWFrg==
 
 sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"

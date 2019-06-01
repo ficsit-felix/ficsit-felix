@@ -15,7 +15,7 @@
     "@sentry/integrations": "^5.3.1",
     "@types/uuid": "^3.4.4",
     "gsap": "^2.1.2",
-    "satisfactory-json": "^0.0.4",
+    "satisfactory-json": "^0.0.6",
     "three": "0.104.0",
     "vue": "^2.6.6",
     "vue-material": "^1.0.0-beta-11",

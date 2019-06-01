@@ -22,7 +22,6 @@ export default {
     this.renderer.scene = this.scene;
     this.scene.background = new Color(0x000000);
     this.scene.fog = new Fog(0x000000, 0.8 * this.farPlane, this.farPlane);
-    // console.log('scene', this.scene)
   },
   watch: {
     farPlane(value) {

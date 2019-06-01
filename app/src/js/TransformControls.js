@@ -1795,7 +1795,7 @@ var TransformControlsGizmo = function() {
 TransformControlsGizmo.prototype = Object.assign(
   Object.create(THREE.Object3D.prototype),
   {
-    constructor: THREE.TransformControlsGizmo,
+    constructor: TransformControlsGizmo,
 
     isTransformControlsGizmo: true
   }

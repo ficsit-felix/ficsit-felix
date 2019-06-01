@@ -15,7 +15,6 @@ export default {
       this.nearPlane,
       this.farPlane
     );
-    console.log("near", this.nearPlane);
 
     if (this.cameraPosition !== undefined) {
       camera.position.x = this.cameraPosition.x;

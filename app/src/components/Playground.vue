@@ -22,53 +22,13 @@
       @setScale="setMode('scale')"
     />
 
-    <!--<button v-on:click="focusSelectedObject">Focus</button> -->
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
         <AmbientLight />
         <Camera />
-        <!--<a v-for="(obj,index) in visibleObjects"
-          :key="index">
-          
-        <Cube
-          v-if="obj.state === 0"
-          :object="obj"
-          :geometry="geometry"
-          :material="unselected"
-        />
-        <Cube
-          v-else
-          :object="obj"
-          :geometry="geometry"
-          :material="selected"
-        />
-        </a>-->
       </Scene>
     </Renderer>
-    <!--<p v-for="(obj,index) in getVisibleObjects" :key="index">
-        {{obj.type}}
-    </p>-->
-    <!--scene
-    <div id="information">test</div>-->
-    <!--   <div
-      id="glContainer"
-      ref="container"
-      @mousedown="mouseDown"
-      @mousemove="mouseMove"
-    ></div>-->
-    <!--	<script src="js/three.js"></script>
 
-		<script src="js/controls/DragControls.js"></script>
-        <script src="js/controls/TrackballControls.js"></script>
-        <script src="js/controls/FlyControls.js"></script>
-        <script src="js/controls/MapControls.js"></script>
-        <script src="js/controls/OrbitControls.js"></script>
-        <script src="js/controls/TransformControls.js"></script>
-
-        <script src="js/libs/stats.min.js"></script>
-        
-        <script src="big.js"></script>
-    -->
     <div class="info">
       {{ filename }}
       <br />
@@ -113,7 +73,6 @@ import { TransformControls } from "@/js/TransformControls";
 import { mapActions, mapGetters, mapState } from "vuex";
 import Scene from "@/components/scene/Scene";
 import Renderer from "@/components/scene/Renderer";
-import Cube from "@/components/scene/Cube";
 import Camera from "@/components/scene/Camera";
 import AmbientLight from "@/components/scene/AmbientLight";
 import { BoxBufferGeometry, LineCurve3, Mesh, error } from "three";
@@ -128,13 +87,18 @@ import { getProperty, findActorByName } from "@/helpers/entityHelper";
 import { version } from "punycode";
 import Compass from "@/components/Compass";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
+import GeometryFactory from "@/graphics/GeometryFactory";
+import {
+  isConveyorBelt,
+  isConveyorLift,
+  isPowerLine
+} from "../helpers/entityHelper";
 
 export default {
   name: "Playground",
   components: {
     Renderer,
     Scene,
-    Cube,
     Camera,
     AmbientLight,
     Toolbar,
@@ -256,16 +220,20 @@ export default {
     },
 
     showModels(value) {
+      this.geometryFactory.showModels = value;
       for (let i = 0; i < this.objects.length; i++) {
         const object = this.objects[i];
         const obj = window.data.objects[object.userData.id];
 
         // TODO should we dispose of the old models? or keep them in case the user changes the setting again
-        this.getGeometry(obj).then(geometry => (object.geometry = geometry));
+        this.geometryFactory
+          .getGeometry(obj)
+          .then(geometry => (object.geometry = geometry));
         //scene.add(object);
       }
     },
     conveyorBeltResolution(value) {
+      this.geometryFactory.conveyorBeltResolution = value;
       if (!this.showModels) {
         // Conveyor belts are not displayed
         return;
@@ -276,8 +244,10 @@ export default {
 
         object.geometry.dispose();
         // TODO here we should certainly dispose of the old conveyor belts
-        if (this.isConveyorBelt(obj)) {
-          this.getGeometry(obj).then(geometry => (object.geometry = geometry));
+        if (isConveyorBelt(obj)) {
+          this.geometryFactory
+            .createGeometry(obj)
+            .then(geometry => (object.geometry = geometry));
         }
         //scene.add(object);
       }
@@ -302,6 +272,10 @@ export default {
   },
 
   mounted() {
+    this.geometryFactory = new GeometryFactory();
+    this.geometryFactory.showModels = this.showModels;
+    this.geometryFactory.conveyorBeltResolution = this.conveyorBeltResolution;
+
     var textureLoader = new THREE.TextureLoader();
     this.matcap = textureLoader.load("textures/matcap-white.png", function(
       matcap
@@ -669,12 +643,12 @@ export default {
             colorMap[obj.className] = Math.random() * 0xffffff;
           }
 
-          if (this.isConveyorLift(obj)) {
+          if (isConveyorLift(obj)) {
             this.addConveyorLift(obj, i);
             continue;
           }
 
-          this.getGeometry(obj).then(geometry => {
+          this.geometryFactory.createGeometry(obj).then(geometry => {
             var object = new THREE.Mesh(
               geometry,
               this.getMaterial(obj)
@@ -779,220 +753,6 @@ export default {
         });
     },
 
-    createConveyorBeltGeometry(obj) {
-      const translation = obj.transform.translation;
-      const splineData = obj.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
-
-      const splinePoints = splineData.value.values.length;
-
-      const extrusionSegments = splinePoints;
-      const radius = 100;
-      const radiusSegments = 3;
-      const closed = false;
-
-      const extrudePath = new ConveyorCurvePath(); //new THREE.CatmullRomCurve3(points);
-
-      var lastArrive = null;
-      var lastLoc = null;
-      var lastLeave = null;
-
-      for (let i = 0; i < splinePoints; i++) {
-        const splinePoint = splineData.value.values[i];
-        const location = splinePoint.properties[0]; // TODO make sure this is Location
-        const arriveTangent = splinePoint.properties[1]; // TODO make sure this is arriveTangent
-        const leaveTangent = splinePoint.properties[2]; // TODO make sure this is leaveTangent
-
-        if (lastLoc != null) {
-          // TODO find out how exactly to use arriveTangent and leaveTangent
-          // I'm still not 100% sure, how the tangents in Unreal are calculated. The division by three is still a guess and based on the first answer here: https://answers.unrealengine.com/questions/330317/which-algorithm-is-used-for-spline-components-in-u.html#
-          extrudePath.add(
-            new THREE.CubicBezierCurve3(
-              new THREE.Vector3(
-                lastLoc.value.y,
-                lastLoc.value.x,
-                lastLoc.value.z
-              ),
-              new THREE.Vector3(
-                lastLoc.value.y + lastLeave.value.y / 3,
-                lastLoc.value.x + lastLeave.value.x / 3,
-                lastLoc.value.z + lastLeave.value.z / 3
-              ),
-              new THREE.Vector3(
-                location.value.y - arriveTangent.value.y / 3,
-                location.value.x - arriveTangent.value.x / 3,
-                location.value.z - arriveTangent.value.z / 3
-              ),
-              new THREE.Vector3(
-                location.value.y,
-                location.value.x,
-                location.value.z
-              )
-            )
-          );
-        }
-
-        lastArrive = arriveTangent;
-        lastLoc = location;
-        lastLeave = leaveTangent;
-      }
-      // const extrudePa th2 = new THREE.CatmullRomCurve3(points);
-      var length = 38,
-        width = 180;
-      var shape = new THREE.Shape();
-      shape.moveTo(-length / 2, -width / 2);
-      shape.lineTo(-length / 2, width / 2);
-      shape.lineTo(length / 2, width / 2);
-      shape.lineTo(length / 2, -width / 2);
-      shape.lineTo(-length / 2, -width / 2);
-
-      var extrudeSettings = {
-        // TODO find better values for this?
-        curveSegments: (splinePoints * this.conveyorBeltResolution) / 2,
-        steps: splinePoints * this.conveyorBeltResolution,
-        bevelEnabled: false,
-        extrudePath: extrudePath
-      };
-
-      const geometry = new THREE.ExtrudeBufferGeometry(shape, extrudeSettings);
-
-      return geometry;
-    },
-
-    createPowerLineGeometry(obj) {
-      const sourceConnection = findActorByName(
-        obj.entity.extra.sourceLevelName,
-        obj.entity.extra.sourcePathName
-      );
-      if (sourceConnection === null) {
-        // TODO error
-        console.error(
-          "source connection of power line " +
-            obj.entity.extra.sourcePathName +
-            " not found."
-        );
-      }
-      const targetConnection = findActorByName(
-        obj.entity.extra.targetLevelName,
-        obj.entity.extra.targetPathName
-      );
-      if (targetConnection === null) {
-        // TODO error
-        console.error(
-          "target connection of power line " +
-            obj.entity.extra.targetPathName +
-            " not found."
-        );
-      }
-
-      const source = findActorByName(
-        sourceConnection.levelName,
-        sourceConnection.outerPathName
-      );
-      if (source === null) {
-        // TODO error
-        console.error(
-          "source of power line " +
-            sourceConnection.outerPathName +
-            " not found."
-        );
-      }
-
-      const target = findActorByName(
-        targetConnection.levelName,
-        targetConnection.outerPathName
-      );
-      if (target === null) {
-        // TODO error
-        console.error(
-          "target of power line " +
-            targetConnection.outerPathName +
-            " not found."
-        );
-      }
-      var sourceOffset = { x: 0, y: 0, z: 0 };
-      if (modelConfig[source.className].powerLineOffset !== undefined) {
-        sourceOffset = modelConfig[source.className].powerLineOffset;
-        const transformedSourceOffset = new THREE.Vector3(
-          sourceOffset.y,
-          sourceOffset.x,
-          sourceOffset.z
-        ).applyQuaternion(
-          new THREE.Quaternion(
-            source.transform.rotation[0],
-            source.transform.rotation[1],
-            -source.transform.rotation[2],
-            source.transform.rotation[3]
-          )
-        );
-        sourceOffset = {
-          x: transformedSourceOffset.x,
-          y: transformedSourceOffset.y,
-          z: transformedSourceOffset.z
-        };
-      }
-      var targetOffset = { x: 0, y: 0, z: 0 };
-      if (modelConfig[target.className].powerLineOffset !== undefined) {
-        targetOffset = modelConfig[target.className].powerLineOffset;
-        const transformedTargetOffset = new THREE.Vector3(
-          targetOffset.y,
-          targetOffset.x,
-          targetOffset.z
-        ).applyQuaternion(
-          new THREE.Quaternion(
-            target.transform.rotation[0],
-            target.transform.rotation[1],
-            -target.transform.rotation[2],
-            target.transform.rotation[3]
-          )
-        );
-        targetOffset = {
-          x: transformedTargetOffset.x,
-          y: transformedTargetOffset.y,
-          z: transformedTargetOffset.z
-        };
-      }
-
-      const extrudePath = new LineCurve3(
-        new THREE.Vector3(
-          source.transform.translation[1] -
-            obj.transform.translation[1] +
-            sourceOffset.x,
-          source.transform.translation[0] -
-            obj.transform.translation[0] +
-            sourceOffset.y,
-          source.transform.translation[2] -
-            obj.transform.translation[2] +
-            sourceOffset.z
-        ),
-        new THREE.Vector3(
-          target.transform.translation[1] -
-            obj.transform.translation[1] +
-            targetOffset.x,
-          target.transform.translation[0] -
-            obj.transform.translation[0] +
-            targetOffset.y,
-          target.transform.translation[2] -
-            obj.transform.translation[2] +
-            targetOffset.z
-        )
-      );
-
-      const extrusionSegments = 1;
-      const radius = 10;
-      const radiusSegments = 3;
-      const closed = false;
-
-      // const extrudePath2 = new THREE.CatmullRomCurve3(points);
-      const geometry = new THREE.TubeBufferGeometry(
-        extrudePath,
-        extrusionSegments,
-        radius,
-        radiusSegments,
-        closed
-      );
-      return geometry;
-    },
-
     applyTranslation(object, translation) {
       // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)
       object.position.x = translation[1];
@@ -1017,7 +777,7 @@ export default {
     updateObjectVisuals(object, obj) {
       // console.log(obj);
       this.applyTranslation(object, obj.transform.translation);
-      if (!this.isConveyorBelt(obj) && !this.isPowerLine(obj)) {
+      if (!isConveyorBelt(obj) && !isPowerLine(obj)) {
         this.applyRotation(object, obj.transform.rotation);
         object.rotateZ(1.5708); // 90 deg in radians
       } else {
@@ -1064,8 +824,8 @@ export default {
       clone.transform.translation[2] = obj.position.z;
 
       if (
-        !this.isConveyorBelt(this.selectedObject) &&
-        !this.isPowerLine(this.selectedObject)
+        !isConveyorBelt(this.selectedObject) &&
+        !isPowerLine(this.selectedObject)
       ) {
         obj.rotateZ(-1.5708); // -90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
@@ -1079,122 +839,6 @@ export default {
       clone.transform.scale3d[2] = obj.scale.z;
 
       this.setSelectedObject(clone);
-    },
-
-    isConveyorBelt(obj) {
-      return (
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C" ||
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C" ||
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C" ||
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk4/Build_ConveyorBeltMk4.Build_ConveyorBeltMk4_C" ||
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk5/Build_ConveyorBeltMk5.Build_ConveyorBeltMk5_C" ||
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk6.Build_ConveyorBeltMk6_C"
-      );
-    },
-
-    isConveyorLift(obj) {
-      return (
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C" ||
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C" ||
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C" ||
-        obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C"
-      );
-    },
-
-    isPowerLine(obj) {
-      return (
-        obj.className ===
-        "/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C"
-      );
-    },
-
-    getGeometry(obj) {
-      var className = obj.className;
-
-      return new Promise((resolve, reject) => {
-        if (!this.showModels) {
-          // return single sized cube
-          if (this.geometries["box"] === undefined) {
-            var size = 400; // 800 is size of foundations
-            var geometry = new THREE.BoxBufferGeometry(size, size, size);
-            this.geometries["box"] = geometry;
-          }
-          resolve(this.geometries["box"]);
-          return;
-        }
-
-        // special cases for geometry
-        if (this.isConveyorBelt(obj)) {
-          resolve(this.createConveyorBeltGeometry(obj));
-          return;
-        }
-        if (this.isPowerLine(obj)) {
-          resolve(this.createPowerLineGeometry(obj));
-          return;
-        }
-
-        if (
-          obj.className ===
-          "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C"
-        ) {
-          // Conveyor Pole
-          const poleMesh = getProperty(obj, "mPoleMesh");
-          if (poleMesh !== undefined) {
-            switch (poleMesh.value.pathName) {
-              case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_01_static.ConveyorPole_01_static":
-                break;
-              case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_02_static.ConveyorPole_02_static":
-                className =
-                  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_2";
-                break;
-              case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_03_static.ConveyorPole_03_static":
-                className =
-                  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_3";
-                break;
-              case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_04_static.ConveyorPole_04_static":
-                className =
-                  "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_4";
-                break;
-            }
-          }
-        }
-
-        if (this.geometries[className] === undefined) {
-          if (
-            modelConfig[className] !== undefined &&
-            modelConfig[className].model !== ""
-          ) {
-            modelHelper
-              .loadModel("/models/" + modelConfig[className].model)
-              .then(geometry => {
-                this.geometries[className] = geometry;
-                resolve(this.geometries[className]);
-              });
-          } else {
-            if (modelConfig[className] === undefined) {
-              console.error("missing model definition: " + className);
-              Sentry.captureMessage("missing model definition: " + className);
-            }
-
-            var size = 200; // 800 is size of foundations
-            var geometry = new THREE.BoxBufferGeometry(size, size, size);
-            this.geometries[className] = geometry;
-            resolve(this.geometries[className]);
-          }
-        } else {
-          resolve(this.geometries[className]);
-        }
-      });
     },
 
     // transform control
