@@ -32,8 +32,13 @@ import {
 export default class GeometryFactory {
   geometries: { [id: string]: BufferGeometry } = {};
   // properties
-  showModels = false;
-  conveyorBeltResolution = 4;
+  showModels: boolean;
+  conveyorBeltResolution: number;
+
+  constructor(showModels: boolean, conveyorBeltResolution: number) {
+    this.showModels = showModels;
+    this.conveyorBeltResolution = conveyorBeltResolution;
+  }
 
   createGeometry(actor: Actor): Promise<BufferGeometry> {
     var className = actor.className;

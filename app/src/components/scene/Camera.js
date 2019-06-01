@@ -21,6 +21,7 @@ export default {
       camera.position.z = this.cameraPosition.z;
       camera.position.y = this.cameraPosition.y;
     } else {
+      // looking north
       camera.position.x = 70000;
       camera.position.y = 0;
       camera.position.z = 60000;
@@ -29,12 +30,10 @@ export default {
     camera.up.z = 1;
     this.obj = camera;
 
-    
     //new OrbitControls(this.camera)
     return {
       camera: this.obj
     };
-    
   },
 
   computed: {
@@ -63,7 +62,6 @@ export default {
   mounted() {
     this.renderer.camera = this;
 
-
     this.onChange();
   },
 
@@ -72,7 +70,7 @@ export default {
 
     setupControl(domElement) {
       const controls = new OrbitControls(this.obj, domElement);
-      controls.addEventListener( 'change', this.onChange ); // call this only in static scenes (i.e., if there is no animation loop)
+      controls.addEventListener("change", this.onChange); // call this only in static scenes (i.e., if there is no animation loop)
       controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
       controls.dampingFactor = 0.25;
       controls.screenSpacePanning = false;
@@ -87,7 +85,6 @@ export default {
 
       // controls.addEventListener('end', this.updateCameraState);
       this.controls = controls;
-      
     },
     updateCameraState() {
       this.setCameraData({
@@ -108,6 +105,6 @@ export default {
   beforeDestroy() {
     if (this.controls) {
       this.controls.dispose();
-    } 
+    }
   }
 };

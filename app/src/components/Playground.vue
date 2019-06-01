@@ -25,9 +25,7 @@
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
         <AmbientLight />
-        <Camera
-        @cameraChange="updateCompass"
-         />
+        <Camera @cameraChange="updateCompass" />
       </Scene>
     </Renderer>
 
@@ -90,6 +88,7 @@ import { version } from "punycode";
 import Compass from "@/components/Compass";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
 import GeometryFactory from "@/graphics/GeometryFactory";
+import MaterialFactory from "@/graphics/MaterialFactory";
 import {
   isConveyorBelt,
   isConveyorLift,
@@ -147,7 +146,9 @@ export default {
           //  && this.lastSelectedIndex < this.objects.length
           this.setMaterial(
             this.lastSelectedIndex,
-            this.getMaterial(window.data.objects[this.lastSelectedIndex])
+            this.materialFactory.createMaterial(
+              window.data.objects[this.lastSelectedIndex]
+            )
           );
         }
         this.lastSelectedIndex = val;
@@ -217,6 +218,7 @@ export default {
     },
 
     showCustomPaints(value) {
+      this.materialFactory.showCustomPaints = value;
       // update materials
       this.updateAllMaterials();
     },
@@ -267,16 +269,17 @@ export default {
     classColors: {
       deep: true,
       handler(value) {
-        this.setupDefaultMaterials();
+        this.materialFactory.setupDefaultMaterials();
         this.updateAllMaterials();
       }
     }
   },
 
   mounted() {
-    this.geometryFactory = new GeometryFactory();
-    this.geometryFactory.showModels = this.showModels;
-    this.geometryFactory.conveyorBeltResolution = this.conveyorBeltResolution;
+    this.geometryFactory = new GeometryFactory(
+      this.showModels,
+      this.conveyorBeltResolution
+    );
 
     var textureLoader = new THREE.TextureLoader();
     this.matcap = textureLoader.load("textures/matcap-white.png", function(
@@ -284,6 +287,11 @@ export default {
     ) {
       matcap.encoding = THREE.sRGBEncoding;
     });
+
+    this.materialFactory = new MaterialFactory(
+      this.matcap,
+      this.showCustomPaints
+    );
 
     this.objects = [];
     this.invisibleObjects = [];
@@ -293,10 +301,6 @@ export default {
     });
 
     this.loader = new GLTFLoader();
-    this.materials = {};
-    this.coloredMaterials = [];
-    this.setupColoredMaterials();
-    this.setupDefaultMaterials();
 
     this.geometries = {};
 
@@ -349,53 +353,9 @@ export default {
       this.loadMap();
     }
 
-    // container.appendChild(renderer.domElement); // TODO //
-    // /*    var dragControls = new THREE.DragControls(
-    //     objects,
-    //     camera,
-    //     renderer.domElement
-    //   );
-    //   dragControls.addEventListener("dragstart", function() {
-    //     controls.enabled = false;
-    //   });
-    //   dragControls.addEventListener("dragend", function() {
-    //     controls.enabled = true;
-    //   });
-
-    //   dragControls.addEventListener("hoveron", function(event) {
-    //     var object = data.objects[event.object.userData.id];
-    //     var text = JSON.stringify(object, null, 2);
-    //     document.getElementById("information").innerHTML = text;
-    //   });*/ /*stats = new Stats();
-    //   container.appendChild(stats.dom);*/ window.addEventListener(
-    //   "resize",
-    //   onWindowResize,
-    //   false
-    // );
-
-    // animate();
-
-    // function onWindowResize() {
-    //   /*camera.aspect = window.innerWidth / window.innerHeight;
-    //   camera.updateProjectionMatrix();
-    //   renderer.setSize(window.innerWidth, window.innerHeight);*/
-    // }
-    // //
-    // function animate() {
-    //   requestAnimationFrame(animate);
-    //   render();
-    //   // stats.update(); // TODO
-    // }
-    // function render() {
-    //   controls.update();
-    //   // console.log('renderCalls: ' + renderer.info.render.calls)
-    //   renderer.render(scene, camera); asdf
-    // }
-
     // listen to window resize
     window.addEventListener("resize", this.handleResize);
     window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
-
   },
   methods: {
     ...mapActions(["loadData", "setSelectedObject"]),
@@ -436,141 +396,6 @@ export default {
       }
     },
 
-    // setup to use the primary colors of painted buildings
-    setupDefaultMaterials() {
-      for (var prop in modelConfig) {
-        var color = modelConfig[prop].color;
-        if (this.classColors[prop] !== undefined) {
-          color = new THREE.Color(this.classColors[prop]);
-        }
-
-        this.materials[prop] = new THREE.MeshMatcapMaterial({
-          color: color,
-          matcap: this.matcap
-          /*emissive: modelConfig[prop].color,
-
-        roughness: 0.6,
-        metalness: .8,
-        flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
-        });
-      }
-    },
-    setupColoredMaterials() {
-      const defaultColors = [
-        new THREE.Color("#fcb26b"),
-        new THREE.Color("#73a9d2"),
-        new THREE.Color("#dd7550"),
-        new THREE.Color("#666375"),
-
-        new THREE.Color("#e1e1e9"),
-        new THREE.Color("#bfe798"),
-        new THREE.Color("#f890e2"),
-        new THREE.Color("#bbf6ec"),
-
-        new THREE.Color("#b59c5e"),
-        new THREE.Color("#f9ecd9"),
-        new THREE.Color("#c490f9"),
-        new THREE.Color("#84dbb8"),
-
-        new THREE.Color("#f5f09e"),
-        new THREE.Color("#97978f"),
-        new THREE.Color("#b048aa"),
-        new THREE.Color("#838283")
-      ];
-
-      // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
-      const buildableSubsystem = findActorByName(
-        "Persistent_Level",
-        "Persistent_Level:PersistentLevel.BuildableSubsystem"
-      );
-      if (buildableSubsystem !== undefined) {
-        for (let i = 0; i < buildableSubsystem.entity.properties.length; i++) {
-          const element = buildableSubsystem.entity.properties[i];
-          if (element.name === "mColorSlotsPrimary") {
-            // this primary color was changed by the user
-            defaultColors[element.index] = new THREE.Color(
-              element.value.r / 255,
-              element.value.g / 255,
-              element.value.b / 255
-            );
-          }
-        }
-      }
-
-      for (let i = 0; i < defaultColors.length; i++) {
-        const color = defaultColors[i];
-
-        this.coloredMaterials[i] = new THREE.MeshMatcapMaterial({
-          color: color,
-          matcap: this.matcap
-          //emissive: color,
-
-          /*roughness: 0.6,
-          metalness: 0.8,
-          flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
-        });
-      }
-    },
-
-    getMaterial(obj) {
-      // mPrimaryColor attribute is no longer used, replaced with mColorSlot
-      // if object contains property with name "mPrimaryColor"
-      /*for (let i = 0; i < obj.entity.properties.length; i++) {
-        const element = obj.entity.properties[i];
-        if (element.name === "mPrimaryColor") {
-          // generate material with this color
-
-          const color = new THREE.Color(element.value.r, element.value.g, element.value.b);
-          
-          if (this.coloredMaterials[color.getHex()] === undefined) {
-            console.log("new material: " + color.getHexString());
-            this.coloredMaterials[color.getHex()] = new THREE.MeshStandardMaterial({
-              color: color,
-              emissive: color,
-
-              roughness: 0.6,
-              metalness: 0.8,
-              flatShading: true, // to not make the conveyor belt cylinders look to much like pipes
-            });
-          }
-          return this.coloredMaterials[color.getHex()];
-        }
-      }*/
-
-      if (this.showCustomPaints) {
-        const isPaintable =
-          modelConfig[obj.className] !== undefined
-            ? modelConfig[obj.className].paintable
-            : false;
-
-        for (let i = 0; i < obj.entity.properties.length; i++) {
-          const element = obj.entity.properties[i];
-          if (element.name === "mColorSlot") {
-            if (!isPaintable) {
-              console.warn("paintable should be true for: " + obj.className);
-              /*Sentry.captureMessage(
-                "paintable should be true for: " + obj.className
-              );*/
-            }
-            return this.coloredMaterials[element.value.unk2];
-          }
-        }
-
-        // mColorSlot is not set if it is colored with material 0
-        if (isPaintable) {
-          return this.coloredMaterials[0];
-        }
-      }
-
-      if (obj.entity.properties)
-        if (this.materials[obj.className] === undefined) {
-          // fetch material based on class name
-          // console.log(className);
-          return this.materials["undefined"];
-        } else {
-          return this.materials[obj.className];
-        }
-    },
     setMaterial(id, material) {
       for (var i = 0; i < this.objects.length; i++) {
         const obj = this.objects[i];
@@ -596,12 +421,13 @@ export default {
       }
       // console.error("No object found with id " + id);
     },
+
     updateAllMaterials() {
       // TODO should keep the selected material?
       for (let i = 0; i < this.objects.length; i++) {
         const object = this.objects[i];
         const obj = window.data.objects[object.userData.id];
-        const material = this.getMaterial(obj);
+        const material = this.materialFactory.createMaterial(obj);
         object.material = material;
       }
     },
@@ -651,7 +477,7 @@ export default {
           this.geometryFactory.createGeometry(obj).then(geometry => {
             var object = new THREE.Mesh(
               geometry,
-              this.getMaterial(obj)
+              this.materialFactory.createMaterial(obj)
               //new THREE.MeshLambertMaterial({ color: colorMap[obj.className] })
             );
 
@@ -673,7 +499,7 @@ export default {
           modelHelper
             .loadModel("/models/ConveyorLift_Top.glb")
             .then(topGeometry => {
-              const material = this.getMaterial(obj);
+              const material = this.materialFactory.createMaterial(obj);
               // const isReversedProp = getProperty(obj, "mIsReversed");
               // const isReversed = isReversedProp !== undefined && isReversedProp.value;
 
@@ -737,7 +563,7 @@ export default {
               );
               var middleObject = new THREE.Mesh(
                 middleGeometry,
-                this.getMaterial(obj)
+                this.materialFactory.createMaterial(obj)
               );
               middleObject.position.x = -60;
               middleObject.position.z = topPartTranslationZ / 2;

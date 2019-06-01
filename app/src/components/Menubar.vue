@@ -7,13 +7,27 @@
     >
       <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
     </div>
-    <span @click="showOpenDialog = true" v-shortkey.once="['ctrl', 'o']" @shortkey="showOpenDialog = true">
-      <md-icon>folder_open</md-icon>Open<md-tooltip md-delay="500">Ctrl+O</md-tooltip>
+    <span
+      @click="showOpenDialog = true"
+      v-shortkey.once="['ctrl', 'o']"
+      @shortkey="showOpenDialog = true"
+    >
+      <md-icon>folder_open</md-icon>Open<md-tooltip md-delay="500"
+        >Ctrl+O</md-tooltip
+      >
     </span>
-    <span @click="showSaveDialog = true" v-shortkey.once="['ctrl', 's']" @shortkey="showSaveDialog = true">
+    <span
+      @click="showSaveDialog = true"
+      v-shortkey.once="['ctrl', 's']"
+      @shortkey="showSaveDialog = true"
+    >
       <md-icon>save</md-icon>Save<md-tooltip md-delay="500">Ctrl+S</md-tooltip>
     </span>
-    <span @click="showHelpDialog = true" v-shortkey.once="['f1']" @shortkey="showHelpDialog = true">
+    <span
+      @click="showHelpDialog = true"
+      v-shortkey.once="['f1']"
+      @shortkey="showHelpDialog = true"
+    >
       <md-icon>help</md-icon>Help<md-tooltip md-delay="500">F1</md-tooltip>
     </span>
     <span @click="showSettingsDialog = true">
@@ -21,20 +35,27 @@
     </span>
     <div class="spacer"></div>
     <md-menu md-direction="bottom-end">
-      <md-button md-menu-trigger>
-      <md-icon>menu</md-icon> More
-      </md-button>
+      <md-button md-menu-trigger> <md-icon>menu</md-icon> More </md-button>
 
       <md-menu-content class="menubar-content">
-        <md-menu-item @click="showOpenJsonDialog = true"><md-icon>file_upload</md-icon>Import JSON</md-menu-item>
-        <md-menu-item @click="showSaveJsonDialog = true"><md-icon>file_download</md-icon>Export JSON</md-menu-item>
-        <md-menu-item @click="openGithub()"><md-icon>code</md-icon>GitHub</md-menu-item>
-        <md-menu-item @click="showLicensesDialog = true"><md-icon>view_headline</md-icon>Open Source Licenses</md-menu-item>
-        <md-menu-item @click="showAboutDialog = true"><md-icon>info_outline</md-icon>About</md-icon></md-menu-item>
+        <md-menu-item @click="showOpenJsonDialog = true"
+          ><md-icon>file_upload</md-icon>Import JSON</md-menu-item
+        >
+        <md-menu-item @click="showSaveJsonDialog = true"
+          ><md-icon>file_download</md-icon>Export JSON</md-menu-item
+        >
+        <md-menu-item @click="openGithub()"
+          ><md-icon>code</md-icon>GitHub</md-menu-item
+        >
+        <md-menu-item @click="showLicensesDialog = true"
+          ><md-icon>view_headline</md-icon>Open Source Licenses</md-menu-item
+        >
+        <md-menu-item @click="showAboutDialog = true"
+          ><md-icon>info_outline</md-icon>About</md-menu-item
+        >
       </md-menu-content>
     </md-menu>
 
-    
     <!--<div class="spacer"></div>
     <span @click="showOpenJsonDialog = true">
       <md-icon>file_upload</md-icon>Import JSON
@@ -84,25 +105,25 @@
       @md-confirm="saveJson"
     />
 
-  <md-dialog :md-active.sync="showHelpDialog">
+    <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>Help</md-dialog-title>
       <md-dialog-content>
-      <b>Controls</b>
-      <p>
-        Middle mouse pressed: move
-        <br>Right mouse: rotate
-        <br>Scroll wheel: zoom
-        <br>Left mouse: select objects
-      </p>
-      <p>
-        If you change the JSON you need to save it before clicking
-        <br>anywhere in the scene, else it will be overwritten!
-      </p>
-      <br>
-
+        <b>Controls</b>
+        <p>
+          Middle mouse pressed: move
+          <br />Right mouse: rotate <br />Scroll wheel: zoom <br />Left mouse:
+          select objects
+        </p>
+        <p>
+          If you change the JSON you need to save it before clicking
+          <br />anywhere in the scene, else it will be overwritten!
+        </p>
+        <br />
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showHelpDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
 
@@ -112,7 +133,9 @@
         <Settings></Settings>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showSettingsDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
 
@@ -122,7 +145,9 @@
         <LicensesDialog></LicensesDialog>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showLicensesDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showLicensesDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
 
@@ -130,19 +155,24 @@
       <md-dialog-title>About</md-dialog-title>
       <md-dialog-content>
         <p>FeliX is a save file visualizer for the game Satisfactory.</p>
-        <p>You can view the source code and contribute to the development on <a href="https://github.com/bitowl/ficsit-felix">GitHub</a>.</p>
-              <p>
-        The low-poly models used by FeliX were created by the respective
-        <a
-          href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
-        >authors</a>.
-      </p>
+        <p>
+          You can view the source code and contribute to the development on
+          <a href="https://github.com/bitowl/ficsit-felix">GitHub</a>.
+        </p>
+        <p>
+          The low-poly models used by FeliX were created by the respective
+          <a
+            href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
+            >authors</a
+          >.
+        </p>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showAboutDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showAboutDialog = false"
+          >Close</md-button
+        >
       </md-dialog-actions>
     </md-dialog>
-
   </div>
 </template>
 
@@ -181,10 +211,8 @@
       color: $primaryOrange;
     }
   }
-
-
 }
- 
+
 p,
 b {
   padding: 0px 16px;
@@ -205,17 +233,14 @@ b {
   .md-list-item-content {
     justify-content: left !important;
   }
-  .md-list-item-content>.md-icon:last-child {
+  .md-list-item-content > .md-icon:last-child {
     margin-left: 0px;
   }
-  .md-list-item-content>.md-icon:first-child {
+  .md-list-item-content > .md-icon:first-child {
     margin-right: 12px;
   }
-
-
 }
 </style>
-
 
 <script>
 import Logo from "@/components/Logo";
