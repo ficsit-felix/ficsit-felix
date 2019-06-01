@@ -25,7 +25,9 @@
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
         <AmbientLight />
-        <Camera />
+        <Camera
+        @cameraChange="updateCompass"
+         />
       </Scene>
     </Renderer>
 
@@ -394,7 +396,6 @@ export default {
     window.addEventListener("resize", this.handleResize);
     window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
 
-    window.setTimeout(this.updateCompass, 1000); // update later when the camera is set
   },
   methods: {
     ...mapActions(["loadData", "setSelectedObject"]),
@@ -415,7 +416,6 @@ export default {
         // don't go invisible at very small angle to map
         this.rotateX = -1.3;
       }
-      requestAnimationFrame(this.updateCompass);
     },
 
     loadMap() {

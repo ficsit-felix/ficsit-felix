@@ -29,10 +29,12 @@ export default {
     camera.up.z = 1;
     this.obj = camera;
 
+    
     //new OrbitControls(this.camera)
     return {
       camera: this.obj
     };
+    
   },
 
   computed: {
@@ -61,8 +63,8 @@ export default {
   mounted() {
     this.renderer.camera = this;
 
-    // this.obj.lookAt(this.scene.position)
-    // console.log('camera', this.obj)
+
+    this.onChange();
   },
 
   methods: {
@@ -70,7 +72,7 @@ export default {
 
     setupControl(domElement) {
       const controls = new OrbitControls(this.obj, domElement);
-      //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
+      controls.addEventListener( 'change', this.onChange ); // call this only in static scenes (i.e., if there is no animation loop)
       controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
       controls.dampingFactor = 0.25;
       controls.screenSpacePanning = false;
@@ -85,6 +87,7 @@ export default {
 
       // controls.addEventListener('end', this.updateCameraState);
       this.controls = controls;
+      
     },
     updateCameraState() {
       this.setCameraData({
@@ -96,12 +99,15 @@ export default {
       if (this.controls) {
         this.controls.update();
       }
+    },
+    onChange() {
+      this.$emit("cameraChange");
     }
   },
 
   beforeDestroy() {
     if (this.controls) {
       this.controls.dispose();
-    }
+    } 
   }
 };
