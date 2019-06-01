@@ -167,13 +167,18 @@ export default new Vuex.Store<RootState>({
       if (!state.dataLoaded) {
         return [];
       }
-      return window.data.actors.map((obj: any, index: any) => { // TODO do we want the name of all components as well?
+      
+      let transformation = (obj: any, index: any) => {
         return {
           // id: index,
           pathName: obj.pathName,
           text: obj.pathName.substring(obj.pathName.indexOf(".") + 1) // everything after the first .
         };
-      });
+      };
+
+      return window.data.actors.map(transformation).concat(
+        window.data.components.map(transformation)
+      );
     },
     getVisibleObjects(state) {
       return state.visibleObjects;
@@ -268,7 +273,6 @@ export default new Vuex.Store<RootState>({
       state.uuid = uuid;
     },
     SET_VISIBILITY(state, { name, visible }) {
-      // console.log("mutation", name, visible);
       for (var i = 0; i < state.classes.length; i++) {
         if (state.classes[i].name === name) {
           state.classes[i].visible = visible;
