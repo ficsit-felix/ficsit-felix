@@ -90,6 +90,7 @@ import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
 import GeometryFactory from "@/graphics/GeometryFactory";
 import MaterialFactory from "@/graphics/MaterialFactory";
 import MeshFactory from "@/graphics/MeshFactory";
+import MeshManager from "@/graphics/MeshManager";
 import { updateActorMeshTransform } from "@/helpers/meshHelper";
 
 import {
@@ -97,7 +98,7 @@ import {
   isConveyorLift,
   isPowerLine
 } from "../helpers/entityHelper";
-import { EventBus } from '../event-bus';
+import { EventBus } from "../event-bus";
 
 export default {
   name: "Playground",
@@ -146,7 +147,7 @@ export default {
     },
     selectedActors(val) {
       if (val.length === 1) {
-        const mesh = this.findMeshByName(val[0].pathName);
+        const mesh = this.meshManager.findMeshByName(val[0].pathName);
         updateActorMeshTransform(mesh, val[0]);
       }
 
@@ -156,7 +157,7 @@ export default {
         for (const actor of this.lastSelectedActors) {
           if (!val.includes(actor)) {
             // deselect this actor
-            const mesh = this.findMeshByName(actor.pathName);
+            const mesh = this.meshManager.findMeshByName(actor.pathName);
             if (mesh !== null) {
               mesh.material = this.materialFactory.createMaterial(actor);
             }
@@ -169,59 +170,36 @@ export default {
           var visibleSelectedMeshes = [];
           for (const actor of val) {
             // select this actor
-            const mesh = this.findMeshByName(actor.pathName);
-            mesh.material = this.selectedMaterial;
-            if (this.objects.includes(mesh)) {
-              visibleSelectedMeshes.push(mesh);
+            const mesh = this.meshManager.findMeshAndVisibilityByName(
+              actor.pathName
+            );
+            mesh.mesh.material = this.selectedMaterial;
+            if (mesh.visible) {
+              visibleSelectedMeshes.push(mesh.mesh);
             }
           }
 
-          if (visibleSelectedMeshes.length === 1) { // TODO multiselection
+          if (visibleSelectedMeshes.length === 1) {
+            // TODO multiselection
             this.transformControl.attach(visibleSelectedMeshes[0]);
           }
         } else {
           this.transformControl.detach();
         }
-
       }
     },
 
     classes: {
       deep: true,
       handler(val) {
-        for (var i = 0; i < val.length; i++) {
-          const item = val[i];
-          if (item.visible) {
-            // make invisible objects visible again
-            for (var j = this.invisibleObjects.length - 1; j >= 0; j--) {
-              const obj = this.invisibleObjects[j];
-
-              if (
-                window.data.actors[obj.userData.id].className === item.name
-              ) {
-                this.scene.add(obj);
-                this.invisibleObjects.splice(j, 1);
-                this.objects.push(obj);
-              }
-            }
-          } else {
-            for (var k = this.objects.length - 1; k >= 0; k--) {
-              const obj = this.objects[k];
-
-              if (
-                window.data.actors[obj.userData.id].className === item.name
-              ) {
-                this.scene.remove(obj);
-                this.objects.splice(k, 1);
-                this.invisibleObjects.push(obj);
-              }
-            }
-          }
-        }
+        this.meshManager.updateClassVisibility(val);
 
         // fix transform helper
-        if (this.selectedActors.length === 1) { // TODO multiselection
-          const mesh = this.findVisibleMeshByName(this.selectedActors[0].pathName);
+        if (this.selectedActors.length === 1) {
+          // TODO multiselection
+          const mesh = this.meshManager.findVisibleMeshByName(
+            this.selectedActors[0].pathName
+          );
           if (mesh === null) {
             this.transformControl.detach();
           } else {
@@ -239,16 +217,7 @@ export default {
 
     showModels(value) {
       this.geometryFactory.showModels = value;
-      for (let i = 0; i < this.objects.length; i++) {
-        const object = this.objects[i];
-        const obj = window.data.actors[object.userData.id];
-
-        // TODO should we dispose of the old models? or keep them in case the user changes the setting again
-        this.geometryFactory
-          .getGeometry(obj)
-          .then(geometry => (object.geometry = geometry));
-        //scene.add(object);
-      }
+      this.meshManager.rebuildAllGeometry(this.geometryFactory);
     },
     conveyorBeltResolution(value) {
       this.geometryFactory.conveyorBeltResolution = value;
@@ -256,20 +225,9 @@ export default {
         // Conveyor belts are not displayed
         return;
       }
-      for (let i = 0; i < this.objects.length; i++) {
-        const object = this.objects[i];
-        const obj = window.data.actors[object.userData.id];
-
-        object.geometry.dispose();
-        // TODO here we should certainly dispose of the old conveyor belts
-        if (isConveyorBelt(obj)) {
-          this.geometryFactory
-            .createGeometry(obj)
-            .then(geometry => (object.geometry = geometry));
-        }
-        //scene.add(object);
-      }
+      this.meshManager.rebuildConveyorBelts(this.geometryFactory);
     },
+
     showMap(value) {
       if (value) {
         this.loadMap();
@@ -310,15 +268,14 @@ export default {
       this.materialFactory
     );
 
-    this.objects = [];
-    this.invisibleObjects = [];
+    this.scene = this.$refs.scene.scene;
+
+    this.meshManager = new MeshManager(this.scene);
+
     this.selectedMaterial = new THREE.MeshMatcapMaterial({
       color: 0xffffff,
       matcap: this.matcap
     });
-
-
-    this.scene = this.$refs.scene.scene;
 
     this.loader = new GLTFLoader();
 
@@ -359,29 +316,7 @@ export default {
 
     EventBus.$on("delete", payload => {
       // remove all actors from scene
-      // TODO delete geometry if not used by anything else?
-
-      
-      for (const actor of payload.actors) {
-        for (var i = this.objects.length - 1; i >= 0; i--) {
-            if (this.objects[i].userData.pathName === actor.pathName) {
-              this.scene.remove(this.objects[i]);
-              this.objects.splice(i, 1);
-              return;
-            }
-          }
-
-          for (var i = this.invisibleObjects.length - 1; i >= 0; i--) {
-            if (this.invisibleObjects[i].userData.pathName === actor.pathName) {
-
-              this.scene.remove(this.invisibleObjects[i]);
-              this.invisibleObjects.splice(i, 1);
-              return;
-            }
-          }
-    
-                
-      }
+      this.meshManager.deleteSelectedMeshes(payload);
     });
   },
   methods: {
@@ -428,68 +363,14 @@ export default {
         if (actor.type == 1) {
           this.meshFactory.createMesh(actor, i).then(mesh => {
             updateActorMeshTransform(mesh, actor);
-            this.scene.add(mesh);
-            this.objects.push(mesh);
+            this.meshManager.add(mesh);
           });
         }
       }
     },
 
-    setMaterial(id, material) {
-      for (const obj of this.objects) {
-        if (obj.userData.id === id) {
-          obj.material = material;
-          for (let j = 0; j < obj.children.length; j++) {
-            const element = obj.children[j];
-            element.material = material;
-          }
-          return;
-        }
-      }
-
-      for (const obj of this.invisibleObjects) {
-        if (obj.userData.id === id) {
-          obj.material = material;
-          for (let j = 0; j < obj.children.length; j++) {
-            const element = obj.children[j];
-            element.material = material;
-          }
-          return;
-        }
-      }
-      // console.error("No object found with id " + id);
-    },
-
     updateAllMaterials() {
-      // TODO should keep the selected material?
-      for (let i = 0; i < this.objects.length; i++) {
-        const object = this.objects[i];
-        const obj = window.data.actors[object.userData.id];
-        const material = this.materialFactory.createMaterial(obj);
-        object.material = material;
-      }
-    },
-    findMeshByName(pathName) {
-      for (const obj of this.objects) {
-        if (obj.userData.pathName === pathName) {
-          return obj;
-        }
-      }
-      for (const obj of this.invisibleObjects) {
-        if (obj.userData.pathName === pathName) {
-          return obj;
-        }
-      }
-      return null;
-    },
-    findVisibleMeshByName(pathName) {
-      for (var i = 0; i < this.objects.length; i++) {
-        const obj = this.objects[i];
-        if (obj.userData.pathName === pathName) {
-          return obj;
-        }
-      }
-      return null;
+      this.meshManager.updateAllMaterials(this.materialFactory);
     },
 
     focusSelectedObject() {
@@ -517,13 +398,12 @@ export default {
       this.height = height;
     },
     onSelectedActorTransformChanged() {
-
       if (this.selectedActors.length !== 1) {
         return; // TODO multiple actors
       }
 
       const actor = this.selectedActors[0];
-      const mesh = this.findMeshByName(actor.pathName);
+      const mesh = this.meshManager.findMeshByName(actor.pathName);
 
       // TODO need to clone, else change is not detected?
       // find more intelligent way
@@ -533,10 +413,7 @@ export default {
       clone.transform.translation[0] = mesh.position.y;
       clone.transform.translation[2] = mesh.position.z;
 
-      if (
-        !isConveyorBelt(actor) &&
-        !isPowerLine(actor)
-      ) {
+      if (!isConveyorBelt(actor) && !isPowerLine(actor)) {
         mesh.rotateZ(-1.5708); // -90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
       clone.transform.rotation[0] = mesh.quaternion.x;
@@ -577,9 +454,7 @@ export default {
     this.transformControl.detach();
     this.transformControl.dispose();
     window.removeEventListener("resize", this.handleResize);
-    for (var i = 0; i < this.objects.length; i++) {
-      this.scene.remove(this.objects[i]);
-    }
+    this.meshManager.dispose();
   }
 };
 </script>

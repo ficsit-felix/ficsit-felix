@@ -207,9 +207,7 @@ export default class GeometryFactory {
       return;
     }
 
-    const source = findActorByName(
-      sourceConnection.outerPathName
-    );
+    const source = findActorByName(sourceConnection.outerPathName);
     if (source === undefined) {
       // TODO error
       console.error(
@@ -218,9 +216,7 @@ export default class GeometryFactory {
       return;
     }
 
-    const target = findActorByName(
-      targetConnection.outerPathName
-    );
+    const target = findActorByName(targetConnection.outerPathName);
     if (target === undefined) {
       // TODO error
       console.error(

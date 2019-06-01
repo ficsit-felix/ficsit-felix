@@ -102,8 +102,7 @@ export default class MaterialFactory {
     }
   }
 
-  createMaterial(actor: Actor) {
-
+  createMaterial(actor: Actor): Material {
     if (this.showCustomPaints) {
       const isPaintable =
         modelConfig[actor.className] !== undefined
@@ -129,12 +128,11 @@ export default class MaterialFactory {
       }
     }
 
-    if (actor.entity.properties)
-      if (this.materials[actor.className] === undefined) {
-        // fetch material based on class name
-        return this.materials["undefined"];
-      } else {
-        return this.materials[actor.className];
-      }
+    if (this.materials[actor.className] === undefined) {
+      // fetch material based on class name
+      return this.materials["undefined"];
+    } else {
+      return this.materials[actor.className];
+    }
   }
 }

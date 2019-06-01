@@ -1,5 +1,26 @@
 import { Actor, Component, Property } from "satisfactory-json";
 
+var actorByPathName: { [id: string]: number } = {};
+var componentByPathName: { [id: string]: number } = {};
+
+/**
+ * refresh the two dictionaries above that are used to quickly look up actors and components by their path name
+ *
+ * needs to be called whenever the indices of window.data.actors or window.data.components change
+ */
+export function refreshActorComponentDictionary() {
+  actorByPathName = {};
+  componentByPathName = {};
+  if (window.data === undefined) return;
+  for (let i = 0; i < window.data.actors.length; i++) {
+    const actor = window.data.actors[i];
+    actorByPathName[actor.pathName] = i;
+  }
+  for (let i = 0; i < window.data.components.length; i++) {
+    const component = window.data.components[i];
+    componentByPathName[component.pathName] = i;
+  }
+}
 
 export function getProperty(
   actor: Actor,
@@ -34,61 +55,68 @@ export function getPropertyFromComponent(
   return undefined;
 }
 
-
-export function findActorByName(
-  pathName: string
-): Actor | undefined {
+export function findActorByName(pathName: string): Actor | undefined {
   if (window.data !== undefined) {
-    // TODO might be worth optimizing using hashmap or the like
+    const index = actorByPathName[pathName];
+    if (index !== undefined) {
+      return window.data.actors[index];
+    }
+
+    /*// TODO might be worth optimizing using hashmap or the like
     for (let i = 0; i < window.data.actors.length; i++) {
       const element = window.data.actors[i];
       if (element.pathName === pathName) {
         return element;
       }
-    }
+    }*/
   }
   return undefined;
 }
 
 export function indexOfActor(pathName: string): number {
   if (window.data !== undefined) {
+    const index = actorByPathName[pathName];
+    return index;
+    /*
     // TODO might be worth optimizing using hashmap or the like
     for (let i = 0; i < window.data.actors.length; i++) {
       const element = window.data.actors[i];
       if (element.pathName === pathName) {
         return i;
       }
-    }
+    }*/
   }
   return -1;
 }
 
-export function findComponentByName(
-  pathName: string
-): Component | undefined {
+export function findComponentByName(pathName: string): Component | undefined {
   if (window.data !== undefined) {
+    const index = componentByPathName[pathName];
+    if (index !== undefined) {
+      return window.data.components[index];
+    }
     // TODO might be worth optimizing using hashmap or the like
-    for (let i = 0; i < window.data.components.length; i++) {
+    /*for (let i = 0; i < window.data.components.length; i++) {
       const element = window.data.components[i];
       if (element.pathName === pathName) {
         return element;
       }
-    }
+    }*/
   }
   return undefined;
 }
 
-export function indexOfComponent(
-  pathName: string
-): number {
+export function indexOfComponent(pathName: string): number {
   if (window.data !== undefined) {
+    const index = actorByPathName[pathName];
+    return index;
     // TODO might be worth optimizing using hashmap or the like
-    for (let i = 0; i < window.data.components.length; i++) {
+    /*for (let i = 0; i < window.data.components.length; i++) {
       const element = window.data.components[i];
       if (element.pathName === pathName) {
         return i;
       }
-    }
+    }*/
   }
   return -1;
 }
@@ -100,30 +128,30 @@ export function indexOfComponent(
 export function isConveyorBelt(actor: Actor) {
   return (
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C" ||
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk1/Build_ConveyorBeltMk1.Build_ConveyorBeltMk1_C" ||
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C" ||
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk2/Build_ConveyorBeltMk2.Build_ConveyorBeltMk2_C" ||
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C" ||
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk3/Build_ConveyorBeltMk3.Build_ConveyorBeltMk3_C" ||
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk4/Build_ConveyorBeltMk4.Build_ConveyorBeltMk4_C" ||
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk4/Build_ConveyorBeltMk4.Build_ConveyorBeltMk4_C" ||
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk5/Build_ConveyorBeltMk5.Build_ConveyorBeltMk5_C" ||
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk5/Build_ConveyorBeltMk5.Build_ConveyorBeltMk5_C" ||
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk6.Build_ConveyorBeltMk6_C"
+      "/Game/FactoryGame/Buildable/Factory/ConveyorBeltMk6/Build_ConveyorBeltMk6.Build_ConveyorBeltMk6_C"
   );
 }
 
 export function isConveyorLift(actor: Actor) {
   return (
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C" ||
+      "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C" ||
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C" ||
+      "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C" ||
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C" ||
+      "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C" ||
     actor.className ===
-    "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C"
+      "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C"
   );
 }
 

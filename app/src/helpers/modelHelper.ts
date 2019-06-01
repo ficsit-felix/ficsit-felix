@@ -20,10 +20,8 @@ class ModelHelper {
   loadModel(path: string): Promise<THREE.BufferGeometry> {
     return new Promise((resolve, reject) => {
       if (this.loadedModels.has(path)) {
-        // console.log("got model already");
         resolve(this.loadedModels.get(path));
       } else {
-        // console.log("requesting model");
         if (this.requestedModels.has(path)) {
           // put request into
           this.requestedModels.get(path)!.push(resolve);

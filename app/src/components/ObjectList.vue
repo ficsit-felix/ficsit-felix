@@ -15,7 +15,11 @@
       :start="listStart"
     >
       <div
-        v-bind:class="{ selected: selectedPathNames.length === 1 && selectedPathNames[0] === '---save-header---'}"
+        v-bind:class="{
+          selected:
+            selectedPathNames.length === 1 &&
+            selectedPathNames[0] === '---save-header---'
+        }"
         @click="select(['---save-header---'])"
         class="item"
       >
@@ -109,7 +113,6 @@ export default {
   methods: {
     ...mapActions(["select"]),
     focusSelectedObject() {
-
       if (this.selectedPathNames.length > 0) {
         // TODO optimize
         for (let i = 0; i < this.displayedNames.length; i++) {
@@ -119,11 +122,9 @@ export default {
           }
         }
       }
-      
     }
   },
   watch: {
-
     // watch getNames as else we need to recompute it every time the search changes for some reason?
     getNames(val) {
       /*    if (this.filterTerm.length < 3) {

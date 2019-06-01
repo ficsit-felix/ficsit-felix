@@ -1,7 +1,11 @@
 <template>
   <div class="property-editor">
     <div class="buttons">
-      <md-button class="md-raised" :disabled="focusDisabled" @click="focusSelectedObject">
+      <md-button
+        class="md-raised"
+        :disabled="focusDisabled"
+        @click="focusSelectedObject"
+      >
         Focus
         <md-tooltip md-delay="500">F</md-tooltip>
       </md-button>
@@ -9,12 +13,17 @@
         class="md-raised md-accent"
         :disabled="this.selectedJsonToEdit == null"
         @click="saveJson"
-      >Save JSON</md-button>
+        >Save JSON</md-button
+      >
       <div class="spacer"></div>
       <md-button
         class="md-raised md-primary"
-        :disabled="this.selectedJsonToEdit == null || (this.selectedPathNames.length === 1 && this.selectedPathNames[0] === '---save-header---')"
-        @click="showDeleteDialog=true"
+        :disabled="
+          this.selectedJsonToEdit == null ||
+            (this.selectedPathNames.length === 1 &&
+              this.selectedPathNames[0] === '---save-header---')
+        "
+        @click="showDeleteDialog = true"
         v-shortkey.once="['del']"
         @shortkey="deleteKeyPressed()"
       >
@@ -24,11 +33,17 @@
     </div>
     <md-field :class="jsonClass">
       <label>JSON</label>
-      <md-textarea v-model="selectedJson" :disabled="this.selectedJson == ''" rows="200"></md-textarea>
+      <md-textarea
+        v-model="selectedJson"
+        :disabled="this.selectedJson == ''"
+        rows="200"
+      ></md-textarea>
       <span class="md-error">{{ jsonError }}</span>
     </md-field>
 
-    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">Object saved.</md-snackbar>
+    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar"
+      >Object saved.</md-snackbar
+    >
 
     <md-dialog-confirm
       :md-active.sync="showDeleteDialog"

@@ -2,10 +2,16 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { Module } from "vuex";
 import { Vector3 } from "three";
-import { Component, Actor } from 'satisfactory-json';
-import { findActorByName, findComponentByName, indexOfComponent, indexOfActor } from './helpers/entityHelper';
+import { Component, Actor } from "satisfactory-json";
+import {
+  findActorByName,
+  findComponentByName,
+  indexOfComponent,
+  indexOfActor,
+  refreshActorComponentDictionary
+} from "./helpers/entityHelper";
 import * as Sentry from "@sentry/browser";
-import { EventBus } from './event-bus';
+import { EventBus } from "./event-bus";
 
 Vue.use(Vuex);
 
@@ -19,7 +25,7 @@ declare global {
 
 interface RootState {
   loading: boolean;
-  
+
   selectedPathNames: string[];
   selectedActors: Actor[];
   selectedComponents: Component[];
@@ -177,9 +183,9 @@ export default new Vuex.Store<RootState>({
         };
       };
 
-      return window.data.actors.map(transformation).concat(
-        window.data.components.map(transformation)
-      );
+      return window.data.actors
+        .map(transformation)
+        .concat(window.data.components.map(transformation));
     },
     getVisibleObjects(state) {
       return state.visibleObjects;
@@ -192,7 +198,10 @@ export default new Vuex.Store<RootState>({
     SET_SELECTED(state, selectedPathNames) {
       state.selectedPathNames = selectedPathNames;
 
-      if (selectedPathNames.length === 1 && selectedPathNames[0] == "---save-header---") {
+      if (
+        selectedPathNames.length === 1 &&
+        selectedPathNames[0] == "---save-header---"
+      ) {
         // selected save header
         const header = {
           saveHeaderType: window.data.saveHeaderType,
@@ -224,8 +233,12 @@ export default new Vuex.Store<RootState>({
             if (component !== undefined) {
               components.push(component);
             } else {
-              console.error("No actor/component with path name '" + pathName + "' found.");
-              Sentry.captureException("No actor/component with path name '" + pathName + "' found.");
+              console.error(
+                "No actor/component with path name '" + pathName + "' found."
+              );
+              Sentry.captureException(
+                "No actor/component with path name '" + pathName + "' found."
+              );
             }
           }
         }
@@ -233,8 +246,8 @@ export default new Vuex.Store<RootState>({
         if (selectedPathNames.length === 1) {
           // the object / actor is editable
           if (actors.length === 1) {
-             state.selectedJsonToEdit = actors[0];
-          } else if(components.length === 1) {
+            state.selectedJsonToEdit = actors[0];
+          } else if (components.length === 1) {
             state.selectedJsonToEdit = components[0];
           } else {
             state.selectedJsonToEdit = null;
@@ -243,7 +256,6 @@ export default new Vuex.Store<RootState>({
           state.selectedJsonToEdit = null;
         }
       }
-
     },
     SET_VISIBLE_OBJECTS(state, visibleObjects) {
       state.selectedPathNames = [];
@@ -283,8 +295,10 @@ export default new Vuex.Store<RootState>({
     },
     // TODO rename to update selected json
     SET_SELECTED_OBJECT(state, obj) {
-
-      if (state.selectedPathNames.length === 1 && state.selectedPathNames[0] == "---save-header---") {
+      if (
+        state.selectedPathNames.length === 1 &&
+        state.selectedPathNames[0] == "---save-header---"
+      ) {
         // header
         window.data.saveHeaderType = obj.saveHeaderType;
         window.data.saveVersion = obj.saveVersion;
@@ -300,10 +314,14 @@ export default new Vuex.Store<RootState>({
       } else {
         // TODO handle components as well
         if (obj.type === 1) {
-          window.data.actors[indexOfActor(state.selectedActors[0].pathName)] = obj;  
+          window.data.actors[
+            indexOfActor(state.selectedActors[0].pathName)
+          ] = obj;
           state.selectedActors = [obj];
         } else {
-          window.data.actors[indexOfComponent(state.selectedComponents[0].pathName)] = obj;
+          window.data.actors[
+            indexOfComponent(state.selectedComponents[0].pathName)
+          ] = obj;
           state.selectedComponents = [obj];
         }
       }
@@ -329,6 +347,7 @@ export default new Vuex.Store<RootState>({
       for (const component of state.selectedComponents) {
         window.data.components.splice(indexOfComponent(component.pathName), 1);
       }
+      refreshActorComponentDictionary();
 
       state.selectedActors = [];
       state.selectedComponents = [];
@@ -349,19 +368,19 @@ export default new Vuex.Store<RootState>({
     setLoadedData(context, data) {
       return new Promise((resolve, reject) => {
         window.data = data;
-
+        refreshActorComponentDictionary();
         context.commit("SET_DATA_LOADED", true);
 
         // slowly fill visible actors
         var visible = [];
         for (var i = 0; i < data.actors.length; i++) {
           var actor = data.actors[i];
-            visible.push({
-              id: i,
-              className: actor.className,
-              transform: actor.transform
-              // state: 0
-            });
+          visible.push({
+            id: i,
+            className: actor.className,
+            transform: actor.transform
+            // state: 0
+          });
         }
         context.commit("SET_VISIBLE_OBJECTS", visible);
         resolve();
