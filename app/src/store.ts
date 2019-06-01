@@ -5,6 +5,7 @@ import { Vector3 } from "three";
 import { Component, Actor } from 'satisfactory-json';
 import { findActorByName, findComponentByName, indexOfComponent, indexOfActor } from './helpers/entityHelper';
 import * as Sentry from "@sentry/browser";
+import { EventBus } from './event-bus';
 
 Vue.use(Vuex);
 
@@ -167,7 +168,7 @@ export default new Vuex.Store<RootState>({
       if (!state.dataLoaded) {
         return [];
       }
-      
+
       let transformation = (obj: any, index: any) => {
         return {
           // id: index,
@@ -313,6 +314,28 @@ export default new Vuex.Store<RootState>({
     SET_CAMERA_DATA(state, data) {
       state.cameraPosition = data.position;
       state.cameraTarget = data.target;
+    },
+    DELETE_SELECTED(state, payload) {
+      // store the event payload here, but send it later, so that selectedActors is set to [] before the meshes are deleted. This way we don't get problems when trying to delect them.
+      const eventPayload = {
+        actors: state.selectedActors,
+        components: state.selectedComponents
+      };
+
+      state.dataLoaded = false; // trigger recalculation of getNames
+      for (const actor of state.selectedActors) {
+        window.data.actors.splice(indexOfActor(actor.pathName), 1);
+      }
+      for (const component of state.selectedComponents) {
+        window.data.components.splice(indexOfComponent(component.pathName), 1);
+      }
+
+      state.selectedActors = [];
+      state.selectedComponents = [];
+      state.selectedJsonToEdit = null;
+      state.selectedPathNames = [];
+      state.dataLoaded = true;
+      EventBus.$emit("delete", eventPayload);
     }
   },
   actions: {
@@ -359,12 +382,8 @@ export default new Vuex.Store<RootState>({
     setCameraData(context, payload) {
       context.commit("SET_CAMERA_DATA", payload);
     },
-
-    setSettingsNearPlane(context, payload) {
-      context.commit("SET_SETTINGS_NEAR_PLANE", payload);
-    },
-    setSettingsFarPlane(context, payload) {
-      context.commit("SET_SETTINGS_FAR_PLANE", payload);
+    deleteSelected(context, payload) {
+      context.commit("DELETE_SELECTED", payload);
     }
   }
 });

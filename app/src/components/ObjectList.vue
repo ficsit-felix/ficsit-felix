@@ -114,7 +114,6 @@ export default {
         // TODO optimize
         for (let i = 0; i < this.displayedNames.length; i++) {
           if (this.displayedNames[i].pathName === this.selectedPathNames[0]) {
-            console.log("focus object", i, this.displayedNames[i]);
             this.listStart = i + 1;
             return;
           }

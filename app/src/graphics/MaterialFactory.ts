@@ -103,29 +103,6 @@ export default class MaterialFactory {
   }
 
   createMaterial(actor: Actor) {
-    // mPrimaryColor attribute is no longer used, replaced with mColorSlot
-    // if object contains property with name "mPrimaryColor"
-    /*for (let i = 0; i < obj.entity.properties.length; i++) {
-      const element = obj.entity.properties[i];
-      if (element.name === "mPrimaryColor") {
-        // generate material with this color
-
-        const color = new THREE.Color(element.value.r, element.value.g, element.value.b);
-        
-        if (this.coloredMaterials[color.getHex()] === undefined) {
-          console.log("new material: " + color.getHexString());
-          this.coloredMaterials[color.getHex()] = new THREE.MeshStandardMaterial({
-            color: color,
-            emissive: color,
-
-            roughness: 0.6,
-            metalness: 0.8,
-            flatShading: true, // to not make the conveyor belt cylinders look to much like pipes
-          });
-        }
-        return this.coloredMaterials[color.getHex()];
-      }
-    }*/
 
     if (this.showCustomPaints) {
       const isPaintable =
@@ -155,7 +132,6 @@ export default class MaterialFactory {
     if (actor.entity.properties)
       if (this.materials[actor.className] === undefined) {
         // fetch material based on class name
-        // console.log(className);
         return this.materials["undefined"];
       } else {
         return this.materials[actor.className];

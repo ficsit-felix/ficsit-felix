@@ -97,6 +97,7 @@ import {
   isConveyorLift,
   isPowerLine
 } from "../helpers/entityHelper";
+import { EventBus } from '../event-bus';
 
 export default {
   name: "Playground",
@@ -155,7 +156,10 @@ export default {
         for (const actor of this.lastSelectedActors) {
           if (!val.includes(actor)) {
             // deselect this actor
-            this.findMeshByName(actor.pathName).material = this.materialFactory.createMaterial(actor);
+            const mesh = this.findMeshByName(actor.pathName);
+            if (mesh !== null) {
+              mesh.material = this.materialFactory.createMaterial(actor);
+            }
           }
         }
 
@@ -313,6 +317,7 @@ export default {
       matcap: this.matcap
     });
 
+
     this.scene = this.$refs.scene.scene;
 
     this.loader = new GLTFLoader();
@@ -346,9 +351,38 @@ export default {
       this.loadMap();
     }
 
+    /// EVENT HANDLERS ///
+
     // listen to window resize
     window.addEventListener("resize", this.handleResize);
     window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
+
+    EventBus.$on("delete", payload => {
+      // remove all actors from scene
+      // TODO delete geometry if not used by anything else?
+
+      
+      for (const actor of payload.actors) {
+        for (var i = this.objects.length - 1; i >= 0; i--) {
+            if (this.objects[i].userData.pathName === actor.pathName) {
+              this.scene.remove(this.objects[i]);
+              this.objects.splice(i, 1);
+              return;
+            }
+          }
+
+          for (var i = this.invisibleObjects.length - 1; i >= 0; i--) {
+            if (this.invisibleObjects[i].userData.pathName === actor.pathName) {
+
+              this.scene.remove(this.invisibleObjects[i]);
+              this.invisibleObjects.splice(i, 1);
+              return;
+            }
+          }
+    
+                
+      }
+    });
   },
   methods: {
     ...mapActions(["loadData", "setSelectedObject"]),
