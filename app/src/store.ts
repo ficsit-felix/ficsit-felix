@@ -2,6 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { Module } from "vuex";
 import { Vector3 } from "three";
+import { Component, Actor } from 'satisfactory-json';
+import { findActorByName, findComponentByName, indexOfComponent, indexOfActor } from './helpers/entityHelper';
+import * as Sentry from "@sentry/browser";
 
 Vue.use(Vuex);
 
@@ -15,8 +18,12 @@ declare global {
 
 interface RootState {
   loading: boolean;
-  selectedIndex: number;
-  selectedObject: any;
+  
+  selectedPathNames: string[];
+  selectedActors: Actor[];
+  selectedComponents: Component[];
+  selectedJsonToEdit: any; // if one actor or component is selected, it's json is editable
+
   error: any;
   title: string;
   dataLoaded: boolean;
@@ -141,8 +148,12 @@ export default new Vuex.Store<RootState>({
   },
   state: {
     loading: false,
-    selectedIndex: -1,
-    selectedObject: null,
+
+    selectedPathNames: [],
+    selectedActors: [],
+    selectedComponents: [],
+    selectedJsonToEdit: null,
+
     error: null,
     title: "asdf",
     dataLoaded: false,
@@ -158,7 +169,8 @@ export default new Vuex.Store<RootState>({
       }
       return window.data.actors.map((obj: any, index: any) => { // TODO do we want the name of all components as well?
         return {
-          id: index,
+          // id: index,
+          pathName: obj.pathName,
           text: obj.pathName.substring(obj.pathName.indexOf(".") + 1) // everything after the first .
         };
       });
@@ -171,12 +183,10 @@ export default new Vuex.Store<RootState>({
     SET_ERROR(state, error) {
       state.error = error;
     },
-    SET_SELECTED(state, selectedIndex) {
-      /*if (state.selectedIndex !== -1) {
-        state.visibleObjects[state.selectedIndex].state = 0;
-      }*/
-      state.selectedIndex = selectedIndex;
-      if (selectedIndex == -2) {
+    SET_SELECTED(state, selectedPathNames) {
+      state.selectedPathNames = selectedPathNames;
+
+      if (selectedPathNames.length === 1 && selectedPathNames[0] == "---save-header---") {
         // selected save header
         const header = {
           saveHeaderType: window.data.saveHeaderType,
@@ -191,30 +201,60 @@ export default new Vuex.Store<RootState>({
           collected: window.data.collected,
           missing: window.data.missing
         };
-        state.selectedObject = header;
-      } else if (selectedIndex != -1) {
-        // TODO handle components here as well
-        state.selectedObject = window.data.actors[selectedIndex];
+        state.selectedJsonToEdit = header;
       } else {
-        state.selectedObject = null;
+        var actors: Actor[] = [];
+        var components: Component[] = [];
+
+        state.selectedActors = actors;
+        state.selectedComponents = components;
+
+        for (const pathName of selectedPathNames) {
+          let actor = findActorByName(pathName);
+          if (actor !== undefined) {
+            actors.push(actor);
+          } else {
+            let component = findComponentByName(pathName);
+            if (component !== undefined) {
+              components.push(component);
+            } else {
+              console.error("No actor/component with path name '" + pathName + "' found.");
+              Sentry.captureException("No actor/component with path name '" + pathName + "' found.");
+            }
+          }
+        }
+
+        if (selectedPathNames.length === 1) {
+          // the object / actor is editable
+          if (actors.length === 1) {
+             state.selectedJsonToEdit = actors[0];
+          } else if(components.length === 1) {
+            state.selectedJsonToEdit = components[0];
+          } else {
+            state.selectedJsonToEdit = null;
+          }
+        } else {
+          state.selectedJsonToEdit = null;
+        }
       }
-      /*if (state.selectedIndex !== -1) {
-        state.visibleObjects[state.selectedIndex].state = 1;
-      }*/
+
     },
     SET_VISIBLE_OBJECTS(state, visibleObjects) {
-      state.selectedIndex = -1;
+      state.selectedPathNames = [];
+      state.selectedActors = [];
+      state.selectedComponents = [];
+      state.selectedJsonToEdit = null;
+
       state.visibleObjects = visibleObjects;
 
       state.classes = (state.visibleObjects as any[])
         .map(obj => obj.className)
-        .filter((value, index, self) => self.indexOf(value) === index)
+        .filter((value, index, self) => self.indexOf(value) === index) // uniq
         .sort()
         .map(name => {
           return {
             name: name,
-            visible: true,
-            color: "#123456" // TODO fetch default color
+            visible: true
           };
         });
     },
@@ -236,9 +276,10 @@ export default new Vuex.Store<RootState>({
         }
       }
     },
+    // TODO rename to update selected json
     SET_SELECTED_OBJECT(state, obj) {
-      // console.log("STATE CHANGE", obj);
-      if (state.selectedIndex === -2) {
+
+      if (state.selectedPathNames.length === 1 && state.selectedPathNames[0] == "---save-header---") {
         // header
         window.data.saveHeaderType = obj.saveHeaderType;
         window.data.saveVersion = obj.saveVersion;
@@ -253,9 +294,17 @@ export default new Vuex.Store<RootState>({
         window.data.missing = obj.missing;
       } else {
         // TODO handle components as well
-        window.data.actors[state.selectedIndex] = obj;
+        if (obj.type === 1) {
+          window.data.actors[indexOfActor(state.selectedActors[0].pathName)] = obj;  
+          state.selectedActors = [obj];
+        } else {
+          window.data.actors[indexOfComponent(state.selectedComponents[0].pathName)] = obj;
+          state.selectedComponents = [obj];
+        }
       }
-      state.selectedObject = obj;
+
+      state.selectedJsonToEdit = obj;
+      // TODO need to update selectedActors / selectedComponents
     },
     SET_CAMERA_DATA(state, data) {
       state.cameraPosition = data.position;
@@ -263,8 +312,8 @@ export default new Vuex.Store<RootState>({
     }
   },
   actions: {
-    select(context, selectIndex) {
-      context.commit("SET_SELECTED", selectIndex);
+    select(context, selectedPathNames) {
+      context.commit("SET_SELECTED", selectedPathNames);
     },
     setLoading(context, value) {
       // this is needed so that the objects list will be updated when we set the dataLoaded state back to true

@@ -35,7 +35,7 @@ export default class MeshFactoy {
             this.materialFactory.createMaterial(actor)
           );
 
-          mesh.userData = { id: i };
+          mesh.userData = { id: i, pathName: actor.pathName };
           resolve(mesh);
         })
         .catch(reject);
@@ -55,8 +55,8 @@ export default class MeshFactoy {
 
               // wether the role of top and bottom are reversed does not seem to depend on the mIsReversed property, but on the sign of the z coordinate of the translation
               var topPartTranslationZ = 0;
-              for (let i = 0; i < actor.entity!.properties.length; i++) {
-                const element = actor.entity!.properties[i] as StructProperty;
+              for (let i = 0; i < actor.entity.properties.length; i++) {
+                const element = actor.entity.properties[i] as StructProperty;
                 if (element.name === "mTopTransform") {
                   for (let i = 0; i < element.value.properties.length; i++) {
                     const elem = element.value.properties[i];
@@ -78,8 +78,8 @@ export default class MeshFactoy {
                 material
               );
 
-              for (let i = 0; i < actor.entity!.properties.length; i++) {
-                const element = actor.entity!.properties[i] as StructProperty;
+              for (let i = 0; i < actor.entity.properties.length; i++) {
+                const element = actor.entity.properties[i] as StructProperty;
                 if (element.name === "mTopTransform") {
                   for (let i = 0; i < element.value.properties.length; i++) {
                     const elem = element.value.properties[i];
@@ -119,7 +119,7 @@ export default class MeshFactoy {
               middleMesh.position.z = topPartTranslationZ / 2;
               mesh.add(middleMesh);
 
-              mesh.userData = { id: index };
+              mesh.userData = { id: index, pathName: actor.pathName };
 
               resolve(mesh);
             });

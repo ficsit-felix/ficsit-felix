@@ -121,12 +121,12 @@ export default {
   },
   computed: {
     ...mapState([
-      "selectedIndex",
       "dataLoaded",
       "uuid",
       "filename",
       "classes",
-      "selectedObject"
+      "selectedPathNames",
+      "selectedActors"
     ]),
     ...mapState("settings", [
       "showCustomPaints",
@@ -143,40 +143,45 @@ export default {
         this.createMeshesForActors();
       }
     },
-    selectedIndex(val) {
-      if (val != this.lastSelectedIndex) {
-        if (this.lastSelectedIndex >= 0) {
-          //  && this.lastSelectedIndex < this.objects.length
-          this.setMaterial(
-            this.lastSelectedIndex,
-            this.materialFactory.createMaterial(
-              window.data.actors[this.lastSelectedIndex]
-            )
-          );
+    selectedActors(val) {
+      if (val.length === 1) {
+        const mesh = this.findMeshByName(val[0].pathName);
+        updateActorMeshTransform(mesh, val[0]);
+      }
+
+      if (val != this.lastSelectedActors) {
+        // selection needs to change
+
+        for (const actor of this.lastSelectedActors) {
+          if (!val.includes(actor)) {
+            // deselect this actor
+            this.findMeshByName(actor.pathName).material = this.materialFactory.createMaterial(actor);
+          }
         }
-        this.lastSelectedIndex = val;
-        if (val >= 0) {
-          //  && val < this.objects.length
-          this.setMaterial(val, this.selectedMaterial);
-          var obj = this.getVisibleObjWithId(val);
-          if (obj != null) {
-            this.transformControl.attach(obj);
-          } else {
-            this.transformControl.detach();
+
+        this.lastSelectedActors = val;
+
+        if (val.length > 0) {
+          var visibleSelectedMeshes = [];
+          for (const actor of val) {
+            // select this actor
+            const mesh = this.findMeshByName(actor.pathName);
+            mesh.material = this.selectedMaterial;
+            if (this.objects.includes(mesh)) {
+              visibleSelectedMeshes.push(mesh);
+            }
+          }
+
+          if (visibleSelectedMeshes.length === 1) { // TODO multiselection
+            this.transformControl.attach(visibleSelectedMeshes[0]);
           }
         } else {
           this.transformControl.detach();
         }
+
       }
     },
-    selectedObject(val) {
-      if (val !== null) {
-        var obj = this.getObjWithId(this.selectedIndex);
-        if (obj !== null) {
-          this.updateObjectVisuals(obj, val);
-        }
-      }
-    },
+
     classes: {
       deep: true,
       handler(val) {
@@ -211,11 +216,13 @@ export default {
         }
 
         // fix transform helper
-        var obj = this.getVisibleObjWithId(this.selectedIndex);
-        if (obj == null) {
-          this.transformControl.detach();
-        } else {
-          this.transformControl.attach(obj);
+        if (this.selectedActors.length === 1) { // TODO multiselection
+          const mesh = this.findVisibleMeshByName(this.selectedActors[0].pathName);
+          if (mesh === null) {
+            this.transformControl.detach();
+          } else {
+            this.transformControl.attach(mesh);
+          }
         }
       }
     },
@@ -312,7 +319,7 @@ export default {
 
     this.geometries = {};
 
-    this.lastSelectedIndex = -1;
+    this.lastSelectedActors = [];
     if (this.dataLoaded) {
       this.createMeshesForActors();
     }
@@ -329,7 +336,7 @@ export default {
     this.transformControl.addEventListener("dragging-changed", event => {
       this.$refs.renderer.selectControls.disabled = event.value;
       if (event.value == false) {
-        this.objectChanged();
+        this.onSelectedActorTransformChanged();
       }
     });
     this.scene.add(this.transformControl);
@@ -428,23 +435,23 @@ export default {
         object.material = material;
       }
     },
-    getObjWithId(id) {
+    findMeshByName(pathName) {
       for (const obj of this.objects) {
-        if (obj.userData.id === id) {
+        if (obj.userData.pathName === pathName) {
           return obj;
         }
       }
       for (const obj of this.invisibleObjects) {
-        if (obj.userData.id === id) {
+        if (obj.userData.pathName === pathName) {
           return obj;
         }
       }
       return null;
     },
-    getVisibleObjWithId(id) {
+    findVisibleMeshByName(pathName) {
       for (var i = 0; i < this.objects.length; i++) {
         const obj = this.objects[i];
-        if (obj.userData.id === id) {
+        if (obj.userData.pathName === pathName) {
           return obj;
         }
       }
@@ -452,9 +459,9 @@ export default {
     },
 
     focusSelectedObject() {
-      var camera = this.$refs.renderer.camera.controls;
-      var actor = window.data.actors[this.selectedIndex];
-      if (actor.type === 1) {
+      if (this.selectedActors.length === 1) {
+        var camera = this.$refs.renderer.camera.controls;
+        const actor = this.selectedActors[0];
         // changed because of coordinate system change
         camera.target.x = actor.transform.translation[1];
         camera.target.y = actor.transform.translation[0];
@@ -476,31 +483,37 @@ export default {
       this.width = width;
       this.height = height;
     },
-    objectChanged() {
-      var obj = this.getObjWithId(this.selectedIndex);
+    onSelectedActorTransformChanged() {
+
+      if (this.selectedActors.length !== 1) {
+        return; // TODO multiple actors
+      }
+
+      const actor = this.selectedActors[0];
+      const mesh = this.findMeshByName(actor.pathName);
 
       // TODO need to clone, else change is not detected?
       // find more intelligent way
-      var clone = Object.assign({}, this.selectedObject);
+      var clone = Object.assign({}, actor);
       // switched to accord for coordinate system change!
-      clone.transform.translation[1] = obj.position.x;
-      clone.transform.translation[0] = obj.position.y;
-      clone.transform.translation[2] = obj.position.z;
+      clone.transform.translation[1] = mesh.position.x;
+      clone.transform.translation[0] = mesh.position.y;
+      clone.transform.translation[2] = mesh.position.z;
 
       if (
-        !isConveyorBelt(this.selectedObject) &&
-        !isPowerLine(this.selectedObject)
+        !isConveyorBelt(actor) &&
+        !isPowerLine(actor)
       ) {
-        obj.rotateZ(-1.5708); // -90 deg in radians
+        mesh.rotateZ(-1.5708); // -90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
-      clone.transform.rotation[0] = obj.quaternion.x;
-      clone.transform.rotation[1] = obj.quaternion.y;
-      clone.transform.rotation[2] = -obj.quaternion.z;
-      clone.transform.rotation[3] = obj.quaternion.w;
+      clone.transform.rotation[0] = mesh.quaternion.x;
+      clone.transform.rotation[1] = mesh.quaternion.y;
+      clone.transform.rotation[2] = -mesh.quaternion.z;
+      clone.transform.rotation[3] = mesh.quaternion.w;
 
-      clone.transform.scale3d[0] = obj.scale.x;
-      clone.transform.scale3d[1] = obj.scale.y;
-      clone.transform.scale3d[2] = obj.scale.z;
+      clone.transform.scale3d[0] = mesh.scale.x;
+      clone.transform.scale3d[1] = mesh.scale.y;
+      clone.transform.scale3d[2] = mesh.scale.z;
 
       this.setSelectedObject(clone);
     },

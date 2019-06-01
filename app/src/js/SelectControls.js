@@ -45,7 +45,7 @@ var SelectControls = function(scene, camera, domElement, callback) {
 
         if (object.type === "TransformControlsPlane") {
           // we hit the plane of the transform gizmo, deselect and then try the raycast again
-          scope.callback.select(-1);
+          scope.callback.select([]);
           // TODO find a better way to fix this?
           setTimeout(() => {
             onMouseDown(event);
@@ -63,12 +63,12 @@ var SelectControls = function(scene, camera, domElement, callback) {
         }
         // object.material.emissive.setHex(0xff00ff);
         if (object !== null && object.userData.id !== undefined) {
-          scope.callback.select(object.userData.id);
+          scope.callback.select([object.userData.pathName]);
         } else {
-          scope.callback.select(-1);
+          scope.callback.select([]);
         }
       } else {
-        scope.callback.select(-1);
+        scope.callback.select([]);
       }
     }
   }

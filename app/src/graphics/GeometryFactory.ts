@@ -121,7 +121,7 @@ export default class GeometryFactory {
 
   createConveyorBeltGeometry(actor: Actor) {
     const splineData = getProperty(actor, "mSplineData") as ArrayProperty;
-    //actor.entity!.properties[0]; // TODO actually search for mSplineData as it might not be the first
+    //actor.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
 
     const splinePoints = splineData.value.values.length;
 
@@ -183,34 +183,31 @@ export default class GeometryFactory {
 
   createPowerLineGeometry(actor: Actor) {
     const sourceConnection = findComponentByName(
-      actor.entity!.extra.sourceLevelName,
-      actor.entity!.extra.sourcePathName
+      actor.entity.extra.sourcePathName
     );
     if (sourceConnection === undefined) {
       // TODO error
       console.error(
         "source connection of power line " +
-          actor.entity!.extra.sourcePathName +
+          actor.entity.extra.sourcePathName +
           " not found."
       );
       return;
     }
     const targetConnection = findComponentByName(
-      actor.entity!.extra.targetLevelName,
-      actor.entity!.extra.targetPathName
+      actor.entity.extra.targetPathName
     );
     if (targetConnection === undefined) {
       // TODO error
       console.error(
         "target connection of power line " +
-          actor.entity!.extra.targetPathName +
+          actor.entity.extra.targetPathName +
           " not found."
       );
       return;
     }
 
     const source = findActorByName(
-      sourceConnection.levelName,
       sourceConnection.outerPathName
     );
     if (source === undefined) {
@@ -222,7 +219,6 @@ export default class GeometryFactory {
     }
 
     const target = findActorByName(
-      targetConnection.levelName,
       targetConnection.outerPathName
     );
     if (target === undefined) {

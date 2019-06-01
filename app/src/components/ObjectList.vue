@@ -15,17 +15,17 @@
       :start="listStart"
     >
       <div
-        v-bind:class="{ selected: selectedIndex == -2 }"
-        @click="select(-2)"
+        v-bind:class="{ selected: selectedPathNames.length === 1 && selectedPathNames[0] === '---save-header---'}"
+        @click="select(['---save-header---'])"
         class="item"
       >
         ___Save_Header___
       </div>
       <div
         v-for="item of displayedNames"
-        :key="item.id"
-        v-bind:class="{ selected: item.id == selectedIndex }"
-        @click="select(item.id)"
+        :key="item.pathName"
+        v-bind:class="{ selected: selectedPathNames.includes(item.pathName) }"
+        @click="select([item.pathName])"
         class="item"
       >
         {{ item.text }}
@@ -97,7 +97,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex"]),
+    ...mapState(["selectedPathNames"]),
     ...mapGetters(["getNames"]),
     displayedNames() {
       return this.getNames.filter(
@@ -109,12 +109,17 @@ export default {
   methods: {
     ...mapActions(["select"]),
     focusSelectedObject() {
-      this.listStart = this.selectedIndex;
-      /*      this.$refs.list.$el.children[0].$el.children[this.selectedIndex].scrollIntoView({
-          block: "start",
-          // behavior: "smooth",
-          //inline: "nearest"
-        });*/
+
+      if (this.selectedPathNames.length > 0) {
+        // TODO optimize
+        for (let i = 0; i < this.displayedNames.length; i++) {
+          if (this.displayedNames[i].pathName === this.selectedPathNames[0]) {
+            this.listStart = i;
+            return;
+          }
+        }
+      }
+      
     }
   },
   watch: {

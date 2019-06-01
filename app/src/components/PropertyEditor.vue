@@ -9,7 +9,7 @@
       >
       <md-button
         class="md-raised md-accent"
-        :disabled="this.selectedObject == null"
+        :disabled="this.selectedJsonToEdit == null"
         @click="saveJson"
         >Save JSON</md-button
       >
@@ -72,9 +72,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectedIndex", "selectedObject"]),
+    ...mapState(["selectedJsonToEdit", "selectedActors"]),
     focusDisabled() {
-      return this.selectedObject == null || this.selectedObject.type !== 1;
+      return this.selectedActors.length !== 1;
     }
     // ...mapGetters(["getSelectedObject"])
     /*selectedJson() {
@@ -86,14 +86,14 @@ export default {
         }*/
   },
   watch: {
-    selectedObject: {
+    selectedJsonToEdit: {
       immediate: true,
       deep: true,
       handler(val) {
-        if (this.selectedObject == null) {
+        if (this.selectedJsonToEdit == null) {
           this.selectedJson = "";
         } else {
-          this.selectedJson = JSON.stringify(this.selectedObject, null, 2);
+          this.selectedJson = JSON.stringify(this.selectedJsonToEdit, null, 2);
 
           this.jsonClass = "";
           this.jsonError = "";

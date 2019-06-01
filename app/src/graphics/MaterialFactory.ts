@@ -69,12 +69,11 @@ export default class MaterialFactory {
 
     // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
     const buildableSubsystem = findActorByName(
-      "Persistent_Level",
       "Persistent_Level:PersistentLevel.BuildableSubsystem"
     );
     if (buildableSubsystem !== undefined) {
-      for (let i = 0; i < buildableSubsystem.entity!.properties.length; i++) {
-        const element = buildableSubsystem.entity!.properties[
+      for (let i = 0; i < buildableSubsystem.entity.properties.length; i++) {
+        const element = buildableSubsystem.entity.properties[
           i
         ] as StructProperty;
         if (element.name === "mColorSlotsPrimary") {
@@ -134,8 +133,8 @@ export default class MaterialFactory {
           ? modelConfig[actor.className].paintable
           : false;
 
-      for (let i = 0; i < actor.entity!.properties.length; i++) {
-        const element = actor.entity!.properties[i] as ByteProperty;
+      for (let i = 0; i < actor.entity.properties.length; i++) {
+        const element = actor.entity.properties[i] as ByteProperty;
         if (element.name === "mColorSlot") {
           if (!isPaintable) {
             console.warn("paintable should be true for: " + actor.className);
@@ -153,7 +152,7 @@ export default class MaterialFactory {
       }
     }
 
-    if (actor.entity!.properties)
+    if (actor.entity.properties)
       if (this.materials[actor.className] === undefined) {
         // fetch material based on class name
         // console.log(className);
