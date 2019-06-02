@@ -2,7 +2,7 @@
   <div class="object-list">
     <div class="filter-field">
       <md-field md-inline>
-        <label>{{$t("objectList.filterField")}}</label>
+        <label>{{ $t("objectList.filterField") }}</label>
         <md-input v-model="filterTerm"></md-input>
         <md-icon>search</md-icon>
       </md-field>
@@ -23,7 +23,7 @@
         @click="select(['---save-header---'])"
         class="item"
       >
-        {{$t("objectList.saveHeader")}}
+        {{ $t("objectList.saveHeader") }}
       </div>
       <div
         v-for="item of displayedNames"
@@ -37,7 +37,6 @@
     </virtual-list>
   </div>
 </template>
-
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
@@ -91,7 +90,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import "@/assets/colors.scss";

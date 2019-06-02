@@ -2,7 +2,7 @@
   <div class="save">
     <div class="centered">
       <Logo height="180" black="#000" :animating="logoAnimating" />
-      <h1>{{$t("savePage.title")}}</h1>
+      <h1>{{ $t("savePage.title") }}</h1>
       <SaveBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"

@@ -58,74 +58,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import "@/assets/colors.scss";
-
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -20px;
-  color: $textGray;
-  padding: 10px 10px;
-  height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-  border-radius: 10px;
-  display: flex;
-  justify-items: center;
-}
-
-.input-file {
-  opacity: 0; /* invisible but it's there! */
-  width: 700px;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-  left: 0px;
-}
-
-.dropbox:hover {
-  background: #efeded;
-}
-
-.dropbox p {
-  font-size: 17px;
-  text-align: center;
-  padding: 50px 0;
-}
-
-.infobox {
-  height: 200px;
-  font-size: 17px;
-  padding: 20px 40px;
-  color: $textGray;
-}
-.progressbar {
-  border: 2px solid $middleGray;
-  height: 50px;
-  border-radius: 5px;
-  padding: 3px;
-  .content {
-    background: $middleGray;
-    height: 100%;
-    border-radius: 3px;
-  }
-}
-.dragInstruction {
-  width: 300px;
-  margin: auto;
-}
-
-.secondary {
-  font-size: 15px;
-  margin-top: 10px;
-  color: $logoColorLight;
-}
-
-.dialog-content {
-  padding: 0px 20px;
-}
-</style>
-
 <script>
 import { mapActions } from "vuex";
 import * as Sentry from "@sentry/browser";
@@ -239,3 +171,71 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/colors.scss";
+
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -20px;
+  color: $textGray;
+  padding: 10px 10px;
+  height: 200px; /* minimum height */
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  justify-items: center;
+}
+
+.input-file {
+  opacity: 0; /* invisible but it's there! */
+  width: 700px;
+  height: 200px;
+  position: absolute;
+  cursor: pointer;
+  left: 0px;
+}
+
+.dropbox:hover {
+  background: #efeded;
+}
+
+.dropbox p {
+  font-size: 17px;
+  text-align: center;
+  padding: 50px 0;
+}
+
+.infobox {
+  height: 200px;
+  font-size: 17px;
+  padding: 20px 40px;
+  color: $textGray;
+}
+.progressbar {
+  border: 2px solid $middleGray;
+  height: 50px;
+  border-radius: 5px;
+  padding: 3px;
+  .content {
+    background: $middleGray;
+    height: 100%;
+    border-radius: 3px;
+  }
+}
+.dragInstruction {
+  width: 300px;
+  margin: auto;
+}
+
+.secondary {
+  font-size: 15px;
+  margin-top: 10px;
+  color: $logoColorLight;
+}
+
+.dialog-content {
+  padding: 0px 20px;
+}
+</style>

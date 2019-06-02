@@ -6,14 +6,14 @@
         :disabled="focusDisabled"
         @click="focusSelectedObject"
       >
-        {{$t("propertyEditor.focusButton")}}
+        {{ $t("propertyEditor.focusButton") }}
         <md-tooltip md-delay="500">F</md-tooltip>
       </md-button>
       <md-button
         class="md-raised md-accent"
         :disabled="this.selectedJsonToEdit == null"
         @click="saveJson"
-        >{{$t("propertyEditor.saveJsonButton")}}</md-button
+        >{{ $t("propertyEditor.saveJsonButton") }}</md-button
       >
       <div class="spacer"></div>
       <md-button
@@ -27,12 +27,12 @@
         v-shortkey.once="['del']"
         @shortkey="deleteKeyPressed()"
       >
-        {{$t("propertyEditor.deleteButton")}}
-        <md-tooltip md-delay="500">{{$t("keyboard.del")}}</md-tooltip>
+        {{ $t("propertyEditor.deleteButton") }}
+        <md-tooltip md-delay="500">{{ $t("keyboard.del") }}</md-tooltip>
       </md-button>
     </div>
     <md-field :class="jsonClass">
-      <label>{{$t("propertyEditor.jsonLabel")}}</label>
+      <label>{{ $t("propertyEditor.jsonLabel") }}</label>
       <md-textarea
         v-model="selectedJson"
         :disabled="this.selectedJson == ''"
@@ -41,9 +41,9 @@
       <span class="md-error">{{ jsonError }}</span>
     </md-field>
 
-    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar"
-      >{{$t("propertyEditor.objectSavedSnack")}}</md-snackbar
-    >
+    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">{{
+      $t("propertyEditor.objectSavedSnack")
+    }}</md-snackbar>
 
     <md-dialog-confirm
       :md-active.sync="showDeleteDialog"
@@ -132,7 +132,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import "@/assets/colors.scss";

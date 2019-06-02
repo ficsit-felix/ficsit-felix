@@ -62,6 +62,13 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: "Compass",
+  props: ["rotateX", "rotateZ"]
+};
+</script>
+
 <style lang="scss" scoped>
 .compass {
   position: absolute;
@@ -79,10 +86,3 @@
   transform-origin: 111% 92%;
 }
 </style>
-
-<script>
-export default {
-  name: "Compass",
-  props: ["rotateX", "rotateZ"]
-};
-</script>

@@ -7,7 +7,8 @@
       >
         <Logo height="180" black="#000" :animating="logoAnimating" />
       </div>
-      <LanguageSwitcher></LanguageSwitcher>
+
+      
       <p>{{ $t("landingPage.firstParagraph") }}</p>
       <p>
         <md-button
@@ -40,6 +41,9 @@
           >
         </i18n>
       </p>
+            <div class="languageSelection">
+        {{$t("landingPage.language")}}: <LanguageSwitcher></LanguageSwitcher>
+      </div>
     </div>
     <div class="commithash">{{ commithash }}</div>
   </div>
@@ -100,5 +104,11 @@ p {
   color: rgba(255, 255, 255, 0.2);
   text-align: center;
   font-size: 12px;
+}
+
+.languageSelection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

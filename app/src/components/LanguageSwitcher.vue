@@ -1,9 +1,9 @@
 <template>
-  <ul>
-    <li v-for="lang in languages" :key="lang" @click="changeLang(lang)">
-      {{ lang }}
-    </li>
-  </ul>
+  <div>
+    <span class="lang" v-for="lang in languages" :key="lang" @click="changeLang(lang)">
+      {{ lang.toUpperCase() }}
+    </span>
+  </div>
 </template>
 
 <script>
@@ -28,3 +28,18 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.lang {
+  display: inline-block;
+  padding: 11px;
+  margin: 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
+  color: #888;
+}
+.lang:hover {
+  background: rgba(128,128,128,0.2);
+}
+</style>

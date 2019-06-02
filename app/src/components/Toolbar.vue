@@ -4,23 +4,26 @@
       <a
         @mousedown.stop="$emit('setTranslate')"
         :class="{ active: translateActive }"
-        >{{ $t("toolbar.translate") }}<md-tooltip md-direction="bottom" md-delay="500"
-          >G</md-tooltip
-        >
+        >{{ $t("toolbar.translate")
+        }}<md-tooltip md-direction="bottom" md-delay="500">G</md-tooltip>
       </a>
       <a @mousedown.stop="$emit('setRotate')" :class="{ active: rotateActive }"
-        >{{ $t("toolbar.rotate") }}<md-tooltip md-direction="bottom" md-delay="500">R</md-tooltip>
+        >{{ $t("toolbar.rotate")
+        }}<md-tooltip md-direction="bottom" md-delay="500">R</md-tooltip>
       </a>
       <a @mousedown.stop="$emit('setScale')" :class="{ active: scaleActive }"
-        >{{ $t("toolbar.scale") }}<md-tooltip md-direction="bottom" md-delay="500">S</md-tooltip>
+        >{{ $t("toolbar.scale")
+        }}<md-tooltip md-direction="bottom" md-delay="500">S</md-tooltip>
       </a>
     </div>
     <div class="section">
       <a @mousedown.stop="$emit('setWorld')" :class="{ active: worldActive }"
-        >{{ $t("toolbar.world") }}<md-tooltip md-direction="bottom" md-delay="500">W</md-tooltip>
+        >{{ $t("toolbar.world")
+        }}<md-tooltip md-direction="bottom" md-delay="500">W</md-tooltip>
       </a>
       <a @mousedown.stop="$emit('setLocal')" :class="{ active: localActive }"
-        >{{ $t("toolbar.local") }}<md-tooltip md-direction="bottom" md-delay="500">L</md-tooltip>
+        >{{ $t("toolbar.local")
+        }}<md-tooltip md-direction="bottom" md-delay="500">L</md-tooltip>
       </a>
     </div>
   </div>

@@ -10,22 +10,6 @@
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-@import "@/assets/colors.scss";
-.open {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-.centered {
-  width: 700px;
-  background: $boxWhite;
-  border-radius: 10px;
-  text-align: center;
-  position: relative;
-}
-</style>
 
 <script>
 import Logo from "@/components/Logo";
@@ -44,3 +28,20 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/colors.scss";
+.open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.centered {
+  width: 700px;
+  background: $boxWhite;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+</style>

@@ -26,42 +26,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.editor {
-  height: 100%;
-}
-
-.maincolumn {
-  display: flex;
-  flex-flow: column;
-  overflow: auto;
-  height: 100%;
-}
-.menubar {
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: auto;
-}
-.mainrow {
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
-  min-height: 0px; // needed for Firefox, else this can become HUUGE
-}
-</style>
-
-<style lang="scss">
-@import "@/assets/colors.scss";
-/* non scoped styles to control split bars */
-.split {
-  overflow: hidden !important;
-}
-.gutter {
-  background-color: $toolbarGray !important;
-}
-</style>
-
 <script>
 // @ is an alias to /src
 import Menubar from "@/components/Menubar.vue";
@@ -103,3 +67,39 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.editor {
+  height: 100%;
+}
+
+.maincolumn {
+  display: flex;
+  flex-flow: column;
+  overflow: auto;
+  height: 100%;
+}
+.menubar {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+}
+.mainrow {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  min-height: 0px; // needed for Firefox, else this can become HUUGE
+}
+</style>
+
+<style lang="scss">
+@import "@/assets/colors.scss";
+/* non scoped styles to control split bars */
+.split {
+  overflow: hidden !important;
+}
+.gutter {
+  background-color: $toolbarGray !important;
+}
+</style>
