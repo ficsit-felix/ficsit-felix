@@ -23,26 +23,6 @@ declare global {
   }
 }
 
-interface RootState {
-  loading: boolean;
-
-  selectedPathNames: string[];
-  selectedActors: Actor[];
-  selectedComponents: Component[];
-  selectedJsonToEdit: any; // if one actor or component is selected, it's json is editable
-
-  error: any;
-  title: string;
-  dataLoaded: boolean;
-  visibleObjects: any[];
-  uuid: string;
-  filename: string;
-  classes: any[];
-
-  cameraTarget?: Vector3;
-  cameraPosition?: Vector3;
-}
-
 interface SettingsRootState {
   nearPlane: number;
   farPlane: number;
@@ -52,6 +32,7 @@ interface SettingsRootState {
   conveyorBeltResolution: number;
   editClassColors: boolean;
   classColors: { [id: string]: string };
+  locale: string;
 }
 
 // updates the local storage on settings mutations
@@ -70,7 +51,8 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     showMap: true,
     conveyorBeltResolution: 4,
     editClassColors: false,
-    classColors: {}
+    classColors: {},
+    locale: 'en'
   },
   getters: {},
   mutations: {
@@ -116,6 +98,10 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     CLEAR_CLASS_COLORS(state, payload) {
       state.classColors = {};
       updateLocalStorage(state);
+    },
+    SET_LOCALE(state, payload) {
+      state.locale = payload;
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -145,9 +131,34 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
     clearClassColors(context, payload) {
       context.commit("CLEAR_CLASS_COLORS", payload);
+    },
+    setLocale(context, payload) {
+      context.commit("SET_LOCALE", payload);
     }
   }
 };
+
+
+interface RootState {
+  loading: boolean;
+
+  selectedPathNames: string[];
+  selectedActors: Actor[];
+  selectedComponents: Component[];
+  selectedJsonToEdit: any; // if one actor or component is selected, it's json is editable
+
+  error: any;
+  title: string;
+  dataLoaded: boolean;
+  visibleObjects: any[];
+  uuid: string;
+  filename: string;
+  classes: any[];
+
+  cameraTarget?: Vector3;
+  cameraPosition?: Vector3;
+}
+
 
 export default new Vuex.Store<RootState>({
   modules: {

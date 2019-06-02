@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "LanguageSwitcher",
   data: function() {
@@ -21,6 +23,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("settings", ["setLocale"]),
     changeLang(lang) {
       if (this.$i18n.locale === lang) {
         return;
@@ -29,6 +32,7 @@ export default {
       import(`@/lang/${lang}.json`).then(msgs => {
         this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
         this.$i18n.locale = lang;
+        this.setLocale(lang);
       });
     }
   }
