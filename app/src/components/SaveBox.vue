@@ -135,6 +135,13 @@ export default {
     }
   },
   mounted() {
+    if (!this.dataLoaded) {
+      // The user needs to load a file first
+      this.$router.push({
+        name: "landingpage"
+      });
+      return;
+    }
     this.exportJson = this.$route.path === "/save/json";
     this.saveFile();
   },
