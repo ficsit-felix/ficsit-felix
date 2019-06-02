@@ -24,8 +24,6 @@
               this.selectedPathNames[0] === '---save-header---')
         "
         @click="showDeleteDialog = true"
-        v-shortkey.once="['del']"
-        @shortkey="deleteKeyPressed()"
       >
         Delete
         <md-tooltip md-delay="500">Del</md-tooltip>

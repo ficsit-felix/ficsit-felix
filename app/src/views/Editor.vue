@@ -5,7 +5,10 @@
       <div class="mainrow">
         <Split @onDrag="onDrag">
           <SplitArea :size="60">
-            <Playground ref="playground" />
+            <Playground
+              ref="playground"
+              @askDeleteSelectedObject="$refs.propertyEditor.deleteKeyPressed()"
+            />
           </SplitArea>
           <SplitArea :size="17">
             <Split direction="vertical">
@@ -18,7 +21,10 @@
             </Split>
           </SplitArea>
           <SplitArea :size="23">
-            <PropertyEditor @focusSelectedObject="focusSelectedObject" />
+            <PropertyEditor
+              ref="propertyEditor"
+              @focusSelectedObject="focusSelectedObject"
+            />
           </SplitArea>
         </Split>
       </div>

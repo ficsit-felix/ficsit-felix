@@ -11,6 +11,7 @@
     @keyup.r="setMode('rotate')"
     @keyup.s="setMode('scale')"
     @keyup.f="focusSelectedObject()"
+    @keyup.delete="$emit('askDeleteSelectedObject')"
   >
     <Toolbar
       :mode="mode"
