@@ -36,7 +36,7 @@
     </span>
     <div class="spacer"></div>
     <LanguageSwitcher></LanguageSwitcher>
-    
+
     <md-menu md-direction="bottom-end">
       <md-button md-menu-trigger>
         <md-icon>menu</md-icon> {{ $t("menubar.more") }}</md-button
@@ -109,8 +109,7 @@
       <md-dialog-title>{{ $t("dialog.help.title") }}</md-dialog-title>
       <md-dialog-content>
         <b>{{ $t("dialog.help.controlsTitle") }}</b>
-        <p class="helpControls">{{ $t("dialog.help.controlsText") }}
-        </p>
+        <p class="helpControls">{{ $t("dialog.help.controlsText") }}</p>
         <p>
           {{ $t("dialog.help.changeJsonWarning") }}
         </p>
@@ -259,7 +258,6 @@ export default {
       color: $primaryOrange;
     }
   }
-  
 }
 p,
 b {
@@ -276,8 +274,6 @@ b {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     color: #e3d3d3;
   }
-
-
 }
 .menubar-content {
   .md-list-item-content {
@@ -292,6 +288,6 @@ b {
 }
 
 .md-dialog-content .helpControls {
-    white-space: pre-line; 
+  white-space: pre-line;
 }
 </style>

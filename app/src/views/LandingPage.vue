@@ -8,7 +8,6 @@
         <Logo height="180" black="#000" :animating="logoAnimating" />
       </div>
 
-      
       <p>{{ $t("landingPage.firstParagraph") }}</p>
       <p>
         <md-button
@@ -41,8 +40,8 @@
           >
         </i18n>
       </p>
-            <div class="languageSelection">
-        {{$t("landingPage.language")}}: <LanguageSwitcher></LanguageSwitcher>
+      <div class="languageSelection">
+        {{ $t("landingPage.language") }}: <LanguageSwitcher></LanguageSwitcher>
       </div>
     </div>
     <div class="commithash">{{ commithash }}</div>

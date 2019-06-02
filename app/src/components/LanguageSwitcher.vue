@@ -1,6 +1,12 @@
 <template>
   <div>
-    <span class="lang" v-for="lang in languages" :key="lang" @click="changeLang(lang)">
+    <span
+      class="lang"
+      v-for="lang in languages"
+      :key="lang"
+      @click="changeLang(lang)"
+      :class="{active: lang === $i18n.locale}"
+    >
       {{ lang.toUpperCase() }}
     </span>
   </div>
@@ -39,7 +45,10 @@ export default {
   user-select: none;
   color: #888;
 }
+.lang.active {
+  color: #666;
+}
 .lang:hover {
-  background: rgba(128,128,128,0.2);
+  background: rgba(128, 128, 128, 0.2);
 }
 </style>
