@@ -37,3 +37,10 @@ html, body {
     theme: light
 ));
 @import "~vue-material/dist/components/MdSnackbar/theme"; // Apply the theme
+
+
+
+// increase dialog animation speed
+.md-dialog {
+    transition-duration: 0.1s !important;
+}
