@@ -1,0 +1,10 @@
+{
+    "landingPage": {
+        "firstParagraph": "FeliX ist ein Save file Visualisierer für das Spiel Satisfactory. Öffne die .sav Datei und du kannst eine low poly 3D Repräsentation deiner Fabrik under umgebenden Gegend betrachten. Der Spielstand wird dabei nur in deinem Browser verarbeitet und wird zu keinem Server hochgeladen.",
+        "openSavButton": ".sav Datei öffnen",
+        "openJsonButton": ".json Datei öffnen"
+    },
+    "menubar": {
+        "more": "Mehr"
+    }
+}

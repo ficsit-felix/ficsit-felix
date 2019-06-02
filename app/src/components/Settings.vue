@@ -1,35 +1,35 @@
 <template>
   <div class="settings">
-    <h3>Graphics</h3>
-    <md-checkbox :model="showMap" @change="updateShowMap">Show map</md-checkbox>
+    <h3>{{$t("settings.graphicsSectionTitle")}}</h3>
+    <md-checkbox :model="showMap" @change="updateShowMap">{{$t("settings.showMap")}}</md-checkbox>
     <md-checkbox :model="showModels" @change="updateShowModels"
-      >Show models</md-checkbox
+      >{{$t("settings.showModels")}}</md-checkbox
     >
     <md-checkbox :model="showCustomPaints" @change="updateShowCustomPaints"
-      >Show custom paints</md-checkbox
+      >{{$t("settings.showCustomPaints")}}</md-checkbox
     >
-    <h4>Advanced</h4>
+    <h4>{{$t("settings.advancedSectionTitle")}}</h4>
     <md-field>
-      <label>Far Plane</label>
+      <label>{{$t("settings.farPlane")}}</label>
       <md-input
         :value="farPlane"
         @input="updateFarPlane"
         type="number"
       ></md-input>
-      <span class="md-helper-text">How far away you can see objects</span>
+      <span class="md-helper-text">{{$t("settings.farPlaneHelp")}}</span>
     </md-field>
     <md-field>
-      <label>Near Plane</label>
+      <label>{{$t("settings.nearPlane")}}</label>
       <md-input
         :value="nearPlane"
         @input="updateNearPlane"
         type="number"
       ></md-input>
-      <span class="md-helper-text">Near objects are cut away</span>
+      <span class="md-helper-text">{{$t("settings.nearPlaneHelp")}}</span>
     </md-field>
 
     <md-field>
-      <label>Conveyor Belt Resolution</label>
+      <label>{{$t("settings.conveyorBeltResolution")}}</label>
       <md-input
         :value="conveyorBeltResolution"
         @input="updateConveyorBeltResolution"
@@ -37,32 +37,25 @@
       ></md-input>
 
       <span class="md-helper-text"
-        >High values can cause very low framerate</span
+        >{{$t("settings.conveyorBeltResolutionHelp")}}</span
       >
     </md-field>
     <br />
-    <h3>Develop</h3>
+    <h3>{{$t("settings.developSectionTitle")}}</h3>
 
     <md-checkbox :model="editClassColors" @change="updateEditClassColors"
-      >Edit class colors</md-checkbox
+      >{{$t("settings.editClassColors")}}</md-checkbox
     >
     <md-button class="md-raised" @click="exportClassColors"
-      >Copy class colors to clipboard</md-button
+      >{{$t("settings.copyClassColorsButton")}}</md-button
     >
     <md-button class="md-raised" @click="clearClassColors"
-      >Clear class colors</md-button
+      >{{$t("settings.clearClassColorsButton")}}</md-button
     >
   </div>
 </template>
 
-<style lang="css" scoped>
-.settings {
-  width: 400px;
-}
-.settings >>> .md-checkbox {
-  display:flex !important;
-}
-</style>
+
 
 <script>
 import { mapState, mapActions } from "vuex";
@@ -130,3 +123,11 @@ export default {
   }
 };
 </script>
+<style lang="css" scoped>
+.settings {
+  width: 400px;
+}
+.settings >>> .md-checkbox {
+  display:flex !important;
+}
+</style>

@@ -3,7 +3,7 @@
     <md-checkbox
       :model="allVisible"
       @change="changeVisibilityOfAllClasses($event)"
-      >all classes</md-checkbox
+      >{{$t("classList.allClasses")}}</md-checkbox
     >
     <ul>
       <li v-for="item in classes" v-bind:key="item.name">
@@ -22,7 +22,7 @@
     </ul>
 
     <md-dialog :md-active.sync="showColorDialog">
-      <md-dialog-title>Select color</md-dialog-title>
+      <md-dialog-title>{{$t("dialog.color.title")}}</md-dialog-title>
       <md-dialog-content class="colorPickerDialogContent">
         <colorPicker
           :color="selectedColor"
@@ -31,7 +31,7 @@
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showColorDialog = false"
-          >Close</md-button
+          >{{$t("general.close")}}</md-button
         >
       </md-dialog-actions>
     </md-dialog>

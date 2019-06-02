@@ -1,0 +1,135 @@
+{
+    "asdf": {
+    "landingPage": {
+      "firstParagraph": "FeliX is a save file visualizer for the game Satisfactory. Open the .sav file and you can view a low poly 3D representation of your factory and the surrounding area. The save file is processed in your browser and not uploaded to a server.",
+      "openSavButton": "Open .sav file",
+      "secondParagraph": "FeliX also has some basic editing capabilities. It can convert the .sav format to a human-readable .json format. You can edit the .json file externally and then open it in FeliX to convert it back to a .sav file:",
+      "openJsonButton": "Open .json file",
+      "thirdParagraph": "The source code for this application is available on {github}. We are happy about any contributions. The low poly models were created by the respective {authors}.",
+      "authors": "authors"
+    },
+    "openPage": {
+      "title": "Open save file",
+      "dragJson": "Drag your JSON file here to begin or click to browse",
+      "dragSav": "Drag your save file here to begin or click to browse",
+      "errorTitle": "Error",
+      "errorText": "Please send this save file to me {dropbox} or per Mail to {mail} so that I can fix this.",
+      "dropboxText": "via this Dropbox form",
+      "initializing": "initializing...",
+      "readingFile": "reading file...",
+      "subtitleJson": "Importing JSON file...",
+      "subtitleSav": "Reading save file...",
+      "processing": "processing file...",
+      "buildingWorld": "building world..."
+    },
+    "savePage": {
+      "title": "Download save file",
+      "saveFinished": "File should be saved.",
+      "error": "An error occured.",
+      "backButton": "Back to editor",
+      "savSubtitle": "Saving save file...",
+      "jsonSubtitle": "Saving JSON file...",
+      "initializing": "initializing...",
+      "readingFile": "reading file...",
+      "processingFile":"processing file..."
+    },
+    "menubar": {
+      "open": "Open",
+      "save": "Save",
+      "help": "Help",
+      "settings": "Settings",
+      "more": "More",
+      "importJson": "Import JSON",
+      "exportJson": "Export JSON",
+      "github": "GitHub",
+      "openSource": "Open Source Licenses",
+      "about": "About"
+    },
+    "classList": {
+      "allClasses": "all classes"
+    },
+    "objectList": {
+      "filterField": "Filter",
+      "saveHeader": "___Save_Header___"
+    },
+    "propertyEditor": {
+      "focusButton": "Focus",
+      "saveJsonButton": "Save JSON",
+      "deleteButton": "Delete",
+      "jsonLabel": "JSON",
+      "objectSavedSnack": "Object saved."
+    },
+    "settings": {
+      "graphicsSectionTitle": "Graphics",
+      "showMap": "Show map",
+      "showModels": "Show models",
+      "showCustomPaints": "Show custom paints",
+      "advancedSectionTitle": "Advanced",
+      "farPlane": "Far Plane",
+      "farPlaneHelp": "How far away you can see objects",
+      "nearPlane": "Near Plane",
+      "nearPlaneHelp": "Nearer objects are cut away",
+      "conveyorBeltResolution": "Conveyor Belt Resolution",
+      "conveyorBeltResolutionHelp": "High values can cause very low framerate",
+      "developSectionTitle": "Develop",
+      "editClassColors": "Edit class colors",
+      "copyClassColorsButton": "Copy class colors to clipboard",
+      "clearClassColorsButton": "Clear class colors"
+
+    },
+    "dialog": {
+      "open": {
+        "title": "Open save file",
+        "content": "Do you really want to open a new save file and lose any changes in the current one?"
+      },
+      "save": {
+        "title": "Save save file",
+        "content": "Do you want to download this save as a .sav file?"
+      },
+      "openJson": {
+        "title": "Import JSON file",
+        "content": "Do you really want to import a JSON file and lose any changes in the current one?"
+      },
+      "saveJson": {
+        "title": "Export JSON file",
+        "content": "Do you want to export this save as a JSON file?"
+      },
+      "help": {
+        "title": "Help",
+        "controlsTitle": "Controls",
+        "controlsText": "Middle mouse pressed: move\nRight mouse: rotate\nScroll wheel: zoom\nLeft mouse: select objects",
+        "changeJsonWarning": "If you change the JSON you need to save it before clicking anywhere in the scene, else it will be overwritten!"
+      },
+      "settings": {
+        "title": "Settings"
+      },
+      "openSource": {
+        "title": "Open Source Licenses"
+      },
+      "about": {
+        "title": "About",
+        "row1": "FeliX is a save file visualizer for the game Satisfactory.",
+        "row2": "You can view the source code and contribute to the development on {github}.",
+        "row3": "The low-poly models used by FeliX were created by the respective {authors}.",
+        "authors": "authors"
+      },
+      "color": {
+        "title": "Select color"
+      },
+      "delete": {
+        "title": "Delete object",
+        "content": "Do you really want to delete this object?"
+      }
+
+    },
+    "general": {
+        "close": "Close",
+        "yes": "Yes",
+        "no": "No"
+    },
+    "keyboard": {
+        "ctrl": "Ctrl",
+        "del": "Del"
+    }
+}
+  }

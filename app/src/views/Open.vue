@@ -2,7 +2,7 @@
   <div class="open">
     <div class="centered">
       <Logo height="180" black="#000" :animating="logoAnimating" />
-      <h1>Open save file</h1>
+      <h1>{{ $t("openPage.title") }}</h1>
       <OpenBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"

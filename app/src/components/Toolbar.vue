@@ -4,27 +4,52 @@
       <a
         @mousedown.stop="$emit('setTranslate')"
         :class="{ active: translateActive }"
-        >Translate<md-tooltip md-direction="bottom" md-delay="500"
+        >{{ $t("toolbar.translate") }}<md-tooltip md-direction="bottom" md-delay="500"
           >G</md-tooltip
         >
       </a>
       <a @mousedown.stop="$emit('setRotate')" :class="{ active: rotateActive }"
-        >Rotate<md-tooltip md-direction="bottom" md-delay="500">R</md-tooltip>
+        >{{ $t("toolbar.rotate") }}<md-tooltip md-direction="bottom" md-delay="500">R</md-tooltip>
       </a>
       <a @mousedown.stop="$emit('setScale')" :class="{ active: scaleActive }"
-        >Scale<md-tooltip md-direction="bottom" md-delay="500">S</md-tooltip>
+        >{{ $t("toolbar.scale") }}<md-tooltip md-direction="bottom" md-delay="500">S</md-tooltip>
       </a>
     </div>
     <div class="section">
       <a @mousedown.stop="$emit('setWorld')" :class="{ active: worldActive }"
-        >World<md-tooltip md-direction="bottom" md-delay="500">W</md-tooltip>
+        >{{ $t("toolbar.world") }}<md-tooltip md-direction="bottom" md-delay="500">W</md-tooltip>
       </a>
       <a @mousedown.stop="$emit('setLocal')" :class="{ active: localActive }"
-        >Local<md-tooltip md-direction="bottom" md-delay="500">L</md-tooltip>
+        >{{ $t("toolbar.local") }}<md-tooltip md-direction="bottom" md-delay="500">L</md-tooltip>
       </a>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "Toolbar",
+  components: {},
+  props: ["mode", "local"],
+  computed: {
+    translateActive() {
+      return this.mode === "translate";
+    },
+    rotateActive() {
+      return this.mode === "rotate";
+    },
+    scaleActive() {
+      return this.mode === "scale";
+    },
+    localActive() {
+      return this.local;
+    },
+    worldActive() {
+      return !this.local;
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .toolbar {
@@ -63,28 +88,3 @@
   }
 }
 </style>
-
-<script>
-export default {
-  name: "Toolbar",
-  components: {},
-  props: ["mode", "local"],
-  computed: {
-    translateActive() {
-      return this.mode === "translate";
-    },
-    rotateActive() {
-      return this.mode === "rotate";
-    },
-    scaleActive() {
-      return this.mode === "scale";
-    },
-    localActive() {
-      return this.local;
-    },
-    worldActive() {
-      return !this.local;
-    }
-  }
-};
-</script>
