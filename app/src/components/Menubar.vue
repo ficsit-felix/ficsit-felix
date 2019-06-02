@@ -73,7 +73,10 @@
       :md-cancel-text="$t('general.no')"
       @md-cancel="showOpenDialog = false"
       @md-confirm="open"
-      @keydown.enter="showOpenDialog = false; open()"
+      @keydown.enter="
+        showOpenDialog = false;
+        open();
+      "
     />
 
     <md-dialog-confirm
@@ -84,7 +87,10 @@
       :md-cancel-text="$t('general.no')"
       @md-cancel="showSaveDialog = false"
       @md-confirm="save"
-      @keydown.enter="showSaveDialog = false; save()"
+      @keydown.enter="
+        showSaveDialog = false;
+        save();
+      "
     />
 
     <md-dialog-confirm
@@ -95,7 +101,10 @@
       :md-cancel-text="$t('general.no')"
       @md-cancel="showOpenJsonDialog = false"
       @md-confirm="openJson"
-      @keydown.enter="showOpenJsonDialog = false; openJson()"
+      @keydown.enter="
+        showOpenJsonDialog = false;
+        openJson();
+      "
     />
 
     <md-dialog-confirm
@@ -106,7 +115,10 @@
       :md-cancel-text="$t('general.no')"
       @md-cancel="showSaveJsonDialog = false"
       @md-confirm="saveJson"
-      @keydown.enter="showSaveJsonDialog = false; saveJson()"
+      @keydown.enter="
+        showSaveJsonDialog = false;
+        saveJson();
+      "
     />
 
     <md-dialog :md-active.sync="showHelpDialog">

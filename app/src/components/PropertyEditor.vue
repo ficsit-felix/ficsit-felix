@@ -51,7 +51,10 @@
       :md-cancel-text="$t('general.no')"
       @md-cancel="showDeleteDialog = false"
       @md-confirm="deleteSelected"
-      @keydown.enter="showDeleteDialog = false; deleteSelected()"
+      @keydown.enter="
+        showDeleteDialog = false;
+        deleteSelected();
+      "
     />
   </div>
 </template>

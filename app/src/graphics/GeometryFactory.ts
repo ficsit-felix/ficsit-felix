@@ -137,12 +137,15 @@ export default class GeometryFactory {
       const leaveTangent = splinePoint.properties[2]; // TODO make sure this is leaveTangent
 
       if (lastLoc != null) {
-
         // If two spline points are very near to each other, ignore the first one
         // This should prevent twirls as described in https://github.com/bitowl/ficsit-felix/issues/42
-        const sqrDist = (location.value.x-lastLoc.value.x) * (location.value.x-lastLoc.value.x) + 
-        (location.value.y-lastLoc.value.y) * (location.value.y-lastLoc.value.y) +
-        (location.value.z-lastLoc.value.z) * (location.value.z-lastLoc.value.z);
+        const sqrDist =
+          (location.value.x - lastLoc.value.x) *
+            (location.value.x - lastLoc.value.x) +
+          (location.value.y - lastLoc.value.y) *
+            (location.value.y - lastLoc.value.y) +
+          (location.value.z - lastLoc.value.z) *
+            (location.value.z - lastLoc.value.z);
         if (sqrDist < 0.1) {
           continue;
         }
@@ -254,6 +257,9 @@ export default class GeometryFactory {
         y: transformedSourceOffset.y,
         z: transformedSourceOffset.z
       };
+    } else {
+      console.error("No power line offset for " + source.className);
+      Sentry.captureException("No power line offset for " + source.className);
     }
     var targetOffset = { x: 0, y: 0, z: 0 };
     if (modelConfig[target.className].powerLineOffset !== undefined) {
@@ -275,6 +281,9 @@ export default class GeometryFactory {
         y: transformedTargetOffset.y,
         z: transformedTargetOffset.z
       };
+    } else {
+      console.error("No power line offset for " + target.className);
+      Sentry.captureException("No power line offset for " + target.className);
     }
 
     const extrudePath = new LineCurve3(

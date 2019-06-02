@@ -71,8 +71,8 @@ export default {
     // Set persisted locale
     const lang = this.$store.state.settings.locale;
     import(`@/lang/${lang}.json`).then(msgs => {
-        this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
-        this.$i18n.locale = lang;
+      this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
+      this.$i18n.locale = lang;
     });
   }
 };

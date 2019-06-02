@@ -52,7 +52,7 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     conveyorBeltResolution: 4,
     editClassColors: false,
     classColors: {},
-    locale: 'en'
+    locale: "en"
   },
   getters: {},
   mutations: {
@@ -138,7 +138,6 @@ const settingsModule: Module<SettingsRootState, RootState> = {
   }
 };
 
-
 interface RootState {
   loading: boolean;
 
@@ -158,7 +157,6 @@ interface RootState {
   cameraTarget?: Vector3;
   cameraPosition?: Vector3;
 }
-
 
 export default new Vuex.Store<RootState>({
   modules: {
