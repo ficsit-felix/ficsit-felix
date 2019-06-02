@@ -137,6 +137,16 @@ export default class GeometryFactory {
       const leaveTangent = splinePoint.properties[2]; // TODO make sure this is leaveTangent
 
       if (lastLoc != null) {
+
+        // If two spline points are very near to each other, ignore the first one
+        // This should prevent twirls as described in https://github.com/bitowl/ficsit-felix/issues/42
+        const sqrDist = (location.value.x-lastLoc.value.x) * (location.value.x-lastLoc.value.x) + 
+        (location.value.y-lastLoc.value.y) * (location.value.y-lastLoc.value.y) +
+        (location.value.z-lastLoc.value.z) * (location.value.z-lastLoc.value.z);
+        if (sqrDist < 0.1) {
+          continue;
+        }
+
         // TODO find out how exactly to use arriveTangent and leaveTangent
         // I'm still not 100% sure, how the tangents in Unreal are calculated. The division by three is still a guess and based on the first answer here: https://answers.unrealengine.com/questions/330317/which-algorithm-is-used-for-spline-components-in-u.html#
         extrudePath.add(
