@@ -12,169 +12,216 @@
       v-shortkey.once="['ctrl', 'o']"
       @shortkey="showOpenDialog = true"
     >
-      <md-icon>folder_open</md-icon>Open<md-tooltip md-delay="500"
-        >Ctrl+O</md-tooltip
-      >
+      <md-icon>folder_open</md-icon>{{ $t("menubar.open")
+      }}<md-tooltip md-delay="500">{{ $t("keyboard.ctrl") }}+O</md-tooltip>
     </span>
     <span
       @click="showSaveDialog = true"
       v-shortkey.once="['ctrl', 's']"
       @shortkey="showSaveDialog = true"
     >
-      <md-icon>save</md-icon>Save<md-tooltip md-delay="500">Ctrl+S</md-tooltip>
+      <md-icon>save</md-icon>{{ $t("menubar.save")
+      }}<md-tooltip md-delay="500">{{ $t("keyboard.ctrl") }}+S</md-tooltip>
     </span>
     <span
       @click="showHelpDialog = true"
       v-shortkey.once="['f1']"
       @shortkey="showHelpDialog = true"
     >
-      <md-icon>help</md-icon>Help<md-tooltip md-delay="500">F1</md-tooltip>
+      <md-icon>help</md-icon>{{ $t("menubar.help")
+      }}<md-tooltip md-delay="500">F1</md-tooltip>
     </span>
     <span @click="showSettingsDialog = true">
-      <md-icon>settings</md-icon>Settings
+      <md-icon>settings</md-icon>{{ $t("menubar.settings") }}
     </span>
     <div class="spacer"></div>
+    <LanguageSwitcher></LanguageSwitcher>
+
     <md-menu md-direction="bottom-end">
-      <md-button md-menu-trigger> <md-icon>menu</md-icon> More </md-button>
+      <md-button md-menu-trigger>
+        <md-icon>menu</md-icon> {{ $t("menubar.more") }}</md-button
+      >
 
       <md-menu-content class="menubar-content">
         <md-menu-item @click="showOpenJsonDialog = true"
-          ><md-icon>file_upload</md-icon>Import JSON</md-menu-item
+          ><md-icon>file_upload</md-icon
+          >{{ $t("menubar.importJson") }}</md-menu-item
         >
         <md-menu-item @click="showSaveJsonDialog = true"
-          ><md-icon>file_download</md-icon>Export JSON</md-menu-item
+          ><md-icon>file_download</md-icon
+          >{{ $t("menubar.exportJson") }}</md-menu-item
         >
         <md-menu-item @click="openGithub()"
-          ><md-icon>code</md-icon>GitHub</md-menu-item
+          ><md-icon>code</md-icon>{{ $t("menubar.github") }}</md-menu-item
         >
         <md-menu-item @click="showLicensesDialog = true"
-          ><md-icon>view_headline</md-icon>Open Source Licenses</md-menu-item
+          ><md-icon>view_headline</md-icon
+          >{{ $t("menubar.openSource") }}</md-menu-item
         >
         <md-menu-item @click="showAboutDialog = true"
-          ><md-icon>info_outline</md-icon>About</md-menu-item
+          ><md-icon>info_outline</md-icon
+          >{{ $t("menubar.about") }}</md-menu-item
         >
       </md-menu-content>
     </md-menu>
 
-    <!--<div class="spacer"></div>
-    <span @click="showOpenJsonDialog = true">
-      <md-icon>file_upload</md-icon>Import JSON
-    </span>
-    <span @click="showSaveJsonDialog = true">
-      <md-icon>file_download</md-icon>Export JSON
-    </span>
-    <div class="spacer"></div>
-    <span @click="openGithub()">GitHub</span>-->
     <md-dialog-confirm
       :md-active.sync="showOpenDialog"
-      md-title="Open save file"
-      md-content="Do you really want to open a new save file and lose any changes in the current one?"
-      md-confirm-text="Yes"
-      md-cancel-text="No"
+      :md-title="$t('dialog.open.title')"
+      :md-content="$t('dialog.open.content')"
+      :md-confirm-text="$t('general.yes')"
+      :md-cancel-text="$t('general.no')"
       @md-cancel="showOpenDialog = false"
       @md-confirm="open"
     />
 
     <md-dialog-confirm
       :md-active.sync="showSaveDialog"
-      md-title="Save save file"
-      md-content="Do you want to download this save as a .sav file?"
-      md-confirm-text="Yes"
-      md-cancel-text="No"
+      :md-title="$t('dialog.save.title')"
+      :md-content="$t('dialog.save.content')"
+      :md-confirm-text="$t('general.yes')"
+      :md-cancel-text="$t('general.no')"
       @md-cancel="showSaveDialog = false"
       @md-confirm="save"
     />
 
     <md-dialog-confirm
       :md-active.sync="showOpenJsonDialog"
-      md-title="Import JSON file"
-      md-content="Do you really want to import a JSON file and lose any changes in the current one?"
-      md-confirm-text="Yes"
-      md-cancel-text="No"
+      :md-title="$t('dialog.openJson.title')"
+      :md-content="$t('dialog.openJson.content')"
+      :md-confirm-text="$t('general.yes')"
+      :md-cancel-text="$t('general.no')"
       @md-cancel="showOpenJsonDialog = false"
       @md-confirm="openJson"
     />
 
     <md-dialog-confirm
       :md-active.sync="showSaveJsonDialog"
-      md-title="Export JSON file"
-      md-content="Do you want to export this save as a JSON file?"
-      md-confirm-text="Yes"
-      md-cancel-text="No"
+      :md-title="$t('dialog.saveJson.title')"
+      :md-content="$t('dialog.saveJson.content')"
+      :md-confirm-text="$t('general.yes')"
+      :md-cancel-text="$t('general.no')"
       @md-cancel="showSaveJsonDialog = false"
       @md-confirm="saveJson"
     />
 
     <md-dialog :md-active.sync="showHelpDialog">
-      <md-dialog-title>Help</md-dialog-title>
+      <md-dialog-title>{{ $t("dialog.help.title") }}</md-dialog-title>
       <md-dialog-content>
-        <b>Controls</b>
+        <b>{{ $t("dialog.help.controlsTitle") }}</b>
+        <p class="helpControls">{{ $t("dialog.help.controlsText") }}</p>
         <p>
-          Middle mouse pressed: move
-          <br />Right mouse: rotate <br />Scroll wheel: zoom <br />Left mouse:
-          select objects
-        </p>
-        <p>
-          If you change the JSON you need to save it before clicking
-          <br />anywhere in the scene, else it will be overwritten!
+          {{ $t("dialog.help.changeJsonWarning") }}
         </p>
         <br />
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false"
-          >Close</md-button
-        >
+        <md-button class="md-primary" @click="showHelpDialog = false">{{
+          $t("general.close")
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
     <md-dialog :md-active.sync="showSettingsDialog">
-      <md-dialog-title>Settings</md-dialog-title>
+      <md-dialog-title>{{ $t("dialog.settings.title") }}</md-dialog-title>
       <md-dialog-content>
         <Settings></Settings>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false"
-          >Close</md-button
-        >
+        <md-button class="md-primary" @click="showSettingsDialog = false">{{
+          $t("general.close")
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
     <md-dialog :md-active.sync="showLicensesDialog">
-      <md-dialog-title>Open Source Licenses</md-dialog-title>
+      <md-dialog-title>{{ $t("dialog.openSource.title") }}</md-dialog-title>
       <md-dialog-content>
         <LicensesDialog></LicensesDialog>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showLicensesDialog = false"
-          >Close</md-button
-        >
+        <md-button class="md-primary" @click="showLicensesDialog = false">{{
+          $t("general.close")
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
     <md-dialog :md-active.sync="showAboutDialog">
-      <md-dialog-title>About</md-dialog-title>
+      <md-dialog-title>{{ $t("dialog.about.title") }}</md-dialog-title>
       <md-dialog-content>
-        <p>FeliX is a save file visualizer for the game Satisfactory.</p>
+        <p>{{ $t("dialog.about.row1") }}</p>
         <p>
-          You can view the source code and contribute to the development on
-          <a href="https://github.com/bitowl/ficsit-felix">GitHub</a>.
+          <i18n path="dialog.about.row2">
+            <a href="https://github.com/bitowl/ficsit-felix" place="github"
+              >GitHub</a
+            >
+          </i18n>
         </p>
         <p>
-          The low-poly models used by FeliX were created by the respective
-          <a
-            href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
-            >authors</a
-          >.
+          <i18n path="dialog.about.row3">
+            <a
+              href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
+              place="authors"
+              >{{ $t("dialog.about.authors") }}</a
+            >
+          </i18n>
         </p>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showAboutDialog = false"
-          >Close</md-button
-        >
+        <md-button class="md-primary" @click="showAboutDialog = false">{{
+          $t("general.close")
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
 </template>
+
+<script>
+import Logo from "@/components/Logo";
+import LicensesDialog from "@/components/LicensesDialog";
+import Settings from "@/components/Settings";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+
+export default {
+  name: "Menubar",
+  components: {
+    Logo,
+    LicensesDialog,
+    Settings,
+    LanguageSwitcher
+  },
+  data: function() {
+    return {
+      logoAnimating: false,
+      showHelpDialog: false,
+      showOpenDialog: false,
+      showSaveDialog: false,
+      showOpenJsonDialog: false,
+      showSaveJsonDialog: false,
+      showSettingsDialog: false,
+      showLicensesDialog: false,
+      showAboutDialog: false
+    };
+  },
+  methods: {
+    open() {
+      this.$router.push("open/sav");
+    },
+    openJson() {
+      this.$router.push("open/json");
+    },
+    save() {
+      this.$router.push("save/sav");
+    },
+    saveJson() {
+      this.$router.push("save/json");
+    },
+    openGithub() {
+      window.open("https://github.com/bitowl/ficsit-felix", "_blank");
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 @import "@/assets/colors.scss";
@@ -212,7 +259,6 @@
     }
   }
 }
-
 p,
 b {
   padding: 0px 16px;
@@ -240,49 +286,8 @@ b {
     margin-right: 12px;
   }
 }
+
+.md-dialog-content .helpControls {
+  white-space: pre-line;
+}
 </style>
-
-<script>
-import Logo from "@/components/Logo";
-import LicensesDialog from "@/components/LicensesDialog";
-import Settings from "@/components/Settings";
-
-export default {
-  name: "Menubar",
-  components: {
-    Logo,
-    LicensesDialog,
-    Settings
-  },
-  data: function() {
-    return {
-      logoAnimating: false,
-      showHelpDialog: false,
-      showOpenDialog: false,
-      showSaveDialog: false,
-      showOpenJsonDialog: false,
-      showSaveJsonDialog: false,
-      showSettingsDialog: false,
-      showLicensesDialog: false,
-      showAboutDialog: false
-    };
-  },
-  methods: {
-    open() {
-      this.$router.push("open/sav");
-    },
-    openJson() {
-      this.$router.push("open/json");
-    },
-    save() {
-      this.$router.push("save/sav");
-    },
-    saveJson() {
-      this.$router.push("save/json");
-    },
-    openGithub() {
-      window.open("https://github.com/bitowl/ficsit-felix", "_blank");
-    }
-  }
-};
-</script>

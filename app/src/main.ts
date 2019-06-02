@@ -8,8 +8,9 @@ import { commithash } from "@/js/commithash";
 import * as Sentry from "@sentry/browser";
 import * as Integrations from "@sentry/integrations";
 
-import "@/helpers/cmdHelper";
+import { i18n } from "./plugins/i18n";
 
+import "@/helpers/cmdHelper";
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
     dsn: "https://4bee35ee7cba4ba194c9e1a575948656@sentry.io/1416938",
@@ -58,6 +59,7 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  i18n,
   beforeCreate() {
     this.$store.commit;
     this.$store.commit("settings/INIT_STORE_FROM_LOCAL_DATA");

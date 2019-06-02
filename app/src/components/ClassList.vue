@@ -3,7 +3,7 @@
     <md-checkbox
       :model="allVisible"
       @change="changeVisibilityOfAllClasses($event)"
-      >all classes</md-checkbox
+      >{{ $t("classList.allClasses") }}</md-checkbox
     >
     <ul>
       <li v-for="item in classes" v-bind:key="item.name">
@@ -22,7 +22,7 @@
     </ul>
 
     <md-dialog :md-active.sync="showColorDialog">
-      <md-dialog-title>Select color</md-dialog-title>
+      <md-dialog-title>{{ $t("dialog.color.title") }}</md-dialog-title>
       <md-dialog-content class="colorPickerDialogContent">
         <colorPicker
           :color="selectedColor"
@@ -30,73 +30,13 @@
         ></colorPicker>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showColorDialog = false"
-          >Close</md-button
-        >
+        <md-button class="md-primary" @click="showColorDialog = false">{{
+          $t("general.close")
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/assets/colors.scss";
-
-.class-list {
-  ul {
-    list-style-type: none;
-    padding: 0px;
-  }
-
-  background: $middleGray;
-  height: 100%;
-  overflow: scroll;
-  user-select: none;
-
-  li {
-    height: 28px;
-    white-space: nowrap;
-  }
-  .color {
-    width: 19px;
-    height: 19px;
-    border: 1px solid #eee;
-    display: inline-block;
-    margin-left: 8px;
-    margin-right: 8px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-
-  .md-checkbox {
-    margin: 3px 8px;
-    white-space: nowrap;
-  }
-  .md-checkbox .md-checkbox-container:before {
-    width: 26px;
-    height: 26px;
-  }
-
-  .md-checkbox .md-checkbox-label {
-    padding-left: 10px;
-  }
-}
-</style>
-
-<style lang="scss">
-.colorPickerDialogContent {
-  .hu-color-picker {
-    width: 218px !important;
-  }
-  .alpha {
-    // don't display alpha
-    display: none;
-  }
-  .color-type:nth-child(4) {
-    // don't display rgba type
-    display: none !important;
-  }
-}
-</style>
 
 <script>
 import { mapState, mapActions } from "vuex";
@@ -169,3 +109,63 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/colors.scss";
+
+.class-list {
+  ul {
+    list-style-type: none;
+    padding: 0px;
+  }
+
+  background: $middleGray;
+  height: 100%;
+  overflow: scroll;
+  user-select: none;
+
+  li {
+    height: 28px;
+    white-space: nowrap;
+  }
+  .color {
+    width: 19px;
+    height: 19px;
+    border: 1px solid #eee;
+    display: inline-block;
+    margin-left: 8px;
+    margin-right: 8px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .md-checkbox {
+    margin: 3px 8px;
+    white-space: nowrap;
+  }
+  .md-checkbox .md-checkbox-container:before {
+    width: 26px;
+    height: 26px;
+  }
+
+  .md-checkbox .md-checkbox-label {
+    padding-left: 10px;
+  }
+}
+</style>
+
+<style lang="scss">
+.colorPickerDialogContent {
+  .hu-color-picker {
+    width: 218px !important;
+  }
+  .alpha {
+    // don't display alpha
+    display: none;
+  }
+  .color-type:nth-child(4) {
+    // don't display rgba type
+    display: none !important;
+  }
+}
+</style>

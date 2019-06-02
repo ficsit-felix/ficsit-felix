@@ -18,6 +18,7 @@
     "satisfactory-json": "^0.0.9",
     "three": "0.105.1",
     "vue": "^2.6.6",
+    "vue-i18n": "^8.11.2",
     "vue-material": "^1.0.0-beta-11",
     "vue-router": "^3.0.1",
     "vue-shortkey": "^3.1.7",

@@ -4,12 +4,6 @@
   </div>
 </template>
 
-<style>
-.licenses {
-  white-space: pre-line;
-}
-</style>
-
 <script>
 export default {
   name: "LicensesDialog",
@@ -23,3 +17,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.licenses {
+  white-space: pre-line;
+}
+</style>

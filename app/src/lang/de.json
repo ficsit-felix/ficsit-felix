@@ -1,0 +1,139 @@
+{
+	"classList": {
+		"allClasses": "Alle Klassen"
+	},
+	"dialog": {
+		"about": {
+			"authors": "Autoren",
+			"row1": "FeliX ist ein Spielstandvisualisierer für das Spiel Satisfactory.",
+			"row2": "Du kannst den Source Code auf {github} anschauen und dort auch bei der Entwicklung mithelfen.",
+			"row3": "Die low-poly Modelle, die von FeliX genutzt werden, wurden vonn den jeweiligen {authors} erstellt.",
+			"title": "Über"
+		},
+		"color": {
+			"title": "Farbe auswählen"
+		},
+		"delete": {
+			"content": "Willst du dieses Objekt wirklich löschen?",
+			"title": "Objekt löschen"
+		},
+		"help": {
+			"changeJsonWarning": "Wenn du das JSON änderst, musst du es noch speichern, bevor du irgendwo anders in die Szene klickst. Sonst wird es wieder überschrieben!",
+			"controlsText": "Mittleres Mausrad gedrückt: Bewegen\nRechte Maustaste: Drehen\nMausrad: Rotieren\nLinke Maustaste: Objekte auswählen",
+			"controlsTitle": "Steuerung",
+			"title": "Hilfe"
+		},
+		"open": {
+			"content": "Willst du wirklich einen neuen Spielstand öffnen und potentielle Änderungen im gerade geöffneten Spielstand verwerfen?",
+			"title": "Spielstand öffnen"
+		},
+		"openJson": {
+			"content": "Willst du wirklich eine JSON Datei importieren und potentielle Änderungen im gerade geöffneten Spielstand verwerfen?",
+			"title": "JSON Datei importieren"
+		},
+		"openSource": {
+			"title": "Open Source Lizenzen"
+		},
+		"save": {
+			"content": "Willst du diesen Spielstand als .sav Datei runterladen?",
+			"title": "Spielstand speichern"
+		},
+		"saveJson": {
+			"content": "Willst du diesen Spielstand als JSON Datei exportieren?",
+			"title": "JSON Datei exportieren"
+		},
+		"settings": {
+			"title": "Einstellungen"
+		}
+	},
+	"general": {
+		"close": "Schließen",
+		"no": "Nein",
+		"yes": "Ja"
+	},
+	"keyboard": {
+		"ctrl": "Strg",
+		"del": "Entf"
+	},
+	"landingPage": {
+		"authors": "Autoren",
+		"firstParagraph": "FeliX ist ein Save file Visualisierer für das Spiel Satisfactory. Öffne die .sav Datei und du kannst eine low poly 3D Repräsentation deiner Fabrik under umgebenden Gegend betrachten. Der Spielstand wird dabei nur in deinem Browser verarbeitet und wird zu keinem Server hochgeladen.",
+		"openJsonButton": ".json Datei öffnen",
+		"openSavButton": ".sav Datei öffnen",
+		"secondParagraph": "FeliX hat auch ein paar grundlegende Bearbeitungsfähigkeiten. Es kann das .sav Format in ein menschenlesbares .json Format umwandeln. Du kannst die .json Dateien außerhalb bearbeiten und sie dann wieder in FeliX laden, um sie zurück zu .sav zu konvertieren.",
+        "thirdParagraph": "Der Quelltext dieser Anwendung ist auf {github} verfügbar. Wir freuen uns über jede Mitwirkung. Die low-poly Modelle wurden von den jeweiligen {authors} erstellt.",
+        "language": "Sprache"
+	},
+	"menubar": {
+		"about": "Über",
+		"exportJson": "JSON exportieren",
+		"github": "GitHub",
+		"help": "Hilfe",
+		"importJson": "JSON importieren",
+		"more": "Mehr",
+		"open": "Öffnen",
+		"openSource": "Open Source Lizenzen",
+		"save": "Speichern",
+		"settings": "Einstellungen"
+	},
+	"objectList": {
+		"filterField": "Filtern",
+		"saveHeader": "___Save_Header___"
+	},
+	"openPage": {
+		"buildingWorld": "Welt wird aufgebaut...",
+		"dragJson": "Zieh deine JSON Datei hierher oder klicke zum durchsuchen",
+		"dragSav": "Zieh deinen Spielstand hierher oder klicke zum durchsuchen",
+		"dropboxText": "mit diesem Dropbox Formular",
+		"errorText": "Bitte schick mit diesen Spielstand {dropbox} oder per Mail an {mail}, damit ich den Fehler beheben kann.",
+		"errorTitle": "Fehler",
+		"initializing": "initialisieren...",
+		"processing": "Datei verarbeiten...",
+		"readingFile": "Datei einlesen...",
+		"subtitleJson": "JSON Datei importieren...",
+		"subtitleSav": "Spielstand einlesen...",
+		"title": "Spielstand öffnen"
+	},
+	"propertyEditor": {
+		"deleteButton": "Löschen",
+		"focusButton": "Fokussieren",
+		"jsonLabel": "JSON",
+		"objectSavedSnack": "Objekt gespeichert.",
+		"saveJsonButton": "JSON speichern"
+	},
+	"savePage": {
+		"backButton": "Zurück zu FeliX",
+		"error": "Ein Fehler ist aufgetreten.",
+		"initializing": "initialisieren...",
+		"jsonSubtitle": "JSON Datei speichern...",
+		"processingFile": "Datei verarbeiten...",
+		"readingFile": "Datei einlesen...",
+		"savSubtitle": "Spielstand speichern...",
+		"saveFinished": "Datei sollte gespeichert sein.",
+		"title": "Spielstand speichern"
+	},
+	"settings": {
+		"advancedSectionTitle": "Erweitern",
+		"clearClassColorsButton": "Klassenfarben zurücksetzen",
+		"conveyorBeltResolution": "Fließband Auflösung",
+		"conveyorBeltResolutionHelp": "Hohe Werte können zu niedriger Framerate führen",
+		"copyClassColorsButton": "Klassenfarben in Zwischenablage kopieren",
+		"developSectionTitle": "Entwicklung",
+		"editClassColors": "Klassenfarben bearbeiten",
+		"farPlane": "Hintere Clippingebene",
+		"farPlaneHelp": "Wie weit in der Ferne Objekte dargestellt werden",
+		"graphicsSectionTitle": "Grafik",
+		"nearPlane": "Vordere Clippingebene",
+		"nearPlaneHelp": "Nähere Objekte sind abgeschnitten",
+		"showCustomPaints": "Eigene Einfärbung anzeigen",
+		"showMap": "Karte anzeigen",
+		"showModels": "Modelle anzeigen"
+	},
+	"toolbar": {
+		"local": "Lokal",
+		"rotate": "Rotieren",
+		"scale": "Skalieren",
+		"translate": "Verschieben",
+		"world": "Welt"
+	}
+}

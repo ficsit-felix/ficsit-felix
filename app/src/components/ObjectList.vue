@@ -2,7 +2,7 @@
   <div class="object-list">
     <div class="filter-field">
       <md-field md-inline>
-        <label>Filter</label>
+        <label>{{ $t("objectList.filterField") }}</label>
         <md-input v-model="filterTerm"></md-input>
         <md-icon>search</md-icon>
       </md-field>
@@ -23,7 +23,7 @@
         @click="select(['---save-header---'])"
         class="item"
       >
-        ___Save_Header___
+        {{ $t("objectList.saveHeader") }}
       </div>
       <div
         v-for="item of displayedNames"
@@ -37,53 +37,6 @@
     </virtual-list>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/assets/colors.scss";
-
-.scroller,
-.list {
-  height: 100%;
-  overflow-y: scroll;
-}
-.item {
-  height: 20px;
-  padding: 0px 8px;
-  cursor: pointer;
-}
-
-.object-list {
-  background: $middleGray;
-  border-right: 1px solid $toolbarGray;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  user-select: none;
-
-  .filter-field {
-    margin-top: -10px;
-    margin-bottom: -10px;
-    padding: 0px 8px;
-    flex-shrink: 0;
-  }
-  .list {
-    padding: 8px;
-    margin: 0px;
-  }
-}
-
-ul {
-  list-style: none;
-  padding: 0px;
-  // direction: rtl; // to show the right most of the text
-}
-
-.selected {
-  font-weight: bold;
-  color: $textWhite;
-}
-</style>
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
@@ -137,3 +90,50 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/colors.scss";
+
+.scroller,
+.list {
+  height: 100%;
+  overflow-y: scroll;
+}
+.item {
+  height: 20px;
+  padding: 0px 8px;
+  cursor: pointer;
+}
+
+.object-list {
+  background: $middleGray;
+  border-right: 1px solid $toolbarGray;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+
+  .filter-field {
+    margin-top: -10px;
+    margin-bottom: -10px;
+    padding: 0px 8px;
+    flex-shrink: 0;
+  }
+  .list {
+    padding: 8px;
+    margin: 0px;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+  // direction: rtl; // to show the right most of the text
+}
+
+.selected {
+  font-weight: bold;
+  color: $textWhite;
+}
+</style>

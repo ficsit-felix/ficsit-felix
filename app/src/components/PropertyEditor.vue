@@ -6,14 +6,14 @@
         :disabled="focusDisabled"
         @click="focusSelectedObject"
       >
-        Focus
+        {{ $t("propertyEditor.focusButton") }}
         <md-tooltip md-delay="500">F</md-tooltip>
       </md-button>
       <md-button
         class="md-raised md-accent"
         :disabled="this.selectedJsonToEdit == null"
         @click="saveJson"
-        >Save JSON</md-button
+        >{{ $t("propertyEditor.saveJsonButton") }}</md-button
       >
       <div class="spacer"></div>
       <md-button
@@ -25,12 +25,12 @@
         "
         @click="showDeleteDialog = true"
       >
-        Delete
-        <md-tooltip md-delay="500">Del</md-tooltip>
+        {{ $t("propertyEditor.deleteButton") }}
+        <md-tooltip md-delay="500">{{ $t("keyboard.del") }}</md-tooltip>
       </md-button>
     </div>
     <md-field :class="jsonClass">
-      <label>JSON</label>
+      <label>{{ $t("propertyEditor.jsonLabel") }}</label>
       <md-textarea
         v-model="selectedJson"
         :disabled="this.selectedJson == ''"
@@ -39,54 +39,21 @@
       <span class="md-error">{{ jsonError }}</span>
     </md-field>
 
-    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar"
-      >Object saved.</md-snackbar
-    >
+    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">{{
+      $t("propertyEditor.objectSavedSnack")
+    }}</md-snackbar>
 
     <md-dialog-confirm
       :md-active.sync="showDeleteDialog"
-      md-title="Delete object"
-      md-content="Do you really want to delete this object?"
-      md-confirm-text="Yes"
-      md-cancel-text="No"
+      :md-title="$t('dialog.delete.title')"
+      :md-content="$t('dialog.delete.content')"
+      :md-confirm-text="$t('general.yes')"
+      :md-cancel-text="$t('general.no')"
       @md-cancel="showDeleteDialog = false"
       @md-confirm="deleteSelected"
     />
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/assets/colors.scss";
-
-.property-editor {
-  /*width: 300px;
-  flex-shrink: 0;*/
-  background: $middleGray;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.buttons {
-  flex-shrink: 0;
-  display: flex;
-}
-.spacer {
-  flex-grow: 1;
-}
-.json-editor {
-  width: 100%;
-  height: 100%;
-  color: $textGray;
-  border: 0px;
-}
-textarea {
-  height: 100% !important;
-  max-height: none !important;
-  font-family: monospace !important;
-}
-</style>
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
@@ -163,3 +130,36 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/colors.scss";
+
+.property-editor {
+  /*width: 300px;
+  flex-shrink: 0;*/
+  background: $middleGray;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  flex-shrink: 0;
+  display: flex;
+}
+.spacer {
+  flex-grow: 1;
+}
+.json-editor {
+  width: 100%;
+  height: 100%;
+  color: $textGray;
+  border: 0px;
+}
+textarea {
+  height: 100% !important;
+  max-height: none !important;
+  font-family: monospace !important;
+}
+</style>

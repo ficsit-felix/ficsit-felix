@@ -69,7 +69,10 @@ export default {
         const val = walkGet(this, prop);
         if (val == null) return;
         handler.call(this, val);
-      } catch (err) {}
+      } catch (err) {
+        // TODO throws many errors
+        //console.error(err);
+      }
     });
   },
 

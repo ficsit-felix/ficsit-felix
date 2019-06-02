@@ -41,31 +41,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.scene {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-#glContainer {
-  width: 100%;
-  height: 100%;
-}
-
-.info {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  color: rgba(255, 255, 255, 0.4);
-  padding: 5px;
-  text-shadow: 1px 1px 1px #000;
-  line-height: 1.1;
-  font-size: 14px;
-}
-</style>
-
 <script>
 import * as THREE from "three";
 import { OrbitControls } from "@/js/OrbitControls";
@@ -459,3 +434,28 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.scene {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+#glContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 5px;
+  text-shadow: 1px 1px 1px #000;
+  line-height: 1.1;
+  font-size: 14px;
+}
+</style>
