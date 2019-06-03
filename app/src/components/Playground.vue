@@ -12,6 +12,10 @@
     @keyup.s="setMode('scale')"
     @keyup.f="focusSelectedObject()"
     @keyup.delete="$emit('askDeleteSelectedObject')"
+    @keydown.shift="setShiftSelect(true)"
+    @keyup.shift="setShiftSelect(false)"
+    @keydown.17="setBoxSelect(true)"
+    @keyup.17="setBoxSelect(false)"
   >
     <Toolbar
       :mode="mode"
@@ -44,7 +48,6 @@
 <script>
 import * as THREE from "three";
 import { OrbitControls } from "@/js/OrbitControls";
-import { SelectControls } from "@/js/SelectControls";
 import { TransformControls } from "@/js/TransformControls";
 import { mapActions, mapGetters, mapState } from "vuex";
 import Scene from "@/components/scene/Scene";
@@ -271,12 +274,19 @@ export default {
     /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
     })*/
+    this.transformControl.addEventListener("mouseDown", event => {
+      console.log("mouse down");
+      this.setSelectionDisabled(true);
+    });
     this.transformControl.addEventListener("dragging-changed", event => {
-      this.$refs.renderer.selectControls.disabled = event.value;
+      console.log("drag change", event.value);
+      // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
+      this.$store.commit("SET_SELECTION_DISABLED", event.value);
+      this.setSelectionDisabled(event.value);
       if (event.value == false) {
         this.onSelectedActorTransformChanged();
       }
-    });
+    }, false);
     this.scene.add(this.transformControl);
 
     // load map
@@ -296,7 +306,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["loadData", "setSelectedObject"]),
+    ...mapActions(["loadData", "setSelectedObject", "setSelectionDisabled", "setBoxSelect", "setShiftSelect"]),
 
     updateCompass() {
       // TODO move to a onCameraChanged to only update when necessary
@@ -459,3 +469,13 @@ export default {
   font-size: 14px;
 }
 </style>
+
+<style>
+			.selectBox {
+				border: 1px dashed #00bcd4;
+				background-color: #00bcd43d;
+        position: fixed;
+        border-radius: 4px;
+			}
+</style>
+

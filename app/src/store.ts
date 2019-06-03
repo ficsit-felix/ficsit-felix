@@ -142,7 +142,7 @@ interface RootState {
   loading: boolean;
 
   selectedPathNames: string[];
-  selectedActors: Actor[];
+  selectedActors: Actor[]; // TODO only store the pathNames of selected actors / components?
   selectedComponents: Component[];
   selectedJsonToEdit: any; // if one actor or component is selected, it's json is editable
 
@@ -156,6 +156,11 @@ interface RootState {
 
   cameraTarget?: Vector3;
   cameraPosition?: Vector3;
+
+  // controls
+  selectionDisabled: boolean;
+  boxSelect: boolean;
+  shiftSelect: boolean;
 }
 
 export default new Vuex.Store<RootState>({
@@ -176,7 +181,11 @@ export default new Vuex.Store<RootState>({
     visibleObjects: [],
     uuid: "",
     filename: "",
-    classes: []
+    classes: [],
+
+    selectionDisabled: false,
+    boxSelect: false,
+    shiftSelect: false,
   },
   getters: {
     getNames: state => {
@@ -364,6 +373,16 @@ export default new Vuex.Store<RootState>({
       state.selectedPathNames = [];
       state.dataLoaded = true;
       EventBus.$emit("delete", eventPayload);
+    },
+
+    SET_SELECTION_DISABLED(state, payload) {
+      state.selectionDisabled = payload;
+    },
+    SET_BOX_SELECT(state, payload) {
+      state.boxSelect = payload;
+    },
+    SET_SHIFT_SELECT(state, payload) {
+      state.shiftSelect = payload;
     }
   },
   actions: {
@@ -412,6 +431,15 @@ export default new Vuex.Store<RootState>({
     },
     deleteSelected(context, payload) {
       context.commit("DELETE_SELECTED", payload);
+    },
+    setSelectionDisabled(context, payload) {
+      context.commit("SET_SELECTION_DISABLED", payload);
+    },
+    setBoxSelect(context, payload) {
+      context.commit("SET_BOX_SELECT", payload);
+    },
+    setShiftSelect(context, payload) {
+      context.commit("SET_SHIFT_SELECT", payload);
     }
   }
 });

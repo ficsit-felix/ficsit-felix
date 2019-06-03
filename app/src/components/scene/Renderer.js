@@ -1,6 +1,7 @@
 import { WebGLRenderer } from "three";
-import { SelectControls } from "../../js/SelectControls";
-import { mapActions } from "vuex";
+import { SelectControls } from "@/js/SelectControls";
+import {BoxSelectControls} from "@/js/BoxSelectControls";
+import { mapActions, mapState } from "vuex";
 
 // see https://github.com/posva/state-animation-demos/tree/master/components/three
 
@@ -35,7 +36,17 @@ export default {
       elem,
       this
     );
+    this.boxSelectControls = new BoxSelectControls(
+      this.scene,
+      this.camera.obj,
+      elem,
+      this
+    );
+
     this.camera.setupControl(elem);
+  },
+  computed: {
+    ...mapState(["selectionDisabled", "boxSelect"])
   },
 
   watch: {
@@ -44,6 +55,23 @@ export default {
     },
     height() {
       this.resize();
+    },
+    selectionDisabled(val) {
+      console.log("selec", val);
+      if (val) {
+        this.boxSelectControls.disabled = true;
+        this.selectControls.disabled = true;
+      } else {
+        this.boxSelectControls.disabled = this.boxSelect;
+        this.selectControls.disabled = this.boxSelect;
+      }
+    },
+    boxSelect(val) {
+      console.log("boxselec", val, this.selectionDisabled);
+      if (!this.selectionDisabled) {
+        this.boxSelectControls.disabled = !val;
+        this.selectControls.disabled = val;
+      }
     }
   },
   methods: {
@@ -74,5 +102,6 @@ export default {
 
   beforeDestroy() {
     this.selectControls.destroy();
+    this.boxSelectControls.destroy();
   }
 };
