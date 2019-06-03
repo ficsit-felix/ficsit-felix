@@ -99,7 +99,8 @@
 		"focusButton": "Fokussieren",
 		"jsonLabel": "JSON",
 		"objectSavedSnack": "Objekt gespeichert.",
-		"saveJsonButton": "JSON speichern"
+		"saveJsonButton": "JSON speichern",
+		"copyAsBlueprint": "Als Entwurf kopieren"
 	},
 	"savePage": {
 		"backButton": "Zurück zu FeliX",

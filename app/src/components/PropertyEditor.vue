@@ -29,6 +29,11 @@
         <md-tooltip md-delay="500">{{ $t("keyboard.del") }}</md-tooltip>
       </md-button>
     </div>
+    <div v-if="experimentalFeatures">
+      <md-button class="md-raised"
+      @click="copyAsBlueprint"
+      :disabled="copyAsBlueprintDisabled">{{$t("propertyEditor.copyAsBlueprint")}}</md-button>
+    </div>
     <md-field :class="jsonClass">
       <label>{{ $t("propertyEditor.jsonLabel") }}</label>
       <md-textarea
@@ -61,6 +66,7 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
+import { createBlueprintFromActors } from "@/ts/blueprintDev";//"satisfactory-blueprint";
 export default {
   name: "PropertyEditor",
   data: function() {
@@ -74,10 +80,14 @@ export default {
   },
   computed: {
     ...mapState(["selectedJsonToEdit", "selectedActors", "selectedPathNames"]),
+    ...mapState("settings", ["experimentalFeatures"]),
     focusDisabled() {
       return this.selectedActors.length !== 1;
+    },
+    copyAsBlueprintDisabled() {
+      return this.selectedActors.length < 2;
     }
-    // ...mapGetters(["getSelectedObject"])
+    //  ...mapGetters(["getSelectedObject"]) 
     /*selectedJson() {
             if (this.getSelectedObject == null) {
                 return "";
@@ -130,6 +140,10 @@ export default {
       ) {
         this.showDeleteDialog = true;
       }
+    },
+    copyAsBlueprint() {
+      const blueprint = createBlueprintFromActors(this.selectedActors, window.data);
+      console.log("blueprint", blueprint);
     }
   }
 };

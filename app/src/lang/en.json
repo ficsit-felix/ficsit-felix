@@ -99,7 +99,8 @@
 		"focusButton": "Focus",
 		"jsonLabel": "JSON",
 		"objectSavedSnack": "Object saved.",
-		"saveJsonButton": "Save JSON"
+		"saveJsonButton": "Save JSON",
+		"copyAsBlueprint": "Copy as blueprint"
 	},
 	"savePage": {
 		"backButton": "Back to FeliX",
