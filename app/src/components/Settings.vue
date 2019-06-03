@@ -54,6 +54,10 @@
     <md-button class="md-raised" @click="clearClassColors">{{
       $t("settings.clearClassColorsButton")
     }}</md-button>
+
+    <md-checkbox :model="experimentalFeatures" @change="updateExperimentalFeatures">{{
+      $t("settings.experimentalFeatures")
+    }}</md-checkbox>
   </div>
 </template>
 
@@ -71,7 +75,8 @@ export default {
       "showMap",
       "conveyorBeltResolution",
       "classColors",
-      "editClassColors"
+      "editClassColors",
+      "experimentalFeatures"
     ])
   },
   methods: {
@@ -83,7 +88,8 @@ export default {
       "setShowMap",
       "setConveyorBeltResolution",
       "setEditClassColors",
-      "clearClassColors"
+      "clearClassColors",
+      "setExperimentalFeatures"
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);
@@ -119,7 +125,10 @@ export default {
       input.select();
       document.execCommand("copy");
       document.body.removeChild(input);
-    }
+    },
+    updateExperimentalFeatures(value) {
+      this.setExperimentalFeatures(value);
+    },
   }
 };
 </script>

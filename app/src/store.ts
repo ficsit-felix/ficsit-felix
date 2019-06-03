@@ -33,6 +33,7 @@ interface SettingsRootState {
   editClassColors: boolean;
   classColors: { [id: string]: string };
   locale: string;
+  experimentalFeatures: boolean;
 }
 
 // updates the local storage on settings mutations
@@ -52,7 +53,8 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     conveyorBeltResolution: 4,
     editClassColors: false,
     classColors: {},
-    locale: "en"
+    locale: "en",
+    experimentalFeatures: false,
   },
   getters: {},
   mutations: {
@@ -102,6 +104,10 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     SET_LOCALE(state, payload) {
       state.locale = payload;
       updateLocalStorage(state);
+    },
+    SET_EXPERIMENTAL_FEATURES(state, payload) {
+      state.experimentalFeatures = payload;
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -134,6 +140,9 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setLocale(context, payload) {
       context.commit("SET_LOCALE", payload);
+    },
+    setExperimentalFeatures(context, payload) {
+      context.commit("SET_EXPERIMENTAL_FEATURES", payload);
     }
   }
 };

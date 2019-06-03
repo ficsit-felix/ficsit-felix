@@ -127,7 +127,8 @@
 		"nearPlaneHelp": "Nähere Objekte sind abgeschnitten",
 		"showCustomPaints": "Eigene Einfärbung anzeigen",
 		"showMap": "Karte anzeigen",
-		"showModels": "Modelle anzeigen"
+		"showModels": "Modelle anzeigen",
+		"experimentalFeatures": "Experimentelle Funktionen"
 	},
 	"toolbar": {
 		"local": "Lokal",

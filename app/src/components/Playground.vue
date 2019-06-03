@@ -12,10 +12,10 @@
     @keyup.s="setMode('scale')"
     @keyup.f="focusSelectedObject()"
     @keyup.delete="$emit('askDeleteSelectedObject')"
-    @keydown.16="setShiftSelect(true)"
-    @keyup.16="setShiftSelect(false)"
-    @keydown.17="setBoxSelect(true)"
-    @keyup.17="setBoxSelect(false)"
+    @keydown.16="updateShiftSelect(true)"
+    @keyup.16="updateShiftSelect(false)"
+    @keydown.17="updateBoxSelect(true)"
+    @keyup.17="updateBoxSelect(false)"
   >
     <Toolbar
       :mode="mode"
@@ -114,7 +114,8 @@ export default {
       "showModels",
       "showMap",
       "conveyorBeltResolution",
-      "classColors"
+      "classColors",
+      "experimentalFeatures"
     ]),
     ...mapGetters(["getVisibleObjects"])
   },
@@ -148,15 +149,16 @@ export default {
         if (val.length > 0) {
           var visibleSelectedMeshes = [];
           for (const actor of val) {
-            if (!this.lastSelectedActors.includes(actor)) {
+            
             // select this actor
             const mesh = this.meshManager.findMeshAndVisibilityByName(
               actor.pathName
             );
+            if (!this.lastSelectedActors.includes(actor)) {
             mesh.mesh.material = this.selectedMaterial;
+            }
             if (mesh.visible) {
               visibleSelectedMeshes.push(mesh.mesh);
-            }
             }
           }
         
@@ -229,6 +231,13 @@ export default {
       handler(value) {
         this.materialFactory.setupDefaultMaterials();
         this.updateAllMaterials();
+      }
+    },
+
+    experimentalFeatures(value) {
+      if (value === false) {
+        this.setBoxSelect(false);
+        this.setShiftSelect(false);
       }
     }
   },
@@ -436,6 +445,16 @@ export default {
       // focus the scene div so no text fields get key inputs
       // needs a tabindex on the div, see https://stackoverflow.com/a/3656524
       document.getElementById("scene").focus();
+    },
+    updateBoxSelect(value) {
+      if (this.experimentalFeatures) {
+        this.setBoxSelect(value);
+      }
+    },
+    updateShiftSelect(value) {
+      if (this.experimentalFeatures) {
+        this.setShiftSelect(value);
+      }
     }
   }, // END OF METHODS
 

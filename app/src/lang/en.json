@@ -127,7 +127,8 @@
 		"nearPlaneHelp": "Nearer objects are cut away",
 		"showCustomPaints": "Show custom paints",
 		"showMap": "Show map",
-		"showModels": "Show models"
+		"showModels": "Show models",
+		"experimentalFeatures": "Experimental features"
 	},
 	"toolbar": {
 		"local": "Local",

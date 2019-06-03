@@ -61,7 +61,7 @@ export default {
         this.boxSelectControls.disabled = true;
         this.selectControls.disabled = true;
       } else {
-        this.boxSelectControls.disabled = this.boxSelect;
+        this.boxSelectControls.disabled = !this.boxSelect;
         this.selectControls.disabled = this.boxSelect;
       }
     },
