@@ -621,6 +621,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xcd8734,
     paintable: true
   },
+  "/Game/FactoryGame/Buildable/Factory/Train/SwitchControl/Build_RailroadSwitchControl.Build_RailroadSwitchControl_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
   "/Game/FactoryGame/Buildable/Factory/TruckStation/Build_TruckStation.Build_TruckStation_C": {
     model: "TruckStation.glb",
     color: 0x472596,
@@ -988,7 +993,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
   "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C": {
     model: "DropPod.glb",
     color: 0xfffd00,
-    paintable: false
+    paintable: false,
+    powerLineOffset: {x: 0,y:-390 , z:40}
   },
   "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C": {
     model: "BP_Shroom_01_C.glb",
