@@ -213,8 +213,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true
   },
   "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C": {
-    model: "Build_Wall_1a_C.glb",
-    color: 0xab51d8,
+    model: "Build_Wall_1a_C.glb", // TODO
+    color: 0xff00ff,
     paintable: true
   },
   "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1c.Build_Wall_1c_C": {
