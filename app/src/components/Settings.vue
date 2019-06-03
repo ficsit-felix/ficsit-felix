@@ -71,7 +71,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-
+import copyToClipboard from "@/ts/copyToClipboard";
 export default {
   name: "Settings",
   computed: {
@@ -129,12 +129,7 @@ export default {
       this.setEditClassColors(value);
     },
     exportClassColors() {
-      var input = document.createElement("textarea");
-      input.value = JSON.stringify(this.classColors);
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand("copy");
-      document.body.removeChild(input);
+      copyToClipboard(JSON.stringify(this.classColors));
     },
     updateExperimentalFeatures(value) {
       this.setExperimentalFeatures(value);

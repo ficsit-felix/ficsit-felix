@@ -67,6 +67,7 @@
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
 import { createBlueprintFromActors } from "@/ts/blueprintDev";//"satisfactory-blueprint";
+import copyToClipboard from "@/ts/copyToClipboard";
 export default {
   name: "PropertyEditor",
   data: function() {
@@ -144,6 +145,7 @@ export default {
     copyAsBlueprint() {
       const blueprint = createBlueprintFromActors(this.selectedActors, window.data);
       console.log("blueprint", blueprint);
+      copyToClipboard(JSON.stringify(blueprint));
     }
   }
 };
