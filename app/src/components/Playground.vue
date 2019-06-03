@@ -12,8 +12,8 @@
     @keyup.s="setMode('scale')"
     @keyup.f="focusSelectedObject()"
     @keyup.delete="$emit('askDeleteSelectedObject')"
-    @keydown.shift="setShiftSelect(true)"
-    @keyup.shift="setShiftSelect(false)"
+    @keydown.16="setShiftSelect(true)"
+    @keyup.16="setShiftSelect(false)"
     @keydown.17="setBoxSelect(true)"
     @keyup.17="setBoxSelect(false)"
   >
@@ -161,6 +161,8 @@ export default {
           if (visibleSelectedMeshes.length === 1) {
             // TODO multiselection
             this.transformControl.attach(visibleSelectedMeshes[0]);
+          } else {
+            this.transformControl.detach();  
           }
         } else {
           this.transformControl.detach();
@@ -274,12 +276,7 @@ export default {
     /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
     })*/
-    this.transformControl.addEventListener("mouseDown", event => {
-      console.log("mouse down");
-      this.setSelectionDisabled(true);
-    });
     this.transformControl.addEventListener("dragging-changed", event => {
-      console.log("drag change", event.value);
       // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
       this.$store.commit("SET_SELECTION_DISABLED", event.value);
       this.setSelectionDisabled(event.value);

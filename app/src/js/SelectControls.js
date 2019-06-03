@@ -1,10 +1,10 @@
 import { MOUSE, Raycaster } from "three";
 
-var SelectControls = function(scene, camera, domElement, callback) {
+var SelectControls = function (scene, camera, domElement, callback) {
   this.callback = null;
   this.disabled = false;
 
-  this.bindCallback = function(callback) {
+  this.bindCallback = function (callback) {
     this.callback = callback;
   };
 
@@ -38,17 +38,20 @@ var SelectControls = function(scene, camera, domElement, callback) {
       var intersects = raycaster.intersectObjects(scene.children, true);
       // recursive, so that we also get intersections with the other parts of a conveyor lift
 
-      if (intersects.length > 0) {
-        var object = intersects[0].object;
+
+      for (const intersection of intersects) {
+        var object = intersection.object;
 
         if (object.type === "TransformControlsPlane") {
+          // ignore the plane of the TransformHelper
+          continue;
           // we hit the plane of the transform gizmo, deselect and then try the raycast again
-          scope.callback.select([]);
+          /*scope.callback.select([]);
           // TODO find a better way to fix this?
           setTimeout(() => {
             onMouseDown(event);
           }, 100);
-          return;
+          return;*/
         }
 
         while (
@@ -65,9 +68,10 @@ var SelectControls = function(scene, camera, domElement, callback) {
         } else {
           scope.callback.select([]);
         }
-      } else {
-        scope.callback.select([]);
+        return;
       }
+
+      scope.callback.select([]);
     }
   }
 

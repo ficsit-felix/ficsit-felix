@@ -214,7 +214,6 @@ export default new Vuex.Store<RootState>({
       state.error = error;
     },
     SET_SELECTED(state, selectedPathNames) {
-      state.selectedPathNames = selectedPathNames;
 
       if (
         selectedPathNames.length === 1 &&
@@ -235,7 +234,40 @@ export default new Vuex.Store<RootState>({
           missing: window.data.missing
         };
         state.selectedJsonToEdit = header;
+        state.selectedPathNames = selectedPathNames;
       } else {
+
+
+        if (state.shiftSelect) {
+          if (selectedPathNames.length === 0) {
+            // nothing needs to change
+            return;
+          }
+          if (selectedPathNames.length === 1) {
+            // If only one is selected, toggle depending on if it was already in the list or not
+            if (state.selectedPathNames.includes(selectedPathNames[0])) {
+              // remove
+              selectedPathNames = state.selectedPathNames.filter(pathName => pathName !== selectedPathNames[0]);
+            } else {
+              // add
+              selectedPathNames = state.selectedPathNames.concat(selectedPathNames);
+            }
+          } else {
+            // Merge old and new selectedPathNames
+            
+            for (const pathName of state.selectedPathNames) {
+              if (!selectedPathNames.includes(pathName)) {
+                selectedPathNames.push(pathName);
+              }
+            }
+
+          }
+          
+        }
+  
+        state.selectedPathNames = selectedPathNames;
+
+
         var actors: Actor[] = [];
         var components: Component[] = [];
 

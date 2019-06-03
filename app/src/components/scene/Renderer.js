@@ -57,7 +57,6 @@ export default {
       this.resize();
     },
     selectionDisabled(val) {
-      console.log("selec", val);
       if (val) {
         this.boxSelectControls.disabled = true;
         this.selectControls.disabled = true;
@@ -67,7 +66,6 @@ export default {
       }
     },
     boxSelect(val) {
-      console.log("boxselec", val, this.selectionDisabled);
       if (!this.selectionDisabled) {
         this.boxSelectControls.disabled = !val;
         this.selectControls.disabled = val;
