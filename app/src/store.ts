@@ -142,8 +142,8 @@ interface RootState {
   loading: boolean;
 
   selectedPathNames: string[];
-  selectedActors: Actor[]; // TODO only store the pathNames of selected actors / components?
-  selectedComponents: Component[];
+  selectedActors: string[];//Actor[]; // TODO only store the pathNames of selected actors / components?
+  selectedComponents: string[]; //Component[];
   selectedJsonToEdit: any; // if one actor or component is selected, it's json is editable
 
   error: any;
@@ -268,20 +268,17 @@ export default new Vuex.Store<RootState>({
         state.selectedPathNames = selectedPathNames;
 
 
-        var actors: Actor[] = [];
-        var components: Component[] = [];
-
-        state.selectedActors = actors;
-        state.selectedComponents = components;
+        var actors: string[] = [];
+        var components: string[] = [];
 
         for (const pathName of selectedPathNames) {
           let actor = findActorByName(pathName);
           if (actor !== undefined) {
-            actors.push(actor);
+            actors.push(pathName);
           } else {
             let component = findComponentByName(pathName);
             if (component !== undefined) {
-              components.push(component);
+              components.push(pathName);
             } else {
               console.error(
                 "No actor/component with path name '" + pathName + "' found."
@@ -305,6 +302,10 @@ export default new Vuex.Store<RootState>({
         } else {
           state.selectedJsonToEdit = null;
         }
+
+        state.selectedActors = actors;
+        state.selectedComponents = components;
+
       }
     },
     SET_VISIBLE_OBJECTS(state, visibleObjects) {
@@ -365,12 +366,12 @@ export default new Vuex.Store<RootState>({
         // TODO handle components as well
         if (obj.type === 1) {
           window.data.actors[
-            indexOfActor(state.selectedActors[0].pathName)
+            indexOfActor(state.selectedActors[0])
           ] = obj;
           state.selectedActors = [obj];
         } else {
           window.data.actors[
-            indexOfComponent(state.selectedComponents[0].pathName)
+            indexOfComponent(state.selectedComponents[0])
           ] = obj;
           state.selectedComponents = [obj];
         }
@@ -392,10 +393,10 @@ export default new Vuex.Store<RootState>({
 
       state.dataLoaded = false; // trigger recalculation of getNames
       for (const actor of state.selectedActors) {
-        window.data.actors.splice(indexOfActor(actor.pathName), 1);
+        window.data.actors.splice(indexOfActor(actor), 1);
       }
       for (const component of state.selectedComponents) {
-        window.data.components.splice(indexOfComponent(component.pathName), 1);
+        window.data.components.splice(indexOfComponent(component), 1);
       }
       refreshActorComponentDictionary();
 

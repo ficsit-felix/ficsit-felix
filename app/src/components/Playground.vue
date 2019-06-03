@@ -126,21 +126,21 @@ export default {
     },
     selectedActors(val) {
       if (val.length === 1) {
-        const mesh = this.meshManager.findMeshByName(val[0].pathName);
-        updateActorMeshTransform(mesh, val[0]);
+        const mesh = this.meshManager.findMeshByName(val[0]);
+        updateActorMeshTransform(mesh, findActorByName(val[0]));
       }
 
       if (val != this.lastSelectedActors) {
         // selection needs to change
 
         for (const actor of this.lastSelectedActors) {
-          if (!val.includes(actor)) {
+          //if (!val.includes(actor)) {
             // deselect this actor
-            const mesh = this.meshManager.findMeshByName(actor.pathName);
+            const mesh = this.meshManager.findMeshByName(actor);
             if (mesh !== null) {
-              mesh.material = this.materialFactory.createMaterial(actor);
+              mesh.material = this.materialFactory.createMaterial(findActorByName(actor));
             }
-          }
+          //}
         }
 
         this.lastSelectedActors = val;
@@ -150,7 +150,7 @@ export default {
           for (const actor of val) {
             // select this actor
             const mesh = this.meshManager.findMeshAndVisibilityByName(
-              actor.pathName
+              actor
             );
             mesh.mesh.material = this.selectedMaterial;
             if (mesh.visible) {
@@ -179,7 +179,7 @@ export default {
         if (this.selectedActors.length === 1) {
           // TODO multiselection
           const mesh = this.meshManager.findVisibleMeshByName(
-            this.selectedActors[0].pathName
+            this.selectedActors[0]
           );
           if (mesh === null) {
             this.transformControl.detach();
@@ -359,7 +359,7 @@ export default {
     focusSelectedObject() {
       if (this.selectedActors.length === 1) {
         var camera = this.$refs.renderer.camera.controls;
-        const actor = this.selectedActors[0];
+        const actor = findActorByName(this.selectedActors[0]);
         // changed because of coordinate system change
         camera.target.x = actor.transform.translation[1];
         camera.target.y = actor.transform.translation[0];
@@ -385,7 +385,7 @@ export default {
         return; // TODO multiple actors
       }
 
-      const actor = this.selectedActors[0];
+      const actor = findActorByName(this.selectedActors[0]);
       const mesh = this.meshManager.findMeshByName(actor.pathName);
 
       // TODO need to clone, else change is not detected?
