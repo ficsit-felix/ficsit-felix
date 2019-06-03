@@ -95,6 +95,21 @@ export default {
 
     Sentry.captureMessage("visit open page");
 
+    if ( this.$route.path == "/open/auto" && this.$store.state.settings.autoLoadSaveFile !== "") {
+      this.importJson = true; // TODO depend on file extension
+      this.isSaving = true;
+      // fetch auto load  save file
+      fetch(this.$store.state.settings.autoLoadSaveFile).then(file => {
+
+        file.arrayBuffer().then(data => {
+                  this.processFile(data);
+        });
+        
+        
+      }).catch(error => this.handleError(error.message));
+
+    }
+
     for (var a in modelConfig) {
       if (modelConfig[a].model !== "") {
         modelHelper.loadModel("/models/" + modelConfig[a].model);
@@ -130,16 +145,22 @@ export default {
       this.setLoading(false).then(() => {});
       var reader = new FileReader();
       reader.onload = response => {
-        this.infoText = this.$t("openPage.processing");
+        this.processFile(response.target.result);
+      };
+      reader.readAsArrayBuffer(file);
+    },
+
+    processFile(data) {
+      this.infoText = this.$t("openPage.processing");
         this.progress = 50;
         try {
           var json;
           if (this.importJson) {
             json = JSON.parse(
-              Buffer.from(response.target.result).toString("utf-8")
+              Buffer.from(data).toString("utf-8")
             );
           } else {
-            let sav2Json = new Sav2Json(Buffer.from(response.target.result));
+            let sav2Json = new Sav2Json(Buffer.from(data));
             json = sav2Json.transform();
           }
 
@@ -165,8 +186,6 @@ export default {
           this.handleError(error.message);
           console.error(error);
         }
-      };
-      reader.readAsArrayBuffer(file);
     }
   }
 };

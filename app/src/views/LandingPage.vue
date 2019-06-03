@@ -68,6 +68,12 @@ export default {
   },
   mounted() {
     Sentry.captureMessage("visit landing page");
+    if (this.$store.state.settings.autoLoadSaveFile !== "") {
+      this.$router.push({
+        path: "open/auto"
+      });
+    }
+
     // Set persisted locale
     const lang = this.$store.state.settings.locale;
     import(`@/lang/${lang}.json`).then(msgs => {

@@ -1,4 +1,4 @@
-{
+ {
 	"classList": {
 		"allClasses": "all classes"
 	},
@@ -129,7 +129,8 @@
 		"showCustomPaints": "Show custom paints",
 		"showMap": "Show map",
 		"showModels": "Show models",
-		"experimentalFeatures": "Experimental features"
+		"experimentalFeatures": "Experimental features",
+		"autoLoadSaveFile": "Auto-load save file"
 	},
 	"toolbar": {
 		"local": "Local",

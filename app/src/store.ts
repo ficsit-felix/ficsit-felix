@@ -34,6 +34,7 @@ interface SettingsRootState {
   classColors: { [id: string]: string };
   locale: string;
   experimentalFeatures: boolean;
+  autoLoadSaveFile: string;
 }
 
 // updates the local storage on settings mutations
@@ -55,6 +56,7 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     classColors: {},
     locale: "en",
     experimentalFeatures: false,
+    autoLoadSaveFile: "",
   },
   getters: {},
   mutations: {
@@ -108,6 +110,10 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     SET_EXPERIMENTAL_FEATURES(state, payload) {
       state.experimentalFeatures = payload;
       updateLocalStorage(state);
+    },
+    SET_AUTO_LOAD_SAVE_FILE(state, payload) {
+      state.autoLoadSaveFile = payload;
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -143,6 +149,9 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setExperimentalFeatures(context, payload) {
       context.commit("SET_EXPERIMENTAL_FEATURES", payload);
+    },
+    setAutoLoadSaveFile(context, payload) {
+      context.commit("SET_AUTO_LOAD_SAVE_FILE", payload);
     }
   }
 };

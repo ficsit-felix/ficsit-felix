@@ -129,7 +129,8 @@
 		"showCustomPaints": "Eigene Einfärbung anzeigen",
 		"showMap": "Karte anzeigen",
 		"showModels": "Modelle anzeigen",
-		"experimentalFeatures": "Experimentelle Funktionen"
+		"experimentalFeatures": "Experimentelle Funktionen",
+		"autoLoadSaveFile": "Spielstand automatisch laden"
 	},
 	"toolbar": {
 		"local": "Lokal",

@@ -58,6 +58,14 @@
     <md-checkbox :model="experimentalFeatures" @change="updateExperimentalFeatures">{{
       $t("settings.experimentalFeatures")
     }}</md-checkbox>
+
+    <md-field>
+      <label>{{ $t("settings.autoLoadSaveFile") }}</label>
+      <md-input
+        :value="autoLoadSaveFile"
+        @input="updateAutoLoadSaveFile"
+      ></md-input>
+    </md-field>
   </div>
 </template>
 
@@ -76,7 +84,8 @@ export default {
       "conveyorBeltResolution",
       "classColors",
       "editClassColors",
-      "experimentalFeatures"
+      "experimentalFeatures",
+      "autoLoadSaveFile"
     ])
   },
   methods: {
@@ -89,7 +98,8 @@ export default {
       "setConveyorBeltResolution",
       "setEditClassColors",
       "clearClassColors",
-      "setExperimentalFeatures"
+      "setExperimentalFeatures",
+      "setAutoLoadSaveFile"
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);
@@ -129,6 +139,9 @@ export default {
     updateExperimentalFeatures(value) {
       this.setExperimentalFeatures(value);
     },
+    updateAutoLoadSaveFile(value) {
+      this.setAutoLoadSaveFile(value);
+    }
   }
 };
 </script>
