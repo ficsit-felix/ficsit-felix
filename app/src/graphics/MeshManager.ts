@@ -22,6 +22,7 @@ export default class MeshManager {
     this.visibleMeshes.push(mesh);
   }
 
+  // TODO use map to speed this up
   findMeshByName(pathName: string): Mesh | null {
     for (const mesh of this.visibleMeshes) {
       if (mesh.userData.pathName === pathName) {
