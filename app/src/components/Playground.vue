@@ -134,20 +134,21 @@ export default {
         // selection needs to change
 
         for (const actor of this.lastSelectedActors) {
-          //if (!val.includes(actor)) {
+          if (!val.includes(actor)) {
             // deselect this actor
             const mesh = this.meshManager.findMeshByName(actor);
             if (mesh !== null) {
               mesh.material = this.materialFactory.createMaterial(findActorByName(actor));
             }
-          //}
+          }
         }
 
-        this.lastSelectedActors = val;
+        
 
         if (val.length > 0) {
           var visibleSelectedMeshes = [];
           for (const actor of val) {
+            if (!this.lastSelectedActors.includes(actor)) {
             // select this actor
             const mesh = this.meshManager.findMeshAndVisibilityByName(
               actor
@@ -156,7 +157,10 @@ export default {
             if (mesh.visible) {
               visibleSelectedMeshes.push(mesh.mesh);
             }
+            }
           }
+        
+       
 
           if (visibleSelectedMeshes.length === 1) {
             // TODO multiselection
@@ -167,7 +171,9 @@ export default {
         } else {
           this.transformControl.detach();
         }
+         this.lastSelectedActors = val;
       }
+
     },
 
     classes: {
