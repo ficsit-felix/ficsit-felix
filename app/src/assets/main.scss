@@ -44,3 +44,21 @@ html, body {
 .md-dialog {
     transition-duration: 0.1s !important;
 }
+
+// hack until https://github.com/vuematerial/vue-material/pull/2023 is merged
+// fixes the blurry text in the settings dialog in chrome on windows by using flex centering instead of transform centering
+// uses the body as the container that centers the dialog and removes the #app by positioning it absolutely
+// breaks if more than one dialog is on screen
+.md-dialog {
+    transform: initial !important;
+    position: initial !important;
+}
+#app {
+    position: absolute;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
