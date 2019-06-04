@@ -10,6 +10,8 @@ import MaterialFactory from "./MaterialFactory";
 export default class MeshManager {
   visibleMeshes: Mesh[] = [];
   invisibleMeshes: Mesh[] = [];
+  meshByName: {[id: string]: {index: number, visibility: boolean}} = {};
+  meshDictionaryDirty: boolean = false;
 
   scene: Scene;
 
@@ -17,24 +19,41 @@ export default class MeshManager {
     this.scene = scene;
   }
 
+  private refreshMeshDictionary() {
+    this.meshDictionaryDirty = false;
+    console.log("refrehs mesh dict")
+    this.meshByName = {};
+    for (let i = 0; i < this.visibleMeshes.length; i++) {
+      const mesh = this.visibleMeshes[i];
+      this.meshByName[mesh.userData.pathName] = {index: i, visibility: true};
+    }
+    for (let i = 0; i < this.invisibleMeshes.length; i++) {
+      const mesh = this.invisibleMeshes[i];
+      this.meshByName[mesh.userData.pathName] = {index: i, visibility: false};
+    }
+  }
+
   add(mesh: Mesh) {
     this.scene.add(mesh);
     this.visibleMeshes.push(mesh);
+    this.meshDictionaryDirty = true;
+    
   }
 
   // TODO use map to speed this up
   findMeshByName(pathName: string): Mesh | null {
-    for (const mesh of this.visibleMeshes) {
-      if (mesh.userData.pathName === pathName) {
-        return mesh;
-      }
+    if (this.meshDictionaryDirty) {
+      this.refreshMeshDictionary(); 
     }
-    for (const mesh of this.invisibleMeshes) {
-      if (mesh.userData.pathName === pathName) {
-        return mesh;
-      }
+    const mesh = this.meshByName[pathName];
+    if (mesh === undefined) {
+      return null;
     }
-    return null;
+    if (mesh.visibility) {
+      return this.visibleMeshes[mesh.index];
+    } else {
+      return this.invisibleMeshes[mesh.index];
+    }
   }
 
   /**
@@ -43,35 +62,50 @@ export default class MeshManager {
   findMeshAndVisibilityByName(
     pathName: string
   ): { mesh: Mesh; visible: boolean } | null {
-    for (const mesh of this.visibleMeshes) {
-      if (mesh.userData.pathName === pathName) {
-        return { mesh, visible: true };
-      }
+    if (this.meshDictionaryDirty) {
+      this.refreshMeshDictionary(); 
     }
-    for (const mesh of this.invisibleMeshes) {
-      if (mesh.userData.pathName === pathName) {
-        return { mesh, visible: false };
-      }
+    const mesh = this.meshByName[pathName];
+    if (mesh === undefined) {
+      return null;
     }
-    return null;
+    if (mesh.visibility) {
+      return {mesh:this.visibleMeshes[mesh.index], visible: true};
+    } else {
+      return {mesh:this.invisibleMeshes[mesh.index], visible: true};
+    }
+
   }
 
+  // TODO are those still used?
   findVisibleMeshByName(pathName: string): Mesh | null {
-    for (const mesh of this.visibleMeshes) {
-      if (mesh.userData.pathName === pathName) {
-        return mesh;
-      }
+    if (this.meshDictionaryDirty) {
+      this.refreshMeshDictionary(); 
     }
-    return null;
+    const mesh = this.meshByName[pathName];
+    if (mesh === undefined) {
+      return null;
+    }
+    if (mesh.visibility) {
+      return this.visibleMeshes[mesh.index];
+    } else {
+      return null;
+    }
   }
 
   findInvisibleMeshByName(pathName: string): Mesh | null {
-    for (const mesh of this.invisibleMeshes) {
-      if (mesh.userData.pathName === pathName) {
-        return mesh;
-      }
+    if (this.meshDictionaryDirty) {
+      this.refreshMeshDictionary(); 
     }
-    return null;
+    const mesh = this.meshByName[pathName];
+    if (mesh === undefined) {
+      return null;
+    }
+    if (mesh.visibility) {
+      return null;
+    } else {
+      return this.invisibleMeshes[mesh.index];
+    }
   }
 
   updateClassVisibility(val: { visible: boolean; name: string }[]) {
@@ -104,6 +138,7 @@ export default class MeshManager {
         }
       }
     }
+    this.meshDictionaryDirty = true;
   }
 
   /**
@@ -138,6 +173,7 @@ export default class MeshManager {
   deleteSelectedMeshes(payload: { actors: Actor[]; components: Component[] }) {
     // TODO delete geometry if not used by anything else?
 
+    this.meshDictionaryDirty = true;
     for (const actor of payload.actors) {
       for (var i = this.visibleMeshes.length - 1; i >= 0; i--) {
         if (this.visibleMeshes[i].userData.pathName === actor.pathName) {

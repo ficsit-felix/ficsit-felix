@@ -1,6 +1,6 @@
 /** dev version of the satisfactory-blueprint module, so that we get hot reloading */
 
-import { Actor, Component, SaveGame, Property } from "satisfactory-json";
+import { Actor, Component, SaveGame, Property, StructProperty } from "satisfactory-json";
 import { SatisfactoryBlueprint, Transform, classNameMap, Building, Vector3, Connection } from "satisfactory-blueprint";
 import { Quaternion, Euler } from 'three';
 import { ExtraErrorData } from '@sentry/integrations';
@@ -266,9 +266,18 @@ class BlueprintCreator {
     // top transform
     const topTransform = getProperty(actor, "mTopTransform");
     if (topTransform !== undefined) {
+      const topTransformStruct = topTransform as StructProperty;
       // TODO make sure these are the correct properties
-      const rotation = topTransform.value.properties[0].value;
-      const translation = topTransform.value.properties[1].value;
+      const rotationProp = getPropertyFromStructProperty(topTransformStruct, "Rotation");
+      const translationProp = getPropertyFromStructProperty(topTransformStruct, "Rotation");
+      var rotation  = {a:0,b:0,c:0,d:1};
+      if (rotationProp !== undefined) {
+        rotation = rotationProp.value;
+      }
+      var translation= {x:0,y:0,z:0};
+      if (translationProp !== undefined) {
+        translation = translationProp.value;
+      }
       connection.topTransform = this.convertTransform({
         translation: [translation.x, translation.y, translation.z],
         rotation: [rotation.a, rotation.b, rotation.c, rotation.d],
@@ -423,6 +432,18 @@ function getPropertyFromComponent(
           return property;
         }
       }
+    }
+  }
+  return undefined;
+}
+
+function getPropertyFromStructProperty(
+  struct: StructProperty,
+  propertyName: string
+): Property | undefined {
+  for (const property of struct.value.properties) {
+    if (property.name === propertyName) {
+      return property;
     }
   }
   return undefined;
