@@ -84,8 +84,7 @@ var SelectionBox = (function() {
         /*center.copy(object.geometry.boundingSphere.center);
 
         center.applyMatrix4(object.matrixWorld);*/
-        
-        
+
         // test for the origin instead
         // TODO would be nice to select the object if any part of it is selected
         // or maybe when the frustum intersects with the bounding box?
@@ -105,4 +104,4 @@ var SelectionBox = (function() {
   return SelectionBox;
 })();
 
-export {SelectionBox};
+export { SelectionBox };

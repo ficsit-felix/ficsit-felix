@@ -5,7 +5,12 @@
 import * as THREE from "three";
 import { MOUSE } from "three";
 var SelectionHelper = (function() {
-  function SelectionHelper(selectionBox, domElement, cssClassName, boxSelectControls) {
+  function SelectionHelper(
+    selectionBox,
+    domElement,
+    cssClassName,
+    boxSelectControls
+  ) {
     this.element = document.createElement("div");
     this.element.classList.add(cssClassName);
     this.element.style.pointerEvents = "none";
@@ -21,8 +26,12 @@ var SelectionHelper = (function() {
     this.domElement.addEventListener(
       "mousedown",
       function(event) {
-        if (boxSelectControls.disabled) {return;}
-        if (event.button != MOUSE.LEFT) {return;}
+        if (boxSelectControls.disabled) {
+          return;
+        }
+        if (event.button != MOUSE.LEFT) {
+          return;
+        }
 
         this.isDown = true;
         this.onSelectStart(event);
@@ -33,7 +42,9 @@ var SelectionHelper = (function() {
     this.domElement.addEventListener(
       "mousemove",
       function(event) {
-        if (boxSelectControls.disabled) {return;}
+        if (boxSelectControls.disabled) {
+          return;
+        }
         if (this.isDown) {
           this.onSelectMove(event);
         }
@@ -44,7 +55,9 @@ var SelectionHelper = (function() {
     document.addEventListener(
       "mouseup",
       function(event) {
-        if (boxSelectControls.disabled) {return;}
+        if (boxSelectControls.disabled) {
+          return;
+        }
         if (this.isDown) {
           this.isDown = false;
           this.onSelectOver(event);
@@ -91,4 +104,4 @@ var SelectionHelper = (function() {
   return SelectionHelper;
 })();
 
-export {SelectionHelper};
+export { SelectionHelper };

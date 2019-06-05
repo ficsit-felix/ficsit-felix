@@ -1,34 +1,52 @@
 /** dev version of the satisfactory-blueprint module, so that we get hot reloading */
 
-import { Actor, Component, SaveGame, Property, StructProperty } from "satisfactory-json";
-import { SatisfactoryBlueprint, Transform, classNameMap, Building, Vector3, Connection } from "satisfactory-blueprint";
-import { Quaternion, Euler } from 'three';
-import { ExtraErrorData } from '@sentry/integrations';
-
+import {
+  Actor,
+  Component,
+  SaveGame,
+  Property,
+  StructProperty
+} from "satisfactory-json";
+import {
+  SatisfactoryBlueprint,
+  Transform,
+  classNameMap,
+  Building,
+  Vector3,
+  Connection
+} from "satisfactory-blueprint";
+import { Quaternion, Euler } from "three";
+import { ExtraErrorData } from "@sentry/integrations";
 
 export interface InstantiatedBlueprint {
   newActors: Actor[];
   newComponents: Component[];
   changesToSubsystems: any; // TODO
-
 }
 
 /**
-* Instantiates a blueprint and returns information needed to place the actors and components into the save game.
-* @param blueprint The blueprint that should be instantiated
-* @param transform Position and rotation at which the blueprint should be instantiated
-* @param saveGame SaveGame to look up stuff in the subsystems
-*/
-export function createActorsFromBlueprint(blueprint: SatisfactoryBlueprint, transform: Transform, saveGame: SaveGame): InstantiatedBlueprint {
-  throw Error("not implemented ho")
+ * Instantiates a blueprint and returns information needed to place the actors and components into the save game.
+ * @param blueprint The blueprint that should be instantiated
+ * @param transform Position and rotation at which the blueprint should be instantiated
+ * @param saveGame SaveGame to look up stuff in the subsystems
+ */
+export function createActorsFromBlueprint(
+  blueprint: SatisfactoryBlueprint,
+  transform: Transform,
+  saveGame: SaveGame
+): InstantiatedBlueprint {
+  throw Error("not implemented ho");
 }
 
 /**
-* Creates a new blueprint from the set of actors 
-* @param actorsToInclude All the actors that should make up the blueprint
-* @param saveGame The save game is needed to look up stuff in the subsystems and in the corresponding components
-*/
-export function createBlueprintFromActors(actorsToInclude: Actor[], saveGame: SaveGame): SatisfactoryBlueprint {
+ * Creates a new blueprint from the set of actors
+ * @param actorsToInclude All the actors that should make up the blueprint
+ * @param saveGame The save game is needed to look up stuff in the subsystems and in the corresponding components
+ */
+export function createBlueprintFromActors(
+  actorsToInclude: Actor[],
+  saveGame: SaveGame
+): SatisfactoryBlueprint {
   const blueprintCreator = new BlueprintCreator(actorsToInclude, saveGame);
   return blueprintCreator.blueprint;
 }
@@ -36,7 +54,7 @@ export function createBlueprintFromActors(actorsToInclude: Actor[], saveGame: Sa
 class BlueprintCreator {
   blueprint: SatisfactoryBlueprint;
   origin: Vector3;
-  pathNames: {[id: string]: string} = {};
+  pathNames: { [id: string]: string } = {};
 
   public constructor(actorsToInclude: Actor[], saveGame: SaveGame) {
     // create minimal blueprint object
@@ -75,7 +93,7 @@ class BlueprintCreator {
     const origin = {
       x: 0,
       y: 0,
-      z: Number.MAX_SAFE_INTEGER,
+      z: Number.MAX_SAFE_INTEGER
     };
 
     for (const actor of actors) {
@@ -95,7 +113,7 @@ class BlueprintCreator {
    * Creates simplified path names
    */
   private buildPathNames(actors: Actor[]) {
-    const counts: {[id:string]: number} = {}; // counts of the different classes
+    const counts: { [id: string]: number } = {}; // counts of the different classes
 
     for (const actor of actors) {
       const className = classNameMap[actor.className].className;
@@ -103,7 +121,7 @@ class BlueprintCreator {
         counts[className] = 0;
       }
 
-      this.pathNames[actor.pathName] = className + (counts[className]++);
+      this.pathNames[actor.pathName] = className + counts[className]++;
     }
   }
 
@@ -111,14 +129,29 @@ class BlueprintCreator {
     for (const actor of actors) {
       const classAndMark = classNameMap[actor.className];
       if (isConnection(classAndMark.className)) {
-        this.createConnection(actor, saveGame, classAndMark.className, classAndMark.mark);
+        this.createConnection(
+          actor,
+          saveGame,
+          classAndMark.className,
+          classAndMark.mark
+        );
       } else {
-        this.createBuilding(actor, saveGame, classAndMark.className, classAndMark.mark);
+        this.createBuilding(
+          actor,
+          saveGame,
+          classAndMark.className,
+          classAndMark.mark
+        );
       }
     }
   }
 
-  private createBuilding(actor: Actor, saveGame: SaveGame, className: string, mark?: number) {
+  private createBuilding(
+    actor: Actor,
+    saveGame: SaveGame,
+    className: string,
+    mark?: number
+  ) {
     const building: Building = {
       pathName: this.convertPathName(actor.pathName)!,
       className: className,
@@ -180,7 +213,11 @@ class BlueprintCreator {
     }
   }
 
-  private addOverclockData(building: Building, actor: Actor, saveGame: SaveGame) {
+  private addOverclockData(
+    building: Building,
+    actor: Actor,
+    saveGame: SaveGame
+  ) {
     // TODO is this direcly the overclock rate?
     const currentPotential = getProperty(actor, "mCurrentPotential");
     if (currentPotential !== undefined) {
@@ -190,25 +227,37 @@ class BlueprintCreator {
     // Fetch the amount of power shards from the InventoryPotential
     const inventoryPotentialPath = getProperty(actor, "mInventoryPotential");
     if (inventoryPotentialPath !== undefined) {
-      const inventoryPotential = findComponentByName(inventoryPotentialPath.value.pathName, saveGame);
+      const inventoryPotential = findComponentByName(
+        inventoryPotentialPath.value.pathName,
+        saveGame
+      );
       if (inventoryPotential !== undefined) {
-        const inventoryStacks = getPropertyFromComponent(inventoryPotential, "mInventoryStacks");
+        const inventoryStacks = getPropertyFromComponent(
+          inventoryPotential,
+          "mInventoryStacks"
+        );
         if (inventoryStacks !== undefined) {
           building.powerShards = 0;
           for (const stack of inventoryStacks.value.values) {
             const item = stack.properties[0];
-            if (item.value.itemName === "/Game/FactoryGame/Resource/Environment/Crystal/Desc_CrystalShard.Desc_CrystalShard_C") {
+            if (
+              item.value.itemName ===
+              "/Game/FactoryGame/Resource/Environment/Crystal/Desc_CrystalShard.Desc_CrystalShard_C"
+            ) {
               building.powerShards += item.value.properties[0].value; // TODO make sure to select the NumItems property
             }
           }
         }
       }
     }
-
-
   }
 
-  private createConnection(actor: Actor, saveGame: SaveGame, className: string, mark?: number) {
+  private createConnection(
+    actor: Actor,
+    saveGame: SaveGame,
+    className: string,
+    mark?: number
+  ) {
     const connection: Connection = {
       pathName: this.convertPathName(actor.pathName)!,
       className: className,
@@ -230,7 +279,11 @@ class BlueprintCreator {
     this.blueprint.connections.push(connection);
   }
 
-  private createConveyorBelt(actor: Actor, connection: Connection, saveGame: SaveGame) {
+  private createConveyorBelt(
+    actor: Actor,
+    connection: Connection,
+    saveGame: SaveGame
+  ) {
     this.createConveyorInputOutput(actor, connection, saveGame);
     // conveyor spline
     const splineData = getProperty(actor, "mSplineData");
@@ -242,25 +295,28 @@ class BlueprintCreator {
           location: {
             x: point.properties[0].value.x,
             y: point.properties[0].value.y,
-            z: point.properties[0].value.z,
+            z: point.properties[0].value.z
           },
           arriveTangent: {
             x: point.properties[1].value.x,
             y: point.properties[1].value.y,
-            z: point.properties[1].value.z,
+            z: point.properties[1].value.z
           },
           leaveTangent: {
             x: point.properties[2].value.x,
             y: point.properties[2].value.y,
-            z: point.properties[2].value.z,
+            z: point.properties[2].value.z
           }
-        }
-        );
+        });
       }
     }
   }
 
-  private createConveyorLift(actor: Actor, connection: Connection, saveGame: SaveGame) {
+  private createConveyorLift(
+    actor: Actor,
+    connection: Connection,
+    saveGame: SaveGame
+  ) {
     this.createConveyorInputOutput(actor, connection, saveGame);
 
     // top transform
@@ -268,13 +324,19 @@ class BlueprintCreator {
     if (topTransform !== undefined) {
       const topTransformStruct = topTransform as StructProperty;
       // TODO make sure these are the correct properties
-      const rotationProp = getPropertyFromStructProperty(topTransformStruct, "Rotation");
-      const translationProp = getPropertyFromStructProperty(topTransformStruct, "Rotation");
-      var rotation  = {a:0,b:0,c:0,d:1};
+      const rotationProp = getPropertyFromStructProperty(
+        topTransformStruct,
+        "Rotation"
+      );
+      const translationProp = getPropertyFromStructProperty(
+        topTransformStruct,
+        "Rotation"
+      );
+      var rotation = { a: 0, b: 0, c: 0, d: 1 };
       if (rotationProp !== undefined) {
         rotation = rotationProp.value;
       }
-      var translation= {x:0,y:0,z:0};
+      var translation = { x: 0, y: 0, z: 0 };
       if (translationProp !== undefined) {
         translation = translationProp.value;
       }
@@ -284,13 +346,19 @@ class BlueprintCreator {
         scale3d: []
       });
     }
-    
   }
 
-  private createPowerLine(actor: Actor, connection: Connection, saveGame: SaveGame) {
+  private createPowerLine(
+    actor: Actor,
+    connection: Connection,
+    saveGame: SaveGame
+  ) {
     // input and output
     if (actor.entity.extra !== undefined) {
-      const sourcePowerInput = findComponentByName(actor.entity.extra.sourcePathName, saveGame);
+      const sourcePowerInput = findComponentByName(
+        actor.entity.extra.sourcePathName,
+        saveGame
+      );
       if (sourcePowerInput !== undefined) {
         const input = this.convertPathName(sourcePowerInput.outerPathName);
         if (input !== undefined) {
@@ -300,7 +368,10 @@ class BlueprintCreator {
         }
       }
 
-      const targetPowerInput = findComponentByName(actor.entity.extra.targetPathName, saveGame);
+      const targetPowerInput = findComponentByName(
+        actor.entity.extra.targetPathName,
+        saveGame
+      );
       if (targetPowerInput !== undefined) {
         const output = this.convertPathName(targetPowerInput.outerPathName);
         if (output !== undefined) {
@@ -309,57 +380,71 @@ class BlueprintCreator {
           };
         }
       }
-      
     }
   }
 
-  private createConveyorInputOutput(actor: Actor, connection: Connection, saveGame: SaveGame) {
+  private createConveyorInputOutput(
+    actor: Actor,
+    connection: Connection,
+    saveGame: SaveGame
+  ) {
     if (actor.entity.children === undefined) {
       return;
     }
-      for (const child of actor.entity.children) {
-        const component = findComponentByName(child.pathName, saveGame);
-        if (component === undefined || component.className !== "/Script/FactoryGame.FGFactoryConnectionComponent") {
-          // This component is not a factory connection
-          continue;
-        }
-        const connectedComponentPath = getPropertyFromComponent(component, "mConnectedComponent");
-        if (connectedComponentPath === undefined) {
-          continue;
-        }
-        const connectedComponent = findComponentByName(connectedComponentPath.value.pathName, saveGame);
-        if (connectedComponent === undefined) {
-          continue;
-        }
-
-        // the last character of the path name of the component defines the connected slot, e.g. Output3
-        var connectedSlot = undefined;
-        const lastChar = connectedComponent.pathName[connectedComponent.pathName.length-1];
-        // TODO does this handle all cases?
-        if (lastChar >= '0' && lastChar <= '9') {
-          connectedSlot = parseInt(lastChar);
-        }
-
-        const direction = getPropertyFromComponent(component, "mDirection");
-        if (direction === undefined) {
-          continue;
-        }
-
-        if (direction.value.value === 'EFactoryConnectionDirection::FCD_INPUT') {
-          connection.input = {
-            pathName: connectedComponent.outerPathName,
-            connectedSlot
-          };
-        } else if (direction.value.value === 'EFactoryConnectionDirection::FCD_OUTPUT') {
-          connection.output = {
-            pathName: connectedComponent.outerPathName,
-            connectedSlot
-          };
-        }
-
+    for (const child of actor.entity.children) {
+      const component = findComponentByName(child.pathName, saveGame);
+      if (
+        component === undefined ||
+        component.className !==
+          "/Script/FactoryGame.FGFactoryConnectionComponent"
+      ) {
+        // This component is not a factory connection
+        continue;
       }
-  }
+      const connectedComponentPath = getPropertyFromComponent(
+        component,
+        "mConnectedComponent"
+      );
+      if (connectedComponentPath === undefined) {
+        continue;
+      }
+      const connectedComponent = findComponentByName(
+        connectedComponentPath.value.pathName,
+        saveGame
+      );
+      if (connectedComponent === undefined) {
+        continue;
+      }
 
+      // the last character of the path name of the component defines the connected slot, e.g. Output3
+      var connectedSlot = undefined;
+      const lastChar =
+        connectedComponent.pathName[connectedComponent.pathName.length - 1];
+      // TODO does this handle all cases?
+      if (lastChar >= "0" && lastChar <= "9") {
+        connectedSlot = parseInt(lastChar);
+      }
+
+      const direction = getPropertyFromComponent(component, "mDirection");
+      if (direction === undefined) {
+        continue;
+      }
+
+      if (direction.value.value === "EFactoryConnectionDirection::FCD_INPUT") {
+        connection.input = {
+          pathName: connectedComponent.outerPathName,
+          connectedSlot
+        };
+      } else if (
+        direction.value.value === "EFactoryConnectionDirection::FCD_OUTPUT"
+      ) {
+        connection.output = {
+          pathName: connectedComponent.outerPathName,
+          connectedSlot
+        };
+      }
+    }
+  }
 
   /**
    * Fetches the path name that is used in the blueprint or undefined if this actor is not included in the blueprint
@@ -368,8 +453,19 @@ class BlueprintCreator {
     return this.pathNames[pathName];
   }
 
-  private convertTransform(transform: { rotation: number[]; translation: number[]; scale3d: number[]; }): Transform {
-    const euler = new Euler().setFromQuaternion(new Quaternion(transform.rotation[0], transform.rotation[1], transform.rotation[2], transform.rotation[3]));
+  private convertTransform(transform: {
+    rotation: number[];
+    translation: number[];
+    scale3d: number[];
+  }): Transform {
+    const euler = new Euler().setFromQuaternion(
+      new Quaternion(
+        transform.rotation[0],
+        transform.rotation[1],
+        transform.rotation[2],
+        transform.rotation[3]
+      )
+    );
     return {
       position: {
         x: transform.translation[0] - this.origin.x,
@@ -383,17 +479,16 @@ class BlueprintCreator {
       }
     };
   }
-
-
-
-
 }
-
 
 /// helper functions ///
 
 function isConnection(className: string) {
-  return className === "conveyorBelt" || className === "conveyorLift" || className === "powerLine";
+  return (
+    className === "conveyorBelt" ||
+    className === "conveyorLift" ||
+    className === "powerLine"
+  );
 }
 
 function rad2Deg(radians: number): number {
@@ -404,10 +499,7 @@ function deg2Rad(degrees: number): number {
   return degrees * (Math.PI / 180);
 }
 
-function getProperty(
-  actor: Actor,
-  propertyName: string
-): Property | undefined {
+function getProperty(actor: Actor, propertyName: string): Property | undefined {
   if (actor.entity !== undefined) {
     if (actor.entity.properties !== undefined) {
       for (let i = 0; i < actor.entity.properties.length; i++) {
@@ -449,7 +541,10 @@ function getPropertyFromStructProperty(
   return undefined;
 }
 
-function findActorByName(pathName: string, saveGame: SaveGame): Actor | undefined {
+function findActorByName(
+  pathName: string,
+  saveGame: SaveGame
+): Actor | undefined {
   // TODO might be worth optimizing using hashmap or the like
   for (let i = 0; i < saveGame.actors.length; i++) {
     const element = saveGame.actors[i];
@@ -460,7 +555,10 @@ function findActorByName(pathName: string, saveGame: SaveGame): Actor | undefine
   return undefined;
 }
 
-function findComponentByName(pathName: string, saveGame: SaveGame): Component | undefined {
+function findComponentByName(
+  pathName: string,
+  saveGame: SaveGame
+): Component | undefined {
   // TODO might be worth optimizing using hashmap or the like
   for (let i = 0; i < saveGame.components.length; i++) {
     const element = saveGame.components[i];

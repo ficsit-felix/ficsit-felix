@@ -144,38 +144,32 @@ export default {
           }
         }
 
-        
-
         if (val.length > 0) {
           var visibleSelectedMeshes = [];
           for (const actor of val) {
-            
             // select this actor
             const mesh = this.meshManager.findMeshAndVisibilityByName(
               actor.pathName
             );
             if (!this.lastSelectedActors.includes(actor)) {
-            mesh.mesh.material = this.selectedMaterial;
+              mesh.mesh.material = this.selectedMaterial;
             }
             if (mesh.visible) {
               visibleSelectedMeshes.push(mesh.mesh);
             }
           }
-        
-       
 
           if (visibleSelectedMeshes.length === 1) {
             // TODO multiselection
             this.transformControl.attach(visibleSelectedMeshes[0]);
           } else {
-            this.transformControl.detach();  
+            this.transformControl.detach();
           }
         } else {
           this.transformControl.detach();
         }
-         this.lastSelectedActors = val;
+        this.lastSelectedActors = val;
       }
-
     },
 
     classes: {
@@ -293,14 +287,18 @@ export default {
     /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
     })*/
-    this.transformControl.addEventListener("dragging-changed", event => {
-      // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
-      this.$store.commit("SET_SELECTION_DISABLED", event.value);
-      this.setSelectionDisabled(event.value);
-      if (event.value == false) {
-        this.onSelectedActorTransformChanged();
-      }
-    }, false);
+    this.transformControl.addEventListener(
+      "dragging-changed",
+      event => {
+        // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
+        this.$store.commit("SET_SELECTION_DISABLED", event.value);
+        this.setSelectionDisabled(event.value);
+        if (event.value == false) {
+          this.onSelectedActorTransformChanged();
+        }
+      },
+      false
+    );
     this.scene.add(this.transformControl);
 
     // load map
@@ -320,7 +318,13 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["loadData", "setSelectedObject", "setSelectionDisabled", "setBoxSelect", "setShiftSelect"]),
+    ...mapActions([
+      "loadData",
+      "setSelectedObject",
+      "setSelectionDisabled",
+      "setBoxSelect",
+      "setShiftSelect"
+    ]),
 
     updateCompass() {
       // TODO move to a onCameraChanged to only update when necessary
@@ -495,11 +499,10 @@ export default {
 </style>
 
 <style>
-			.selectBox {
-				border: 1px dashed #00bcd4;
-				background-color: #00bcd43d;
-        position: fixed;
-        border-radius: 4px;
-			}
+.selectBox {
+  border: 1px dashed #00bcd4;
+  background-color: #00bcd43d;
+  position: fixed;
+  border-radius: 4px;
+}
 </style>
-

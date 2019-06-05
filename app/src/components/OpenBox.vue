@@ -95,19 +95,20 @@ export default {
 
     Sentry.captureMessage("visit open page");
 
-    if ( this.$route.path == "/open/auto" && this.$store.state.settings.autoLoadSaveFile !== "") {
+    if (
+      this.$route.path == "/open/auto" &&
+      this.$store.state.settings.autoLoadSaveFile !== ""
+    ) {
       this.importJson = true; // TODO depend on file extension
       this.isSaving = true;
       // fetch auto load  save file
-      fetch(this.$store.state.settings.autoLoadSaveFile).then(file => {
-
-        file.arrayBuffer().then(data => {
-                  this.processFile(data);
-        });
-        
-        
-      }).catch(error => this.handleError(error.message));
-
+      fetch(this.$store.state.settings.autoLoadSaveFile)
+        .then(file => {
+          file.arrayBuffer().then(data => {
+            this.processFile(data);
+          });
+        })
+        .catch(error => this.handleError(error.message));
     }
 
     for (var a in modelConfig) {
@@ -152,40 +153,38 @@ export default {
 
     processFile(data) {
       this.infoText = this.$t("openPage.processing");
-        this.progress = 50;
-        try {
-          var json;
-          if (this.importJson) {
-            json = JSON.parse(
-              Buffer.from(data).toString("utf-8")
-            );
-          } else {
-            let sav2Json = new Sav2Json(Buffer.from(data));
-            json = sav2Json.transform();
-          }
-
-          this.infoText = this.$t("openPage.buildingWorld");
-          // give us some time to build the 3d world while animating the progress bar
-          this.setLoadedData(json).then(() => {
-            this.buildInterval = setInterval(() => {
-              this.progress += 1;
-              if (this.progress >= 100) {
-                this.progress = 100;
-                clearInterval(this.buildInterval);
-                setTimeout(() => {
-                  // let the user at least see the full bar
-                  this.$router.push({
-                    name: "editor"
-                  });
-                }, 100);
-              }
-            }, 30);
-          });
-        } catch (error) {
-          Sentry.captureException(error);
-          this.handleError(error.message);
-          console.error(error);
+      this.progress = 50;
+      try {
+        var json;
+        if (this.importJson) {
+          json = JSON.parse(Buffer.from(data).toString("utf-8"));
+        } else {
+          let sav2Json = new Sav2Json(Buffer.from(data));
+          json = sav2Json.transform();
         }
+
+        this.infoText = this.$t("openPage.buildingWorld");
+        // give us some time to build the 3d world while animating the progress bar
+        this.setLoadedData(json).then(() => {
+          this.buildInterval = setInterval(() => {
+            this.progress += 1;
+            if (this.progress >= 100) {
+              this.progress = 100;
+              clearInterval(this.buildInterval);
+              setTimeout(() => {
+                // let the user at least see the full bar
+                this.$router.push({
+                  name: "editor"
+                });
+              }, 100);
+            }
+          }, 30);
+        });
+      } catch (error) {
+        Sentry.captureException(error);
+        this.handleError(error.message);
+        console.error(error);
+      }
     }
   }
 };

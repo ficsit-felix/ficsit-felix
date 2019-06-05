@@ -15,7 +15,11 @@ export default class MaterialFactory {
   // properties
   showCustomPaints: boolean;
 
-  constructor(matcap: Texture, showCustomPaints: boolean, classColors: {[id:string]:Color}) {
+  constructor(
+    matcap: Texture,
+    showCustomPaints: boolean,
+    classColors: { [id: string]: Color }
+  ) {
     this.matcap = matcap;
     this.showCustomPaints = showCustomPaints;
     this.classColors = classColors;

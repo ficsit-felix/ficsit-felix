@@ -566,7 +566,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/RadarTower/Build_RadarTower.Build_RadarTower_C": {
     model: "RadarTower.glb",
-    color: 0xACEEF1,
+    color: 0xaceef1,
     paintable: false,
     powerLineOffset: { x: 90, y: -150, z: 1700 }
   },
@@ -994,7 +994,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "DropPod.glb",
     color: 0xfffd00,
     paintable: false,
-    powerLineOffset: {x: 0,y:-390 , z:40}
+    powerLineOffset: { x: 0, y: -390, z: 40 }
   },
   "/Game/FactoryGame/World/Benefit/Mushroom/BP_Shroom_01.BP_Shroom_01_C": {
     model: "BP_Shroom_01_C.glb",

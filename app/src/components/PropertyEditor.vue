@@ -30,9 +30,12 @@
       </md-button>
     </div>
     <div v-if="experimentalFeatures">
-      <md-button class="md-raised"
-      @click="copyAsBlueprint"
-      :disabled="copyAsBlueprintDisabled">{{$t("propertyEditor.copyAsBlueprint")}}</md-button>
+      <md-button
+        class="md-raised"
+        @click="copyAsBlueprint"
+        :disabled="copyAsBlueprintDisabled"
+        >{{ $t("propertyEditor.copyAsBlueprint") }}</md-button
+      >
     </div>
     <md-field :class="jsonClass">
       <label>{{ $t("propertyEditor.jsonLabel") }}</label>
@@ -66,7 +69,7 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
-import { createBlueprintFromActors } from "@/ts/blueprintDev";//"satisfactory-blueprint";
+import { createBlueprintFromActors } from "@/ts/blueprintDev"; //"satisfactory-blueprint";
 import copyToClipboard from "@/ts/copyToClipboard";
 export default {
   name: "PropertyEditor",
@@ -88,7 +91,7 @@ export default {
     copyAsBlueprintDisabled() {
       return this.selectedActors.length < 2;
     }
-    //  ...mapGetters(["getSelectedObject"]) 
+    //  ...mapGetters(["getSelectedObject"])
     /*selectedJson() {
             if (this.getSelectedObject == null) {
                 return "";
@@ -143,7 +146,10 @@ export default {
       }
     },
     copyAsBlueprint() {
-      const blueprint = createBlueprintFromActors(this.selectedActors, window.data);
+      const blueprint = createBlueprintFromActors(
+        this.selectedActors,
+        window.data
+      );
       console.log("blueprint", blueprint);
       copyToClipboard(JSON.stringify(blueprint));
     }

@@ -10,7 +10,7 @@ import MaterialFactory from "./MaterialFactory";
 export default class MeshManager {
   visibleMeshes: Mesh[] = [];
   invisibleMeshes: Mesh[] = [];
-  meshByName: {[id: string]: {index: number, visibility: boolean}} = {};
+  meshByName: { [id: string]: { index: number; visibility: boolean } } = {};
   meshDictionaryDirty: boolean = false;
 
   scene: Scene;
@@ -24,11 +24,11 @@ export default class MeshManager {
     this.meshByName = {};
     for (let i = 0; i < this.visibleMeshes.length; i++) {
       const mesh = this.visibleMeshes[i];
-      this.meshByName[mesh.userData.pathName] = {index: i, visibility: true};
+      this.meshByName[mesh.userData.pathName] = { index: i, visibility: true };
     }
     for (let i = 0; i < this.invisibleMeshes.length; i++) {
       const mesh = this.invisibleMeshes[i];
-      this.meshByName[mesh.userData.pathName] = {index: i, visibility: false};
+      this.meshByName[mesh.userData.pathName] = { index: i, visibility: false };
     }
   }
 
@@ -36,13 +36,12 @@ export default class MeshManager {
     this.scene.add(mesh);
     this.visibleMeshes.push(mesh);
     this.meshDictionaryDirty = true;
-    
   }
 
   // TODO use map to speed this up
   findMeshByName(pathName: string): Mesh | null {
     if (this.meshDictionaryDirty) {
-      this.refreshMeshDictionary(); 
+      this.refreshMeshDictionary();
     }
     const mesh = this.meshByName[pathName];
     if (mesh === undefined) {
@@ -62,24 +61,23 @@ export default class MeshManager {
     pathName: string
   ): { mesh: Mesh; visible: boolean } | null {
     if (this.meshDictionaryDirty) {
-      this.refreshMeshDictionary(); 
+      this.refreshMeshDictionary();
     }
     const mesh = this.meshByName[pathName];
     if (mesh === undefined) {
       return null;
     }
     if (mesh.visibility) {
-      return {mesh:this.visibleMeshes[mesh.index], visible: true};
+      return { mesh: this.visibleMeshes[mesh.index], visible: true };
     } else {
-      return {mesh:this.invisibleMeshes[mesh.index], visible: true};
+      return { mesh: this.invisibleMeshes[mesh.index], visible: true };
     }
-
   }
 
   // TODO are those still used?
   findVisibleMeshByName(pathName: string): Mesh | null {
     if (this.meshDictionaryDirty) {
-      this.refreshMeshDictionary(); 
+      this.refreshMeshDictionary();
     }
     const mesh = this.meshByName[pathName];
     if (mesh === undefined) {
@@ -94,7 +92,7 @@ export default class MeshManager {
 
   findInvisibleMeshByName(pathName: string): Mesh | null {
     if (this.meshDictionaryDirty) {
-      this.refreshMeshDictionary(); 
+      this.refreshMeshDictionary();
     }
     const mesh = this.meshByName[pathName];
     if (mesh === undefined) {

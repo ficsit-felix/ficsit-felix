@@ -56,7 +56,7 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     classColors: {},
     locale: "en",
     experimentalFeatures: false,
-    autoLoadSaveFile: "",
+    autoLoadSaveFile: ""
   },
   getters: {},
   mutations: {
@@ -203,7 +203,7 @@ export default new Vuex.Store<RootState>({
 
     selectionDisabled: false,
     boxSelect: false,
-    shiftSelect: false,
+    shiftSelect: false
   },
   getters: {
     getNames: state => {
@@ -232,7 +232,6 @@ export default new Vuex.Store<RootState>({
       state.error = error;
     },
     SET_SELECTED(state, selectedPathNames) {
-
       if (
         selectedPathNames.length === 1 &&
         selectedPathNames[0] == "---save-header---"
@@ -254,8 +253,6 @@ export default new Vuex.Store<RootState>({
         state.selectedJsonToEdit = header;
         state.selectedPathNames = selectedPathNames;
       } else {
-
-
         if (state.shiftSelect) {
           if (selectedPathNames.length === 0) {
             // nothing needs to change
@@ -265,26 +262,27 @@ export default new Vuex.Store<RootState>({
             // If only one is selected, toggle depending on if it was already in the list or not
             if (state.selectedPathNames.includes(selectedPathNames[0])) {
               // remove
-              selectedPathNames = state.selectedPathNames.filter(pathName => pathName !== selectedPathNames[0]);
+              selectedPathNames = state.selectedPathNames.filter(
+                pathName => pathName !== selectedPathNames[0]
+              );
             } else {
               // add
-              selectedPathNames = state.selectedPathNames.concat(selectedPathNames);
+              selectedPathNames = state.selectedPathNames.concat(
+                selectedPathNames
+              );
             }
           } else {
             // Merge old and new selectedPathNames
-            
+
             for (const pathName of state.selectedPathNames) {
               if (!selectedPathNames.includes(pathName)) {
                 selectedPathNames.push(pathName);
               }
             }
-
           }
-          
         }
-  
-        state.selectedPathNames = selectedPathNames;
 
+        state.selectedPathNames = selectedPathNames;
 
         var actors: Actor[] = [];
         var components: Component[] = [];

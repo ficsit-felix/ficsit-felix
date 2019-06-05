@@ -55,9 +55,11 @@
       $t("settings.clearClassColorsButton")
     }}</md-button>
 
-    <md-checkbox :model="experimentalFeatures" @change="updateExperimentalFeatures">{{
-      $t("settings.experimentalFeatures")
-    }}</md-checkbox>
+    <md-checkbox
+      :model="experimentalFeatures"
+      @change="updateExperimentalFeatures"
+      >{{ $t("settings.experimentalFeatures") }}</md-checkbox
+    >
 
     <md-field>
       <label>{{ $t("settings.autoLoadSaveFile") }}</label>

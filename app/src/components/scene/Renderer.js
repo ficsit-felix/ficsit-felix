@@ -1,6 +1,6 @@
 import { WebGLRenderer } from "three";
 import { SelectControls } from "@/js/SelectControls";
-import {BoxSelectControls} from "@/js/BoxSelectControls";
+import { BoxSelectControls } from "@/js/BoxSelectControls";
 import { mapActions, mapState } from "vuex";
 
 // see https://github.com/posva/state-animation-demos/tree/master/components/three
