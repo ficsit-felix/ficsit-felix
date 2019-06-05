@@ -229,6 +229,7 @@ export default {
     classColors: {
       deep: true,
       handler(value) {
+        this.materialFactory.classColors = this.classColors;
         this.materialFactory.setupDefaultMaterials();
         this.updateAllMaterials();
       }
@@ -257,7 +258,8 @@ export default {
 
     this.materialFactory = new MaterialFactory(
       this.matcap,
-      this.showCustomPaints
+      this.showCustomPaints,
+      this.classColors
     );
     this.meshFactory = new MeshFactory(
       this.geometryFactory,

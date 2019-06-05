@@ -7,7 +7,7 @@ import { Actor, ByteProperty, StructProperty } from "satisfactory-json";
  * Factory that creates and caches materials
  */
 export default class MaterialFactory {
-  classColors: { [id: string]: Color } = {};
+  classColors: { [id: string]: Color };
   materials: { [id: string]: Material } = {};
   coloredMaterials: Material[] = [];
   matcap: Texture;
@@ -15,9 +15,10 @@ export default class MaterialFactory {
   // properties
   showCustomPaints: boolean;
 
-  constructor(matcap: Texture, showCustomPaints: boolean) {
+  constructor(matcap: Texture, showCustomPaints: boolean, classColors: {[id:string]:Color}) {
     this.matcap = matcap;
     this.showCustomPaints = showCustomPaints;
+    this.classColors = classColors;
     this.setupColoredMaterials();
     this.setupDefaultMaterials();
   }

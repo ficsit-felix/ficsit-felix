@@ -193,6 +193,7 @@ export default class MeshManager {
   }
 
   updateAllMaterials(materialFactory: MaterialFactory) {
+    console.log("update");
     for (const mesh of this.visibleMeshes.concat(this.invisibleMeshes)) {
       const actor = findActorByName(mesh.userData.pathName);
       if (actor === undefined) continue;

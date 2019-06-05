@@ -566,7 +566,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/RadarTower/Build_RadarTower.Build_RadarTower_C": {
     model: "RadarTower.glb",
-    color: 0xff00ff,
+    color: 0xACEEF1,
     paintable: false,
     powerLineOffset: { x: 90, y: -150, z: 1700 }
   },
