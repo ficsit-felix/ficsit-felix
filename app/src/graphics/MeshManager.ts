@@ -21,7 +21,6 @@ export default class MeshManager {
 
   private refreshMeshDictionary() {
     this.meshDictionaryDirty = false;
-    console.log("refrehs mesh dict")
     this.meshByName = {};
     for (let i = 0; i < this.visibleMeshes.length; i++) {
       const mesh = this.visibleMeshes[i];

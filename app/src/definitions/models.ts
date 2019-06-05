@@ -1007,8 +1007,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   "/Game/FactoryGame/World/Hazard/SporeCloudPlant/BP_SporeFlower.BP_SporeFlower_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "SporeCloudPlant.glb",
+    color: 0xb12525,
     paintable: false
   },
   "/Script/FactoryGame.FGFoliageRemoval": {
