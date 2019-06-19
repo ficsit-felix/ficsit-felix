@@ -69,7 +69,7 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
-import { createBlueprintFromActors } from "@/ts/blueprintDev"; //"satisfactory-blueprint";
+import { createBlueprintFromActors } from "satisfactory-blueprint"; //"satisfactory-blueprint";
 import copyToClipboard from "@/ts/copyToClipboard";
 export default {
   name: "PropertyEditor",
