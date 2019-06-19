@@ -20,6 +20,8 @@ cd app
 yarn serve
 ```
 
+To use a local copy of `satisfactory-json` for development use [yarn link](https://yarnpkg.com/lang/en/docs/cli/link/).
+
 ## Licensing
 All script files are distributed unter the [MIT license](LICENSE).
 
