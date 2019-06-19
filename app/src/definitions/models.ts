@@ -212,6 +212,18 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: wallWoodColor,
     paintable: true
   },
+
+  "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Window_8x4_03.Build_Wall_Window_8x4_03_C": {
+    model: "Build_Wall_1a_C.glb", // TODO
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Window_Diagonal_8x4_02.Build_Wall_Window_Diagonal_8x4_02_C": {
+    model: "Build_Wall_1a_C.glb", // TODO
+    color: 0xff00ff,
+    paintable: false
+  },
+
   "/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C": {
     model: "Build_Wall_1a_C.glb", // TODO
     color: 0xff00ff,
@@ -369,6 +381,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
   "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C": {
     model: "ConveyorLift_Bottom.glb",
     color: conveyorMk4,
+    paintable: false
+  },
+
+  "/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk5/Build_ConveyorLiftMk5.Build_ConveyorLiftMk5_C": {
+    model: "ConveyorLift_Bottom.glb",
+    color: conveyorMk5,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C": {
@@ -818,6 +836,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true
   },
   "/Game/FactoryGame/Equipment/GasMask/Equip_GasMask.Equip_GasMask_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Equipment/HazmatSuit/Equip_HazmatSuit.Equip_HazmatSuit_C": {
     model: "",
     color: 0xff00ff,
     paintable: false
