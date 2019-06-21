@@ -139,5 +139,15 @@
 		"scale": "Scale",
 		"translate": "Translate",
 		"world": "World"
+	},
+	"experimentalFix": {
+		"title": "Fix experimental save file",
+		"explanation": "The experimental version currently has a bug which leads to infinite loading times. A cause can be a missing extra in the RailroadSubsystem.",
+		"explanation2": "You can load your save file here to receive a fixed version. When you save the file in the experimental version again, you probably need to fix it again.",
+		"explanation3": "The save file is only processed in your browser and not uploaded to a server.",
+		"fixing": "Fixing save file...",
+		"errorText": "If this fix does not work for you, please send the save file to me {dropbox} or per Mail to {mail} so that I can look into that problem.",
+		"landingText": "The experimental version currently has a bug which can lead to infinite loading times. If you only want to fix your save file, click here.",
+		"landingButton": "Fix save file"
 	}
 }

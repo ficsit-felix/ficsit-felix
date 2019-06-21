@@ -16,7 +16,7 @@
     "@types/uuid": "^3.4.4",
     "gsap": "^2.1.2",
     "satisfactory-blueprint": "^0.0.3",
-    "satisfactory-json": "^0.0.11",
+    "satisfactory-json": "^0.0.12",
     "three": "0.105.2",
     "vue": "^2.6.6",
     "vue-i18n": "^8.11.2",

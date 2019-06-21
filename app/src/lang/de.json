@@ -139,5 +139,15 @@
 		"scale": "Skalieren",
 		"translate": "Verschieben",
 		"world": "Welt"
+	},
+	"experimentalFix": {
+		"title": "Experimentellen Spielstand reparieren",
+		"explanation": "Die experimentelle Version hat momentan einen Bug, der zu unendlichen Ladezeiten führen kann. Ein Grund dafür können fehlende Daten im RailroadSubsystem sein.",
+		"explanation2": "Du kannst deinen Spielstand hier laden und eine reparierte Version erhalten. Wenn du in der experimentellen Version danach wieder speicherst, musst du den Spielstand wahrscheinlich wieder hier reparieren.",
+		"explanation3": "Dein Spielstand wird nur in deinem Browser verarbeitet und zu keinem Server hochgeladen.",
+		"fixing": "Spielstand wird repariert...",
+		"errorText": "Wenn dieser Fix für dich nicht funktioniert, schick mir den Spielstand {dropbox} oder per Mail an {mail}, damit ich mir das Problem anschauen kann.",
+		"landingText": "Die experimentelle Version hat momentan einen Bug, der zu unendlichen Ladezeiten führen kann. Wenn du nur deinen Spielstand reparieren möchtest, klick hier.",
+		"landingButton": "Spielstand reparieren"
 	}
 }

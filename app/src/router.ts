@@ -34,6 +34,12 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/Save.vue")
-    }
+    },
+    {
+      path: "/experimental-fix",
+      name: "experimental-fix",
+      component: () =>
+        import( "./views/ExperimentalFix.vue")
+    },
   ]
 });

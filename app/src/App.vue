@@ -11,6 +11,7 @@
   -moz-osx-font-smoothing: grayscale;
   color: #adadad;
   height: 100%;
+  width: 100%;
   overflow: hidden;
 }
 #nav {

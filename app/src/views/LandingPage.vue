@@ -7,6 +7,17 @@
       >
         <Logo height="180" black="#000" :animating="logoAnimating" />
       </div>
+<div style="display: flex; flex-direction: row;background: #ffff0060; align-items: center;">
+<p>
+{{ $t("experimentalFix.landingText") }}
+</p>
+        <md-button
+        style="flex-shrink: 0"
+          class="md-raised"
+          @click="$router.push({ path: '/experimental-fix' })"
+          >{{ $t("experimentalFix.landingButton") }}</md-button
+        >
+</div>
 
       <p>{{ $t("landingPage.firstParagraph") }}</p>
       <p>
