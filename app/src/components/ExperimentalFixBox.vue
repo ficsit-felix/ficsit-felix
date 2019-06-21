@@ -8,7 +8,7 @@
           accept=".sav"
           class="input-file"
           @change="openFile($event.target.files[0])"
-        />
+        >
         <!--
             
         @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
@@ -16,7 +16,6 @@
       </div>
     </form>
     <div v-else class="infobox">
-      
       <p>{{ $t("openPage.subtitleSav") }}</p>
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
@@ -26,21 +25,24 @@
 
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>{{ $t("openPage.errorTitle") }}</md-dialog-title>
-      <span class="dialog-content"
-        >{{ errorText }} <br /><br />
+      <span class="dialog-content">
+        {{ errorText }}
+        <br>
+        <br>
         <i18n path="openPage.errorText">
           <a
             href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
             place="dropbox"
-            >{{ $t("openPage.dropboxText") }}</a
-          >
+          >{{ $t("openPage.dropboxText") }}</a>
           <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
         </i18n>
       </span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">{{
+        <md-button class="md-primary" @click="showErrorDialog = false">
+          {{
           $t("general.close")
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -56,7 +58,7 @@ import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 
 export default {
-  name: 'ExperimentalFixBox',
+  name: "ExperimentalFixBox",
   data: function() {
     return {
       isSaving: false,
@@ -83,7 +85,6 @@ export default {
   },
   mounted() {
     Sentry.captureMessage("visit fix page");
-
 
     for (var a in modelConfig) {
       if (modelConfig[a].model !== "") {
@@ -130,8 +131,10 @@ export default {
       this.progress = 50;
       try {
         var json;
-          let sav2Json = new Sav2Json(Buffer.from(data));
-          json = sav2Json.transform();
+        let sav2Json = new Sav2Json(Buffer.from(data));
+        json = sav2Json.transform();
+
+        Sentry.captureMessage("debugSav2Json");
 
         this.infoText = this.$t("experimentalFix.fixing");
 
@@ -155,8 +158,7 @@ export default {
 
               element.href = window.URL.createObjectURL(blob);
               element.download =
-                this.filename.replace(".json", "").replace(".sav", "") +
-                ".sav";
+                this.filename.replace(".json", "").replace(".sav", "") + ".sav";
 
               document.body.appendChild(element);
 
@@ -167,7 +169,6 @@ export default {
             }, 100);
           }
         }, 30);
-        
       } catch (error) {
         Sentry.captureException(error);
         this.handleError(error.message);

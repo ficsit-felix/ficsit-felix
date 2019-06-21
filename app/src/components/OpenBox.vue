@@ -163,6 +163,8 @@ export default {
           json = sav2Json.transform();
         }
 
+        Sentry.captureMessage("debugSav2Json");
+
         this.infoText = this.$t("openPage.buildingWorld");
         // give us some time to build the 3d world while animating the progress bar
         this.setLoadedData(json).then(() => {
