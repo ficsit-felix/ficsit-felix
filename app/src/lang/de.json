@@ -35,7 +35,7 @@
 			"title": "Open Source Lizenzen"
 		},
 		"save": {
-			"content": "Willst du diesen Spielstand als .sav Datei runterladen?",
+			"content": "Willst du diesen Spielstand als .sav Datei runterladen? Bitte sichere deinen alten Spielstand bevor du ihn überschreibst!",
 			"title": "Spielstand speichern"
 		},
 		"saveJson": {
@@ -86,7 +86,7 @@
 		"dragJson": "Zieh deine JSON Datei hierher oder klicke zum durchsuchen",
 		"dragSav": "Zieh deinen Spielstand hierher oder klicke zum durchsuchen",
 		"dropboxText": "mit diesem Dropbox Formular",
-		"errorText": "Bitte schick mit diesen Spielstand {dropbox} oder per Mail an {mail}, damit ich den Fehler beheben kann.",
+		"errorText": "Bitte schick mit diesen Spielstand {dropbox} oder per Mail an {mail}, damit ich den Fehler beheben kann. Wenn du informiert werden möchtest, wenn ich das Problem fixe, schick mir bitte auch eine E-Mail, denn ich kann die E-Mail, die du bei Dropbox einträgst nicht sehen.",
 		"errorTitle": "Fehler",
 		"initializing": "initialisieren...",
 		"processing": "Datei verarbeiten...",
@@ -143,10 +143,10 @@
 	"experimentalFix": {
 		"title": "Experimentellen Spielstand reparieren",
 		"explanation": "Die experimentelle Version hat momentan einen Bug, der zu unendlichen Ladezeiten führen kann. Ein Grund dafür können fehlende Daten im RailroadSubsystem sein.",
-		"explanation2": "Du kannst deinen Spielstand hier laden und eine reparierte Version erhalten. Wenn du in der experimentellen Version danach wieder speicherst, musst du den Spielstand wahrscheinlich wieder hier reparieren.",
+		"explanation2": "Du kannst deinen Spielstand hier laden und eine reparierte Version erhalten. Wenn du in der experimentellen Version danach wieder speicherst, musst du den Spielstand wahrscheinlich wieder hier reparieren. Bitte mach ein Backup deines Spielstandes bevor du dieses Tool benutzt!",
 		"explanation3": "Dein Spielstand wird nur in deinem Browser verarbeitet und zu keinem Server hochgeladen.",
 		"fixing": "Spielstand wird repariert...",
-		"errorText": "Wenn dieser Fix für dich nicht funktioniert, schick mir den Spielstand {dropbox} oder per Mail an {mail}, damit ich mir das Problem anschauen kann.",
+		"errorText": "Wenn dieser Fix für dich nicht funktioniert, schick mir den Spielstand {dropbox} oder per Mail an {mail}, damit ich mir das Problem anschauen kann. Wenn du informiert werden möchtest, wenn ich das Problem fixe, schick mir bitte auch eine E-Mail, denn ich kann die E-Mail, die du bei Dropbox einträgst nicht sehen.",
 		"landingText": "Die experimentelle Version hat momentan einen Bug, der zu unendlichen Ladezeiten führen kann. Wenn du nur deinen Spielstand reparieren möchtest, klick hier.",
 		"landingButton": "Spielstand reparieren"
 	}

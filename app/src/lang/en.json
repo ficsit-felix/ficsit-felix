@@ -35,7 +35,7 @@
 			"title": "Open Source Licenses"
 		},
 		"save": {
-			"content": "Do you want to download this save as a .sav file?",
+			"content": "Do you want to download this save as a .sav file? Please backup your old save file before you overwrite it!",
 			"title": "Save save file"
 		},
 		"saveJson": {
@@ -86,7 +86,7 @@
 		"dragJson": "Drag your JSON file here to begin or click to browse",
 		"dragSav": "Drag your save file here to begin or click to browse",
 		"dropboxText": "via this Dropbox form",
-		"errorText": "Please send this save file to me {dropbox} or per Mail to {mail} so that I can fix this error.",
+		"errorText": "Please send this save file to me {dropbox} or per Mail to {mail} so that I can fix this error. If you want to be informed when I fix it, please also send me an E-Mail as I cannot see the E-Mail you enter in Dropbox.",
 		"errorTitle": "Error",
 		"initializing": "initializing...",
 		"processing": "processing file...",
@@ -143,10 +143,10 @@
 	"experimentalFix": {
 		"title": "Fix experimental save file",
 		"explanation": "The experimental version currently has a bug which leads to infinite loading times. A cause can be a missing extra in the RailroadSubsystem.",
-		"explanation2": "You can load your save file here to receive a fixed version. When you save the file in the experimental version again, you probably need to fix it again.",
+		"explanation2": "You can load your save file here to receive a fixed version. When you save the file in the experimental version again, you probably need to fix it again. Please back up your save files before you try this!",
 		"explanation3": "The save file is only processed in your browser and not uploaded to a server.",
 		"fixing": "Fixing save file...",
-		"errorText": "If this fix does not work for you, please send the save file to me {dropbox} or per Mail to {mail} so that I can look into that problem.",
+		"errorText": "If this fix does not work for you, please send the save file to me {dropbox} or per Mail to {mail} so that I can look into that problem. If you want to be informed when I fix it, please also send me an E-Mail as I cannot see the E-Mail you enter in Dropbox.",
 		"landingText": "The experimental version currently has a bug which can lead to infinite loading times. If you only want to fix your save file, click here.",
 		"landingButton": "Fix save file"
 	}
