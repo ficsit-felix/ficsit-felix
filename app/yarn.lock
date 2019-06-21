@@ -821,15 +821,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
-"@types/node@*":
+"@types/node@*", "@types/node@12.0.8":
   version "12.0.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.8.tgz#551466be11b2adc3f3d47156758f610bd9f6b1d8"
   integrity sha512-b8bbUOTwzIY3V5vDTY1fIJ+ePKDUBqt2hC2woVGotdQQhG/2Sh62HOKHrT7ab+VerXAcPyAiTEipPu/FsreUtg==
-
-"@types/node@12.0.4":
-  version "12.0.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.4.tgz#46832183115c904410c275e34cf9403992999c32"
-  integrity sha512-j8YL2C0fXq7IONwl/Ud5Kt0PeXw22zGERt+HSSnwbKOJVsAGkEz3sFCYwaF9IOuoG1HOtE0vKCj6sXF7Q0+Vaw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -7245,15 +7240,18 @@ sass@^1.17.2:
   dependencies:
     chokidar "^2.0.0"
 
-satisfactory-blueprint@../../satisfactory-blueprint/:
-  version "0.0.1"
+satisfactory-blueprint@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/satisfactory-blueprint/-/satisfactory-blueprint-0.0.3.tgz#44c1e51e470fb9101f0d602eb6164aa3adb43ab9"
+  integrity sha512-ldj0niApN5F+c8Rp2Ok/3D/t5JrKNGXtQSNNN/bFoiTctcSAi1Hm8WdybJHCj/oIm768U/LkL4ms9ktdeDcf4g==
   dependencies:
     satisfactory-json "^0.0.9"
+    three "^0.105.2"
 
-satisfactory-json@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.10.tgz#71c121ae37d2e6ba93328c5b1411f35961331a21"
-  integrity sha512-k30faR6TzbTxyjiDIouBhTO5PnEM+Qbhnbi5BWxV3MVB0H14OPvJSdphFsfgl3Qd0isj+kvf30XiXx1hWdSHvA==
+satisfactory-json@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.11.tgz#4d47dece28c304a72c025888ce8bd3d215dba131"
+  integrity sha512-JOBWdmlcG1ogaCk8ZENhKGHocZ22VoMnYu/6VIeoOaRIjQ5Ukzv50Z9GKRck5JPGOj5IFYKbE58HBy/FKFKtww==
 
 satisfactory-json@^0.0.9:
   version "0.0.9"
@@ -8015,7 +8013,7 @@ thread-loader@^2.1.2:
     loader-utils "^1.1.0"
     neo-async "^2.6.0"
 
-three@0.105.2:
+three@0.105.2, three@^0.105.2:
   version "0.105.2"
   resolved "https://registry.yarnpkg.com/three/-/three-0.105.2.tgz#d135f1549bdcf5a9acd904ba3dbf9198a0268984"
   integrity sha512-L3Al37k4g3hVbgFFS251UVtIc25chhyN0/RvXzR0C+uIBToV6EKDG+MZzEXm9L2miGUVMK27W46/VkP6WUZXMg==

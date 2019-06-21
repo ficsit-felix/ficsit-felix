@@ -27,6 +27,8 @@
       @setScale="setMode('scale')"
     />
 
+
+
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
         <AmbientLight />
@@ -362,6 +364,7 @@ export default {
     },
 
     createMeshesForActors() {
+
       for (let i = 0; i < window.data.actors.length; i++) {
         let actor = window.data.actors[i];
         if (actor.type == 1) {
@@ -496,6 +499,7 @@ export default {
   line-height: 1.1;
   font-size: 14px;
 }
+
 </style>
 
 <style>

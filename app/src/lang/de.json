@@ -49,7 +49,8 @@
 	"general": {
 		"close": "Schließen",
 		"no": "Nein",
-		"yes": "Ja"
+		"yes": "Ja",
+		"cancel": "Abbrechen"
 	},
 	"keyboard": {
 		"ctrl": "Strg",
