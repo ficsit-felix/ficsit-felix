@@ -264,6 +264,8 @@ export default {
       if (railroadSubsystem !== undefined) {
         if (railroadSubsystem.entity.extra === undefined) {
           this.railroadWarning = true;
+          // reset to old save header version
+          window.data.saveHeaderType = 5; 
         }
       }
   }
@@ -322,7 +324,7 @@ b {
   position: absolute;
   top: 10%;
   font-size: 16px;
-  z-index: 2;
+  z-index: 6;
   display: flex;
   flex-direction: row;
   align-items: center;

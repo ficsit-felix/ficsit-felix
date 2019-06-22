@@ -13,7 +13,6 @@
     "@caohenghu/vue-colorpicker": "^1.1.1",
     "@sentry/browser": "5.4.0",
     "@sentry/integrations": "^5.3.1",
-    "@types/uuid": "^3.4.4",
     "gsap": "^2.1.2",
     "satisfactory-blueprint": "^0.0.3",
     "satisfactory-json": "^0.0.12",
@@ -29,6 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "12.0.8",
+    "@types/uuid": "^3.4.4",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-plugin-typescript": "^3.5.1",

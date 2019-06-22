@@ -62,3 +62,8 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+// increase z-index of semi-transparent overlay to put it above the railroadWarning, so that it can be higher than the text of material buttons
+.md-overlay {
+    z-index: 10 !important;
+}
