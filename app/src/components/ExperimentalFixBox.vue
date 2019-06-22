@@ -117,7 +117,7 @@ export default {
         scope.setExtra("uuid", uuid);
       });
 
-      Sentry.captureMessage("opened file");
+      // Sentry.captureMessage("opened file");
       this.setLoading(false).then(() => {});
       var reader = new FileReader();
       reader.onload = response => {
@@ -134,7 +134,7 @@ export default {
         let sav2Json = new Sav2Json(Buffer.from(data));
         json = sav2Json.transform();
 
-        Sentry.captureMessage("debugSav2Json");
+        // Sentry.captureMessage("debugSav2Json");
 
         this.infoText = this.$t("experimentalFix.fixing");
 
