@@ -37,6 +37,8 @@ import * as Sentry from "@sentry/browser";
 
 import { Json2Sav } from "satisfactory-json";
 
+import { reportMessage, reportError } from "@/ts/errorReporting";
+
 export default {
   name: "SaveBox",
   data: function() {
@@ -116,7 +118,7 @@ export default {
             this.progress = 100;
             clearInterval(this.buildInterval);
             setTimeout(() => {
-              Sentry.captureMessage("saved file");
+              reportMessage("saved file");
 
               element.href = window.URL.createObjectURL(blob);
               if (this.exportJson) {
@@ -140,7 +142,7 @@ export default {
           }
         }, 30);
       } catch (error) {
-        Sentry.captureException(error);
+        reportError(error);
         this.handleError(error.message);
         console.error(error);
       }

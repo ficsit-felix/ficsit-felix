@@ -1,32 +1,35 @@
 <template>
   <div class="open">
     <div class="centered">
-      <Logo height="180" black="#000" :animating="logoAnimating"/>
+      <Logo height="180" black="#000" :animating="logoAnimating" />
       <h1>{{ $t("experimentalFix.title") }}</h1>
-      <div style="color: #333;padding: 1px 16px 0px 16px; text-align: left;font-size: 16px;">
+      <div
+        style="color: #333;padding: 1px 16px 0px 16px; text-align: left;font-size: 16px;"
+      >
         <p>{{ $t("experimentalFix.explanation") }}</p>
         <p>{{ $t("experimentalFix.explanation2") }}</p>
         <p>{{ $t("experimentalFix.explanation3") }}</p>
-        
       </div>
       <ExperimentalFixBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"
       />
       <p>
-          <i18n path="experimentalFix.errorText">
-            <a
-              href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
-              place="dropbox"
-            >{{ $t("openPage.dropboxText") }}</a>
-            <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
-          </i18n>
-        </p>
+        <i18n path="experimentalFix.errorText">
+          <a
+            href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
+            place="dropbox"
+            >{{ $t("openPage.dropboxText") }}</a
+          >
+          <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
+        </i18n>
+      </p>
       <p>
-        <md-button class="md-raised" @click="$router.push({ name: 'landingpage' })">
-          {{
-          $t("savePage.backButton")
-          }}
+        <md-button
+          class="md-raised"
+          @click="$router.push({ name: 'landingpage' })"
+        >
+          {{ $t("savePage.backButton") }}
         </md-button>
       </p>
     </div>

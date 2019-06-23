@@ -121,7 +121,7 @@ export default class MaterialFactory {
         if (element.name === "mColorSlot") {
           if (!isPaintable) {
             console.warn("paintable should be true for: " + actor.className);
-            /*Sentry.captureMessage(
+            /*reportMessage(
               "paintable should be true for: " + actor.className
             );*/
           }

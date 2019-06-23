@@ -190,22 +190,24 @@
       </md-dialog-actions>
     </md-dialog>
 
-
     <div class="railroadWarning" v-if="railroadWarning">
       <p>
-      This savefile is missing the train extra in the RailroadSubsystem. This might be due to a bug in the experimental version. Click the save button to download a repaired savefile.
+        This savefile is missing the train extra in the RailroadSubsystem. This
+        might be due to a bug in the experimental version. Click the save button
+        to download a repaired savefile.
       </p>
       <md-button
-style="color: #44444480"
+        style="color: #44444480"
         class="md-flat md-accent"
         @click="railroadWarning = false"
-        >{{ $t("general.cancel") }}</md-button>
-    <md-button
-style="color: #444"
+        >{{ $t("general.cancel") }}</md-button
+      >
+      <md-button
+        style="color: #444"
         class="md-flat md-accent"
         @click="showSaveDialog = true"
-        >{{ $t("menubar.save") }}</md-button>
-      
+        >{{ $t("menubar.save") }}</md-button
+      >
     </div>
   </div>
 </template>
@@ -215,7 +217,7 @@ import Logo from "@/components/Logo";
 import LicensesDialog from "@/components/LicensesDialog";
 import Settings from "@/components/Settings";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import {findActorByName} from "@/helpers/entityHelper"
+import { findActorByName } from "@/helpers/entityHelper";
 
 export default {
   name: "Menubar",
@@ -257,17 +259,18 @@ export default {
     }
   },
   mounted() {
-          
-      // Show warning for experimental save games
-      this.railroadWarning = false;
-      const railroadSubsystem = findActorByName("Persistent_Level:PersistentLevel.RailroadSubsystem");
-      if (railroadSubsystem !== undefined) {
-        if (railroadSubsystem.entity.extra === undefined) {
-          this.railroadWarning = true;
-          // reset to old save header version
-          window.data.saveHeaderType = 5; 
-        }
+    // Show warning for experimental save games
+    this.railroadWarning = false;
+    const railroadSubsystem = findActorByName(
+      "Persistent_Level:PersistentLevel.RailroadSubsystem"
+    );
+    if (railroadSubsystem !== undefined) {
+      if (railroadSubsystem.entity.extra === undefined) {
+        this.railroadWarning = true;
+        // reset to old save header version
+        window.data.saveHeaderType = 5;
       }
+    }
   }
 };
 </script>
@@ -312,7 +315,6 @@ p,
 b {
   padding: 0px 16px;
 }
-
 
 .railroadWarning {
   background: #f3e13d;

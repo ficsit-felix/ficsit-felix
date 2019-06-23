@@ -38,14 +38,13 @@ export default new Router({
     {
       path: "/experimental-fix",
       name: "experimental-fix",
-      component: () =>
-        import( "./views/ExperimentalFix.vue")
+      component: () => import("./views/ExperimentalFix.vue")
     },
 
     {
       path: "*",
       name: "404",
       component: LandingPage
-    },
+    }
   ]
 });

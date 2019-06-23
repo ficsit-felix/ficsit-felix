@@ -27,6 +27,8 @@ import {
   Shape
 } from "three";
 
+import { reportMessage, reportException } from "@/ts/errorReporting";
+
 /**
  * Factory that creates and caches geometry
  */
@@ -105,7 +107,7 @@ export default class GeometryFactory {
         } else {
           if (modelConfig[className] === undefined) {
             console.error("missing model definition: " + className);
-            Sentry.captureMessage("missing model definition: " + className);
+            reportMessage("missing model definition: " + className);
           }
 
           // 800 is size of foundations
@@ -259,7 +261,7 @@ export default class GeometryFactory {
       };
     } else {
       console.error("No power line offset for " + source.className);
-      Sentry.captureException("No power line offset for " + source.className);
+      reportException("No power line offset for " + source.className);
     }
     var targetOffset = { x: 0, y: 0, z: 0 };
     if (modelConfig[target.className].powerLineOffset !== undefined) {
@@ -283,7 +285,7 @@ export default class GeometryFactory {
       };
     } else {
       console.error("No power line offset for " + target.className);
-      Sentry.captureException("No power line offset for " + target.className);
+      reportException("No power line offset for " + target.className);
     }
 
     const extrudePath = new LineCurve3(

@@ -12,6 +12,7 @@ import {
 } from "./helpers/entityHelper";
 import * as Sentry from "@sentry/browser";
 import { EventBus } from "./event-bus";
+import { reportException } from "@/ts/errorReporting";
 
 Vue.use(Vuex);
 
@@ -302,7 +303,7 @@ export default new Vuex.Store<RootState>({
               console.error(
                 "No actor/component with path name '" + pathName + "' found."
               );
-              Sentry.captureException(
+              reportException(
                 "No actor/component with path name '" + pathName + "' found."
               );
             }

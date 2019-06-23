@@ -8,7 +8,7 @@
           accept=".sav"
           class="input-file"
           @change="openFile($event.target.files[0])"
-        >
+        />
         <!--
             
         @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
@@ -27,21 +27,20 @@
       <md-dialog-title>{{ $t("openPage.errorTitle") }}</md-dialog-title>
       <span class="dialog-content">
         {{ errorText }}
-        <br>
-        <br>
+        <br />
+        <br />
         <i18n path="openPage.errorText">
           <a
             href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
             place="dropbox"
-          >{{ $t("openPage.dropboxText") }}</a>
+            >{{ $t("openPage.dropboxText") }}</a
+          >
           <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
         </i18n>
       </span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false">
-          {{
-          $t("general.close")
-          }}
+          {{ $t("general.close") }}
         </md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -57,7 +56,8 @@ import { Sav2Json, Json2Sav } from "satisfactory-json";
 import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 
-import {findActorByName} from "@/helpers/entityHelper"
+import { findActorByName } from "@/helpers/entityHelper";
+import { reportMessage, reportContext, reportError } from "@/ts/errorReporting";
 
 export default {
   name: "ExperimentalFixBox",
@@ -86,7 +86,7 @@ export default {
     ...mapState(["filename"])
   },
   mounted() {
-    Sentry.captureMessage("visit fix page");
+    reportMessage("visit fix page");
 
     for (var a in modelConfig) {
       if (modelConfig[a].model !== "") {
@@ -114,12 +114,10 @@ export default {
       const uuid = v4();
       this.setUUID(uuid);
 
-      Sentry.configureScope(scope => {
-        scope.setExtra("filename", file.name);
-        scope.setExtra("uuid", uuid);
-      });
+      reportContext("filename", file.name);
+      reportContext("uuid", uuid);
 
-      // Sentry.captureMessage("opened file");
+      reportMessage("opened file");
       this.setLoading(false).then(() => {});
       var reader = new FileReader();
       reader.onload = response => {
@@ -136,18 +134,20 @@ export default {
         let sav2Json = new Sav2Json(Buffer.from(data));
         json = sav2Json.transform();
 
-        // Sentry.captureMessage("debugSav2Json");
+        // reportMessage("debugSav2Json");
 
         this.infoText = this.$t("experimentalFix.fixing");
 
         data = new Json2Sav(json).transform();
 
         window.data = data;
-        const railroadSubsystem = findActorByName("Persistent_Level:PersistentLevel.RailroadSubsystem");
+        const railroadSubsystem = findActorByName(
+          "Persistent_Level:PersistentLevel.RailroadSubsystem"
+        );
         if (railroadSubsystem !== undefined) {
           if (railroadSubsystem.entity.extra === undefined) {
             // reset to old save header version
-            window.data.saveHeaderType = 5; 
+            window.data.saveHeaderType = 5;
           }
         }
 
@@ -165,7 +165,7 @@ export default {
             this.progress = 100;
             clearInterval(this.buildInterval);
             setTimeout(() => {
-              Sentry.captureMessage("saved file");
+              reportMessage("saved file");
 
               element.href = window.URL.createObjectURL(blob);
               element.download =
@@ -181,7 +181,7 @@ export default {
           }
         }, 30);
       } catch (error) {
-        Sentry.captureException(error);
+        reportError(error);
         this.handleError(error.message);
         console.error(error);
       }

@@ -7,17 +7,19 @@
       >
         <Logo height="180" black="#000" :animating="logoAnimating" />
       </div>
-<div style="display: flex; flex-direction: row;background: #ffff0060; align-items: center;">
-<p>
-{{ $t("experimentalFix.landingText") }}
-</p>
+      <div
+        style="display: flex; flex-direction: row;background: #ffff0060; align-items: center;"
+      >
+        <p>
+          {{ $t("experimentalFix.landingText") }}
+        </p>
         <md-button
-        style="flex-shrink: 0"
+          style="flex-shrink: 0"
           class="md-raised"
           @click="$router.push({ path: '/experimental-fix' })"
           >{{ $t("experimentalFix.landingButton") }}</md-button
         >
-</div>
+      </div>
 
       <p>{{ $t("landingPage.firstParagraph") }}</p>
       <p>
@@ -64,6 +66,7 @@ import Logo from "@/components/Logo";
 import * as Sentry from "@sentry/browser";
 import { commithash } from "@/js/commithash";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { reportMessage } from "@/ts/errorReporting";
 
 export default {
   name: "LandingPage",
@@ -78,7 +81,7 @@ export default {
     };
   },
   mounted() {
-    Sentry.captureMessage("visit landing page");
+    reportMessage("visit landing page");
     if (this.$store.state.settings.autoLoadSaveFile !== "") {
       this.$router.push({
         path: "open/auto"

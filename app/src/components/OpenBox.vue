@@ -67,6 +67,8 @@ import { Sav2Json } from "satisfactory-json";
 import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 
+import { reportMessage, reportContext, reportError } from "@/ts/errorReporting";
+
 export default {
   data: function() {
     return {
@@ -93,7 +95,7 @@ export default {
   mounted() {
     this.importJson = this.$route.path === "/open/json";
 
-    Sentry.captureMessage("visit open page");
+    reportMessage("visit open page");
 
     if (
       this.$route.path == "/open/auto" &&
@@ -137,12 +139,10 @@ export default {
       const uuid = v4();
       this.setUUID(uuid);
 
-      Sentry.configureScope(scope => {
-        scope.setExtra("filename", file.name);
-        scope.setExtra("uuid", uuid);
-      });
+      reportContext("filename", file.name);
+      reportContext("uuid", uuid);
 
-      Sentry.captureMessage("opened file");
+      reportMessage("opened file");
       this.setLoading(false).then(() => {});
       var reader = new FileReader();
       reader.onload = response => {
@@ -163,7 +163,7 @@ export default {
           json = sav2Json.transform();
         }
 
-        // Sentry.captureMessage("debugSav2Json");
+        // reportMessage("debugSav2Json");
 
         this.infoText = this.$t("openPage.buildingWorld");
         // give us some time to build the 3d world while animating the progress bar
@@ -183,7 +183,7 @@ export default {
           }, 30);
         });
       } catch (error) {
-        Sentry.captureException(error);
+        reportError(error);
         this.handleError(error.message);
         console.error(error);
       }
