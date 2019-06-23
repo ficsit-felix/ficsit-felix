@@ -57,6 +57,8 @@ import { Sav2Json, Json2Sav } from "satisfactory-json";
 import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 
+import {findActorByName} from "@/helpers/entityHelper"
+
 export default {
   name: "ExperimentalFixBox",
   data: function() {
@@ -139,6 +141,15 @@ export default {
         this.infoText = this.$t("experimentalFix.fixing");
 
         data = new Json2Sav(json).transform();
+
+        window.data = data;
+        const railroadSubsystem = findActorByName("Persistent_Level:PersistentLevel.RailroadSubsystem");
+        if (railroadSubsystem !== undefined) {
+          if (railroadSubsystem.entity.extra === undefined) {
+            // reset to old save header version
+            window.data.saveHeaderType = 5; 
+          }
+        }
 
         //// SAVING
         var element = document.createElement("a");
