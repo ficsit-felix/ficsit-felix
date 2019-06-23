@@ -41,5 +41,11 @@ export default new Router({
       component: () =>
         import( "./views/ExperimentalFix.vue")
     },
+
+    {
+      path: "*",
+      name: "404",
+      component: LandingPage
+    },
   ]
 });
