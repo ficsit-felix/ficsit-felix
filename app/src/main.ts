@@ -24,7 +24,7 @@ Vue.use(Rollbar, {
   payload: {
     client: {
       javascript: {
-        code_version: "1.0"
+        code_version: commithash
       }
     }
   }
