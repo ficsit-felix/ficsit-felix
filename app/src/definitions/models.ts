@@ -78,6 +78,16 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: foundationColor,
     paintable: false
   },
+  "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_Diagonal_8x2_01.Build_Foundation_Diagonal_8x2_01_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x1_01.Build_Ramp_8x1_01_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
   "/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x2_01.Build_Ramp_8x2_01_C": {
     model: "Build_Ramp_8x2_01_C.glb", // z-100
     color: rampColor,
@@ -88,7 +98,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: rampColor,
     paintable: false
   },
-
+  "/Game/FactoryGame/Buildable/Building/Stair/Build_Stair_1b.Build_Stair_1b_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
   "/Game/FactoryGame/Buildable/Building/Stair/Build_Stairs_Left_01.Build_Stairs_Left_01_C": {
     model: "Stairs_Left.glb", // z+100
     color: 0xac74b7,
@@ -124,6 +138,16 @@ let modelConfig: { [id: string]: ModelConfig } = {
   "/Game/FactoryGame/Buildable/Building/Walkway/Build_WalkwayTrun.Build_WalkwayTrun_C": {
     model: "Walkway_Turn.glb", // x -200 r z 90
     color: 0x71777a,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x1_01.Build_Wall_8x1_01_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x2_01.Build_Wall_8x2_01_C": {
+    model: "",
+    color: 0xff00ff,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_8x4_01.Build_Wall_8x4_01_C": {
@@ -176,6 +200,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: wallWoodColor,
     paintable: true
   },
+  "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Diagonal_8x4_01.Build_Wall_Diagonal_8x4_01_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
 
   "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Door_8x4_01_Steel.Build_Wall_Door_8x4_01_Steel_C": {
     model: "Build_Wall_Door_8x4_01_C.glb", // TODO
@@ -213,13 +242,24 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true
   },
 
+  "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Window_8x4_02.Build_Wall_Window_8x4_02_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+
   "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Window_8x4_03.Build_Wall_Window_8x4_03_C": {
     model: "Build_Wall_1a_C.glb", // TODO
     color: 0xff00ff,
     paintable: false
   },
+  "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Window_8x4_04.Build_Wall_Window_8x4_04_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
   "/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Window_Diagonal_8x4_02.Build_Wall_Window_Diagonal_8x4_02_C": {
-    model: "Build_Wall_1a_C.glb", // TODO
+    model: "",
     color: 0xff00ff,
     paintable: false
   },
@@ -727,6 +767,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
   "/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C": {
     model: "",
     color: 0xda3950,
+    paintable: false
+  },
+  "/Game/FactoryGame/Character/Creature/Enemy/Stinger/BigStinger/Char_EliteCaveStinger.Char_EliteCaveStinger_C": {
+    model: "",
+    color: 0xff00ff,
     paintable: false
   },
   "/Game/FactoryGame/Character/Creature/Enemy/Stinger/Char_CaveStinger.Char_CaveStinger_C": {
