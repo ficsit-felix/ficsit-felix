@@ -8,8 +8,8 @@ export function reportError(error: Error) {
 
 export function reportException(message: string) {
   // @ts-ignore
-  Vue.rollbar.warn(error);
-  // Sentry.captureException(error);
+  Vue.rollbar.warn(message);
+  // Sentry.captureException(message);
 }
 
 export function reportMessage(message: string) {
