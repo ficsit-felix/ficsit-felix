@@ -23,6 +23,13 @@
       <p class="secondary">{{ infoText }}</p>
     </div>
 
+    <md-checkbox
+      :model="saveAsZip"
+      @change="setSaveAsZip"
+      class="lightCheckbox md-primary"
+      >{{ $t("experimentalFix.saveAsZip") }}</md-checkbox
+    >
+
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>{{ $t("openPage.errorTitle") }}</md-dialog-title>
       <span class="dialog-content">
@@ -39,9 +46,9 @@
         </i18n>
       </span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">
-          {{ $t("general.close") }}
-        </md-button>
+        <md-button class="md-primary" @click="showErrorDialog = false">{{
+          $t("general.close")
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -58,6 +65,9 @@ import { modelConfig } from "@/definitions/models";
 
 import { findActorByName } from "@/helpers/entityHelper";
 import { reportMessage, reportContext, reportError } from "@/ts/errorReporting";
+
+import * as JSZip from "jszip";
+import { saveAs } from "file-saver";
 
 export default {
   name: "ExperimentalFixBox",
@@ -83,19 +93,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(["filename"])
+    ...mapState(["filename"]),
+    ...mapState("settings", ["saveAsZip"])
   },
   mounted() {
     reportMessage("visit fix page");
-
-    for (var a in modelConfig) {
-      if (modelConfig[a].model !== "") {
-        modelHelper.loadModel("/models/" + modelConfig[a].model);
-      }
-    }
   },
   methods: {
     ...mapActions(["setLoadedData", "setFilename", "setUUID", "setLoading"]),
+    ...mapActions("settings", ["setSaveAsZip"]),
 
     handleError(errorMessage) {
       this.showErrorDialog = true;
@@ -151,13 +157,6 @@ export default {
           }
         }
 
-        //// SAVING
-        var element = document.createElement("a");
-
-        var blob = new Blob([Buffer.from(data, "binary")], {
-          type: "application/octet-stream"
-        });
-
         this.progress = 50;
         this.buildInterval = setInterval(() => {
           this.progress += 1;
@@ -167,15 +166,51 @@ export default {
             setTimeout(() => {
               reportMessage("saved file");
 
-              element.href = window.URL.createObjectURL(blob);
-              element.download =
-                this.filename.replace(".json", "").replace(".sav", "") + ".sav";
+              if (this.saveAsZip) {
+                let zip = new JSZip();
 
-              document.body.appendChild(element);
+                zip.file(
+                  this.filename.replace(".json", "").replace(".sav", "") +
+                    ".sav",
+                  data,
+                  { binary: true }
+                );
 
-              element.click();
+                zip
+                  .generateAsync({
+                    type: "blob",
+                    compression: "DEFLATE",
+                    compressionOptions: {
+                      level: 9
+                    }
+                  })
+                  .then(content => {
+                    // see FileSaver.js
+                    saveAs(
+                      content,
+                      this.filename.replace(".json", "").replace(".sav", "") +
+                        ".zip"
+                    );
+                  });
+              } else {
+                var element = document.createElement("a");
 
-              document.body.removeChild(element);
+                var blob = new Blob([Buffer.from(data, "binary")], {
+                  type: "application/octet-stream"
+                });
+
+                element.href = window.URL.createObjectURL(blob);
+                element.download =
+                  this.filename.replace(".json", "").replace(".sav", "") +
+                  ".sav";
+
+                document.body.appendChild(element);
+
+                element.click();
+
+                document.body.removeChild(element);
+              }
+
               this.isSaving = false;
             }, 100);
           }
@@ -255,5 +290,17 @@ export default {
 
 .dialog-content {
   padding: 0px 20px;
+}
+</style>
+<style>
+.lightCheckbox {
+  padding: 0px 16px;
+  margin: 0px;
+}
+.lightCheckbox .md-checkbox-label {
+  height: auto;
+}
+.lightCheckbox .md-checkbox-container {
+  border-color: #ccc !important;
 }
 </style>

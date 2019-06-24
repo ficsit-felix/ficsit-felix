@@ -36,6 +36,7 @@ interface SettingsRootState {
   locale: string;
   experimentalFeatures: boolean;
   autoLoadSaveFile: string;
+  saveAsZip: boolean;
 }
 
 // updates the local storage on settings mutations
@@ -57,7 +58,8 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     classColors: {},
     locale: "en",
     experimentalFeatures: false,
-    autoLoadSaveFile: ""
+    autoLoadSaveFile: "",
+    saveAsZip: false
   },
   getters: {},
   mutations: {
@@ -115,6 +117,10 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     SET_AUTO_LOAD_SAVE_FILE(state, payload) {
       state.autoLoadSaveFile = payload;
       updateLocalStorage(state);
+    },
+    SET_SAVE_AS_ZIP(state, payload) {
+      state.saveAsZip = payload;
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -153,6 +159,9 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setAutoLoadSaveFile(context, payload) {
       context.commit("SET_AUTO_LOAD_SAVE_FILE", payload);
+    },
+    setSaveAsZip(context, payload) {
+      context.commit("SET_SAVE_AS_ZIP", payload);
     }
   }
 };

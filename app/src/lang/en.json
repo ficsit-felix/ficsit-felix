@@ -148,6 +148,7 @@
 		"fixing": "Fixing save file...",
 		"errorText": "If this fix does not work for you, please send the save file to me {dropbox} or per Mail to {mail} so that I can look into that problem. If you want to be informed when I fix it, please also send me an E-Mail as I cannot see the E-Mail you enter in Dropbox.",
 		"landingText": "The experimental version currently has a bug which can lead to infinite loading times. If you only want to fix your save file, click here.",
-		"landingButton": "Fix save file"
+		"landingButton": "Fix save file",
+		"saveAsZip": "If your browser crashes with the message \"Something went wrong while displaying this webpage.\", try enabling this checkbox. It will save the .sav file as a .zip file which you then need to extract."
 	}
 }
