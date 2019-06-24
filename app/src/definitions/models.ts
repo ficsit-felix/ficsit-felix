@@ -684,6 +684,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: false
   },
+  "/Game/FactoryGame/Buildable/Factory/Train/Track/Build_RailroadTrack.Build_RailroadTrack_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
   "/Game/FactoryGame/Buildable/Factory/TruckStation/Build_TruckStation.Build_TruckStation_C": {
     model: "TruckStation.glb",
     color: 0x472596,
@@ -721,6 +726,16 @@ let modelConfig: { [id: string]: ModelConfig } = {
   "/Game/FactoryGame/Buildable/Vehicle/Tractor/BP_Tractor.BP_Tractor_C": {
     model: "Tractor.glb",
     color: 0x7f28b0,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Vehicle/Train/Locomotive/BP_Locomotive.BP_Locomotive_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Vehicle/Train/Wagon/BP_FreightWagon.BP_FreightWagon_C": {
+    model: "",
+    color: 0xff00ff,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Vehicle/Truck/BP_Truck.BP_Truck_C": {
@@ -1100,6 +1115,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   "/Script/FactoryGame.FGRecipeManager": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Script/FactoryGame.FGTrain": {
     model: "",
     color: 0xff00ff,
     paintable: false
