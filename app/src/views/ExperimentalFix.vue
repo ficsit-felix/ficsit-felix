@@ -3,6 +3,11 @@
     <div class="centered">
       <Logo height="180" black="#000" :animating="logoAnimating" />
       <h1>{{ $t("experimentalFix.title") }}</h1>
+            <div class="experimentalFix">
+        <p>{{ $t("experimentalFix.landingText") }}</p>
+
+      </div>
+
       <div
         style="color: #333;padding: 1px 16px 0px 16px; text-align: left;font-size: 16px;"
       >
@@ -72,5 +77,16 @@ export default {
   border-radius: 10px;
   text-align: center;
   position: relative;
+}
+
+.experimentalFix {
+  display: flex;
+  flex-direction: row;
+  background: #48ff0060;
+  align-items: center;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+  color: $textGray;
 }
 </style>
