@@ -17,6 +17,7 @@
       id="svg4831"
       inkscape:version="0.92.4 5da689c313, 2019-01-14"
       sodipodi:docname="logo.svg"
+      style="max-width:100%"
     >
       <defs id="defs4825"></defs>
       <sodipodi:namedview

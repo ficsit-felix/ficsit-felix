@@ -235,6 +235,9 @@ export default {
 .input-file {
   opacity: 0; /* invisible but it's there! */
   width: 700px;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
   height: 200px;
   position: absolute;
   cursor: pointer;

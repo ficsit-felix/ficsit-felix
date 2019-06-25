@@ -32,11 +32,11 @@ export default {
 @import "@/assets/colors.scss";
 .save {
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
+  overflow: auto;
 }
 .centered {
+  margin: auto;
   width: 700px;
   background: $boxWhite;
   border-radius: 10px;

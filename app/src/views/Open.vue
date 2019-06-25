@@ -7,6 +7,14 @@
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"
       />
+      <p>
+        <md-button
+          class="md-raised"
+          @click="$router.push({ name: 'landingpage' })"
+        >
+          {{ $t("openPage.backButton") }}
+        </md-button>
+      </p>
     </div>
   </div>
 </template>
@@ -33,11 +41,12 @@ export default {
 @import "@/assets/colors.scss";
 .open {
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
+  width: 100%;
+  overflow: auto;
 }
 .centered {
+  margin: auto;
   width: 700px;
   background: $boxWhite;
   border-radius: 10px;

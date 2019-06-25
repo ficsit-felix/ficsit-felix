@@ -7,12 +7,8 @@
       >
         <Logo height="180" black="#000" :animating="logoAnimating" />
       </div>
-      <div
-        style="display: flex; flex-direction: row;background: #ffff0060; align-items: center;"
-      >
-        <p>
-          {{ $t("experimentalFix.landingText") }}
-        </p>
+      <div class="experimentalFix">
+        <p>{{ $t("experimentalFix.landingText") }}</p>
         <md-button
           style="flex-shrink: 0"
           class="md-raised"
@@ -32,9 +28,7 @@
       <a href="/screenshot.png">
         <img src="/screenshot.png" />
       </a>
-      <p>
-        {{ $t("landingPage.secondParagraph") }}
-      </p>
+      <p>{{ $t("landingPage.secondParagraph") }}</p>
       <md-button
         class="md-flat md-accent"
         @click="$router.push({ path: '/open/json' })"
@@ -54,7 +48,8 @@
         </i18n>
       </p>
       <div class="languageSelection">
-        {{ $t("landingPage.language") }}: <LanguageSwitcher></LanguageSwitcher>
+        {{ $t("landingPage.language") }}:
+        <LanguageSwitcher></LanguageSwitcher>
       </div>
     </div>
     <div class="commithash">{{ commithash }}</div>
@@ -111,6 +106,9 @@ export default {
 .centered {
   margin: auto; // fix scrolling in vertically centered flex box, see https://stackoverflow.com/a/33455342
   width: 700px;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
   background: $boxWhite;
   border-radius: 10px;
   text-align: center;
@@ -135,5 +133,15 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.experimentalFix {
+  display: flex;
+  flex-direction: row;
+  background: #ffff0060;
+  align-items: center;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 }
 </style>

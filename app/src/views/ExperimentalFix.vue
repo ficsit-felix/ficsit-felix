@@ -29,7 +29,7 @@
           class="md-raised"
           @click="$router.push({ name: 'landingpage' })"
         >
-          {{ $t("savePage.backButton") }}
+          {{ $t("openPage.backButton") }}
         </md-button>
       </p>
     </div>
@@ -57,13 +57,17 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/colors.scss";
 .open {
+  overflow: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
+  flex-direction: column;
 }
 .centered {
+  margin: auto;
   width: 700px;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
   background: $boxWhite;
   border-radius: 10px;
   text-align: center;
