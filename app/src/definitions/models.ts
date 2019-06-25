@@ -694,12 +694,32 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xcd8734,
     paintable: true
   },
+  "/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainDockingStation.Build_TrainDockingStation_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainPlatformEmpty.Build_TrainPlatformEmpty_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainStation.Build_TrainStation_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
   "/Game/FactoryGame/Buildable/Factory/Train/SwitchControl/Build_RailroadSwitchControl.Build_RailroadSwitchControl_C": {
     model: "",
     color: 0xff00ff,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Factory/Train/Track/Build_RailroadTrack.Build_RailroadTrack_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Factory/Train/Track/Build_RailroadTrackIntegrated.Build_RailroadTrackIntegrated_C": {
     model: "",
     color: 0xff00ff,
     paintable: false
