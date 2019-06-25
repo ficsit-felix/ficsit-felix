@@ -238,7 +238,7 @@ export default {
       showSettingsDialog: false,
       showLicensesDialog: false,
       showAboutDialog: false,
-      railroadWarning: true
+      railroadWarning: false
     };
   },
   methods: {
@@ -259,18 +259,6 @@ export default {
     }
   },
   mounted() {
-    // Show warning for experimental save games
-    this.railroadWarning = false;
-    const railroadSubsystem = findActorByName(
-      "Persistent_Level:PersistentLevel.RailroadSubsystem"
-    );
-    if (railroadSubsystem !== undefined) {
-      if (railroadSubsystem.entity.extra === undefined) {
-        this.railroadWarning = true;
-        // reset to old save header version
-        window.data.saveHeaderType = 5;
-      }
-    }
   }
 };
 </script>

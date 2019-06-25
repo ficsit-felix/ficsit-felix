@@ -128,6 +128,7 @@ export default {
       try {
         var obj = JSON.parse(this.selectedJson);
         this.setSelectedObject(obj);
+        console.log(obj);
         this.jsonClass = "";
         this.jsonError = "";
         this.showSnackbar = true;

@@ -108,7 +108,7 @@ export function findComponentByName(pathName: string): Component | undefined {
 
 export function indexOfComponent(pathName: string): number {
   if (window.data !== undefined) {
-    const index = actorByPathName[pathName];
+    const index = componentByPathName[pathName];
     return index;
     // TODO might be worth optimizing using hashmap or the like
     /*for (let i = 0; i < window.data.components.length; i++) {

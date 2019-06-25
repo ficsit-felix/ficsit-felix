@@ -395,7 +395,7 @@ export default new Vuex.Store<RootState>({
           ] = obj;
           state.selectedActors = [obj];
         } else {
-          window.data.actors[
+          window.data.components[
             indexOfComponent(state.selectedComponents[0].pathName)
           ] = obj;
           state.selectedComponents = [obj];
