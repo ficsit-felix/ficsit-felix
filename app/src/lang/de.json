@@ -93,7 +93,8 @@
 		"readingFile": "Datei einlesen...",
 		"subtitleJson": "JSON Datei importieren...",
 		"subtitleSav": "Spielstand einlesen...",
-		"title": "Spielstand öffnen"
+		"title": "Spielstand öffnen",
+		"extensionError": "Deine Datei sollte die Endung .{expected} haben, hat aber die Endung .{actual}. Bitte öffne eine Datei mit der korrekten Endung."
 	},
 	"propertyEditor": {
 		"deleteButton": "Löschen",
@@ -148,6 +149,7 @@
 		"fixing": "Spielstand wird repariert...",
 		"errorText": "Wenn dieser Fix für dich nicht funktioniert, schick mir den Spielstand {dropbox} oder per Mail an {mail}, damit ich mir das Problem anschauen kann. Wenn du informiert werden möchtest, wenn ich das Problem fixe, schick mir bitte auch eine E-Mail, denn ich kann die E-Mail, die du bei Dropbox einträgst nicht sehen.",
 		"landingText": "Die experimentelle Version hat momentan einen Bug, der zu unendlichen Ladezeiten führen kann. Wenn du nur deinen Spielstand reparieren möchtest, klick hier.",
-		"landingButton": "Spielstand reparieren"
+		"landingButton": "Spielstand reparieren",
+		"saveAsZip": "Falls dein Browser mit der Nachricht \"Fehler beim Anzeigen dieser Website\" abstürzt, versuch diese Checkbox zu aktivieren. Die .sav Datei wird dabei als .zip Datei gespeichert, die du erst noch extrahieren musst."
 	}
 }

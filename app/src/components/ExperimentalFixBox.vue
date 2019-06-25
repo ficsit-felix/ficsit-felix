@@ -34,16 +34,18 @@
       <md-dialog-title>{{ $t("openPage.errorTitle") }}</md-dialog-title>
       <span class="dialog-content">
         {{ errorText }}
-        <br />
-        <br />
-        <i18n path="openPage.errorText">
-          <a
-            href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
-            place="dropbox"
-            >{{ $t("openPage.dropboxText") }}</a
-          >
-          <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
-        </i18n>
+        <span v-if="showSendSave">
+          <br />
+          <br />
+          <i18n path="openPage.errorText">
+            <a
+              href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
+              place="dropbox"
+              >{{ $t("openPage.dropboxText") }}</a
+            >
+            <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
+          </i18n>
+        </span>
       </span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false">{{
@@ -68,6 +70,7 @@ import { reportMessage, reportContext, reportError } from "@/ts/errorReporting";
 
 import * as JSZip from "jszip";
 import { saveAs } from "file-saver";
+import { reportException } from "../ts/errorReporting";
 
 export default {
   name: "ExperimentalFixBox",
@@ -77,7 +80,8 @@ export default {
       progress: 0,
       infoText: this.$t("openPage.initializing"),
       showErrorDialog: false,
-      errorText: ""
+      errorText: "",
+      showSendSave: false
     };
   },
   watch: {
@@ -103,11 +107,12 @@ export default {
     ...mapActions(["setLoadedData", "setFilename", "setUUID", "setLoading"]),
     ...mapActions("settings", ["setSaveAsZip"]),
 
-    handleError(errorMessage) {
+    handleError(errorMessage, showSendSave = true) {
       this.showErrorDialog = true;
       this.errorText = errorMessage;
       this.isSaving = false;
       this.progress = 0;
+      this.showSendSave = showSendSave;
     },
     openFile(file) {
       this.isSaving = true;
@@ -125,6 +130,17 @@ export default {
 
       reportMessage("opened file");
       this.setLoading(false).then(() => {});
+
+      if (file.name.split(".").pop() !== "sav") {
+        const message = this.$t("openPage.extensionError", {
+          expected: "sav",
+          actual: file.name.split(".").pop()
+        });
+        reportException(message);
+        this.handleError(message, false);
+        return;
+      }
+
       var reader = new FileReader();
       reader.onload = response => {
         this.processFile(response.target.result);
@@ -191,6 +207,10 @@ export default {
                       this.filename.replace(".json", "").replace(".sav", "") +
                         ".zip"
                     );
+                  })
+                  .catch(error => {
+                    reportError(error);
+                    this.handleError(error.message);
                   });
               } else {
                 var element = document.createElement("a");
@@ -212,6 +232,7 @@ export default {
               }
 
               this.isSaving = false;
+              this.progress = 0;
             }, 100);
           }
         }, 30);

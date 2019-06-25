@@ -39,16 +39,19 @@
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>{{ $t("openPage.errorTitle") }}</md-dialog-title>
       <span class="dialog-content"
-        >{{ errorText }} <br /><br />
-        <i18n path="openPage.errorText">
-          <a
-            href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
-            place="dropbox"
-            >{{ $t("openPage.dropboxText") }}</a
-          >
-          <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
-        </i18n>
-      </span>
+        >{{ errorText
+        }}<span v-if="showSendSave"
+          ><br /><br />
+          <i18n path="openPage.errorText">
+            <a
+              href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
+              place="dropbox"
+              >{{ $t("openPage.dropboxText") }}</a
+            >
+            <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
+          </i18n>
+        </span></span
+      >
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false">{{
           $t("general.close")
@@ -68,6 +71,7 @@ import { modelHelper } from "@/helpers/modelHelper";
 import { modelConfig } from "@/definitions/models";
 
 import { reportMessage, reportContext, reportError } from "@/ts/errorReporting";
+import { reportException } from "../ts/errorReporting";
 
 export default {
   data: function() {
@@ -77,6 +81,7 @@ export default {
       infoText: this.$t("openPage.initializing"),
       showErrorDialog: false,
       errorText: "",
+      showSendSave: false,
       importJson: false
     };
   },
@@ -122,11 +127,12 @@ export default {
   methods: {
     ...mapActions(["setLoadedData", "setFilename", "setUUID", "setLoading"]),
 
-    handleError(errorMessage) {
+    handleError(errorMessage, showSendSave = true) {
       this.showErrorDialog = true;
       this.errorText = errorMessage;
       this.isSaving = false;
       this.progress = 0;
+      this.showSendSave = showSendSave;
     },
     openFile(file) {
       this.isSaving = true;
@@ -144,6 +150,19 @@ export default {
 
       reportMessage("opened file");
       this.setLoading(false).then(() => {});
+
+      const expected = this.importJson ? "json" : "sav";
+
+      if (file.name.split(".").pop() !== expected) {
+        const message = this.$t("openPage.extensionError", {
+          expected: expected,
+          actual: file.name.split(".").pop()
+        });
+        reportException(message);
+        this.handleError(message, false);
+        return;
+      }
+
       var reader = new FileReader();
       reader.onload = response => {
         this.processFile(response.target.result);
@@ -167,21 +186,26 @@ export default {
 
         this.infoText = this.$t("openPage.buildingWorld");
         // give us some time to build the 3d world while animating the progress bar
-        this.setLoadedData(json).then(() => {
-          this.buildInterval = setInterval(() => {
-            this.progress += 1;
-            if (this.progress >= 100) {
-              this.progress = 100;
-              clearInterval(this.buildInterval);
-              setTimeout(() => {
-                // let the user at least see the full bar
-                this.$router.push({
-                  name: "editor"
-                });
-              }, 100);
-            }
-          }, 30);
-        });
+        this.setLoadedData(json)
+          .then(() => {
+            this.buildInterval = setInterval(() => {
+              this.progress += 1;
+              if (this.progress >= 100) {
+                this.progress = 100;
+                clearInterval(this.buildInterval);
+                setTimeout(() => {
+                  // let the user at least see the full bar
+                  this.$router.push({
+                    name: "editor"
+                  });
+                }, 100);
+              }
+            }, 30);
+          })
+          .catch(error => {
+            reportError(error);
+            this.handleError(error.message);
+          });
       } catch (error) {
         reportError(error);
         this.handleError(error.message);
