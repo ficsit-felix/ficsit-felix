@@ -9,12 +9,7 @@
       </div>
       <div class="experimentalFix">
         <p>{{ $t("experimentalFix.landingText") }}</p>
-        <md-button
-          style="flex-shrink: 0"
-          class="md-raised"
-          @click="$router.push({ path: '/experimental-fix' })"
-          >{{ $t("experimentalFix.landingButton") }}</md-button
-        >
+
       </div>
 
       <p>{{ $t("landingPage.firstParagraph") }}</p>
@@ -138,7 +133,7 @@ p {
 .experimentalFix {
   display: flex;
   flex-direction: row;
-  background: #ffff0060;
+  background: #48ff0060;
   align-items: center;
   @media (max-width: 500px) {
     flex-direction: column;

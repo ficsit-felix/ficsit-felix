@@ -149,7 +149,7 @@
 		"explanation3": "Dein Spielstand wird nur in deinem Browser verarbeitet und zu keinem Server hochgeladen.",
 		"fixing": "Spielstand wird repariert...",
 		"errorText": "Wenn dieser Fix für dich nicht funktioniert, schick mir den Spielstand {dropbox} oder per Mail an {mail}, damit ich mir das Problem anschauen kann. Wenn du informiert werden möchtest, wenn ich das Problem fixe, schick mir bitte auch eine E-Mail, denn ich kann die E-Mail, die du bei Dropbox einträgst nicht sehen.",
-		"landingText": "Die experimentelle Version hat momentan einen Bug, der zu unendlichen Ladezeiten führen kann. Wenn du nur deinen Spielstand reparieren möchtest, klick hier.",
+		"landingText": "Der Bug mit unendlichen Ladezeiten in der experimentellen Version wurde mit Version  v0.1.16 - Build 101177. Bitte aktualisiere dein Spiel, dann wird dieser Fix nicht mehr benötigt.",
 		"landingButton": "Spielstand reparieren",
 		"saveAsZip": "Falls dein Browser mit der Nachricht \"Fehler beim Anzeigen dieser Website\" abstürzt, versuch diese Checkbox zu aktivieren. Die .sav Datei wird dabei als .zip Datei gespeichert, die du erst noch extrahieren musst."
 	}

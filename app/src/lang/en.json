@@ -149,7 +149,7 @@
 		"explanation3": "The save file is only processed in your browser and not uploaded to a server.",
 		"fixing": "Fixing save file...",
 		"errorText": "If this fix does not work for you, please send the save file to me {dropbox} or per Mail to {mail} so that I can look into that problem. If you want to be informed when I fix it, please also send me an E-Mail as I cannot see the E-Mail you enter in Dropbox.",
-		"landingText": "The experimental version currently has a bug which can lead to infinite loading times. If you only want to fix your save file, click here.",
+		"landingText": "The infinite loading bug in the experimental version was fixed with version v0.1.16 - Build 101177. Please update your game and you won't need to use the fix anymore.",
 		"landingButton": "Fix save file",
 		"saveAsZip": "If your browser crashes with the message \"Something went wrong while displaying this webpage.\", try enabling this checkbox. It will save the .sav file as a .zip file which you then need to extract."
 	}
