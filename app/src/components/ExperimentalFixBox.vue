@@ -71,6 +71,7 @@ import { reportMessage, reportContext, reportError } from "@/ts/errorReporting";
 import * as JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { reportException } from "../ts/errorReporting";
+import { refreshActorComponentDictionary } from "../helpers/entityHelper";
 
 export default {
   name: "ExperimentalFixBox",
@@ -160,18 +161,21 @@ export default {
 
         this.infoText = this.$t("experimentalFix.fixing");
 
-        data = new Json2Sav(json).transform();
-
-        window.data = data;
-        const railroadSubsystem = findActorByName(
-          "Persistent_Level:PersistentLevel.RailroadSubsystem"
-        );
-        if (railroadSubsystem !== undefined) {
-          if (railroadSubsystem.entity.extra === undefined) {
-            // reset to old save header version
-            window.data.saveHeaderType = 5;
+        for (const actor of json.actors) {
+          if (
+            actor.pathName ===
+            "Persistent_Level:PersistentLevel.RailroadSubsystem"
+          ) {
+            if (actor !== undefined) {
+              if (actor.entity.extra === undefined) {
+                // reset to old save header version
+                json.saveHeaderType = 5;
+              }
+            }
           }
         }
+
+        data = new Json2Sav(json).transform();
 
         this.progress = 50;
         this.buildInterval = setInterval(() => {

@@ -68,6 +68,21 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x0c2a89,
     paintable: false
   },
+  "/Game/FactoryGame/Buildable/Building/Fence/Build_Fence_01.Build_Fence_01_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_4x4_01.Build_Foundation_4x4_01_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x1_01.Build_Foundation_8x1_01_C": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
   "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C": {
     model: "Build_Foundation_8x2_01_C.glb",
     color: foundationColor,
