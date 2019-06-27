@@ -1,4 +1,4 @@
-import { Mesh, Scene } from "three";
+import { Mesh, Scene, Color } from "three";
 import GeometryFactory from "./GeometryFactory";
 import {
   findActorByName,
@@ -8,9 +8,13 @@ import {
 import { Actor } from "satisfactory-json";
 import { Component } from "vue";
 import MaterialFactory from "./MaterialFactory";
+// patch the THREE instance
+import * as THREE from "three";
+var InstancedMesh = require('three-instanced-mesh')(THREE);
 
-// manages the meshes displayed on the playground
-
+/**
+ * manages the meshes displayed on the playground
+ */
 export default class MeshManager {
   visibleMeshes: Mesh[] = [];
   invisibleMeshes: Mesh[] = [];
@@ -21,6 +25,36 @@ export default class MeshManager {
 
   constructor(scene: Scene) {
     this.scene = scene;
+
+    //geometry to be instanced
+var boxGeometry = new THREE.BoxBufferGeometry(2,2,2,1,1,1);
+
+//material that the geometry will use
+var material = new THREE.MeshPhongMaterial();
+
+//the instance group
+var cluster = new InstancedMesh( 
+  boxGeometry,                 //this is the same 
+  material, 
+  10000,                       //instance count
+  true,                       //is it dynamic
+  true,                        //does it have color
+  false,                        //uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
+);
+
+var _v3 = new THREE.Vector3();
+var _q = new THREE.Quaternion();
+
+for ( var i = 0 ; i < 10000 ; i ++ ) {
+  
+  cluster.setQuaternionAt( i , _q );
+  cluster.setPositionAt( i , _v3.set( Math.random()*100000 , Math.random()*100000, Math.random()*10000 ) );
+  cluster.setScaleAt( i , _v3.set(Math.random()*100+10,Math.random()*100+10,Math.random()*100+10) );
+  cluster.setColorAt(i, new Color(Math.random() * 0xffffff ));
+
+}
+
+scene.add( cluster );
   }
 
   private refreshMeshDictionary() {
