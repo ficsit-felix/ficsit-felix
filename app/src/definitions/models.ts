@@ -299,13 +299,13 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "AssemblerMk1.glb",
     color: 0x41063c,
     paintable: true,
-    powerLineOffset: { x: 400, y: -115, z: 515 }
+    powerLineOffset: { x: 475, y: 120, z: 700 }
   },
   "/Game/FactoryGame/Buildable/Factory/AssemblerMk2/Build_AssemblerMk2.Build_AssemblerMk2_C": {
     model: "AssemblerMk1.glb",
     color: 0x630f53,
     paintable: true,
-    powerLineOffset: { x: 400, y: -115, z: 515 }
+    powerLineOffset: { x: 475, y: 120, z: 700 }
   },
   "/Game/FactoryGame/Buildable/Factory/Converter/Build_Converter.Build_Converter_C": {
     model: "",
@@ -363,13 +363,13 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "ConstructorMk1.glb",
     color: 0x63075a,
     paintable: true,
-    powerLineOffset: { x: 190, y: -210, z: 465 }
+    powerLineOffset: { x: 210, y: -470, z: 690 }
   },
   "/Game/FactoryGame/Buildable/Factory/ConstructorMk2/Build_ConstructorMk2.Build_ConstructorMk2_C": {
     model: "ConstructorMk1.glb",
     color: 0x7a0f6e,
     paintable: true,
-    powerLineOffset: { x: 190, y: -210, z: 465 }
+    powerLineOffset: { x: 210, y: -470, z: 690 }
   },
   "/Game/FactoryGame/Buildable/Factory/ConveyoAttachmentSplitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C": {
     model: "ConveyorSplitter.glb",
@@ -480,13 +480,13 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "FoundryMk1.glb",
     color: 0x91498a,
     paintable: false,
-    powerLineOffset: { x: 260, y: -220, z: 770 }
+    powerLineOffset: { x: 420, y: -320, z: 580 }
   },
   "/Game/FactoryGame/Buildable/Factory/FoundryMk2/Build_FoundryMk2.Build_FoundryMk2_C": {
     model: "FoundryMk1.glb",
     color: 0x91498a,
     paintable: false,
-    powerLineOffset: { x: 260, y: -220, z: 770 }
+    powerLineOffset: { x: 420, y: -320, z: 580 }
   },
 
   "/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorBiomass.Build_GeneratorBiomass_C": {
@@ -520,9 +520,10 @@ let modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 0, y: 250, z: 1650 }
   },
   "/Game/FactoryGame/Buildable/Factory/GeneratorNuclear/Build_GeneratorNuclear.Build_GeneratorNuclear_C": {
-    model: "",
-    color: 0xff00ff,
-    paintable: false
+    model: "GeneratorNuclear.glb",
+    color: 0x693fb,
+    paintable: false,
+    powerLineOffset: { x: -1840, y: -2480, z: 890 }
   },
   "/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C": {
     model: "HubTerminal.glb",
@@ -566,31 +567,31 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "ManufacturerMk1.glb",
     color: 0x4e2596,
     paintable: false,
-    powerLineOffset: { x: 770, y: -700, z: 630 }
+    powerLineOffset: { x: 905, y: -700, z: 770 }
   },
   "/Game/FactoryGame/Buildable/Factory/ManufacturerMk2/Build_ManufacturerMk2.Build_ManufacturerMk2_C": {
     model: "ManufacturerMk1.glb",
     color: 0x6e309c,
     paintable: false,
-    powerLineOffset: { x: 770, y: -700, z: 630 }
+    powerLineOffset: { x: 905, y: -700, z: 770 }
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C": {
-    model: "Build_MinerMk1_C.glb",
+    model: "MinerMk1.glb",
     color: 0xac139e,
     paintable: true,
-    powerLineOffset: { x: 120, y: 0, z: 1800 }
+    powerLineOffset: { x: 140, y: 20, z: 1800 }
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMk2/Build_MinerMk2.Build_MinerMk2_C": {
-    model: "Build_MinerMk1_C.glb",
+    model: "MinerMk2.glb",
     color: 0xce2abb,
     paintable: true,
-    powerLineOffset: { x: 120, y: 0, z: 1800 }
+    powerLineOffset: { x: -135, y: 0, z: 1800 }
   },
   "/Game/FactoryGame/Buildable/Factory/MinerMk3/Build_MinerMk3.Build_MinerMk3_C": {
-    model: "Build_MinerMk1_C.glb",
+    model: "MinerMk3.glb",
     color: 0xd638af,
     paintable: true,
-    powerLineOffset: { x: 120, y: 0, z: 1800 }
+    powerLineOffset: { x: 140, y: 20, z: 1800 }
   },
   "/Game/FactoryGame/Buildable/Factory/OilPump/Build_OilPump.Build_OilPump_C": {
     model: "OilPump.glb",
@@ -641,19 +642,19 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "RadarTower.glb",
     color: 0xaceef1,
     paintable: false,
-    powerLineOffset: { x: 90, y: -150, z: 1700 }
+    powerLineOffset: { x: 115, y: -340, z: 1730 }
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C": {
     model: "SmelterMk1.glb",
     color: 0x830477,
     paintable: true,
-    powerLineOffset: { x: -140, y: -290, z: 400 }
+    powerLineOffset: { x: 217, y: -300, z: 500 }
   },
   "/Game/FactoryGame/Buildable/Factory/SmelterMk2/Build_SmelterMk2.Build_SmelterMk2_C": {
     model: "SmelterMk1.glb",
     color: 0x970c87,
     paintable: true,
-    powerLineOffset: { x: -140, y: -290, z: 400 }
+    powerLineOffset: { x: 217, y: -300, z: 500 }
   },
 
   "/Game/FactoryGame/Buildable/Factory/SpaceElevator/Build_SpaceElevator.Build_SpaceElevator_C": {
