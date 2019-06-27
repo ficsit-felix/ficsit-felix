@@ -3,6 +3,7 @@ import { SelectControls } from "@/js/SelectControls";
 import { BoxSelectControls } from "@/js/BoxSelectControls";
 import { mapActions, mapState } from "vuex";
 
+import * as Stats from "stats.js";
 // see https://github.com/posva/state-animation-demos/tree/master/components/three
 
 export default {
@@ -23,6 +24,12 @@ export default {
   },
 
   mounted() {
+    if (this.showFps) {
+      this.showStats();
+    } else {
+      this.stats = null;
+    }
+
     var elem = document.getElementById("scene");
     var width = document.getElementById("scene").offsetWidth;
     var height = document.getElementById("scene").offsetHeight;
@@ -46,7 +53,8 @@ export default {
     this.camera.setupControl(elem);
   },
   computed: {
-    ...mapState(["selectionDisabled", "boxSelect"])
+    ...mapState(["selectionDisabled", "boxSelect"]),
+    ...mapState("settings", ["showFps"])
   },
 
   watch: {
@@ -70,16 +78,29 @@ export default {
         this.boxSelectControls.disabled = !val;
         this.selectControls.disabled = val;
       }
+    },
+    showFps(val) {
+      if (val) {
+        this.showStats();
+      } else {
+        this.hideStats();
+      }
     }
   },
   methods: {
     ...mapActions(["select"]),
     animate() {
+      if (this.stats !== null) {
+        this.stats.begin();
+      }
       if (this.scene && this.camera) {
         this.camera.updateControls();
         this.renderer.render(this.scene, this.camera.obj);
       } else {
         // console.warn('You need a scene and a camera inside of the renderer')
+      }
+      if (this.stats !== null) {
+        this.stats.end();
       }
       requestAnimationFrame(this.animate.bind(this));
     },
@@ -88,6 +109,17 @@ export default {
       this.renderer.setSize(this.width, this.height);
       this.camera.obj.aspect = this.width / this.height;
       this.camera.obj.updateProjectionMatrix();
+    },
+    showStats() {
+      this.stats = new Stats();
+      this.stats.showPanel(1); // 0: fps, 1: ms, 2: mb, 3+: custom
+      document.body.appendChild(this.stats.dom);
+    },
+    hideStats() {
+      if (this.stats !== null) {
+        document.body.removeChild(this.stats.dom);
+      }
+      this.stats = null;
     }
   },
 
@@ -101,5 +133,6 @@ export default {
   beforeDestroy() {
     this.selectControls.destroy();
     this.boxSelectControls.destroy();
+    this.hideStats();
   }
 };

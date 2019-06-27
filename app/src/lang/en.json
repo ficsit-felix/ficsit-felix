@@ -133,7 +133,8 @@
 		"showMap": "Show map",
 		"showModels": "Show models",
 		"experimentalFeatures": "Experimental features",
-		"autoLoadSaveFile": "Auto-load save file"
+		"autoLoadSaveFile": "Auto-load save file",
+		"showFps": "Show FPS"
 	},
 	"toolbar": {
 		"local": "Local",
