@@ -12,24 +12,6 @@ import { i18n } from "./plugins/i18n";
 
 import "@/helpers/cmdHelper";
 
-var Rollbar = require("vue-rollbar");
-Vue.use(Rollbar, {
-  accessToken: "e253918024624698a38a06b4e061955e",
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-  enabled: true,
-  source_map_enabled: true,
-  environment:
-    process.env.NODE_ENV === "production" ? "production" : "development",
-  payload: {
-    client: {
-      javascript: {
-        code_version: commithash
-      }
-    }
-  }
-});
-
 if (process.env.NODE_ENV === "production") {
   /*Sentry.init({
     dsn: "https://4bee35ee7cba4ba194c9e1a575948656@sentry.io/1416938",
