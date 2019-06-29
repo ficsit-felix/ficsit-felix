@@ -1,4 +1,14 @@
-import { Mesh, Scene, Color, Material, UniformsLib, ShaderChunk, BufferGeometry, MeshMatcapMaterial, Object3D } from "three";
+import {
+  Mesh,
+  Scene,
+  Color,
+  Material,
+  UniformsLib,
+  ShaderChunk,
+  BufferGeometry,
+  MeshMatcapMaterial,
+  Object3D
+} from "three";
 import GeometryFactory from "./GeometryFactory";
 import {
   findActorByName,
@@ -8,8 +18,8 @@ import {
 import { Actor } from "satisfactory-json";
 import { Component } from "vue";
 import MaterialFactory from "./ColorFactory";
-import { MeshResult } from './MeshFactory';
-import MeshInstance from './MeshInstance';
+import { MeshResult } from "./MeshFactory";
+import MeshInstance from "./MeshInstance";
 
 /**
  * manages the meshes displayed on the playground
@@ -20,7 +30,7 @@ export default class MeshManager {
   meshByName: { [id: string]: { index: number; visibility: boolean } } = {};
   meshDictionaryDirty: boolean = false;
 
-  meshInstances: { [id: string]: MeshInstance} = {};
+  meshInstances: { [id: string]: MeshInstance } = {};
 
   scene: Scene;
 
@@ -46,7 +56,6 @@ export default class MeshManager {
   }
 
   add(result: MeshResult) {
-    
     if (result.instance === undefined) {
       this.scene.add(result.mesh);
     } else {
@@ -58,24 +67,22 @@ export default class MeshManager {
         );
       }
 
-      this.meshInstances[result.instance].add(
-        {
-          position: result.mesh.position,
-          quat: result.mesh.quaternion,
-          scale: result.mesh.scale,
-          color: (result.mesh.material as MeshMatcapMaterial).color
-        }
-      )
+      this.meshInstances[result.instance].add({
+        position: result.mesh.position,
+        quat: result.mesh.quaternion,
+        scale: result.mesh.scale,
+        color: (result.mesh.material as MeshMatcapMaterial).color
+      });
     }
     this.visibleMeshes.push(result.mesh);
     this.meshDictionaryDirty = true;
   }
 
   buildMeshInstances() {
-    console.log('BUILD MESH INSTANCES');
+    console.log("BUILD MESH INSTANCES");
     console.log(this.meshInstances);
     for (const key in this.meshInstances) {
-      console.log('build instanced mesh ' + key);
+      console.log("build instanced mesh " + key);
       this.scene.add(this.meshInstances[key].buildInstancedMesh() as Object3D);
     }
   }

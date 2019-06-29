@@ -20,10 +20,7 @@ export default class MeshFactoy {
   geometryFactory: GeometryFactory;
   materialFactory: ColorFactory;
 
-  constructor(
-    geometryFactory: GeometryFactory,
-    materialFactory: ColorFactory
-  ) {
+  constructor(geometryFactory: GeometryFactory, materialFactory: ColorFactory) {
     this.geometryFactory = geometryFactory;
     this.materialFactory = materialFactory;
   }

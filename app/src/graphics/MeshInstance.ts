@@ -1,21 +1,27 @@
-import { Material, UniformsLib, Geometry, Color, Vector3, Quaternion, BufferGeometry } from "three";
+import {
+  Material,
+  UniformsLib,
+  Geometry,
+  Color,
+  Vector3,
+  Quaternion,
+  BufferGeometry
+} from "three";
 
 // patch the THREE instance
 import * as THREE from "three";
 import index from "three-instanced-mesh";
 const InstancedMesh = index(THREE);
 
-
 export interface MeshInstanceNode {
-  position: Vector3,
-  quat: Quaternion,
-  scale: Vector3,
-  color: Color
-};
+  position: Vector3;
+  quat: Quaternion;
+  scale: Vector3;
+  color: Color;
+}
 
 // patch matcap shaders
 // TODO do this only once?
-
 
 export default class MeshInstance {
   private material: Material;
@@ -32,9 +38,7 @@ export default class MeshInstance {
     this.nodes.push(node);
   }
 
-
   public buildInstancedMesh(): typeof InstancedMesh {
-
     this.instancedMesh = new InstancedMesh(
       this.geometry,
       this.material,
@@ -44,7 +48,6 @@ export default class MeshInstance {
       false // uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
     );
 
-
     var _v3 = new Vector3();
     var _q = new Quaternion();
 
@@ -52,14 +55,8 @@ export default class MeshInstance {
       const node = this.nodes[i];
 
       this.instancedMesh.setQuaternionAt(i, node.quat);
-      this.instancedMesh.setPositionAt(
-        i,
-        node.position
-      );
-      this.instancedMesh.setScaleAt(
-        i,
-        node.scale
-      );
+      this.instancedMesh.setPositionAt(i, node.position);
+      this.instancedMesh.setScaleAt(i, node.scale);
       this.instancedMesh.setColorAt(i, node.color);
     }
 
