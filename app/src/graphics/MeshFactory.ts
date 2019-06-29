@@ -1,26 +1,34 @@
-import { BoxBufferGeometry, Mesh } from "three";
+import { BoxBufferGeometry, Mesh, Material } from "three";
 
 import { isConveyorLift } from "@/helpers/entityHelper";
 
 import { modelHelper } from "@/helpers/modelHelper";
 import GeometryFactory from "./GeometryFactory";
-import MaterialFactory from "./MaterialFactory";
+import ColorFactory from "./ColorFactory";
 import { Actor, StructProperty } from "satisfactory-json";
 import { applyRotation, applyTranslation } from "@/helpers/meshHelper";
 
+interface MeshResult {
+  mesh: Mesh;
+
+  // key of the mesh instance if instanced, undefined if not
+  instance: string | undefined;
+  // TODO: pass the color
+}
+
 export default class MeshFactoy {
   geometryFactory: GeometryFactory;
-  materialFactory: MaterialFactory;
+  materialFactory: ColorFactory;
 
   constructor(
     geometryFactory: GeometryFactory,
-    materialFactory: MaterialFactory
+    materialFactory: ColorFactory
   ) {
     this.geometryFactory = geometryFactory;
     this.materialFactory = materialFactory;
   }
 
-  createMesh(actor: Actor, i: number): Promise<Mesh> {
+  createMesh(actor: Actor, i: number): Promise<MeshResult> {
     // create multiple meshes for conveyor lift
     if (isConveyorLift(actor)) {
       return this.addConveyorLift(actor, i);
@@ -29,20 +37,23 @@ export default class MeshFactoy {
     return new Promise((resolve, reject) => {
       this.geometryFactory
         .createGeometry(actor)
-        .then(geometry => {
+        .then(result => {
           var mesh = new Mesh(
-            geometry,
+            result.geometry,
             this.materialFactory.createMaterial(actor)
           );
 
           mesh.userData = { id: i, pathName: actor.pathName };
-          resolve(mesh);
+          resolve({
+            mesh,
+            instance: result.instance
+          });
         })
         .catch(reject);
     });
   }
 
-  addConveyorLift(actor: Actor, index: number): Promise<Mesh> {
+  addConveyorLift(actor: Actor, index: number): Promise<MeshResult> {
     return new Promise((resolve, reject) => {
       // add other parts to conveyor lift
       modelHelper
@@ -121,7 +132,10 @@ export default class MeshFactoy {
 
               mesh.userData = { id: index, pathName: actor.pathName };
 
-              resolve(mesh);
+              resolve({
+                mesh,
+                instance: undefined
+              });
             });
         });
     });

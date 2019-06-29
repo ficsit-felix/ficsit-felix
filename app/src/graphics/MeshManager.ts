@@ -7,7 +7,7 @@ import {
 } from "@/helpers/entityHelper";
 import { Actor } from "satisfactory-json";
 import { Component } from "vue";
-import MaterialFactory from "./MaterialFactory";
+import MaterialFactory from "./ColorFactory";
 // patch the THREE instance
 import * as THREE from "three";
 var InstancedMesh = require("three-instanced-mesh")(THREE);
@@ -27,61 +27,9 @@ export default class MeshManager {
 
   constructor(scene: Scene, material: Material) {
     this.scene = scene;
-
-    for (let x = 0; x < 100; x++) {
-      //geometry to be instanced
-      var boxGeometry = new THREE.BoxBufferGeometry(2, 2, 2, 1, 1, 1);
-
-      //material that the geometry will use
-      var material2 = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-      //the instance group
-      this.cluster = new InstancedMesh(
-        boxGeometry, //this is the same
-        material,
-        10000, //instance count
-        true, //is it dynamic
-        true, //does it have color
-        false //uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
-      );
-
-      var _v3 = new THREE.Vector3();
-      var _q = new THREE.Quaternion();
-
-      for (var i = 0; i < 10000; i++) {
-        this.cluster.setQuaternionAt(i, _q);
-        this.cluster.setPositionAt(
-          i,
-          _v3.set(
-            Math.random() * 100000,
-            Math.random() * 100000,
-            Math.random() * 10000
-          )
-        );
-        this.cluster.setScaleAt(
-          i,
-          _v3.set(
-            Math.random() * 100 + 10,
-            Math.random() * 100 + 10,
-            Math.random() * 100 + 10
-          )
-        );
-        this.cluster.setColorAt(i, new Color(Math.random() * 0xffffff));
-      }
-
-      scene.add(this.cluster);
-    }
   }
 
   private refreshMeshDictionary() {
-    console.log("refresh");
-    // tmp
-    for (var i = 0; i < 10000; i++) {
-      this.cluster.setColorAt(i, new Color(Math.random() * 0xffffff));
-    }
-    this.cluster.needsUpdate("colors");
-    // end tmp
-
     this.meshDictionaryDirty = false;
     this.meshByName = {};
     for (let i = 0; i < this.visibleMeshes.length; i++) {
@@ -211,7 +159,7 @@ export default class MeshManager {
 
       geometryFactory
         .createGeometry(actor)
-        .then(geometry => (mesh.geometry = geometry));
+        .then(result => (mesh.geometry = result.geometry));
     }
   }
 
@@ -224,7 +172,7 @@ export default class MeshManager {
       if (isConveyorBelt(actor) || isRailroadTrack(actor)) {
         geometryFactory
           .createGeometry(actor)
-          .then(geometry => (mesh.geometry = geometry));
+          .then(result => (mesh.geometry = result.geometry));
       }
     }
   }

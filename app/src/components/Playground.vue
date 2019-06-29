@@ -67,7 +67,7 @@ import { version } from "punycode";
 import Compass from "@/components/Compass";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
 import GeometryFactory from "@/graphics/GeometryFactory";
-import MaterialFactory from "@/graphics/MaterialFactory";
+import MaterialFactory from "@/graphics/ColorFactory";
 import MeshFactory from "@/graphics/MeshFactory";
 import MeshManager from "@/graphics/MeshManager";
 import { updateActorMeshTransform } from "@/helpers/meshHelper";
@@ -368,9 +368,9 @@ export default {
       for (let i = 0; i < window.data.actors.length; i++) {
         let actor = window.data.actors[i];
         if (actor.type == 1) {
-          this.meshFactory.createMesh(actor, i).then(mesh => {
-            updateActorMeshTransform(mesh, actor);
-            this.meshManager.add(mesh);
+          this.meshFactory.createMesh(actor, i).then(result => {
+            updateActorMeshTransform(result.mesh, actor);
+            this.meshManager.add(result.mesh);
           });
         }
       }

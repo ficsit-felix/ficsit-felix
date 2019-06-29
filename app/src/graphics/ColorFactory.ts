@@ -6,7 +6,7 @@ import { Actor, ByteProperty, StructProperty } from "satisfactory-json";
 /**
  * Factory that creates and caches materials
  */
-export default class MaterialFactory {
+export default class ColorFactory {
   classColors: { [id: string]: Color };
   materials: { [id: string]: Material } = {};
   coloredMaterials: Material[] = [];
