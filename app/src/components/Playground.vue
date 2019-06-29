@@ -265,7 +265,7 @@ export default {
 
 
     this.selectedMaterial = new THREE.MeshMatcapMaterial({
-      //color: 0xffffff,
+      color: 0xffffff,
       matcap: this.matcap
     });
 

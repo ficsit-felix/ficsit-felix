@@ -10,28 +10,7 @@ import { Component } from "vue";
 import MaterialFactory from "./MaterialFactory";
 // patch the THREE instance
 import * as THREE from "three";
-var InstancedMesh = require('three-instanced-mesh')(THREE);
-
-import meshmatcap_vert from '@/shaders/meshmatcap_vert.glsl.js';
-import meshmatcap_frag from '@/shaders/meshmatcap_frag.glsl.js';
-
-// patch matcap shaders
-// TODO do this only once?
-THREE.ShaderLib.matcap = 	{	uniforms: THREE.UniformsUtils.merge( [
-  UniformsLib.common,
-  UniformsLib.bumpmap,
-  UniformsLib.normalmap,
-  UniformsLib.displacementmap,
-  UniformsLib.fog,
-  {
-    matcap: { value: null }
-  }
-] ),
-
-vertexShader: meshmatcap_vert,
-fragmentShader: meshmatcap_frag
-};
-
+var InstancedMesh = require("three-instanced-mesh")(THREE);
 
 /**
  * manages the meshes displayed on the playground
@@ -49,49 +28,59 @@ export default class MeshManager {
   constructor(scene: Scene, material: Material) {
     this.scene = scene;
 
-//    for (let x = 0; x < 100; x++) {
-          //geometry to be instanced
-var boxGeometry = new THREE.BoxBufferGeometry(2,2,2,1,1,1);
+    for (let x = 0; x < 100; x++) {
+      //geometry to be instanced
+      var boxGeometry = new THREE.BoxBufferGeometry(2, 2, 2, 1, 1, 1);
 
-//material that the geometry will use
-var material2 = new THREE.MeshBasicMaterial({color: 0xffffff});
+      //material that the geometry will use
+      var material2 = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
-//the instance group
-this.cluster = new InstancedMesh( 
-  boxGeometry,                 //this is the same 
-  material, 
-  10000,                       //instance count
-  true,                       //is it dynamic
-  true,                        //does it have color
-  false,                        //uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
-);
+      //the instance group
+      this.cluster = new InstancedMesh(
+        boxGeometry, //this is the same
+        material,
+        10000, //instance count
+        true, //is it dynamic
+        true, //does it have color
+        false //uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
+      );
 
-var _v3 = new THREE.Vector3();
-var _q = new THREE.Quaternion();
+      var _v3 = new THREE.Vector3();
+      var _q = new THREE.Quaternion();
 
-for ( var i = 0 ; i < 10000 ; i ++ ) {
-  
-  this.cluster.setQuaternionAt( i , _q );
-  this.cluster.setPositionAt( i , _v3.set( Math.random()*100000 , Math.random()*100000, Math.random()*10000 ) );
-  this.cluster.setScaleAt( i , _v3.set(Math.random()*100+10,Math.random()*100+10,Math.random()*100+10) );
-  this.cluster.setColorAt(i, new Color(Math.random() * 0xffffff ));
+      for (var i = 0; i < 10000; i++) {
+        this.cluster.setQuaternionAt(i, _q);
+        this.cluster.setPositionAt(
+          i,
+          _v3.set(
+            Math.random() * 100000,
+            Math.random() * 100000,
+            Math.random() * 10000
+          )
+        );
+        this.cluster.setScaleAt(
+          i,
+          _v3.set(
+            Math.random() * 100 + 10,
+            Math.random() * 100 + 10,
+            Math.random() * 100 + 10
+          )
+        );
+        this.cluster.setColorAt(i, new Color(Math.random() * 0xffffff));
+      }
 
-}
-
-scene.add( this.cluster );
-//    }
-
+      scene.add(this.cluster);
+    }
   }
 
   private refreshMeshDictionary() {
-    console.log('refresh');
+    console.log("refresh");
     // tmp
-    for ( var i = 0 ; i < 10000 ; i ++ ) {
-      this.cluster.setColorAt(i, new Color(Math.random() * 0xffffff ));
+    for (var i = 0; i < 10000; i++) {
+      this.cluster.setColorAt(i, new Color(Math.random() * 0xffffff));
     }
-    this.cluster.needsUpdate('colors');
+    this.cluster.needsUpdate("colors");
     // end tmp
-
 
     this.meshDictionaryDirty = false;
     this.meshByName = {};
