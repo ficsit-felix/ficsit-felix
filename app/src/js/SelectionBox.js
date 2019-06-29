@@ -79,9 +79,9 @@ var SelectionBox = (function() {
   SelectionBox.prototype.searchChildInFrustum = function(frustum, object) {
     if (object.isMesh) {
       if (object.material !== undefined) {
-        object.geometry.computeBoundingSphere();
+        /*object.geometry.computeBoundingSphere();
 
-        /*center.copy(object.geometry.boundingSphere.center);
+        center.copy(object.geometry.boundingSphere.center);
 
         center.applyMatrix4(object.matrixWorld);*/
 

@@ -25,7 +25,7 @@ export interface MeshInstanceNode {
 
 export default class MeshInstance {
   private material: Material;
-  private instancedMesh?: typeof InstancedMesh;
+  public instancedMesh?: typeof InstancedMesh;
   private geometry: BufferGeometry;
   private nodes: MeshInstanceNode[] = [];
 

@@ -36,7 +36,7 @@ var SelectControls = function(scene, camera, domElement, callback, playground) {
     if (event.button == MOUSE.LEFT) {
       raycaster.setFromCamera(mouse, camera);
       var intersects = raycaster.intersectObjects(
-        playground.meshManager.raycastScene.children,
+        playground.meshManager.raycastActiveMeshes,
         true
       );
       // recursive, so that we also get intersections with the other parts of a conveyor lift

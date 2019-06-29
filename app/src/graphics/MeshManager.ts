@@ -28,7 +28,6 @@ export default class MeshManager {
   visibleMeshes: Mesh[] = [];
   invisibleMeshes: Mesh[] = [];
 
-  raycastScene: Scene;
   raycastActiveMeshes: Mesh[] = [];
   raycastInactiveMeshes: Mesh[] = [];
   meshByName: { [id: string]: { index: number; visibility: boolean } } = {};
@@ -37,14 +36,11 @@ export default class MeshManager {
   meshInstances: { [id: string]: MeshInstance } = {};
 
   scene: Scene;
-
-  cluster: any;
   material: Material;
 
   constructor(scene: Scene, material: Material) {
     this.scene = scene;
     this.material = material;
-    this.raycastScene = new Scene();
   }
 
   private refreshMeshDictionary() {
@@ -62,7 +58,8 @@ export default class MeshManager {
 
   add(result: MeshResult) {
     if (result.instance === undefined) {
-      this.scene.add(result.mesh);
+      console.log("adding");
+      this.scene.add(result.mesh.clone());
     } else {
       // Add to the corresponding MeshInstance
       if (this.meshInstances[result.instance] === undefined) {
@@ -84,7 +81,8 @@ export default class MeshManager {
     }
 
     // use the meshes for raycasting
-    this.raycastScene.add(result.mesh);
+    result.mesh.updateMatrixWorld(true);
+    this.raycastActiveMeshes.push(result.mesh);
 
     this.visibleMeshes.push(result.mesh);
     this.meshDictionaryDirty = true;
@@ -92,7 +90,6 @@ export default class MeshManager {
 
   buildMeshInstances() {
     // calculate matrixes for all meshes so that we can do raycasting
-    this.raycastScene.updateMatrixWorld(true);
 
     console.log("BUILD MESH INSTANCES");
     console.log(this.meshInstances);
@@ -268,7 +265,10 @@ export default class MeshManager {
     for (const mesh of this.visibleMeshes) {
       this.scene.remove(mesh);
     }
-
-    this.scene.remove(this.cluster);
+    for (const key in this.meshInstances) {
+      if (this.meshInstances[key].instancedMesh !== undefined) {
+        this.scene.remove(this.meshInstances[key].instancedMesh!);
+      }
+    }
   }
 }
