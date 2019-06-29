@@ -1,4 +1,4 @@
-import { Mesh, Scene, Color } from "three";
+import { Mesh, Scene, Color, Material, UniformsLib, ShaderChunk } from "three";
 import GeometryFactory from "./GeometryFactory";
 import {
   findActorByName,
@@ -12,6 +12,27 @@ import MaterialFactory from "./MaterialFactory";
 import * as THREE from "three";
 var InstancedMesh = require('three-instanced-mesh')(THREE);
 
+import meshmatcap_vert from '@/shaders/meshmatcap_vert.glsl.js';
+import meshmatcap_frag from '@/shaders/meshmatcap_frag.glsl.js';
+
+// patch matcap shaders
+// TODO do this only once?
+THREE.ShaderLib.matcap = 	{	uniforms: THREE.UniformsUtils.merge( [
+  UniformsLib.common,
+  UniformsLib.bumpmap,
+  UniformsLib.normalmap,
+  UniformsLib.displacementmap,
+  UniformsLib.fog,
+  {
+    matcap: { value: null }
+  }
+] ),
+
+vertexShader: meshmatcap_vert,
+fragmentShader: meshmatcap_frag
+};
+
+
 /**
  * manages the meshes displayed on the playground
  */
@@ -23,17 +44,20 @@ export default class MeshManager {
 
   scene: Scene;
 
-  constructor(scene: Scene) {
+  cluster: any;
+
+  constructor(scene: Scene, material: Material) {
     this.scene = scene;
 
-    //geometry to be instanced
+//    for (let x = 0; x < 100; x++) {
+          //geometry to be instanced
 var boxGeometry = new THREE.BoxBufferGeometry(2,2,2,1,1,1);
 
 //material that the geometry will use
-var material = new THREE.MeshPhongMaterial();
+var material2 = new THREE.MeshBasicMaterial({color: 0xffffff});
 
 //the instance group
-var cluster = new InstancedMesh( 
+this.cluster = new InstancedMesh( 
   boxGeometry,                 //this is the same 
   material, 
   10000,                       //instance count
@@ -47,17 +71,28 @@ var _q = new THREE.Quaternion();
 
 for ( var i = 0 ; i < 10000 ; i ++ ) {
   
-  cluster.setQuaternionAt( i , _q );
-  cluster.setPositionAt( i , _v3.set( Math.random()*100000 , Math.random()*100000, Math.random()*10000 ) );
-  cluster.setScaleAt( i , _v3.set(Math.random()*100+10,Math.random()*100+10,Math.random()*100+10) );
-  cluster.setColorAt(i, new Color(Math.random() * 0xffffff ));
+  this.cluster.setQuaternionAt( i , _q );
+  this.cluster.setPositionAt( i , _v3.set( Math.random()*100000 , Math.random()*100000, Math.random()*10000 ) );
+  this.cluster.setScaleAt( i , _v3.set(Math.random()*100+10,Math.random()*100+10,Math.random()*100+10) );
+  this.cluster.setColorAt(i, new Color(Math.random() * 0xffffff ));
 
 }
 
-scene.add( cluster );
+scene.add( this.cluster );
+//    }
+
   }
 
   private refreshMeshDictionary() {
+    console.log('refresh');
+    // tmp
+    for ( var i = 0 ; i < 10000 ; i ++ ) {
+      this.cluster.setColorAt(i, new Color(Math.random() * 0xffffff ));
+    }
+    this.cluster.needsUpdate('colors');
+    // end tmp
+
+
     this.meshDictionaryDirty = false;
     this.meshByName = {};
     for (let i = 0; i < this.visibleMeshes.length; i++) {
@@ -242,5 +277,7 @@ scene.add( cluster );
     for (const mesh of this.visibleMeshes) {
       this.scene.remove(mesh);
     }
+
+    this.scene.remove(this.cluster);
   }
 }

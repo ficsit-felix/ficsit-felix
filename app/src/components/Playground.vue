@@ -263,12 +263,14 @@ export default {
 
     this.scene = this.$refs.scene.scene;
 
-    this.meshManager = new MeshManager(this.scene);
 
     this.selectedMaterial = new THREE.MeshMatcapMaterial({
-      color: 0xffffff,
+      //color: 0xffffff,
       matcap: this.matcap
     });
+
+
+    this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
 
     this.loader = new GLTFLoader();
 
