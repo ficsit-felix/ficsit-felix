@@ -1,6 +1,7 @@
 import { MOUSE, Raycaster } from "three";
 
-var SelectControls = function(scene, camera, domElement, callback) {
+// TODO remove the explicit playground parameter just to get the meshManager
+var SelectControls = function(scene, camera, domElement, callback, playground) {
   this.callback = null;
   this.disabled = false;
 
@@ -34,11 +35,14 @@ var SelectControls = function(scene, camera, domElement, callback) {
 
     if (event.button == MOUSE.LEFT) {
       raycaster.setFromCamera(mouse, camera);
-
-      var intersects = raycaster.intersectObjects(scene.children, true);
+      var intersects = raycaster.intersectObjects(
+        playground.meshManager.raycastScene.children,
+        true
+      );
       // recursive, so that we also get intersections with the other parts of a conveyor lift
 
       for (const intersection of intersects) {
+        console.log(object);
         var object = intersection.object;
 
         if (object.type === "TransformControlsPlane") {

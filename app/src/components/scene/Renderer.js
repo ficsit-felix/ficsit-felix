@@ -11,8 +11,10 @@ export default {
     width: Number,
     height: Number
   },
+  inject: ["playground"],
 
   provide() {
+    console.log("Renderer.provide");
     this.renderer = new WebGLRenderer({
       antialias: true,
       logarithmicDepthBuffer: true
@@ -24,6 +26,7 @@ export default {
   },
 
   mounted() {
+    console.log("Renderer.mount");
     if (this.showFps) {
       this.showStats();
     } else {
@@ -41,7 +44,8 @@ export default {
       this.scene,
       this.camera.obj,
       elem,
-      this
+      this,
+      this.playground
     );
     this.boxSelectControls = new BoxSelectControls(
       this.scene,

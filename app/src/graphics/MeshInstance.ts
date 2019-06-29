@@ -34,8 +34,10 @@ export default class MeshInstance {
     this.geometry = geometry;
   }
 
-  public add(node: MeshInstanceNode) {
+  public add(node: MeshInstanceNode): number {
+    const index = this.nodes.length;
     this.nodes.push(node);
+    return index;
   }
 
   public buildInstancedMesh(): typeof InstancedMesh {

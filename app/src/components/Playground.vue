@@ -90,6 +90,11 @@ export default {
     Toolbar,
     Compass
   },
+  provide() {
+    return {
+      playground: this
+    };
+  },
   data: function() {
     return {
       width: 100,
@@ -239,6 +244,7 @@ export default {
   },
 
   mounted() {
+    console.log("Playgound.mounted");
     this.geometryFactory = new GeometryFactory(
       this.showModels,
       this.conveyorBeltResolution

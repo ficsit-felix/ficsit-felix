@@ -27,6 +27,10 @@ import MeshInstance from "./MeshInstance";
 export default class MeshManager {
   visibleMeshes: Mesh[] = [];
   invisibleMeshes: Mesh[] = [];
+
+  raycastScene: Scene;
+  raycastActiveMeshes: Mesh[] = [];
+  raycastInactiveMeshes: Mesh[] = [];
   meshByName: { [id: string]: { index: number; visibility: boolean } } = {};
   meshDictionaryDirty: boolean = false;
 
@@ -40,6 +44,7 @@ export default class MeshManager {
   constructor(scene: Scene, material: Material) {
     this.scene = scene;
     this.material = material;
+    this.raycastScene = new Scene();
   }
 
   private refreshMeshDictionary() {
@@ -67,18 +72,28 @@ export default class MeshManager {
         );
       }
 
-      this.meshInstances[result.instance].add({
+      const index = this.meshInstances[result.instance].add({
         position: result.mesh.position,
         quat: result.mesh.quaternion,
         scale: result.mesh.scale,
         color: (result.mesh.material as MeshMatcapMaterial).color
       });
+      // store the instance index into the mesh
+      result.mesh.userData.instance = result.instance;
+      result.mesh.userData.index = index;
     }
+
+    // use the meshes for raycasting
+    this.raycastScene.add(result.mesh);
+
     this.visibleMeshes.push(result.mesh);
     this.meshDictionaryDirty = true;
   }
 
   buildMeshInstances() {
+    // calculate matrixes for all meshes so that we can do raycasting
+    this.raycastScene.updateMatrixWorld(true);
+
     console.log("BUILD MESH INSTANCES");
     console.log(this.meshInstances);
     for (const key in this.meshInstances) {
