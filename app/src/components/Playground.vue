@@ -376,7 +376,7 @@ export default {
       }
 
       // TODO FIXME call this when all meshes are created
-      setTimeout(() => {this.meshManager.buildMeshInstances()}, 1000);
+      setTimeout(() => {this.meshManager.buildMeshInstances()}, 4000);
     },
 
     updateAllMaterials() {

@@ -39,7 +39,6 @@ export default class ColorFactory {
 
       this.materials[prop] = new MeshMatcapMaterial({
         color: color,
-        // @ts-ignore
         matcap: this.matcap
         /*emissive: modelConfig[prop].color,
  
@@ -98,7 +97,6 @@ export default class ColorFactory {
 
       this.coloredMaterials[i] = new MeshMatcapMaterial({
         color: color,
-        // @ts-ignore
         matcap: this.matcap
         //emissive: color,
 

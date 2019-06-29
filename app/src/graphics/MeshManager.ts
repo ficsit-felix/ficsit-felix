@@ -25,9 +25,11 @@ export default class MeshManager {
   scene: Scene;
 
   cluster: any;
+  material: Material;
 
   constructor(scene: Scene, material: Material) {
     this.scene = scene;
+    this.material = material;
   }
 
   private refreshMeshDictionary() {
@@ -44,13 +46,14 @@ export default class MeshManager {
   }
 
   add(result: MeshResult) {
+    
     if (result.instance === undefined) {
       this.scene.add(result.mesh);
     } else {
       // Add to the corresponding MeshInstance
       if (this.meshInstances[result.instance] === undefined) {
         this.meshInstances[result.instance] = new MeshInstance(
-          result.mesh.material as Material,
+          this.material,
           result.mesh.geometry as BufferGeometry
         );
       }
