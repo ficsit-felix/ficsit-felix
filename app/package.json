@@ -19,7 +19,7 @@
     "satisfactory-blueprint": "^0.0.3",
     "satisfactory-json": "^0.0.15",
     "stats.js": "^0.17.0",
-    "three": "0.105.2",
+    "three": "0.106.2",
     "three-instanced-mesh": "bitowl/three-instanced-mesh",
     "vue": "^2.6.6",
     "vue-i18n": "^8.11.2",
