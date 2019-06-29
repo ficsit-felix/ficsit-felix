@@ -1,10 +1,17 @@
-import { Material, UniformsLib, Geometry, Color, Vector3, Quaternion } from "three";
+import { Material, UniformsLib, Geometry, Color, Vector3, Quaternion, BufferGeometry } from "three";
 
 // patch the THREE instance
 import * as THREE from "three";
 import index from "three-instanced-mesh";
 const InstancedMesh = index(THREE);
 
+
+export interface MeshInstanceNode {
+  position: Vector3,
+  quat: Quaternion,
+  scale: Vector3,
+  color: Color
+};
 
 // patch matcap shaders
 // TODO do this only once?
@@ -13,20 +20,25 @@ const InstancedMesh = index(THREE);
 export default class MeshInstance {
   private material: Material;
   private instancedMesh?: typeof InstancedMesh;
-  private geometry: Geometry;
+  private geometry: BufferGeometry;
+  private nodes: MeshInstanceNode[] = [];
 
-  constructor(material: Material, geometry: Geometry) {
+  constructor(material: Material, geometry: BufferGeometry) {
     this.material = material;
     this.geometry = geometry;
   }
 
+  public add(node: MeshInstanceNode) {
+    this.nodes.push(node);
+  }
 
-  private createInstancedMesh() {
+
+  public buildInstancedMesh(): typeof InstancedMesh {
 
     this.instancedMesh = new InstancedMesh(
       this.geometry,
       this.material,
-      10000, // instance count
+      this.nodes.length, // instance count
       true, // is it dynamic
       true, // does it have color
       false // uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
@@ -36,26 +48,21 @@ export default class MeshInstance {
     var _v3 = new Vector3();
     var _q = new Quaternion();
 
-    for (var i = 0; i < 10000; i++) {
-      this.instancedMesh.setQuaternionAt(i, _q);
+    for (var i = 0; i < this.nodes.length; i++) {
+      const node = this.nodes[i];
+
+      this.instancedMesh.setQuaternionAt(i, node.quat);
       this.instancedMesh.setPositionAt(
         i,
-        _v3.set(
-          Math.random() * 100000,
-          Math.random() * 100000,
-          Math.random() * 10000
-        )
+        node.position
       );
       this.instancedMesh.setScaleAt(
         i,
-        _v3.set(
-          Math.random() * 100 + 10,
-          Math.random() * 100 + 10,
-          Math.random() * 100 + 10
-        )
+        node.scale
       );
-      this.instancedMesh.setColorAt(i, new Color(Math.random() * 0xffffff));
+      this.instancedMesh.setColorAt(i, node.color);
     }
 
+    return this.instancedMesh;
   }
 }

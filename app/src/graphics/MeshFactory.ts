@@ -8,7 +8,7 @@ import ColorFactory from "./ColorFactory";
 import { Actor, StructProperty } from "satisfactory-json";
 import { applyRotation, applyTranslation } from "@/helpers/meshHelper";
 
-interface MeshResult {
+export interface MeshResult {
   mesh: Mesh;
 
   // key of the mesh instance if instanced, undefined if not

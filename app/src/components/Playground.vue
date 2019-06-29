@@ -370,10 +370,13 @@ export default {
         if (actor.type == 1) {
           this.meshFactory.createMesh(actor, i).then(result => {
             updateActorMeshTransform(result.mesh, actor);
-            this.meshManager.add(result.mesh);
+            this.meshManager.add(result);
           });
         }
       }
+
+      // TODO FIXME call this when all meshes are created
+      setTimeout(() => {this.meshManager.buildMeshInstances()}, 1000);
     },
 
     updateAllMaterials() {
