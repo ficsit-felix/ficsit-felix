@@ -696,19 +696,20 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true
   },
   "/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainDockingStation.Build_TrainDockingStation_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "TrainDockingStation.glb",
+    color: 0x108873,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainPlatformEmpty.Build_TrainPlatformEmpty_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "TrainPlatformEmpty.glb",
+    color: 0x108873,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainStation.Build_TrainStation_C": {
-    model: "",
-    color: 0xff00ff,
-    paintable: false
+    model: "TrainStation.glb",
+    color: 0x108873,
+    paintable: false,
+    powerLineOffset: { x: 710, y: -925, z: 1025 }
   },
   "/Game/FactoryGame/Buildable/Factory/Train/SwitchControl/Build_RailroadSwitchControl.Build_RailroadSwitchControl_C": {
     model: "",
