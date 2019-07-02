@@ -8146,9 +8146,9 @@ thread-loader@^2.1.2:
     loader-utils "^1.1.0"
     neo-async "^2.6.0"
 
-three-instanced-mesh@bitowl/three-instanced-mesh:
+three-instanced-mesh@bitowl/three-instanced-mesh#master:
   version "0.96.2"
-  resolved "https://codeload.github.com/bitowl/three-instanced-mesh/tar.gz/84b195d8ec5658fc970e97d4b58281f8ca6a4bb7"
+  resolved "https://codeload.github.com/bitowl/three-instanced-mesh/tar.gz/dc6366f37078c54f554d1e43e88f323f97c813eb"
 
 three@0.106.2:
   version "0.106.2"
