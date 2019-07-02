@@ -1,6 +1,6 @@
 import { Mesh } from "three";
 import { Actor } from "satisfactory-json";
-import { isConveyorBelt, isPowerLine } from "./entityHelper";
+import { isConveyorBelt, isPowerLine, isRailroadTrack } from "./entityHelper";
 
 export function applyTranslation(mesh: Mesh, translation: number[]) {
   // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)
@@ -25,7 +25,11 @@ export function applyScale(mesh: Mesh, scale: number[]) {
 
 export function updateActorMeshTransform(mesh: Mesh, actor: Actor) {
   applyTranslation(mesh, actor.transform.translation);
-  if (!isConveyorBelt(actor) && !isPowerLine(actor)) {
+  if (
+    !isConveyorBelt(actor) &&
+    !isRailroadTrack(actor) &&
+    !isPowerLine(actor)
+  ) {
     applyRotation(mesh, actor.transform.rotation);
     mesh.rotateZ(1.5708); // 90 deg in radians
   } else {

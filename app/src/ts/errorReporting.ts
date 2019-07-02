@@ -17,4 +17,3 @@ export function reportContext(key: string, value: string) {
     scope.setExtra(key, value);
   });*/
 }
-

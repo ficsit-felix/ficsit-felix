@@ -9,7 +9,6 @@
       </div>
       <div class="experimentalFix">
         <p>{{ $t("experimentalFix.landingText") }}</p>
-
       </div>
 
       <p>{{ $t("landingPage.firstParagraph") }}</p>

@@ -718,12 +718,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
   },
   "/Game/FactoryGame/Buildable/Factory/Train/Track/Build_RailroadTrack.Build_RailroadTrack_C": {
     model: "",
-    color: 0xff00ff,
+    color: 0x087764,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Factory/Train/Track/Build_RailroadTrackIntegrated.Build_RailroadTrackIntegrated_C": {
     model: "",
-    color: 0xff00ff,
+    color: 0x087764,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Factory/TruckStation/Build_TruckStation.Build_TruckStation_C": {

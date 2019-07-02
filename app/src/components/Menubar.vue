@@ -258,8 +258,7 @@ export default {
       window.open("https://github.com/bitowl/ficsit-felix", "_blank");
     }
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 

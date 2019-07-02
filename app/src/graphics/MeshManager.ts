@@ -1,6 +1,10 @@
 import { Mesh, Scene } from "three";
 import GeometryFactory from "./GeometryFactory";
-import { findActorByName, isConveyorBelt } from "@/helpers/entityHelper";
+import {
+  findActorByName,
+  isConveyorBelt,
+  isRailroadTrack
+} from "@/helpers/entityHelper";
 import { Actor } from "satisfactory-json";
 import { Component } from "vue";
 import MaterialFactory from "./MaterialFactory";
@@ -159,7 +163,7 @@ export default class MeshManager {
       if (actor === undefined) continue;
       // TODO here we should certainly dispose of the old conveyor belts
       mesh.geometry.dispose();
-      if (isConveyorBelt(actor)) {
+      if (isConveyorBelt(actor) || isRailroadTrack(actor)) {
         geometryFactory
           .createGeometry(actor)
           .then(geometry => (mesh.geometry = geometry));

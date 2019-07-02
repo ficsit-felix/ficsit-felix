@@ -75,7 +75,8 @@ import { updateActorMeshTransform } from "@/helpers/meshHelper";
 import {
   isConveyorBelt,
   isConveyorLift,
-  isPowerLine
+  isPowerLine,
+  isRailroadTrack
 } from "../helpers/entityHelper";
 import { EventBus } from "../event-bus";
 
@@ -417,7 +418,11 @@ export default {
       clone.transform.translation[0] = mesh.position.y;
       clone.transform.translation[2] = mesh.position.z;
 
-      if (!isConveyorBelt(actor) && !isPowerLine(actor)) {
+      if (
+        !isConveyorBelt(actor) &&
+        !isRailroadTrack(actor) &&
+        !isPowerLine(actor)
+      ) {
         mesh.rotateZ(-1.5708); // -90 deg in radians
       } // TODO conveyor belt coordinates are given without rotation?
       clone.transform.rotation[0] = mesh.quaternion.x;

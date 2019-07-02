@@ -4,7 +4,8 @@ import {
   getProperty,
   isConveyorBelt,
   isPowerLine,
-  findComponentByName
+  findComponentByName,
+  isRailroadTrack
 } from "@/helpers/entityHelper";
 import { modelHelper } from "@/helpers/modelHelper";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
@@ -59,7 +60,11 @@ export default class GeometryFactory {
 
       // special cases for geometry
       if (isConveyorBelt(actor)) {
-        resolve(this.createConveyorBeltGeometry(actor));
+        resolve(this.createConveyorBeltGeometry(actor, true));
+        return;
+      }
+      if (isRailroadTrack(actor)) {
+        resolve(this.createConveyorBeltGeometry(actor, false));
         return;
       }
       if (isPowerLine(actor)) {
@@ -121,7 +126,12 @@ export default class GeometryFactory {
     });
   }
 
-  createConveyorBeltGeometry(actor: Actor) {
+  /**
+   *
+   * @param actor
+   * @param conveyorBelt false => railroadTrack
+   */
+  createConveyorBeltGeometry(actor: Actor, conveyorBelt: boolean) {
     const splineData = getProperty(actor, "mSplineData") as ArrayProperty;
     //actor.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
 
@@ -176,14 +186,29 @@ export default class GeometryFactory {
       lastLeave = leaveTangent;
     }
 
-    var length = 38,
-      width = 180;
     var shape = new Shape();
-    shape.moveTo(-length / 2, -width / 2);
-    shape.lineTo(-length / 2, width / 2);
-    shape.lineTo(length / 2, width / 2);
-    shape.lineTo(length / 2, -width / 2);
-    shape.lineTo(-length / 2, -width / 2);
+    if (conveyorBelt) {
+      // Conveyor Belt rectangle
+      var length = 38,
+        width = 180;
+
+      shape.moveTo(-length / 2, -width / 2);
+      shape.lineTo(-length / 2, width / 2);
+      shape.lineTo(length / 2, width / 2);
+      shape.lineTo(length / 2, -width / 2);
+      shape.lineTo(-length / 2, -width / 2);
+    } else {
+      // Railroad Track trapezoid
+      const bottomWidth = 520,
+        topWidth = 150,
+        height = 130;
+
+      shape.moveTo(0, -bottomWidth / 2);
+      shape.lineTo(0, bottomWidth / 2);
+      shape.lineTo(-height, topWidth / 2);
+      shape.lineTo(-height, -topWidth / 2);
+      shape.lineTo(0, -bottomWidth / 2);
+    }
 
     var extrudeSettings = {
       // TODO find better values for this?
