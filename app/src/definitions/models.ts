@@ -523,7 +523,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: "GeneratorNuclear.glb",
     color: 0x693fb,
     paintable: false,
-    powerLineOffset: { x: -1840, y: -2480, z: 890 }
+    powerLineOffset: { x: -690, y: -1930, z: 900 }
   },
   "/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C": {
     model: "HubTerminal.glb",
@@ -712,8 +712,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 710, y: -925, z: 1025 }
   },
   "/Game/FactoryGame/Buildable/Factory/Train/SwitchControl/Build_RailroadSwitchControl.Build_RailroadSwitchControl_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "RailroadSwitchControl.glb",
+    color: 0x108873,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Factory/Train/Track/Build_RailroadTrack.Build_RailroadTrack_C": {
@@ -766,13 +766,13 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Vehicle/Train/Locomotive/BP_Locomotive.BP_Locomotive_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "Locomotive.glb",
+    color: 0x2878b0,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Vehicle/Train/Wagon/BP_FreightWagon.BP_FreightWagon_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "FreightWagon.glb",
+    color: 0x2878b0,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Vehicle/Truck/BP_Truck.BP_Truck_C": {
@@ -1151,6 +1151,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x51d5e4,
     paintable: false
   },
+  "/Script/FactoryGame.FGRailroadTimeTable": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
   "/Script/FactoryGame.FGMapManager": {
     model: "",
     color: 0xff00ff,
@@ -1162,6 +1167,11 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   "/Script/FactoryGame.FGTrain": {
+    model: "",
+    color: 0xff00ff,
+    paintable: false
+  },
+  "/Script/FactoryGame.FGTrainStationIdentifier": {
     model: "",
     color: 0xff00ff,
     paintable: false
