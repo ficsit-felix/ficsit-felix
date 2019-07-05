@@ -68,11 +68,17 @@ export default class GeometryFactory {
 
       // special cases for geometry
       if (isConveyorBelt(actor)) {
-        resolve({geometry: this.createConveyorBeltGeometry(actor, true), instance:undefined});
+        resolve({
+          geometry: this.createConveyorBeltGeometry(actor, true),
+          instance: undefined
+        });
         return;
       }
       if (isRailroadTrack(actor)) {
-        resolve({geometry: this.createConveyorBeltGeometry(actor, false), instance: undefined});
+        resolve({
+          geometry: this.createConveyorBeltGeometry(actor, false),
+          instance: undefined
+        });
         return;
       }
       if (isPowerLine(actor)) {

@@ -13,28 +13,32 @@ import * as THREE from "three";
 import index from "three-instanced-mesh";
 const InstancedMesh = index(THREE);
 
-export interface MeshInstanceNode {
+export interface InstancedMeshElement {
+  pathName: string;
+  visible: boolean;
   position: Vector3;
   quat: Quaternion;
   scale: Vector3;
   color: Color;
 }
 
-// patch matcap shaders
-// TODO do this only once?
-
-export default class MeshInstance {
+/**
+ * Wrapper around InstancedMesh that handles passing in the arguments
+ *
+ * Defines a group of instances that use the same geometry
+ */
+export default class InstancedMeshGroup {
   private material: Material;
   public instancedMesh?: typeof InstancedMesh;
   private geometry: BufferGeometry;
-  private nodes: MeshInstanceNode[] = [];
+  public nodes: InstancedMeshElement[] = [];
 
   constructor(material: Material, geometry: BufferGeometry) {
     this.material = material;
     this.geometry = geometry;
   }
 
-  public add(node: MeshInstanceNode): number {
+  public add(node: InstancedMeshElement): number {
     const index = this.nodes.length;
     this.nodes.push(node);
     return index;
@@ -63,5 +67,9 @@ export default class MeshInstance {
     }
 
     return this.instancedMesh;
+  }
+
+  public dispose() {
+    // TODO
   }
 }

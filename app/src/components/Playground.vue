@@ -67,7 +67,7 @@ import { version } from "punycode";
 import Compass from "@/components/Compass";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
 import GeometryFactory from "@/graphics/GeometryFactory";
-import MaterialFactory from "@/graphics/ColorFactory";
+import ColorFactory from "@/graphics/ColorFactory";
 import MeshFactory from "@/graphics/MeshFactory";
 import MeshManager from "@/graphics/MeshManager";
 import { updateActorMeshTransform } from "@/helpers/meshHelper";
@@ -145,7 +145,7 @@ export default {
             // deselect this actor
             const mesh = this.meshManager.findMeshByName(actor.pathName);
             if (mesh !== null) {
-              mesh.material = this.materialFactory.createMaterial(actor);
+              mesh.setSelected(false);
             }
           }
         }
@@ -158,10 +158,10 @@ export default {
               actor.pathName
             );
             if (!this.lastSelectedActors.includes(actor)) {
-              mesh.mesh.material = this.selectedMaterial;
+              mesh.mesh.setSelected(true);
             }
             if (mesh.visible) {
-              visibleSelectedMeshes.push(mesh.mesh);
+              visibleSelectedMeshes.push(mesh.mesh.getRaycastMesh());
             }
           }
 
@@ -192,14 +192,14 @@ export default {
           if (mesh === null) {
             this.transformControl.detach();
           } else {
-            this.transformControl.attach(mesh);
+            this.transformControl.attach(mesh.getRaycastMesh());
           }
         }
       }
     },
 
     showCustomPaints(value) {
-      this.materialFactory.showCustomPaints = value;
+      this.colorFactor.showCustomPaints = value;
       // update materials
       this.updateAllMaterials();
     },
@@ -229,8 +229,8 @@ export default {
     classColors: {
       deep: true,
       handler(value) {
-        this.materialFactory.classColors = this.classColors;
-        this.materialFactory.setupDefaultMaterials();
+        this.colorFactor.classColors = this.classColors;
+        this.colorFactor.setupDefaultMaterials();
         this.updateAllMaterials();
       }
     },
@@ -257,15 +257,12 @@ export default {
       matcap.encoding = THREE.sRGBEncoding;
     });
 
-    this.materialFactory = new MaterialFactory(
+    this.colorFactor = new ColorFactory(
       this.matcap,
       this.showCustomPaints,
       this.classColors
     );
-    this.meshFactory = new MeshFactory(
-      this.geometryFactory,
-      this.materialFactory
-    );
+    this.meshFactory = new MeshFactory(this.geometryFactory, this.colorFactor);
 
     this.scene = this.$refs.scene.scene;
 
@@ -381,12 +378,12 @@ export default {
 
       // TODO FIXME call this when all meshes are created
       setTimeout(() => {
-        this.meshManager.buildMeshInstances();
+        this.meshManager.buildInstancedMeshGroups();
       }, 4000);
     },
 
     updateAllMaterials() {
-      this.meshManager.updateAllMaterials(this.materialFactory);
+      this.meshManager.updateAllMaterials(this.colorFactor);
     },
 
     focusSelectedObject() {
@@ -418,34 +415,10 @@ export default {
         return; // TODO multiple actors
       }
 
-      const actor = this.selectedActors[0];
       const mesh = this.meshManager.findMeshByName(actor.pathName);
+      const actor = mesh.applyTransformToActor(this.selectedActors[0]);
 
-      // TODO need to clone, else change is not detected?
-      // find more intelligent way
-      var clone = Object.assign({}, actor);
-      // switched to accord for coordinate system change!
-      clone.transform.translation[1] = mesh.position.x;
-      clone.transform.translation[0] = mesh.position.y;
-      clone.transform.translation[2] = mesh.position.z;
-
-      if (
-        !isConveyorBelt(actor) &&
-        !isRailroadTrack(actor) &&
-        !isPowerLine(actor)
-      ) {
-        mesh.rotateZ(-1.5708); // -90 deg in radians
-      } // TODO conveyor belt coordinates are given without rotation?
-      clone.transform.rotation[0] = mesh.quaternion.x;
-      clone.transform.rotation[1] = mesh.quaternion.y;
-      clone.transform.rotation[2] = -mesh.quaternion.z;
-      clone.transform.rotation[3] = mesh.quaternion.w;
-
-      clone.transform.scale3d[0] = mesh.scale.x;
-      clone.transform.scale3d[1] = mesh.scale.y;
-      clone.transform.scale3d[2] = mesh.scale.z;
-
-      this.setSelectedObject(clone);
+      this.setSelectedObject(actor);
     },
 
     // transform control
