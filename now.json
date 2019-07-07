@@ -2,7 +2,11 @@
   "version": 2,
   "name": "ficsit-felix",
   "builds": [
-    {"src": "package.json", "use": "@now/static-build"}
+    {"src": "app/package.json", "use": "@now/static-build",
+    
+    "config": {
+    "distDir": "app/dist"
+    }}
   ],
    "routes": [
       {"src": "/service-worker.js", "headers": { "cache-control": "s-maxage=0" } },
