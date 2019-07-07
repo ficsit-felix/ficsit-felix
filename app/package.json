@@ -58,5 +58,8 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
