@@ -11,6 +11,7 @@
    "routes": [
       {"src": "/service-worker.js", "headers": { "cache-control": "s-maxage=0" } },
       { "handle": "filesystem" },
+      {"src" : "/(.*)", "dest" :"/app/$1"},
       {"src": ".*", "dest": "/index.html"}
     ],
     "github": {
