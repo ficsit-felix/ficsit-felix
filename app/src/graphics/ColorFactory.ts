@@ -11,6 +11,7 @@ export default class ColorFactory {
   materials: { [id: string]: Material } = {};
   coloredMaterials: Material[] = [];
   matcap: Texture;
+  selectedMaterial: Material;
 
   // properties
   showCustomPaints: boolean;
@@ -23,6 +24,12 @@ export default class ColorFactory {
     this.matcap = matcap;
     this.showCustomPaints = showCustomPaints;
     this.classColors = classColors;
+
+    this.selectedMaterial = new MeshMatcapMaterial({
+      color: 0xffffff,
+      matcap: this.matcap
+    });
+
     this.setupColoredMaterials();
     this.setupDefaultMaterials();
   }
@@ -139,5 +146,9 @@ export default class ColorFactory {
     } else {
       return this.materials[actor.className];
     }
+  }
+
+  getSelectedMaterial(): Material {
+    return this.selectedMaterial;
   }
 }

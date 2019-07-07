@@ -145,7 +145,7 @@ export default {
             // deselect this actor
             const mesh = this.meshManager.findMeshByName(actor.pathName);
             if (mesh !== null) {
-              mesh.setSelected(false);
+              mesh.setSelected(false, this.colorFactory, this.scene);
             }
           }
         }
@@ -158,7 +158,7 @@ export default {
               actor.pathName
             );
             if (!this.lastSelectedActors.includes(actor)) {
-              mesh.mesh.setSelected(true);
+              mesh.mesh.setSelected(true, this.colorFactory, this.scene);
             }
             if (mesh.visible) {
               visibleSelectedMeshes.push(mesh.mesh.getRaycastMesh());
@@ -199,7 +199,7 @@ export default {
     },
 
     showCustomPaints(value) {
-      this.colorFactor.showCustomPaints = value;
+      this.colorFactory.showCustomPaints = value;
       // update materials
       this.updateAllMaterials();
     },
@@ -229,8 +229,8 @@ export default {
     classColors: {
       deep: true,
       handler(value) {
-        this.colorFactor.classColors = this.classColors;
-        this.colorFactor.setupDefaultMaterials();
+        this.colorFactory.classColors = this.classColors;
+        this.colorFactory.setupDefaultMaterials();
         this.updateAllMaterials();
       }
     },
@@ -257,12 +257,12 @@ export default {
       matcap.encoding = THREE.sRGBEncoding;
     });
 
-    this.colorFactor = new ColorFactory(
+    this.colorFactory = new ColorFactory(
       this.matcap,
       this.showCustomPaints,
       this.classColors
     );
-    this.meshFactory = new MeshFactory(this.geometryFactory, this.colorFactor);
+    this.meshFactory = new MeshFactory(this.geometryFactory, this.colorFactory);
 
     this.scene = this.$refs.scene.scene;
 
@@ -383,7 +383,7 @@ export default {
     },
 
     updateAllMaterials() {
-      this.meshManager.updateAllMaterials(this.colorFactor);
+      this.meshManager.updateAllMaterials(this.colorFactory);
     },
 
     focusSelectedObject() {

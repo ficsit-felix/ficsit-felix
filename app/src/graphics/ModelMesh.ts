@@ -1,4 +1,4 @@
-import { Mesh, Scene, Color, MeshMatcapMaterial } from "three";
+import { Mesh, Scene, Color, MeshMatcapMaterial, Material } from "three";
 import InstancedMeshGroup from "./InstancedMeshGroup";
 import GeometryFactory from "./GeometryFactory";
 import { Actor } from "satisfactory-json";
@@ -25,14 +25,16 @@ export interface ModelMesh {
   rebuildColor(actor: Actor, colorFactory: ColorFactory): void;
 
   dispose(): void;
-  setSelected(selected: boolean): void;
+  setSelected(selected: boolean, colorFactory: ColorFactory, scene: Scene): void;
   applyTransformToActor(actor: Actor): Actor;
 }
 
 export class ThreeModelMesh implements ModelMesh {
   private mesh: Mesh;
+  private material: Material;
   constructor(mesh: Mesh) {
     this.mesh = mesh;
+    this.material = mesh.material as Material;
   }
 
   getPathName(): string {
@@ -62,9 +64,14 @@ export class ThreeModelMesh implements ModelMesh {
     // TODO remove from scene if visible
   }
 
-  setSelected(selected: boolean): void {
-    (this.mesh.material as MeshMatcapMaterial).color = selected ? new Color("#ffffff") : new Color("#999999");
-    // TODO set correct color
+  setSelected(selected: boolean, colorFactory: ColorFactory, scene: Scene): void {
+    if (selected) {
+      this.material = this.mesh.material as Material;
+      // TODO what to do if the color changes while the actor is selected?
+      this.mesh.material = colorFactory.getSelectedMaterial();
+    } else {
+      this.mesh.material = this.material;
+    }
   }
 
   applyTransformToActor(actor: Actor): Actor {
@@ -81,6 +88,7 @@ function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
     clone.transform.translation[0] = mesh.position.y;
     clone.transform.translation[2] = mesh.position.z;
 
+    // TODO directly apply this rotation on the quaternion so we don't need to reverse it afterwards
     if (
       !isConveyorBelt(actor) &&
       !isRailroadTrack(actor) &&
@@ -88,10 +96,20 @@ function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
     ) {
       mesh.rotateZ(-1.5708); // -90 deg in radians
     } // TODO conveyor belt coordinates are given without rotation?
+
     clone.transform.rotation[0] = mesh.quaternion.x;
     clone.transform.rotation[1] = mesh.quaternion.y;
     clone.transform.rotation[2] = -mesh.quaternion.z;
     clone.transform.rotation[3] = mesh.quaternion.w;
+
+    if (
+      !isConveyorBelt(actor) &&
+      !isRailroadTrack(actor) &&
+      !isPowerLine(actor)
+    ) {
+      mesh.rotateZ(1.5708); // 90 deg in radians
+    } // TODO conveyor belt coordinates are given without rotation?
+    
 
     clone.transform.scale3d[0] = mesh.scale.x;
     clone.transform.scale3d[1] = mesh.scale.y;
@@ -140,8 +158,17 @@ export class InstancedModelMesh implements ModelMesh {
     // TODO
   }
 
-  setSelected(selected: boolean): void {
+  setSelected(selected: boolean, colorFactory: ColorFactory, scene: Scene): void {
     // TODO change color
+    if (selected) {
+      this.raycastMesh.material = colorFactory.getSelectedMaterial(); // TODO set this material on creation already as the raycastMesh will only be visible if this ModelMesh is selected
+      scene.add(this.raycastMesh);
+      // TODO correctly remove the raycast mesh from the scene when this ModelMesh is selected on dispose
+    } else {
+      scene.remove(this.raycastMesh);
+    }
+    this.instancedMeshGroup.setVisible(this.index, !selected);
+
   }
 
   applyTransformToActor(actor: Actor): Actor {

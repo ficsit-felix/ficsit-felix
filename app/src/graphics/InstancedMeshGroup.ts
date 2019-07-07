@@ -13,6 +13,8 @@ import * as THREE from "three";
 import index from "three-instanced-mesh";
 const InstancedMesh = index(THREE);
 
+var farAway = new Vector3(1000000000, 0,0);
+
 export interface InstancedMeshElement {
   pathName: string;
   visible: boolean;
@@ -61,7 +63,12 @@ export default class InstancedMeshGroup {
       const node = this.nodes[i];
 
       this.instancedMesh.setQuaternionAt(i, node.quat);
-      this.instancedMesh.setPositionAt(i, node.position);
+      if (node.visible === true) {
+        this.instancedMesh.setPositionAt(i, node.position);
+      } else {
+        this.instancedMesh.setPositionAt(i, farAway);
+      }
+  
       this.instancedMesh.setScaleAt(i, node.scale);
       this.instancedMesh.setColorAt(i, node.color);
     }
@@ -73,6 +80,9 @@ export default class InstancedMeshGroup {
     if (this.instancedMesh === undefined) {
       return;
     }
+    this.nodes[index].position = position;
+    this.nodes[index].quat = quaternion;
+    this.nodes[index].scale = scale;
     this.instancedMesh.setPositionAt(index, position);
     this.instancedMesh.setQuaternionAt(index, quaternion);
     this.instancedMesh.setScaleAt(index, scale);
@@ -80,6 +90,19 @@ export default class InstancedMeshGroup {
     this.instancedMesh.needsUpdate("quaternion");
     this.instancedMesh.needsUpdate("scale");
 
+  }
+
+  public setVisible(index: number, visible: boolean) {
+    if (this.instancedMesh === undefined) {
+      return;
+    }
+    this.nodes[index].visible = visible;
+    if (visible === true) {
+      this.instancedMesh.setPositionAt(index, this.nodes[index].position);
+    } else {
+      this.instancedMesh.setPositionAt(index, farAway);
+    }
+    this.instancedMesh.needsUpdate("position");
   }
   
   public dispose() {
