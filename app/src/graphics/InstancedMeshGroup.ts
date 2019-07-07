@@ -69,6 +69,19 @@ export default class InstancedMeshGroup {
     return this.instancedMesh;
   }
 
+  public setTransform(index: number, position: Vector3, quaternion: Quaternion, scale: Vector3) {
+    if (this.instancedMesh === undefined) {
+      return;
+    }
+    this.instancedMesh.setPositionAt(index, position);
+    this.instancedMesh.setQuaternionAt(index, quaternion);
+    this.instancedMesh.setScaleAt(index, scale);
+    this.instancedMesh.needsUpdate("position");
+    this.instancedMesh.needsUpdate("quaternion");
+    this.instancedMesh.needsUpdate("scale");
+
+  }
+  
   public dispose() {
     // TODO
   }
