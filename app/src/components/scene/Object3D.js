@@ -5,7 +5,7 @@ function walkGet(obj, path) {
   while (keys.length) {
     if (obj === undefined) {
       return null;
-    } 
+    }
     obj = obj[keys.shift()];
   }
   return obj;

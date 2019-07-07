@@ -13,7 +13,7 @@ import * as THREE from "three";
 import index from "three-instanced-mesh";
 const InstancedMesh = index(THREE);
 
-var farAway = new Vector3(1000000000, 0,0);
+var farAway = new Vector3(1000000000, 0, 0);
 
 export interface InstancedMeshElement {
   pathName: string;
@@ -68,7 +68,7 @@ export default class InstancedMeshGroup {
       } else {
         this.instancedMesh.setPositionAt(i, farAway);
       }
-  
+
       this.instancedMesh.setScaleAt(i, node.scale);
       this.instancedMesh.setColorAt(i, node.color);
     }
@@ -76,7 +76,12 @@ export default class InstancedMeshGroup {
     return this.instancedMesh;
   }
 
-  public setTransform(index: number, position: Vector3, quaternion: Quaternion, scale: Vector3) {
+  public setTransform(
+    index: number,
+    position: Vector3,
+    quaternion: Quaternion,
+    scale: Vector3
+  ) {
     if (this.instancedMesh === undefined) {
       return;
     }
@@ -89,7 +94,6 @@ export default class InstancedMeshGroup {
     this.instancedMesh.needsUpdate("position");
     this.instancedMesh.needsUpdate("quaternion");
     this.instancedMesh.needsUpdate("scale");
-
   }
 
   public setVisible(index: number, visible: boolean) {
@@ -104,7 +108,7 @@ export default class InstancedMeshGroup {
     }
     this.instancedMesh.needsUpdate("position");
   }
-  
+
   public dispose() {
     // TODO
   }

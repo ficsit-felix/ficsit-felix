@@ -1151,11 +1151,6 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x51d5e4,
     paintable: false
   },
-  "/Script/FactoryGame.FGRailroadTimeTable": {
-    model: "",
-    color: 0xff00ff,
-    paintable: false
-  },
   "/Script/FactoryGame.FGMapManager": {
     model: "",
     color: 0xff00ff,

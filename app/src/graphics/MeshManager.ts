@@ -97,8 +97,7 @@ export default class MeshManager {
         result.mesh
       );
 
-      this.visibleMeshes.push(modelMesh
-      );
+      this.visibleMeshes.push(modelMesh);
     }
 
     modelMesh.addToScene(this.scene);
