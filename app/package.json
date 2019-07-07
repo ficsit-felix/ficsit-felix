@@ -7,7 +7,8 @@
     "prebuild": "./rebuild-commithash.sh build",
     "build": "vue-cli-service build",
     "postbuild": "./rebuild-commithash.sh develop",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "now-build": "yarn build"
   },
   "dependencies": {
     "@caohenghu/vue-colorpicker": "^1.1.1",
