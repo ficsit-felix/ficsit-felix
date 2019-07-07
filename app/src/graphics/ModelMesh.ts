@@ -1,4 +1,4 @@
-import { Mesh, Scene } from "three";
+import { Mesh, Scene, Color, MeshMatcapMaterial } from "three";
 import InstancedMeshGroup from "./InstancedMeshGroup";
 import GeometryFactory from "./GeometryFactory";
 import { Actor } from "satisfactory-json";
@@ -63,35 +63,40 @@ export class ThreeModelMesh implements ModelMesh {
   }
 
   setSelected(selected: boolean): void {
+    (this.mesh.material as MeshMatcapMaterial).color = selected ? new Color("#ffffff") : new Color("#999999");
     // TODO set correct color
   }
 
   applyTransformToActor(actor: Actor): Actor {
-    // TODO need to clone, else change is not detected?
+    return applyMeshTransformToActor(this.mesh, actor);
+  }
+}
+
+function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
+      // TODO need to clone, else change is not detected?
     // find more intelligent way
     var clone = Object.assign({}, actor);
     // switched to accord for coordinate system change!
-    clone.transform.translation[1] = this.mesh.position.x;
-    clone.transform.translation[0] = this.mesh.position.y;
-    clone.transform.translation[2] = this.mesh.position.z;
+    clone.transform.translation[1] = mesh.position.x;
+    clone.transform.translation[0] = mesh.position.y;
+    clone.transform.translation[2] = mesh.position.z;
 
     if (
       !isConveyorBelt(actor) &&
       !isRailroadTrack(actor) &&
       !isPowerLine(actor)
     ) {
-      this.mesh.rotateZ(-1.5708); // -90 deg in radians
+      mesh.rotateZ(-1.5708); // -90 deg in radians
     } // TODO conveyor belt coordinates are given without rotation?
-    clone.transform.rotation[0] = this.mesh.quaternion.x;
-    clone.transform.rotation[1] = this.mesh.quaternion.y;
-    clone.transform.rotation[2] = -this.mesh.quaternion.z;
-    clone.transform.rotation[3] = this.mesh.quaternion.w;
+    clone.transform.rotation[0] = mesh.quaternion.x;
+    clone.transform.rotation[1] = mesh.quaternion.y;
+    clone.transform.rotation[2] = -mesh.quaternion.z;
+    clone.transform.rotation[3] = mesh.quaternion.w;
 
-    clone.transform.scale3d[0] = this.mesh.scale.x;
-    clone.transform.scale3d[1] = this.mesh.scale.y;
-    clone.transform.scale3d[2] = this.mesh.scale.z;
+    clone.transform.scale3d[0] = mesh.scale.x;
+    clone.transform.scale3d[1] = mesh.scale.y;
+    clone.transform.scale3d[2] = mesh.scale.z;
     return clone;
-  }
 }
 
 export class InstancedModelMesh implements ModelMesh {
@@ -140,7 +145,7 @@ export class InstancedModelMesh implements ModelMesh {
   }
 
   applyTransformToActor(actor: Actor): Actor {
-    // TODO
-    return actor;
+    // TODO when to update transform of InstancedMesh? 
+    return applyMeshTransformToActor(this.raycastMesh, actor);
   }
 }

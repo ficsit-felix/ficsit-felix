@@ -170,11 +170,19 @@ var TransformControls = function(camera, domElement) {
   this.updateMatrixWorld = function() {
     if (this.object !== undefined) {
       this.object.updateMatrixWorld();
-      this.object.parent.matrixWorld.decompose(
-        parentPosition,
-        parentQuaternion,
-        parentScale
-      );
+
+      if (this.object.parent !== undefined && this.object.parent !== null) {
+       this.object.parent.matrixWorld.decompose(
+         parentPosition,
+         parentQuaternion,
+         parentScale
+        );
+      } else {
+        // this object is not placed in a scene
+        parentPosition.set(0,0,0);
+        parentQuaternion.set(0,0,0,1);
+        parentScale.set(1,1,1);
+      }
       this.object.matrixWorld.decompose(
         worldPosition,
         worldQuaternion,
@@ -268,7 +276,9 @@ var TransformControls = function(camera, domElement) {
         }
 
         this.object.updateMatrixWorld();
-        this.object.parent.updateMatrixWorld();
+        if (this.object.parent !== undefined && this.object.parent !== null) {
+          this.object.parent.updateMatrixWorld();
+        }
 
         positionStart.copy(this.object.position);
         quaternionStart.copy(this.object.quaternion);

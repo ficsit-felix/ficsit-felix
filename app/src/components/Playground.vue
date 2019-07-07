@@ -415,7 +415,7 @@ export default {
         return; // TODO multiple actors
       }
 
-      const mesh = this.meshManager.findMeshByName(actor.pathName);
+      const mesh = this.meshManager.findMeshByName(this.selectedActors[0].pathName);
       const actor = mesh.applyTransformToActor(this.selectedActors[0]);
 
       this.setSelectedObject(actor);

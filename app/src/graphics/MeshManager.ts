@@ -17,7 +17,6 @@ import {
 } from "@/helpers/entityHelper";
 import { Actor } from "satisfactory-json";
 import { Component } from "vue";
-import MaterialFactory from "./ColorFactory";
 import { MeshResult } from "./MeshFactory";
 import InstancedMeshGroup from "./InstancedMeshGroup";
 import { ModelMesh, ThreeModelMesh, InstancedModelMesh } from "./ModelMesh";
@@ -68,10 +67,11 @@ export default class MeshManager {
    * @param result the MeshResult created by the MeshFactory
    */
   add(result: MeshResult) {
+    let modelMesh;
     if (result.instance === undefined) {
       console.log("adding");
-      this.scene.add(result.mesh.clone());
-      this.visibleMeshes.push(new ThreeModelMesh(result.mesh));
+      modelMesh = new ThreeModelMesh(result.mesh);
+      this.visibleMeshes.push(modelMesh);
     } else {
       // Add to the corresponding MeshInstance
       if (this.instancedMeshGroups[result.instance] === undefined) {
@@ -92,14 +92,17 @@ export default class MeshManager {
       // store the instance index into the mesh
       result.mesh.userData.instance = result.instance;
       result.mesh.userData.index = index;
-      this.visibleMeshes.push(
-        new InstancedModelMesh(
-          this.instancedMeshGroups[result.instance],
-          index,
-          result.mesh
-        )
+      modelMesh = new InstancedModelMesh(
+        this.instancedMeshGroups[result.instance],
+        index,
+        result.mesh
+      );
+
+      this.visibleMeshes.push(modelMesh
       );
     }
+
+    modelMesh.addToScene(this.scene);
 
     // use the meshes for raycasting
     result.mesh.updateMatrixWorld(true);
