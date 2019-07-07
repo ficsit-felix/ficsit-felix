@@ -172,8 +172,9 @@ export class InstancedModelMesh implements ModelMesh {
   }
 
   applyTransformToActor(actor: Actor): Actor {
+    // apply the changes to the instanced mesh group as well
     this.instancedMeshGroup.setTransform(this.index, this.raycastMesh.position, this.raycastMesh.quaternion, this.raycastMesh.scale);
-    // TODO when to update transform of InstancedMesh? 
+   
     return applyMeshTransformToActor(this.raycastMesh, actor);
   }
 }

@@ -69,7 +69,6 @@ export default class MeshManager {
   add(result: MeshResult) {
     let modelMesh;
     if (result.instance === undefined) {
-      console.log("adding");
       modelMesh = new ThreeModelMesh(result.mesh);
       this.visibleMeshes.push(modelMesh);
     } else {
