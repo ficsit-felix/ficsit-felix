@@ -145,36 +145,40 @@
   </div>
 </template>
 
-<script>
-import { TimelineLite } from 'gsap';
+<script lang="ts">
+import { Watch, Component, Vue, Prop } from 'vue-property-decorator';
+import { TimelineLite, Power2, Power3 } from 'gsap';
 
-export default {
-  name: 'Logo',
-  props: ['height', 'black', 'animating'],
-  watch: {
-    animating: {
-      imediate: true,
-      handler(val) {
-        if (val) {
-          this.tl.play();
-        }
+@Component({
+  //props: ['height', 'black', 'animating']
+})
+export default class Logo extends Vue {
+  @Prop(String) readonly height: string | undefined;
+  @Prop(String) readonly black: string | undefined;
+  @Prop(Boolean) readonly animating: boolean | undefined;
+
+  private tl: TimelineLite = new TimelineLite({
+    onComplete: () => {
+      if (this.animating) {
+        this.tl.restart();
       }
+    },
+    paused: !this.animating
+  });
+
+  @Watch('animating', { immediate: true })
+  onAnimatingChanged(val: boolean) {
+    if (val) {
+      this.tl.play();
     }
-  },
+  }
+
   mounted() {
     const hammer = this.$refs.hammer;
-    this.tl = new TimelineLite({
-      onComplete: () => {
-        if (this.animating) {
-          this.tl.restart();
-        }
-      },
-      paused: !this.animating
-    });
     this.tl.set(hammer, { transformOrigin: '80% 64%' });
     this.tl.to(hammer, 0.5, { rotation: 50, ease: Power2.easeIn });
     this.tl.to(hammer, 0.2, { rotation: -10, ease: Power3.easeIn });
     this.tl.to(hammer, 0.3, { rotation: 0, ease: Power2.easeOut });
   }
-};
+}
 </script>

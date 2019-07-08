@@ -14,6 +14,7 @@
     "@caohenghu/vue-colorpicker": "^1.1.1",
     "@sentry/browser": "5.4.3",
     "@sentry/integrations": "^5.3.1",
+    "@types/gsap": "^1.20.2",
     "file-saver": "^2.0.2",
     "gsap": "^2.1.2",
     "jszip": "^3.2.1",
@@ -25,6 +26,7 @@
     "vue": "^2.6.6",
     "vue-i18n": "^8.11.2",
     "vue-material": "^1.0.0-beta-11",
+    "vue-property-decorator": "^8.2.1",
     "vue-router": "^3.0.1",
     "vue-shortkey": "^3.1.7",
     "vue-split-panel": "1.0.4",
@@ -47,7 +49,8 @@
     "lint-staged": "^8.1.4",
     "sass": "^1.22.0",
     "sass-loader": "^7.1.0",
-    "typescript": "^3.2.1",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
     "vue-template-compiler": "^2.5.21"
   },
   "gitHooks": {

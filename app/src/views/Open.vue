@@ -19,22 +19,22 @@
   </div>
 </template>
 
-<script>
-import Logo from '@/components/Logo';
-import OpenBox from '@/components/OpenBox';
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
 
-export default {
-  name: 'Open',
+import Logo from '@/components/Logo.vue';
+import OpenBox from '@/components/OpenBox.vue';
+
+@Component({
   components: {
     Logo,
     OpenBox
-  },
-  data: function() {
-    return {
-      logoAnimating: false
-    };
   }
-};
+})
+export default class Open extends Vue {
+  logoAnimating: boolean = false;
+}
 </script>
 
 <style lang="scss" scoped>
