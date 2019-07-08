@@ -1,18 +1,18 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import { Module } from "vuex";
-import { Vector3 } from "three";
-import { Component, Actor } from "satisfactory-json";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { Module } from 'vuex';
+import { Vector3 } from 'three';
+import { Component, Actor } from 'satisfactory-json';
 import {
   findActorByName,
   findComponentByName,
   indexOfComponent,
   indexOfActor,
   refreshActorComponentDictionary
-} from "./helpers/entityHelper";
-import * as Sentry from "@sentry/browser";
-import { EventBus } from "./event-bus";
-import { reportException } from "@/ts/errorReporting";
+} from './helpers/entityHelper';
+import * as Sentry from '@sentry/browser';
+import { EventBus } from './event-bus';
+import { reportException } from '@/ts/errorReporting';
 
 Vue.use(Vuex);
 
@@ -43,7 +43,7 @@ interface SettingsRootState {
 // updates the local storage on settings mutations
 // TODO do this in a better way?
 function updateLocalStorage(state: SettingsRootState) {
-  localStorage.setItem("settings", JSON.stringify(state));
+  localStorage.setItem('settings', JSON.stringify(state));
 }
 
 const settingsModule: Module<SettingsRootState, RootState> = {
@@ -57,17 +57,17 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     conveyorBeltResolution: 4,
     editClassColors: false,
     classColors: {},
-    locale: "en",
+    locale: 'en',
     experimentalFeatures: false,
-    autoLoadSaveFile: "",
+    autoLoadSaveFile: '',
     saveAsZip: false,
     showFps: false
   },
   getters: {},
   mutations: {
     INIT_STORE_FROM_LOCAL_DATA(state) {
-      if (localStorage.getItem("settings")) {
-        Object.assign(state, JSON.parse(localStorage.getItem("settings")!));
+      if (localStorage.getItem('settings')) {
+        Object.assign(state, JSON.parse(localStorage.getItem('settings')!));
       }
     },
 
@@ -131,46 +131,46 @@ const settingsModule: Module<SettingsRootState, RootState> = {
   },
   actions: {
     setNearPlane(context, payload) {
-      context.commit("SET_NEAR_PLANE", payload);
+      context.commit('SET_NEAR_PLANE', payload);
     },
     setFarPlane(context, payload) {
-      context.commit("SET_FAR_PLANE", payload);
+      context.commit('SET_FAR_PLANE', payload);
     },
     setShowModels(context, payload) {
-      context.commit("SET_SHOW_MODELS", payload);
+      context.commit('SET_SHOW_MODELS', payload);
     },
     setShowCustomPaints(context, payload) {
-      context.commit("SET_SHOW_CUSTOM_PAINTS", payload);
+      context.commit('SET_SHOW_CUSTOM_PAINTS', payload);
     },
     setShowMap(context, payload) {
-      context.commit("SET_SHOW_MAP", payload);
+      context.commit('SET_SHOW_MAP', payload);
     },
     setConveyorBeltResolution(context, payload) {
-      context.commit("SET_CONVEYOR_BELT_RESOLUTION", payload);
+      context.commit('SET_CONVEYOR_BELT_RESOLUTION', payload);
     },
     setClassColor(context, payload) {
-      context.commit("SET_CLASS_COLOR", payload);
+      context.commit('SET_CLASS_COLOR', payload);
     },
     setEditClassColors(context, payload) {
-      context.commit("SET_EDIT_CLASS_COLORS", payload);
+      context.commit('SET_EDIT_CLASS_COLORS', payload);
     },
     clearClassColors(context, payload) {
-      context.commit("CLEAR_CLASS_COLORS", payload);
+      context.commit('CLEAR_CLASS_COLORS', payload);
     },
     setLocale(context, payload) {
-      context.commit("SET_LOCALE", payload);
+      context.commit('SET_LOCALE', payload);
     },
     setExperimentalFeatures(context, payload) {
-      context.commit("SET_EXPERIMENTAL_FEATURES", payload);
+      context.commit('SET_EXPERIMENTAL_FEATURES', payload);
     },
     setAutoLoadSaveFile(context, payload) {
-      context.commit("SET_AUTO_LOAD_SAVE_FILE", payload);
+      context.commit('SET_AUTO_LOAD_SAVE_FILE', payload);
     },
     setSaveAsZip(context, payload) {
-      context.commit("SET_SAVE_AS_ZIP", payload);
+      context.commit('SET_SAVE_AS_ZIP', payload);
     },
     setShowFps(context, payload) {
-      context.commit("SET_SHOW_FPS", payload);
+      context.commit('SET_SHOW_FPS', payload);
     }
   }
 };
@@ -213,11 +213,11 @@ export default new Vuex.Store<RootState>({
     selectedJsonToEdit: null,
 
     error: null,
-    title: "asdf",
+    title: 'asdf',
     dataLoaded: false,
     visibleObjects: [],
-    uuid: "",
-    filename: "",
+    uuid: '',
+    filename: '',
     classes: [],
 
     selectionDisabled: false,
@@ -230,11 +230,12 @@ export default new Vuex.Store<RootState>({
         return [];
       }
 
-      let transformation = (obj: any, index: any) => {
+      const transformation = (obj: any, index: any) => {
         return {
           // id: index,
           pathName: obj.pathName,
-          text: obj.pathName.substring(obj.pathName.indexOf(".") + 1) // everything after the first .
+          text: obj.pathName.substring(obj.pathName.indexOf('.') + 1)
+          // everything after the first .
         };
       };
 
@@ -253,7 +254,7 @@ export default new Vuex.Store<RootState>({
     SET_SELECTED(state, selectedPathNames) {
       if (
         selectedPathNames.length === 1 &&
-        selectedPathNames[0] == "---save-header---"
+        selectedPathNames[0] === '---save-header---'
       ) {
         // selected save header
         const header = {
@@ -303,26 +304,26 @@ export default new Vuex.Store<RootState>({
 
         state.selectedPathNames = selectedPathNames;
 
-        var actors: Actor[] = [];
-        var components: Component[] = [];
+        const actors: Actor[] = [];
+        const components: Component[] = [];
 
         state.selectedActors = actors;
         state.selectedComponents = components;
 
         for (const pathName of selectedPathNames) {
-          let actor = findActorByName(pathName);
+          const actor = findActorByName(pathName);
           if (actor !== undefined) {
             actors.push(actor);
           } else {
-            let component = findComponentByName(pathName);
+            const component = findComponentByName(pathName);
             if (component !== undefined) {
               components.push(component);
             } else {
               console.error(
-                "No actor/component with path name '" + pathName + "' found."
+                `No actor/component with path name '${pathName}' found.`
               );
               reportException(
-                "No actor/component with path name '" + pathName + "' found."
+                `No actor/component with path name '${pathName}' found.`
               );
             }
           }
@@ -356,7 +357,7 @@ export default new Vuex.Store<RootState>({
         .sort()
         .map(name => {
           return {
-            name: name,
+            name,
             visible: true
           };
         });
@@ -371,9 +372,9 @@ export default new Vuex.Store<RootState>({
       state.uuid = uuid;
     },
     SET_VISIBILITY(state, { name, visible }) {
-      for (var i = 0; i < state.classes.length; i++) {
-        if (state.classes[i].name === name) {
-          state.classes[i].visible = visible;
+      for (const clazz of state.classes) {
+        if (clazz.name === name) {
+          clazz.visible = visible;
           break;
         }
       }
@@ -382,7 +383,7 @@ export default new Vuex.Store<RootState>({
     SET_SELECTED_OBJECT(state, obj) {
       if (
         state.selectedPathNames.length === 1 &&
-        state.selectedPathNames[0] == "---save-header---"
+        state.selectedPathNames[0] === '---save-header---'
       ) {
         // header
         window.data.saveHeaderType = obj.saveHeaderType;
@@ -419,7 +420,9 @@ export default new Vuex.Store<RootState>({
       state.cameraTarget = data.target;
     },
     DELETE_SELECTED(state, payload) {
-      // store the event payload here, but send it later, so that selectedActors is set to [] before the meshes are deleted. This way we don't get problems when trying to delect them.
+      // store the event payload here, but send it later,
+      // so that selectedActors is set to [] before the meshes are deleted.
+      // This way we don't get problems when trying to delect them.
       const eventPayload = {
         actors: state.selectedActors,
         components: state.selectedComponents
@@ -439,7 +442,7 @@ export default new Vuex.Store<RootState>({
       state.selectedJsonToEdit = null;
       state.selectedPathNames = [];
       state.dataLoaded = true;
-      EventBus.$emit("delete", eventPayload);
+      EventBus.$emit('delete', eventPayload);
     },
 
     SET_SELECTION_DISABLED(state, payload) {
@@ -454,22 +457,23 @@ export default new Vuex.Store<RootState>({
   },
   actions: {
     select(context, selectedPathNames) {
-      context.commit("SET_SELECTED", selectedPathNames);
+      context.commit('SET_SELECTED', selectedPathNames);
     },
     setLoading(context, value) {
-      // this is needed so that the objects list will be updated when we set the dataLoaded state back to true
-      context.commit("SET_DATA_LOADED", value);
+      // this is needed so that the objects list will be updated
+      // when we set the dataLoaded state back to true
+      context.commit('SET_DATA_LOADED', value);
     },
     setLoadedData(context, data) {
       return new Promise((resolve, reject) => {
         window.data = data;
         refreshActorComponentDictionary();
-        context.commit("SET_DATA_LOADED", true);
+        context.commit('SET_DATA_LOADED', true);
 
         // slowly fill visible actors
-        var visible = [];
-        for (var i = 0; i < data.actors.length; i++) {
-          var actor = data.actors[i];
+        const visible = [];
+        for (let i = 0; i < data.actors.length; i++) {
+          const actor = data.actors[i];
           visible.push({
             id: i,
             className: actor.className,
@@ -477,36 +481,36 @@ export default new Vuex.Store<RootState>({
             // state: 0
           });
         }
-        context.commit("SET_VISIBLE_OBJECTS", visible);
+        context.commit('SET_VISIBLE_OBJECTS', visible);
         resolve();
       });
     },
     setFilename(context, filename) {
-      context.commit("SET_FILENAME", filename);
+      context.commit('SET_FILENAME', filename);
     },
     setUUID(context, uuid) {
-      context.commit("SET_UUID", uuid);
+      context.commit('SET_UUID', uuid);
     },
     setVisibility(context, payload) {
-      context.commit("SET_VISIBILITY", payload);
+      context.commit('SET_VISIBILITY', payload);
     },
     setSelectedObject(context, payload) {
-      context.commit("SET_SELECTED_OBJECT", payload);
+      context.commit('SET_SELECTED_OBJECT', payload);
     },
     setCameraData(context, payload) {
-      context.commit("SET_CAMERA_DATA", payload);
+      context.commit('SET_CAMERA_DATA', payload);
     },
     deleteSelected(context, payload) {
-      context.commit("DELETE_SELECTED", payload);
+      context.commit('DELETE_SELECTED', payload);
     },
     setSelectionDisabled(context, payload) {
-      context.commit("SET_SELECTION_DISABLED", payload);
+      context.commit('SET_SELECTION_DISABLED', payload);
     },
     setBoxSelect(context, payload) {
-      context.commit("SET_BOX_SELECT", payload);
+      context.commit('SET_BOX_SELECT', payload);
     },
     setShiftSelect(context, payload) {
-      context.commit("SET_SHIFT_SELECT", payload);
+      context.commit('SET_SHIFT_SELECT', payload);
     }
   }
 });

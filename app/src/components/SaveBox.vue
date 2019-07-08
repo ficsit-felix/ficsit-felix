@@ -1,17 +1,17 @@
 <template>
   <div>
     <div v-if="!isSaving" class="infobox">
-      <p v-if="errorText == ''">{{ $t("savePage.saveFinished") }}</p>
-      <p v-else>{{ $t("savePage.error") }}</p>
+      <p v-if="errorText == ''">{{ $t('savePage.saveFinished') }}</p>
+      <p v-else>{{ $t('savePage.error') }}</p>
       <br />
       <br />
       <md-button class="md-raised" @click="$router.push({ name: 'editor' })">{{
-        $t("savePage.backButton")
+        $t('savePage.backButton')
       }}</md-button>
     </div>
     <div v-else class="infobox">
-      <p v-if="exportJson">{{ $t("savePage.jsonSubtitle") }}</p>
-      <p v-else>{{ $t("savePage.savSubtitle") }}</p>
+      <p v-if="exportJson">{{ $t('savePage.jsonSubtitle') }}</p>
+      <p v-else>{{ $t('savePage.savSubtitle') }}</p>
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
@@ -19,11 +19,11 @@
     </div>
 
     <md-dialog :md-active.sync="showErrorDialog">
-      <md-dialog-title>{{ $t("openPage.errorTitle") }}</md-dialog-title>
+      <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
       <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false">{{
-          $t("general.close")
+          $t('general.close')
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -31,23 +31,23 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import { setTimeout } from "timers";
-import * as Sentry from "@sentry/browser";
+import { mapActions, mapState } from 'vuex';
+import { setTimeout } from 'timers';
+import * as Sentry from '@sentry/browser';
 
-import { Json2Sav } from "satisfactory-json";
+import { Json2Sav } from 'satisfactory-json';
 
-import { reportMessage, reportError } from "@/ts/errorReporting";
+import { reportMessage, reportError } from '@/ts/errorReporting';
 
 export default {
-  name: "SaveBox",
+  name: 'SaveBox',
   data: function() {
     return {
       isSaving: true,
       progress: 0,
-      infoText: this.$t("savePage.initializing"),
+      infoText: this.$t('savePage.initializing'),
       showErrorDialog: false,
-      errorText: "",
+      errorText: '',
       exportJson: false
     };
   },
@@ -56,21 +56,21 @@ export default {
       immediate: true,
       handler(val) {
         if (val) {
-          this.$emit("startAnimating");
+          this.$emit('startAnimating');
         } else {
-          this.$emit("stopAnimating");
+          this.$emit('stopAnimating');
         }
       }
     }
   },
   computed: {
-    ...mapState(["dataLoaded", "filename"])
+    ...mapState(['dataLoaded', 'filename'])
   },
   created() {
     if (!this.dataLoaded) {
       // The user needs to load a file first
       this.$router.push({
-        name: "landingpage"
+        name: 'landingpage'
       });
     }
   },
@@ -78,11 +78,11 @@ export default {
     if (!this.dataLoaded) {
       // The user needs to load a file first
       this.$router.push({
-        name: "landingpage"
+        name: 'landingpage'
       });
       return;
     }
-    this.exportJson = this.$route.path === "/save/json";
+    this.exportJson = this.$route.path === '/save/json';
     this.saveFile();
   },
   methods: {
@@ -95,7 +95,7 @@ export default {
     saveFile() {
       try {
         this.isSaving = true;
-        this.infoText = this.$t("savePage.readingFile");
+        this.infoText = this.$t('savePage.readingFile');
 
         var data;
         if (this.exportJson) {
@@ -104,13 +104,13 @@ export default {
           data = new Json2Sav(window.data).transform();
         }
 
-        var element = document.createElement("a");
+        var element = document.createElement('a');
 
-        var blob = new Blob([Buffer.from(data, "binary")], {
-          type: "application/octet-stream"
+        var blob = new Blob([Buffer.from(data, 'binary')], {
+          type: 'application/octet-stream'
         });
 
-        this.infoText = this.$t("savePage.processingFile");
+        this.infoText = this.$t('savePage.processingFile');
         this.progress = 50;
         this.buildInterval = setInterval(() => {
           this.progress += 1;
@@ -118,18 +118,18 @@ export default {
             this.progress = 100;
             clearInterval(this.buildInterval);
             setTimeout(() => {
-              reportMessage("saved file");
+              reportMessage('saved file');
 
               element.href = window.URL.createObjectURL(blob);
               if (this.exportJson) {
                 // TODO make sure we only cut of the extension
                 element.download =
-                  this.filename.replace(".json", "").replace(".sav", "") +
-                  ".json";
+                  this.filename.replace('.json', '').replace('.sav', '') +
+                  '.json';
               } else {
                 element.download =
-                  this.filename.replace(".json", "").replace(".sav", "") +
-                  ".sav";
+                  this.filename.replace('.json', '').replace('.sav', '') +
+                  '.sav';
               }
 
               document.body.appendChild(element);
@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 
 .dropbox {
   outline: 2px dashed grey; /* the dash box */

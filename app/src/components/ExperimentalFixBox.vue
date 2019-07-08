@@ -12,11 +12,11 @@
         <!--
             
         @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
-        <p class="dragInstruction">{{ $t("openPage.dragSav") }}</p>
+        <p class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
       </div>
     </form>
     <div v-else class="infobox">
-      <p>{{ $t("openPage.subtitleSav") }}</p>
+      <p>{{ $t('openPage.subtitleSav') }}</p>
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
@@ -27,11 +27,11 @@
       :model="saveAsZip"
       @change="setSaveAsZip"
       class="lightCheckbox md-primary"
-      >{{ $t("experimentalFix.saveAsZip") }}</md-checkbox
+      >{{ $t('experimentalFix.saveAsZip') }}</md-checkbox
     >
 
     <md-dialog :md-active.sync="showErrorDialog">
-      <md-dialog-title>{{ $t("openPage.errorTitle") }}</md-dialog-title>
+      <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
       <span class="dialog-content">
         {{ errorText }}
         <span v-if="showSendSave">
@@ -41,7 +41,7 @@
             <a
               href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
               place="dropbox"
-              >{{ $t("openPage.dropboxText") }}</a
+              >{{ $t('openPage.dropboxText') }}</a
             >
             <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
           </i18n>
@@ -49,7 +49,7 @@
       </span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false">{{
-          $t("general.close")
+          $t('general.close')
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -57,31 +57,31 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import * as Sentry from "@sentry/browser";
-import { v4 } from "uuid";
+import { mapActions, mapState } from 'vuex';
+import * as Sentry from '@sentry/browser';
+import { v4 } from 'uuid';
 
-import { Sav2Json, Json2Sav } from "satisfactory-json";
-import { modelHelper } from "@/helpers/modelHelper";
-import { modelConfig } from "@/definitions/models";
+import { Sav2Json, Json2Sav } from 'satisfactory-json';
+import { modelHelper } from '@/helpers/modelHelper';
+import { modelConfig } from '@/definitions/models';
 
-import { findActorByName } from "@/helpers/entityHelper";
-import { reportMessage, reportContext, reportError } from "@/ts/errorReporting";
+import { findActorByName } from '@/helpers/entityHelper';
+import { reportMessage, reportContext, reportError } from '@/ts/errorReporting';
 
-import * as JSZip from "jszip";
-import { saveAs } from "file-saver";
-import { reportException } from "../ts/errorReporting";
-import { refreshActorComponentDictionary } from "../helpers/entityHelper";
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { reportException } from '../ts/errorReporting';
+import { refreshActorComponentDictionary } from '../helpers/entityHelper';
 
 export default {
-  name: "ExperimentalFixBox",
+  name: 'ExperimentalFixBox',
   data: function() {
     return {
       isSaving: false,
       progress: 0,
-      infoText: this.$t("openPage.initializing"),
+      infoText: this.$t('openPage.initializing'),
       showErrorDialog: false,
-      errorText: "",
+      errorText: '',
       showSendSave: false
     };
   },
@@ -90,23 +90,23 @@ export default {
       immediate: true,
       handler(val) {
         if (val) {
-          this.$emit("startAnimating");
+          this.$emit('startAnimating');
         } else {
-          this.$emit("stopAnimating");
+          this.$emit('stopAnimating');
         }
       }
     }
   },
   computed: {
-    ...mapState(["filename"]),
-    ...mapState("settings", ["saveAsZip"])
+    ...mapState(['filename']),
+    ...mapState('settings', ['saveAsZip'])
   },
   mounted() {
-    reportMessage("visit fix page");
+    reportMessage('visit fix page');
   },
   methods: {
-    ...mapActions(["setLoadedData", "setFilename", "setUUID", "setLoading"]),
-    ...mapActions("settings", ["setSaveAsZip"]),
+    ...mapActions(['setLoadedData', 'setFilename', 'setUUID', 'setLoading']),
+    ...mapActions('settings', ['setSaveAsZip']),
 
     handleError(errorMessage, showSendSave = true) {
       this.showErrorDialog = true;
@@ -117,25 +117,25 @@ export default {
     },
     openFile(file) {
       this.isSaving = true;
-      this.infoText = this.$t("openPage.readingFile");
-      console.log("Opening...", file);
-      console.log("name: " + file.name);
-      console.log("last modified: " + file.lastModifiedDate);
-      console.log("size: " + file.size);
+      this.infoText = this.$t('openPage.readingFile');
+      console.log('Opening...', file);
+      console.log('name: ' + file.name);
+      console.log('last modified: ' + file.lastModifiedDate);
+      console.log('size: ' + file.size);
       this.setFilename(file.name);
       const uuid = v4();
       this.setUUID(uuid);
 
-      reportContext("filename", file.name);
-      reportContext("uuid", uuid);
+      reportContext('filename', file.name);
+      reportContext('uuid', uuid);
 
-      reportMessage("opened file");
+      reportMessage('opened file');
       this.setLoading(false).then(() => {});
 
-      if (file.name.split(".").pop() !== "sav") {
-        const message = this.$t("openPage.extensionError", {
-          expected: "sav",
-          actual: file.name.split(".").pop()
+      if (file.name.split('.').pop() !== 'sav') {
+        const message = this.$t('openPage.extensionError', {
+          expected: 'sav',
+          actual: file.name.split('.').pop()
         });
         reportException(message);
         this.handleError(message, false);
@@ -150,7 +150,7 @@ export default {
     },
 
     processFile(data) {
-      this.infoText = this.$t("openPage.processing");
+      this.infoText = this.$t('openPage.processing');
       this.progress = 50;
       try {
         var json;
@@ -159,12 +159,12 @@ export default {
 
         // reportMessage("debugSav2Json");
 
-        this.infoText = this.$t("experimentalFix.fixing");
+        this.infoText = this.$t('experimentalFix.fixing');
 
         for (const actor of json.actors) {
           if (
             actor.pathName ===
-            "Persistent_Level:PersistentLevel.RailroadSubsystem"
+            'Persistent_Level:PersistentLevel.RailroadSubsystem'
           ) {
             if (actor !== undefined) {
               if (actor.entity.extra === undefined) {
@@ -184,22 +184,22 @@ export default {
             this.progress = 100;
             clearInterval(this.buildInterval);
             setTimeout(() => {
-              reportMessage("saved file");
+              reportMessage('saved file');
 
               if (this.saveAsZip) {
                 let zip = new JSZip();
 
                 zip.file(
-                  this.filename.replace(".json", "").replace(".sav", "") +
-                    ".sav",
+                  this.filename.replace('.json', '').replace('.sav', '') +
+                    '.sav',
                   data,
                   { binary: true }
                 );
 
                 zip
                   .generateAsync({
-                    type: "blob",
-                    compression: "DEFLATE",
+                    type: 'blob',
+                    compression: 'DEFLATE',
                     compressionOptions: {
                       level: 9
                     }
@@ -208,8 +208,8 @@ export default {
                     // see FileSaver.js
                     saveAs(
                       content,
-                      this.filename.replace(".json", "").replace(".sav", "") +
-                        ".zip"
+                      this.filename.replace('.json', '').replace('.sav', '') +
+                        '.zip'
                     );
                   })
                   .catch(error => {
@@ -217,16 +217,16 @@ export default {
                     this.handleError(error.message);
                   });
               } else {
-                var element = document.createElement("a");
+                var element = document.createElement('a');
 
-                var blob = new Blob([Buffer.from(data, "binary")], {
-                  type: "application/octet-stream"
+                var blob = new Blob([Buffer.from(data, 'binary')], {
+                  type: 'application/octet-stream'
                 });
 
                 element.href = window.URL.createObjectURL(blob);
                 element.download =
-                  this.filename.replace(".json", "").replace(".sav", "") +
-                  ".sav";
+                  this.filename.replace('.json', '').replace('.sav', '') +
+                  '.sav';
 
                 document.body.appendChild(element);
 
@@ -251,7 +251,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 
 .dropbox {
   outline: 2px dashed grey; /* the dash box */

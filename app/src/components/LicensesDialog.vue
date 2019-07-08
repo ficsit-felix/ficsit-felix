@@ -6,14 +6,14 @@
 
 <script>
 export default {
-  name: "LicensesDialog",
+  name: 'LicensesDialog',
   data: function() {
     return {
-      licenses: "loading..."
+      licenses: 'loading...'
     };
   },
   mounted() {
-    import("@/js/licenses").then(module => (this.licenses = module.licenses));
+    import('@/js/licenses').then(module => (this.licenses = module.licenses));
   }
 };
 </script>

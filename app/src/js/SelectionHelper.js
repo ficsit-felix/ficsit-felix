@@ -2,8 +2,8 @@
  * @author HypnosNova / https://www.threejs.org.cn/gallery
  */
 
-import * as THREE from "three";
-import { MOUSE } from "three";
+import * as THREE from 'three';
+import { MOUSE } from 'three';
 var SelectionHelper = (function() {
   function SelectionHelper(
     selectionBox,
@@ -11,9 +11,9 @@ var SelectionHelper = (function() {
     cssClassName,
     boxSelectControls
   ) {
-    this.element = document.createElement("div");
+    this.element = document.createElement('div');
     this.element.classList.add(cssClassName);
-    this.element.style.pointerEvents = "none";
+    this.element.style.pointerEvents = 'none';
 
     this.domElement = domElement;
 
@@ -24,7 +24,7 @@ var SelectionHelper = (function() {
     this.isDown = false;
 
     this.domElement.addEventListener(
-      "mousedown",
+      'mousedown',
       function(event) {
         if (boxSelectControls.disabled) {
           return;
@@ -40,7 +40,7 @@ var SelectionHelper = (function() {
     );
 
     this.domElement.addEventListener(
-      "mousemove",
+      'mousemove',
       function(event) {
         if (boxSelectControls.disabled) {
           return;
@@ -53,7 +53,7 @@ var SelectionHelper = (function() {
     );
 
     document.addEventListener(
-      "mouseup",
+      'mouseup',
       function(event) {
         if (boxSelectControls.disabled) {
           return;
@@ -70,10 +70,10 @@ var SelectionHelper = (function() {
   SelectionHelper.prototype.onSelectStart = function(event) {
     this.domElement.parentElement.appendChild(this.element);
 
-    this.element.style.left = event.clientX + "px";
-    this.element.style.top = event.clientY + "px";
-    this.element.style.width = "0px";
-    this.element.style.height = "0px";
+    this.element.style.left = event.clientX + 'px';
+    this.element.style.top = event.clientY + 'px';
+    this.element.style.width = '0px';
+    this.element.style.height = '0px';
 
     this.startPoint.x = event.clientX;
     this.startPoint.y = event.clientY;
@@ -85,12 +85,12 @@ var SelectionHelper = (function() {
     this.pointTopLeft.x = Math.min(this.startPoint.x, event.clientX);
     this.pointTopLeft.y = Math.min(this.startPoint.y, event.clientY);
 
-    this.element.style.left = this.pointTopLeft.x + "px";
-    this.element.style.top = this.pointTopLeft.y + "px";
+    this.element.style.left = this.pointTopLeft.x + 'px';
+    this.element.style.top = this.pointTopLeft.y + 'px';
     this.element.style.width =
-      this.pointBottomRight.x - this.pointTopLeft.x + "px";
+      this.pointBottomRight.x - this.pointTopLeft.x + 'px';
     this.element.style.height =
-      this.pointBottomRight.y - this.pointTopLeft.y + "px";
+      this.pointBottomRight.y - this.pointTopLeft.y + 'px';
   };
 
   SelectionHelper.prototype.onSelectOver = function() {

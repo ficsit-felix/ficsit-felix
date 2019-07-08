@@ -1,12 +1,12 @@
-import { BoxBufferGeometry, Mesh, Material } from "three";
+import { BoxBufferGeometry, Mesh, Material } from 'three';
 
-import { isConveyorLift } from "@/helpers/entityHelper";
+import { isConveyorLift } from '@/helpers/entityHelper';
 
-import { modelHelper } from "@/helpers/modelHelper";
-import GeometryFactory from "./GeometryFactory";
-import ColorFactory from "./ColorFactory";
-import { Actor, StructProperty } from "satisfactory-json";
-import { applyRotation, applyTranslation } from "@/helpers/meshHelper";
+import { modelHelper } from '@/helpers/modelHelper';
+import GeometryFactory from './GeometryFactory';
+import ColorFactory from './ColorFactory';
+import { Actor, StructProperty } from 'satisfactory-json';
+import { applyRotation, applyTranslation } from '@/helpers/meshHelper';
 
 export interface MeshResult {
   mesh: Mesh;
@@ -54,10 +54,10 @@ export default class MeshFactoy {
     return new Promise((resolve, reject) => {
       // add other parts to conveyor lift
       modelHelper
-        .loadModel("/models/ConveyorLift_Bottom.glb")
+        .loadModel('/models/ConveyorLift_Bottom.glb')
         .then(bottomGeometry => {
           modelHelper
-            .loadModel("/models/ConveyorLift_Top.glb")
+            .loadModel('/models/ConveyorLift_Top.glb')
             .then(topGeometry => {
               const material = this.materialFactory.createMaterial(actor);
 
@@ -65,10 +65,10 @@ export default class MeshFactoy {
               var topPartTranslationZ = 0;
               for (let i = 0; i < actor.entity.properties.length; i++) {
                 const element = actor.entity.properties[i] as StructProperty;
-                if (element.name === "mTopTransform") {
+                if (element.name === 'mTopTransform') {
                   for (let i = 0; i < element.value.properties.length; i++) {
                     const elem = element.value.properties[i];
-                    if (elem.name === "Translation") {
+                    if (elem.name === 'Translation') {
                       topPartTranslationZ = elem.value.z;
                     }
                   }
@@ -88,17 +88,17 @@ export default class MeshFactoy {
 
               for (let i = 0; i < actor.entity.properties.length; i++) {
                 const element = actor.entity.properties[i] as StructProperty;
-                if (element.name === "mTopTransform") {
+                if (element.name === 'mTopTransform') {
                   for (let i = 0; i < element.value.properties.length; i++) {
                     const elem = element.value.properties[i];
-                    if (elem.name === "Rotation") {
+                    if (elem.name === 'Rotation') {
                       applyRotation(topMesh, [
                         elem.value.a,
                         elem.value.b,
                         elem.value.c,
                         elem.value.d
                       ]);
-                    } else if (elem.name === "Translation") {
+                    } else if (elem.name === 'Translation') {
                       applyTranslation(topMesh, [
                         elem.value.x,
                         elem.value.y,

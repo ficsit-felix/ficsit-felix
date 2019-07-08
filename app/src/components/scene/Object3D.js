@@ -1,7 +1,7 @@
 // import { Mesh } from 'three'
 
 function walkGet(obj, path) {
-  const keys = path.split(".");
+  const keys = path.split('.');
   while (keys.length) {
     if (obj === undefined) {
       return null;
@@ -12,7 +12,7 @@ function walkGet(obj, path) {
 }
 
 function walkSet(obj, path, val) {
-  const keys = path.split(".");
+  const keys = path.split('.');
   while (keys.length > 1) {
     obj = obj[keys.shift()];
   }
@@ -33,17 +33,17 @@ function propWatcher(propsToWatch) {
 }
 
 const watch = propWatcher({
-  "scale.x": "scale.x",
-  "scale.y": "scale.y",
-  "scale.z": "scale.z",
+  'scale.x': 'scale.x',
+  'scale.y': 'scale.y',
+  'scale.z': 'scale.z',
 
-  "position.x": "position.x",
-  "position.y": "position.y",
-  "position.z": "position.z",
+  'position.x': 'position.x',
+  'position.y': 'position.y',
+  'position.z': 'position.z',
 
-  "rotation.x": "rotation.x",
-  "rotation.y": "rotation.y",
-  "rotation.z": "rotation.z"
+  'rotation.x': 'rotation.x',
+  'rotation.y': 'rotation.y',
+  'rotation.z': 'rotation.z'
 });
 
 const VectorType = (v = 0) => ({
@@ -56,7 +56,7 @@ const VectorType = (v = 0) => ({
 });
 
 export default {
-  inject: ["scene"],
+  inject: ['scene'],
 
   props: {
     position: Object,
@@ -84,7 +84,7 @@ export default {
   },
 
   render(h) {
-    return !this.$slots.default ? h() : h("div", this.$slots.default);
+    return !this.$slots.default ? h() : h('div', this.$slots.default);
   },
 
   watch

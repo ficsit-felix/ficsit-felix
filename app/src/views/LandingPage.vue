@@ -8,25 +8,25 @@
         <Logo height="180" black="#000" :animating="logoAnimating" />
       </div>
       <div class="experimentalFix">
-        <p>{{ $t("experimentalFix.landingText") }}</p>
+        <p>{{ $t('experimentalFix.landingText') }}</p>
       </div>
 
-      <p>{{ $t("landingPage.firstParagraph") }}</p>
+      <p>{{ $t('landingPage.firstParagraph') }}</p>
       <p>
         <md-button
           class="md-raised"
           @click="$router.push({ path: '/open/sav' })"
-          >{{ $t("landingPage.openSavButton") }}</md-button
+          >{{ $t('landingPage.openSavButton') }}</md-button
         >
       </p>
       <a href="/screenshot.png">
         <img src="/screenshot.png" />
       </a>
-      <p>{{ $t("landingPage.secondParagraph") }}</p>
+      <p>{{ $t('landingPage.secondParagraph') }}</p>
       <md-button
         class="md-flat md-accent"
         @click="$router.push({ path: '/open/json' })"
-        >{{ $t("landingPage.openJsonButton") }}</md-button
+        >{{ $t('landingPage.openJsonButton') }}</md-button
       >
 
       <p class="left">
@@ -37,12 +37,12 @@
           <a
             href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
             place="authors"
-            >{{ $t("landingPage.authors") }}</a
+            >{{ $t('landingPage.authors') }}</a
           >
         </i18n>
       </p>
       <div class="languageSelection">
-        {{ $t("landingPage.language") }}:
+        {{ $t('landingPage.language') }}:
         <LanguageSwitcher></LanguageSwitcher>
       </div>
     </div>
@@ -51,14 +51,14 @@
 </template>
 
 <script>
-import Logo from "@/components/Logo";
-import * as Sentry from "@sentry/browser";
-import { commithash } from "@/js/commithash";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
-import { reportMessage } from "@/ts/errorReporting";
+import Logo from '@/components/Logo';
+import * as Sentry from '@sentry/browser';
+import { commithash } from '@/js/commithash';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { reportMessage } from '@/ts/errorReporting';
 
 export default {
-  name: "LandingPage",
+  name: 'LandingPage',
   components: {
     Logo,
     LanguageSwitcher
@@ -70,10 +70,10 @@ export default {
     };
   },
   mounted() {
-    reportMessage("visit landing page");
-    if (this.$store.state.settings.autoLoadSaveFile !== "") {
+    reportMessage('visit landing page');
+    if (this.$store.state.settings.autoLoadSaveFile !== '') {
       this.$router.push({
-        path: "open/auto"
+        path: 'open/auto'
       });
     }
 
@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 
 .landingpage {
   overflow: auto;

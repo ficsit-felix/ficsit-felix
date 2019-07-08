@@ -6,13 +6,14 @@ module.exports = {
   },
 
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'prettier/prettier': ['error', { singleQuote: true }]
   },
 
   parserOptions: {
-    parser: "@typescript-eslint/parser"
+    parser: '@typescript-eslint/parser'
   },
 
-  extends: ["plugin:vue/essential", "@vue/prettier", "@vue/typescript"]
+  extends: ['plugin:vue/essential', '@vue/prettier', '@vue/typescript']
 };

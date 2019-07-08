@@ -1,4 +1,4 @@
-import { CurvePath, Vector3, Matrix4, Math as _Math } from "three";
+import { CurvePath, Vector3, Matrix4, Math as _Math } from 'three';
 
 // Custom extension of the CurvePath only used to display Conveyor Belt splines
 function ConveyorCurvePath() {

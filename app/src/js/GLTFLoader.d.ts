@@ -1,4 +1,4 @@
-import { AnimationClip, Camera, LoadingManager, Scene } from "three";
+import { AnimationClip, Camera, LoadingManager, Scene } from 'three';
 
 export interface GLTF {
   animations: AnimationClip[];

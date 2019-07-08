@@ -1,13 +1,13 @@
-import { Mesh, Scene, Color, MeshMatcapMaterial, Material } from "three";
-import InstancedMeshGroup from "./InstancedMeshGroup";
-import GeometryFactory from "./GeometryFactory";
-import { Actor } from "satisfactory-json";
-import ColorFactory from "./ColorFactory";
+import { Mesh, Scene, Color, MeshMatcapMaterial, Material } from 'three';
+import InstancedMeshGroup from './InstancedMeshGroup';
+import GeometryFactory from './GeometryFactory';
+import { Actor } from 'satisfactory-json';
+import ColorFactory from './ColorFactory';
 import {
   isRailroadTrack,
   isConveyorBelt,
   isPowerLine
-} from "@/helpers/entityHelper";
+} from '@/helpers/entityHelper';
 
 /**
  * Interface for Meshes

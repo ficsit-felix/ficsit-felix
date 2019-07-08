@@ -13,17 +13,17 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
 export default {
-  name: "LanguageSwitcher",
+  name: 'LanguageSwitcher',
   data: function() {
     return {
-      languages: ["en", "de"]
+      languages: ['en', 'de']
     };
   },
   methods: {
-    ...mapActions("settings", ["setLocale"]),
+    ...mapActions('settings', ['setLocale']),
     changeLang(lang) {
       if (this.$i18n.locale === lang) {
         return;

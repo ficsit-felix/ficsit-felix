@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue from 'vue';
 
 export function reportError(error: Error) {
   // Sentry.captureException(error);

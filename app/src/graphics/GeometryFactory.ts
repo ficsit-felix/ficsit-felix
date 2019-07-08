@@ -1,4 +1,4 @@
-import { modelConfig } from "@/definitions/models";
+import { modelConfig } from '@/definitions/models';
 import {
   findActorByName,
   getProperty,
@@ -6,16 +6,16 @@ import {
   isPowerLine,
   findComponentByName,
   isRailroadTrack
-} from "@/helpers/entityHelper";
-import { modelHelper } from "@/helpers/modelHelper";
-import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
-import * as Sentry from "@sentry/browser";
+} from '@/helpers/entityHelper';
+import { modelHelper } from '@/helpers/modelHelper';
+import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
+import * as Sentry from '@sentry/browser';
 import {
   Actor,
   ArrayProperty,
   Component,
   ObjectProperty
-} from "satisfactory-json";
+} from 'satisfactory-json';
 import {
   BoxBufferGeometry,
   BufferGeometry,
@@ -26,9 +26,9 @@ import {
   Vector3,
   ExtrudeBufferGeometry,
   Shape
-} from "three";
+} from 'three';
 
-import { reportMessage, reportException } from "@/ts/errorReporting";
+import { reportMessage, reportException } from '@/ts/errorReporting';
 
 interface GeometryResult {
   geometry: BufferGeometry;
@@ -55,14 +55,14 @@ export default class GeometryFactory {
     return new Promise((resolve, reject) => {
       if (!this.showModels) {
         // return single sized cube
-        if (this.geometries["box"] === undefined) {
+        if (this.geometries['box'] === undefined) {
           // 800 is size of foundations
-          this.geometries["box"] = {
+          this.geometries['box'] = {
             geometry: this.createBoxGeometry(400),
-            instance: "box"
+            instance: 'box'
           };
         }
-        resolve(this.geometries["box"]);
+        resolve(this.geometries['box']);
         return;
       }
 
@@ -86,7 +86,7 @@ export default class GeometryFactory {
         if (geom !== undefined) {
           resolve(geom);
         } else {
-          reject("Could not create power line geometry");
+          reject('Could not create power line geometry');
         }
 
         return;
@@ -94,25 +94,25 @@ export default class GeometryFactory {
 
       if (
         actor.className ===
-        "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C"
+        '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C'
       ) {
         // Conveyor Pole
-        const poleMesh = getProperty(actor, "mPoleMesh") as ObjectProperty;
+        const poleMesh = getProperty(actor, 'mPoleMesh') as ObjectProperty;
         if (poleMesh !== undefined) {
           switch (poleMesh.value.pathName) {
-            case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_01_static.ConveyorPole_01_static":
+            case '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_01_static.ConveyorPole_01_static':
               break;
-            case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_02_static.ConveyorPole_02_static":
+            case '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_02_static.ConveyorPole_02_static':
               className =
-                "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_2";
+                '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_2';
               break;
-            case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_03_static.ConveyorPole_03_static":
+            case '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_03_static.ConveyorPole_03_static':
               className =
-                "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_3";
+                '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_3';
               break;
-            case "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_04_static.ConveyorPole_04_static":
+            case '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Mesh/ConveyorPole_04_static.ConveyorPole_04_static':
               className =
-                "/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_4";
+                '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_4';
               break;
           }
         }
@@ -121,21 +121,21 @@ export default class GeometryFactory {
       if (this.geometries[className] === undefined) {
         if (
           modelConfig[className] !== undefined &&
-          modelConfig[className].model !== ""
+          modelConfig[className].model !== ''
         ) {
           modelHelper
-            .loadModel("/models/" + modelConfig[className].model)
+            .loadModel('/models/' + modelConfig[className].model)
             .then(geometry => {
               this.geometries[className] = {
                 geometry,
-                instance: "/models/" + modelConfig[className].model
+                instance: '/models/' + modelConfig[className].model
               };
               resolve(this.geometries[className]);
             });
         } else {
           if (modelConfig[className] === undefined) {
-            console.error("missing model definition: " + className);
-            reportMessage("missing model definition: " + className);
+            console.error('missing model definition: ' + className);
+            reportMessage('missing model definition: ' + className);
           }
 
           // 800 is size of foundations
@@ -158,7 +158,7 @@ export default class GeometryFactory {
    * @param conveyorBelt false => railroadTrack
    */
   createConveyorBeltGeometry(actor: Actor, conveyorBelt: boolean) {
-    const splineData = getProperty(actor, "mSplineData") as ArrayProperty;
+    const splineData = getProperty(actor, 'mSplineData') as ArrayProperty;
     //actor.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
 
     const splinePoints = splineData.value.values.length;
@@ -254,9 +254,9 @@ export default class GeometryFactory {
     if (sourceConnection === undefined) {
       // TODO error
       console.error(
-        "source connection of power line " +
+        'source connection of power line ' +
           actor.entity.extra.sourcePathName +
-          " not found."
+          ' not found.'
       );
       return;
     }
@@ -266,9 +266,9 @@ export default class GeometryFactory {
     if (targetConnection === undefined) {
       // TODO error
       console.error(
-        "target connection of power line " +
+        'target connection of power line ' +
           actor.entity.extra.targetPathName +
-          " not found."
+          ' not found.'
       );
       return;
     }
@@ -277,7 +277,7 @@ export default class GeometryFactory {
     if (source === undefined) {
       // TODO error
       console.error(
-        "source of power line " + sourceConnection.outerPathName + " not found."
+        'source of power line ' + sourceConnection.outerPathName + ' not found.'
       );
       return;
     }
@@ -286,7 +286,7 @@ export default class GeometryFactory {
     if (target === undefined) {
       // TODO error
       console.error(
-        "target of power line " + targetConnection.outerPathName + " not found."
+        'target of power line ' + targetConnection.outerPathName + ' not found.'
       );
       return;
     }
@@ -311,8 +311,8 @@ export default class GeometryFactory {
         z: transformedSourceOffset.z
       };
     } else {
-      console.error("No power line offset for " + source.className);
-      reportException("No power line offset for " + source.className);
+      console.error('No power line offset for ' + source.className);
+      reportException('No power line offset for ' + source.className);
     }
     var targetOffset = { x: 0, y: 0, z: 0 };
     if (modelConfig[target.className].powerLineOffset !== undefined) {
@@ -335,8 +335,8 @@ export default class GeometryFactory {
         z: transformedTargetOffset.z
       };
     } else {
-      console.error("No power line offset for " + target.className);
-      reportException("No power line offset for " + target.className);
+      console.error('No power line offset for ' + target.className);
+      reportException('No power line offset for ' + target.className);
     }
 
     const extrudePath = new LineCurve3(

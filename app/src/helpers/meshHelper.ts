@@ -1,6 +1,6 @@
-import { Mesh } from "three";
-import { Actor } from "satisfactory-json";
-import { isConveyorBelt, isPowerLine, isRailroadTrack } from "./entityHelper";
+import { Mesh } from 'three';
+import { Actor } from 'satisfactory-json';
+import { isConveyorBelt, isPowerLine, isRailroadTrack } from './entityHelper';
 
 export function applyTranslation(mesh: Mesh, translation: number[]) {
   // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)

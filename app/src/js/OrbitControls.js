@@ -13,7 +13,7 @@ import {
   Spherical,
   Vector2,
   Vector3
-} from "three";
+} from 'three';
 
 // This set of controls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
@@ -227,18 +227,18 @@ var OrbitControls = function(object, domElement) {
   })();
 
   this.dispose = function() {
-    scope.domElement.removeEventListener("contextmenu", onContextMenu, false);
-    scope.domElement.removeEventListener("mousedown", onMouseDown, false);
-    scope.domElement.removeEventListener("wheel", onMouseWheel, false);
+    scope.domElement.removeEventListener('contextmenu', onContextMenu, false);
+    scope.domElement.removeEventListener('mousedown', onMouseDown, false);
+    scope.domElement.removeEventListener('wheel', onMouseWheel, false);
 
-    scope.domElement.removeEventListener("touchstart", onTouchStart, false);
-    scope.domElement.removeEventListener("touchend", onTouchEnd, false);
-    scope.domElement.removeEventListener("touchmove", onTouchMove, false);
+    scope.domElement.removeEventListener('touchstart', onTouchStart, false);
+    scope.domElement.removeEventListener('touchend', onTouchEnd, false);
+    scope.domElement.removeEventListener('touchmove', onTouchMove, false);
 
-    document.removeEventListener("mousemove", onMouseMove, false);
-    document.removeEventListener("mouseup", onMouseUp, false);
+    document.removeEventListener('mousemove', onMouseMove, false);
+    document.removeEventListener('mouseup', onMouseUp, false);
 
-    window.removeEventListener("keydown", onKeyDown, false);
+    window.removeEventListener('keydown', onKeyDown, false);
 
     //scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
   };
@@ -249,9 +249,9 @@ var OrbitControls = function(object, domElement) {
 
   var scope = this;
 
-  var changeEvent = { type: "change" };
-  var startEvent = { type: "start" };
-  var endEvent = { type: "end" };
+  var changeEvent = { type: 'change' };
+  var startEvent = { type: 'start' };
+  var endEvent = { type: 'end' };
 
   var STATE = {
     NONE: -1,
@@ -375,7 +375,7 @@ var OrbitControls = function(object, domElement) {
       } else {
         // camera neither orthographic nor perspective
         console.warn(
-          "WARNING: OrbitControls.js encountered an unknown camera type - pan disabled."
+          'WARNING: OrbitControls.js encountered an unknown camera type - pan disabled.'
         );
         scope.enablePan = false;
       }
@@ -394,7 +394,7 @@ var OrbitControls = function(object, domElement) {
       zoomChanged = true;
     } else {
       console.warn(
-        "WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled."
+        'WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.'
       );
       scope.enableZoom = false;
     }
@@ -412,7 +412,7 @@ var OrbitControls = function(object, domElement) {
       zoomChanged = true;
     } else {
       console.warn(
-        "WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled."
+        'WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.'
       );
       scope.enableZoom = false;
     }
@@ -681,8 +681,8 @@ var OrbitControls = function(object, domElement) {
     }
 
     if (state !== STATE.NONE) {
-      document.addEventListener("mousemove", onMouseMove, false);
-      document.addEventListener("mouseup", onMouseUp, false);
+      document.addEventListener('mousemove', onMouseMove, false);
+      document.addEventListener('mouseup', onMouseUp, false);
 
       scope.dispatchEvent(startEvent);
     }
@@ -722,8 +722,8 @@ var OrbitControls = function(object, domElement) {
 
     handleMouseUp(event);
 
-    document.removeEventListener("mousemove", onMouseMove, false);
-    document.removeEventListener("mouseup", onMouseUp, false);
+    document.removeEventListener('mousemove', onMouseMove, false);
+    document.removeEventListener('mouseup', onMouseUp, false);
 
     scope.dispatchEvent(endEvent);
 
@@ -838,16 +838,16 @@ var OrbitControls = function(object, domElement) {
 
   //
 
-  scope.domElement.addEventListener("contextmenu", onContextMenu, false);
+  scope.domElement.addEventListener('contextmenu', onContextMenu, false);
 
-  scope.domElement.addEventListener("mousedown", onMouseDown, false);
-  scope.domElement.addEventListener("wheel", onMouseWheel, false);
+  scope.domElement.addEventListener('mousedown', onMouseDown, false);
+  scope.domElement.addEventListener('wheel', onMouseWheel, false);
 
-  scope.domElement.addEventListener("touchstart", onTouchStart, false);
-  scope.domElement.addEventListener("touchend", onTouchEnd, false);
-  scope.domElement.addEventListener("touchmove", onTouchMove, false);
+  scope.domElement.addEventListener('touchstart', onTouchStart, false);
+  scope.domElement.addEventListener('touchend', onTouchEnd, false);
+  scope.domElement.addEventListener('touchmove', onTouchMove, false);
 
-  window.addEventListener("keydown", onKeyDown, false);
+  window.addEventListener('keydown', onKeyDown, false);
 
   // force an update at start
 

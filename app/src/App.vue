@@ -6,7 +6,7 @@
 
 <style lang="scss" scoped>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #adadad;
@@ -29,15 +29,15 @@
 </style>
 
 <script>
-import "@/assets/main.scss";
-import { mapState } from "vuex";
+import '@/assets/main.scss';
+import { mapState } from 'vuex';
 
 export default {
-  name: "App",
-  computed: mapState(["title"]),
+  name: 'App',
+  computed: mapState(['title']),
   methods: {
     testError: function() {
-      throw new Error("asdf");
+      throw new Error('asdf');
     }
   }
 };

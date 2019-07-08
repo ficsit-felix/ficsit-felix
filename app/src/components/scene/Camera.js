@@ -1,12 +1,12 @@
-import Object3D from "./Object3D";
-import { PerspectiveCamera } from "three";
+import Object3D from './Object3D';
+import { PerspectiveCamera } from 'three';
 // import { OrbitControls } from '~/plugins/three'
-import { OrbitControls } from "@/js/OrbitControls";
-import { mapActions, mapState } from "vuex";
+import { OrbitControls } from '@/js/OrbitControls';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   extends: Object3D,
-  inject: ["renderer"],
+  inject: ['renderer'],
 
   provide() {
     const camera = new PerspectiveCamera(
@@ -37,8 +37,8 @@ export default {
   },
 
   computed: {
-    ...mapState(["cameraPosition", "cameraTarget"]),
-    ...mapState("settings", ["nearPlane", "farPlane"])
+    ...mapState(['cameraPosition', 'cameraTarget']),
+    ...mapState('settings', ['nearPlane', 'farPlane'])
   },
 
   watch: {
@@ -66,11 +66,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setCameraData"]),
+    ...mapActions(['setCameraData']),
 
     setupControl(domElement) {
       const controls = new OrbitControls(this.obj, domElement);
-      controls.addEventListener("change", this.onChange); // call this only in static scenes (i.e., if there is no animation loop)
+      controls.addEventListener('change', this.onChange); // call this only in static scenes (i.e., if there is no animation loop)
       controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
       controls.dampingFactor = 0.25;
       controls.screenSpacePanning = false;
@@ -98,7 +98,7 @@ export default {
       }
     },
     onChange() {
-      this.$emit("cameraChange");
+      this.$emit('cameraChange');
     }
   },
 

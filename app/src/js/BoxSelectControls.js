@@ -1,7 +1,7 @@
-import { SelectionBox } from "@/js/SelectionBox";
-import { SelectionHelper } from "@/js/SelectionHelper";
-import * as THREE from "three";
-import { MOUSE } from "three";
+import { SelectionBox } from '@/js/SelectionBox';
+import { SelectionHelper } from '@/js/SelectionHelper';
+import * as THREE from 'three';
+import { MOUSE } from 'three';
 
 var BoxSelectControls = function(
   scene,
@@ -14,7 +14,7 @@ var BoxSelectControls = function(
   this.isDown = false;
 
   var selectionBox = new SelectionBox(camera, scene);
-  var helper = new SelectionHelper(selectionBox, domElement, "selectBox", this);
+  var helper = new SelectionHelper(selectionBox, domElement, 'selectBox', this);
   var scope = this;
 
   function onMouseDown(event) {
@@ -86,14 +86,14 @@ var BoxSelectControls = function(
     callback.select(selectedPathNames);
   }
 
-  domElement.addEventListener("mousedown", onMouseDown);
-  domElement.addEventListener("mousemove", onMouseMove);
-  document.addEventListener("mouseup", onMouseUp);
+  domElement.addEventListener('mousedown', onMouseDown);
+  domElement.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 
   this.destroy = () => {
-    domElement.removeEventListener("mousedown", onMouseDown);
-    domElement.removeEventListener("mousemove", onMouseMove);
-    document.removeEventListener("mouseup", onMouseUp);
+    domElement.removeEventListener('mousedown', onMouseDown);
+    domElement.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
 
     helper.destroy();
     // TODO

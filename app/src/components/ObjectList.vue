@@ -2,7 +2,7 @@
   <div class="object-list">
     <div class="filter-field">
       <md-field md-inline>
-        <label>{{ $t("objectList.filterField") }}</label>
+        <label>{{ $t('objectList.filterField') }}</label>
         <md-input v-model="filterTerm"></md-input>
         <md-icon>search</md-icon>
       </md-field>
@@ -23,7 +23,7 @@
         @click="select(['---save-header---'])"
         class="item"
       >
-        {{ $t("objectList.saveHeader") }}
+        {{ $t('objectList.saveHeader') }}
       </div>
       <div
         v-for="item of displayedNames"
@@ -39,23 +39,23 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from 'vuex';
 
-import virtualList from "vue-virtual-scroll-list";
+import virtualList from 'vue-virtual-scroll-list';
 export default {
-  name: "ObjectList",
+  name: 'ObjectList',
   components: {
     virtualList
   },
   data: function() {
     return {
-      filterTerm: "",
+      filterTerm: '',
       listStart: 0
     };
   },
   computed: {
-    ...mapState(["selectedPathNames"]),
-    ...mapGetters(["getNames"]),
+    ...mapState(['selectedPathNames']),
+    ...mapGetters(['getNames']),
     displayedNames() {
       return this.getNames.filter(
         obj =>
@@ -64,7 +64,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["select"]),
+    ...mapActions(['select']),
     focusSelectedObject() {
       if (this.selectedPathNames.length > 0) {
         // TODO optimize
@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 
 .scroller,
 .list {

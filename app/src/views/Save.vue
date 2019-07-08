@@ -2,7 +2,7 @@
   <div class="save">
     <div class="centered">
       <Logo height="180" black="#000" :animating="logoAnimating" />
-      <h1>{{ $t("savePage.title") }}</h1>
+      <h1>{{ $t('savePage.title') }}</h1>
       <SaveBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"
@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import Logo from "@/components/Logo";
-import SaveBox from "@/components/SaveBox";
+import Logo from '@/components/Logo';
+import SaveBox from '@/components/SaveBox';
 
 export default {
-  name: "Save",
+  name: 'Save',
   components: {
     Logo,
     SaveBox
@@ -29,7 +29,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 .save {
   display: flex;
   height: 100%;

@@ -1,10 +1,10 @@
-import Object3D from "./Object3D";
-import { Scene, Color, Fog } from "three";
-import { mapState } from "vuex";
+import Object3D from './Object3D';
+import { Scene, Color, Fog } from 'three';
+import { mapState } from 'vuex';
 
 export default {
   ...Object3D,
-  inject: ["renderer"],
+  inject: ['renderer'],
 
   provide() {
     this.scene = new Scene();
@@ -14,7 +14,7 @@ export default {
   },
 
   computed: {
-    ...mapState("settings", ["farPlane"])
+    ...mapState('settings', ['farPlane'])
   },
 
   // overwrite existing mounted

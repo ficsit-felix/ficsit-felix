@@ -64,8 +64,8 @@
 
 <script>
 export default {
-  name: "Compass",
-  props: ["rotateX", "rotateZ"]
+  name: 'Compass',
+  props: ['rotateX', 'rotateZ']
 };
 </script>
 

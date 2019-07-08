@@ -34,15 +34,15 @@
 
 <script>
 // @ is an alias to /src
-import Menubar from "@/components/Menubar.vue";
-import Playground from "@/components/Playground.vue";
-import ObjectList from "@/components/ObjectList.vue";
-import PropertyEditor from "@/components/PropertyEditor.vue";
-import ClassList from "@/components/ClassList.vue";
-import { mapState } from "vuex";
+import Menubar from '@/components/Menubar.vue';
+import Playground from '@/components/Playground.vue';
+import ObjectList from '@/components/ObjectList.vue';
+import PropertyEditor from '@/components/PropertyEditor.vue';
+import ClassList from '@/components/ClassList.vue';
+import { mapState } from 'vuex';
 
 export default {
-  name: "editor",
+  name: 'editor',
   components: {
     Menubar,
     Playground,
@@ -51,14 +51,14 @@ export default {
     ClassList
   },
   computed: {
-    ...mapState(["dataLoaded"])
+    ...mapState(['dataLoaded'])
   },
 
   created() {
     if (!this.dataLoaded) {
       // The user needs to load a file first
       this.$router.push({
-        name: "landingpage"
+        name: 'landingpage'
       });
     }
   },
@@ -100,7 +100,7 @@ export default {
 </style>
 
 <style lang="scss">
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 /* non scoped styles to control split bars */
 .split {
   overflow: hidden !important;

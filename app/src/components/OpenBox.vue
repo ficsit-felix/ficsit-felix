@@ -22,14 +22,14 @@
             
         @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
         <p v-if="importJson" class="dragInstruction">
-          {{ $t("openPage.dragJson") }}
+          {{ $t('openPage.dragJson') }}
         </p>
-        <p v-else class="dragInstruction">{{ $t("openPage.dragSav") }}</p>
+        <p v-else class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
       </div>
     </form>
     <div v-else class="infobox">
-      <p v-if="importJson">{{ $t("openPage.subtitleJson") }}</p>
-      <p v-else>{{ $t("openPage.subtitleSav") }}</p>
+      <p v-if="importJson">{{ $t('openPage.subtitleJson') }}</p>
+      <p v-else>{{ $t('openPage.subtitleSav') }}</p>
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
@@ -37,7 +37,7 @@
     </div>
 
     <md-dialog :md-active.sync="showErrorDialog">
-      <md-dialog-title>{{ $t("openPage.errorTitle") }}</md-dialog-title>
+      <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
       <span class="dialog-content"
         >{{ errorText
         }}<span v-if="showSendSave"
@@ -46,7 +46,7 @@
             <a
               href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
               place="dropbox"
-              >{{ $t("openPage.dropboxText") }}</a
+              >{{ $t('openPage.dropboxText') }}</a
             >
             <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
           </i18n>
@@ -54,7 +54,7 @@
       >
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false">{{
-          $t("general.close")
+          $t('general.close')
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -62,25 +62,25 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import * as Sentry from "@sentry/browser";
-import { v4 } from "uuid";
+import { mapActions } from 'vuex';
+import * as Sentry from '@sentry/browser';
+import { v4 } from 'uuid';
 
-import { Sav2Json } from "satisfactory-json";
-import { modelHelper } from "@/helpers/modelHelper";
-import { modelConfig } from "@/definitions/models";
+import { Sav2Json } from 'satisfactory-json';
+import { modelHelper } from '@/helpers/modelHelper';
+import { modelConfig } from '@/definitions/models';
 
-import { reportMessage, reportContext, reportError } from "@/ts/errorReporting";
-import { reportException } from "../ts/errorReporting";
+import { reportMessage, reportContext, reportError } from '@/ts/errorReporting';
+import { reportException } from '../ts/errorReporting';
 
 export default {
   data: function() {
     return {
       isSaving: false,
       progress: 0,
-      infoText: this.$t("openPage.initializing"),
+      infoText: this.$t('openPage.initializing'),
       showErrorDialog: false,
-      errorText: "",
+      errorText: '',
       showSendSave: false,
       importJson: false
     };
@@ -90,21 +90,21 @@ export default {
       immediate: true,
       handler(val) {
         if (val) {
-          this.$emit("startAnimating");
+          this.$emit('startAnimating');
         } else {
-          this.$emit("stopAnimating");
+          this.$emit('stopAnimating');
         }
       }
     }
   },
   mounted() {
-    this.importJson = this.$route.path === "/open/json";
+    this.importJson = this.$route.path === '/open/json';
 
-    reportMessage("visit open page");
+    reportMessage('visit open page');
 
     if (
-      this.$route.path == "/open/auto" &&
-      this.$store.state.settings.autoLoadSaveFile !== ""
+      this.$route.path == '/open/auto' &&
+      this.$store.state.settings.autoLoadSaveFile !== ''
     ) {
       this.importJson = true; // TODO depend on file extension
       this.isSaving = true;
@@ -119,13 +119,13 @@ export default {
     }
 
     for (var a in modelConfig) {
-      if (modelConfig[a].model !== "") {
-        modelHelper.loadModel("/models/" + modelConfig[a].model);
+      if (modelConfig[a].model !== '') {
+        modelHelper.loadModel('/models/' + modelConfig[a].model);
       }
     }
   },
   methods: {
-    ...mapActions(["setLoadedData", "setFilename", "setUUID", "setLoading"]),
+    ...mapActions(['setLoadedData', 'setFilename', 'setUUID', 'setLoading']),
 
     handleError(errorMessage, showSendSave = true) {
       this.showErrorDialog = true;
@@ -136,27 +136,27 @@ export default {
     },
     openFile(file) {
       this.isSaving = true;
-      this.infoText = this.$t("openPage.readingFile");
-      console.log("Opening...", file);
-      console.log("name: " + file.name);
-      console.log("last modified: " + file.lastModifiedDate);
-      console.log("size: " + file.size);
+      this.infoText = this.$t('openPage.readingFile');
+      console.log('Opening...', file);
+      console.log('name: ' + file.name);
+      console.log('last modified: ' + file.lastModifiedDate);
+      console.log('size: ' + file.size);
       this.setFilename(file.name);
       const uuid = v4();
       this.setUUID(uuid);
 
-      reportContext("filename", file.name);
-      reportContext("uuid", uuid);
+      reportContext('filename', file.name);
+      reportContext('uuid', uuid);
 
-      reportMessage("opened file");
+      reportMessage('opened file');
       this.setLoading(false).then(() => {});
 
-      const expected = this.importJson ? "json" : "sav";
+      const expected = this.importJson ? 'json' : 'sav';
 
-      if (file.name.split(".").pop() !== expected) {
-        const message = this.$t("openPage.extensionError", {
+      if (file.name.split('.').pop() !== expected) {
+        const message = this.$t('openPage.extensionError', {
           expected: expected,
-          actual: file.name.split(".").pop()
+          actual: file.name.split('.').pop()
         });
         reportException(message);
         this.handleError(message, false);
@@ -171,12 +171,12 @@ export default {
     },
 
     processFile(data) {
-      this.infoText = this.$t("openPage.processing");
+      this.infoText = this.$t('openPage.processing');
       this.progress = 50;
       try {
         var json;
         if (this.importJson) {
-          json = JSON.parse(Buffer.from(data).toString("utf-8"));
+          json = JSON.parse(Buffer.from(data).toString('utf-8'));
         } else {
           let sav2Json = new Sav2Json(Buffer.from(data));
           json = sav2Json.transform();
@@ -184,7 +184,7 @@ export default {
 
         // reportMessage("debugSav2Json");
 
-        this.infoText = this.$t("openPage.buildingWorld");
+        this.infoText = this.$t('openPage.buildingWorld');
         // give us some time to build the 3d world while animating the progress bar
         this.setLoadedData(json)
           .then(() => {
@@ -196,7 +196,7 @@ export default {
                 setTimeout(() => {
                   // let the user at least see the full bar
                   this.$router.push({
-                    name: "editor"
+                    name: 'editor'
                   });
                 }, 100);
               }
@@ -217,7 +217,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 
 .dropbox {
   outline: 2px dashed grey; /* the dash box */

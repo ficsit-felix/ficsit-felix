@@ -46,43 +46,43 @@
 </template>
 
 <script>
-import * as THREE from "three";
-import { OrbitControls } from "@/js/OrbitControls";
-import { TransformControls } from "@/js/TransformControls";
-import { mapActions, mapGetters, mapState } from "vuex";
-import Scene from "@/components/scene/Scene";
-import Renderer from "@/components/scene/Renderer";
-import Camera from "@/components/scene/Camera";
-import AmbientLight from "@/components/scene/AmbientLight";
-import { BoxBufferGeometry, LineCurve3, Mesh, error } from "three";
-import { setTimeout } from "timers";
-import { GLTFLoader } from "@/js/GLTFLoader";
-import { modelHelper } from "@/helpers/modelHelper";
-import { modelConfig } from "@/definitions/models";
-import * as Sentry from "@sentry/browser";
-import Toolbar from "@/components/Toolbar";
-import { commithash } from "@/js/commithash";
-import { getProperty, findActorByName } from "@/helpers/entityHelper";
-import { version } from "punycode";
-import Compass from "@/components/Compass";
-import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
-import GeometryFactory from "@/graphics/GeometryFactory";
-import ColorFactory from "@/graphics/ColorFactory";
-import MeshFactory from "@/graphics/MeshFactory";
-import MeshManager from "@/graphics/MeshManager";
-import { updateActorMeshTransform } from "@/helpers/meshHelper";
+import * as THREE from 'three';
+import { OrbitControls } from '@/js/OrbitControls';
+import { TransformControls } from '@/js/TransformControls';
+import { mapActions, mapGetters, mapState } from 'vuex';
+import Scene from '@/components/scene/Scene';
+import Renderer from '@/components/scene/Renderer';
+import Camera from '@/components/scene/Camera';
+import AmbientLight from '@/components/scene/AmbientLight';
+import { BoxBufferGeometry, LineCurve3, Mesh, error } from 'three';
+import { setTimeout } from 'timers';
+import { GLTFLoader } from '@/js/GLTFLoader';
+import { modelHelper } from '@/helpers/modelHelper';
+import { modelConfig } from '@/definitions/models';
+import * as Sentry from '@sentry/browser';
+import Toolbar from '@/components/Toolbar';
+import { commithash } from '@/js/commithash';
+import { getProperty, findActorByName } from '@/helpers/entityHelper';
+import { version } from 'punycode';
+import Compass from '@/components/Compass';
+import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
+import GeometryFactory from '@/graphics/GeometryFactory';
+import ColorFactory from '@/graphics/ColorFactory';
+import MeshFactory from '@/graphics/MeshFactory';
+import MeshManager from '@/graphics/MeshManager';
+import { updateActorMeshTransform } from '@/helpers/meshHelper';
 
 import {
   isConveyorBelt,
   isConveyorLift,
   isPowerLine,
   isRailroadTrack
-} from "../helpers/entityHelper";
-import { EventBus } from "../event-bus";
-import { reportError } from "../ts/errorReporting";
+} from '../helpers/entityHelper';
+import { EventBus } from '../event-bus';
+import { reportError } from '../ts/errorReporting';
 
 export default {
-  name: "Playground",
+  name: 'Playground',
   components: {
     Renderer,
     Scene,
@@ -100,7 +100,7 @@ export default {
     return {
       width: 100,
       height: 100,
-      mode: "translate",
+      mode: 'translate',
       local: false,
       commithash,
       rotateX: 0,
@@ -109,22 +109,22 @@ export default {
   },
   computed: {
     ...mapState([
-      "dataLoaded",
-      "uuid",
-      "filename",
-      "classes",
-      "selectedPathNames",
-      "selectedActors"
+      'dataLoaded',
+      'uuid',
+      'filename',
+      'classes',
+      'selectedPathNames',
+      'selectedActors'
     ]),
-    ...mapState("settings", [
-      "showCustomPaints",
-      "showModels",
-      "showMap",
-      "conveyorBeltResolution",
-      "classColors",
-      "experimentalFeatures"
+    ...mapState('settings', [
+      'showCustomPaints',
+      'showModels',
+      'showMap',
+      'conveyorBeltResolution',
+      'classColors',
+      'experimentalFeatures'
     ]),
-    ...mapGetters(["getVisibleObjects"])
+    ...mapGetters(['getVisibleObjects'])
   },
   watch: {
     dataLoaded(val) {
@@ -255,7 +255,7 @@ export default {
     );
 
     var textureLoader = new THREE.TextureLoader();
-    this.matcap = textureLoader.load("textures/matcap-white.png", function(
+    this.matcap = textureLoader.load('textures/matcap-white.png', function(
       matcap
     ) {
       matcap.encoding = THREE.sRGBEncoding;
@@ -290,16 +290,16 @@ export default {
       this.$refs.renderer.camera.obj,
       this.$refs.renderer.renderer.domElement
     );
-    this.transformControl.space = "world";
+    this.transformControl.space = 'world';
     // correct way to to this, but i don't want that many updates
     /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
     })*/
     this.transformControl.addEventListener(
-      "dragging-changed",
+      'dragging-changed',
       event => {
         // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
-        this.$store.commit("SET_SELECTION_DISABLED", event.value);
+        this.$store.commit('SET_SELECTION_DISABLED', event.value);
         this.setSelectionDisabled(event.value);
         if (event.value == false) {
           this.onSelectedActorTransformChanged();
@@ -317,21 +317,21 @@ export default {
     /// EVENT HANDLERS ///
 
     // listen to window resize
-    window.addEventListener("resize", this.handleResize);
+    window.addEventListener('resize', this.handleResize);
     window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
 
-    EventBus.$on("delete", payload => {
+    EventBus.$on('delete', payload => {
       // remove all actors from scene
       this.meshManager.deleteSelectedMeshes(payload);
     });
   },
   methods: {
     ...mapActions([
-      "loadData",
-      "setSelectedObject",
-      "setSelectionDisabled",
-      "setBoxSelect",
-      "setShiftSelect"
+      'loadData',
+      'setSelectedObject',
+      'setSelectionDisabled',
+      'setBoxSelect',
+      'setShiftSelect'
     ]),
 
     updateCompass() {
@@ -354,7 +354,7 @@ export default {
 
     loadMap() {
       if (this.mapModel === undefined) {
-        modelHelper.loadScene("/models/map.glb").then(model => {
+        modelHelper.loadScene('/models/map.glb').then(model => {
           this.mapModel = model;
           if (this.showMap) {
             this.scene.add(model);
@@ -427,7 +427,7 @@ export default {
     },
 
     handleResize() {
-      var elem = document.getElementById("scene");
+      var elem = document.getElementById('scene');
       if (elem === undefined || elem === null) {
         return;
       }
@@ -453,9 +453,9 @@ export default {
     setLocal(local) {
       this.local = local;
       if (local) {
-        this.transformControl.space = "local";
+        this.transformControl.space = 'local';
       } else {
-        this.transformControl.space = "world";
+        this.transformControl.space = 'world';
       }
     },
 
@@ -467,7 +467,7 @@ export default {
     focusScene() {
       // focus the scene div so no text fields get key inputs
       // needs a tabindex on the div, see https://stackoverflow.com/a/3656524
-      document.getElementById("scene").focus();
+      document.getElementById('scene').focus();
     },
     updateBoxSelect(value) {
       if (this.experimentalFeatures) {
@@ -484,7 +484,7 @@ export default {
   beforeDestroy() {
     this.transformControl.detach();
     this.transformControl.dispose();
-    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener('resize', this.handleResize);
     this.meshManager.dispose();
   }
 };

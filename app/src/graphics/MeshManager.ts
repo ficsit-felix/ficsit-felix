@@ -8,19 +8,19 @@ import {
   BufferGeometry,
   MeshMatcapMaterial,
   Object3D
-} from "three";
-import GeometryFactory from "./GeometryFactory";
+} from 'three';
+import GeometryFactory from './GeometryFactory';
 import {
   findActorByName,
   isConveyorBelt,
   isRailroadTrack
-} from "@/helpers/entityHelper";
-import { Actor } from "satisfactory-json";
-import { Component } from "vue";
-import { MeshResult } from "./MeshFactory";
-import InstancedMeshGroup from "./InstancedMeshGroup";
-import { ModelMesh, ThreeModelMesh, InstancedModelMesh } from "./ModelMesh";
-import ColorFactory from "./ColorFactory";
+} from '@/helpers/entityHelper';
+import { Actor } from 'satisfactory-json';
+import { Component } from 'vue';
+import { MeshResult } from './MeshFactory';
+import InstancedMeshGroup from './InstancedMeshGroup';
+import { ModelMesh, ThreeModelMesh, InstancedModelMesh } from './ModelMesh';
+import ColorFactory from './ColorFactory';
 
 /**
  * manages the meshes displayed on the playground
@@ -263,7 +263,7 @@ export default class MeshManager {
   }
 
   updateAllMaterials(colorFactory: ColorFactory) {
-    console.log("updateAllMaterials");
+    console.log('updateAllMaterials');
     for (const mesh of this.visibleMeshes.concat(this.invisibleMeshes)) {
       const actor = findActorByName(mesh.getPathName());
       if (actor === undefined) continue;

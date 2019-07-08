@@ -3,7 +3,7 @@
     <md-checkbox
       :model="allVisible"
       @change="changeVisibilityOfAllClasses($event)"
-      >{{ $t("classList.allClasses") }}</md-checkbox
+      >{{ $t('classList.allClasses') }}</md-checkbox
     >
     <ul>
       <li v-for="item in classes" v-bind:key="item.name">
@@ -22,7 +22,7 @@
     </ul>
 
     <md-dialog :md-active.sync="showColorDialog">
-      <md-dialog-title>{{ $t("dialog.color.title") }}</md-dialog-title>
+      <md-dialog-title>{{ $t('dialog.color.title') }}</md-dialog-title>
       <md-dialog-content class="colorPickerDialogContent">
         <colorPicker
           :color="selectedColor"
@@ -31,7 +31,7 @@
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showColorDialog = false">{{
-          $t("general.close")
+          $t('general.close')
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -39,32 +39,32 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import colorPicker from "@caohenghu/vue-colorpicker";
-import { modelConfig } from "@/definitions/models";
+import { mapState, mapActions } from 'vuex';
+import colorPicker from '@caohenghu/vue-colorpicker';
+import { modelConfig } from '@/definitions/models';
 
 export default {
-  name: "ClassList",
+  name: 'ClassList',
   components: {
     colorPicker
   },
   data: function() {
     return {
       showColorDialog: false,
-      selectedClassName: "",
-      selectedColor: "#ff00ff"
+      selectedClassName: '',
+      selectedColor: '#ff00ff'
     };
   },
   computed: {
-    ...mapState(["classes"]),
-    ...mapState("settings", ["classColors", "editClassColors"]),
+    ...mapState(['classes']),
+    ...mapState('settings', ['classColors', 'editClassColors']),
     allVisible: function() {
       return this.classes.every(item => item.visible == true);
     },
     classColorStrings() {
       // https://stackoverflow.com/a/37796055
       function getHexColor(number) {
-        return "#" + (number >>> 0).toString(16).slice(-6);
+        return '#' + (number >>> 0).toString(16).slice(-6);
       }
       var result = {};
 
@@ -76,9 +76,9 @@ export default {
 
         if (modelConfig[clazz.name] === undefined) {
           console.error(
-            "Trying to access missing model config of class " + clazz.name
+            'Trying to access missing model config of class ' + clazz.name
           );
-          return "#ff00ff";
+          return '#ff00ff';
         }
         result[clazz.name] = getHexColor(modelConfig[clazz.name].color);
       });
@@ -86,8 +86,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setVisibility"]),
-    ...mapActions("settings", ["setClassColor"]),
+    ...mapActions(['setVisibility']),
+    ...mapActions('settings', ['setClassColor']),
     changeVisibility(name, visible) {
       this.setVisibility({ name, visible });
     },
@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 
 .class-list {
   ul {

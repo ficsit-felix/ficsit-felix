@@ -1,4 +1,4 @@
-import { MOUSE, Raycaster } from "three";
+import { MOUSE, Raycaster } from 'three';
 
 // TODO remove the explicit playground parameter just to get the meshManager
 var SelectControls = function(scene, camera, domElement, callback, playground) {
@@ -45,7 +45,7 @@ var SelectControls = function(scene, camera, domElement, callback, playground) {
         console.log(object);
         var object = intersection.object;
 
-        if (object.type === "TransformControlsPlane") {
+        if (object.type === 'TransformControlsPlane') {
           // ignore the plane of the TransformHelper
           continue;
           // we hit the plane of the transform gizmo, deselect and then try the raycast again
@@ -78,12 +78,12 @@ var SelectControls = function(scene, camera, domElement, callback, playground) {
     }
   }
 
-  domElement.addEventListener("mousedown", onMouseDown, false);
-  domElement.addEventListener("mousemove", onMouseMove, false);
+  domElement.addEventListener('mousedown', onMouseDown, false);
+  domElement.addEventListener('mousemove', onMouseMove, false);
 
   this.destroy = () => {
-    domElement.removeEventListener("mousedown", onMouseDown);
-    domElement.removeEventListener("mousemove", onMouseMove);
+    domElement.removeEventListener('mousedown', onMouseDown);
+    domElement.removeEventListener('mousemove', onMouseMove);
   };
 };
 

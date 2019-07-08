@@ -1,5 +1,5 @@
-import { GLTFLoader } from "@/js/GLTFLoader";
-import * as THREE from "three";
+import { GLTFLoader } from '@/js/GLTFLoader';
+import * as THREE from 'three';
 
 // singleton class that helps with loading all the models
 class ModelHelper {
@@ -71,7 +71,7 @@ class ModelHelper {
             let geometry = (gltf.scene.children[0] as THREE.Mesh)
               .geometry as THREE.BufferGeometry;
             this.loadedModels.set(model, geometry);
-            console.log("loaded model " + model);
+            console.log('loaded model ' + model);
             for (let resolveX of this.requestedModels.get(model)!) {
               resolveX(geometry);
             }

@@ -1,7 +1,7 @@
-import { modelConfig } from "@/definitions/models";
-import { Color, MeshMatcapMaterial, Material, Texture } from "three";
-import { findActorByName } from "@/helpers/entityHelper";
-import { Actor, ByteProperty, StructProperty } from "satisfactory-json";
+import { modelConfig } from '@/definitions/models';
+import { Color, MeshMatcapMaterial, Material, Texture } from 'three';
+import { findActorByName } from '@/helpers/entityHelper';
+import { Actor, ByteProperty, StructProperty } from 'satisfactory-json';
 
 /**
  * Factory that creates and caches materials
@@ -58,37 +58,37 @@ export default class ColorFactory {
 
   setupColoredMaterials() {
     const defaultColors = [
-      new Color("#fcb26b"),
-      new Color("#73a9d2"),
-      new Color("#dd7550"),
-      new Color("#666375"),
+      new Color('#fcb26b'),
+      new Color('#73a9d2'),
+      new Color('#dd7550'),
+      new Color('#666375'),
 
-      new Color("#e1e1e9"),
-      new Color("#bfe798"),
-      new Color("#f890e2"),
-      new Color("#bbf6ec"),
+      new Color('#e1e1e9'),
+      new Color('#bfe798'),
+      new Color('#f890e2'),
+      new Color('#bbf6ec'),
 
-      new Color("#b59c5e"),
-      new Color("#f9ecd9"),
-      new Color("#c490f9"),
-      new Color("#84dbb8"),
+      new Color('#b59c5e'),
+      new Color('#f9ecd9'),
+      new Color('#c490f9'),
+      new Color('#84dbb8'),
 
-      new Color("#f5f09e"),
-      new Color("#97978f"),
-      new Color("#b048aa"),
-      new Color("#838283")
+      new Color('#f5f09e'),
+      new Color('#97978f'),
+      new Color('#b048aa'),
+      new Color('#838283')
     ];
 
     // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
     const buildableSubsystem = findActorByName(
-      "Persistent_Level:PersistentLevel.BuildableSubsystem"
+      'Persistent_Level:PersistentLevel.BuildableSubsystem'
     );
     if (buildableSubsystem !== undefined) {
       for (let i = 0; i < buildableSubsystem.entity.properties.length; i++) {
         const element = buildableSubsystem.entity.properties[
           i
         ] as StructProperty;
-        if (element.name === "mColorSlotsPrimary") {
+        if (element.name === 'mColorSlotsPrimary') {
           // this primary color was changed by the user
           defaultColors[element.index] = new Color(
             element.value.r / 255,
@@ -123,9 +123,9 @@ export default class ColorFactory {
 
       for (let i = 0; i < actor.entity.properties.length; i++) {
         const element = actor.entity.properties[i] as ByteProperty;
-        if (element.name === "mColorSlot") {
+        if (element.name === 'mColorSlot') {
           if (!isPaintable) {
-            console.warn("paintable should be true for: " + actor.className);
+            console.warn('paintable should be true for: ' + actor.className);
             /*reportMessage(
               "paintable should be true for: " + actor.className
             );*/
@@ -142,7 +142,7 @@ export default class ColorFactory {
 
     if (this.materials[actor.className] === undefined) {
       // fetch material based on class name
-      return this.materials["undefined"];
+      return this.materials['undefined'];
     } else {
       return this.materials[actor.className];
     }

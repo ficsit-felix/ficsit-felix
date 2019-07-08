@@ -2,7 +2,7 @@
   <div class="open">
     <div class="centered">
       <Logo height="180" black="#000" :animating="logoAnimating" />
-      <h1>{{ $t("openPage.title") }}</h1>
+      <h1>{{ $t('openPage.title') }}</h1>
       <OpenBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"
@@ -12,7 +12,7 @@
           class="md-raised"
           @click="$router.push({ name: 'landingpage' })"
         >
-          {{ $t("openPage.backButton") }}
+          {{ $t('openPage.backButton') }}
         </md-button>
       </p>
     </div>
@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import Logo from "@/components/Logo";
-import OpenBox from "@/components/OpenBox";
+import Logo from '@/components/Logo';
+import OpenBox from '@/components/OpenBox';
 
 export default {
-  name: "Open",
+  name: 'Open',
   components: {
     Logo,
     OpenBox
@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 .open {
   display: flex;
   height: 100%;

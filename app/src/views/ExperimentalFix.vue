@@ -2,17 +2,17 @@
   <div class="open">
     <div class="centered">
       <Logo height="180" black="#000" :animating="logoAnimating" />
-      <h1>{{ $t("experimentalFix.title") }}</h1>
+      <h1>{{ $t('experimentalFix.title') }}</h1>
       <div class="experimentalFix">
-        <p>{{ $t("experimentalFix.landingText") }}</p>
+        <p>{{ $t('experimentalFix.landingText') }}</p>
       </div>
 
       <div
         style="color: #333;padding: 1px 16px 0px 16px; text-align: left;font-size: 16px;"
       >
-        <p>{{ $t("experimentalFix.explanation") }}</p>
-        <p>{{ $t("experimentalFix.explanation2") }}</p>
-        <p>{{ $t("experimentalFix.explanation3") }}</p>
+        <p>{{ $t('experimentalFix.explanation') }}</p>
+        <p>{{ $t('experimentalFix.explanation2') }}</p>
+        <p>{{ $t('experimentalFix.explanation3') }}</p>
       </div>
       <ExperimentalFixBox
         @startAnimating="logoAnimating = true"
@@ -23,7 +23,7 @@
           <a
             href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
             place="dropbox"
-            >{{ $t("openPage.dropboxText") }}</a
+            >{{ $t('openPage.dropboxText') }}</a
           >
           <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
         </i18n>
@@ -33,7 +33,7 @@
           class="md-raised"
           @click="$router.push({ name: 'landingpage' })"
         >
-          {{ $t("openPage.backButton") }}
+          {{ $t('openPage.backButton') }}
         </md-button>
       </p>
     </div>
@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import Logo from "@/components/Logo";
-import ExperimentalFixBox from "@/components/ExperimentalFixBox";
+import Logo from '@/components/Logo';
+import ExperimentalFixBox from '@/components/ExperimentalFixBox';
 
 export default {
-  name: "ExperimentalFix",
+  name: 'ExperimentalFix',
   components: {
     Logo,
     ExperimentalFixBox
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 .open {
   overflow: auto;
   display: flex;

@@ -6,11 +6,11 @@ import {
   Vector3,
   Quaternion,
   BufferGeometry
-} from "three";
+} from 'three';
 
 // patch the THREE instance
-import * as THREE from "three";
-import index from "three-instanced-mesh";
+import * as THREE from 'three';
+import index from 'three-instanced-mesh';
 const InstancedMesh = index(THREE);
 
 var farAway = new Vector3(1000000000, 0, 0);
@@ -91,9 +91,9 @@ export default class InstancedMeshGroup {
     this.instancedMesh.setPositionAt(index, position);
     this.instancedMesh.setQuaternionAt(index, quaternion);
     this.instancedMesh.setScaleAt(index, scale);
-    this.instancedMesh.needsUpdate("position");
-    this.instancedMesh.needsUpdate("quaternion");
-    this.instancedMesh.needsUpdate("scale");
+    this.instancedMesh.needsUpdate('position');
+    this.instancedMesh.needsUpdate('quaternion');
+    this.instancedMesh.needsUpdate('scale');
   }
 
   public setVisible(index: number, visible: boolean) {
@@ -106,7 +106,7 @@ export default class InstancedMeshGroup {
     } else {
       this.instancedMesh.setPositionAt(index, farAway);
     }
-    this.instancedMesh.needsUpdate("position");
+    this.instancedMesh.needsUpdate('position');
   }
 
   public setGeometry(geometry: BufferGeometry) {
@@ -121,7 +121,7 @@ export default class InstancedMeshGroup {
       return;
     }
     this.instancedMesh.setColorAt(index, color);
-    this.instancedMesh.needsUpdate("colors");
+    this.instancedMesh.needsUpdate('colors');
   }
 
   public dispose() {

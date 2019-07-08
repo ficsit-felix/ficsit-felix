@@ -12,55 +12,55 @@
       v-shortkey.once="['ctrl', 'o']"
       @shortkey="showOpenDialog = true"
     >
-      <md-icon>folder_open</md-icon>{{ $t("menubar.open")
-      }}<md-tooltip md-delay="500">{{ $t("keyboard.ctrl") }}+O</md-tooltip>
+      <md-icon>folder_open</md-icon>{{ $t('menubar.open')
+      }}<md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+O</md-tooltip>
     </span>
     <span
       @click="showSaveDialog = true"
       v-shortkey.once="['ctrl', 's']"
       @shortkey="showSaveDialog = true"
     >
-      <md-icon>save</md-icon>{{ $t("menubar.save")
-      }}<md-tooltip md-delay="500">{{ $t("keyboard.ctrl") }}+S</md-tooltip>
+      <md-icon>save</md-icon>{{ $t('menubar.save')
+      }}<md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+S</md-tooltip>
     </span>
     <span
       @click="showHelpDialog = true"
       v-shortkey.once="['f1']"
       @shortkey="showHelpDialog = true"
     >
-      <md-icon>help</md-icon>{{ $t("menubar.help")
+      <md-icon>help</md-icon>{{ $t('menubar.help')
       }}<md-tooltip md-delay="500">F1</md-tooltip>
     </span>
     <span @click="showSettingsDialog = true">
-      <md-icon>settings</md-icon>{{ $t("menubar.settings") }}
+      <md-icon>settings</md-icon>{{ $t('menubar.settings') }}
     </span>
     <div class="spacer"></div>
     <LanguageSwitcher></LanguageSwitcher>
 
     <md-menu md-direction="bottom-end">
       <md-button md-menu-trigger>
-        <md-icon>menu</md-icon> {{ $t("menubar.more") }}</md-button
+        <md-icon>menu</md-icon> {{ $t('menubar.more') }}</md-button
       >
 
       <md-menu-content class="menubar-content">
         <md-menu-item @click="showOpenJsonDialog = true"
           ><md-icon>file_upload</md-icon
-          >{{ $t("menubar.importJson") }}</md-menu-item
+          >{{ $t('menubar.importJson') }}</md-menu-item
         >
         <md-menu-item @click="showSaveJsonDialog = true"
           ><md-icon>file_download</md-icon
-          >{{ $t("menubar.exportJson") }}</md-menu-item
+          >{{ $t('menubar.exportJson') }}</md-menu-item
         >
         <md-menu-item @click="openGithub()"
-          ><md-icon>code</md-icon>{{ $t("menubar.github") }}</md-menu-item
+          ><md-icon>code</md-icon>{{ $t('menubar.github') }}</md-menu-item
         >
         <md-menu-item @click="showLicensesDialog = true"
           ><md-icon>view_headline</md-icon
-          >{{ $t("menubar.openSource") }}</md-menu-item
+          >{{ $t('menubar.openSource') }}</md-menu-item
         >
         <md-menu-item @click="showAboutDialog = true"
           ><md-icon>info_outline</md-icon
-          >{{ $t("menubar.about") }}</md-menu-item
+          >{{ $t('menubar.about') }}</md-menu-item
         >
       </md-menu-content>
     </md-menu>
@@ -122,50 +122,50 @@
     />
 
     <md-dialog :md-active.sync="showHelpDialog">
-      <md-dialog-title>{{ $t("dialog.help.title") }}</md-dialog-title>
+      <md-dialog-title>{{ $t('dialog.help.title') }}</md-dialog-title>
       <md-dialog-content>
-        <b>{{ $t("dialog.help.controlsTitle") }}</b>
-        <p class="helpControls">{{ $t("dialog.help.controlsText") }}</p>
+        <b>{{ $t('dialog.help.controlsTitle') }}</b>
+        <p class="helpControls">{{ $t('dialog.help.controlsText') }}</p>
         <p>
-          {{ $t("dialog.help.changeJsonWarning") }}
+          {{ $t('dialog.help.changeJsonWarning') }}
         </p>
         <br />
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showHelpDialog = false">{{
-          $t("general.close")
+          $t('general.close')
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
     <md-dialog :md-active.sync="showSettingsDialog">
-      <md-dialog-title>{{ $t("dialog.settings.title") }}</md-dialog-title>
+      <md-dialog-title>{{ $t('dialog.settings.title') }}</md-dialog-title>
       <md-dialog-content>
         <Settings></Settings>
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showSettingsDialog = false">{{
-          $t("general.close")
+          $t('general.close')
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
     <md-dialog :md-active.sync="showLicensesDialog">
-      <md-dialog-title>{{ $t("dialog.openSource.title") }}</md-dialog-title>
+      <md-dialog-title>{{ $t('dialog.openSource.title') }}</md-dialog-title>
       <md-dialog-content>
         <LicensesDialog></LicensesDialog>
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showLicensesDialog = false">{{
-          $t("general.close")
+          $t('general.close')
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
     <md-dialog :md-active.sync="showAboutDialog">
-      <md-dialog-title>{{ $t("dialog.about.title") }}</md-dialog-title>
+      <md-dialog-title>{{ $t('dialog.about.title') }}</md-dialog-title>
       <md-dialog-content>
-        <p>{{ $t("dialog.about.row1") }}</p>
+        <p>{{ $t('dialog.about.row1') }}</p>
         <p>
           <i18n path="dialog.about.row2">
             <a href="https://github.com/bitowl/ficsit-felix" place="github"
@@ -178,14 +178,14 @@
             <a
               href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
               place="authors"
-              >{{ $t("dialog.about.authors") }}</a
+              >{{ $t('dialog.about.authors') }}</a
             >
           </i18n>
         </p>
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showAboutDialog = false">{{
-          $t("general.close")
+          $t('general.close')
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -200,27 +200,27 @@
         style="color: #44444480"
         class="md-flat md-accent"
         @click="railroadWarning = false"
-        >{{ $t("general.cancel") }}</md-button
+        >{{ $t('general.cancel') }}</md-button
       >
       <md-button
         style="color: #444"
         class="md-flat md-accent"
         @click="showSaveDialog = true"
-        >{{ $t("menubar.save") }}</md-button
+        >{{ $t('menubar.save') }}</md-button
       >
     </div>
   </div>
 </template>
 
 <script>
-import Logo from "@/components/Logo";
-import LicensesDialog from "@/components/LicensesDialog";
-import Settings from "@/components/Settings";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
-import { findActorByName } from "@/helpers/entityHelper";
+import Logo from '@/components/Logo';
+import LicensesDialog from '@/components/LicensesDialog';
+import Settings from '@/components/Settings';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { findActorByName } from '@/helpers/entityHelper';
 
 export default {
-  name: "Menubar",
+  name: 'Menubar',
   components: {
     Logo,
     LicensesDialog,
@@ -243,19 +243,19 @@ export default {
   },
   methods: {
     open() {
-      this.$router.push("open/sav");
+      this.$router.push('open/sav');
     },
     openJson() {
-      this.$router.push("open/json");
+      this.$router.push('open/json');
     },
     save() {
-      this.$router.push("save/sav");
+      this.$router.push('save/sav');
     },
     saveJson() {
-      this.$router.push("save/json");
+      this.$router.push('save/json');
     },
     openGithub() {
-      window.open("https://github.com/bitowl/ficsit-felix", "_blank");
+      window.open('https://github.com/bitowl/ficsit-felix', '_blank');
     }
   },
   mounted() {}
@@ -263,7 +263,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 .menubar {
   display: flex;
   background: $toolbarGray;
@@ -326,7 +326,7 @@ b {
     margin: 8px;
     text-transform: none;
     font-size: 16px;
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
     color: #e3d3d3;
   }
 }

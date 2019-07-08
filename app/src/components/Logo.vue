@@ -146,11 +146,11 @@
 </template>
 
 <script>
-import { TimelineLite } from "gsap";
+import { TimelineLite } from 'gsap';
 
 export default {
-  name: "Logo",
-  props: ["height", "black", "animating"],
+  name: 'Logo',
+  props: ['height', 'black', 'animating'],
   watch: {
     animating: {
       imediate: true,
@@ -171,7 +171,7 @@ export default {
       },
       paused: !this.animating
     });
-    this.tl.set(hammer, { transformOrigin: "80% 64%" });
+    this.tl.set(hammer, { transformOrigin: '80% 64%' });
     this.tl.to(hammer, 0.5, { rotation: 50, ease: Power2.easeIn });
     this.tl.to(hammer, 0.2, { rotation: -10, ease: Power3.easeIn });
     this.tl.to(hammer, 0.3, { rotation: 0, ease: Power2.easeOut });

@@ -1,9 +1,9 @@
-import { WebGLRenderer } from "three";
-import { SelectControls } from "@/js/SelectControls";
-import { BoxSelectControls } from "@/js/BoxSelectControls";
-import { mapActions, mapState } from "vuex";
+import { WebGLRenderer } from 'three';
+import { SelectControls } from '@/js/SelectControls';
+import { BoxSelectControls } from '@/js/BoxSelectControls';
+import { mapActions, mapState } from 'vuex';
 
-import * as Stats from "stats.js";
+import * as Stats from 'stats.js';
 // see https://github.com/posva/state-animation-demos/tree/master/components/three
 
 export default {
@@ -11,10 +11,10 @@ export default {
     width: Number,
     height: Number
   },
-  inject: ["playground"],
+  inject: ['playground'],
 
   provide() {
-    console.log("Renderer.provide");
+    console.log('Renderer.provide');
     this.renderer = new WebGLRenderer({
       antialias: true,
       logarithmicDepthBuffer: true
@@ -26,16 +26,16 @@ export default {
   },
 
   mounted() {
-    console.log("Renderer.mount");
+    console.log('Renderer.mount');
     if (this.showFps) {
       this.showStats();
     } else {
       this.stats = null;
     }
 
-    var elem = document.getElementById("scene");
-    var width = document.getElementById("scene").offsetWidth;
-    var height = document.getElementById("scene").offsetHeight;
+    var elem = document.getElementById('scene');
+    var width = document.getElementById('scene').offsetWidth;
+    var height = document.getElementById('scene').offsetHeight;
     this.renderer.setSize(width, height);
     this.camera.obj.aspect = width / height;
     this.camera.obj.updateProjectionMatrix();
@@ -58,8 +58,8 @@ export default {
     this.camera.setupControl(elem);
   },
   computed: {
-    ...mapState(["selectionDisabled", "boxSelect"]),
-    ...mapState("settings", ["showFps"])
+    ...mapState(['selectionDisabled', 'boxSelect']),
+    ...mapState('settings', ['showFps'])
   },
 
   watch: {
@@ -93,7 +93,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["select"]),
+    ...mapActions(['select']),
     animate() {
       if (this.stats !== null) {
         this.stats.begin();
@@ -132,7 +132,7 @@ export default {
     this.$nextTick().then(() => {
       this.$el.appendChild(this.renderer.domElement);
     });
-    return h("div", this.$slots.default);
+    return h('div', this.$slots.default);
   },
 
   beforeDestroy() {

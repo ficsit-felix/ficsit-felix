@@ -6,14 +6,14 @@
         :disabled="focusDisabled"
         @click="focusSelectedObject"
       >
-        {{ $t("propertyEditor.focusButton") }}
+        {{ $t('propertyEditor.focusButton') }}
         <md-tooltip md-delay="500">F</md-tooltip>
       </md-button>
       <md-button
         class="md-raised md-accent"
         :disabled="this.selectedJsonToEdit == null"
         @click="saveJson"
-        >{{ $t("propertyEditor.saveJsonButton") }}</md-button
+        >{{ $t('propertyEditor.saveJsonButton') }}</md-button
       >
       <div class="spacer"></div>
       <md-button
@@ -25,8 +25,8 @@
         "
         @click="showDeleteDialog = true"
       >
-        {{ $t("propertyEditor.deleteButton") }}
-        <md-tooltip md-delay="500">{{ $t("keyboard.del") }}</md-tooltip>
+        {{ $t('propertyEditor.deleteButton') }}
+        <md-tooltip md-delay="500">{{ $t('keyboard.del') }}</md-tooltip>
       </md-button>
     </div>
     <div v-if="experimentalFeatures">
@@ -34,11 +34,11 @@
         class="md-raised"
         @click="copyAsBlueprint"
         :disabled="copyAsBlueprintDisabled"
-        >{{ $t("propertyEditor.copyAsBlueprint") }}</md-button
+        >{{ $t('propertyEditor.copyAsBlueprint') }}</md-button
       >
     </div>
     <md-field :class="jsonClass">
-      <label>{{ $t("propertyEditor.jsonLabel") }}</label>
+      <label>{{ $t('propertyEditor.jsonLabel') }}</label>
       <md-textarea
         v-model="selectedJson"
         :disabled="this.selectedJson == ''"
@@ -48,7 +48,7 @@
     </md-field>
 
     <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">{{
-      $t("propertyEditor.objectSavedSnack")
+      $t('propertyEditor.objectSavedSnack')
     }}</md-snackbar>
 
     <md-dialog-confirm
@@ -68,23 +68,23 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
-import { createBlueprintFromActors } from "satisfactory-blueprint"; //"satisfactory-blueprint";
-import copyToClipboard from "@/ts/copyToClipboard";
+import { mapGetters, mapState, mapActions } from 'vuex';
+import { createBlueprintFromActors } from 'satisfactory-blueprint'; //"satisfactory-blueprint";
+import copyToClipboard from '@/ts/copyToClipboard';
 export default {
-  name: "PropertyEditor",
+  name: 'PropertyEditor',
   data: function() {
     return {
-      selectedJson: "",
-      jsonClass: "",
-      jsonError: "",
+      selectedJson: '',
+      jsonClass: '',
+      jsonError: '',
       showSnackbar: false,
       showDeleteDialog: false
     };
   },
   computed: {
-    ...mapState(["selectedJsonToEdit", "selectedActors", "selectedPathNames"]),
-    ...mapState("settings", ["experimentalFeatures"]),
+    ...mapState(['selectedJsonToEdit', 'selectedActors', 'selectedPathNames']),
+    ...mapState('settings', ['experimentalFeatures']),
     focusDisabled() {
       return this.selectedActors.length !== 1;
     },
@@ -106,33 +106,33 @@ export default {
       deep: true,
       handler(val) {
         if (this.selectedJsonToEdit == null) {
-          this.selectedJson = "";
+          this.selectedJson = '';
         } else {
           this.selectedJson = JSON.stringify(this.selectedJsonToEdit, null, 2);
 
-          this.jsonClass = "";
-          this.jsonError = "";
+          this.jsonClass = '';
+          this.jsonError = '';
         }
       }
     }
   },
 
   methods: {
-    ...mapActions(["setSelectedObject", "deleteSelected"]),
+    ...mapActions(['setSelectedObject', 'deleteSelected']),
     focusSelectedObject() {
-      this.$emit("focusSelectedObject");
+      this.$emit('focusSelectedObject');
     },
 
     saveJson() {
-      console.log("save json");
+      console.log('save json');
       try {
         var obj = JSON.parse(this.selectedJson);
         this.setSelectedObject(obj);
-        this.jsonClass = "";
-        this.jsonError = "";
+        this.jsonClass = '';
+        this.jsonError = '';
         this.showSnackbar = true;
       } catch (e) {
-        this.jsonClass = "md-invalid";
+        this.jsonClass = 'md-invalid';
         this.jsonError = e;
       }
     },
@@ -140,7 +140,7 @@ export default {
       if (
         this.selectedJsonToEdit !== null &&
         (this.selectedPathNames.length !== 1 ||
-          this.selectedPathNames[0] !== "---save-header---")
+          this.selectedPathNames[0] !== '---save-header---')
       ) {
         this.showDeleteDialog = true;
       }
@@ -150,7 +150,7 @@ export default {
         this.selectedActors,
         window.data
       );
-      console.log("blueprint", blueprint);
+      console.log('blueprint', blueprint);
       copyToClipboard(JSON.stringify(blueprint));
     }
   }
@@ -158,7 +158,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors.scss";
+@import '@/assets/colors.scss';
 
 .property-editor {
   /*width: 300px;

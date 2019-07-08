@@ -1,4 +1,4 @@
-import { Actor, Component } from "satisfactory-json";
+import { Actor, Component } from 'satisfactory-json';
 
 /**
  * Global functions that help developing
@@ -11,7 +11,7 @@ declare global {
 
 window.checkMissing = function() {
   if (window.data === undefined) {
-    console.error("Need to load a save file first.");
+    console.error('Need to load a save file first.');
     return;
   }
 
@@ -19,7 +19,7 @@ window.checkMissing = function() {
     const actor = elem as Actor;
     const missing = actor.entity.missing;
     if (missing !== undefined) {
-      console.log("actor: " + actor.className);
+      console.log('actor: ' + actor.className);
     }
   }
 
@@ -27,7 +27,7 @@ window.checkMissing = function() {
     const component = elem as Component;
     const missing = component.entity.missing;
     if (missing !== undefined) {
-      console.log("component: " + component.className);
+      console.log('component: ' + component.className);
     }
   }
 };

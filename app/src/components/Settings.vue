@@ -1,37 +1,37 @@
 <template>
   <div class="settings">
-    <h3>{{ $t("settings.graphicsSectionTitle") }}</h3>
+    <h3>{{ $t('settings.graphicsSectionTitle') }}</h3>
     <md-checkbox :model="showMap" @change="updateShowMap">{{
-      $t("settings.showMap")
+      $t('settings.showMap')
     }}</md-checkbox>
     <md-checkbox :model="showModels" @change="updateShowModels">{{
-      $t("settings.showModels")
+      $t('settings.showModels')
     }}</md-checkbox>
     <md-checkbox :model="showCustomPaints" @change="updateShowCustomPaints">{{
-      $t("settings.showCustomPaints")
+      $t('settings.showCustomPaints')
     }}</md-checkbox>
-    <h4>{{ $t("settings.advancedSectionTitle") }}</h4>
+    <h4>{{ $t('settings.advancedSectionTitle') }}</h4>
     <md-field>
-      <label>{{ $t("settings.farPlane") }}</label>
+      <label>{{ $t('settings.farPlane') }}</label>
       <md-input
         :value="farPlane"
         @input="updateFarPlane"
         type="number"
       ></md-input>
-      <span class="md-helper-text">{{ $t("settings.farPlaneHelp") }}</span>
+      <span class="md-helper-text">{{ $t('settings.farPlaneHelp') }}</span>
     </md-field>
     <md-field>
-      <label>{{ $t("settings.nearPlane") }}</label>
+      <label>{{ $t('settings.nearPlane') }}</label>
       <md-input
         :value="nearPlane"
         @input="updateNearPlane"
         type="number"
       ></md-input>
-      <span class="md-helper-text">{{ $t("settings.nearPlaneHelp") }}</span>
+      <span class="md-helper-text">{{ $t('settings.nearPlaneHelp') }}</span>
     </md-field>
 
     <md-field>
-      <label>{{ $t("settings.conveyorBeltResolution") }}</label>
+      <label>{{ $t('settings.conveyorBeltResolution') }}</label>
       <md-input
         :value="conveyorBeltResolution"
         @input="updateConveyorBeltResolution"
@@ -39,30 +39,30 @@
       ></md-input>
 
       <span class="md-helper-text">{{
-        $t("settings.conveyorBeltResolutionHelp")
+        $t('settings.conveyorBeltResolutionHelp')
       }}</span>
     </md-field>
     <br />
-    <h3>{{ $t("settings.developSectionTitle") }}</h3>
+    <h3>{{ $t('settings.developSectionTitle') }}</h3>
 
     <md-checkbox :model="editClassColors" @change="updateEditClassColors">{{
-      $t("settings.editClassColors")
+      $t('settings.editClassColors')
     }}</md-checkbox>
     <md-button class="md-raised" @click="exportClassColors">{{
-      $t("settings.copyClassColorsButton")
+      $t('settings.copyClassColorsButton')
     }}</md-button>
     <md-button class="md-raised" @click="clearClassColors">{{
-      $t("settings.clearClassColorsButton")
+      $t('settings.clearClassColorsButton')
     }}</md-button>
 
     <md-checkbox
       :model="experimentalFeatures"
       @change="updateExperimentalFeatures"
-      >{{ $t("settings.experimentalFeatures") }}</md-checkbox
+      >{{ $t('settings.experimentalFeatures') }}</md-checkbox
     >
 
     <md-field>
-      <label>{{ $t("settings.autoLoadSaveFile") }}</label>
+      <label>{{ $t('settings.autoLoadSaveFile') }}</label>
       <md-input
         :value="autoLoadSaveFile"
         @input="updateAutoLoadSaveFile"
@@ -70,44 +70,44 @@
     </md-field>
 
     <md-checkbox :model="showFps" @change="setShowFps">{{
-      $t("settings.showFps")
+      $t('settings.showFps')
     }}</md-checkbox>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import copyToClipboard from "@/ts/copyToClipboard";
+import { mapState, mapActions } from 'vuex';
+import copyToClipboard from '@/ts/copyToClipboard';
 export default {
-  name: "Settings",
+  name: 'Settings',
   computed: {
-    ...mapState("settings", [
-      "nearPlane",
-      "farPlane",
-      "showModels",
-      "showCustomPaints",
-      "showMap",
-      "conveyorBeltResolution",
-      "classColors",
-      "editClassColors",
-      "experimentalFeatures",
-      "autoLoadSaveFile",
-      "showFps"
+    ...mapState('settings', [
+      'nearPlane',
+      'farPlane',
+      'showModels',
+      'showCustomPaints',
+      'showMap',
+      'conveyorBeltResolution',
+      'classColors',
+      'editClassColors',
+      'experimentalFeatures',
+      'autoLoadSaveFile',
+      'showFps'
     ])
   },
   methods: {
-    ...mapActions("settings", [
-      "setNearPlane",
-      "setFarPlane",
-      "setShowModels",
-      "setShowCustomPaints",
-      "setShowMap",
-      "setConveyorBeltResolution",
-      "setEditClassColors",
-      "clearClassColors",
-      "setExperimentalFeatures",
-      "setAutoLoadSaveFile",
-      "setShowFps"
+    ...mapActions('settings', [
+      'setNearPlane',
+      'setFarPlane',
+      'setShowModels',
+      'setShowCustomPaints',
+      'setShowMap',
+      'setConveyorBeltResolution',
+      'setEditClassColors',
+      'clearClassColors',
+      'setExperimentalFeatures',
+      'setAutoLoadSaveFile',
+      'setShowFps'
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);
