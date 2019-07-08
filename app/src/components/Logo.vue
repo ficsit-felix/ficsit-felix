@@ -153,7 +153,7 @@ import { TimelineLite, Power2, Power3 } from 'gsap';
   //props: ['height', 'black', 'animating']
 })
 export default class Logo extends Vue {
-  @Prop(String) readonly height: string | undefined;
+  @Prop(Number) readonly height: number | undefined;
   @Prop(String) readonly black: string | undefined;
   @Prop(Boolean) readonly animating: boolean | undefined;
 

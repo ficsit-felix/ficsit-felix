@@ -100,8 +100,6 @@ export default {
   mounted() {
     this.importJson = this.$route.path === '/open/json';
 
-    reportMessage('visit open page');
-
     if (
       this.$route.path == '/open/auto' &&
       this.$store.state.settings.autoLoadSaveFile !== ''
@@ -147,8 +145,6 @@ export default {
 
       reportContext('filename', file.name);
       reportContext('uuid', uuid);
-
-      reportMessage('opened file');
       this.setLoading(false).then(() => {});
 
       const expected = this.importJson ? 'json' : 'sav';

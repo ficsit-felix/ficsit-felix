@@ -118,8 +118,6 @@ export default {
             this.progress = 100;
             clearInterval(this.buildInterval);
             setTimeout(() => {
-              reportMessage('saved file');
-
               element.href = window.URL.createObjectURL(blob);
               if (this.exportJson) {
                 // TODO make sure we only cut of the extension

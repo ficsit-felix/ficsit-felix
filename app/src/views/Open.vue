@@ -1,7 +1,7 @@
 <template>
   <div class="open">
     <div class="centered">
-      <Logo height="180" black="#000" :animating="logoAnimating" />
+      <Logo :height="180" black="#000" :animating="logoAnimating" />
       <h1>{{ $t('openPage.title') }}</h1>
       <OpenBox
         @startAnimating="logoAnimating = true"

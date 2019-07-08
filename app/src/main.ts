@@ -2,7 +2,6 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import { ComponentOptions } from 'vue';
 import { commithash } from '@/js/commithash';
 
 import * as Sentry from '@sentry/browser';
@@ -13,8 +12,8 @@ import { i18n } from './plugins/i18n';
 import '@/helpers/cmdHelper';
 
 if (process.env.NODE_ENV === 'production') {
-  /*Sentry.init({
-    dsn: "https://4bee35ee7cba4ba194c9e1a575948656@sentry.io/1416938",
+  Sentry.init({
+    dsn: 'https://4bee35ee7cba4ba194c9e1a575948656@sentry.io/1416938',
     release: commithash,
     integrations: [
       new Integrations.Vue({
@@ -22,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
         attachProps: true
       })
     ]
-  });*/
+  });
 }
 
 // vue-material

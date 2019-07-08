@@ -1,7 +1,7 @@
 <template>
   <div class="open">
     <div class="centered">
-      <Logo height="180" black="#000" :animating="logoAnimating" />
+      <Logo :height="180" black="#000" :animating="logoAnimating" />
       <h1>{{ $t('experimentalFix.title') }}</h1>
       <div class="experimentalFix">
         <p>{{ $t('experimentalFix.landingText') }}</p>

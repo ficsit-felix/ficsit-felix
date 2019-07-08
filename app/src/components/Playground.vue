@@ -63,7 +63,6 @@ import * as Sentry from '@sentry/browser';
 import Toolbar from '@/components/Toolbar';
 import { commithash } from '@/js/commithash';
 import { getProperty, findActorByName } from '@/helpers/entityHelper';
-import { version } from 'punycode';
 import Compass from '@/components/Compass';
 import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
 import GeometryFactory from '@/graphics/GeometryFactory';
@@ -485,7 +484,8 @@ export default {
     this.transformControl.detach();
     this.transformControl.dispose();
     window.removeEventListener('resize', this.handleResize);
-    this.meshManager.dispose();
+    this.meshManager.dispose(this.scene);
+    this.scene.dispose();
   }
 };
 </script>

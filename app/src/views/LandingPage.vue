@@ -5,7 +5,7 @@
         @mouseover="logoAnimating = true"
         @mouseleave="logoAnimating = false"
       >
-        <Logo height="180" black="#000" :animating="logoAnimating" />
+        <Logo :height="180" black="#000" :animating="logoAnimating" />
       </div>
       <div class="experimentalFix">
         <p>{{ $t('experimentalFix.landingText') }}</p>
@@ -70,7 +70,6 @@ export default {
     };
   },
   mounted() {
-    reportMessage('visit landing page');
     if (this.$store.state.settings.autoLoadSaveFile !== '') {
       this.$router.push({
         path: 'open/auto'
