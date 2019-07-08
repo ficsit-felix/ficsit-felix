@@ -79,6 +79,7 @@ import {
   isRailroadTrack
 } from "../helpers/entityHelper";
 import { EventBus } from "../event-bus";
+import { reportError } from "../ts/errorReporting";
 
 export default {
   name: "Playground",
@@ -366,20 +367,35 @@ export default {
     },
 
     createMeshesForActors() {
-      for (let i = 0; i < window.data.actors.length; i++) {
-        let actor = window.data.actors[i];
-        if (actor.type == 1) {
-          this.meshFactory.createMesh(actor, i).then(result => {
-            updateActorMeshTransform(result.mesh, actor);
-            this.meshManager.add(result);
-          });
-        }
+      this.createMeshForActor(0);
+    },
+
+    createMeshForActor(index) {
+      // we want to create them synchroniously so that we can track progress
+      // and build all the instancedMeshGroups at the end
+
+      // TODO progress: console.log(index/window.data.actors.length*100);
+
+      if (index >= window.data.actors.length) {
+        // created all meshes
+        this.meshManager.buildInstancedMeshGroups();
+        return;
       }
 
-      // TODO FIXME call this when all meshes are created
-      setTimeout(() => {
-        this.meshManager.buildInstancedMeshGroups();
-      }, 4000);
+      let actor = window.data.actors[index];
+      this.meshFactory
+        .createMesh(actor, index)
+        .then(result => {
+          updateActorMeshTransform(result.mesh, actor);
+          this.meshManager.add(result);
+          // create next mesh
+          this.createMeshForActor(index + 1);
+        })
+        .catch(error => {
+          reportError(error);
+          console.error(error);
+          this.createMeshForActor(index + 1);
+        });
     },
 
     updateAllMaterials() {

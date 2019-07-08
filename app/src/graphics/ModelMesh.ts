@@ -63,7 +63,9 @@ export class ThreeModelMesh implements ModelMesh {
   }
 
   rebuildColor(actor: Actor, colorFactory: ColorFactory): void {
-    this.material.color = (colorFactory.createMaterial(actor) as MeshMatcapMaterial).color;
+    this.material.color = (colorFactory.createMaterial(
+      actor
+    ) as MeshMatcapMaterial).color;
   }
 
   dispose(): void {
@@ -158,12 +160,15 @@ export class InstancedModelMesh implements ModelMesh {
   rebuildGeometry(actor: Actor, geometryFactory: GeometryFactory): void {
     // TODO only rebuild once per InstancedMeshGroup
     geometryFactory
-    .createGeometry(actor)
-    .then(result => (this.instancedMeshGroup.setGeometry(result.geometry)));
+      .createGeometry(actor)
+      .then(result => this.instancedMeshGroup.setGeometry(result.geometry));
   }
 
   rebuildColor(actor: Actor, colorFactory: ColorFactory): void {
-    this.instancedMeshGroup.setColor(this.index, (colorFactory.createMaterial(actor) as MeshMatcapMaterial).color);
+    this.instancedMeshGroup.setColor(
+      this.index,
+      (colorFactory.createMaterial(actor) as MeshMatcapMaterial).color
+    );
   }
 
   dispose(): void {
