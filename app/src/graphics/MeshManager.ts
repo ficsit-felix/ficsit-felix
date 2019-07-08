@@ -70,7 +70,6 @@ export default class MeshManager {
     let modelMesh;
     if (result.instance === undefined) {
       modelMesh = new ThreeModelMesh(result.mesh);
-      this.visibleMeshes.push(modelMesh);
     } else {
       // Add to the corresponding MeshInstance
       if (this.instancedMeshGroups[result.instance] === undefined) {
@@ -97,13 +96,13 @@ export default class MeshManager {
         result.mesh
       );
 
-      this.visibleMeshes.push(modelMesh);
     }
 
     modelMesh.addToScene(this.scene);
 
     // use the meshes for raycasting
     result.mesh.updateMatrixWorld(true);
+    this.visibleMeshes.push(modelMesh);
     this.raycastActiveMeshes.push(result.mesh);
 
     // need to rebuild the mesh dictionary the next time we use it
@@ -206,6 +205,8 @@ export default class MeshManager {
             mesh.addToScene(this.scene);
             this.invisibleMeshes.splice(j, 1);
             this.visibleMeshes.push(mesh);
+            this.raycastActiveMeshes.push(this.raycastInactiveMeshes[j]);
+            this.raycastInactiveMeshes.splice(j, 1);
           }
         }
       } else {
@@ -213,9 +214,11 @@ export default class MeshManager {
           const mesh = this.visibleMeshes[k];
 
           if (findActorByName(mesh.getPathName())!.className === item.name) {
-            mesh.addToScene(this.scene);
+            mesh.removeFromScene(this.scene);
             this.visibleMeshes.splice(k, 1);
             this.invisibleMeshes.push(mesh);
+            this.raycastInactiveMeshes.push(this.raycastActiveMeshes[k]);
+            this.raycastActiveMeshes.splice(k, 1);
           }
         }
       }
@@ -258,6 +261,7 @@ export default class MeshManager {
         if (this.visibleMeshes[i].getPathName() === actor.pathName) {
           this.visibleMeshes[i].removeFromScene(this.scene);
           this.visibleMeshes.splice(i, 1);
+          
           break;
         }
       }
@@ -270,6 +274,7 @@ export default class MeshManager {
         }
       }
     }
+
   }
 
   updateAllMaterials(colorFactory: ColorFactory) {

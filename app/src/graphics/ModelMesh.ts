@@ -152,6 +152,7 @@ export class InstancedModelMesh implements ModelMesh {
 
   addToScene(scene: Scene): void {
     // TODO
+    this.instancedMeshGroup.setVisible(this.index, true);
   }
   removeFromScene(scene: Scene): void {
     scene.remove(this.raycastMesh);
