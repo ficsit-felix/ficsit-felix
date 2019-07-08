@@ -17,13 +17,16 @@ var SelectionBox = (function() {
     this.deep = deep || Number.MAX_VALUE;
   }
 
-  SelectionBox.prototype.select = function(startPoint, endPoint) {
+  SelectionBox.prototype.select = function(meshes, startPoint, endPoint) {
     this.startPoint = startPoint || this.startPoint;
     this.endPoint = endPoint || this.endPoint;
     this.collection = [];
 
     this.updateFrustum(this.startPoint, this.endPoint);
-    this.searchChildInFrustum(frustum, this.scene);
+
+    for (var i = 0; i < meshes.length; i++) {
+      this.searchChildInFrustum(frustum, meshes[i]);
+    }
 
     return this.collection;
   };

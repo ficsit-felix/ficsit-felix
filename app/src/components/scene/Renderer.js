@@ -51,7 +51,8 @@ export default {
       this.scene,
       this.camera.obj,
       elem,
-      this
+      this,
+      this.playground
     );
 
     this.camera.setupControl(elem);

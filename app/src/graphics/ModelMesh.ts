@@ -154,7 +154,8 @@ export class InstancedModelMesh implements ModelMesh {
     // TODO
   }
   removeFromScene(scene: Scene): void {
-    // TODO
+    scene.remove(this.raycastMesh);
+    this.instancedMeshGroup.setVisible(this.index, false);
   }
 
   rebuildGeometry(actor: Actor, geometryFactory: GeometryFactory): void {
