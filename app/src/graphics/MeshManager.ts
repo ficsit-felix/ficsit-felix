@@ -65,8 +65,9 @@ export default class MeshManager {
   /**
    * Adds a new mesh to be handled by the MeshManager
    * @param result the MeshResult created by the MeshFactory
+   * @param visible wheter this mesh should currently be visible
    */
-  add(result: MeshResult) {
+  add(result: MeshResult, visible: boolean) {
     let modelMesh;
     if (result.instance === undefined) {
       modelMesh = new ThreeModelMesh(result.mesh);
@@ -81,7 +82,7 @@ export default class MeshManager {
 
       const index = this.instancedMeshGroups[result.instance].add({
         pathName: result.mesh.userData.pathName,
-        visible: true, // TODO what about starting with classes invisible?
+        visible: visible,
         position: result.mesh.position,
         quat: result.mesh.quaternion,
         scale: result.mesh.scale,
@@ -98,12 +99,18 @@ export default class MeshManager {
 
     }
 
-    modelMesh.addToScene(this.scene);
+    
 
     // use the meshes for raycasting
     result.mesh.updateMatrixWorld(true);
-    this.visibleMeshes.push(modelMesh);
-    this.raycastActiveMeshes.push(result.mesh);
+    if (visible) {
+      modelMesh.addToScene(this.scene);
+      this.visibleMeshes.push(modelMesh);
+      this.raycastActiveMeshes.push(result.mesh);
+    } else {
+      this.invisibleMeshes.push(modelMesh);
+      this.raycastInactiveMeshes.push(result.mesh);
+    }
 
     // need to rebuild the mesh dictionary the next time we use it
     this.meshDictionaryDirty = true;
