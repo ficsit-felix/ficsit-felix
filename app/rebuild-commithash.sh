@@ -1,13 +1,13 @@
 #!/bin/bash
 # Writes the current commit hash into src/js/commithash.ts during build
-env
-pwd
-ls -la
-
 HASH="development build"
 LICENSES="placeholder for open source licenses"
 if [[ "$@" == "build" ]]; then
-    HASH="$(git rev-parse HEAD)"
+    if [ -z $NOW_GITHUB_COMMIT_SHA ]; then
+        HASH="$(git rev-parse HEAD)"
+    else
+        HASH=$NOW_GITHUB_COMMIT_SHA
+    fi
     LICENSES="$(
         (
         echo -e "ficsit-felix (https://github.com/bitowl/ficsit-felix)\n";
