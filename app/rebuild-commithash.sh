@@ -1,5 +1,9 @@
 #!/bin/bash
 # Writes the current commit hash into src/js/commithash.ts during build
+env
+pwd
+ls -la
+
 HASH="development build"
 LICENSES="placeholder for open source licenses"
 if [[ "$@" == "build" ]]; then
