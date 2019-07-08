@@ -109,6 +109,21 @@ export default class InstancedMeshGroup {
     this.instancedMesh.needsUpdate("position");
   }
 
+  public setGeometry(geometry: BufferGeometry) {
+    if (this.instancedMesh === undefined) {
+      return;
+    }
+    this.instancedMesh.geometry = geometry;
+  }
+
+  public setColor(index: number, color: Color) {
+    if (this.instancedMesh === undefined) {
+      return;
+    }
+    this.instancedMesh.setColorAt(index, color);
+    this.instancedMesh.needsUpdate("colors");
+  }
+
   public dispose() {
     // TODO
   }

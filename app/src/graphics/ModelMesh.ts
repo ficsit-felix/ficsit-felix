@@ -35,10 +35,10 @@ export interface ModelMesh {
 
 export class ThreeModelMesh implements ModelMesh {
   private mesh: Mesh;
-  private material: Material;
+  private material: MeshMatcapMaterial;
   constructor(mesh: Mesh) {
     this.mesh = mesh;
-    this.material = mesh.material as Material;
+    this.material = mesh.material as MeshMatcapMaterial;
   }
 
   getPathName(): string {
@@ -62,7 +62,9 @@ export class ThreeModelMesh implements ModelMesh {
       .then(result => (this.mesh.geometry = result.geometry));
   }
 
-  rebuildColor(actor: Actor, colorFactory: ColorFactory): void {}
+  rebuildColor(actor: Actor, colorFactory: ColorFactory): void {
+    this.material.color = (colorFactory.createMaterial(actor) as MeshMatcapMaterial).color;
+  }
 
   dispose(): void {
     // TODO remove from scene if visible
@@ -74,7 +76,7 @@ export class ThreeModelMesh implements ModelMesh {
     scene: Scene
   ): void {
     if (selected) {
-      this.material = this.mesh.material as Material;
+      this.material = this.mesh.material as MeshMatcapMaterial;
       // TODO what to do if the color changes while the actor is selected?
       this.mesh.material = colorFactory.getSelectedMaterial();
     } else {
@@ -154,11 +156,14 @@ export class InstancedModelMesh implements ModelMesh {
   }
 
   rebuildGeometry(actor: Actor, geometryFactory: GeometryFactory): void {
-    // TODO
+    // TODO only rebuild once per InstancedMeshGroup
+    geometryFactory
+    .createGeometry(actor)
+    .then(result => (this.instancedMeshGroup.setGeometry(result.geometry)));
   }
 
   rebuildColor(actor: Actor, colorFactory: ColorFactory): void {
-    // TODO set color for this node in the InstancedMeshGroup
+    this.instancedMeshGroup.setColor(this.index, (colorFactory.createMaterial(actor) as MeshMatcapMaterial).color);
   }
 
   dispose(): void {
