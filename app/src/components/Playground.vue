@@ -207,7 +207,11 @@ export default {
 
     showModels(value) {
       this.geometryFactory.showModels = value;
-      this.meshManager.rebuildAllGeometry(this.geometryFactory);
+
+      // completely rebuild all meshes
+      this.meshManager.dispose(this.scene);
+      this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
+      this.createMeshesForActors();
     },
     conveyorBeltResolution(value) {
       this.geometryFactory.conveyorBeltResolution = value;
@@ -245,7 +249,6 @@ export default {
   },
 
   mounted() {
-    console.log("Playgound.mounted");
     this.geometryFactory = new GeometryFactory(
       this.showModels,
       this.conveyorBeltResolution
@@ -387,13 +390,20 @@ export default {
         .createMesh(actor, index)
         .then(result => {
           updateActorMeshTransform(result.mesh, actor);
-          this.meshManager.add(result);
+
+          var visible = true;
+          for (var i = 0; i < this.classes.length; i++) {
+            if (this.classes[i].name === actor.className) {
+              visible = this.classes[i].visible;
+              break;
+            }
+          }
+          this.meshManager.add(result, visible);
           // create next mesh
           this.createMeshForActor(index + 1);
         })
         .catch(error => {
           reportError(error);
-          console.error(error);
           this.createMeshForActor(index + 1);
         });
     },

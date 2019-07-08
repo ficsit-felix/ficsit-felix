@@ -96,10 +96,7 @@ export default class MeshManager {
         index,
         result.mesh
       );
-
     }
-
-    
 
     // use the meshes for raycasting
     result.mesh.updateMatrixWorld(true);
@@ -122,12 +119,7 @@ export default class MeshManager {
    * Should be called after all actors are added to the scene
    */
   buildInstancedMeshGroups() {
-    // calculate matrixes for all meshes so that we can do raycasting
-
-    console.log("BUILD MESH INSTANCES");
-    console.log(this.instancedMeshGroups);
     for (const key in this.instancedMeshGroups) {
-      console.log("build instanced mesh " + key);
       this.scene.add(this.instancedMeshGroups[
         key
       ].buildInstancedMesh() as Object3D);
@@ -233,19 +225,6 @@ export default class MeshManager {
     this.meshDictionaryDirty = true;
   }
 
-  /**
-   * Rebuilds all geometry if the showModel setting is changed
-   */
-  rebuildAllGeometry(geometryFactory: GeometryFactory) {
-    for (const mesh of this.visibleMeshes.concat(this.invisibleMeshes)) {
-      const actor = findActorByName(mesh.getPathName());
-      // TODO should we dispose of the old models? or keep them in case the user changes the setting again
-      if (actor === undefined) continue;
-
-      mesh.rebuildGeometry(actor, geometryFactory);
-    }
-  }
-
   rebuildConveyorBelts(geometryFactory: GeometryFactory) {
     for (const mesh of this.visibleMeshes.concat(this.invisibleMeshes)) {
       const actor = findActorByName(mesh.getPathName());
@@ -268,7 +247,7 @@ export default class MeshManager {
         if (this.visibleMeshes[i].getPathName() === actor.pathName) {
           this.visibleMeshes[i].removeFromScene(this.scene);
           this.visibleMeshes.splice(i, 1);
-          
+
           break;
         }
       }
@@ -281,7 +260,6 @@ export default class MeshManager {
         }
       }
     }
-
   }
 
   updateAllMaterials(colorFactory: ColorFactory) {
@@ -293,8 +271,9 @@ export default class MeshManager {
     }
   }
 
-  dispose() {
+  dispose(scene: Scene) {
     for (const mesh of this.visibleMeshes) {
+      mesh.removeFromScene(scene);
       mesh.dispose();
     }
     for (const mesh of this.invisibleMeshes) {
