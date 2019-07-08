@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "ficsit-felix",
+  "alias": "ficsit-felix.now.sh",
   "builds": [
     {"src": "app/package.json", "use": "@now/static-build",
     
