@@ -7,7 +7,8 @@
     "prebuild": "./rebuild-commithash.sh build",
     "build": "vue-cli-service build",
     "postbuild": "./rebuild-commithash.sh develop",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "now-build": "yarn build"
   },
   "dependencies": {
     "@caohenghu/vue-colorpicker": "^1.1.1",
@@ -18,7 +19,9 @@
     "jszip": "^3.2.1",
     "satisfactory-blueprint": "^0.0.3",
     "satisfactory-json": "^0.0.15",
-    "three": "0.105.2",
+    "stats.js": "^0.17.0",
+    "three": "0.106.2",
+    "three-instanced-mesh": "bitowl/three-instanced-mesh#master",
     "vue": "^2.6.6",
     "vue-i18n": "^8.11.2",
     "vue-material": "^1.0.0-beta-11",
@@ -55,5 +58,8 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "engines": {
+    "node": ">= 10.x"
   }
 }

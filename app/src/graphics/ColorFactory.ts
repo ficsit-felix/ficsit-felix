@@ -6,11 +6,12 @@ import { Actor, ByteProperty, StructProperty } from "satisfactory-json";
 /**
  * Factory that creates and caches materials
  */
-export default class MaterialFactory {
+export default class ColorFactory {
   classColors: { [id: string]: Color };
   materials: { [id: string]: Material } = {};
   coloredMaterials: Material[] = [];
   matcap: Texture;
+  selectedMaterial: Material;
 
   // properties
   showCustomPaints: boolean;
@@ -23,6 +24,12 @@ export default class MaterialFactory {
     this.matcap = matcap;
     this.showCustomPaints = showCustomPaints;
     this.classColors = classColors;
+
+    this.selectedMaterial = new MeshMatcapMaterial({
+      color: 0xffffff,
+      matcap: this.matcap
+    });
+
     this.setupColoredMaterials();
     this.setupDefaultMaterials();
   }
@@ -39,7 +46,6 @@ export default class MaterialFactory {
 
       this.materials[prop] = new MeshMatcapMaterial({
         color: color,
-        // @ts-ignore
         matcap: this.matcap
         /*emissive: modelConfig[prop].color,
  
@@ -98,7 +104,6 @@ export default class MaterialFactory {
 
       this.coloredMaterials[i] = new MeshMatcapMaterial({
         color: color,
-        // @ts-ignore
         matcap: this.matcap
         //emissive: color,
 
@@ -141,5 +146,9 @@ export default class MaterialFactory {
     } else {
       return this.materials[actor.className];
     }
+  }
+
+  getSelectedMaterial(): Material {
+    return this.selectedMaterial;
   }
 }

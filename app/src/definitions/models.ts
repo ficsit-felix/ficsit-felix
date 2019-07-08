@@ -79,8 +79,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x1_01.Build_Foundation_8x1_01_C": {
-    model: "",
-    color: 0xff00ff,
+    model: "Foundation_8x1_01.glb",
+    color: foundationColor,
     paintable: false
   },
   "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C": {
@@ -1151,12 +1151,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x51d5e4,
     paintable: false
   },
-  "/Script/FactoryGame.FGRailroadTimeTable": {
+  "/Script/FactoryGame.FGMapManager": {
     model: "",
     color: 0xff00ff,
     paintable: false
   },
-  "/Script/FactoryGame.FGMapManager": {
+  "/Script/FactoryGame.FGRailroadTimeTable": {
     model: "",
     color: 0xff00ff,
     paintable: false

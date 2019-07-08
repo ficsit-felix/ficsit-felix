@@ -1,4 +1,14 @@
-import { Mesh, Scene } from "three";
+import {
+  Mesh,
+  Scene,
+  Color,
+  Material,
+  UniformsLib,
+  ShaderChunk,
+  BufferGeometry,
+  MeshMatcapMaterial,
+  Object3D
+} from "three";
 import GeometryFactory from "./GeometryFactory";
 import {
   findActorByName,
@@ -7,20 +17,36 @@ import {
 } from "@/helpers/entityHelper";
 import { Actor } from "satisfactory-json";
 import { Component } from "vue";
-import MaterialFactory from "./MaterialFactory";
+import { MeshResult } from "./MeshFactory";
+import InstancedMeshGroup from "./InstancedMeshGroup";
+import { ModelMesh, ThreeModelMesh, InstancedModelMesh } from "./ModelMesh";
+import ColorFactory from "./ColorFactory";
 
-// manages the meshes displayed on the playground
-
+/**
+ * manages the meshes displayed on the playground
+ */
 export default class MeshManager {
-  visibleMeshes: Mesh[] = [];
-  invisibleMeshes: Mesh[] = [];
-  meshByName: { [id: string]: { index: number; visibility: boolean } } = {};
+  visibleMeshes: ModelMesh[] = [];
+  invisibleMeshes: ModelMesh[] = [];
+
+  raycastActiveMeshes: Mesh[] = [];
+  raycastInactiveMeshes: Mesh[] = [];
+  meshByName: {
+    [id: string]: {
+      index: number;
+      visibility: boolean;
+    };
+  } = {};
   meshDictionaryDirty: boolean = false;
 
-  scene: Scene;
+  instancedMeshGroups: { [id: string]: InstancedMeshGroup } = {};
 
-  constructor(scene: Scene) {
+  scene: Scene;
+  material: Material;
+
+  constructor(scene: Scene, material: Material) {
     this.scene = scene;
+    this.material = material;
   }
 
   private refreshMeshDictionary() {
@@ -28,22 +54,79 @@ export default class MeshManager {
     this.meshByName = {};
     for (let i = 0; i < this.visibleMeshes.length; i++) {
       const mesh = this.visibleMeshes[i];
-      this.meshByName[mesh.userData.pathName] = { index: i, visibility: true };
+      this.meshByName[mesh.getPathName()] = { index: i, visibility: true };
     }
     for (let i = 0; i < this.invisibleMeshes.length; i++) {
       const mesh = this.invisibleMeshes[i];
-      this.meshByName[mesh.userData.pathName] = { index: i, visibility: false };
+      this.meshByName[mesh.getPathName()] = { index: i, visibility: false };
     }
   }
 
-  add(mesh: Mesh) {
-    this.scene.add(mesh);
-    this.visibleMeshes.push(mesh);
+  /**
+   * Adds a new mesh to be handled by the MeshManager
+   * @param result the MeshResult created by the MeshFactory
+   * @param visible wheter this mesh should currently be visible
+   */
+  add(result: MeshResult, visible: boolean) {
+    let modelMesh;
+    if (result.instance === undefined) {
+      modelMesh = new ThreeModelMesh(result.mesh);
+    } else {
+      // Add to the corresponding MeshInstance
+      if (this.instancedMeshGroups[result.instance] === undefined) {
+        this.instancedMeshGroups[result.instance] = new InstancedMeshGroup(
+          this.material,
+          result.mesh.geometry as BufferGeometry
+        );
+      }
+
+      const index = this.instancedMeshGroups[result.instance].add({
+        pathName: result.mesh.userData.pathName,
+        visible: visible,
+        position: result.mesh.position,
+        quat: result.mesh.quaternion,
+        scale: result.mesh.scale,
+        color: (result.mesh.material as MeshMatcapMaterial).color
+      });
+      // store the instance index into the mesh
+      result.mesh.userData.instance = result.instance;
+      result.mesh.userData.index = index;
+      modelMesh = new InstancedModelMesh(
+        this.instancedMeshGroups[result.instance],
+        index,
+        result.mesh
+      );
+    }
+
+    // use the meshes for raycasting
+    result.mesh.updateMatrixWorld(true);
+    if (visible) {
+      modelMesh.addToScene(this.scene);
+      this.visibleMeshes.push(modelMesh);
+      this.raycastActiveMeshes.push(result.mesh);
+    } else {
+      this.invisibleMeshes.push(modelMesh);
+      this.raycastInactiveMeshes.push(result.mesh);
+    }
+
+    // need to rebuild the mesh dictionary the next time we use it
     this.meshDictionaryDirty = true;
   }
 
-  // TODO use map to speed this up
-  findMeshByName(pathName: string): Mesh | null {
+  /**
+   * Builds the InstancedMeshGroups
+   *
+   * Should be called after all actors are added to the scene
+   */
+  buildInstancedMeshGroups() {
+    for (const key in this.instancedMeshGroups) {
+      this.scene.add(this.instancedMeshGroups[
+        key
+      ].buildInstancedMesh() as Object3D);
+    }
+  }
+
+  findMeshByName(pathName: string): ModelMesh | null {
     if (this.meshDictionaryDirty) {
       this.refreshMeshDictionary();
     }
@@ -63,7 +146,7 @@ export default class MeshManager {
    */
   findMeshAndVisibilityByName(
     pathName: string
-  ): { mesh: Mesh; visible: boolean } | null {
+  ): { mesh: ModelMesh; visible: boolean } | null {
     if (this.meshDictionaryDirty) {
       this.refreshMeshDictionary();
     }
@@ -79,7 +162,7 @@ export default class MeshManager {
   }
 
   // TODO are those still used?
-  findVisibleMeshByName(pathName: string): Mesh | null {
+  findVisibleMeshByName(pathName: string): ModelMesh | null {
     if (this.meshDictionaryDirty) {
       this.refreshMeshDictionary();
     }
@@ -94,7 +177,7 @@ export default class MeshManager {
     }
   }
 
-  findInvisibleMeshByName(pathName: string): Mesh | null {
+  findInvisibleMeshByName(pathName: string): ModelMesh | null {
     if (this.meshDictionaryDirty) {
       this.refreshMeshDictionary();
     }
@@ -117,24 +200,24 @@ export default class MeshManager {
         for (var j = this.invisibleMeshes.length - 1; j >= 0; j--) {
           const mesh = this.invisibleMeshes[j];
 
-          if (
-            findActorByName(mesh.userData.pathName)!.className === item.name
-          ) {
-            this.scene.add(mesh);
+          if (findActorByName(mesh.getPathName())!.className === item.name) {
+            mesh.addToScene(this.scene);
             this.invisibleMeshes.splice(j, 1);
             this.visibleMeshes.push(mesh);
+            this.raycastActiveMeshes.push(this.raycastInactiveMeshes[j]);
+            this.raycastInactiveMeshes.splice(j, 1);
           }
         }
       } else {
         for (var k = this.visibleMeshes.length - 1; k >= 0; k--) {
           const mesh = this.visibleMeshes[k];
 
-          if (
-            findActorByName(mesh.userData.pathName)!.className === item.name
-          ) {
-            this.scene.remove(mesh);
+          if (findActorByName(mesh.getPathName())!.className === item.name) {
+            mesh.removeFromScene(this.scene);
             this.visibleMeshes.splice(k, 1);
             this.invisibleMeshes.push(mesh);
+            this.raycastInactiveMeshes.push(this.raycastActiveMeshes[k]);
+            this.raycastActiveMeshes.splice(k, 1);
           }
         }
       }
@@ -142,31 +225,15 @@ export default class MeshManager {
     this.meshDictionaryDirty = true;
   }
 
-  /**
-   * Rebuilds all geometry if the showModel setting is changed
-   */
-  rebuildAllGeometry(geometryFactory: GeometryFactory) {
-    for (const mesh of this.visibleMeshes.concat(this.invisibleMeshes)) {
-      const actor = findActorByName(mesh.userData.pathName);
-      // TODO should we dispose of the old models? or keep them in case the user changes the setting again
-      if (actor === undefined) continue;
-
-      geometryFactory
-        .createGeometry(actor)
-        .then(geometry => (mesh.geometry = geometry));
-    }
-  }
-
   rebuildConveyorBelts(geometryFactory: GeometryFactory) {
     for (const mesh of this.visibleMeshes.concat(this.invisibleMeshes)) {
-      const actor = findActorByName(mesh.userData.pathName);
+      const actor = findActorByName(mesh.getPathName());
       if (actor === undefined) continue;
       // TODO here we should certainly dispose of the old conveyor belts
-      mesh.geometry.dispose();
+      //mesh.geometry.dispose();
+
       if (isConveyorBelt(actor) || isRailroadTrack(actor)) {
-        geometryFactory
-          .createGeometry(actor)
-          .then(geometry => (mesh.geometry = geometry));
+        mesh.rebuildGeometry(actor, geometryFactory);
       }
     }
   }
@@ -177,36 +244,46 @@ export default class MeshManager {
     this.meshDictionaryDirty = true;
     for (const actor of payload.actors) {
       for (var i = this.visibleMeshes.length - 1; i >= 0; i--) {
-        if (this.visibleMeshes[i].userData.pathName === actor.pathName) {
-          this.scene.remove(this.visibleMeshes[i]);
+        if (this.visibleMeshes[i].getPathName() === actor.pathName) {
+          this.visibleMeshes[i].removeFromScene(this.scene);
           this.visibleMeshes.splice(i, 1);
-          return;
+
+          break;
         }
       }
 
       for (var j = this.invisibleMeshes.length - 1; j >= 0; j--) {
-        if (this.invisibleMeshes[j].userData.pathName === actor.pathName) {
-          this.scene.remove(this.invisibleMeshes[j]);
+        if (this.invisibleMeshes[j].getPathName() === actor.pathName) {
+          this.invisibleMeshes[j].removeFromScene(this.scene);
           this.invisibleMeshes.splice(j, 1);
-          return;
+          break;
         }
       }
     }
   }
 
-  updateAllMaterials(materialFactory: MaterialFactory) {
-    console.log("update");
+  updateAllMaterials(colorFactory: ColorFactory) {
+    console.log("updateAllMaterials");
     for (const mesh of this.visibleMeshes.concat(this.invisibleMeshes)) {
-      const actor = findActorByName(mesh.userData.pathName);
+      const actor = findActorByName(mesh.getPathName());
       if (actor === undefined) continue;
-
-      mesh.material = materialFactory.createMaterial(actor)!;
+      mesh.rebuildColor(actor, colorFactory);
     }
   }
 
-  dispose() {
+  dispose(scene: Scene) {
     for (const mesh of this.visibleMeshes) {
-      this.scene.remove(mesh);
+      mesh.removeFromScene(scene);
+      mesh.dispose();
+    }
+    for (const mesh of this.invisibleMeshes) {
+      mesh.dispose();
+    }
+    for (const key in this.instancedMeshGroups) {
+      this.instancedMeshGroups[key].dispose();
+      /*      if (this.instancedMeshGroups[key].instancedMesh !== undefined) {
+        this.scene.remove(this.instancedMeshGroups[key].instancedMesh!);
+      }*/
     }
   }
 }

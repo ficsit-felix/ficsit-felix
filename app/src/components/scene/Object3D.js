@@ -3,6 +3,9 @@
 function walkGet(obj, path) {
   const keys = path.split(".");
   while (keys.length) {
+    if (obj === undefined) {
+      return null;
+    }
     obj = obj[keys.shift()];
   }
   return obj;

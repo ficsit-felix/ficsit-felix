@@ -67,7 +67,7 @@ import { version } from "punycode";
 import Compass from "@/components/Compass";
 import { ConveyorCurvePath } from "@/js/ConveyorCurvePath";
 import GeometryFactory from "@/graphics/GeometryFactory";
-import MaterialFactory from "@/graphics/MaterialFactory";
+import ColorFactory from "@/graphics/ColorFactory";
 import MeshFactory from "@/graphics/MeshFactory";
 import MeshManager from "@/graphics/MeshManager";
 import { updateActorMeshTransform } from "@/helpers/meshHelper";
@@ -79,6 +79,7 @@ import {
   isRailroadTrack
 } from "../helpers/entityHelper";
 import { EventBus } from "../event-bus";
+import { reportError } from "../ts/errorReporting";
 
 export default {
   name: "Playground",
@@ -89,6 +90,11 @@ export default {
     AmbientLight,
     Toolbar,
     Compass
+  },
+  provide() {
+    return {
+      playground: this
+    };
   },
   data: function() {
     return {
@@ -127,10 +133,10 @@ export default {
       }
     },
     selectedActors(val) {
-      if (val.length === 1) {
+      /*if (val.length === 1) {
         const mesh = this.meshManager.findMeshByName(val[0].pathName);
         updateActorMeshTransform(mesh, val[0]);
-      }
+      }*/
 
       if (val != this.lastSelectedActors) {
         // selection needs to change
@@ -140,7 +146,7 @@ export default {
             // deselect this actor
             const mesh = this.meshManager.findMeshByName(actor.pathName);
             if (mesh !== null) {
-              mesh.material = this.materialFactory.createMaterial(actor);
+              mesh.setSelected(false, this.colorFactory, this.scene);
             }
           }
         }
@@ -153,10 +159,10 @@ export default {
               actor.pathName
             );
             if (!this.lastSelectedActors.includes(actor)) {
-              mesh.mesh.material = this.selectedMaterial;
+              mesh.mesh.setSelected(true, this.colorFactory, this.scene);
             }
             if (mesh.visible) {
-              visibleSelectedMeshes.push(mesh.mesh);
+              visibleSelectedMeshes.push(mesh.mesh.getRaycastMesh());
             }
           }
 
@@ -187,21 +193,25 @@ export default {
           if (mesh === null) {
             this.transformControl.detach();
           } else {
-            this.transformControl.attach(mesh);
+            this.transformControl.attach(mesh.getRaycastMesh());
           }
         }
       }
     },
 
     showCustomPaints(value) {
-      this.materialFactory.showCustomPaints = value;
+      this.colorFactory.showCustomPaints = value;
       // update materials
       this.updateAllMaterials();
     },
 
     showModels(value) {
       this.geometryFactory.showModels = value;
-      this.meshManager.rebuildAllGeometry(this.geometryFactory);
+
+      // completely rebuild all meshes
+      this.meshManager.dispose(this.scene);
+      this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
+      this.createMeshesForActors();
     },
     conveyorBeltResolution(value) {
       this.geometryFactory.conveyorBeltResolution = value;
@@ -224,8 +234,8 @@ export default {
     classColors: {
       deep: true,
       handler(value) {
-        this.materialFactory.classColors = this.classColors;
-        this.materialFactory.setupDefaultMaterials();
+        this.colorFactory.classColors = this.classColors;
+        this.colorFactory.setupDefaultMaterials();
         this.updateAllMaterials();
       }
     },
@@ -251,24 +261,21 @@ export default {
       matcap.encoding = THREE.sRGBEncoding;
     });
 
-    this.materialFactory = new MaterialFactory(
+    this.colorFactory = new ColorFactory(
       this.matcap,
       this.showCustomPaints,
       this.classColors
     );
-    this.meshFactory = new MeshFactory(
-      this.geometryFactory,
-      this.materialFactory
-    );
+    this.meshFactory = new MeshFactory(this.geometryFactory, this.colorFactory);
 
     this.scene = this.$refs.scene.scene;
-
-    this.meshManager = new MeshManager(this.scene);
 
     this.selectedMaterial = new THREE.MeshMatcapMaterial({
       color: 0xffffff,
       matcap: this.matcap
     });
+
+    this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
 
     this.loader = new GLTFLoader();
 
@@ -363,19 +370,46 @@ export default {
     },
 
     createMeshesForActors() {
-      for (let i = 0; i < window.data.actors.length; i++) {
-        let actor = window.data.actors[i];
-        if (actor.type == 1) {
-          this.meshFactory.createMesh(actor, i).then(mesh => {
-            updateActorMeshTransform(mesh, actor);
-            this.meshManager.add(mesh);
-          });
-        }
+      this.createMeshForActor(0);
+    },
+
+    createMeshForActor(index) {
+      // we want to create them synchroniously so that we can track progress
+      // and build all the instancedMeshGroups at the end
+
+      // TODO progress: console.log(index/window.data.actors.length*100);
+
+      if (index >= window.data.actors.length) {
+        // created all meshes
+        this.meshManager.buildInstancedMeshGroups();
+        return;
       }
+
+      let actor = window.data.actors[index];
+      this.meshFactory
+        .createMesh(actor, index)
+        .then(result => {
+          updateActorMeshTransform(result.mesh, actor);
+
+          var visible = true;
+          for (var i = 0; i < this.classes.length; i++) {
+            if (this.classes[i].name === actor.className) {
+              visible = this.classes[i].visible;
+              break;
+            }
+          }
+          this.meshManager.add(result, visible);
+          // create next mesh
+          this.createMeshForActor(index + 1);
+        })
+        .catch(error => {
+          reportError(error);
+          this.createMeshForActor(index + 1);
+        });
     },
 
     updateAllMaterials() {
-      this.meshManager.updateAllMaterials(this.materialFactory);
+      this.meshManager.updateAllMaterials(this.colorFactory);
     },
 
     focusSelectedObject() {
@@ -407,34 +441,12 @@ export default {
         return; // TODO multiple actors
       }
 
-      const actor = this.selectedActors[0];
-      const mesh = this.meshManager.findMeshByName(actor.pathName);
+      const mesh = this.meshManager.findMeshByName(
+        this.selectedActors[0].pathName
+      );
+      const actor = mesh.applyTransformToActor(this.selectedActors[0]);
 
-      // TODO need to clone, else change is not detected?
-      // find more intelligent way
-      var clone = Object.assign({}, actor);
-      // switched to accord for coordinate system change!
-      clone.transform.translation[1] = mesh.position.x;
-      clone.transform.translation[0] = mesh.position.y;
-      clone.transform.translation[2] = mesh.position.z;
-
-      if (
-        !isConveyorBelt(actor) &&
-        !isRailroadTrack(actor) &&
-        !isPowerLine(actor)
-      ) {
-        mesh.rotateZ(-1.5708); // -90 deg in radians
-      } // TODO conveyor belt coordinates are given without rotation?
-      clone.transform.rotation[0] = mesh.quaternion.x;
-      clone.transform.rotation[1] = mesh.quaternion.y;
-      clone.transform.rotation[2] = -mesh.quaternion.z;
-      clone.transform.rotation[3] = mesh.quaternion.w;
-
-      clone.transform.scale3d[0] = mesh.scale.x;
-      clone.transform.scale3d[1] = mesh.scale.y;
-      clone.transform.scale3d[2] = mesh.scale.z;
-
-      this.setSelectedObject(clone);
+      this.setSelectedObject(actor);
     },
 
     // transform control

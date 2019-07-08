@@ -30,11 +30,16 @@ import {
 
 import { reportMessage, reportException } from "@/ts/errorReporting";
 
+interface GeometryResult {
+  geometry: BufferGeometry;
+  instance: string | undefined;
+}
+
 /**
  * Factory that creates and caches geometry
  */
 export default class GeometryFactory {
-  geometries: { [id: string]: BufferGeometry } = {};
+  geometries: { [id: string]: GeometryResult } = {};
   // properties
   showModels: boolean;
   conveyorBeltResolution: number;
@@ -44,7 +49,7 @@ export default class GeometryFactory {
     this.conveyorBeltResolution = conveyorBeltResolution;
   }
 
-  createGeometry(actor: Actor): Promise<BufferGeometry> {
+  createGeometry(actor: Actor): Promise<GeometryResult> {
     var className = actor.className;
 
     return new Promise((resolve, reject) => {
@@ -52,7 +57,10 @@ export default class GeometryFactory {
         // return single sized cube
         if (this.geometries["box"] === undefined) {
           // 800 is size of foundations
-          this.geometries["box"] = this.createBoxGeometry(400);
+          this.geometries["box"] = {
+            geometry: this.createBoxGeometry(400),
+            instance: "box"
+          };
         }
         resolve(this.geometries["box"]);
         return;
@@ -60,15 +68,27 @@ export default class GeometryFactory {
 
       // special cases for geometry
       if (isConveyorBelt(actor)) {
-        resolve(this.createConveyorBeltGeometry(actor, true));
+        resolve({
+          geometry: this.createConveyorBeltGeometry(actor, true),
+          instance: undefined
+        });
         return;
       }
       if (isRailroadTrack(actor)) {
-        resolve(this.createConveyorBeltGeometry(actor, false));
+        resolve({
+          geometry: this.createConveyorBeltGeometry(actor, false),
+          instance: undefined
+        });
         return;
       }
       if (isPowerLine(actor)) {
-        resolve(this.createPowerLineGeometry(actor));
+        const geom = this.createPowerLineGeometry(actor);
+        if (geom !== undefined) {
+          resolve(geom);
+        } else {
+          reject("Could not create power line geometry");
+        }
+
         return;
       }
 
@@ -106,7 +126,10 @@ export default class GeometryFactory {
           modelHelper
             .loadModel("/models/" + modelConfig[className].model)
             .then(geometry => {
-              this.geometries[className] = geometry;
+              this.geometries[className] = {
+                geometry,
+                instance: "/models/" + modelConfig[className].model
+              };
               resolve(this.geometries[className]);
             });
         } else {
@@ -117,7 +140,10 @@ export default class GeometryFactory {
 
           // 800 is size of foundations
 
-          this.geometries[className] = this.createBoxGeometry(200);
+          this.geometries[className] = {
+            geometry: this.createBoxGeometry(200),
+            instance: className
+          };
           resolve(this.geometries[className]);
         }
       } else {
@@ -221,7 +247,7 @@ export default class GeometryFactory {
     return new ExtrudeBufferGeometry(shape, extrudeSettings);
   }
 
-  createPowerLineGeometry(actor: Actor) {
+  createPowerLineGeometry(actor: Actor): GeometryResult | undefined {
     const sourceConnection = findComponentByName(
       actor.entity.extra.sourcePathName
     );
@@ -343,13 +369,16 @@ export default class GeometryFactory {
     const radiusSegments = 3;
     const closed = false;
 
-    return new TubeBufferGeometry(
-      extrudePath,
-      extrusionSegments,
-      radius,
-      radiusSegments,
-      closed
-    );
+    return {
+      geometry: new TubeBufferGeometry(
+        extrudePath,
+        extrusionSegments,
+        radius,
+        radiusSegments,
+        closed
+      ),
+      instance: undefined
+    };
   }
 
   createBoxGeometry(size: number): BoxBufferGeometry {

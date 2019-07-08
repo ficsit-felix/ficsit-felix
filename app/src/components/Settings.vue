@@ -68,6 +68,10 @@
         @input="updateAutoLoadSaveFile"
       ></md-input>
     </md-field>
+
+    <md-checkbox :model="showFps" @change="setShowFps">{{
+      $t("settings.showFps")
+    }}</md-checkbox>
   </div>
 </template>
 
@@ -87,7 +91,8 @@ export default {
       "classColors",
       "editClassColors",
       "experimentalFeatures",
-      "autoLoadSaveFile"
+      "autoLoadSaveFile",
+      "showFps"
     ])
   },
   methods: {
@@ -101,7 +106,8 @@ export default {
       "setEditClassColors",
       "clearClassColors",
       "setExperimentalFeatures",
-      "setAutoLoadSaveFile"
+      "setAutoLoadSaveFile",
+      "setShowFps"
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);

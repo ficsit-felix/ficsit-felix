@@ -7,7 +7,8 @@ var BoxSelectControls = function(
   scene,
   camera,
   domElement,
-  callback // renderer object
+  callback, // renderer object
+  playground
 ) {
   this.disabled = true;
   this.isDown = false;
@@ -73,7 +74,9 @@ var BoxSelectControls = function(
       -((event.clientY - rect.top) / rect.height) * 2 + 1,
       0.5
     );
-    var allSelected = selectionBox.select();
+    var allSelected = selectionBox.select(
+      playground.meshManager.raycastActiveMeshes
+    );
     var selectedPathNames = [];
     for (const mesh of allSelected) {
       if (mesh.userData !== undefined && mesh.userData.pathName !== undefined) {

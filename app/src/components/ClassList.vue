@@ -75,7 +75,9 @@ export default {
         }
 
         if (modelConfig[clazz.name] === undefined) {
-          console.error("Trying to access missing model config of class " + clazz.name);
+          console.error(
+            "Trying to access missing model config of class " + clazz.name
+          );
           return "#ff00ff";
         }
         result[clazz.name] = getHexColor(modelConfig[clazz.name].color);
