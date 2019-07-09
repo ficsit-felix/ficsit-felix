@@ -25,6 +25,12 @@ export default {
     };
   },
 
+  data: function() {
+    return {
+      animating: true
+    };
+  },
+
   mounted() {
     console.log('Renderer.mount');
     if (this.showFps) {
@@ -107,7 +113,9 @@ export default {
       if (this.stats !== null) {
         this.stats.end();
       }
-      requestAnimationFrame(this.animate.bind(this));
+      if (this.animating) {
+        requestAnimationFrame(this.animate.bind(this));
+      }
     },
 
     resize() {
@@ -139,5 +147,6 @@ export default {
     this.selectControls.destroy();
     this.boxSelectControls.destroy();
     this.hideStats();
+    this.animating = false;
   }
 };
