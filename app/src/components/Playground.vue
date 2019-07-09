@@ -41,6 +41,11 @@
       <br />
       {{ commithash }}
     </div>
+
+    <div v-if="loadingProgress < 100" class="loadingProgress">
+      <div class="progressBar" :style="{ width: loadingProgress + '%' }"></div>
+      <div class="progressText">{{ Math.round(loadingProgress) }} %</div>
+    </div>
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
   </div>
 </template>
@@ -103,7 +108,8 @@ export default {
       local: false,
       commithash,
       rotateX: 0,
-      rotateZ: 0
+      rotateZ: 0,
+      loadingProgress: 50
     };
   },
   computed: {
@@ -376,7 +382,7 @@ export default {
       // we want to create them synchroniously so that we can track progress
       // and build all the instancedMeshGroups at the end
 
-      // TODO progress: console.log(index/window.data.actors.length*100);
+      this.loadingProgress = (index / window.data.actors.length) * 100;
 
       if (index >= window.data.actors.length) {
         // created all meshes
@@ -512,6 +518,29 @@ export default {
   text-shadow: 1px 1px 1px #000;
   line-height: 1.1;
   font-size: 14px;
+}
+
+.loadingProgress {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 20px;
+
+  background: #00bcd43d;
+  color: #fff;
+
+  .progressBar {
+    background: #00bcd4;
+    height: 100%;
+  }
+
+  .progressText {
+    position: absolute;
+    top: 0px;
+    text-align: center;
+    width: 100%;
+  }
 }
 </style>
 
