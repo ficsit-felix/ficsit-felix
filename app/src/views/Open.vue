@@ -1,6 +1,6 @@
 <template>
   <div class="open">
-    <div class="centered">
+    <CenterWhiteBox>
       <Logo :height="180" black="#000" :animating="logoAnimating" />
       <h1>{{ $t('openPage.title') }}</h1>
       <OpenBox
@@ -15,7 +15,7 @@
           {{ $t('openPage.backButton') }}
         </md-button>
       </p>
-    </div>
+    </CenterWhiteBox>
   </div>
 </template>
 
@@ -25,11 +25,13 @@ import Component from 'vue-class-component';
 
 import Logo from '@/components/Logo.vue';
 import OpenBox from '@/components/OpenBox.vue';
+import CenterWhiteBox from '@/components/CenterWhiteBox.vue';
 
 @Component({
   components: {
     Logo,
-    OpenBox
+    OpenBox,
+    CenterWhiteBox
   }
 })
 export default class Open extends Vue {
@@ -44,13 +46,5 @@ export default class Open extends Vue {
   height: 100%;
   width: 100%;
   overflow: auto;
-}
-.centered {
-  margin: auto;
-  width: 700px;
-  background: $boxWhite;
-  border-radius: 10px;
-  text-align: center;
-  position: relative;
 }
 </style>

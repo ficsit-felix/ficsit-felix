@@ -1,25 +1,27 @@
 <template>
   <div class="save">
-    <div class="centered">
+    <CenterWhiteBox>
       <Logo :height="180" black="#000" :animating="logoAnimating" />
       <h1>{{ $t('savePage.title') }}</h1>
       <SaveBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"
       />
-    </div>
+    </CenterWhiteBox>
   </div>
 </template>
 
 <script>
 import Logo from '@/components/Logo';
 import SaveBox from '@/components/SaveBox';
+import CenterWhiteBox from '@/components/CenterWhiteBox';
 
 export default {
   name: 'Save',
   components: {
     Logo,
-    SaveBox
+    SaveBox,
+    CenterWhiteBox
   },
   data: function() {
     return {
@@ -34,13 +36,5 @@ export default {
   display: flex;
   height: 100%;
   overflow: auto;
-}
-.centered {
-  margin: auto;
-  width: 700px;
-  background: $boxWhite;
-  border-radius: 10px;
-  text-align: center;
-  position: relative;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="landingpage">
-    <div class="centered">
+    <CenterWhiteBox>
       <div
         @mouseover="logoAnimating = true"
         @mouseleave="logoAnimating = false"
@@ -41,7 +41,7 @@
         {{ $t('landingPage.language') }}:
         <LanguageSwitcher></LanguageSwitcher>
       </div>
-    </div>
+    </CenterWhiteBox>
     <div class="commithash">{{ commithash }}</div>
   </div>
 </template>
@@ -52,12 +52,14 @@ import * as Sentry from '@sentry/browser';
 import { commithash } from '@/js/commithash';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
+import CenterWhiteBox from '@/components/CenterWhiteBox';
 
 export default {
   name: 'LandingPage',
   components: {
     Logo,
-    LanguageSwitcher
+    LanguageSwitcher,
+    CenterWhiteBox
   },
   data: function() {
     return {
@@ -90,19 +92,6 @@ export default {
   display: flex;
   height: 100%;
   flex-direction: column;
-}
-
-.centered {
-  margin: auto; // fix scrolling in vertically centered flex box, see https://stackoverflow.com/a/33455342
-  width: 700px;
-  background: $boxWhite;
-  border-radius: 10px;
-  text-align: center;
-  position: relative;
-  @media (max-width: 700px) {
-    width: 100%;
-    border-radius: 0px;
-  }
 }
 
 p {
