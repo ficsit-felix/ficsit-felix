@@ -36,12 +36,6 @@ export default new Router({
         import(/* webpackChunkName: "about" */ './views/Save.vue')
     },
     {
-      path: '/experimental-fix',
-      name: 'experimental-fix',
-      component: () => import('./views/ExperimentalFix.vue')
-    },
-
-    {
       path: '*',
       name: '404',
       component: LandingPage

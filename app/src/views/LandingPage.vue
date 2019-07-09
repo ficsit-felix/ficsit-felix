@@ -7,10 +7,6 @@
       >
         <Logo :height="180" black="#000" :animating="logoAnimating" />
       </div>
-      <div class="experimentalFix">
-        <p>{{ $t('experimentalFix.landingText') }}</p>
-      </div>
-
       <p>{{ $t('landingPage.firstParagraph') }}</p>
       <p>
         <md-button
@@ -99,13 +95,14 @@ export default {
 .centered {
   margin: auto; // fix scrolling in vertically centered flex box, see https://stackoverflow.com/a/33455342
   width: 700px;
-  @media (max-width: 700px) {
-    width: 100%;
-  }
   background: $boxWhite;
   border-radius: 10px;
   text-align: center;
   position: relative;
+  @media (max-width: 700px) {
+    width: 100%;
+    border-radius: 0px;
+  }
 }
 
 p {
@@ -126,15 +123,5 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.experimentalFix {
-  display: flex;
-  flex-direction: row;
-  background: #48ff0060;
-  align-items: center;
-  @media (max-width: 500px) {
-    flex-direction: column;
-  }
 }
 </style>

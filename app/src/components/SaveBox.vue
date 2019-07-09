@@ -66,14 +66,6 @@ export default {
   computed: {
     ...mapState(['dataLoaded', 'filename'])
   },
-  created() {
-    if (!this.dataLoaded) {
-      // The user needs to load a file first
-      this.$router.push({
-        name: 'landingpage'
-      });
-    }
-  },
   mounted() {
     if (!this.dataLoaded) {
       // The user needs to load a file first

@@ -29,7 +29,6 @@
 
     <Renderer ref="renderer" :width="width" :height="height">
       <Scene ref="scene">
-        <AmbientLight />
         <Camera @cameraChange="updateCompass" />
       </Scene>
     </Renderer>
@@ -58,7 +57,6 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import Scene from '@/components/scene/Scene';
 import Renderer from '@/components/scene/Renderer';
 import Camera from '@/components/scene/Camera';
-import AmbientLight from '@/components/scene/AmbientLight';
 import { BoxBufferGeometry, LineCurve3, Mesh, error } from 'three';
 import { setTimeout } from 'timers';
 import { GLTFLoader } from '@/js/GLTFLoader';
@@ -91,7 +89,6 @@ export default {
     Renderer,
     Scene,
     Camera,
-    AmbientLight,
     Toolbar,
     Compass
   },
@@ -144,7 +141,7 @@ export default {
       }*/
 
       if (val != this.lastSelectedActors) {
-        // selection needs to change
+        // selection needs to changex
 
         for (const actor of this.lastSelectedActors) {
           if (!val.includes(actor)) {
