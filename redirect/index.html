@@ -1,11 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script>
+      var deployedUrls = [
+        "https://ficsit-felix.netlify.com/",
+        "https://ficsit-felix.now.sh/"
+      ];
+
+      function redirectTo(url) {
+        location.href = url + location.hash;
+      }
+
+      function getRandomDeployedUrl() {
+        return deployedUrls[Math.floor(Math.random() * deployedUrls.length)];
+      }
+
+      function redirectToDeployedUrl() {
+        // if there was a previous redirect, redirect to the same site to reuse cache if possible
+        if (
+          localStorage !== undefined &&
+          localStorage.getItem("url") !== null
+        ) {
+          var url = localStorage.getItem("url");
+          if (deployedUrls.includes(url)) {
+            redirectTo(url);
+            return;
+          }
+        }
+
+        // choose a deployed url at random and cache it
+        var url = getRandomDeployedUrl();
+        if (localStorage !== undefined) {
+          localStorage.setItem("url", url);
+          redirectTo(url);
+        }
+      }
+
+      redirectToDeployedUrl();
+    </script>
+    <title>FICSIT - FeliX</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="favicon.ico" />
-    <title>FICSIT - FeliX</title>
+    <link rel="stylesheet" href="style.css" />
     <meta
       name="description"
       content="FeliX is a save file visualizer for the game Satisfactory."
@@ -16,15 +54,13 @@
     />
   </head>
   <body>
-    <a href="https://ficsit-felix.netlify.com/"
-      >You can currently find FeliX here.</a
-    >
-    <script>
-      if (Math.random() < 0.5) {
-        location.href = "https://ficsit-felix.netlify.com/" + location.hash;
-      } else {
-        location.href = "https://ficsit-felix.now.sh/" + location.hash;
-      }
-    </script>
+    <h1>FICSIT - FeliX</h1>
+    <p>FeliX is a save file visualizer for the game Satisfactory.</p>
+    <noscript>
+      You need JavaScript enabled to be able to use FeliX.
+    </noscript>
+    <a href="javascript:redirectToDeployedUrl()">
+      You can currently find FeliX here.
+    </a>
   </body>
 </html>
