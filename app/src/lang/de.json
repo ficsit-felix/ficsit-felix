@@ -135,6 +135,7 @@
     "showModels": "Modelle anzeigen",
     "experimentalFeatures": "Experimentelle Funktionen",
     "autoLoadSaveFile": "Spielstand automatisch laden",
+    "showFps": "FPS anzeigen",
     "saveAsZip": "Ausgabe as zip Datei speichern"
   },
   "toolbar": {
