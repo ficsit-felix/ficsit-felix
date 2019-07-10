@@ -591,7 +591,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: 'MinerMk3.glb',
     color: 0xd638af,
     paintable: true,
-    powerLineOffset: { x: 140, y: 20, z: 1800 }
+    powerLineOffset: { x: -135, y: 0, z: 1800 }
   },
   '/Game/FactoryGame/Buildable/Factory/OilPump/Build_OilPump.Build_OilPump_C': {
     model: 'OilPump.glb',
