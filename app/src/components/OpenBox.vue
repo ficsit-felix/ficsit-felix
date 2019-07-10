@@ -24,7 +24,14 @@
         <p v-if="importJson" class="dragInstruction">
           {{ $t('openPage.dragJson') }}
         </p>
-        <p v-else class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
+        <p v-else class="dragInstruction">
+          {{ $t('openPage.dragSav') }}<br /><br />
+          {{
+            $t('openPage.saveLocation', {
+              saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
+            })
+          }}
+        </p>
       </div>
     </form>
     <div v-else class="infobox">
@@ -247,7 +254,6 @@ export default {
 .dropbox p {
   font-size: 17px;
   text-align: center;
-  padding: 50px 0;
 }
 
 .infobox {
@@ -268,8 +274,8 @@ export default {
   }
 }
 .dragInstruction {
-  width: 300px;
   margin: auto;
+  padding: 0px 30px;
 }
 
 .secondary {

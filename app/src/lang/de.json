@@ -95,7 +95,8 @@
     "subtitleSav": "Spielstand einlesen...",
     "title": "Spielstand öffnen",
     "extensionError": "Deine Datei sollte die Endung .{expected} haben, hat aber die Endung .{actual}. Bitte öffne eine Datei mit der korrekten Endung.",
-    "backButton": "Zurück"
+    "backButton": "Zurück",
+    "saveLocation": "Du findest deine Spielstände im Ordner {saveLocation}."
   },
   "propertyEditor": {
     "deleteButton": "Löschen",
