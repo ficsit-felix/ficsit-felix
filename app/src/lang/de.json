@@ -133,7 +133,8 @@
     "showMap": "Karte anzeigen",
     "showModels": "Modelle anzeigen",
     "experimentalFeatures": "Experimentelle Funktionen",
-    "autoLoadSaveFile": "Spielstand automatisch laden"
+    "autoLoadSaveFile": "Spielstand automatisch laden",
+    "saveAsZip": "Ausgabe as zip Datei speichern"
   },
   "toolbar": {
     "local": "Lokal",

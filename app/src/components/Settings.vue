@@ -42,6 +42,10 @@
         $t('settings.conveyorBeltResolutionHelp')
       }}</span>
     </md-field>
+    <md-checkbox :model="saveAsZip" @change="setSaveAsZip">
+      {{ $t('settings.saveAsZip') }}
+    </md-checkbox>
+
     <br />
     <h3>{{ $t('settings.developSectionTitle') }}</h3>
 
@@ -92,7 +96,8 @@ export default {
       'editClassColors',
       'experimentalFeatures',
       'autoLoadSaveFile',
-      'showFps'
+      'showFps',
+      'saveAsZip'
     ])
   },
   methods: {
@@ -107,7 +112,8 @@ export default {
       'clearClassColors',
       'setExperimentalFeatures',
       'setAutoLoadSaveFile',
-      'setShowFps'
+      'setShowFps',
+      'setSaveAsZip'
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);
@@ -153,6 +159,6 @@ export default {
   width: 400px;
 }
 .settings >>> .md-checkbox {
-  display:flex !important;
+  display: flex !important;
 }
 </style>

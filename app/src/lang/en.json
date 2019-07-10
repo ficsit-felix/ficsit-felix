@@ -134,7 +134,8 @@
     "showModels": "Show models",
     "experimentalFeatures": "Experimental features",
     "autoLoadSaveFile": "Auto-load save file",
-    "showFps": "Show FPS"
+    "showFps": "Show FPS",
+    "saveAsZip": "Save output as zip file"
   },
   "toolbar": {
     "local": "Local",

@@ -38,6 +38,8 @@ import * as Sentry from '@sentry/browser';
 import { Json2Sav } from 'satisfactory-json';
 
 import { reportMessage, reportError } from '@/ts/errorReporting';
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 export default {
   name: 'SaveBox',
@@ -64,7 +66,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['dataLoaded', 'filename'])
+    ...mapState(['dataLoaded', 'filename']),
+    ...mapState('settings', ['saveAsZip'])
   },
   mounted() {
     if (!this.dataLoaded) {
@@ -96,12 +99,6 @@ export default {
           data = new Json2Sav(window.data).transform();
         }
 
-        var element = document.createElement('a');
-
-        var blob = new Blob([Buffer.from(data, 'binary')], {
-          type: 'application/octet-stream'
-        });
-
         this.infoText = this.$t('savePage.processingFile');
         this.progress = 50;
         this.buildInterval = setInterval(() => {
@@ -110,24 +107,7 @@ export default {
             this.progress = 100;
             clearInterval(this.buildInterval);
             setTimeout(() => {
-              element.href = window.URL.createObjectURL(blob);
-              if (this.exportJson) {
-                // TODO make sure we only cut of the extension
-                element.download =
-                  this.filename.replace('.json', '').replace('.sav', '') +
-                  '.json';
-              } else {
-                element.download =
-                  this.filename.replace('.json', '').replace('.sav', '') +
-                  '.sav';
-              }
-
-              document.body.appendChild(element);
-
-              element.click();
-
-              document.body.removeChild(element);
-              this.isSaving = false;
+              this.downloadData(data);
             }, 100);
           }
         }, 30);
@@ -136,6 +116,61 @@ export default {
         this.handleError(error.message);
         console.error(error);
       }
+    },
+
+    downloadData(data) {
+      let filename;
+      if (this.exportJson) {
+        // TODO make sure we only cut of the extension
+        filename =
+          this.filename.replace('.json', '').replace('.sav', '') + '.json';
+      } else {
+        filename =
+          this.filename.replace('.json', '').replace('.sav', '') + '.sav';
+      }
+
+      if (this.saveAsZip) {
+        let zip = new JSZip();
+
+        zip.file(filename, data, { binary: true });
+
+        zip
+          .generateAsync({
+            type: 'blob',
+            compression: 'DEFLATE',
+            compressionOptions: {
+              level: 9
+            }
+          })
+          .then(content => {
+            // see FileSaver.js
+            saveAs(
+              content,
+              // TODO make sure we only cut of the extension
+              filename.replace('.json', '').replace('.sav', '') + '.zip'
+            );
+          })
+          .catch(error => {
+            reportError(error);
+            this.handleError(error.message);
+          });
+      } else {
+        var element = document.createElement('a');
+
+        var blob = new Blob([Buffer.from(data, 'binary')], {
+          type: 'application/octet-stream'
+        });
+        element.href = window.URL.createObjectURL(blob);
+        element.download = filename;
+
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+      }
+
+      this.isSaving = false;
     }
   }
 };
