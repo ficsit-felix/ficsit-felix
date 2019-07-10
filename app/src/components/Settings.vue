@@ -47,35 +47,41 @@
     </md-checkbox>
 
     <br />
-    <h3>{{ $t('settings.developSectionTitle') }}</h3>
+    <h3 class="clickable" @click="toggleShowDevelopSettings">
+      {{ $t('settings.developSectionTitle') }}
+      <md-icon v-if="showDevelopSettings">expand_less</md-icon>
+      <md-icon v-else>expand_more</md-icon>
+    </h3>
 
-    <md-checkbox :model="editClassColors" @change="updateEditClassColors">{{
-      $t('settings.editClassColors')
-    }}</md-checkbox>
-    <md-button class="md-raised" @click="exportClassColors">{{
-      $t('settings.copyClassColorsButton')
-    }}</md-button>
-    <md-button class="md-raised" @click="clearClassColors">{{
-      $t('settings.clearClassColorsButton')
-    }}</md-button>
+    <div v-if="showDevelopSettings">
+      <md-checkbox :model="editClassColors" @change="updateEditClassColors">{{
+        $t('settings.editClassColors')
+      }}</md-checkbox>
+      <md-button class="md-raised" @click="exportClassColors">{{
+        $t('settings.copyClassColorsButton')
+      }}</md-button>
+      <md-button class="md-raised" @click="clearClassColors">{{
+        $t('settings.clearClassColorsButton')
+      }}</md-button>
 
-    <md-checkbox
-      :model="experimentalFeatures"
-      @change="updateExperimentalFeatures"
-      >{{ $t('settings.experimentalFeatures') }}</md-checkbox
-    >
+      <md-checkbox
+        :model="experimentalFeatures"
+        @change="updateExperimentalFeatures"
+        >{{ $t('settings.experimentalFeatures') }}</md-checkbox
+      >
 
-    <md-field>
-      <label>{{ $t('settings.autoLoadSaveFile') }}</label>
-      <md-input
-        :value="autoLoadSaveFile"
-        @input="updateAutoLoadSaveFile"
-      ></md-input>
-    </md-field>
+      <md-field>
+        <label>{{ $t('settings.autoLoadSaveFile') }}</label>
+        <md-input
+          :value="autoLoadSaveFile"
+          @input="updateAutoLoadSaveFile"
+        ></md-input>
+      </md-field>
 
-    <md-checkbox :model="showFps" @change="setShowFps">{{
-      $t('settings.showFps')
-    }}</md-checkbox>
+      <md-checkbox :model="showFps" @change="setShowFps">{{
+        $t('settings.showFps')
+      }}</md-checkbox>
+    </div>
   </div>
 </template>
 
@@ -97,7 +103,8 @@ export default {
       'experimentalFeatures',
       'autoLoadSaveFile',
       'showFps',
-      'saveAsZip'
+      'saveAsZip',
+      'showDevelopSettings'
     ])
   },
   methods: {
@@ -113,7 +120,8 @@ export default {
       'setExperimentalFeatures',
       'setAutoLoadSaveFile',
       'setShowFps',
-      'setSaveAsZip'
+      'setSaveAsZip',
+      'setShowDevelopSettings'
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);
@@ -150,6 +158,9 @@ export default {
     },
     updateAutoLoadSaveFile(value) {
       this.setAutoLoadSaveFile(value);
+    },
+    toggleShowDevelopSettings() {
+      this.setShowDevelopSettings(!this.showDevelopSettings);
     }
   }
 };
@@ -160,5 +171,10 @@ export default {
 }
 .settings >>> .md-checkbox {
   display: flex !important;
+}
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
 }
 </style>

@@ -1,5 +1,12 @@
 <template>
   <div>
+    <p v-if="!importJson">
+      {{
+        $t('openPage.saveLocation', {
+          saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
+        })
+      }}
+    </p>
     <form enctype="multipart/form-data" novalidate v-if="!isSaving">
       <div class="dropbox">
         <input
@@ -25,12 +32,7 @@
           {{ $t('openPage.dragJson') }}
         </p>
         <p v-else class="dragInstruction">
-          {{ $t('openPage.dragSav') }}<br /><br />
-          {{
-            $t('openPage.saveLocation', {
-              saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
-            })
-          }}
+          {{ $t('openPage.dragSav') }}
         </p>
       </div>
     </form>
@@ -221,6 +223,9 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
+p {
+  color: $textGray;
+}
 
 .dropbox {
   outline: 2px dashed grey; /* the dash box */

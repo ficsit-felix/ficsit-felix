@@ -96,7 +96,7 @@
     "title": "Open save file",
     "extensionError": "Your file should have the extension .{expected} but has the extension .{actual}. Please load a file with the correct extension.",
     "backButton": "Back",
-    "saveLocation": "You can find your save files at {saveLocation}."
+    "saveLocation": "You can find your save files at {saveLocation}"
   },
   "propertyEditor": {
     "deleteButton": "Delete",

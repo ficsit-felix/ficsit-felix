@@ -38,6 +38,7 @@ interface SettingsRootState {
   autoLoadSaveFile: string;
   saveAsZip: boolean;
   showFps: boolean;
+  showDevelopSettings: boolean;
 }
 
 // updates the local storage on settings mutations
@@ -61,7 +62,8 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     experimentalFeatures: false,
     autoLoadSaveFile: '',
     saveAsZip: false,
-    showFps: false
+    showFps: false,
+    showDevelopSettings: false
   },
   getters: {},
   mutations: {
@@ -127,6 +129,10 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     SET_SHOW_FPS(state, payload) {
       state.showFps = payload;
       updateLocalStorage(state);
+    },
+    SET_SHOW_DEVELOP_SETTINGS(state, payload) {
+      state.showDevelopSettings = payload;
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -171,6 +177,9 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setShowFps(context, payload) {
       context.commit('SET_SHOW_FPS', payload);
+    },
+    setShowDevelopSettings(context, payload) {
+      context.commit('SET_SHOW_DEVELOP_SETTINGS', payload);
     }
   }
 };
