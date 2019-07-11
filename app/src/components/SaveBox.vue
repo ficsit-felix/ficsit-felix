@@ -35,7 +35,7 @@ import { mapActions, mapState } from 'vuex';
 import { setTimeout } from 'timers';
 import * as Sentry from '@sentry/browser';
 
-import { Json2Sav } from 'satisfactory-json';
+import { json2sav } from 'satisfactory-json';
 
 import { reportMessage, reportError } from '@/ts/errorReporting';
 import * as JSZip from 'jszip';
@@ -96,7 +96,7 @@ export default {
         if (this.exportJson) {
           data = JSON.stringify(window.data);
         } else {
-          data = new Json2Sav(window.data).transform();
+          data = json2sav(window.data);
         }
 
         this.infoText = this.$t('savePage.processingFile');
