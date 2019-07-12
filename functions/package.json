@@ -12,10 +12,12 @@
   "main": "lib/index.js",
   "dependencies": {
     "@google-cloud/storage": "^3.0.2",
+    "@types/formidable": "^1.0.31",
     "@types/uuid": "^3.4.5",
     "cors": "^2.8.5",
     "firebase-admin": "~8.2.0",
     "firebase-functions": "3.0.2",
+    "formidable": "^1.2.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

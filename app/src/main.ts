@@ -30,11 +30,13 @@ import {
   MdField,
   MdSnackbar,
   MdDialog,
+  MdDialogAlert,
   MdDialogConfirm,
   MdCheckbox,
   MdTooltip,
   MdMenu,
-  MdList
+  MdList,
+  MdProgress
 } from 'vue-material/dist/components';
 import 'vue-material/dist/vue-material.min.css'; // use custom theme in @/assets/main.scss instead
 // import 'vue-material/dist/theme/default-dark.css'
@@ -42,11 +44,13 @@ Vue.use(MdButton);
 Vue.use(MdField);
 Vue.use(MdSnackbar);
 Vue.use(MdDialog);
+Vue.use(MdDialogAlert);
 Vue.use(MdDialogConfirm);
 Vue.use(MdCheckbox);
 Vue.use(MdTooltip);
 Vue.use(MdMenu);
 Vue.use(MdList);
+Vue.use(MdProgress);
 // vue-split-panel
 import VueSplit from 'vue-split-panel';
 Vue.use(VueSplit);

@@ -50,7 +50,8 @@
     "close": "Schließen",
     "no": "Nein",
     "yes": "Ja",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "ok": "Ok"
   },
   "keyboard": {
     "ctrl": "Strg",

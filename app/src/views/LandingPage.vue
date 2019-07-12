@@ -43,6 +43,10 @@
       </div>
     </CenterWhiteBox>
     <div class="commithash">{{ commithash }}</div>
+    <BugReportDialog
+      :visible="true"
+      message="This is a demo bug."
+    ></BugReportDialog>
   </div>
 </template>
 
@@ -53,13 +57,15 @@ import { commithash } from '@/js/commithash';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
 import CenterWhiteBox from '@/components/CenterWhiteBox';
+import BugReportDialog from '@/components/BugReportDialog';
 
 export default {
   name: 'LandingPage',
   components: {
     Logo,
     LanguageSwitcher,
-    CenterWhiteBox
+    CenterWhiteBox,
+    BugReportDialog
   },
   data: function() {
     return {

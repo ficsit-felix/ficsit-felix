@@ -44,13 +44,23 @@
     },
     "settings": {
       "title": "Settings"
+    },
+    "bugReport": {
+      "title": "Submit Bug Report",
+      "userContact": "E-mail if you want to be informed when the bug is fixed. (optional)",
+      "userMessage": "Describe the bug or what triggered it (optional)",
+      "includeSave": "Include save file in bug report",
+      "send": "Send Bug Report",
+      "sentMessage": "Bug report was successfully submitted.",
+      "errorMessage": "Unable to send the bug report."
     }
   },
   "general": {
     "close": "Close",
     "no": "No",
     "yes": "Yes",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "ok": "Ok"
   },
   "keyboard": {
     "ctrl": "Ctrl",
