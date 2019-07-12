@@ -70,7 +70,6 @@ export default class BugReportDialog extends Vue {
   @Prop(String) readonly message: string;
   @Prop(String) readonly uuid: string;
   @Prop(String) readonly filename: string;
-  @Prop() readonly saveData;
 
   showSentDialog: boolean = false;
   showErrorDialog: boolean = false;
@@ -86,7 +85,7 @@ export default class BugReportDialog extends Vue {
 
     let zip = new JSZip();
     if (this.includeSave) {
-      zip.file(this.filename, this.saveData, { binary: true });
+      zip.file(this.filename, window.data, { binary: true });
     }
 
     const meta = `message: ${this.message}

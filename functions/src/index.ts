@@ -30,67 +30,58 @@ class ReportBug {
     this.uuid = v4();
   }
   upload() {
-    return new Promise((resolve, reject) => {
-
-
-      try {
-        // if (process.env.PWD === "/user_code") { // on firebase
-        const now = new Date();
-        function leadingZeros(n: number): string {
-          if (n <= 9) {
-            return '0' + n;
-          }
-          return n.toString();
+    try {
+      // if (process.env.PWD === "/user_code") { // on firebase
+      const now = new Date();
+      function leadingZeros(n: number): string {
+        if (n <= 9) {
+          return '0' + n;
         }
-        const formattedDate = now.getFullYear() + '-' + leadingZeros(now.getMonth() + 1) + '-' + leadingZeros(now.getDate()) + '_' + leadingZeros(now.getHours()) + '-' + leadingZeros(now.getMinutes()) + '-' + leadingZeros(now.getSeconds());
-
-        const fileName = formattedDate + '_' + this.request.query.uuid + '.zip';
-        const tempFile = path.join(os.tmpdir(), fileName);
-
-        const base64 = Buffer.from(this.request.body, 'base64').toString('utf8');
-        const content = Buffer.from(base64, 'base64');
-
-        fs.writeFile(tempFile, content, err => {
-          if (err) {
-            this.error(err.message);
-            return;
-          }
-          this.response.send('{"status": "ok"}');
-          console.log(tempFile);
-
-          resolve();
-          return;
-
-          try {
-            // upload to cloud storage
-            const bucket = new gcs.Storage().bucket('ficsit-felix.appspot.com');
-            bucket
-              .upload(tempFile, {
-                destination: 'reports/' + fileName,
-                resumable: false
-              })
-              .then(() => {
-                console.log('Successful');
-                this.response.send('{"status": "ok"}');
-              })
-              .catch(e => {
-                console.error(e);
-                this.error(e);
-              });
-          } catch (e) {
-            console.error(e.stack);
-            this.error(e.message);
-          }
-        });
-
-
-
-        //}
-      } catch (e) {
-        console.error(e.stack);
-        this.error(e.message);
+        return n.toString();
       }
-    });
+      const formattedDate = now.getFullYear() + '-' + leadingZeros(now.getMonth() + 1) + '-' + leadingZeros(now.getDate()) + '_' + leadingZeros(now.getHours()) + '-' + leadingZeros(now.getMinutes()) + '-' + leadingZeros(now.getSeconds());
+
+      const fileName = formattedDate + '_' + this.request.query.uuid + '.zip';
+      const tempFile = path.join(os.tmpdir(), fileName);
+
+      const base64 = Buffer.from(this.request.body, 'base64').toString('utf8');
+      const content = Buffer.from(base64, 'base64');
+
+      fs.writeFile(tempFile, content, err => {
+        if (err) {
+          this.error(err.message);
+          return;
+        }
+        this.response.send('{"status": "ok"}');
+        try {
+          // upload to cloud storage
+          const bucket = new gcs.Storage().bucket('ficsit-felix.appspot.com');
+          bucket
+            .upload(tempFile, {
+              destination: 'reports/' + fileName,
+              resumable: false
+            })
+            .then(() => {
+              console.log('Successful');
+              this.response.send('{"status": "ok"}');
+            })
+            .catch(e => {
+              console.error(e);
+              this.error(e);
+            });
+        } catch (e) {
+          console.error(e.stack);
+          this.error(e.message);
+        }
+      });
+
+
+
+      //}
+    } catch (e) {
+      console.error(e.stack);
+      this.error(e.message);
+    }
   }
 
   error(message: string) {
@@ -140,6 +131,6 @@ export const reportBug = functions.https.onRequest((request, response) => {
     return;
   }
 
-  return new ReportBug(request, response).upload();
+  new ReportBug(request, response).upload();
   //});
 });

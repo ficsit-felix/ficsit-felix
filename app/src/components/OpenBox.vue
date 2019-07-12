@@ -67,11 +67,19 @@
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
+
+    <BugReportDialog
+      :visible="bugReportVisible"
+      @dismiss="bugReportVisible = false"
+      :message="bugReportMessage"
+      :filename="filename"
+      :uuid="uuid"
+    ></BugReportDialog>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import * as Sentry from '@sentry/browser';
 import { v4 } from 'uuid';
 
@@ -82,7 +90,12 @@ import { reportMessage, reportContext, reportError } from '@/ts/errorReporting';
 import { reportException } from '../ts/errorReporting';
 import { sav2json } from 'satisfactory-json';
 
+import BugReportDialog from '@/components/BugReportDialog';
+
 export default {
+  components: {
+    BugReportDialog
+  },
   data: function() {
     return {
       isSaving: false,
@@ -91,7 +104,9 @@ export default {
       showErrorDialog: false,
       errorText: '',
       showSendSave: false,
-      importJson: false
+      importJson: false,
+      bugReportVisible: false,
+      bugReportMessage: ''
     };
   },
   watch: {
@@ -105,6 +120,9 @@ export default {
         }
       }
     }
+  },
+  computed: {
+    ...mapState(['filename', 'uuid'])
   },
   mounted() {
     this.importJson = this.$route.path === '/open/json';
@@ -135,8 +153,10 @@ export default {
     ...mapActions(['setLoadedData', 'setFilename', 'setUUID', 'setLoading']),
 
     handleError(errorMessage, showSendSave = true) {
-      this.showErrorDialog = true;
-      this.errorText = errorMessage;
+      this.bugReportVisible = true;
+      this.bugReportMessage = errorMessage;
+      //this.showErrorDialog = true;
+      //this.errorText = errorMessage;
       this.isSaving = false;
       this.progress = 0;
       this.showSendSave = showSendSave;
@@ -176,6 +196,9 @@ export default {
     },
 
     processFile(data) {
+      // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
+      window.data = data;
+
       this.infoText = this.$t('openPage.processing');
       this.progress = 50;
       try {
