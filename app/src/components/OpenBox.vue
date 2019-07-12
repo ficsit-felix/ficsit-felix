@@ -75,12 +75,12 @@ import { mapActions } from 'vuex';
 import * as Sentry from '@sentry/browser';
 import { v4 } from 'uuid';
 
-import { Sav2Json } from 'satisfactory-json';
 import { modelHelper } from '@/helpers/modelHelper';
 import { modelConfig } from '@/definitions/models';
 
 import { reportMessage, reportContext, reportError } from '@/ts/errorReporting';
 import { reportException } from '../ts/errorReporting';
+import { sav2json } from 'satisfactory-json';
 
 export default {
   data: function() {
@@ -183,8 +183,7 @@ export default {
         if (this.importJson) {
           json = JSON.parse(Buffer.from(data).toString('utf-8'));
         } else {
-          let sav2Json = new Sav2Json(Buffer.from(data));
-          json = sav2Json.transform();
+          json = sav2json(Buffer.from(data));
         }
 
         // reportMessage("debugSav2Json");
