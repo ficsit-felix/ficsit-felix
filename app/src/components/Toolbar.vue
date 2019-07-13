@@ -26,6 +26,16 @@
         }}<md-tooltip md-direction="bottom" md-delay="500">L</md-tooltip>
       </a>
     </div>
+    <div class="spacer"></div>
+    <span
+      @click="$emit('reportBug')"
+      style="cursor: pointer;margin-right: 10px;"
+    >
+      <md-icon style="color: #a44">bug_report</md-icon>
+      <md-tooltip md-direction="bottom" md-delay="500">{{
+        $t('toolbar.reportBug')
+      }}</md-tooltip>
+    </span>
   </div>
 </template>
 
@@ -56,6 +66,8 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar {
+  width: 100%;
+  display: flex;
   position: absolute;
   top: 10px;
   .section {
@@ -89,5 +101,8 @@ export default {
   a:active {
     background: rgba(255, 255, 255, 0.3);
   }
+}
+.spacer {
+  flex-grow: 1;
 }
 </style>

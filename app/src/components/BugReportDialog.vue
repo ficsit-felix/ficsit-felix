@@ -1,49 +1,47 @@
 <template>
   <div class="bugreport">
-    <md-dialog :md-active.sync="visible">
-      <md-dialog-title>{{ $t('dialog.bugReport.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <div class="dialog-content">
-          <p v-if="message">{{ message }}</p>
-          <md-field>
-            <label>{{ $t('dialog.bugReport.userMessage') }}</label>
-            <md-textarea
-              v-model="userMessage"
-              :disabled="formDisabled"
-            ></md-textarea>
-          </md-field>
-
-          <md-field>
-            <label>{{ $t('dialog.bugReport.userContact') }}</label>
-            <md-input v-model="userContact" :disabled="formDisabled"></md-input>
-          </md-field>
-          <md-checkbox
-            v-model="includeSave"
+    <md-dialog-title>{{ $t('dialog.bugReport.title') }}</md-dialog-title>
+    <md-dialog-content>
+      <div class="dialog-content">
+        <p v-if="message">{{ message }}</p>
+        <md-field>
+          <label>{{ $t('dialog.bugReport.userMessage') }}</label>
+          <md-textarea
+            v-model="userMessage"
             :disabled="formDisabled"
-            style="margin: 0px"
-            >{{ $t('dialog.bugReport.includeSave') }}</md-checkbox
-          >
+          ></md-textarea>
+        </md-field>
 
-          <md-progress-spinner
-            v-if="formDisabled"
-            md-mode="indeterminate"
-            class="floating"
-          ></md-progress-spinner>
-        </div>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button @click="$emit('dismiss')" :disabled="formDisabled">{{
-          $t('general.close')
-        }}</md-button>
-        <md-button
-          class="md-primary"
-          @click="sendReport()"
+        <md-field>
+          <label>{{ $t('dialog.bugReport.userContact') }}</label>
+          <md-input v-model="userContact" :disabled="formDisabled"></md-input>
+        </md-field>
+        <md-checkbox
+          v-model="includeSave"
           :disabled="formDisabled"
+          style="margin: 0px"
+          >{{ $t('dialog.bugReport.includeSave') }}</md-checkbox
         >
-          {{ $t('dialog.bugReport.send') }}
-        </md-button>
-      </md-dialog-actions>
-    </md-dialog>
+
+        <md-progress-spinner
+          v-if="formDisabled"
+          md-mode="indeterminate"
+          class="floating"
+        ></md-progress-spinner>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+      <md-button @click="$emit('dismiss')" :disabled="formDisabled">{{
+        $t('general.close')
+      }}</md-button>
+      <md-button
+        class="md-primary"
+        @click="sendReport()"
+        :disabled="formDisabled"
+      >
+        {{ $t('dialog.bugReport.send') }}
+      </md-button>
+    </md-dialog-actions>
 
     <md-dialog-alert
       :md-active.sync="showSentDialog"
@@ -66,7 +64,6 @@ import { saveAs } from 'file-saver';
 
 @Component({})
 export default class BugReportDialog extends Vue {
-  @Prop(Boolean) readonly visible: boolean;
   @Prop(String) readonly message: string;
   @Prop(String) readonly uuid: string;
   @Prop(String) readonly filename: string;
@@ -85,7 +82,14 @@ export default class BugReportDialog extends Vue {
 
     let zip = new JSZip();
     if (this.includeSave) {
-      zip.file(this.filename, window.data, { binary: true });
+      console.log(typeof window.data);
+      if (typeof window.data === 'object') {
+        zip.file(this.filename + '.json', JSON.stringify(window.data), {
+          binary: true
+        });
+      } else {
+        zip.file(this.filename + '.sav', window.data, { binary: true });
+      }
     }
 
     const meta = `message: ${this.message}
@@ -126,6 +130,9 @@ userMessage: ${this.userMessage}
             this.$emit('dismiss');
             this.formDisabled = false;
             this.showSentDialog = true;
+            // prepare for possible next report
+            this.userMessage = '';
+            this.includeSave = true;
           })
           .catch(error => {
             this.$emit('dismiss');
@@ -145,6 +152,11 @@ userMessage: ${this.userMessage}
 </script>
 
 <style lang="scss" scoped>
+.bugreport {
+  /* As we need to place the md-dialog outside of this component, so that clicking on the background can work */
+  display: flex;
+  flex-direction: column;
+}
 .dialog-content {
   width: 500px;
   @media (max-width: 700px) {

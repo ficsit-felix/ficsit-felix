@@ -68,13 +68,14 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <BugReportDialog
-      :visible="bugReportVisible"
-      @dismiss="bugReportVisible = false"
-      :message="bugReportMessage"
-      :filename="filename"
-      :uuid="uuid"
-    ></BugReportDialog>
+    <md-dialog :md-active.sync="bugReportVisible">
+      <BugReportDialog
+        @dismiss="bugReportVisible = false"
+        :message="bugReportMessage"
+        :filename="filename"
+        :uuid="uuid"
+      ></BugReportDialog>
+    </md-dialog>
   </div>
 </template>
 

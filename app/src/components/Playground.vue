@@ -25,6 +25,7 @@
       @setTranslate="setMode('translate')"
       @setRotate="setMode('rotate')"
       @setScale="setMode('scale')"
+      @reportBug="bugReportVisible = true"
     />
 
     <Renderer ref="renderer" :width="width" :height="height">
@@ -46,6 +47,14 @@
       <div class="progressText">{{ Math.round(loadingProgress) }} %</div>
     </div>
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
+
+    <md-dialog :md-active.sync="bugReportVisible">
+      <BugReportDialog
+        @dismiss="bugReportVisible = false"
+        :filename="filename"
+        :uuid="uuid"
+      ></BugReportDialog>
+    </md-dialog>
   </div>
 </template>
 
@@ -73,6 +82,7 @@ import ColorFactory from '@/graphics/ColorFactory';
 import MeshFactory from '@/graphics/MeshFactory';
 import MeshManager from '@/graphics/MeshManager';
 import { updateActorMeshTransform } from '@/helpers/meshHelper';
+import BugReportDialog from '@/components/BugReportDialog';
 
 import {
   isConveyorBelt,
@@ -90,7 +100,8 @@ export default {
     Scene,
     Camera,
     Toolbar,
-    Compass
+    Compass,
+    BugReportDialog
   },
   provide() {
     return {
@@ -106,7 +117,8 @@ export default {
       commithash,
       rotateX: 0,
       rotateZ: 0,
-      loadingProgress: 50
+      loadingProgress: 50,
+      bugReportVisible: false
     };
   },
   computed: {
