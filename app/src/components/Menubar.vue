@@ -236,7 +236,7 @@ export default {
       this.$router.push('save/json');
     },
     openGithub() {
-      window.open('https://github.com/bitowl/ficsit-felix', '_blank');
+      window.open('https://github.com/ficsit-felix/ficsit-felix', '_blank');
     }
   },
   mounted() {}

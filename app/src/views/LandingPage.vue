@@ -27,11 +27,11 @@
 
       <p class="left">
         <i18n path="landingPage.thirdParagraph">
-          <a href="https://github.com/bitowl/ficsit-felix" place="github"
+          <a href="https://github.com/ficsit-felix/ficsit-felix" place="github"
             >GitHub</a
           >
           <a
-            href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
+            href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
             place="authors"
             >{{ $t('landingPage.authors') }}</a
           >

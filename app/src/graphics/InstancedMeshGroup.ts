@@ -87,7 +87,11 @@ export default class InstancedMeshGroup {
     this.nodes[index].position = position;
     this.nodes[index].quat = quaternion;
     this.nodes[index].scale = scale;
-    this.instancedMesh.setPositionAt(index, position);
+    if (this.nodes[index].visible) {
+      this.instancedMesh.setPositionAt(index, position);
+    } else {
+      this.instancedMesh.setPositionAt(index, farAway);
+    }
     this.instancedMesh.setQuaternionAt(index, quaternion);
     this.instancedMesh.setScaleAt(index, scale);
     this.instancedMesh.needsUpdate('position');
