@@ -55,7 +55,6 @@ export default class InstancedMeshGroup {
       true, // does it have color
       false // uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
     );
-
     var _v3 = new Vector3();
     var _q = new Quaternion();
 

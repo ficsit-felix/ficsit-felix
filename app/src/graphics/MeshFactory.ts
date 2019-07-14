@@ -93,10 +93,10 @@ export default class MeshFactoy {
                     const elem = element.value.properties[i];
                     if (elem.name === 'Rotation') {
                       applyRotation(topMesh, [
-                        elem.value.a,
+                        elem.value.r,
+                        elem.value.g,
                         elem.value.b,
-                        elem.value.c,
-                        elem.value.d
+                        elem.value.a
                       ]);
                     } else if (elem.name === 'Translation') {
                       applyTranslation(topMesh, [
