@@ -138,7 +138,7 @@ export default {
       if (val.length === 1) {
         const mesh = this.meshManager.findMeshByName(val[0].pathName);
         mesh.applyTransform(val[0]);
-//        updateActorMeshTransform(mesh, val[0]);
+        //        updateActorMeshTransform(mesh, val[0]);
       }
 
       if (val != this.lastSelectedActors) {

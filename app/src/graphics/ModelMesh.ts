@@ -8,7 +8,10 @@ import {
   isConveyorBelt,
   isPowerLine
 } from '@/helpers/entityHelper';
-import { applyMeshTransformToActor, updateActorMeshTransform } from '@/helpers/meshHelper';
+import {
+  applyMeshTransformToActor,
+  updateActorMeshTransform
+} from '@/helpers/meshHelper';
 
 /**
  * Interface for Meshes
@@ -97,7 +100,6 @@ export class ThreeModelMesh implements ModelMesh {
   }
 }
 
-
 export class InstancedModelMesh implements ModelMesh {
   private instancedMeshGroup: InstancedMeshGroup;
   private index: number;
@@ -165,12 +167,12 @@ export class InstancedModelMesh implements ModelMesh {
 
   applyTransformToActor(actor: Actor): Actor {
     // apply the changes to the instanced mesh group as well
-    this.instancedMeshGroup.setTransform(
+    /*this.instancedMeshGroup.setTransform(
       this.index,
       this.raycastMesh.position,
       this.raycastMesh.quaternion,
       this.raycastMesh.scale
-    );
+    );*/
 
     return applyMeshTransformToActor(this.raycastMesh, actor);
   }
