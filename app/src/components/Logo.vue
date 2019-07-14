@@ -157,9 +157,9 @@ export default class Logo extends Vue {
   @Prop(String) readonly black: string | undefined;
   @Prop(Boolean) readonly animating: boolean | undefined;
 
-  private tl: TimelineLite = new TimelineLite({
+  private tl: TimelineLite | null = new TimelineLite({
     onComplete: () => {
-      if (this.animating) {
+      if (this.animating && this.tl !== null) {
         this.tl.restart();
       }
     },
@@ -168,17 +168,26 @@ export default class Logo extends Vue {
 
   @Watch('animating', { immediate: true })
   onAnimatingChanged(val: boolean) {
-    if (val) {
+    if (val && this.tl !== null) {
       this.tl.play();
     }
   }
 
   mounted() {
-    const hammer = this.$refs.hammer;
-    this.tl.set(hammer, { transformOrigin: '80% 64%' });
-    this.tl.to(hammer, 0.5, { rotation: 50, ease: Power2.easeIn });
-    this.tl.to(hammer, 0.2, { rotation: -10, ease: Power3.easeIn });
-    this.tl.to(hammer, 0.3, { rotation: 0, ease: Power2.easeOut });
+    if (this.tl !== null) {
+      const hammer = this.$refs.hammer;
+      this.tl.set(hammer, { transformOrigin: '80% 64%' });
+      this.tl.to(hammer, 0.5, { rotation: 50, ease: Power2.easeIn });
+      this.tl.to(hammer, 0.2, { rotation: -10, ease: Power3.easeIn });
+      this.tl.to(hammer, 0.3, { rotation: 0, ease: Power2.easeOut });
+    }
+  }
+
+  beforeDestroy() {
+    if (this.tl !== null) {
+      this.tl.kill();
+      this.tl = null;
+    }
   }
 }
 </script>
