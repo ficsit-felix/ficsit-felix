@@ -1,2 +1,2 @@
-const commithash = "development build";
+const commithash = 'development build';
 export { commithash };

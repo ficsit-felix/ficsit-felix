@@ -33,8 +33,8 @@ All models in `app/public/models` are distributed under the [Creative Commons At
 
 ## Other useful repositories
 
-https://github.com/bitowl/satisfactory-save-format  
-Scripts to convert save files to json and back written in Python
+https://github.com/ficsit-felix/satisfactory-json
+Library to convert from Satisfactory save files to a JSON format and back
 
 https://github.com/Vilsol/satisfactory-tool  
 Save file to json converter written in Go

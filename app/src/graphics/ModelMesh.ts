@@ -86,8 +86,18 @@ export class ThreeModelMesh implements ModelMesh {
       this.material = this.mesh.material as MeshMatcapMaterial;
       // TODO what to do if the color changes while the actor is selected?
       this.mesh.material = colorFactory.getSelectedMaterial();
+      for (const child of this.mesh.children) {
+        if (child instanceof Mesh) {
+          child.material = colorFactory.getSelectedMaterial();
+        }
+      }
     } else {
       this.mesh.material = this.material;
+      for (const child of this.mesh.children) {
+        if (child instanceof Mesh) {
+          child.material = this.material;
+        }
+      }
     }
   }
 
