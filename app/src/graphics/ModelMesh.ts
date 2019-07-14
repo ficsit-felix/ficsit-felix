@@ -8,6 +8,7 @@ import {
   isConveyorBelt,
   isPowerLine
 } from '@/helpers/entityHelper';
+import { applyMeshTransformToActor, updateActorMeshTransform } from '@/helpers/meshHelper';
 
 /**
  * Interface for Meshes
@@ -31,6 +32,7 @@ export interface ModelMesh {
     scene: Scene
   ): void;
   applyTransformToActor(actor: Actor): Actor;
+  applyTransform(actor: Actor): void;
 }
 
 export class ThreeModelMesh implements ModelMesh {
@@ -89,44 +91,12 @@ export class ThreeModelMesh implements ModelMesh {
   applyTransformToActor(actor: Actor): Actor {
     return applyMeshTransformToActor(this.mesh, actor);
   }
+
+  applyTransform(actor: Actor) {
+    updateActorMeshTransform(this.mesh, actor);
+  }
 }
 
-function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
-  // TODO need to clone, else change is not detected?
-  // find more intelligent way
-  var clone = Object.assign({}, actor);
-  // switched to accord for coordinate system change!
-  clone.transform.translation[1] = mesh.position.x;
-  clone.transform.translation[0] = mesh.position.y;
-  clone.transform.translation[2] = mesh.position.z;
-
-  // TODO directly apply this rotation on the quaternion so we don't need to reverse it afterwards
-  if (
-    !isConveyorBelt(actor) &&
-    !isRailroadTrack(actor) &&
-    !isPowerLine(actor)
-  ) {
-    mesh.rotateZ(-1.5708); // -90 deg in radians
-  } // TODO conveyor belt coordinates are given without rotation?
-
-  clone.transform.rotation[0] = mesh.quaternion.x;
-  clone.transform.rotation[1] = mesh.quaternion.y;
-  clone.transform.rotation[2] = -mesh.quaternion.z;
-  clone.transform.rotation[3] = mesh.quaternion.w;
-
-  if (
-    !isConveyorBelt(actor) &&
-    !isRailroadTrack(actor) &&
-    !isPowerLine(actor)
-  ) {
-    mesh.rotateZ(1.5708); // 90 deg in radians
-  } // TODO conveyor belt coordinates are given without rotation?
-
-  clone.transform.scale3d[0] = mesh.scale.x;
-  clone.transform.scale3d[1] = mesh.scale.y;
-  clone.transform.scale3d[2] = mesh.scale.z;
-  return clone;
-}
 
 export class InstancedModelMesh implements ModelMesh {
   private instancedMeshGroup: InstancedMeshGroup;
@@ -203,5 +173,16 @@ export class InstancedModelMesh implements ModelMesh {
     );
 
     return applyMeshTransformToActor(this.raycastMesh, actor);
+  }
+
+  applyTransform(actor: Actor) {
+    updateActorMeshTransform(this.raycastMesh, actor);
+    // apply the changes to the instanced mesh group as well
+    this.instancedMeshGroup.setTransform(
+      this.index,
+      this.raycastMesh.position,
+      this.raycastMesh.quaternion,
+      this.raycastMesh.scale
+    );
   }
 }
