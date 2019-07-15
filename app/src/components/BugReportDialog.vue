@@ -111,7 +111,7 @@ export default class BugReportDialog extends Vue {
   sendReport() {
     this.formDisabled = true;
 
-    let zip = JSZip.default();
+    let zip = new JSZip();
     if (this.includeSave) {
       if (window.data instanceof ArrayBuffer) {
         zip.file(this.filename + '.sav', window.data, { binary: true });
@@ -138,14 +138,22 @@ userMessage: ${this.userMessage}
     zip.file('meta.txt', meta);
 
     zip
-      .generateAsync({
-        type: 'uint8array',
-        compression: 'DEFLATE',
-        compressionOptions: {
-          level: 9
-        }
-      })
+      .generateAsync(
+        {
+          type: 'uint8array',
+          compression: 'DEFLATE',
+          compressionOptions: {
+            level: 9
+          }
+        } /*,
+        (metadata: any) => {
+          console.log(metadata.percent);
+        }*/
+      )
       .then((content: Uint8Array) => {
+        this.showBugReportDialog = false;
+        this.formDisabled = false;
+        this.showSentDialog = true;
         window
           .fetch('https://owl.yt/ficsit-felix/?uuid=' + this.uuid, {
             method: 'POST',
@@ -211,8 +219,8 @@ userMessage: ${this.userMessage}
   margin: 10px 10px 10px 0px !important;
 }
 .dialog-content img {
-    max-width: 100%;
-    max-height: 300px;
-    display: flex;
-  }
+  max-width: 100%;
+  max-height: 300px;
+  display: flex;
+}
 </style>
