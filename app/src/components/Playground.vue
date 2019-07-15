@@ -52,6 +52,7 @@
       ref="bugReport"
       :filename="filename"
       :uuid="uuid"
+      :defaultIncludeSave="false"
     ></BugReportDialog>
   </div>
 </template>

@@ -33,7 +33,7 @@ All models in `app/public/models` are distributed under the [Creative Commons At
 
 ## Other useful repositories
 
-https://github.com/ficsit-felix/satisfactory-json
+https://github.com/ficsit-felix/satisfactory-json  
 Library to convert from Satisfactory save files to a JSON format and back
 
 https://github.com/Vilsol/satisfactory-tool  

@@ -44,6 +44,16 @@
     },
     "settings": {
       "title": "Einstellungen"
+    },
+    "bugReport": {
+      "title": "Fehlerbericht senden",
+      "userContact": "E-Mail wenn du bei Änderungen benachrichtigt werden willst (optional)",
+      "userMessage": "Beschreibe den Bug und wie es dazu kam (optional)",
+      "includeSave": "Spielstand an Fehlerbericht anhängen",
+      "includeScreenshot": "Bildschirmfoto an Fehlerbericht anhängen",
+      "send": "Fehlerbericht abschicken",
+      "sentMessage": "Fehlerbericht wurde erfolgreich versendet.",
+      "errorMessage": "Es gab ein Problem beim Senden des Fehlerberichtes."
     }
   },
   "general": {
@@ -144,6 +154,7 @@
     "rotate": "Rotieren",
     "scale": "Skalieren",
     "translate": "Verschieben",
-    "world": "Welt"
+    "world": "Welt",
+    "reportBug": "Einen Fehler melden"
   }
 }

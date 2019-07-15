@@ -73,8 +73,9 @@ import { saveAs } from 'file-saver';
 
 @Component({})
 export default class BugReportDialog extends Vue {
-  @Prop(String) readonly uuid: string = '';
-  @Prop(String) readonly filename: string = '';
+  @Prop({ default: '' }) readonly uuid!: string;
+  @Prop({ default: '' }) readonly filename!: string;
+  @Prop({ default: true }) readonly defaultIncludeSave!: boolean;
 
   message: string = '';
   showBugReportDialog = false;
@@ -92,6 +93,7 @@ export default class BugReportDialog extends Vue {
   openReportWindow(message: string) {
     this.message = message;
     this.showBugReportDialog = true;
+    this.includeSave = this.defaultIncludeSave;
 
     const scene = document.getElementById('scene');
     if (scene !== undefined && scene !== null) {
