@@ -324,8 +324,13 @@ var OrbitControls = function(object, domElement) {
         v.crossVectors(scope.object.up, v);
       }
 
-      v.multiplyScalar(distance);
+      // @bitowl: invert vector on lower hemisphere
+      if (spherical.phi > Math.PI / 2) {
+        v.x = -v.x;
+        v.y = -v.y;
+      }
 
+      v.multiplyScalar(distance);
       panOffset.add(v);
     };
   })();
