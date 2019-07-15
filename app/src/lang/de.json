@@ -109,7 +109,7 @@
   },
   "savePage": {
     "backButton": "Zurück zu FeliX",
-    "error": "Ein Fehler ist aufgetreten.",
+    "error": "Ein Fehler ist aufgetreten:",
     "initializing": "initialisieren...",
     "jsonSubtitle": "JSON Datei speichern...",
     "processingFile": "Datei verarbeiten...",

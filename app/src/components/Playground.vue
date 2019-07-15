@@ -25,7 +25,7 @@
       @setTranslate="setMode('translate')"
       @setRotate="setMode('rotate')"
       @setScale="setMode('scale')"
-      @reportBug="bugReportVisible = true"
+      @reportBug="reportBug()"
     />
 
     <Renderer ref="renderer" :width="width" :height="height">
@@ -48,13 +48,11 @@
     </div>
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
 
-    <md-dialog :md-active.sync="bugReportVisible">
       <BugReportDialog
-        @dismiss="bugReportVisible = false"
+      ref="bugReport"
         :filename="filename"
         :uuid="uuid"
       ></BugReportDialog>
-    </md-dialog>
   </div>
 </template>
 
@@ -492,6 +490,9 @@ export default {
       if (this.experimentalFeatures) {
         this.setShiftSelect(value);
       }
+    },
+    reportBug() {
+      this.$refs.bugReport.openReportWindow('');
     }
   }, // END OF METHODS
 

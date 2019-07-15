@@ -118,7 +118,7 @@
   },
   "savePage": {
     "backButton": "Back to FeliX",
-    "error": "An error occured.",
+    "error": "An error occured:",
     "initializing": "initializing...",
     "jsonSubtitle": "Saving JSON file...",
     "processingFile": "processing file...",

@@ -1,5 +1,7 @@
 <template>
   <div class="bugreport">
+        <md-dialog :md-active.sync="showBugReportDialog">
+
     <md-dialog-title>{{ $t('dialog.bugReport.title') }}</md-dialog-title>
     <md-dialog-content>
       <div class="dialog-content">
@@ -31,7 +33,7 @@
       </div>
     </md-dialog-content>
     <md-dialog-actions>
-      <md-button @click="$emit('dismiss')" :disabled="formDisabled">{{
+      <md-button @click="showBugReportDialog = false" :disabled="formDisabled">{{
         $t('general.close')
       }}</md-button>
       <md-button
@@ -42,6 +44,7 @@
         {{ $t('dialog.bugReport.send') }}
       </md-button>
     </md-dialog-actions>
+    </md-dialog>
 
     <md-dialog-alert
       :md-active.sync="showSentDialog"
@@ -64,11 +67,12 @@ import { saveAs } from 'file-saver';
 
 @Component({})
 export default class BugReportDialog extends Vue {
-  @Prop(String) readonly message: string;
   @Prop(String) readonly uuid: string;
   @Prop(String) readonly filename: string;
 
-  showSentDialog: boolean = false;
+message: string ='';
+  showBugReportDialog = false;
+showSentDialog: boolean = false;
   showErrorDialog: boolean = false;
 
   userContact: string = '';
@@ -77,18 +81,23 @@ export default class BugReportDialog extends Vue {
 
   formDisabled: boolean = false;
 
+  openReportWindow(message: string) {
+    this.message = message;
+    this.showBugReportDialog = true;
+    console.log('OH');
+  }
+
   sendReport() {
     this.formDisabled = true;
 
     let zip = new JSZip();
     if (this.includeSave) {
       console.log(typeof window.data);
-      if (typeof window.data === 'object') {
-        zip.file(this.filename + '.json', JSON.stringify(window.data), {
-          binary: true
-        });
-      } else {
+      if (window.data instanceof ArrayBuffer) {
         zip.file(this.filename + '.sav', window.data, { binary: true });
+      } else {
+        zip.file(this.filename + '.json', JSON.stringify(window.data));
+
       }
     }
 
@@ -100,7 +109,7 @@ userMessage: ${this.userMessage}
 
     zip
       .generateAsync({
-        type: 'base64',
+        type: 'uint8array',
         compression: 'DEFLATE',
         compressionOptions: {
           level: 9
@@ -109,7 +118,7 @@ userMessage: ${this.userMessage}
       .then(content => {
         window
           .fetch(
-            'http://localhost:5000/ficsit-felix/us-central1/reportBug?uuid=' +
+            'https://owl.yt/ficsit-felix/?uuid=' +
               this.uuid,
             {
               method: 'POST',
@@ -127,7 +136,7 @@ userMessage: ${this.userMessage}
           })
           .then(response => {
             console.log(response);
-            this.$emit('dismiss');
+            this.showBugReportDialog = false;
             this.formDisabled = false;
             this.showSentDialog = true;
             // prepare for possible next report
@@ -135,14 +144,14 @@ userMessage: ${this.userMessage}
             this.includeSave = true;
           })
           .catch(error => {
-            this.$emit('dismiss');
+            this.showBugReportDialog = false;
             this.formDisabled = false;
             console.error(error);
             this.showErrorDialog = true;
           });
       })
       .catch(error => {
-        this.$emit('dismiss');
+            this.showBugReportDialog = false;
         this.formDisabled = false;
         console.error(error);
         this.showErrorDialog = true;

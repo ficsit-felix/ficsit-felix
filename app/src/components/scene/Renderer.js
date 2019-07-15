@@ -17,7 +17,9 @@ export default {
     console.log('Renderer.provide');
     this.renderer = new WebGLRenderer({
       antialias: true,
-      logarithmicDepthBuffer: true
+      logarithmicDepthBuffer: true,
+      // necessary for the screenshot feature of the BugReportDialog
+      preserveDrawingBuffer: true
     });
 
     return {

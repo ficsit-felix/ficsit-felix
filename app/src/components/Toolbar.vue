@@ -31,7 +31,7 @@
       @click="$emit('reportBug')"
       style="cursor: pointer;margin-right: 10px;"
     >
-      <md-icon style="color: #a44">bug_report</md-icon>
+      <md-icon class="bugReportIcon">bug_report</md-icon>
       <md-tooltip md-direction="bottom" md-delay="500">{{
         $t('toolbar.reportBug')
       }}</md-tooltip>
@@ -105,4 +105,11 @@ export default {
 .spacer {
   flex-grow: 1;
 }
+.md-icon.bugReportIcon {
+  color: #aa4444AA;
+}
+span:hover .md-icon.bugReportIcon {
+    color: #d44;
+  }
+
 </style>

@@ -68,14 +68,11 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <md-dialog :md-active.sync="bugReportVisible">
       <BugReportDialog
-        @dismiss="bugReportVisible = false"
-        :message="bugReportMessage"
+        ref="bugReport"
         :filename="filename"
         :uuid="uuid"
       ></BugReportDialog>
-    </md-dialog>
   </div>
 </template>
 
@@ -105,9 +102,7 @@ export default {
       showErrorDialog: false,
       errorText: '',
       showSendSave: false,
-      importJson: false,
-      bugReportVisible: false,
-      bugReportMessage: ''
+      importJson: false
     };
   },
   watch: {
@@ -154,10 +149,8 @@ export default {
     ...mapActions(['setLoadedData', 'setFilename', 'setUUID', 'setLoading']),
 
     handleError(errorMessage, showSendSave = true) {
-      this.bugReportVisible = true;
-      this.bugReportMessage = errorMessage;
-      //this.showErrorDialog = true;
-      //this.errorText = errorMessage;
+      console.log('BR');
+      this.$refs.bugReport.openReportWindow(this.$t('savePage.error') + ' ' + errorMessage);
       this.isSaving = false;
       this.progress = 0;
       this.showSendSave = showSendSave;
@@ -190,6 +183,12 @@ export default {
       }
 
       var reader = new FileReader();
+      reader.onprogress = evt => {
+	if (evt.lengthComputable) {
+    var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+    this.progress = percentLoaded / 2;
+  }
+      };
       reader.onload = response => {
         this.processFile(response.target.result);
       };
