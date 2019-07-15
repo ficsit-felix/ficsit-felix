@@ -75,7 +75,7 @@ export default {
       controls.screenSpacePanning = false;
       controls.minDistance = 1000;
       controls.maxDistance = 100000;
-      controls.maxPolarAngle = Math.PI / 2;
+      controls.maxPolarAngle = Math.PI;
       controls.rotateSpeed = 0.3;
       controls.panSpeed = 0.3;
       if (this.cameraTarget !== undefined) {
