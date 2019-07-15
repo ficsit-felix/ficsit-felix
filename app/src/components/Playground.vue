@@ -145,10 +145,11 @@ export default {
       }
     },
     selectedActors(val) {
-      /*if (val.length === 1) {
+      if (val.length === 1) {
         const mesh = this.meshManager.findMeshByName(val[0].pathName);
-        updateActorMeshTransform(mesh, val[0]);
-      }*/
+        mesh.applyTransform(val[0]);
+        //        updateActorMeshTransform(mesh, val[0]);
+      }
 
       if (val != this.lastSelectedActors) {
         // selection needs to changex

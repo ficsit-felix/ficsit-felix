@@ -165,16 +165,22 @@ export default {
   }
 };
 </script>
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .settings {
   width: 400px;
-}
-.settings >>> .md-checkbox {
-  display: flex !important;
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .clickable {
   cursor: pointer;
   user-select: none;
+}
+</style>
+
+<style lang="css" scoped>
+.settings >>> .md-checkbox {
+  display: flex !important;
 }
 </style>

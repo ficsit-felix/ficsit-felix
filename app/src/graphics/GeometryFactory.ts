@@ -176,7 +176,7 @@ export default class GeometryFactory {
 
       if (lastLoc != null) {
         // If two spline points are very near to each other, ignore the first one
-        // This should prevent twirls as described in https://github.com/bitowl/ficsit-felix/issues/42
+        // This should prevent twirls as described in https://github.com/ficsit-felix/ficsit-felix/issues/42
         const sqrDist =
           (location.value.x - lastLoc.value.x) *
             (location.value.x - lastLoc.value.x) +
@@ -297,14 +297,14 @@ export default class GeometryFactory {
         sourceOffset.y,
         sourceOffset.x,
         sourceOffset.z
-      ).applyQuaternion(
+      ); /*.applyQuaternion(
         new Quaternion(
-          source.transform.rotation[0],
-          source.transform.rotation[1],
+          -source.transform.rotation[1],
+          -source.transform.rotation[0],
           -source.transform.rotation[2],
           source.transform.rotation[3]
         )
-      );
+      );*/
       sourceOffset = {
         x: transformedSourceOffset.x,
         y: transformedSourceOffset.y,

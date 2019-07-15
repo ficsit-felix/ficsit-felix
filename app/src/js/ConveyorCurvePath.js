@@ -10,7 +10,7 @@ ConveyorCurvePath.prototype.constructor = ConveyorCurvePath;
 
 /*
 	Code from https://github.com/mrdoob/three.js/blob/dev/src/extras/curves/CubicBezierCurve3.js
-	Changed to fix conveyor belt roll (see https://github.com/bitowl/ficsit-felix/issues/36) by always setting the normal to point up in z direction
+	Changed to fix conveyor belt roll (see https://github.com/ficsit-felix/ficsit-felix/issues/36) by always setting the normal to point up in z direction
 */
 ConveyorCurvePath.prototype.computeFrenetFrames = function(segments, closed) {
   // see http://www.cs.indiana.edu/pub/techreports/TR425.pdf

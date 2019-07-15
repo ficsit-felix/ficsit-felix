@@ -613,19 +613,19 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/PowerPoleMk1/Build_PowerPoleMk1.Build_PowerPoleMk1_C': {
     model: 'PowerPoleMk1.glb',
     color: 0x6042d5,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: 0, y: 0, z: 615 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleMk2/Build_PowerPoleMk2.Build_PowerPoleMk2_C': {
     model: 'PowerPoleMk2.glb',
     color: 0x6042d5,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: 0, y: 0, z: 715 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleMk3/Build_PowerPoleMk3.Build_PowerPoleMk3_C': {
     model: 'PowerPoleMk3.glb',
     color: 0x6042d5,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: 0, y: 0, z: 850 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C': {

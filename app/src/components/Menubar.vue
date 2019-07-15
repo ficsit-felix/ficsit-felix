@@ -168,7 +168,9 @@
         <p>{{ $t('dialog.about.row1') }}</p>
         <p>
           <i18n path="dialog.about.row2">
-            <a href="https://github.com/bitowl/ficsit-felix" place="github"
+            <a
+              href="https://github.com/ficsit-felix/ficsit-felix"
+              place="github"
               >GitHub</a
             >
           </i18n>
@@ -176,7 +178,7 @@
         <p>
           <i18n path="dialog.about.row3">
             <a
-              href="https://github.com/bitowl/ficsit-felix/blob/master/app/public/models/AUTHORS"
+              href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
               place="authors"
               >{{ $t('dialog.about.authors') }}</a
             >
@@ -234,7 +236,7 @@ export default {
       this.$router.push('save/json');
     },
     openGithub() {
-      window.open('https://github.com/bitowl/ficsit-felix', '_blank');
+      window.open('https://github.com/ficsit-felix/ficsit-felix', '_blank');
     }
   },
   mounted() {}

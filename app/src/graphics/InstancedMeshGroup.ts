@@ -55,7 +55,6 @@ export default class InstancedMeshGroup {
       true, // does it have color
       false // uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
     );
-
     var _v3 = new Vector3();
     var _q = new Quaternion();
 
@@ -88,7 +87,11 @@ export default class InstancedMeshGroup {
     this.nodes[index].position = position;
     this.nodes[index].quat = quaternion;
     this.nodes[index].scale = scale;
-    this.instancedMesh.setPositionAt(index, position);
+    if (this.nodes[index].visible) {
+      this.instancedMesh.setPositionAt(index, position);
+    } else {
+      this.instancedMesh.setPositionAt(index, farAway);
+    }
     this.instancedMesh.setQuaternionAt(index, quaternion);
     this.instancedMesh.setScaleAt(index, scale);
     this.instancedMesh.needsUpdate('position');

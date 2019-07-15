@@ -14,7 +14,6 @@ export default {
   inject: ['playground'],
 
   provide() {
-    console.log('Renderer.provide');
     this.renderer = new WebGLRenderer({
       antialias: true,
       logarithmicDepthBuffer: true,
@@ -34,7 +33,6 @@ export default {
   },
 
   mounted() {
-    console.log('Renderer.mount');
     if (this.showFps) {
       this.showStats();
     } else {

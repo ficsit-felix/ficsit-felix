@@ -42,7 +42,6 @@ var SelectControls = function(scene, camera, domElement, callback, playground) {
       // recursive, so that we also get intersections with the other parts of a conveyor lift
 
       for (const intersection of intersects) {
-        console.log(object);
         var object = intersection.object;
 
         if (object.type === 'TransformControlsPlane') {

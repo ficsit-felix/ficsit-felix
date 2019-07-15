@@ -1,6 +1,26 @@
-import { Mesh } from 'three';
+import { Mesh, Vector3, Quaternion, Euler, Matrix4 } from 'three';
 import { Actor } from 'satisfactory-json';
 import { isConveyorBelt, isPowerLine, isRailroadTrack } from './entityHelper';
+
+/*
+ * Unreal coordinate system:
+ * right:   y
+ * forward: x
+ * up:      z
+ *
+ * three.js coordinate system (after setting the up vector to (0,0,1)):
+ * right:   x
+ * forward: y
+ * up:      z
+ *
+ *
+ */
+
+const up = new Vector3(0, 0, 1);
+const rotate90 = new Quaternion().setFromEuler(new Euler(0, 0, Math.PI / 2));
+const rotateNeg90 = new Quaternion().setFromEuler(
+  new Euler(0, 0, -Math.PI / 2)
+);
 
 export function applyTranslation(mesh: Mesh, translation: number[]) {
   // switched around to convert from Unreal coordinate system (XYZ left-handed) to three.js coordinate system (XZY right-handed)
@@ -10,10 +30,9 @@ export function applyTranslation(mesh: Mesh, translation: number[]) {
 }
 
 export function applyRotation(mesh: Mesh, rotation: number[]) {
-  mesh.quaternion.x = rotation[0];
-  mesh.quaternion.y = rotation[1];
-  mesh.quaternion.z = -rotation[2];
-  mesh.quaternion.w = rotation[3];
+  mesh.setRotationFromQuaternion(
+    new Quaternion(-rotation[1], -rotation[0], -rotation[2], rotation[3])
+  );
 }
 
 export function applyScale(mesh: Mesh, scale: number[]) {
@@ -25,17 +44,53 @@ export function applyScale(mesh: Mesh, scale: number[]) {
 
 export function updateActorMeshTransform(mesh: Mesh, actor: Actor) {
   applyTranslation(mesh, actor.transform.translation);
-  if (
-    !isConveyorBelt(actor) &&
-    !isRailroadTrack(actor) &&
-    !isPowerLine(actor)
-  ) {
-    applyRotation(mesh, actor.transform.rotation);
-    mesh.rotateZ(1.5708); // 90 deg in radians
+
+  const quat = new Quaternion(
+    -actor.transform.rotation[1],
+    -actor.transform.rotation[0],
+    -actor.transform.rotation[2],
+    actor.transform.rotation[3]
+  );
+
+  if (isConveyorBelt(actor) || isRailroadTrack(actor)) {
+    mesh.setRotationFromQuaternion(quat);
+  } else if (isPowerLine(actor)) {
+    mesh.setRotationFromQuaternion(new Quaternion()); // identity
   } else {
-    // TODO conveyor belt coordinates are given without rotation?
-    applyRotation(mesh, [0, 0, 0, 1]);
+    mesh.setRotationFromQuaternion(quat.multiply(rotate90));
   }
 
   applyScale(mesh, actor.transform.scale3d);
+}
+
+export function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
+  // TODO need to clone, else change is not detected?
+  // find more intelligent way
+  var clone = Object.assign({}, actor);
+  // switched to accord for coordinate system change!
+  clone.transform.translation[1] = mesh.position.x;
+  clone.transform.translation[0] = mesh.position.y;
+  clone.transform.translation[2] = mesh.position.z;
+
+  // TODO directly apply this rotation on the quaternion so we don't need to reverse it afterwards
+  let quat;
+
+  if (isConveyorBelt(actor) || isRailroadTrack(actor)) {
+    // TODO conveyor belt coordinates are given without rotation?
+    quat = mesh.quaternion;
+  } else if (isPowerLine(actor)) {
+    quat = new Quaternion();
+  } else {
+    quat = mesh.quaternion.multiply(rotateNeg90);
+  }
+
+  clone.transform.rotation[0] = -quat.y;
+  clone.transform.rotation[1] = -quat.x;
+  clone.transform.rotation[2] = -quat.z;
+  clone.transform.rotation[3] = quat.w;
+
+  clone.transform.scale3d[0] = mesh.scale.x;
+  clone.transform.scale3d[1] = mesh.scale.y;
+  clone.transform.scale3d[2] = mesh.scale.z;
+  return clone;
 }
