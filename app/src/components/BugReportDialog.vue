@@ -18,12 +18,23 @@
           <label>{{ $t('dialog.bugReport.userContact') }}</label>
           <md-input v-model="userContact" :disabled="formDisabled"></md-input>
         </md-field>
+
         <md-checkbox
           v-model="includeSave"
           :disabled="formDisabled"
-          style="margin: 0px"
+ 
           >{{ $t('dialog.bugReport.includeSave') }}</md-checkbox
         >
+<div v-if="screenshotDataUrl !== ''">
+        <md-checkbox
+          v-model="includeScreenshot"
+          :disabled="formDisabled"
+          >{{ $t('dialog.bugReport.includeScreenshot') }}</md-checkbox
+        >
+
+        <img :src="screenshotDataUrl" v-if="includeScreenshot" />
+</div>
+
 
         <md-progress-spinner
           v-if="formDisabled"
@@ -78,13 +89,26 @@ showSentDialog: boolean = false;
   userContact: string = '';
   userMessage: string = '';
   includeSave: boolean = true;
+  includeScreenshot: boolean = true;
+  screenshotDataUrl: string = '';
 
   formDisabled: boolean = false;
 
   openReportWindow(message: string) {
     this.message = message;
     this.showBugReportDialog = true;
-    console.log('OH');
+
+    const scene = document.getElementById('scene');
+    if (scene !== undefined && scene !== null) {
+      const canvas = scene.getElementsByTagName('canvas')[0];
+      if (canvas !== undefined && canvas !== null) {
+      this.screenshotDataUrl = canvas.toDataURL('image/jpeg');
+      this.includeScreenshot = true;
+      }
+    } else {
+      this.screenshotDataUrl = '';
+      this.includeScreenshot = false;
+    }
   }
 
   sendReport() {
@@ -92,13 +116,19 @@ showSentDialog: boolean = false;
 
     let zip = new JSZip();
     if (this.includeSave) {
-      console.log(typeof window.data);
       if (window.data instanceof ArrayBuffer) {
         zip.file(this.filename + '.sav', window.data, { binary: true });
       } else {
         zip.file(this.filename + '.json', JSON.stringify(window.data));
 
       }
+    }
+
+    if (this.includeScreenshot) {
+      const screenshot = Buffer.from(this.screenshotDataUrl.substring(this.screenshotDataUrl.indexOf(',') + 1), 'base64');
+
+        zip.file('screenshot.jpg', screenshot, { binary: true });
+
     }
 
     const meta = `message: ${this.message}
@@ -165,6 +195,8 @@ userMessage: ${this.userMessage}
   /* As we need to place the md-dialog outside of this component, so that clicking on the background can work */
   display: flex;
   flex-direction: column;
+
+
 }
 .dialog-content {
   width: 500px;
@@ -180,3 +212,15 @@ userMessage: ${this.userMessage}
   margin-left: -30px;
 }
 </style>
+<style lang="css" scoped>
+.bugreport >>> .md-checkbox {
+  display: flex !important;
+  margin: 8px 8px 8px 0px;
+}
+.dialog-content img {
+    max-width: 100%;
+    max-height: 300px;
+    display: flex;
+  }
+</style>
+
