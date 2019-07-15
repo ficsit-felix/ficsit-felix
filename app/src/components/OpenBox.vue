@@ -68,11 +68,11 @@
       </md-dialog-actions>
     </md-dialog>
 
-      <BugReportDialog
-        ref="bugReport"
-        :filename="filename"
-        :uuid="uuid"
-      ></BugReportDialog>
+    <BugReportDialog
+      ref="bugReport"
+      :filename="filename"
+      :uuid="uuid"
+    ></BugReportDialog>
   </div>
 </template>
 
@@ -150,7 +150,9 @@ export default {
 
     handleError(errorMessage, showSendSave = true) {
       console.log('BR');
-      this.$refs.bugReport.openReportWindow(this.$t('savePage.error') + ' ' + errorMessage);
+      this.$refs.bugReport.openReportWindow(
+        this.$t('savePage.error') + ' ' + errorMessage
+      );
       this.isSaving = false;
       this.progress = 0;
       this.showSendSave = showSendSave;
@@ -184,10 +186,10 @@ export default {
 
       var reader = new FileReader();
       reader.onprogress = evt => {
-	if (evt.lengthComputable) {
-    var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-    this.progress = percentLoaded / 2;
-  }
+        if (evt.lengthComputable) {
+          var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+          this.progress = percentLoaded / 2;
+        }
       };
       reader.onload = response => {
         this.processFile(response.target.result);

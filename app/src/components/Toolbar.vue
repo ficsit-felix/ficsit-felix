@@ -106,10 +106,9 @@ export default {
   flex-grow: 1;
 }
 .md-icon.bugReportIcon {
-  color: #aa4444AA;
+  color: #aa4444aa;
 }
 span:hover .md-icon.bugReportIcon {
-    color: #d44;
-  }
-
+  color: #d44;
+}
 </style>

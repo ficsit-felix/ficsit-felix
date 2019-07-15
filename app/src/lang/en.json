@@ -50,6 +50,7 @@
       "userContact": "E-mail if you want to be informed when the bug is fixed. (optional)",
       "userMessage": "Describe the bug or what triggered it (optional)",
       "includeSave": "Include save file in bug report",
+      "includeScreenshot": "Include screenshot in bug report",
       "send": "Send Bug Report",
       "sentMessage": "Bug report was successfully submitted.",
       "errorMessage": "Unable to send the bug report."
@@ -153,6 +154,7 @@
     "rotate": "Rotate",
     "scale": "Scale",
     "translate": "Translate",
-    "world": "World"
+    "world": "World",
+    "reportBug": "Report a bug"
   }
 }
