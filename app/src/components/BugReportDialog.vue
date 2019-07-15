@@ -73,8 +73,8 @@ import { saveAs } from 'file-saver';
 
 @Component({})
 export default class BugReportDialog extends Vue {
-  @Prop(String) readonly uuid: string;
-  @Prop(String) readonly filename: string;
+  @Prop(String) readonly uuid: string = '';
+  @Prop(String) readonly filename: string = '';
 
   message: string = '';
   showBugReportDialog = false;
@@ -109,7 +109,7 @@ export default class BugReportDialog extends Vue {
   sendReport() {
     this.formDisabled = true;
 
-    let zip = new JSZip();
+    let zip = JSZip.default();
     if (this.includeSave) {
       if (window.data instanceof ArrayBuffer) {
         zip.file(this.filename + '.sav', window.data, { binary: true });
@@ -143,7 +143,7 @@ userMessage: ${this.userMessage}
           level: 9
         }
       })
-      .then(content => {
+      .then((content: Uint8Array) => {
         window
           .fetch('https://owl.yt/ficsit-felix/?uuid=' + this.uuid, {
             method: 'POST',
@@ -159,7 +159,6 @@ userMessage: ${this.userMessage}
             return response.json();
           })
           .then(response => {
-            console.log(response);
             this.showBugReportDialog = false;
             this.formDisabled = false;
             this.showSentDialog = true;
@@ -167,14 +166,14 @@ userMessage: ${this.userMessage}
             this.userMessage = '';
             this.includeSave = true;
           })
-          .catch(error => {
+          .catch((error: Error) => {
             this.showBugReportDialog = false;
             this.formDisabled = false;
             console.error(error);
             this.showErrorDialog = true;
           });
       })
-      .catch(error => {
+      .catch((error: Error) => {
         this.showBugReportDialog = false;
         this.formDisabled = false;
         console.error(error);

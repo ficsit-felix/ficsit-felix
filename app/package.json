@@ -14,7 +14,6 @@
     "@caohenghu/vue-colorpicker": "^1.1.1",
     "@sentry/browser": "5.5.0",
     "@sentry/integrations": "^5.3.1",
-    "@types/gsap": "^1.20.2",
     "file-saver": "^2.0.2",
     "gsap": "^2.1.2",
     "jszip": "^3.2.1",
@@ -35,7 +34,11 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.1",
+    "@types/gsap": "^1.20.2",
+    "@types/jszip": "^3.1.6",
     "@types/node": "12.6.2",
+    "@types/node-fetch": "^2.3.7",
     "@types/uuid": "^3.4.4",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
