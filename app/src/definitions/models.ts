@@ -597,13 +597,13 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: 'OilPump.glb',
     color: 0x5549bf,
     paintable: false,
-    powerLineOffset: { x: 80, y: -380, z: 1620 }
+    powerLineOffset: { x: 100, y: -520, z: 1640 }
   },
   '/Game/FactoryGame/Buildable/Factory/OilRefinery/Build_OilRefinery.Build_OilRefinery_C': {
     model: 'OilRefinery.glb',
     color: 0x5549bf,
     paintable: false,
-    powerLineOffset: { x: 0, y: -740, z: 1760 }
+    powerLineOffset: { x: 0, y: -800, z: 1825 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C': {
     model: 'Build_PowerLine_C.glb',
