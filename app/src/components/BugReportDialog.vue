@@ -145,10 +145,10 @@ userMessage: ${this.userMessage}
           compressionOptions: {
             level: 9
           }
-        },
+        } /*,
         (metadata: any) => {
           console.log(metadata.percent);
-        }
+        }*/
       )
       .then((content: Uint8Array) => {
         this.showBugReportDialog = false;
