@@ -97,7 +97,8 @@ export default {
       }
     },
     onChange() {
-      this.$emit('cameraChange');
+      // currently disabled https://github.com/ficsit-felix/ficsit-felix/issues/86#issuecomment-512925021
+      //this.$emit('cameraChange');
     }
   },
 
