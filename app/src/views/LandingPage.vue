@@ -54,6 +54,8 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
 import CenterWhiteBox from '@/components/CenterWhiteBox';
 
+import * as workerPath from 'file-loader?name=[name].js!@/transformation/testworker.ts';
+
 export default {
   name: 'LandingPage',
   components: {
@@ -68,6 +70,15 @@ export default {
     };
   },
   mounted() {
+    const worker = new Worker(workerPath);
+
+    console.log(workerPath, worker);
+    worker.addEventListener('message', message => {
+      console.log(message);
+    });
+
+    worker.postMessage('this is a test message to the worker');
+
     if (this.$store.state.settings.autoLoadSaveFile !== '') {
       this.$router.push({
         path: 'open/auto'
