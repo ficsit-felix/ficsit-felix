@@ -148,14 +148,18 @@ export default {
   methods: {
     ...mapActions(['setLoadedData', 'setFilename', 'setUUID', 'setLoading']),
 
-    handleError(errorMessage, showSendSave = true) {
-      console.log('BR');
-      this.$refs.bugReport.openReportWindow(
-        this.$t('savePage.error') + ' ' + errorMessage
-      );
+    handleError(errorMessage, showBugReportWindow = true) {
+      if (showBugReportWindow) {
+        this.$refs.bugReport.openReportWindow(
+          this.$t('savePage.error') + ' ' + errorMessage
+        );
+      } else {
+        this.errorText = errorMessage;
+        this.showErrorDialog = true;
+        this.showSendSave = false;
+      }
       this.isSaving = false;
       this.progress = 0;
-      this.showSendSave = showSendSave;
     },
     openFile(file) {
       this.isSaving = true;
