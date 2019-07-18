@@ -90,6 +90,8 @@ import { sav2json } from 'satisfactory-json';
 
 import BugReportDialog from '@/components/BugReportDialog';
 
+import * as Sav2JsonWorker from 'worker-loader?name=[name].js!@/transformation/sav2json.worker.js';
+
 export default {
   components: {
     BugReportDialog
@@ -205,40 +207,46 @@ export default {
       // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
       window.data = data;
 
+      if (this.$store.state.settings.autoLoadSaveFile !== '') {
+        this.$router.push({
+          path: 'open/auto'
+        });
+      }
+
       this.infoText = this.$t('openPage.processing');
       this.progress = 50;
       try {
-        var json;
-        if (this.importJson) {
-          json = JSON.parse(Buffer.from(data).toString('utf-8'));
-        } else {
-          json = sav2json(Buffer.from(data));
-        }
+        const worker = new Sav2JsonWorker(); //Worker(workerPath);
 
-        // reportMessage("debugSav2Json");
+        //console.log(workerPath, worker);
+        worker.addEventListener('message', message => {
+          // reportMessage("debugSav2Json");
 
-        this.infoText = this.$t('openPage.buildingWorld');
-        // give us some time to build the 3d world while animating the progress bar
-        this.setLoadedData(json)
-          .then(() => {
-            this.buildInterval = setInterval(() => {
-              this.progress += 1;
-              if (this.progress >= 100) {
-                this.progress = 100;
-                clearInterval(this.buildInterval);
-                setTimeout(() => {
-                  // let the user at least see the full bar
-                  this.$router.push({
-                    name: 'editor'
-                  });
-                }, 100);
-              }
-            }, 30);
-          })
-          .catch(error => {
-            reportError(error);
-            this.handleError(error.message);
-          });
+          this.infoText = this.$t('openPage.buildingWorld');
+          // give us some time to build the 3d world while animating the progress bar
+          this.setLoadedData(message.data)
+            .then(() => {
+              this.buildInterval = setInterval(() => {
+                this.progress += 1;
+                if (this.progress >= 100) {
+                  this.progress = 100;
+                  clearInterval(this.buildInterval);
+                  setTimeout(() => {
+                    // let the user at least see the full bar
+                    this.$router.push({
+                      name: 'editor'
+                    });
+                  }, 100);
+                }
+              }, 30);
+            })
+            .catch(error => {
+              reportError(error);
+              this.handleError(error.message);
+            });
+        });
+
+        worker.postMessage(data);
       } catch (error) {
         reportError(error);
         this.handleError(error.message);
