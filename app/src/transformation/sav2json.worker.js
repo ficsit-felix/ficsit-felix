@@ -17,9 +17,22 @@ const satisfactory = require('satisfactory-json');
 });*/
 
 addEventListener('message', (message) => {
-  console.log('in webworker', message);
-  const json = satisfactory.sav2json(Buffer.from(message.data));
-  postMessage(json);
+  try {
+    console.log('STARTED');
+    const json = satisfactory.sav2json(Buffer.from(message.data));
+    console.log('FINISHED');
+    postMessage({
+      status: 'ok',
+      data: json
+    });
+  } catch (error) {
+    console.error(error);
+    // TODO pass stack trace
+    postMessage({
+      status: 'error',
+      error: error.message
+    });
+  }
 });
 
 /*var json;

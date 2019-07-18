@@ -220,11 +220,17 @@ export default {
 
         //console.log(workerPath, worker);
         worker.addEventListener('message', message => {
+          if (message.data.status === 'error') {
+            reportException(message.data.error);
+            this.handleError(message.data.error);
+            return;
+          }
+          this.progress = 70;
           // reportMessage("debugSav2Json");
 
           this.infoText = this.$t('openPage.buildingWorld');
           // give us some time to build the 3d world while animating the progress bar
-          this.setLoadedData(message.data)
+          this.setLoadedData(message.data.data)
             .then(() => {
               this.buildInterval = setInterval(() => {
                 this.progress += 1;
