@@ -54,7 +54,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
 import CenterWhiteBox from '@/components/CenterWhiteBox';
 
-import * as workerPath from 'file-loader?name=[name].js!@/transformation/testworker.ts';
+import * as workerPath from 'file-loader?name=[name].js!@/transformation/testworker.js';
 
 export default {
   name: 'LandingPage',

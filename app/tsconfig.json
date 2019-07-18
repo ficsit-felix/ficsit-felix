@@ -22,7 +22,6 @@
       ]
     },
     "lib": [
-      "webworker",
       "esnext",
       "dom",
       "dom.iterable",
@@ -34,7 +33,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "src/transformation/testworker.js"
   ],
   "exclude": [
     "node_modules"
