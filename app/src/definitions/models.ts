@@ -730,7 +730,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: 'TruckStation.glb',
     color: 0x472596,
     paintable: true,
-    powerLineOffset: { x: 75, y: -1150, z: 940 }
+    powerLineOffset: { x: 165, y: -1170, z: 1080 }
   },
   '/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C': {
     model: 'Workbench.glb',
