@@ -46,6 +46,8 @@
       <div class="progressBar" :style="{ width: loadingProgress + '%' }"></div>
       <div class="progressText">{{ Math.round(loadingProgress) }} %</div>
     </div>
+
+    <Compass></Compass>
     <!--
       //currently disabled https://github.com/ficsit-felix/ficsit-felix/issues/86#issuecomment-512925021
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
@@ -102,7 +104,7 @@ export default {
     Scene,
     Camera,
     Toolbar,
-    //Compass,
+    Compass,
     BugReportDialog
   },
   provide() {
