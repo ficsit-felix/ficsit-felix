@@ -342,6 +342,7 @@ export default {
     EventBus.$on('delete', payload => {
       // remove all actors from scene
       this.meshManager.deleteSelectedMeshes(payload);
+      this.transformControl.detach();
     });
   },
   methods: {
