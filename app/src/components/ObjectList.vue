@@ -52,7 +52,6 @@ export default {
   methods: {
     ...mapActions(['select']),
     focusSelectedObject() {
-      console.log(this.displayedNames.length);
       if (this.selectedPathNames.length > 0) {
         // TODO optimize
         for (let i = 0; i < this.displayedNames.length; i++) {
