@@ -130,7 +130,7 @@ export default class ColorFactory {
               "paintable should be true for: " + actor.className
             );*/
           }
-          return this.coloredMaterials[element.value.unk2];
+          return this.coloredMaterials[element.value.value!];
         }
       }
 

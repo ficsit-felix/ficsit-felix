@@ -7525,10 +7525,10 @@ satisfactory-blueprint@^0.0.3:
     satisfactory-json "^0.0.9"
     three "^0.105.2"
 
-satisfactory-json@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.18.tgz#9788a00c364f76c31bfbddd5556c9981344f096d"
-  integrity sha512-mbLBI/APT36qG+5eWWjDssOXtDTXd8lq3ITiKTOaK8o08Wd+7kEmdz8S3s+vmcMvlrPWmuXQQUCO5sC0njF/eQ==
+satisfactory-json@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.19.tgz#f10832c48d00448a23273d7f2648af06ce776a72"
+  integrity sha512-K6z5wMmA04KHRroEM10i1ncPXiNhzuuTFZU9wIdF/xxtYrVyCrxMitaCbisW1VyMn4gaSqBgyHyEPmYGPxHaFw==
   dependencies:
     commander "^2.20.0"
 
