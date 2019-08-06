@@ -43,7 +43,7 @@ export class ThreeModelMesh implements ModelMesh {
   private material: MeshMatcapMaterial;
   constructor(mesh: Mesh) {
     this.mesh = mesh;
-    this.material = mesh.material as MeshMatcapMaterial;
+    this.material = (mesh.material as MeshMatcapMaterial).clone();
   }
 
   getPathName(): string {
