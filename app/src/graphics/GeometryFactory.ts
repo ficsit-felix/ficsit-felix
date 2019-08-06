@@ -179,11 +179,11 @@ export default class GeometryFactory {
         // This should prevent twirls as described in https://github.com/ficsit-felix/ficsit-felix/issues/42
         const sqrDist =
           (location.value.x - lastLoc.value.x) *
-            (location.value.x - lastLoc.value.x) +
+          (location.value.x - lastLoc.value.x) +
           (location.value.y - lastLoc.value.y) *
-            (location.value.y - lastLoc.value.y) +
+          (location.value.y - lastLoc.value.y) +
           (location.value.z - lastLoc.value.z) *
-            (location.value.z - lastLoc.value.z);
+          (location.value.z - lastLoc.value.z);
         if (sqrDist < 0.1) {
           continue;
         }
@@ -255,8 +255,8 @@ export default class GeometryFactory {
       // TODO error
       console.error(
         'source connection of power line ' +
-          actor.entity.extra.sourcePathName +
-          ' not found.'
+        actor.entity.extra.sourcePathName +
+        ' not found.'
       );
       return;
     }
@@ -267,8 +267,8 @@ export default class GeometryFactory {
       // TODO error
       console.error(
         'target connection of power line ' +
-          actor.entity.extra.targetPathName +
-          ' not found.'
+        actor.entity.extra.targetPathName +
+        ' not found.'
       );
       return;
     }
@@ -297,14 +297,14 @@ export default class GeometryFactory {
         sourceOffset.y,
         sourceOffset.x,
         sourceOffset.z
-      ); /*.applyQuaternion(
+      ).applyQuaternion(
         new Quaternion(
           -source.transform.rotation[1],
           -source.transform.rotation[0],
           -source.transform.rotation[2],
           source.transform.rotation[3]
         )
-      );*/
+      );
       sourceOffset = {
         x: transformedSourceOffset.x,
         y: transformedSourceOffset.y,
@@ -323,8 +323,8 @@ export default class GeometryFactory {
         targetOffset.z
       ).applyQuaternion(
         new Quaternion(
-          target.transform.rotation[0],
-          target.transform.rotation[1],
+          -target.transform.rotation[1],
+          -target.transform.rotation[0],
           -target.transform.rotation[2],
           target.transform.rotation[3]
         )
@@ -342,25 +342,25 @@ export default class GeometryFactory {
     const extrudePath = new LineCurve3(
       new Vector3(
         source.transform.translation[1] -
-          actor.transform.translation[1] +
-          sourceOffset.x,
+        actor.transform.translation[1] +
+        sourceOffset.x,
         source.transform.translation[0] -
-          actor.transform.translation[0] +
-          sourceOffset.y,
+        actor.transform.translation[0] +
+        sourceOffset.y,
         source.transform.translation[2] -
-          actor.transform.translation[2] +
-          sourceOffset.z
+        actor.transform.translation[2] +
+        sourceOffset.z
       ),
       new Vector3(
         target.transform.translation[1] -
-          actor.transform.translation[1] +
-          targetOffset.x,
+        actor.transform.translation[1] +
+        targetOffset.x,
         target.transform.translation[0] -
-          actor.transform.translation[0] +
-          targetOffset.y,
+        actor.transform.translation[0] +
+        targetOffset.y,
         target.transform.translation[2] -
-          actor.transform.translation[2] +
-          targetOffset.z
+        actor.transform.translation[2] +
+        targetOffset.z
       )
     );
 
