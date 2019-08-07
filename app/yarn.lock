@@ -885,10 +885,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.2.tgz#a5ccec6abb6060d5f20d256fb03ed743e9774999"
   integrity sha512-gojym4tX0FWeV2gsW4Xmzo5wxGjXGm550oVUII7f7G5o4BV6c7DBdiG1RRQd+y1bvqRyYtPfMK85UM95vsapqQ==
 
-"@types/node@12.6.9":
-  version "12.6.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.9.tgz#ffeee23afdc19ab16e979338e7b536fdebbbaeaf"
-  integrity sha512-+YB9FtyxXGyD54p8rXwWaN1EWEyar5L58GlGWgtH2I9rGmLGBQcw63+0jw+ujqVavNuO47S1ByAjm9zdHMnskw==
+"@types/node@12.7.0":
+  version "12.7.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.0.tgz#545dde2a1a5c27d281cfb8308d6736e0708f5d6c"
+  integrity sha512-vqcj1MVm2Sla4PpMfYKh1MyDN4D2f/mPIZD7RdAGqEsbE+JxfeqQHHVbRDQ0Nqn8i73gJa1HQ1Pu3+nH4Q0Yiw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -7525,10 +7525,10 @@ satisfactory-blueprint@^0.0.3:
     satisfactory-json "^0.0.9"
     three "^0.105.2"
 
-satisfactory-json@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.20.tgz#4643c1b8bacbfbd2a31b5c04aee1fe068ecdaf60"
-  integrity sha512-4zbkZe7yG4YydfLA3EfibXTmEEsoZN0dQAwoWJXtMUKLPwy68xhbZhnXkZIQ7GBnd65hK3ozI1UzxRWefA6tCA==
+satisfactory-json@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.21.tgz#69e6820602d85e61885d2c9e1ac1c004a5df9dbe"
+  integrity sha512-7g5G3VjhAuifxGdCxwh8fW1yTztlcCJAeuMCrcVSRo6iIgjwsG72TnbB5xgIRQ3Azzsqc7LX39fuSxEJdEj4Nw==
   dependencies:
     commander "^2.20.0"
 
@@ -8808,10 +8808,10 @@ vue-property-decorator@^8.2.1:
     vue "^2.6.10"
     vue-class-component "^7.0.1"
 
-vue-router@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.0.tgz#e193d2de7abff75fd793a038a92bdb399259327c"
-  integrity sha512-i1jCgNtJeRqIXPz91BAZ9/eSnqiQjJHXIToOmeqBtKLSqt4Ok8vzBhVJ/pd/nDDX4wQ5OfVXRn9BaCkI19nZsA==
+vue-router@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.1.tgz#0893c29548ba2dbe35ed104dcd1aa06743aa0ead"
+  integrity sha512-RAFCIQjs4gbDV7YNH44c1GT0jXSTFvNhKh3o0xiA/UWI1EM7Eriv45n8kM+R8NZ58wXEGtKVaDVBlrXJBuM/Bg==
 
 vue-shortkey@^3.1.7:
   version "3.1.7"
