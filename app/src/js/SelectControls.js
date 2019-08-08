@@ -47,13 +47,6 @@ var SelectControls = function(scene, camera, domElement, callback, playground) {
         if (object.type === 'TransformControlsPlane') {
           // ignore the plane of the TransformHelper
           continue;
-          // we hit the plane of the transform gizmo, deselect and then try the raycast again
-          /*scope.callback.select([]);
-          // TODO find a better way to fix this?
-          setTimeout(() => {
-            onMouseDown(event);
-          }, 100);
-          return;*/
         }
 
         while (

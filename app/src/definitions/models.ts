@@ -99,8 +99,8 @@ let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x1_01.Build_Ramp_8x1_01_C': {
-    model: '',
-    color: 0xff00ff,
+    model: 'Ramp_8x1_01.glb',
+    color: rampColor,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x2_01.Build_Ramp_8x2_01_C': {
@@ -315,23 +315,23 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/CA_Merger/Build_ConveyorAttachmentMerger.Build_ConveyorAttachmentMerger_C': {
     model: 'ConveyorSplitter.glb',
     color: 0x693d65,
-    paintable: false
+    paintable: true
   },
 
   '/Game/FactoryGame/Buildable/Factory/CA_Splitter/Build_ConveyorAttachmentSplitter.Build_ConveyorAttachmentSplitter_C': {
     model: 'ConveyorSplitter.glb',
     color: 0x5f1c59,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/CA_SplitterProgrammable/Build_ConveyorAttachmentSplitterProgrammable.Build_ConveyorAttachmentSplitterProgrammable_C': {
     model: 'ConveyorSplitter.glb',
     color: 0xff00ff,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/CA_SplitterSmart/Build_ConveyorAttachmentSplitterSmart.Build_ConveyorAttachmentSplitterSmart_C': {
     model: 'ConveyorSplitter.glb',
     color: 0xff00ff,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/CentralStorage/Build_CentralStorage.Build_CentralStorage_C': {
     model: '',
@@ -421,28 +421,28 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk1/Build_ConveyorLiftMk1.Build_ConveyorLiftMk1_C': {
     model: 'ConveyorLift_Bottom.glb',
     color: conveyorMk1,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk2/Build_ConveyorLiftMk2.Build_ConveyorLiftMk2_C': {
     model: 'ConveyorLift_Bottom.glb',
     color: conveyorMk2,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk3/Build_ConveyorLiftMk3.Build_ConveyorLiftMk3_C': {
     model: 'ConveyorLift_Bottom.glb',
     color: conveyorMk3,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk4/Build_ConveyorLiftMk4.Build_ConveyorLiftMk4_C': {
     model: 'ConveyorLift_Bottom.glb',
     color: conveyorMk4,
-    paintable: false
+    paintable: true
   },
 
   '/Game/FactoryGame/Buildable/Factory/ConveyorLiftMk5/Build_ConveyorLiftMk5.Build_ConveyorLiftMk5_C': {
     model: 'ConveyorLift_Bottom.glb',
     color: conveyorMk5,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C': {
     model: 'Build_ConveyorPole_C.glb',
@@ -468,7 +468,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/ConveyorPoleStackable/Build_ConveyorPoleStackable.Build_ConveyorPoleStackable_C': {
     model: 'Build_ConveyorPoleStackable_C.glb',
     color: 0xff00ff,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/Elevator/Build_Elevator.Build_Elevator_C': {
     // TODO what is this?
@@ -516,13 +516,13 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/GeneratorGeoThermal/Build_GeneratorGeoThermal.Build_GeneratorGeoThermal_C': {
     model: 'GeneratorGeoThermal.glb',
     color: 0x693fb,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: 0, y: 250, z: 1650 }
   },
   '/Game/FactoryGame/Buildable/Factory/GeneratorNuclear/Build_GeneratorNuclear.Build_GeneratorNuclear_C': {
     model: 'GeneratorNuclear.glb',
     color: 0x693fb,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: -690, y: -1930, z: 900 }
   },
   '/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C': {
@@ -538,19 +538,19 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPad.Build_JumpPad_C': {
     model: 'JumpPad.glb',
     color: 0x872f98,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: -25, y: -205, z: 420 }
   },
   '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadTilted.Build_JumpPadTilted_C': {
     model: 'JumpPadTilted.glb',
     color: 0xff00ff,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: -25, y: -205, z: 420 }
   },
   '/Game/FactoryGame/Buildable/Factory/LandingPad/Build_LandingPad.Build_LandingPad_C': {
     model: 'LandingPad.glb',
     color: 0xff00ff,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: 400, y: 470, z: 420 }
   },
   '/Game/FactoryGame/Buildable/Factory/LookoutTower/Build_LookoutTower.Build_LookoutTower_C': {
@@ -641,7 +641,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/RadarTower/Build_RadarTower.Build_RadarTower_C': {
     model: 'RadarTower.glb',
     color: 0xaceef1,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: 115, y: -340, z: 1730 }
   },
   '/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C': {
@@ -698,17 +698,17 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainDockingStation.Build_TrainDockingStation_C': {
     model: 'TrainDockingStation.glb',
     color: 0x108873,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainPlatformEmpty.Build_TrainPlatformEmpty_C': {
     model: 'TrainPlatformEmpty.glb',
     color: 0x108873,
-    paintable: false
+    paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainStation.Build_TrainStation_C': {
     model: 'TrainStation.glb',
     color: 0x108873,
-    paintable: false,
+    paintable: true,
     powerLineOffset: { x: 710, y: -925, z: 1025 }
   },
   '/Game/FactoryGame/Buildable/Factory/Train/SwitchControl/Build_RailroadSwitchControl.Build_RailroadSwitchControl_C': {
@@ -730,12 +730,12 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: 'TruckStation.glb',
     color: 0x472596,
     paintable: true,
-    powerLineOffset: { x: 75, y: -1150, z: 940 }
+    powerLineOffset: { x: 165, y: -1170, z: 1080 }
   },
   '/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C': {
     model: 'Workbench.glb',
     color: 0x472596,
-    paintable: false
+    paintable: true
   },
 
   '/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBenchIntegrated.Build_WorkBenchIntegrated_C': {
@@ -747,7 +747,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/Workshop/Build_Workshop.Build_Workshop_C': {
     model: 'Workshop.glb',
     color: 0x310c89,
-    paintable: false
+    paintable: true
   },
 
   '/Game/FactoryGame/Buildable/Vehicle/BP_VehicleTargetPoint.BP_VehicleTargetPoint_C': {

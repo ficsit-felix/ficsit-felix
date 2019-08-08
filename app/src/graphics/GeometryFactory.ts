@@ -297,14 +297,14 @@ export default class GeometryFactory {
         sourceOffset.y,
         sourceOffset.x,
         sourceOffset.z
-      ); /*.applyQuaternion(
+      ).applyQuaternion(
         new Quaternion(
           -source.transform.rotation[1],
           -source.transform.rotation[0],
           -source.transform.rotation[2],
           source.transform.rotation[3]
         )
-      );*/
+      );
       sourceOffset = {
         x: transformedSourceOffset.x,
         y: transformedSourceOffset.y,
@@ -323,8 +323,8 @@ export default class GeometryFactory {
         targetOffset.z
       ).applyQuaternion(
         new Quaternion(
-          target.transform.rotation[0],
-          target.transform.rotation[1],
+          -target.transform.rotation[1],
+          -target.transform.rotation[0],
           -target.transform.rotation[2],
           target.transform.rotation[3]
         )

@@ -63,9 +63,41 @@
 </template>
 
 <script>
+import { Vector3, Quaternion, Euler } from 'three';
 export default {
   name: 'Compass',
-  props: ['rotateX', 'rotateZ']
+  //  props: ['rotateX', 'rotateZ']
+  data: () => {
+    return {
+      rotateX: 0,
+      rotateZ: 0
+    };
+  },
+
+  mounted() {
+    window.onCompassUpdate = matrixWorldInverse => {
+      var position = new Vector3();
+      var quaternion = new Quaternion();
+      var scale = new Vector3();
+
+      matrixWorldInverse.decompose(position, quaternion, scale);
+      const euler = new Euler().setFromQuaternion(quaternion);
+
+      this.rotateX = euler.x;
+      this.rotateZ = -euler.z - 3.14 / 2; // point correctly to north
+      if (
+        this.rotateX < -Math.PI / 2 + 0.2 &&
+        this.rotateX > -Math.PI / 2 - 0.2
+      ) {
+        // don't go invisible at very small angle to map
+        this.rotateX = -Math.PI / 2 + 0.2;
+      }
+    };
+  },
+
+  beforeDestroy() {
+    window.onCompassUpdate = undefined;
+  }
 };
 </script>
 

@@ -103,10 +103,10 @@ export default class MeshManager {
     if (visible) {
       modelMesh.addToScene(this.scene);
       this.visibleMeshes.push(modelMesh);
-      this.raycastActiveMeshes.push(result.mesh);
+      this.raycastActiveMeshes.push(modelMesh.getRaycastMesh());
     } else {
       this.invisibleMeshes.push(modelMesh);
-      this.raycastInactiveMeshes.push(result.mesh);
+      this.raycastInactiveMeshes.push(modelMesh.getRaycastMesh());
     }
 
     // need to rebuild the mesh dictionary the next time we use it
@@ -243,19 +243,25 @@ export default class MeshManager {
 
     this.meshDictionaryDirty = true;
     for (const actor of payload.actors) {
+      let found = false;
       for (var i = this.visibleMeshes.length - 1; i >= 0; i--) {
         if (this.visibleMeshes[i].getPathName() === actor.pathName) {
           this.visibleMeshes[i].removeFromScene(this.scene);
           this.visibleMeshes.splice(i, 1);
-
+          this.raycastActiveMeshes.splice(i, 1);
+          found = true;
           break;
         }
+      }
+      if (found) {
+        break;
       }
 
       for (var j = this.invisibleMeshes.length - 1; j >= 0; j--) {
         if (this.invisibleMeshes[j].getPathName() === actor.pathName) {
           this.invisibleMeshes[j].removeFromScene(this.scene);
           this.invisibleMeshes.splice(j, 1);
+          this.raycastInactiveMeshes.splice(j, 1);
           break;
         }
       }

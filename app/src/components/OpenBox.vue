@@ -174,8 +174,8 @@ export default {
       const uuid = v4();
       this.setUUID(uuid);
 
-      reportContext('filename', file.name);
       reportContext('uuid', uuid);
+      reportContext('savename', file.name);
       this.setLoading(false).then(() => {});
 
       const expected = this.importJson ? 'json' : 'sav';

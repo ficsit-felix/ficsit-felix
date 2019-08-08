@@ -134,6 +134,8 @@ export default class BugReportDialog extends Vue {
     const meta = `message: ${this.message}
 userContact: ${this.userContact}
 userMessage: ${this.userMessage}
+filename: ${this.filename}
+uuid: ${this.uuid}
 `;
     zip.file('meta.txt', meta);
 
@@ -155,13 +157,19 @@ userMessage: ${this.userMessage}
         this.formDisabled = false;
         this.showSentDialog = true;
         window
-          .fetch('https://owl.yt/ficsit-felix/?uuid=' + this.uuid, {
-            method: 'POST',
-            body: content, //Buffer.from(content, 'base64').toString('ascii'),
-            headers: {
-              'Content-Type': 'application/octet-stream'
+          .fetch(
+            'https://owl.yt/ficsit-felix/?uuid=' +
+              this.uuid +
+              '&message=' +
+              Buffer.from(this.message).toString('base64'),
+            {
+              method: 'POST',
+              body: content, //Buffer.from(content, 'base64').toString('ascii'),
+              headers: {
+                'Content-Type': 'application/octet-stream'
+              }
             }
-          })
+          )
           .then(response => {
             if (!response.ok) {
               return Promise.reject('http ' + response.status);

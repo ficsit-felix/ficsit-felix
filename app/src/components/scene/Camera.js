@@ -99,6 +99,9 @@ export default {
     onChange() {
       // currently disabled https://github.com/ficsit-felix/ficsit-felix/issues/86#issuecomment-512925021
       //this.$emit('cameraChange');
+      if (window.onCompassUpdate) {
+        window.onCompassUpdate(this.obj.matrixWorldInverse);
+      }
     }
   },
 

@@ -13,27 +13,10 @@
       class="scroller"
       ref="list"
       :start="listStart"
+      :item="item"
+      :itemcount="displayedNames.length + 1"
+      :itemprops="getItemProps"
     >
-      <div
-        v-bind:class="{
-          selected:
-            selectedPathNames.length === 1 &&
-            selectedPathNames[0] === '---save-header---'
-        }"
-        @click="select(['---save-header---'])"
-        class="item"
-      >
-        {{ $t('objectList.saveHeader') }}
-      </div>
-      <div
-        v-for="item of displayedNames"
-        :key="item.pathName"
-        v-bind:class="{ selected: selectedPathNames.includes(item.pathName) }"
-        @click="select([item.pathName])"
-        class="item"
-      >
-        {{ item.text }}
-      </div>
     </virtual-list>
   </div>
 </template>
@@ -42,6 +25,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 
 import virtualList from 'vue-virtual-scroll-list';
+import ObjectListItem from './ObjectListItem.vue';
 export default {
   name: 'ObjectList',
   components: {
@@ -50,7 +34,9 @@ export default {
   data: function() {
     return {
       filterTerm: '',
-      listStart: 0
+      listStart: 0,
+
+      item: ObjectListItem
     };
   },
   computed: {
@@ -75,6 +61,26 @@ export default {
           }
         }
       }
+    },
+
+    getItemProps(itemIndex) {
+      if (itemIndex == 0) {
+        return {
+          key: 0,
+          props: {
+            index: 0
+          }
+        };
+      }
+
+      return {
+        key: this.displayedNames[itemIndex - 1].pathName,
+        props: {
+          height: 32,
+          index: itemIndex,
+          info: this.displayedNames[itemIndex - 1]
+        }
+      };
     }
   },
   watch: {
@@ -98,11 +104,6 @@ export default {
 .list {
   height: 100%;
   overflow-y: scroll;
-}
-.item {
-  height: 20px;
-  padding: 0px 8px;
-  cursor: pointer;
 }
 
 .object-list {
@@ -130,10 +131,5 @@ ul {
   list-style: none;
   padding: 0px;
   // direction: rtl; // to show the right most of the text
-}
-
-.selected {
-  font-weight: bold;
-  color: $textWhite;
 }
 </style>
