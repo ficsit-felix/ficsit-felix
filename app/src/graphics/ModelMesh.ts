@@ -4,11 +4,6 @@ import GeometryFactory from './GeometryFactory';
 import { Actor } from 'satisfactory-json';
 import ColorFactory from './ColorFactory';
 import {
-  isRailroadTrack,
-  isConveyorBelt,
-  isPowerLine
-} from '@/helpers/entityHelper';
-import {
   applyMeshTransformToActor,
   updateActorMeshTransform
 } from '@/helpers/meshHelper';
@@ -43,7 +38,14 @@ export class ThreeModelMesh implements ModelMesh {
   private material: MeshMatcapMaterial;
   constructor(mesh: Mesh) {
     this.mesh = mesh;
+    // need to make a clone of the material as we change its color in rebuildColor()
     this.material = (mesh.material as MeshMatcapMaterial).clone();
+    this.mesh.material = this.material;
+    for (const child of this.mesh.children) {
+      if (child instanceof Mesh) {
+        child.material = this.material;
+      }
+    }
   }
 
   getPathName(): string {
@@ -68,9 +70,7 @@ export class ThreeModelMesh implements ModelMesh {
   }
 
   rebuildColor(actor: Actor, colorFactory: ColorFactory): void {
-    this.material.color = (colorFactory.createMaterial(
-      actor
-    ) as MeshMatcapMaterial).color;
+    this.material.color = colorFactory.getColor(actor);
   }
 
   dispose(): void {
@@ -83,8 +83,6 @@ export class ThreeModelMesh implements ModelMesh {
     scene: Scene
   ): void {
     if (selected) {
-      this.material = this.mesh.material as MeshMatcapMaterial;
-      // TODO what to do if the color changes while the actor is selected?
       this.mesh.material = colorFactory.getSelectedMaterial();
       for (const child of this.mesh.children) {
         if (child instanceof Mesh) {
@@ -149,10 +147,7 @@ export class InstancedModelMesh implements ModelMesh {
   }
 
   rebuildColor(actor: Actor, colorFactory: ColorFactory): void {
-    this.instancedMeshGroup.setColor(
-      this.index,
-      (colorFactory.createMaterial(actor) as MeshMatcapMaterial).color
-    );
+    this.instancedMeshGroup.setColor(this.index, colorFactory.getColor(actor));
   }
 
   dispose(): void {

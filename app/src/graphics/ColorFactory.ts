@@ -47,11 +47,6 @@ export default class ColorFactory {
       this.materials[prop] = new MeshMatcapMaterial({
         color: color,
         matcap: this.matcap
-        /*emissive: modelConfig[prop].color,
- 
-      roughness: 0.6,
-      metalness: .8,
-      flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
       });
     }
   }
@@ -105,11 +100,6 @@ export default class ColorFactory {
       this.coloredMaterials[i] = new MeshMatcapMaterial({
         color: color,
         matcap: this.matcap
-        //emissive: color,
-
-        /*roughness: 0.6,
-        metalness: 0.8,
-        flatShading: true, // to not make the conveyor belt cylinders look to much like pipes*/
       });
     }
   }
@@ -146,6 +136,11 @@ export default class ColorFactory {
     } else {
       return this.materials[actor.className];
     }
+  }
+
+  // TODO: Migrate everywhere to this method and then change it and remove the createMaterial one
+  getColor(actor: Actor): Color {
+    return (this.createMaterial(actor) as MeshMatcapMaterial).color;
   }
 
   getSelectedMaterial(): Material {
