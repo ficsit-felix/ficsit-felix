@@ -493,37 +493,37 @@ let modelConfig: { [id: string]: ModelConfig } = {
     model: 'GeneratorBiomass.glb',
     color: 0xaa3da0,
     paintable: true,
-    powerLineOffset: { x: 240, y: 210, z: 540 }
+    powerLineOffset: { x: 305, y: 185, z: 650 }
   },
   '/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorIntegratedBiomass.Build_GeneratorIntegratedBiomass_C': {
     model: 'GeneratorIntegratedBiomass.glb',
     color: 0x91498a,
     paintable: true,
-    powerLineOffset: { x: -35, y: -40, z: 340 }
+    powerLineOffset: { x: -30, y: -80, z: 375 }
   },
   '/Game/FactoryGame/Buildable/Factory/GeneratorCoal/Build_GeneratorCoal.Build_GeneratorCoal_C': {
     model: 'GeneratorCoal.glb',
     color: 0x8b2f82,
     paintable: true,
-    powerLineOffset: { x: -200, y: -1180, z: 710 }
+    powerLineOffset: { x: -270, y: -1275, z: 950 }
   },
   '/Game/FactoryGame/Buildable/Factory/GeneratorFuel/Build_GeneratorFuel.Build_GeneratorFuel_C': {
     model: 'GeneratorFuel.glb',
     color: 0x693fb,
     paintable: true,
-    powerLineOffset: { x: 0, y: 440, z: 660 }
+    powerLineOffset: { x: 0, y: 540, z: 960 }
   },
   '/Game/FactoryGame/Buildable/Factory/GeneratorGeoThermal/Build_GeneratorGeoThermal.Build_GeneratorGeoThermal_C': {
     model: 'GeneratorGeoThermal.glb',
     color: 0x693fb,
     paintable: true,
-    powerLineOffset: { x: 0, y: 250, z: 1650 }
+    powerLineOffset: { x: 0, y: 315, z: 1620 }
   },
   '/Game/FactoryGame/Buildable/Factory/GeneratorNuclear/Build_GeneratorNuclear.Build_GeneratorNuclear_C': {
     model: 'GeneratorNuclear.glb',
     color: 0x693fb,
     paintable: true,
-    powerLineOffset: { x: -690, y: -1930, z: 900 }
+    powerLineOffset: { x: -660, y: -1900, z: 900 }
   },
   '/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C': {
     model: 'HubTerminal.glb',
