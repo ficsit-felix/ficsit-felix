@@ -4,12 +4,17 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "prebuild": "./rebuild-commithash.sh build",
     "build": "vue-cli-service build",
-    "postbuild": "./rebuild-commithash.sh develop",
     "lint": "vue-cli-service lint",
-    "now-build": "yarn build"
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "now-build": "yarn build",
+    "postbuild": "./rebuild-commithash.sh develop",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "prebuild": "./rebuild-commithash.sh build"
   },
+  "main": "background.js",
   "dependencies": {
     "@caohenghu/vue-colorpicker": "^1.1.1",
     "@sentry/browser": "5.5.0",
@@ -47,6 +52,7 @@
     "@vue/eslint-config-prettier": "^5.0.0",
     "@vue/eslint-config-typescript": "^4.0.0",
     "babel-eslint": "^10.0.1",
+    "electron": "^6.0.0",
     "eslint": "^6.1.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.2.3",
@@ -56,7 +62,11 @@
     "sass-loader": "^7.1.0",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
+    "vue-cli-plugin-electron-builder": "^1.4.0",
     "vue-template-compiler": "^2.5.21"
+  },
+  "engines": {
+    "node": ">= 10.x"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -66,8 +76,5 @@
       "vue-cli-service lint",
       "git add"
     ]
-  },
-  "engines": {
-    "node": ">= 10.x"
   }
 }
