@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
+
 import store from './store';
 import { commithash } from '@/js/commithash';
 
@@ -8,6 +8,10 @@ import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 
 import { i18n } from './plugins/i18n';
+import {isElectron} from './ts/isElectron';
+
+import routerElectron from './router_electron';
+import routerWeb from './router_web';
 
 import '@/helpers/cmdHelper';
 
@@ -61,7 +65,7 @@ Vue.use(require('vue-shortkey'));
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
+  router: isElectron() ? routerElectron : routerWeb,
   store,
   i18n,
   beforeCreate() {
