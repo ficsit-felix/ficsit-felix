@@ -85,10 +85,10 @@ import { modelHelper } from '@/helpers/modelHelper';
 import { modelConfig } from '@/definitions/models';
 
 import { reportMessage, reportContext, reportError } from '@/ts/errorReporting';
-import { reportException } from '../ts/errorReporting';
+import { reportException } from '@/ts/errorReporting';
 import { sav2json } from 'satisfactory-json';
 
-import BugReportDialog from '@/components/BugReportDialog';
+import BugReportDialog from './BugReportDialog';
 
 export default {
   components: {

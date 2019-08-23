@@ -40,10 +40,10 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import Logo from '@/components/Logo.vue';
-import OpenBox from '@/components/OpenBox.vue';
-import CenterWhiteBox from '@/components/CenterWhiteBox.vue';
-import Settings from '@/components/Settings.vue';
+import Logo from './Logo.vue';
+import OpenBox from './OpenBox.vue';
+import CenterWhiteBox from './CenterWhiteBox.vue';
+import Settings from './Settings.vue';
 
 @Component({
   components: {

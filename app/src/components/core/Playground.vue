@@ -67,35 +67,35 @@ import * as THREE from 'three';
 import { OrbitControls } from '@/js/OrbitControls';
 import { TransformControls } from '@/js/TransformControls';
 import { mapActions, mapGetters, mapState } from 'vuex';
-import Scene from '@/components/scene/Scene';
-import Renderer from '@/components/scene/Renderer';
-import Camera from '@/components/scene/Camera';
+import Scene from './scene/Scene';
+import Renderer from './scene/Renderer';
+import Camera from './scene/Camera';
 import { BoxBufferGeometry, LineCurve3, Mesh, error } from 'three';
 import { setTimeout } from 'timers';
 import { GLTFLoader } from '@/js/GLTFLoader';
 import { modelHelper } from '@/helpers/modelHelper';
 import { modelConfig } from '@/definitions/models';
 import * as Sentry from '@sentry/browser';
-import Toolbar from '@/components/Toolbar';
+import Toolbar from './Toolbar';
 import { commithash } from '@/js/commithash';
 import { getProperty, findActorByName } from '@/helpers/entityHelper';
-import Compass from '@/components/Compass';
+import Compass from './Compass';
 import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
 import GeometryFactory from '@/graphics/GeometryFactory';
 import ColorFactory from '@/graphics/ColorFactory';
 import MeshFactory from '@/graphics/MeshFactory';
 import MeshManager from '@/graphics/MeshManager';
 import { updateActorMeshTransform } from '@/helpers/meshHelper';
-import BugReportDialog from '@/components/BugReportDialog';
+import BugReportDialog from './BugReportDialog';
 
 import {
   isConveyorBelt,
   isConveyorLift,
   isPowerLine,
   isRailroadTrack
-} from '../helpers/entityHelper';
-import { EventBus } from '../event-bus';
-import { reportError } from '../ts/errorReporting';
+} from '@/helpers/entityHelper';
+import { EventBus } from '@/event-bus';
+import { reportError } from '@/ts/errorReporting';
 
 export default {
   name: 'Playground',

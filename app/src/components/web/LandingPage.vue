@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import Logo from '@/components/Logo';
+import Logo from '@/components/core/Logo';
 import * as Sentry from '@sentry/browser';
 import { commithash } from '@/js/commithash';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
+import LanguageSwitcher from '@/components/core/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
-import CenterWhiteBox from '@/components/CenterWhiteBox';
+import CenterWhiteBox from '@/components/core/CenterWhiteBox';
 
 export default {
   name: 'LandingPage',

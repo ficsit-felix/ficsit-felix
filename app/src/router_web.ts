@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Editor from './views/Editor.vue';
-import LandingPage from './views/LandingPage.vue';
+import Editor from './components/core/Editor.vue';
+import LandingPage from './components/web/LandingPage.vue';
 
 Vue.use(Router);
 
@@ -24,7 +24,7 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ './views/Open.vue')
+        import(/* webpackChunkName: "about" */ './components/core/Open.vue')
     },
     {
       path: '/save/*',
@@ -33,7 +33,7 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ './views/Save.vue')
+        import(/* webpackChunkName: "about" */ './components/core/Save.vue')
     },
     {
       path: '*',

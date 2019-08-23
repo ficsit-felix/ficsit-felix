@@ -39,12 +39,12 @@
 </template>
 
 <script>
-import Logo from '@/components/Logo';
+import Logo from '@/components/core/Logo';
 import * as Sentry from '@sentry/browser';
 import { commithash } from '@/js/commithash';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
+import LanguageSwitcher from '@/components/core/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
-import CenterWhiteBox from '@/components/CenterWhiteBox';
+import CenterWhiteBox from '@/components/core/CenterWhiteBox';
 
 export default {
   name: 'MainScreen',
@@ -70,6 +70,17 @@ export default {
     import(`@/lang/${lang}.json`).then(msgs => {
       this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
       this.$i18n.locale = lang;
+    });
+
+    // read files
+    const testFolder = '/';
+    const fs = require('fs');
+
+    fs.readdir(testFolder, (err, files) => {
+      console.log(err);
+      files.forEach(file => {
+        console.log(file);
+      });
     });
   }
 };

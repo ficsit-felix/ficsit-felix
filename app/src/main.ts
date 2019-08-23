@@ -1,5 +1,6 @@
 import Vue from 'vue';
-import App from './App.vue';
+import WebApp from './components/web/WebApp.vue';
+import DesktopApp from './components/desktop/DesktopApp.vue';
 
 import store from './store';
 import { commithash } from '@/js/commithash';
@@ -8,7 +9,7 @@ import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 
 import { i18n } from './plugins/i18n';
-import {isElectron} from './ts/isElectron';
+import { isElectron } from './ts/isElectron';
 
 import routerElectron from './router_electron';
 import routerWeb from './router_web';
@@ -72,5 +73,5 @@ new Vue({
     this.$store.commit;
     this.$store.commit('settings/INIT_STORE_FROM_LOCAL_DATA');
   },
-  render: h => h(App)
+  render: h => h(isElectron() ? DesktopApp : WebApp)
 }).$mount('#app');

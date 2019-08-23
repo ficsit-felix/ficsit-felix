@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import Logo from '@/components/Logo';
-import SaveBox from '@/components/SaveBox';
-import CenterWhiteBox from '@/components/CenterWhiteBox';
+import Logo from './Logo';
+import SaveBox from './SaveBox';
+import CenterWhiteBox from './CenterWhiteBox';
 
 export default {
   name: 'Save',

@@ -195,10 +195,10 @@
 </template>
 
 <script>
-import Logo from '@/components/Logo';
-import LicensesDialog from '@/components/LicensesDialog';
-import Settings from '@/components/Settings';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
+import Logo from './Logo';
+import LicensesDialog from './LicensesDialog';
+import Settings from './Settings';
+import LanguageSwitcher from './LanguageSwitcher';
 import { findActorByName } from '@/helpers/entityHelper';
 
 export default {

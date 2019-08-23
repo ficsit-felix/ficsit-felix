@@ -34,11 +34,11 @@
 
 <script>
 // @ is an alias to /src
-import Menubar from '@/components/Menubar.vue';
-import Playground from '@/components/Playground.vue';
-import ObjectList from '@/components/ObjectList.vue';
-import PropertyEditor from '@/components/PropertyEditor.vue';
-import ClassList from '@/components/ClassList.vue';
+import Menubar from './Menubar.vue';
+import Playground from './Playground.vue';
+import ObjectList from './ObjectList.vue';
+import PropertyEditor from './PropertyEditor.vue';
+import ClassList from './ClassList.vue';
 import { mapState } from 'vuex';
 
 export default {
