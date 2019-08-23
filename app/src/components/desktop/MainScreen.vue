@@ -1,36 +1,38 @@
 <template>
   <div class="landingpage">
-    <p>{{ $t('landingPage.firstParagraph') }}</p>
-    <p>
+    <div class="content">
+      <p>{{ $t('landingPage.firstParagraph') }}</p>
+      <p>
+        <md-button
+          class="md-raised"
+          @click="$router.push({ path: '/open/sav' })"
+          >{{ $t('landingPage.openSavButton') }}</md-button
+        >
+      </p>
+      <img src="/screenshot.png" />
+      <p>{{ $t('landingPage.secondParagraph') }}</p>
       <md-button
-        class="md-raised"
-        @click="$router.push({ path: '/open/sav' })"
-        >{{ $t('landingPage.openSavButton') }}</md-button
+        class="md-flat md-accent"
+        @click="$router.push({ path: '/open/json' })"
+        >{{ $t('landingPage.openJsonButton') }}</md-button
       >
-    </p>
-    <img src="/screenshot.png" />
-    <p>{{ $t('landingPage.secondParagraph') }}</p>
-    <md-button
-      class="md-flat md-accent"
-      @click="$router.push({ path: '/open/json' })"
-      >{{ $t('landingPage.openJsonButton') }}</md-button
-    >
 
-    <p class="left">
-      <i18n path="landingPage.thirdParagraph">
-        <a href="https://github.com/ficsit-felix/ficsit-felix" place="github"
-          >GitHub</a
-        >
-        <a
-          href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
-          place="authors"
-          >{{ $t('landingPage.authors') }}</a
-        >
-      </i18n>
-    </p>
-    <div class="languageSelection">
-      {{ $t('landingPage.language') }}:
-      <LanguageSwitcher></LanguageSwitcher>
+      <p class="left">
+        <i18n path="landingPage.thirdParagraph">
+          <a href="https://github.com/ficsit-felix/ficsit-felix" place="github"
+            >GitHub</a
+          >
+          <a
+            href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
+            place="authors"
+            >{{ $t('landingPage.authors') }}</a
+          >
+        </i18n>
+      </p>
+      <div class="languageSelection">
+        {{ $t('landingPage.language') }}:
+        <LanguageSwitcher></LanguageSwitcher>
+      </div>
     </div>
   </div>
 </template>
@@ -82,14 +84,16 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
-
 .landingpage {
-  overflow: auto;
-  display: flex;
   height: 100%;
-  flex-direction: column;
+  overflow: auto;
+}
+.content {
   max-width: 800px;
+  min-height: 100%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

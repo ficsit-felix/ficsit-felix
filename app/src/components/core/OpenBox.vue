@@ -196,7 +196,7 @@ export default {
         }
       };
       reader.onload = response => {
-        this.processFile(response.target.result);
+        this.processFile(reader.result);
       };
       reader.readAsArrayBuffer(file);
     },
