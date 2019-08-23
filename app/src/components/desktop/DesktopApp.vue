@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Titlebar></Titlebar>
     <router-view />
   </div>
 </template>
@@ -13,6 +14,8 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 #nav {
   position: absolute;
@@ -30,15 +33,12 @@
 
 <script>
 import '@/assets/main.scss';
-import { mapState } from 'vuex';
+import Titlebar from './Titlebar.vue';
 
 export default {
-  name: 'App',
-  computed: mapState(['title']),
-  methods: {
-    testError: function() {
-      throw new Error('asdf');
-    }
+  name: 'DesktopApp',
+  components: {
+    Titlebar
   }
 };
 </script>

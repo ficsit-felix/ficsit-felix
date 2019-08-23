@@ -1,8 +1,5 @@
 <template>
   <div class="landingpage">
-    <div @mouseover="logoAnimating = true" @mouseleave="logoAnimating = false">
-      <Logo :height="180" black="#000" :animating="logoAnimating" />
-    </div>
     <p>{{ $t('landingPage.firstParagraph') }}</p>
     <p>
       <md-button
@@ -39,7 +36,6 @@
 </template>
 
 <script>
-import Logo from '@/components/core/Logo';
 import * as Sentry from '@sentry/browser';
 import { commithash } from '@/js/commithash';
 import LanguageSwitcher from '@/components/core/LanguageSwitcher';
@@ -49,12 +45,10 @@ import CenterWhiteBox from '@/components/core/CenterWhiteBox';
 export default {
   name: 'MainScreen',
   components: {
-    Logo,
     LanguageSwitcher
   },
   data: function() {
     return {
-      logoAnimating: false,
       commithash: commithash
     };
   },
@@ -94,10 +88,15 @@ export default {
   display: flex;
   height: 100%;
   flex-direction: column;
+  max-width: 800px;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 p {
-  color: $textGray;
+  color: $textLightGray;
+  font-size: 16px;
   padding: 0px 15px;
 }
 .left {

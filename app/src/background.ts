@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow } from 'electron';
+import { app, protocol, BrowserWindow, shell } from 'electron';
 import {
   createProtocol,
   installVueDevtools
@@ -39,6 +39,18 @@ function createWindow() {
 
   win.on('closed', () => {
     win = null;
+  });
+
+  // Open all urls in external browser, see https://github.com/electron/electron/issues/1344#issuecomment-359312676
+  function isSafeishURL(url: string) {
+    return url.startsWith('http:') || url.startsWith('https:');
+  }
+
+  win.webContents.on('will-navigate', (event, url) => {
+    event.preventDefault();
+    if (isSafeishURL(url)) {
+      shell.openExternal(url);
+    }
   });
 }
 
