@@ -55,15 +55,7 @@ export default {
       backgroundColor: Color.fromHex('#16161d'),
       itemBackgroundColor: Color.fromHex('#26262d')
     });
-    this.titlebar.updateTitle(' ');
-
-/*    const node = document.createElement('div');
-    this.titlebar.titlebar.insertBefore(node, this.titlebar.titlebar.children[1]);
-    
-    this.logo = new Vue({
-      render: h => h(TitlebarLogo)
-    }).$mount(node);*/
-
+    this.titlebar.updateTitle('FICSIT - FeliX');
   },
   beforeDestroy() {
     this.titlebar.dispose();

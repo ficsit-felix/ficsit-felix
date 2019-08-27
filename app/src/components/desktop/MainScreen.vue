@@ -1,6 +1,12 @@
 <template>
   <div class="landingpage">
+    <ul class="filebrowser">
+      <li v-for="file in files">
+        {{file}}
+      </li>
+      </ul>
     <div class="content">
+
       <p>{{ $t('landingPage.firstParagraph') }}</p>
       <p>
         <md-button
@@ -43,7 +49,8 @@ import { commithash } from '@/js/commithash';
 import LanguageSwitcher from '@/components/core/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
 import CenterWhiteBox from '@/components/core/CenterWhiteBox';
-
+import { app, remote } from 'electron';
+import electron from 'electron';
 export default {
   name: 'MainScreen',
   components: {
@@ -51,7 +58,8 @@ export default {
   },
   data: function() {
     return {
-      commithash: commithash
+      commithash: commithash,
+      files: []
     };
   },
   mounted() {
@@ -68,13 +76,17 @@ export default {
       this.$i18n.locale = lang;
     });
 
+
+    
     // read files
-    const testFolder = '/';
+    const testFolder = (electron.app || electron.remote.app).getPath('home') + '/AppData/Local/FactoryGame/Saved/SaveGames';
+    console.log(testFolder);
     const fs = require('fs');
 
     fs.readdir(testFolder, (err, files) => {
       console.log(err);
       files.forEach(file => {
+        this.files.push(file);
         console.log(file);
       });
     });
@@ -86,7 +98,8 @@ export default {
 @import '@/assets/colors.scss';
 .landingpage {
   height: 100%;
-  overflow: auto;
+  display: flex;
+  flex-direction: row;
 }
 .content {
   max-width: 800px;
@@ -117,5 +130,24 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.filebrowser {
+  width: 300px;
+        margin: 0px;
+    padding: 0px;
+  li {
+    list-style-type: none;
+    padding: 2px 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+
+    &:hover {
+      background: #ffffff20;
+    }
+  }
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>

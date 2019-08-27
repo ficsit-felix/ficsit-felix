@@ -77,3 +77,9 @@ body {
 .titlebar .menubar {
     margin-left: 85px;
 }
+
+// hide title text
+.titlebar .window-title {
+    color: #00000000;
+    font-size: 0px !important;
+}
