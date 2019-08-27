@@ -67,3 +67,13 @@ body {
 .md-overlay {
     z-index: 10 !important;
 }
+
+// don't underline menu entries in the titlebar
+.titlebar .action-menu-item:hover {
+    text-decoration: none;
+}
+
+// make space for the logo in the titlebar
+.titlebar .menubar {
+    margin-left: 85px;
+}

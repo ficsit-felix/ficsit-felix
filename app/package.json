@@ -19,6 +19,7 @@
     "@caohenghu/vue-colorpicker": "^1.1.1",
     "@sentry/browser": "5.6.2",
     "@sentry/integrations": "^5.3.1",
+    "custom-electron-titlebar": "^3.1.0",
     "file-saver": "^2.0.2",
     "gsap": "^2.1.2",
     "jszip": "^3.2.1",

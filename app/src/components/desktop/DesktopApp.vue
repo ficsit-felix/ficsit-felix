@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <Titlebar></Titlebar>
+        <div
+      @mouseover="logoAnimating = true"
+      @mouseleave="logoAnimating = false"
+      class="titlebar-logo"
+    >
+      <Logo :height="25" black="#505050" :animating="logoAnimating"></Logo>
+  </div>
     <router-view />
   </div>
 </template>
@@ -13,32 +19,54 @@
   color: #adadad;
   height: 100%;
   width: 100%;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
-#nav {
-  position: absolute;
-  right: 20px;
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #83c1ff;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+.titlebar-logo {
+  display: inline-block;
+  position: fixed;
+  margin-top: -30px;
+  left: 10px;
+  z-index: 100000;
+  -webkit-app-region: no-drag;
 }
 </style>
 
 <script>
 import '@/assets/main.scss';
-import Titlebar from './Titlebar.vue';
-
+import Logo from '../core/Logo.vue';
+import { Titlebar, Color } from 'custom-electron-titlebar';
+import { Menu } from 'electron';
+import Vue from 'vue';
 export default {
   name: 'DesktopApp',
   components: {
-    Titlebar
+    Logo
+  },
+    data: function() {
+    return {
+      logoAnimating: false
+    };
+  },
+  mounted() {
+
+    this.titlebar = new Titlebar({
+      backgroundColor: Color.fromHex('#16161d'),
+      itemBackgroundColor: Color.fromHex('#26262d')
+    });
+    this.titlebar.updateTitle(' ');
+
+/*    const node = document.createElement('div');
+    this.titlebar.titlebar.insertBefore(node, this.titlebar.titlebar.children[1]);
+    
+    this.logo = new Vue({
+      render: h => h(TitlebarLogo)
+    }).$mount(node);*/
+
+  },
+  beforeDestroy() {
+    this.titlebar.dispose();
   }
 };
 </script>
