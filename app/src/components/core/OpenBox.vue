@@ -212,7 +212,9 @@ export default {
         if (this.importJson) {
           json = JSON.parse(Buffer.from(data).toString('utf-8'));
         } else {
+          console.time('sav2json');
           json = sav2json(Buffer.from(data));
+          console.timeEnd('sav2json');
         }
 
         // reportMessage("debugSav2Json");

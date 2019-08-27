@@ -96,7 +96,9 @@ export default {
         if (this.exportJson) {
           data = JSON.stringify(window.data);
         } else {
+          console.time('json2sav');
           data = json2sav(window.data);
+          console.timeEnd('json2sav');
         }
 
         this.infoText = this.$t('savePage.processingFile');
