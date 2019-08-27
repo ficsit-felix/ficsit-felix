@@ -68,12 +68,6 @@ export default {
     };
   },
   mounted() {
-    if (this.$store.state.settings.autoLoadSaveFile !== '') {
-      this.$router.push({
-        path: 'open/auto'
-      });
-    }
-
     // Set persisted locale
     const lang = this.$store.state.settings.locale;
     import(`@/lang/${lang}.json`).then(msgs => {
