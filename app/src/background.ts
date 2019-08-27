@@ -23,7 +23,8 @@ function createWindow() {
     height: 600,
     frame: false,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true
     }
   });
 

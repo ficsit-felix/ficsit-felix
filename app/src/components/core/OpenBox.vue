@@ -252,7 +252,10 @@ export default {
             });
         });
 
-        worker.postMessage(data);
+        worker.postMessage({
+          importJson: this.importJson,
+          data
+        });
       } catch (error) {
         reportError(error);
         this.handleError(error.message);

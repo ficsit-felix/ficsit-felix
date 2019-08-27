@@ -41,6 +41,8 @@ import { reportMessage, reportError } from '@/ts/errorReporting';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
+import * as Json2SavWorker from 'worker-loader?name=[name].js!@/transformation/json2sav.worker.js';
+
 export default {
   name: 'SaveBox',
   data: function() {
@@ -92,27 +94,33 @@ export default {
         this.isSaving = true;
         this.infoText = this.$t('savePage.readingFile');
 
-        var data;
-        if (this.exportJson) {
-          data = JSON.stringify(window.data);
-        } else {
-          console.time('json2sav');
-          data = json2sav(window.data);
-          console.timeEnd('json2sav');
-        }
+        const worker = new Json2SavWorker();
 
-        this.infoText = this.$t('savePage.processingFile');
-        this.progress = 50;
-        this.buildInterval = setInterval(() => {
-          this.progress += 1;
-          if (this.progress >= 100) {
-            this.progress = 100;
-            clearInterval(this.buildInterval);
-            setTimeout(() => {
-              this.downloadData(data);
-            }, 100);
+        worker.addEventListener('message', message => {
+          if (message.data.status === 'error') {
+            reportException(message.data.error);
+            this.handleError(message.data.error);
+            return;
           }
-        }, 30);
+
+          this.infoText = this.$t('savePage.processingFile');
+          this.progress = 50;
+          this.buildInterval = setInterval(() => {
+            this.progress += 1;
+            if (this.progress >= 100) {
+              this.progress = 100;
+              clearInterval(this.buildInterval);
+              setTimeout(() => {
+                this.downloadData(message.data.data);
+              }, 100);
+            }
+          }, 30);
+        });
+
+        worker.postMessage({
+          exportJson: this.exportJson,
+          data: window.data
+        });
       } catch (error) {
         reportError(error);
         this.handleError(error.message);
