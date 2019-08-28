@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-        <div
+    <Dialogs></Dialogs>
+    <div
       @mouseover="logoAnimating = true"
       @mouseleave="logoAnimating = false"
       class="titlebar-logo"
     >
       <Logo :height="25" black="#505050" :animating="logoAnimating"></Logo>
-  </div>
+    </div>
     <router-view />
   </div>
 </template>
@@ -36,29 +37,143 @@
 <script>
 import '@/assets/main.scss';
 import Logo from '../core/Logo.vue';
+import Dialogs from '../core/Dialogs.vue';
 import { Titlebar, Color } from 'custom-electron-titlebar';
-import { Menu } from 'electron';
 import Vue from 'vue';
+import { dialog, remote, shell } from 'electron';
+
+const { Menu, MenuItem } = require('electron').remote;
+import { getSaveGamesFolderPath } from './desktopUtils';
+import { EventBus } from '../../event-bus';
+import {
+  DIALOG_ABOUT,
+  DIALOG_OPEN_SOURCE,
+  DIALOG_HELP,
+  DIALOG_SETTINGS
+} from '../../ts/constants';
+
 export default {
   name: 'DesktopApp',
   components: {
-    Logo
+    Logo,
+    Dialogs
   },
-    data: function() {
+  data: function() {
     return {
       logoAnimating: false
     };
   },
   mounted() {
-
     this.titlebar = new Titlebar({
       backgroundColor: Color.fromHex('#16161d'),
       itemBackgroundColor: Color.fromHex('#26262d')
     });
     this.titlebar.updateTitle('FICSIT - FeliX');
+    this.setDefaultMenu();
   },
   beforeDestroy() {
     this.titlebar.dispose();
+  },
+  methods: {
+    setDefaultMenu() {
+      const menu = new Menu();
+      menu.append(
+        new MenuItem({
+          label: this.$t('menubar.file'),
+          submenu: [
+            {
+              label: this.$t('menubar.open'),
+              accelerator: 'Ctrl+O',
+              click: () => {
+                remote.dialog.showOpenDialog(
+                  {
+                    defaultPath: getSaveGamesFolderPath(),
+                    filters: [
+                      {
+                        name: this.$t('desktop.saveExtension'),
+                        extensions: ['sav']
+                      }
+                    ]
+                  },
+                  filePath => {
+                    console.log(filePath);
+                  }
+                );
+              }
+            },
+            {
+              label: this.$t('menubar.importJson'),
+              accelerator: 'Ctrl+Shift+O',
+              click: () => console.log('Click on subitem 1')
+            },
+            {
+              label: this.$t('menubar.settings'),
+              click() {
+                EventBus.$emit(DIALOG_SETTINGS);
+              }
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: this.$t('menubar.exit'),
+              accelerator: 'Ctrl+Q',
+              click() {
+                var window = remote.getCurrentWindow();
+                window.close();
+              }
+            }
+          ]
+        })
+      );
+
+      menu.append(
+        new MenuItem({
+          label: this.$t('menubar.help'),
+          submenu: [
+            {
+              label: this.$t('menubar.help'),
+              click() {
+                EventBus.$emit(DIALOG_HELP);
+              }
+            },
+            {
+              label: this.$t('menubar.github'),
+              click() {
+                shell.openExternal(
+                  'https://github.com/ficsit-felix/ficsit-felix'
+                );
+              }
+            },
+            {
+              label: this.$t('menubar.openSource'),
+              click() {
+                EventBus.$emit(DIALOG_OPEN_SOURCE);
+              }
+            },
+            {
+              label: this.$t('menubar.about'),
+              click() {
+                EventBus.$emit(DIALOG_ABOUT);
+              }
+            } /*
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Subitem with submenu',
+              submenu: [
+                {
+                  label: 'Submenu &item 1',
+                  accelerator: 'Ctrl+T'
+                }
+              ]
+            }*/
+          ]
+        })
+      );
+      this.titlebar.updateMenu(menu);
+    }
   }
 };
 </script>
