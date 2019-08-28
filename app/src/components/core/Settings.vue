@@ -1,5 +1,10 @@
 <template>
   <div class="settings">
+    <div class="languageSelection">
+      {{ $t('landingPage.language') }}:
+      <LanguageSwitcher></LanguageSwitcher>
+    </div>
+
     <h3>{{ $t('settings.graphicsSectionTitle') }}</h3>
     <md-checkbox :model="showMap" @change="updateShowMap">{{
       $t('settings.showMap')
@@ -88,8 +93,12 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import copyToClipboard from '@/ts/copyToClipboard';
+import LanguageSwitcher from './LanguageSwitcher';
 export default {
   name: 'Settings',
+  components: {
+    LanguageSwitcher
+  },
   computed: {
     ...mapState('settings', [
       'nearPlane',
@@ -176,6 +185,11 @@ export default {
 .clickable {
   cursor: pointer;
   user-select: none;
+}
+
+.languageSelection {
+  display: flex;
+  align-items: center;
 }
 </style>
 

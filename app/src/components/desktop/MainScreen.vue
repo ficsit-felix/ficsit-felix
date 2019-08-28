@@ -34,10 +34,6 @@
           >
         </i18n>
       </p>
-      <div class="languageSelection">
-        {{ $t('landingPage.language') }}:
-        <LanguageSwitcher></LanguageSwitcher>
-      </div>
     </div>
   </div>
 </template>
@@ -45,16 +41,12 @@
 <script>
 import * as Sentry from '@sentry/browser';
 import { commithash } from '@/js/commithash';
-import LanguageSwitcher from '@/components/core/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
 import CenterWhiteBox from '@/components/core/CenterWhiteBox';
 import { app, remote } from 'electron';
 import electron from 'electron';
 export default {
   name: 'MainScreen',
-  components: {
-    LanguageSwitcher
-  },
   data: function() {
     return {
       commithash: commithash,
@@ -129,13 +121,6 @@ p {
   text-align: center;
   font-size: 12px;
 }
-
-.languageSelection {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .filebrowser {
   width: 300px;
   margin: 0px;

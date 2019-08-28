@@ -85,6 +85,7 @@ import {
   DIALOG_SETTINGS
 } from '../../ts/constants';
 import { EventBufferer } from 'custom-electron-titlebar/lib/common/event';
+import { setTimeout } from 'timers';
 
 export default Vue.extend({
   name: 'Dialogs',
@@ -95,10 +96,6 @@ export default Vue.extend({
   data: function() {
     return {
       showHelpDialog: false,
-      showOpenDialog: false,
-      showSaveDialog: false,
-      showOpenJsonDialog: false,
-      showSaveJsonDialog: false,
       showSettingsDialog: false,
       showLicensesDialog: false,
       showAboutDialog: false
@@ -106,16 +103,16 @@ export default Vue.extend({
   },
   mounted() {
     EventBus.$on(DIALOG_HELP, () => {
-      this.showHelpDialog = true;
+      this.closeDialogs(() => (this.showHelpDialog = true));
     });
     EventBus.$on(DIALOG_OPEN_SOURCE, () => {
-      this.showLicensesDialog = true;
+      this.closeDialogs(() => (this.showLicensesDialog = true));
     });
     EventBus.$on(DIALOG_ABOUT, () => {
-      this.showAboutDialog = true;
+      this.closeDialogs(() => (this.showAboutDialog = true));
     });
     EventBus.$on(DIALOG_SETTINGS, () => {
-      this.showSettingsDialog = true;
+      this.closeDialogs(() => (this.showSettingsDialog = true));
     });
   },
   beforeDestroy() {
@@ -124,6 +121,24 @@ export default Vue.extend({
     EventBus.$off(DIALOG_ABOUT);
     EventBus.$off(DIALOG_SETTINGS);
   },
-  methods: {}
+  methods: {
+    closeDialogs(callback) {
+      const dialogPreviouslyOpen =
+        this.showHelpDialog ||
+        this.showSettingsDialog ||
+        this.showLicensesDialog ||
+        this.showAboutDialog;
+      this.showHelpDialog = false;
+      this.showSettingsDialog = false;
+      this.showLicensesDialog = false;
+      this.showAboutDialog = false;
+      if (dialogPreviouslyOpen) {
+        // wait for the dialog to close
+        setTimeout(callback, 100);
+      } else {
+        callback();
+      }
+    }
+  }
 });
 </script>

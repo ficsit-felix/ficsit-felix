@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Dialogs></Dialogs>
     <div
       @mouseover="logoAnimating = true"
       @mouseleave="logoAnimating = false"
@@ -9,6 +8,7 @@
       <Logo :height="25" black="#505050" :animating="logoAnimating"></Logo>
     </div>
     <router-view />
+    <Dialogs></Dialogs>
   </div>
 </template>
 
