@@ -3,3 +3,5 @@ export const DIALOG_HELP = 'DIALOG_HELP';
 export const DIALOG_OPEN_SOURCE = 'DIALOG_OPEN_SOURCE';
 export const DIALOG_ABOUT = 'DIALOG_ABOUT';
 export const DIALOG_SETTINGS = 'DIALOG_SETTINGS';
+
+export const CHANGE_LOCALE = 'CHANGE_LOCALE';

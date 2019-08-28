@@ -168,9 +168,7 @@
         <p>{{ $t('dialog.about.row1') }}</p>
         <p>
           <i18n path="dialog.about.row2">
-            <a
-              href="https://github.com/ficsit-felix/ficsit-felix"
-              place="github"
+            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
               >GitHub</a
             >
           </i18n>
@@ -179,7 +177,7 @@
           <i18n path="dialog.about.row3">
             <a
               href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
-              place="authors"
+              slot="authors"
               >{{ $t('dialog.about.authors') }}</a
             >
           </i18n>

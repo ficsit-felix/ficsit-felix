@@ -14,6 +14,8 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { EventBus } from '../../event-bus';
+import { CHANGE_LOCALE } from '../../ts/constants';
 
 export default {
   name: 'LanguageSwitcher',
@@ -33,6 +35,7 @@ export default {
         this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
         this.$i18n.locale = lang;
         this.setLocale(lang);
+        EventBus.$emit(CHANGE_LOCALE);
       });
     }
   }

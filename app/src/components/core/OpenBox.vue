@@ -54,10 +54,10 @@
           <i18n path="openPage.errorText">
             <a
               href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
-              place="dropbox"
+              slot="dropbox"
               >{{ $t('openPage.dropboxText') }}</a
             >
-            <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
+            <a href="mailto:felix@owl.yt" slot="mail">felix@owl.yt</a>
           </i18n>
         </span></span
       >

@@ -86,7 +86,9 @@
     "open": "Öffnen",
     "openSource": "Open Source Lizenzen",
     "save": "Speichern",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "file": "Datei",
+    "exit": "Beenden"
   },
   "objectList": {
     "filterField": "Filtern",

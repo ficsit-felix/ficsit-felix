@@ -4,12 +4,14 @@ body {
     background: $eigenblack;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     margin: 0px;
     padding: 0px;
     overflow: hidden;
 }
+
 * {
 
     box-sizing: border-box;
@@ -22,20 +24,16 @@ html, body {
 
 
 
-@include md-register-theme("default", (
-  primary: md-get-palette-color(orange, A200), // The primary color of your application
-  accent: md-get-palette-color(cyan, 500), // The accent or secondary color
-  theme: dark
-));
+@include md-register-theme("default", (primary: md-get-palette-color(orange, A200), // The primary color of your application
+        accent: md-get-palette-color(cyan, 500), // The accent or secondary color
+        theme: dark));
 @import "~vue-material/dist/theme/all"; // Apply the theme
 // @import "~vue-material/dist/components/MdButton/theme"; // Apply the theme
 // @import "~vue-material/dist/components/MdField/theme"; // Apply the theme
 
-@include md-register-theme("default", (
-    primary: md-get-palette-color(orange, A200), // The primary color of your application
-    accent: md-get-palette-color(cyan, 400), // The accent or secondary color
-    theme: light
-));
+@include md-register-theme("default", (primary: md-get-palette-color(orange, A200), // The primary color of your application
+        accent: md-get-palette-color(cyan, 400), // The accent or secondary color
+        theme: light));
 @import "~vue-material/dist/components/MdSnackbar/theme"; // Apply the theme
 
 
@@ -53,6 +51,7 @@ html, body {
     transform: initial !important;
     position: initial !important;
 }
+
 #app {
     position: absolute;
 }
@@ -82,4 +81,9 @@ body {
 .titlebar .window-title {
     color: #00000000;
     font-size: 0px !important;
+}
+
+// need to be flex so that our hack for centering VueMaterial dialogs still works
+.container-after-titlebar {
+    display: flex;
 }

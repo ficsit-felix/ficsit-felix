@@ -1,39 +1,26 @@
 <template>
   <div class="landingpage">
-    <ul class="filebrowser">
+    <ul class="menu">
+      <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
+      <div class="spacer"></div>
+      <li class="small">{{ $t('menubar.importJson') }}</li>
+      <li class="small" @click="openSettings()">
+        {{ $t('menubar.settings') }}
+      </li>
+      <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
+      <div class="spacer"></div>
+      <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
+    </ul>
+    <ul class="filebrowser" ref="filebrowser">
       <li v-bind:key="file" v-for="file in files">
         {{ file }}
       </li>
     </ul>
-    <div class="content">
-      <p>{{ $t('landingPage.firstParagraph') }}</p>
-      <p>
-        <md-button
-          class="md-raised"
-          @click="$router.push({ path: '/open/sav' })"
-          >{{ $t('landingPage.openSavButton') }}</md-button
-        >
-      </p>
-      <img src="/screenshot.png" />
-      <p>{{ $t('landingPage.secondParagraph') }}</p>
-      <md-button
-        class="md-flat md-accent"
-        @click="$router.push({ path: '/open/json' })"
-        >{{ $t('landingPage.openJsonButton') }}</md-button
-      >
 
-      <p class="left">
-        <i18n path="landingPage.thirdParagraph">
-          <a href="https://github.com/ficsit-felix/ficsit-felix" place="github"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
-            place="authors"
-            >{{ $t('landingPage.authors') }}</a
-          >
-        </i18n>
-      </p>
+    <div class="content">
+      <div v-if="saveFolderNotFound" class="saveFolderError">
+        Could not locate save folder
+      </div>
     </div>
   </div>
 </template>
@@ -45,12 +32,15 @@ import { reportMessage } from '@/ts/errorReporting';
 import CenterWhiteBox from '@/components/core/CenterWhiteBox';
 import { app, remote } from 'electron';
 import electron from 'electron';
+import { EventBus } from '../../event-bus';
+import { DIALOG_SETTINGS, DIALOG_ABOUT } from '../../ts/constants';
 export default {
   name: 'MainScreen',
   data: function() {
     return {
       commithash: commithash,
-      files: []
+      files: [],
+      saveFolderNotFound: false
     };
   },
   mounted() {
@@ -77,6 +67,7 @@ export default {
     fs.readdir(testFolder, (err, files) => {
       console.log(err);
       if (err) {
+        this.saveFolderNotFound = true;
         // TODO: SaveGames folder not found
         return;
       }
@@ -86,6 +77,21 @@ export default {
         console.log(file);
       });
     });
+  },
+  methods: {
+    openFilebrowser() {
+      this.$refs.filebrowser.classList.add('visible');
+    },
+    openSettings() {
+      EventBus.$emit(DIALOG_SETTINGS);
+    },
+    openAbout() {
+      EventBus.$emit(DIALOG_ABOUT);
+    },
+    openExit() {
+      var window = remote.getCurrentWindow();
+      window.close();
+    }
   }
 };
 </script>
@@ -93,36 +99,44 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
 .landingpage {
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
 }
-.content {
-  max-width: 800px;
-  min-height: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+.menu {
+  list-style-type: none;
+  margin: 0px;
+  padding: 80px 0px;
+  width: 300px;
+  height: 100%;
+  background: #3e3f4022;
+  li {
+    margin: 0px;
+    padding: 20px 40px;
+    font-size: 24px;
+    font-weight: 100;
+    cursor: pointer;
+    user-select: none;
+    color: #fff;
+    &.small {
+      font-size: 18px;
+      padding: 10px 40px;
+    }
+    &:hover {
+      background: #e59345bb;
+    }
+  }
+  .spacer {
+    height: 30px;
+  }
 }
 
-p {
-  color: $textLightGray;
-  font-size: 16px;
-  padding: 0px 15px;
-}
-.left {
-  text-align: left;
-}
-
-.commithash {
-  color: rgba(255, 255, 255, 0.2);
-  text-align: center;
-  font-size: 12px;
-}
 .filebrowser {
   width: 300px;
+  height: 100%;
+  background: #cccccc22;
   margin: 0px;
   padding: 0px;
   li {
@@ -138,5 +152,24 @@ p {
   }
   overflow-y: auto;
   overflow-x: hidden;
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.saveFolderError {
+  background: $primaryOrange;
+  color: #222;
+  padding: 8px 16px;
+  font-size: 18px;
+  margin: 30px 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
 }
 </style>

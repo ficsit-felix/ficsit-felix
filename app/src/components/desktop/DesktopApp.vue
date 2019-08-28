@@ -49,7 +49,8 @@ import {
   DIALOG_ABOUT,
   DIALOG_OPEN_SOURCE,
   DIALOG_HELP,
-  DIALOG_SETTINGS
+  DIALOG_SETTINGS,
+  CHANGE_LOCALE
 } from '../../ts/constants';
 
 export default {
@@ -70,11 +71,16 @@ export default {
     });
     this.titlebar.updateTitle('FICSIT - FeliX');
     this.setDefaultMenu();
+    EventBus.$on(CHANGE_LOCALE, this.onChangeLocale);
   },
   beforeDestroy() {
+    EventBus.$off(CHANGE_LOCALE, this.onChangeLocale);
     this.titlebar.dispose();
   },
   methods: {
+    onChangeLocale() {
+      this.setDefaultMenu(); // TODO rebuild the currently selected menu
+    },
     setDefaultMenu() {
       const menu = new Menu();
       menu.append(
