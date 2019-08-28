@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-        <div
+    <div
       @mouseover="logoAnimating = true"
       @mouseleave="logoAnimating = false"
       class="titlebar-logo"
     >
       <Logo :height="25" black="#505050" :animating="logoAnimating"></Logo>
-  </div>
+    </div>
     <router-view />
   </div>
 </template>
@@ -44,13 +44,12 @@ export default {
   components: {
     Logo
   },
-    data: function() {
+  data: function() {
     return {
       logoAnimating: false
     };
   },
   mounted() {
-
     this.titlebar = new Titlebar({
       backgroundColor: Color.fromHex('#16161d'),
       itemBackgroundColor: Color.fromHex('#26262d')

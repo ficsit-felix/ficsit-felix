@@ -2,11 +2,10 @@
   <div class="landingpage">
     <ul class="filebrowser">
       <li v-for="file in files">
-        {{file}}
+        {{ file }}
       </li>
-      </ul>
+    </ul>
     <div class="content">
-
       <p>{{ $t('landingPage.firstParagraph') }}</p>
       <p>
         <md-button
@@ -76,10 +75,10 @@ export default {
       this.$i18n.locale = lang;
     });
 
-
-    
     // read files
-    const testFolder = (electron.app || electron.remote.app).getPath('home') + '/AppData/Local/FactoryGame/Saved/SaveGames';
+    const testFolder =
+      (electron.app || electron.remote.app).getPath('home') +
+      '/AppData/Local/FactoryGame/Saved/SaveGames';
     console.log(testFolder);
     const fs = require('fs');
 
@@ -134,8 +133,8 @@ p {
 
 .filebrowser {
   width: 300px;
-        margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
   li {
     list-style-type: none;
     padding: 2px 10px;
