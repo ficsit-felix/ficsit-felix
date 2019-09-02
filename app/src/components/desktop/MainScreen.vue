@@ -16,7 +16,6 @@
         {{ file }}
       </li>
     </ul>
-
     <div class="content">
       <div v-if="saveFolderNotFound" class="saveFolderError">
         Could not locate save folder
@@ -135,8 +134,11 @@ export default {
 
 .filebrowser {
   width: 300px;
+<<<<<<< HEAD
   height: 100%;
   background: #cccccc22;
+=======
+>>>>>>> 6b58468caf23361a97772d4b91d9dad3dcf8bb3f
   margin: 0px;
   padding: 0px;
   li {

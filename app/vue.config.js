@@ -9,9 +9,9 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        productName: "FICSIT - FeliX",
+        productName: 'FICSIT - FeliX',
         win: {
-          publisherName: "bitowl"
+          publisherName: 'bitowl'
         }
       }
     }

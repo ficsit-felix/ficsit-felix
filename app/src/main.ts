@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import WebApp from './components/web/WebApp.vue';
-import DesktopApp from './components/desktop/DesktopApp.vue';
 
 import store from './store';
 import { commithash } from '@/js/commithash';
@@ -10,10 +8,6 @@ import * as Integrations from '@sentry/integrations';
 
 import { i18n } from './plugins/i18n';
 import { isElectron } from './ts/isElectron';
-
-import routerElectron from './router_electron';
-import routerWeb from './router_web';
-
 import '@/helpers/cmdHelper';
 
 if (process.env.NODE_ENV === 'production') {
@@ -65,13 +59,19 @@ Vue.use(require('vue-shortkey'));
 
 Vue.config.productionTip = false;
 
+let router;
+if (isElectron()) {
+  router = require('./router_electron').default;
+} else {
+  router = require('./router_web').default;
+}
 new Vue({
-  router: isElectron() ? routerElectron : routerWeb,
+  router,
   store,
   i18n,
   beforeCreate() {
     this.$store.commit;
     this.$store.commit('settings/INIT_STORE_FROM_LOCAL_DATA');
   },
-  render: h => h(isElectron() ? DesktopApp : WebApp)
+  render: h => h(isElectron() ? require('./components/desktop/DesktopApp.vue').default : require('./components/web/WebApp.vue').default)
 }).$mount('#app');
