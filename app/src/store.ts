@@ -207,6 +207,9 @@ interface RootState {
   selectionDisabled: boolean;
   boxSelect: boolean;
   shiftSelect: boolean;
+
+  // loading
+  progress: number;
 }
 
 export default new Vuex.Store<RootState>({
@@ -231,7 +234,9 @@ export default new Vuex.Store<RootState>({
 
     selectionDisabled: false,
     boxSelect: false,
-    shiftSelect: false
+    shiftSelect: false,
+
+    progress: 0
   },
   getters: {
     getNames: state => {
@@ -462,6 +467,9 @@ export default new Vuex.Store<RootState>({
     },
     SET_SHIFT_SELECT(state, payload) {
       state.shiftSelect = payload;
+    },
+    SET_PROGRESS(state, payload) {
+      state.progress = payload;
     }
   },
   actions: {
@@ -520,6 +528,9 @@ export default new Vuex.Store<RootState>({
     },
     setShiftSelect(context, payload) {
       context.commit('SET_SHIFT_SELECT', payload);
+    },
+    setProgress(context, payload) {
+      context.commit('SET_PROGRESS', payload);
     }
   }
 });

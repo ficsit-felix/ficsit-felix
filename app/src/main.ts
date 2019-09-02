@@ -73,5 +73,10 @@ new Vue({
     this.$store.commit;
     this.$store.commit('settings/INIT_STORE_FROM_LOCAL_DATA');
   },
-  render: h => h(isElectron() ? require('./components/desktop/DesktopApp.vue').default : require('./components/web/WebApp.vue').default)
+  render: h =>
+    h(
+      isElectron()
+        ? require('./components/desktop/DesktopApp.vue').default
+        : require('./components/web/WebApp.vue').default
+    )
 }).$mount('#app');

@@ -4,22 +4,16 @@
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
       <li class="small">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">
-        {{ $t('menubar.settings') }}
-      </li>
+      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
     </ul>
     <ul class="filebrowser" ref="filebrowser">
-      <li v-bind:key="file" v-for="file in files">
-        {{ file }}
-      </li>
+      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">{{ file }}</li>
     </ul>
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">
-        Could not locate save folder
-      </div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
     </div>
   </div>
 </template>
@@ -33,6 +27,9 @@ import { app, remote } from 'electron';
 import electron from 'electron';
 import { EventBus } from '../../event-bus';
 import { DIALOG_SETTINGS, DIALOG_ABOUT } from '../../ts/constants';
+import { openFileFromFilesystem } from './openFile';
+import { mapActions } from 'vuex';
+
 export default {
   name: 'MainScreen',
   data: function() {
@@ -57,13 +54,15 @@ export default {
     });
 
     // read files
-    const testFolder =
+    /*this.saveFilesPath = 
       (electron.app || electron.remote.app).getPath('home') +
-      '/AppData/Local/FactoryGame/Saved/SaveGames';
-    console.log(testFolder);
+      '/AppData/Local/FactoryGame/Saved/SaveGames';*/
+
+    this.saveFilesPath = '/home/stream/saves';
+
     const fs = require('fs');
 
-    fs.readdir(testFolder, (err, files) => {
+    fs.readdir(this.saveFilesPath, (err, files) => {
       console.log(err);
       if (err) {
         this.saveFolderNotFound = true;
@@ -78,8 +77,14 @@ export default {
     });
   },
   methods: {
+    ...mapActions(['setLoadedData', 'setProgress']),
     openFilebrowser() {
-      this.$refs.filebrowser.classList.add('visible');
+      const filebrowser = this.$refs.filebrowser;
+      if (filebrowser.classList.contains('visible')) {
+        filebrowser.classList.remove('visible');
+      } else {
+        filebrowser.classList.add('visible');
+      }
     },
     openSettings() {
       EventBus.$emit(DIALOG_SETTINGS);
@@ -90,6 +95,40 @@ export default {
     openExit() {
       var window = remote.getCurrentWindow();
       window.close();
+    },
+
+    openFile(file) {
+      this.$router.push({
+        name: 'progressbar'
+      });
+      //      setTimeout(() => {
+      console.time('openFile');
+      openFileFromFilesystem(
+        this.saveFilesPath + '/' + file,
+        (err, progress, saveGame) => {
+          if (err) {
+            // TODO open bug report window
+            console.error(err);
+            return;
+          }
+
+          if (progress) {
+            this.setProgress(progress);
+            return;
+          }
+
+          console.time('setVuex');
+          this.setLoadedData(saveGame).then(() => {
+            console.timeEnd('setVuex');
+            console.timeEnd('openFile');
+
+            this.$router.push({
+              name: 'editor'
+            });
+          });
+        }
+      );
+      //}, 1000);
     }
   }
 };
@@ -134,19 +173,16 @@ export default {
 
 .filebrowser {
   width: 300px;
-<<<<<<< HEAD
   height: 100%;
   background: #cccccc22;
-=======
->>>>>>> 6b58468caf23361a97772d4b91d9dad3dcf8bb3f
   margin: 0px;
-  padding: 0px;
+  padding: 30px 0px;
   li {
     list-style-type: none;
-    padding: 2px 10px;
+    padding: 10px 20px;
     cursor: pointer;
     user-select: none;
-    font-size: 12px;
+    font-size: 20px;
 
     &:hover {
       background: #ffffff20;

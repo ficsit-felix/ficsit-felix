@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Editor from './components/core/Editor.vue';
 import MainScreen from './components/desktop/MainScreen.vue';
-
+import ProgressBarView from './components/core/ProgressBarView.vue';
 Vue.use(Router);
 
 export default new Router({
@@ -12,6 +12,12 @@ export default new Router({
       name: 'landingpage',
       component: MainScreen
     },
+    {
+      path: '/progressbar',
+      name: 'progressbar',
+      component: ProgressBarView
+    },
+
     {
       path: '/editor',
       name: 'editor',

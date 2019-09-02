@@ -5,15 +5,13 @@
       <md-dialog-content>
         <b>{{ $t('dialog.help.controlsTitle') }}</b>
         <p class="helpControls">{{ $t('dialog.help.controlsText') }}</p>
-        <p>
-          {{ $t('dialog.help.changeJsonWarning') }}
-        </p>
+        <p>{{ $t('dialog.help.changeJsonWarning') }}</p>
         <br />
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false">{{
-          $t('general.close')
-        }}</md-button>
+        <md-button class="md-primary" @click="showHelpDialog = false">
+          {{ $t('general.close') }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -23,9 +21,9 @@
         <Settings></Settings>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false">{{
-          $t('general.close')
-        }}</md-button>
+        <md-button class="md-primary" @click="showSettingsDialog = false">
+          {{ $t('general.close') }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -35,9 +33,9 @@
         <LicensesDialog></LicensesDialog>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showLicensesDialog = false">{{
-          $t('general.close')
-        }}</md-button>
+        <md-button class="md-primary" @click="showLicensesDialog = false">
+          {{ $t('general.close') }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -63,9 +61,9 @@
         </p>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showAboutDialog = false">{{
-          $t('general.close')
-        }}</md-button>
+        <md-button class="md-primary" @click="showAboutDialog = false">
+          {{ $t('general.close') }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -120,7 +118,7 @@ export default Vue.extend({
     EventBus.$off(DIALOG_SETTINGS);
   },
   methods: {
-    closeDialogs(callback) {
+    closeDialogs(callback: () => void) {
       const dialogPreviouslyOpen =
         this.showHelpDialog ||
         this.showSettingsDialog ||

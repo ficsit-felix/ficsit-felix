@@ -2,9 +2,9 @@
   <div>
     <p v-if="!importJson">
       {{
-        $t('openPage.saveLocation', {
-          saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
-        })
+      $t('openPage.saveLocation', {
+      saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
+      })
       }}
     </p>
     <form enctype="multipart/form-data" novalidate v-if="!isSaving">
@@ -28,12 +28,8 @@
         <!--
             
         @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
-        <p v-if="importJson" class="dragInstruction">
-          {{ $t('openPage.dragJson') }}
-        </p>
-        <p v-else class="dragInstruction">
-          {{ $t('openPage.dragSav') }}
-        </p>
+        <p v-if="importJson" class="dragInstruction">{{ $t('openPage.dragJson') }}</p>
+        <p v-else class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
       </div>
     </form>
     <div v-else class="infobox">
@@ -47,32 +43,31 @@
 
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
-      <span class="dialog-content"
-        >{{ errorText
-        }}<span v-if="showSendSave"
-          ><br /><br />
+      <span class="dialog-content">
+        {{ errorText
+        }}
+        <span v-if="showSendSave">
+          <br />
+          <br />
           <i18n path="openPage.errorText">
             <a
               href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
               slot="dropbox"
-              >{{ $t('openPage.dropboxText') }}</a
-            >
+            >{{ $t('openPage.dropboxText') }}</a>
             <a href="mailto:felix@owl.yt" slot="mail">felix@owl.yt</a>
           </i18n>
-        </span></span
-      >
+        </span>
+      </span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">{{
+        <md-button class="md-primary" @click="showErrorDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-    ></BugReportDialog>
+    <BugReportDialog ref="bugReport" :filename="filename" :uuid="uuid"></BugReportDialog>
   </div>
 </template>
 
@@ -190,6 +185,9 @@ export default {
         return;
       }
 
+      console.time('openFile');
+      console.time('readWeb');
+
       var reader = new FileReader();
       reader.onprogress = evt => {
         if (evt.lengthComputable) {
@@ -198,6 +196,7 @@ export default {
         }
       };
       reader.onload = response => {
+        console.timeEnd('readWeb');
         this.processFile(reader.result);
       };
       reader.readAsArrayBuffer(file);
@@ -216,6 +215,7 @@ export default {
       this.infoText = this.$t('openPage.processing');
       this.progress = 50;
       try {
+        console.time('sav2json');
         const worker = new Sav2JsonWorker(); //Worker(workerPath);
 
         //console.log(workerPath, worker);
@@ -225,6 +225,7 @@ export default {
             this.handleError(message.data.error);
             return;
           }
+          console.timeEnd('sav2json');
           this.progress = 70;
           // reportMessage("debugSav2Json");
 
@@ -238,6 +239,7 @@ export default {
                   this.progress = 100;
                   clearInterval(this.buildInterval);
                   setTimeout(() => {
+                    console.timeEnd('openFile');
                     // let the user at least see the full bar
                     this.$router.push({
                       name: 'editor'
