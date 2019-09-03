@@ -210,6 +210,7 @@ interface RootState {
 
   // loading
   progress: number;
+  showSaveMenuEntries: boolean;
 }
 
 export default new Vuex.Store<RootState>({
@@ -236,7 +237,8 @@ export default new Vuex.Store<RootState>({
     boxSelect: false,
     shiftSelect: false,
 
-    progress: 0
+    progress: 0,
+    showSaveMenuEntries: false
   },
   getters: {
     getNames: state => {
@@ -470,6 +472,9 @@ export default new Vuex.Store<RootState>({
     },
     SET_PROGRESS(state, payload) {
       state.progress = payload;
+    },
+    SET_SHOW_SAVE_MENU_ENTRIES(state, payload) {
+      state.showSaveMenuEntries = payload;
     }
   },
   actions: {
@@ -531,6 +536,9 @@ export default new Vuex.Store<RootState>({
     },
     setProgress(context, payload) {
       context.commit('SET_PROGRESS', payload);
+    },
+    setShowSaveMenuEntries(context, payload) {
+      context.commit('SET_SHOW_SAVE_MENU_ENTRIES', payload);
     }
   }
 });

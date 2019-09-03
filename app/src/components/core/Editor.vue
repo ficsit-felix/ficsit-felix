@@ -21,7 +21,10 @@
             </Split>
           </SplitArea>
           <SplitArea :size="23">
-            <PropertyEditor ref="propertyEditor" @focusSelectedObject="focusSelectedObject" />
+            <PropertyEditor
+              ref="propertyEditor"
+              @focusSelectedObject="focusSelectedObject"
+            />
           </SplitArea>
         </Split>
       </div>

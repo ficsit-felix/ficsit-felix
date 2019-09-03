@@ -4,22 +4,16 @@
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
       <li class="small">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">
-        {{ $t('menubar.settings') }}
-      </li>
+      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
     </ul>
     <ul class="filebrowser" ref="filebrowser">
-      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">
-        {{ file }}
-      </li>
+      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">{{ file }}</li>
     </ul>
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">
-        Could not locate save folder
-      </div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
     </div>
   </div>
 </template>
@@ -48,6 +42,9 @@ export default {
     };
   },
   mounted() {
+    // hide save menu entries
+    this.setShowSaveMenuEntries(false);
+
     if (this.$store.state.settings.autoLoadSaveFile !== '') {
       this.$router.push({
         path: 'open/auto'
@@ -82,7 +79,13 @@ export default {
     });
   },
   methods: {
-    ...mapActions(['setLoadedData', 'setProgress', 'setFilename', 'setUUID']),
+    ...mapActions([
+      'setLoadedData',
+      'setProgress',
+      'setFilename',
+      'setUUID',
+      'setShowSaveMenuEntries'
+    ]),
     openFilebrowser() {
       const filebrowser = this.$refs.filebrowser;
       if (filebrowser.classList.contains('visible')) {
@@ -135,6 +138,7 @@ export default {
             console.timeEnd('setVuex');
             console.timeEnd('openFile');
 
+            this.setShowSaveMenuEntries(true);
             this.$router.push({
               name: 'editor'
             });

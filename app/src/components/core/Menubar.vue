@@ -13,8 +13,7 @@
       @shortkey="showOpenDialog = true"
     >
       <md-icon>folder_open</md-icon>
-      {{ $t('menubar.open')
-      }}
+      {{ $t('menubar.open') }}
       <md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+O</md-tooltip>
     </span>
     <span
@@ -23,14 +22,16 @@
       @shortkey="showSaveDialog = true"
     >
       <md-icon>save</md-icon>
-      {{ $t('menubar.save')
-      }}
+      {{ $t('menubar.save') }}
       <md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+S</md-tooltip>
     </span>
-    <span @click="showHelpDialog = true" v-shortkey.once="['f1']" @shortkey="showHelpDialog = true">
+    <span
+      @click="showHelpDialog = true"
+      v-shortkey.once="['f1']"
+      @shortkey="showHelpDialog = true"
+    >
       <md-icon>help</md-icon>
-      {{ $t('menubar.help')
-      }}
+      {{ $t('menubar.help') }}
       <md-tooltip md-delay="500">F1</md-tooltip>
     </span>
     <span @click="showSettingsDialog = true">
@@ -136,9 +137,7 @@
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showHelpDialog = false">
-          {{
-          $t('general.close')
-          }}
+          {{ $t('general.close') }}
         </md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -150,9 +149,7 @@
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showSettingsDialog = false">
-          {{
-          $t('general.close')
-          }}
+          {{ $t('general.close') }}
         </md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -164,9 +161,7 @@
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showLicensesDialog = false">
-          {{
-          $t('general.close')
-          }}
+          {{ $t('general.close') }}
         </md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -177,7 +172,9 @@
         <p>{{ $t('dialog.about.row1') }}</p>
         <p>
           <i18n path="dialog.about.row2">
-            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github">GitHub</a>
+            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
+              >GitHub</a
+            >
           </i18n>
         </p>
         <p>
@@ -185,15 +182,14 @@
             <a
               href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
               slot="authors"
-            >{{ $t('dialog.about.authors') }}</a>
+              >{{ $t('dialog.about.authors') }}</a
+            >
           </i18n>
         </p>
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showAboutDialog = false">
-          {{
-          $t('general.close')
-          }}
+          {{ $t('general.close') }}
         </md-button>
       </md-dialog-actions>
     </md-dialog>

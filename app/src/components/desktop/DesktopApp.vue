@@ -53,6 +53,7 @@ import {
   CHANGE_LOCALE
 } from '../../ts/constants';
 import { debug } from 'util';
+import { mapState } from 'vuex';
 
 export default {
   name: 'DesktopApp',
@@ -64,6 +65,15 @@ export default {
     return {
       logoAnimating: false
     };
+  },
+  computed: {
+    ...mapState(['showSaveMenuEntries'])
+  },
+  watch: {
+    showSaveMenuEntries() {
+      // update the menu
+      this.setDefaultMenu();
+    }
   },
   mounted() {
     this.titlebar = new Titlebar({
@@ -85,76 +95,85 @@ export default {
     setDefaultMenu() {
       const self = this;
       const menu = new Menu();
+
+      let fileEntries = [
+        {
+          label: this.$t('menubar.open'),
+          accelerator: 'Ctrl+O',
+          click: () => {
+            remote.dialog.showOpenDialog(
+              {
+                defaultPath: getSaveGamesFolderPath(),
+                filters: [
+                  {
+                    name: this.$t('desktop.saveExtension'),
+                    extensions: ['sav']
+                  }
+                ]
+              },
+              filePath => {
+                console.log(filePath);
+              }
+            );
+          }
+        },
+        {
+          label: this.$t('menubar.importJson'),
+          accelerator: 'Ctrl+Shift+O',
+          click: () => console.log('Click on subitem 1')
+        }
+      ];
+
+      if (this.showSaveMenuEntries) {
+        fileEntries = fileEntries.concat([
+          {
+            type: 'separator'
+          },
+          {
+            label: this.$t('menubar.save'),
+            click() {
+              self.$router.push('save/sav');
+            }
+          },
+          {
+            label: this.$t('menubar.exportJson'),
+            click() {
+              self.$router.push('save/json');
+            }
+          }
+        ]);
+      }
+
+      fileEntries = fileEntries.concat([
+        {
+          type: 'separator'
+        },
+        {
+          label: this.$t('menubar.settings'),
+          click() {
+            EventBus.$emit(DIALOG_SETTINGS);
+          }
+        },
+        {
+          label: this.$t('menubar.mainScreen'),
+          click() {
+            self.$router.push('/');
+          }
+        },
+        {
+          label: this.$t('menubar.exit'),
+          accelerator: 'Ctrl+Q',
+          click() {
+            var window = remote.getCurrentWindow();
+            window.close();
+          }
+        }
+      ]);
+
       menu.append(
         new MenuItem({
           label: this.$t('menubar.file'),
-          submenu: [
-            {
-              label: this.$t('menubar.open'),
-              accelerator: 'Ctrl+O',
-              click: () => {
-                remote.dialog.showOpenDialog(
-                  {
-                    defaultPath: getSaveGamesFolderPath(),
-                    filters: [
-                      {
-                        name: this.$t('desktop.saveExtension'),
-                        extensions: ['sav']
-                      }
-                    ]
-                  },
-                  filePath => {
-                    console.log(filePath);
-                  }
-                );
-              }
-            },
-            {
-              label: this.$t('menubar.importJson'),
-              accelerator: 'Ctrl+Shift+O',
-              click: () => console.log('Click on subitem 1')
-            },
-
-            {
-              type: 'separator'
-            },
-            {
-              label: this.$t('menubar.save'),
-              click() {
-                self.$router.push('save/sav');
-              }
-            },
-            {
-              label: this.$t('menubar.exportJson'),
-              click() {
-                self.$router.push('save/json');
-              }
-            },
-
-            {
-              type: 'separator'
-            },
-            {
-              label: this.$t('menubar.settings'),
-              click() {
-                EventBus.$emit(DIALOG_SETTINGS);
-              }
-            },
-            {
-              label: this.$t('menubar.mainScreen'),
-              click() {
-                self.$router.push('/');
-              }
-            },
-            {
-              label: this.$t('menubar.exit'),
-              accelerator: 'Ctrl+Q',
-              click() {
-                var window = remote.getCurrentWindow();
-                window.close();
-              }
-            }
-          ]
+          submenu: fileEntries
         })
       );
 
