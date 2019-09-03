@@ -4,16 +4,22 @@
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
       <li class="small">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
+      <li class="small" @click="openSettings()">
+        {{ $t('menubar.settings') }}
+      </li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
     </ul>
     <ul class="filebrowser" ref="filebrowser">
-      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">{{ file }}</li>
+      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">
+        {{ file }}
+      </li>
     </ul>
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">
+        Could not locate save folder
+      </div>
     </div>
   </div>
 </template>
@@ -21,7 +27,7 @@
 <script>
 import * as Sentry from '@sentry/browser';
 import { commithash } from '@/js/commithash';
-import { reportMessage } from '@/ts/errorReporting';
+import { reportMessage, reportContext } from '@/ts/errorReporting';
 import CenterWhiteBox from '@/components/core/CenterWhiteBox';
 import { app, remote } from 'electron';
 import electron from 'electron';
@@ -29,6 +35,8 @@ import { EventBus } from '../../event-bus';
 import { DIALOG_SETTINGS, DIALOG_ABOUT } from '../../ts/constants';
 import { openFileFromFilesystem } from './openFile';
 import { mapActions } from 'vuex';
+import { getSaveFilesPath } from './fileUtil';
+import { v4 } from 'uuid';
 
 export default {
   name: 'MainScreen',
@@ -54,11 +62,8 @@ export default {
     });
 
     // read files
-    /*this.saveFilesPath = 
-      (electron.app || electron.remote.app).getPath('home') +
-      '/AppData/Local/FactoryGame/Saved/SaveGames';*/
 
-    this.saveFilesPath = '/home/stream/saves';
+    this.saveFilesPath = getSaveFilesPath();
 
     const fs = require('fs');
 
@@ -77,7 +82,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(['setLoadedData', 'setProgress']),
+    ...mapActions(['setLoadedData', 'setProgress', 'setFilename', 'setUUID']),
     openFilebrowser() {
       const filebrowser = this.$refs.filebrowser;
       if (filebrowser.classList.contains('visible')) {
@@ -101,6 +106,14 @@ export default {
       this.$router.push({
         name: 'progressbar'
       });
+
+      this.setFilename(file);
+      const uuid = v4();
+      this.setUUID(uuid);
+
+      reportContext('uuid', uuid);
+      reportContext('savename', file);
+
       //      setTimeout(() => {
       console.time('openFile');
       openFileFromFilesystem(

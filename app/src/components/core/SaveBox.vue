@@ -6,9 +6,7 @@
       <br />
       <br />
       <md-button class="md-raised" @click="$router.push({ name: 'editor' })">
-        {{
-        $t('savePage.backButton')
-        }}
+        {{ $t('savePage.backButton') }}
       </md-button>
     </div>
     <div v-else class="infobox">
@@ -25,9 +23,7 @@
       <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showErrorDialog = false">
-          {{
-          $t('general.close')
-          }}
+          {{ $t('general.close') }}
         </md-button>
       </md-dialog-actions>
     </md-dialog>
@@ -98,6 +94,8 @@ export default {
         this.infoText = this.$t('savePage.readingFile');
 
         let filename;
+
+        debugger;
         if (this.exportJson) {
           // TODO make sure we only cut of the extension
           filename =
@@ -107,7 +105,7 @@ export default {
             this.filename.replace('.json', '').replace('.sav', '') + '.sav';
         }
 
-        // TODO if desktop, add folder to path
+        // TODO if desktop, add folder to pathasdf
         saveFileToFilesystem(
           window.data,
           filename,
