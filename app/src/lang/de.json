@@ -88,7 +88,8 @@
     "save": "Speichern",
     "settings": "Einstellungen",
     "file": "Datei",
-    "exit": "Beenden"
+    "exit": "Beenden",
+    "mainScreen": "Zurück zum Hauptmenü"
   },
   "objectList": {
     "filterField": "Filtern",

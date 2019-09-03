@@ -52,6 +52,7 @@ import {
   DIALOG_SETTINGS,
   CHANGE_LOCALE
 } from '../../ts/constants';
+import { debug } from 'util';
 
 export default {
   name: 'DesktopApp',
@@ -82,6 +83,7 @@ export default {
       this.setDefaultMenu(); // TODO rebuild the currently selected menu
     },
     setDefaultMenu() {
+      const self = this;
       const menu = new Menu();
       menu.append(
         new MenuItem({
@@ -112,6 +114,26 @@ export default {
               accelerator: 'Ctrl+Shift+O',
               click: () => console.log('Click on subitem 1')
             },
+
+            {
+              type: 'separator'
+            },
+            {
+              label: this.$t('menubar.save'),
+              click() {
+                self.$router.push('save/sav');
+              }
+            },
+            {
+              label: this.$t('menubar.exportJson'),
+              click() {
+                self.$router.push('save/json');
+              }
+            },
+
+            {
+              type: 'separator'
+            },
             {
               label: this.$t('menubar.settings'),
               click() {
@@ -119,7 +141,10 @@ export default {
               }
             },
             {
-              type: 'separator'
+              label: this.$t('menubar.mainScreen'),
+              click() {
+                self.$router.push('/');
+              }
             },
             {
               label: this.$t('menubar.exit'),

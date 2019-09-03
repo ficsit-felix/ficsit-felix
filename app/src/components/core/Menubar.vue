@@ -12,56 +12,61 @@
       v-shortkey.once="['ctrl', 'o']"
       @shortkey="showOpenDialog = true"
     >
-      <md-icon>folder_open</md-icon>{{ $t('menubar.open')
-      }}<md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+O</md-tooltip>
+      <md-icon>folder_open</md-icon>
+      {{ $t('menubar.open')
+      }}
+      <md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+O</md-tooltip>
     </span>
     <span
       @click="showSaveDialog = true"
       v-shortkey.once="['ctrl', 's']"
       @shortkey="showSaveDialog = true"
     >
-      <md-icon>save</md-icon>{{ $t('menubar.save')
-      }}<md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+S</md-tooltip>
+      <md-icon>save</md-icon>
+      {{ $t('menubar.save')
+      }}
+      <md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+S</md-tooltip>
     </span>
-    <span
-      @click="showHelpDialog = true"
-      v-shortkey.once="['f1']"
-      @shortkey="showHelpDialog = true"
-    >
-      <md-icon>help</md-icon>{{ $t('menubar.help')
-      }}<md-tooltip md-delay="500">F1</md-tooltip>
+    <span @click="showHelpDialog = true" v-shortkey.once="['f1']" @shortkey="showHelpDialog = true">
+      <md-icon>help</md-icon>
+      {{ $t('menubar.help')
+      }}
+      <md-tooltip md-delay="500">F1</md-tooltip>
     </span>
     <span @click="showSettingsDialog = true">
-      <md-icon>settings</md-icon>{{ $t('menubar.settings') }}
+      <md-icon>settings</md-icon>
+      {{ $t('menubar.settings') }}
     </span>
     <div class="spacer"></div>
     <LanguageSwitcher></LanguageSwitcher>
 
     <md-menu md-direction="bottom-end">
       <md-button md-menu-trigger>
-        <md-icon>menu</md-icon> {{ $t('menubar.more') }}</md-button
-      >
+        <md-icon>menu</md-icon>
+        {{ $t('menubar.more') }}
+      </md-button>
 
       <md-menu-content class="menubar-content">
-        <md-menu-item @click="showOpenJsonDialog = true"
-          ><md-icon>file_upload</md-icon
-          >{{ $t('menubar.importJson') }}</md-menu-item
-        >
-        <md-menu-item @click="showSaveJsonDialog = true"
-          ><md-icon>file_download</md-icon
-          >{{ $t('menubar.exportJson') }}</md-menu-item
-        >
-        <md-menu-item @click="openGithub()"
-          ><md-icon>code</md-icon>{{ $t('menubar.github') }}</md-menu-item
-        >
-        <md-menu-item @click="showLicensesDialog = true"
-          ><md-icon>view_headline</md-icon
-          >{{ $t('menubar.openSource') }}</md-menu-item
-        >
-        <md-menu-item @click="showAboutDialog = true"
-          ><md-icon>info_outline</md-icon
-          >{{ $t('menubar.about') }}</md-menu-item
-        >
+        <md-menu-item @click="showOpenJsonDialog = true">
+          <md-icon>file_upload</md-icon>
+          {{ $t('menubar.importJson') }}
+        </md-menu-item>
+        <md-menu-item @click="showSaveJsonDialog = true">
+          <md-icon>file_download</md-icon>
+          {{ $t('menubar.exportJson') }}
+        </md-menu-item>
+        <md-menu-item @click="openGithub()">
+          <md-icon>code</md-icon>
+          {{ $t('menubar.github') }}
+        </md-menu-item>
+        <md-menu-item @click="showLicensesDialog = true">
+          <md-icon>view_headline</md-icon>
+          {{ $t('menubar.openSource') }}
+        </md-menu-item>
+        <md-menu-item @click="showAboutDialog = true">
+          <md-icon>info_outline</md-icon>
+          {{ $t('menubar.about') }}
+        </md-menu-item>
       </md-menu-content>
     </md-menu>
 
@@ -126,15 +131,15 @@
       <md-dialog-content>
         <b>{{ $t('dialog.help.controlsTitle') }}</b>
         <p class="helpControls">{{ $t('dialog.help.controlsText') }}</p>
-        <p>
-          {{ $t('dialog.help.changeJsonWarning') }}
-        </p>
+        <p>{{ $t('dialog.help.changeJsonWarning') }}</p>
         <br />
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false">{{
+        <md-button class="md-primary" @click="showHelpDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -144,9 +149,11 @@
         <Settings></Settings>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false">{{
+        <md-button class="md-primary" @click="showSettingsDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -156,9 +163,11 @@
         <LicensesDialog></LicensesDialog>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showLicensesDialog = false">{{
+        <md-button class="md-primary" @click="showLicensesDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -168,9 +177,7 @@
         <p>{{ $t('dialog.about.row1') }}</p>
         <p>
           <i18n path="dialog.about.row2">
-            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
-              >GitHub</a
-            >
+            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github">GitHub</a>
           </i18n>
         </p>
         <p>
@@ -178,15 +185,16 @@
             <a
               href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
               slot="authors"
-              >{{ $t('dialog.about.authors') }}</a
-            >
+            >{{ $t('dialog.about.authors') }}</a>
           </i18n>
         </p>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showAboutDialog = false">{{
+        <md-button class="md-primary" @click="showAboutDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>

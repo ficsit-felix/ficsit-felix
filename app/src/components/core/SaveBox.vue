@@ -5,9 +5,10 @@
       <p v-else>{{ $t('savePage.error') }}</p>
       <br />
       <br />
-      <md-button class="md-raised" @click="$router.push({ name: 'editor' })">
-        {{ $t('savePage.backButton') }}
-      </md-button>
+      <md-button
+        class="md-raised"
+        @click="$router.push({ name: 'editor' })"
+      >{{ $t('savePage.backButton') }}</md-button>
     </div>
     <div v-else class="infobox">
       <p v-if="exportJson">{{ $t('savePage.jsonSubtitle') }}</p>
@@ -22,9 +23,7 @@
       <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
       <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">
-          {{ $t('general.close') }}
-        </md-button>
+        <md-button class="md-primary" @click="showErrorDialog = false">{{ $t('general.close') }}</md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -95,7 +94,6 @@ export default {
 
         let filename;
 
-        debugger;
         if (this.exportJson) {
           // TODO make sure we only cut of the extension
           filename =

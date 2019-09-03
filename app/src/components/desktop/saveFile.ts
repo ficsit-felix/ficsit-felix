@@ -4,7 +4,7 @@ import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { isElectron } from '@/ts/isElectron';
 import { getSaveFilesPath } from './fileUtil';
-import { writeFile } from 'fs';
+import { writeFile, fstat, existsSync, copyFileSync } from 'fs';
 
 export function saveFileToFilesystem(
   saveGame: SaveGame,
@@ -42,15 +42,7 @@ function transformFile(
 
       // TODO convert to zip
 
-      const path = getSaveFilesPath() + '/' + filename;
-      debugger;
-      writeFile(path, data, err => {
-        if (err) {
-          callback(err, undefined, undefined);
-          return;
-        }
-        callback(undefined, undefined, true);
-      });
+      saveDesktop(filename, data, callback);
     } else {
       // web version
       saveWeb(asZip, filename, data, callback);
@@ -60,6 +52,46 @@ function transformFile(
     exportJson: asJson,
     data: window.data
   });
+}
+
+function saveDesktop(
+  filename: string,
+  data: any,
+  callback: (
+    err: Error | undefined,
+    progress: number | undefined,
+    success: boolean | undefined
+  ) => void
+) {
+  const path = getSaveFilesPath() + '/' + filename;
+
+  if (existsSync(path)) {
+    // make a backup
+    // TODO maybe zip the backup?
+    const timestamp = new Date()
+      .toISOString()
+      .replace('T', '_')
+      .replace('Z', '');
+    copyFileSync(
+      path,
+      getSaveFilesPath() + '/' + filename + '_' + timestamp + '.bak'
+    );
+  }
+
+  writeFile(
+    path,
+    data,
+    {
+      encoding: 'binary'
+    },
+    err => {
+      if (err) {
+        callback(err, undefined, undefined);
+        return;
+      }
+      callback(undefined, undefined, true);
+    }
+  );
 }
 
 function saveWeb(

@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <div class="maincolumn">
-      <Menubar />
+      <Menubar v-if="showMenubar" />
       <div class="mainrow">
         <Split @onDrag="onDrag">
           <SplitArea :size="60">
@@ -21,10 +21,7 @@
             </Split>
           </SplitArea>
           <SplitArea :size="23">
-            <PropertyEditor
-              ref="propertyEditor"
-              @focusSelectedObject="focusSelectedObject"
-            />
+            <PropertyEditor ref="propertyEditor" @focusSelectedObject="focusSelectedObject" />
           </SplitArea>
         </Split>
       </div>
@@ -40,6 +37,7 @@ import ObjectList from './ObjectList.vue';
 import PropertyEditor from './PropertyEditor.vue';
 import ClassList from './ClassList.vue';
 import { mapState } from 'vuex';
+import { isElectron } from '../../ts/isElectron';
 
 export default {
   name: 'editor',
@@ -52,6 +50,11 @@ export default {
   },
   computed: {
     ...mapState(['dataLoaded'])
+  },
+  data() {
+    return {
+      showMenubar: !isElectron()
+    };
   },
 
   created() {
