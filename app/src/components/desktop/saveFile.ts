@@ -11,20 +11,12 @@ export function saveFileToFilesystem(
   filename: string,
   asJson: boolean,
   asZip: boolean,
-  callback: (
-    err: Error | undefined,
-    progress: number | undefined,
-    success: boolean | undefined
-  ) => void
+  callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
   transformFile(callback, asZip, filename, asJson);
 }
 function transformFile(
-  callback: (
-    err: Error | undefined,
-    progress: number | undefined,
-    success: boolean | undefined
-  ) => void,
+  callback: (err?: Error, progress?: number, success?: boolean) => void,
   asZip: boolean,
   filename: string,
   asJson: boolean
@@ -57,11 +49,7 @@ function transformFile(
 function saveDesktop(
   filename: string,
   data: any,
-  callback: (
-    err: Error | undefined,
-    progress: number | undefined,
-    success: boolean | undefined
-  ) => void
+  callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
   const path = getSaveFilesPath() + '/' + filename;
 
@@ -98,11 +86,7 @@ function saveWeb(
   asZip: boolean,
   filename: string,
   data: any,
-  callback: (
-    err: Error | undefined,
-    progress: number | undefined,
-    success: boolean | undefined
-  ) => void
+  callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
   if (asZip) {
     let zip = new JSZip();

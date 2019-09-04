@@ -4,22 +4,16 @@
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
       <li class="small">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">
-        {{ $t('menubar.settings') }}
-      </li>
+      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
     </ul>
     <ul class="filebrowser" ref="filebrowser">
-      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">
-        {{ file }}
-      </li>
+      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">{{ file }}</li>
     </ul>
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">
-        Could not locate save folder
-      </div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
     </div>
   </div>
 </template>
@@ -122,7 +116,8 @@ export default {
     openFile(file) {
       this.setProgressText({
         title: this.$t('openPage.subtitleSav'),
-        currentStep: this.$t('openPage.readingFile')
+        currentStep: this.$t('openPage.readingFile'),
+        showCloseButton: false
       });
       EventBus.$emit(DIALOG_PROGRESS, true);
       setTimeout(() => {

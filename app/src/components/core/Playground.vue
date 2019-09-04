@@ -48,12 +48,7 @@
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
     -->
 
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-      :defaultIncludeSave="false"
-    ></BugReportDialog>
+    <BugReportDialog ref="bugReport" :filename="filename" :uuid="uuid" :defaultIncludeSave="false"></BugReportDialog>
   </div>
 </template>
 
@@ -263,9 +258,9 @@ export default {
   },
 
   mounted() {
-    console.log('sdxasdfasasdfasdfasdfasdfdfassdfgsdfgdfxxxf');
     this.setProgressText({
-      currentStep: this.$t('openPage.buildingWorld')
+      currentStep: this.$t('openPage.buildingWorld'),
+      showCloseButton: false
     });
     this.setProgress(50);
     EventBus.$emit(DIALOG_PROGRESS, true);

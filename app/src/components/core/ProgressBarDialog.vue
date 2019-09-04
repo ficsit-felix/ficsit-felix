@@ -3,6 +3,11 @@
     <div class="title">{{ progressText.title }}</div>
     <ProgressBar :progress="progress"></ProgressBar>
     <div class="currentStep">{{ progressText.currentStep }}</div>
+    <md-button v-if="progressText.showCloseButton" @click="hideProgressDialog()">
+      {{
+      $t('general.close')
+      }}
+    </md-button>
   </div>
 </template>
 
@@ -12,6 +17,7 @@ import { mapState } from 'vuex';
 import ProgressBar from './ProgressBar.vue';
 import { EventBus } from '../../event-bus';
 import { cursorTo } from 'readline';
+import { DIALOG_PROGRESS } from '../../ts/constants';
 
 @Component({
   components: {
@@ -21,13 +27,16 @@ import { cursorTo } from 'readline';
     ...mapState(['progress', 'progressText'])
   }
 })
-export default class ProgressBarDialog extends Vue {}
+export default class ProgressBarDialog extends Vue {
+  hideProgressDialog() {
+    EventBus.$emit(DIALOG_PROGRESS, false);
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
 .progress-bar-view {
-  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,14 +44,17 @@ export default class ProgressBarDialog extends Vue {}
   height: 100%;
 }
 .title {
-  font-size: 40px;
-  line-height: 2;
-  margin-bottom: 40px;
+  font-size: 30px;
+  line-height: 1;
+  margin-bottom: 50px;
+  margin-top: 30px;
 }
 
 .currentStep {
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   color: #ccc;
   font-size: 20px;
+  line-height: 1;
 }
 </style>

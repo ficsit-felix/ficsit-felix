@@ -6,50 +6,48 @@
     </div>
 
     <h3>{{ $t('settings.graphicsSectionTitle') }}</h3>
-    <md-checkbox :model="showMap" @change="updateShowMap">{{
+    <md-checkbox :model="showMap" @change="updateShowMap">
+      {{
       $t('settings.showMap')
-    }}</md-checkbox>
-    <md-checkbox :model="showModels" @change="updateShowModels">{{
+      }}
+    </md-checkbox>
+    <md-checkbox :model="showModels" @change="updateShowModels">
+      {{
       $t('settings.showModels')
-    }}</md-checkbox>
-    <md-checkbox :model="showCustomPaints" @change="updateShowCustomPaints">{{
+      }}
+    </md-checkbox>
+    <md-checkbox :model="showCustomPaints" @change="updateShowCustomPaints">
+      {{
       $t('settings.showCustomPaints')
-    }}</md-checkbox>
+      }}
+    </md-checkbox>
     <h4>{{ $t('settings.advancedSectionTitle') }}</h4>
     <md-field>
       <label>{{ $t('settings.farPlane') }}</label>
-      <md-input
-        :value="farPlane"
-        @input="updateFarPlane"
-        type="number"
-      ></md-input>
+      <md-input :value="farPlane" @input="updateFarPlane" type="number"></md-input>
       <span class="md-helper-text">{{ $t('settings.farPlaneHelp') }}</span>
     </md-field>
     <md-field>
       <label>{{ $t('settings.nearPlane') }}</label>
-      <md-input
-        :value="nearPlane"
-        @input="updateNearPlane"
-        type="number"
-      ></md-input>
+      <md-input :value="nearPlane" @input="updateNearPlane" type="number"></md-input>
       <span class="md-helper-text">{{ $t('settings.nearPlaneHelp') }}</span>
     </md-field>
 
     <md-field>
       <label>{{ $t('settings.conveyorBeltResolution') }}</label>
-      <md-input
-        :value="conveyorBeltResolution"
-        @input="updateConveyorBeltResolution"
-        type="number"
-      ></md-input>
+      <md-input :value="conveyorBeltResolution" @input="updateConveyorBeltResolution" type="number"></md-input>
 
-      <span class="md-helper-text">{{
+      <span class="md-helper-text">
+        {{
         $t('settings.conveyorBeltResolutionHelp')
-      }}</span>
+        }}
+      </span>
     </md-field>
-    <md-checkbox :model="saveAsZip" @change="setSaveAsZip">
-      {{ $t('settings.saveAsZip') }}
-    </md-checkbox>
+    <md-checkbox
+      v-if="showSaveAsZip"
+      :model="saveAsZip"
+      @change="setSaveAsZip"
+    >{{ $t('settings.saveAsZip') }}</md-checkbox>
 
     <br />
     <h3 class="clickable" @click="toggleShowDevelopSettings">
@@ -59,33 +57,37 @@
     </h3>
 
     <div v-if="showDevelopSettings">
-      <md-checkbox :model="editClassColors" @change="updateEditClassColors">{{
+      <md-checkbox :model="editClassColors" @change="updateEditClassColors">
+        {{
         $t('settings.editClassColors')
-      }}</md-checkbox>
-      <md-button class="md-raised" @click="exportClassColors">{{
+        }}
+      </md-checkbox>
+      <md-button class="md-raised" @click="exportClassColors">
+        {{
         $t('settings.copyClassColorsButton')
-      }}</md-button>
-      <md-button class="md-raised" @click="clearClassColors">{{
+        }}
+      </md-button>
+      <md-button class="md-raised" @click="clearClassColors">
+        {{
         $t('settings.clearClassColorsButton')
-      }}</md-button>
+        }}
+      </md-button>
 
       <md-checkbox
         :model="experimentalFeatures"
         @change="updateExperimentalFeatures"
-        >{{ $t('settings.experimentalFeatures') }}</md-checkbox
-      >
+      >{{ $t('settings.experimentalFeatures') }}</md-checkbox>
 
       <md-field>
         <label>{{ $t('settings.autoLoadSaveFile') }}</label>
-        <md-input
-          :value="autoLoadSaveFile"
-          @input="updateAutoLoadSaveFile"
-        ></md-input>
+        <md-input :value="autoLoadSaveFile" @input="updateAutoLoadSaveFile"></md-input>
       </md-field>
 
-      <md-checkbox :model="showFps" @change="setShowFps">{{
+      <md-checkbox :model="showFps" @change="setShowFps">
+        {{
         $t('settings.showFps')
-      }}</md-checkbox>
+        }}
+      </md-checkbox>
     </div>
   </div>
 </template>
@@ -94,6 +96,7 @@
 import { mapState, mapActions } from 'vuex';
 import copyToClipboard from '@/ts/copyToClipboard';
 import LanguageSwitcher from './LanguageSwitcher';
+import { isElectron } from '../../ts/isElectron';
 export default {
   name: 'Settings',
   components: {
@@ -115,6 +118,11 @@ export default {
       'saveAsZip',
       'showDevelopSettings'
     ])
+  },
+  data() {
+    return {
+      showSaveAsZip: !isElectron() // hide saveAsZip setting on desktop
+    };
   },
   methods: {
     ...mapActions('settings', [

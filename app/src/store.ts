@@ -211,8 +211,9 @@ interface RootState {
   // loading
   progress: number;
   progressText: {
-    title?: string;
-    currentStep?: string;
+    title: string;
+    currentStep: string;
+    showCloseButton: boolean;
   };
   showSaveMenuEntries: boolean;
 }
@@ -244,7 +245,8 @@ export default new Vuex.Store<RootState>({
     progress: 0,
     progressText: {
       title: '',
-      currentStep: ''
+      currentStep: '',
+      showCloseButton: false
     },
     showSaveMenuEntries: false
   },
@@ -487,6 +489,9 @@ export default new Vuex.Store<RootState>({
       }
       if (payload.currentStep) {
         state.progressText.currentStep = payload.currentStep;
+      }
+      if (payload.showCloseButton) {
+        state.progressText.showCloseButton = payload.showCloseButton;
       }
     },
     SET_SHOW_SAVE_MENU_ENTRIES(state, payload) {

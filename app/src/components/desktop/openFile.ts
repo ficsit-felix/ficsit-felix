@@ -3,11 +3,7 @@ import { sav2json, SaveGame } from 'satisfactory-json';
 
 export function openFileFromFilesystem(
   path: string,
-  callback: (
-    err: Error | undefined,
-    progress: number | undefined,
-    saveGame: SaveGame | undefined
-  ) => void
+  callback: (err?: Error, progress?: number, saveGame?: SaveGame) => void
 ): void {
   console.time('readDesktop');
   fs.readFile(path, (err, data) => {
