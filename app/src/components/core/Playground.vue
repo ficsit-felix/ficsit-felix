@@ -264,87 +264,82 @@ export default {
     });
     this.setProgress(50);
     EventBus.$emit(DIALOG_PROGRESS, true);
-    setTimeout(() => {
-      this.geometryFactory = new GeometryFactory(
-        this.showModels,
-        this.conveyorBeltResolution
-      );
+    this.geometryFactory = new GeometryFactory(
+      this.showModels,
+      this.conveyorBeltResolution
+    );
 
-      var textureLoader = new THREE.TextureLoader();
-      this.matcap = textureLoader.load('textures/matcap-white.png', function(
-        matcap
-      ) {
-        matcap.encoding = THREE.sRGBEncoding;
-      });
+    var textureLoader = new THREE.TextureLoader();
+    this.matcap = textureLoader.load('textures/matcap-white.png', function(
+      matcap
+    ) {
+      matcap.encoding = THREE.sRGBEncoding;
+    });
 
-      this.colorFactory = new ColorFactory(
-        this.matcap,
-        this.showCustomPaints,
-        this.classColors
-      );
-      this.meshFactory = new MeshFactory(
-        this.geometryFactory,
-        this.colorFactory
-      );
+    this.colorFactory = new ColorFactory(
+      this.matcap,
+      this.showCustomPaints,
+      this.classColors
+    );
+    this.meshFactory = new MeshFactory(this.geometryFactory, this.colorFactory);
 
-      this.scene = this.$refs.scene.scene;
+    this.scene = this.$refs.scene.scene;
 
-      this.selectedMaterial = new THREE.MeshMatcapMaterial({
-        color: 0xffffff,
-        matcap: this.matcap
-      });
+    this.selectedMaterial = new THREE.MeshMatcapMaterial({
+      color: 0xffffff,
+      matcap: this.matcap
+    });
 
-      this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
+    this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
 
-      this.loader = new GLTFLoader();
+    this.loader = new GLTFLoader();
 
-      this.geometries = {};
+    this.geometries = {};
 
-      this.lastSelectedActors = [];
-      if (this.dataLoaded) {
-        this.createMeshesForActors();
-      }
+    this.lastSelectedActors = [];
+    if (this.dataLoaded) {
+      this.createMeshesForActors();
+    }
 
-      this.transformControl = new TransformControls(
-        this.$refs.renderer.camera.obj,
-        this.$refs.renderer.renderer.domElement
-      );
-      this.transformControl.space = 'world';
-      // correct way to to this, but i don't want that many updates
-      /*this.transformControl.addEventListener('objectChange', () => {
+    this.transformControl = new TransformControls(
+      this.$refs.renderer.camera.obj,
+      this.$refs.renderer.renderer.domElement
+    );
+    this.transformControl.space = 'world';
+    // correct way to to this, but i don't want that many updates
+    /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
     })*/
-      this.transformControl.addEventListener(
-        'dragging-changed',
-        event => {
-          // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
-          this.$store.commit('SET_SELECTION_DISABLED', event.value);
-          this.setSelectionDisabled(event.value);
-          if (event.value == false) {
-            this.onSelectedActorTransformChanged();
-          }
-        },
-        false
-      );
-      this.scene.add(this.transformControl);
+    this.transformControl.addEventListener(
+      'dragging-changed',
+      event => {
+        // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
+        this.$store.commit('SET_SELECTION_DISABLED', event.value);
+        this.setSelectionDisabled(event.value);
+        if (event.value == false) {
+          this.onSelectedActorTransformChanged();
+        }
+      },
+      false
+    );
+    this.scene.add(this.transformControl);
 
-      // load map
-      if (this.showMap) {
-        this.loadMap();
-      }
+    // load map
+    if (this.showMap) {
+      this.loadMap();
+    }
 
-      /// EVENT HANDLERS ///
+    /// EVENT HANDLERS ///
 
-      // listen to window resize
-      window.addEventListener('resize', this.handleResize);
-      window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
+    // listen to window resize
+    window.addEventListener('resize', this.handleResize);
+    window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
 
-      EventBus.$on('delete', payload => {
-        // remove all actors from scene
-        this.meshManager.deleteSelectedMeshes(payload);
-        this.transformControl.detach();
-      });
-    }, DIALOG_OPEN_TIME_MS);
+    EventBus.$on('delete', payload => {
+      // remove all actors from scene
+      this.meshManager.deleteSelectedMeshes(payload);
+      this.transformControl.detach();
+    });
   },
   methods: {
     ...mapActions([
