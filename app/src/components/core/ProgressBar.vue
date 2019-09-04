@@ -1,6 +1,7 @@
 <template>
   <div class="progressbar">
     <div class="content" v-bind:style="{ width: progress + '%' }"></div>
+    <div class="label">{{ Math.round(progress) }}%</div>
   </div>
 </template>
 
@@ -21,12 +22,24 @@ export default class ProgressBar extends Vue {
   height: 50px;
   border-radius: 5px;
   padding: 3px;
-  background: #ffffff80;
   max-width: 1000px;
+  background: #ffffff;
+  position: relative;
+
   .content {
     background: $middleGray;
     height: 100%;
     border-radius: 3px;
+  }
+  .label {
+    position: absolute;
+    top: 0px;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    text-shadow: 1px 1px 1px #333;
+    font-size: 22px;
+    line-height: 45px;
   }
 }
 </style>

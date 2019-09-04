@@ -210,6 +210,10 @@ interface RootState {
 
   // loading
   progress: number;
+  progressText: {
+    title?: string;
+    currentStep?: string;
+  };
   showSaveMenuEntries: boolean;
 }
 
@@ -238,6 +242,10 @@ export default new Vuex.Store<RootState>({
     shiftSelect: false,
 
     progress: 0,
+    progressText: {
+      title: '',
+      currentStep: ''
+    },
     showSaveMenuEntries: false
   },
   getters: {
@@ -473,6 +481,14 @@ export default new Vuex.Store<RootState>({
     SET_PROGRESS(state, payload) {
       state.progress = payload;
     },
+    SET_PROGRESS_TEXT(state, payload) {
+      if (payload.title) {
+        state.progressText.title = payload.title;
+      }
+      if (payload.currentStep) {
+        state.progressText.currentStep = payload.currentStep;
+      }
+    },
     SET_SHOW_SAVE_MENU_ENTRIES(state, payload) {
       state.showSaveMenuEntries = payload;
     }
@@ -536,6 +552,9 @@ export default new Vuex.Store<RootState>({
     },
     setProgress(context, payload) {
       context.commit('SET_PROGRESS', payload);
+    },
+    setProgressText(context, payload) {
+      context.commit('SET_PROGRESS_TEXT', payload);
     },
     setShowSaveMenuEntries(context, payload) {
       context.commit('SET_SHOW_SAVE_MENU_ENTRIES', payload);

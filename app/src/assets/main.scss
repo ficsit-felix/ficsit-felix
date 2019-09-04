@@ -1,46 +1,53 @@
 @import 'colors.scss';
 
 body {
-    background: $eigenblack;
+  background: $eigenblack;
 }
 
 html,
 body {
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    overflow: hidden;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
 }
 
 * {
-
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-
 // custom theme
-@import "~vue-material/dist/theme/engine"; // Import the theme engine
+@import '~vue-material/dist/theme/engine'; // Import the theme engine
 
-
-
-
-@include md-register-theme("default", (primary: md-get-palette-color(orange, A200), // The primary color of your application
-        accent: md-get-palette-color(cyan, 500), // The accent or secondary color
-        theme: dark));
-@import "~vue-material/dist/theme/all"; // Apply the theme
+@include md-register-theme(
+  'default',
+  (
+    primary: md-get-palette-color(orange, A200),
+    // The primary color of your application
+      accent: md-get-palette-color(cyan, 500),
+    // The accent or secondary color
+      theme: dark
+  )
+);
+@import '~vue-material/dist/theme/all'; // Apply the theme
 // @import "~vue-material/dist/components/MdButton/theme"; // Apply the theme
 // @import "~vue-material/dist/components/MdField/theme"; // Apply the theme
 
-@include md-register-theme("default", (primary: md-get-palette-color(orange, A200), // The primary color of your application
-        accent: md-get-palette-color(cyan, 400), // The accent or secondary color
-        theme: light));
-@import "~vue-material/dist/components/MdSnackbar/theme"; // Apply the theme
-
-
+@include md-register-theme(
+  'default',
+  (
+    primary: md-get-palette-color(orange, A200),
+    // The primary color of your application
+      accent: md-get-palette-color(cyan, 400),
+    // The accent or secondary color
+      theme: light
+  )
+);
+@import '~vue-material/dist/components/MdSnackbar/theme'; // Apply the theme
 
 // increase dialog animation speed
 .md-dialog {
-    transition-duration: 0.1s !important;
+  transition-duration: 0.1s !important;
 }
 
 // hack until https://github.com/vuematerial/vue-material/pull/2023 is merged
@@ -48,42 +55,47 @@ body {
 // uses the body as the container that centers the dialog and removes the #app by positioning it absolutely
 // breaks if more than one dialog is on screen
 .md-dialog {
-    transform: initial !important;
-    position: initial !important;
+  transform: initial !important;
+  position: initial !important;
 }
 
 #app {
-    position: absolute;
+  position: absolute;
 }
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // increase z-index of semi-transparent overlay to put it above the railroadWarning, so that it can be higher than the text of material buttons
 .md-overlay {
-    z-index: 10 !important;
+  z-index: 10 !important;
 }
 
 // don't underline menu entries in the titlebar
 .titlebar .action-menu-item:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 // make space for the logo in the titlebar
 .titlebar .menubar {
-    margin-left: 85px;
+  margin-left: 85px;
 }
 
 // hide title text
 .titlebar .window-title {
-    color: #00000000;
-    font-size: 0px !important;
+  color: #00000000;
+  font-size: 0px !important;
 }
 
 // need to be flex so that our hack for centering VueMaterial dialogs still works
 .container-after-titlebar {
-    display: flex;
+  display: flex;
+}
+
+// put titlebar below dialog overlay layer
+.titlebar {
+  z-index: 9 !important;
 }

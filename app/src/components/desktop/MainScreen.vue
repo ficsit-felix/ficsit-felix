@@ -4,16 +4,22 @@
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
       <li class="small">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
+      <li class="small" @click="openSettings()">
+        {{ $t('menubar.settings') }}
+      </li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
     </ul>
     <ul class="filebrowser" ref="filebrowser">
-      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">{{ file }}</li>
+      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">
+        {{ file }}
+      </li>
     </ul>
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">
+        Could not locate save folder
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +32,12 @@ import CenterWhiteBox from '@/components/core/CenterWhiteBox';
 import { app, remote } from 'electron';
 import electron from 'electron';
 import { EventBus } from '../../event-bus';
-import { DIALOG_SETTINGS, DIALOG_ABOUT } from '../../ts/constants';
+import {
+  DIALOG_SETTINGS,
+  DIALOG_ABOUT,
+  DIALOG_PROGRESS,
+  DIALOG_OPEN_TIME_MS
+} from '../../ts/constants';
 import { openFileFromFilesystem } from './openFile';
 import { mapActions } from 'vuex';
 import { getSaveFilesPath } from './fileUtil';
@@ -86,7 +97,8 @@ export default {
       'setProgress',
       'setFilename',
       'setUUID',
-      'setShowSaveMenuEntries'
+      'setShowSaveMenuEntries',
+      'setProgressText'
     ]),
     openFilebrowser() {
       const filebrowser = this.$refs.filebrowser;
@@ -108,45 +120,49 @@ export default {
     },
 
     openFile(file) {
-      this.$router.push({
-        name: 'progressbar'
+      this.setProgressText({
+        title: this.$t('openPage.subtitleSav'),
+        currentStep: this.$t('openPage.readingFile')
       });
+      EventBus.$emit(DIALOG_PROGRESS, true);
+      setTimeout(() => {
+        // give the dialog time to be open
+        this.setFilename(file);
+        const uuid = v4();
+        this.setUUID(uuid);
 
-      this.setFilename(file);
-      const uuid = v4();
-      this.setUUID(uuid);
+        reportContext('uuid', uuid);
+        reportContext('savename', file);
 
-      reportContext('uuid', uuid);
-      reportContext('savename', file);
+        //      setTimeout(() => {
+        console.time('openFile');
+        openFileFromFilesystem(
+          this.saveFilesPath + '/' + file,
+          (err, progress, saveGame) => {
+            if (err) {
+              // TODO open bug report window
+              console.error(err);
+              return;
+            }
 
-      //      setTimeout(() => {
-      console.time('openFile');
-      openFileFromFilesystem(
-        this.saveFilesPath + '/' + file,
-        (err, progress, saveGame) => {
-          if (err) {
-            // TODO open bug report window
-            console.error(err);
-            return;
-          }
+            if (progress) {
+              this.setProgress(progress);
+              return;
+            }
 
-          if (progress) {
-            this.setProgress(progress);
-            return;
-          }
+            console.time('setVuex');
+            this.setLoadedData(saveGame).then(() => {
+              console.timeEnd('setVuex');
+              console.timeEnd('openFile');
 
-          console.time('setVuex');
-          this.setLoadedData(saveGame).then(() => {
-            console.timeEnd('setVuex');
-            console.timeEnd('openFile');
-
-            this.setShowSaveMenuEntries(true);
-            this.$router.push({
-              name: 'editor'
+              this.setShowSaveMenuEntries(true);
+              this.$router.push({
+                name: 'editor'
+              });
             });
-          });
-        }
-      );
+          }
+        );
+      }, DIALOG_OPEN_TIME_MS);
       //}, 1000);
     }
   }

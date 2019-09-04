@@ -18,13 +18,13 @@
             <md-input v-model="userContact" :disabled="formDisabled"></md-input>
           </md-field>
 
-          <md-checkbox v-model="includeSave" :disabled="formDisabled">{{
-            $t('dialog.bugReport.includeSave')
-          }}</md-checkbox>
+          <md-checkbox v-model="includeSave" :disabled="formDisabled">
+            {{ $t('dialog.bugReport.includeSave') }}
+          </md-checkbox>
           <div v-if="screenshotDataUrl !== ''">
-            <md-checkbox v-model="includeScreenshot" :disabled="formDisabled">{{
-              $t('dialog.bugReport.includeScreenshot')
-            }}</md-checkbox>
+            <md-checkbox v-model="includeScreenshot" :disabled="formDisabled">
+              {{ $t('dialog.bugReport.includeScreenshot') }}
+            </md-checkbox>
 
             <img :src="screenshotDataUrl" v-if="includeScreenshot" />
           </div>
@@ -46,9 +46,8 @@
           class="md-primary"
           @click="sendReport()"
           :disabled="formDisabled"
+          >{{ $t('dialog.bugReport.send') }}</md-button
         >
-          {{ $t('dialog.bugReport.send') }}
-        </md-button>
       </md-dialog-actions>
     </md-dialog>
 

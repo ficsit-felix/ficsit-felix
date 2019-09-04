@@ -1,8 +1,8 @@
 <template>
   <div class="progress-bar-view">
-    <div class="title">Loading files</div>
+    <div class="title">{{ progressText.title }}</div>
     <ProgressBar :progress="progress"></ProgressBar>
-    <div class="currentStep">reading the file...</div>
+    <div class="currentStep">{{ progressText.currentStep }}</div>
   </div>
 </template>
 
@@ -10,16 +10,18 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import ProgressBar from './ProgressBar.vue';
+import { EventBus } from '../../event-bus';
+import { cursorTo } from 'readline';
 
 @Component({
   components: {
     ProgressBar
   },
   computed: {
-    ...mapState(['progress'])
+    ...mapState(['progress', 'progressText'])
   }
 })
-export default class ProgressBarView extends Vue {}
+export default class ProgressBarDialog extends Vue {}
 </script>
 
 <style lang="scss" scoped>
@@ -40,7 +42,7 @@ export default class ProgressBarView extends Vue {}
 
 .currentStep {
   margin-top: 50px;
-  color: $middleGray;
+  color: #ccc;
   font-size: 20px;
 }
 </style>

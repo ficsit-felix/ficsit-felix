@@ -42,11 +42,6 @@
       {{ commithash }}
     </div>
 
-    <div v-if="loadingProgress < 100" class="loadingProgress">
-      <div class="progressBar" :style="{ width: loadingProgress + '%' }"></div>
-      <div class="progressText">{{ Math.round(loadingProgress) }} %</div>
-    </div>
-
     <Compass></Compass>
     <!--
       //currently disabled https://github.com/ficsit-felix/ficsit-felix/issues/86#issuecomment-512925021
@@ -66,7 +61,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from '@/js/OrbitControls';
 import { TransformControls } from '@/js/TransformControls';
-import { mapActions, mapGetters, mapState } from 'vuex';
+import _default, { mapActions, mapGetters, mapState } from 'vuex';
 import Scene from './scene/Scene';
 import Renderer from './scene/Renderer';
 import Camera from './scene/Camera';
@@ -96,6 +91,7 @@ import {
 } from '@/helpers/entityHelper';
 import { EventBus } from '@/event-bus';
 import { reportError } from '@/ts/errorReporting';
+import { DIALOG_PROGRESS, DIALOG_OPEN_TIME_MS } from '../../ts/constants';
 
 export default {
   name: 'Playground',
@@ -121,7 +117,6 @@ export default {
       commithash,
       rotateX: 0,
       rotateZ: 0,
-      loadingProgress: 50,
       bugReportVisible: false
     };
   },
@@ -268,82 +263,93 @@ export default {
   },
 
   mounted() {
-    this.geometryFactory = new GeometryFactory(
-      this.showModels,
-      this.conveyorBeltResolution
-    );
-
-    var textureLoader = new THREE.TextureLoader();
-    this.matcap = textureLoader.load('textures/matcap-white.png', function(
-      matcap
-    ) {
-      matcap.encoding = THREE.sRGBEncoding;
+    console.log('sdxasdfasasdfasdfasdfasdfdfassdfgsdfgdfxxxf');
+    this.setProgressText({
+      currentStep: this.$t('openPage.buildingWorld')
     });
+    this.setProgress(50);
+    EventBus.$emit(DIALOG_PROGRESS, true);
+    setTimeout(() => {
+      this.geometryFactory = new GeometryFactory(
+        this.showModels,
+        this.conveyorBeltResolution
+      );
 
-    this.colorFactory = new ColorFactory(
-      this.matcap,
-      this.showCustomPaints,
-      this.classColors
-    );
-    this.meshFactory = new MeshFactory(this.geometryFactory, this.colorFactory);
+      var textureLoader = new THREE.TextureLoader();
+      this.matcap = textureLoader.load('textures/matcap-white.png', function(
+        matcap
+      ) {
+        matcap.encoding = THREE.sRGBEncoding;
+      });
 
-    this.scene = this.$refs.scene.scene;
+      this.colorFactory = new ColorFactory(
+        this.matcap,
+        this.showCustomPaints,
+        this.classColors
+      );
+      this.meshFactory = new MeshFactory(
+        this.geometryFactory,
+        this.colorFactory
+      );
 
-    this.selectedMaterial = new THREE.MeshMatcapMaterial({
-      color: 0xffffff,
-      matcap: this.matcap
-    });
+      this.scene = this.$refs.scene.scene;
 
-    this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
+      this.selectedMaterial = new THREE.MeshMatcapMaterial({
+        color: 0xffffff,
+        matcap: this.matcap
+      });
 
-    this.loader = new GLTFLoader();
+      this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
 
-    this.geometries = {};
+      this.loader = new GLTFLoader();
 
-    this.lastSelectedActors = [];
-    if (this.dataLoaded) {
-      this.createMeshesForActors();
-    }
+      this.geometries = {};
 
-    this.transformControl = new TransformControls(
-      this.$refs.renderer.camera.obj,
-      this.$refs.renderer.renderer.domElement
-    );
-    this.transformControl.space = 'world';
-    // correct way to to this, but i don't want that many updates
-    /*this.transformControl.addEventListener('objectChange', () => {
+      this.lastSelectedActors = [];
+      if (this.dataLoaded) {
+        this.createMeshesForActors();
+      }
+
+      this.transformControl = new TransformControls(
+        this.$refs.renderer.camera.obj,
+        this.$refs.renderer.renderer.domElement
+      );
+      this.transformControl.space = 'world';
+      // correct way to to this, but i don't want that many updates
+      /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
     })*/
-    this.transformControl.addEventListener(
-      'dragging-changed',
-      event => {
-        // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
-        this.$store.commit('SET_SELECTION_DISABLED', event.value);
-        this.setSelectionDisabled(event.value);
-        if (event.value == false) {
-          this.onSelectedActorTransformChanged();
-        }
-      },
-      false
-    );
-    this.scene.add(this.transformControl);
+      this.transformControl.addEventListener(
+        'dragging-changed',
+        event => {
+          // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
+          this.$store.commit('SET_SELECTION_DISABLED', event.value);
+          this.setSelectionDisabled(event.value);
+          if (event.value == false) {
+            this.onSelectedActorTransformChanged();
+          }
+        },
+        false
+      );
+      this.scene.add(this.transformControl);
 
-    // load map
-    if (this.showMap) {
-      this.loadMap();
-    }
+      // load map
+      if (this.showMap) {
+        this.loadMap();
+      }
 
-    /// EVENT HANDLERS ///
+      /// EVENT HANDLERS ///
 
-    // listen to window resize
-    window.addEventListener('resize', this.handleResize);
-    window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
+      // listen to window resize
+      window.addEventListener('resize', this.handleResize);
+      window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
 
-    EventBus.$on('delete', payload => {
-      // remove all actors from scene
-      this.meshManager.deleteSelectedMeshes(payload);
-      this.transformControl.detach();
-    });
+      EventBus.$on('delete', payload => {
+        // remove all actors from scene
+        this.meshManager.deleteSelectedMeshes(payload);
+        this.transformControl.detach();
+      });
+    }, DIALOG_OPEN_TIME_MS);
   },
   methods: {
     ...mapActions([
@@ -351,7 +357,9 @@ export default {
       'setSelectedObject',
       'setSelectionDisabled',
       'setBoxSelect',
-      'setShiftSelect'
+      'setShiftSelect',
+      'setProgress',
+      'setProgressText'
     ]),
 
     updateCompass() {
@@ -397,11 +405,14 @@ export default {
       // we want to create them synchroniously so that we can track progress
       // and build all the instancedMeshGroups at the end
 
-      this.loadingProgress = (index / window.data.actors.length) * 100;
+      this.setProgress((index / window.data.actors.length) * 50 + 50);
 
       if (index >= window.data.actors.length) {
         // created all meshes
         this.meshManager.buildInstancedMeshGroups();
+
+        // hide progress bar dialog
+        EventBus.$emit(DIALOG_PROGRESS, false);
         return;
       }
 
@@ -536,29 +547,6 @@ export default {
   text-shadow: 1px 1px 1px #000;
   line-height: 1.1;
   font-size: 14px;
-}
-
-.loadingProgress {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 20px;
-
-  background: #00bcd43d;
-  color: #fff;
-
-  .progressBar {
-    background: #00bcd4;
-    height: 100%;
-  }
-
-  .progressText {
-    position: absolute;
-    top: 0px;
-    text-align: center;
-    width: 100%;
-  }
 }
 </style>
 
