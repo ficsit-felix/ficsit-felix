@@ -73,8 +73,10 @@ export default {
       }
 
       files.forEach(file => {
-        this.files.push(file);
-        console.log(file);
+        if (file.endsWith('.sav')) {
+          this.files.push(file);
+        }
+        //console.log(file);
       });
     });
   },
