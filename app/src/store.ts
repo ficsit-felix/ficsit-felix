@@ -484,13 +484,13 @@ export default new Vuex.Store<RootState>({
       state.progress = payload;
     },
     SET_PROGRESS_TEXT(state, payload) {
-      if (payload.title) {
+      if (payload.title !== undefined) {
         state.progressText.title = payload.title;
       }
-      if (payload.currentStep) {
+      if (payload.currentStep !== undefined) {
         state.progressText.currentStep = payload.currentStep;
       }
-      if (payload.showCloseButton) {
+      if (payload.showCloseButton !== undefined) {
         state.progressText.showCloseButton = payload.showCloseButton;
       }
     },
