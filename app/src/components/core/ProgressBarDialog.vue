@@ -3,10 +3,11 @@
     <div class="title">{{ progressText.title }}</div>
     <ProgressBar :progress="progress"></ProgressBar>
     <div class="currentStep">{{ progressText.currentStep }}</div>
-    <md-button v-if="progressText.showCloseButton" @click="hideProgressDialog()">
-      {{
-      $t('general.close')
-      }}
+    <md-button
+      v-if="progressText.showCloseButton"
+      @click="hideProgressDialog()"
+    >
+      {{ $t('general.close') }}
     </md-button>
   </div>
 </template>

@@ -3,7 +3,7 @@ import Json2SavWorker from 'worker-loader?name=[name].js!@/transformation/json2s
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { isElectron } from '@/ts/isElectron';
-import { getSaveFilesPath } from './fileUtil';
+import { getSaveGamesFolderPath } from './desktopUtils';
 import { writeFile, fstat, existsSync, copyFileSync } from 'fs';
 
 export function saveFileToFilesystem(
@@ -51,7 +51,7 @@ function saveDesktop(
   data: any,
   callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
-  const path = getSaveFilesPath() + '/' + filename;
+  const path = getSaveGamesFolderPath() + '/' + filename;
 
   if (existsSync(path)) {
     // make a backup
@@ -62,7 +62,7 @@ function saveDesktop(
       .replace('Z', '');
     copyFileSync(
       path,
-      getSaveFilesPath() + '/' + filename + '_' + timestamp + '.bak'
+      getSaveGamesFolderPath() + '/' + filename + '_' + timestamp + '.bak'
     );
   }
 

@@ -43,7 +43,10 @@ import Vue from 'vue';
 import { dialog, remote, shell } from 'electron';
 
 const { Menu, MenuItem } = require('electron').remote;
-import { getSaveGamesFolderPath } from './desktopUtils';
+import {
+  getSaveGamesFolderPath,
+  openFileAndMoveToEditor
+} from './desktopUtils';
 import { EventBus } from '../../event-bus';
 import {
   DIALOG_ABOUT,
@@ -101,26 +104,13 @@ export default {
           label: this.$t('menubar.open'),
           accelerator: 'Ctrl+O',
           click: () => {
-            remote.dialog.showOpenDialog(
-              {
-                defaultPath: getSaveGamesFolderPath(),
-                filters: [
-                  {
-                    name: this.$t('desktop.saveExtension'),
-                    extensions: ['sav']
-                  }
-                ]
-              },
-              filePath => {
-                console.log(filePath);
-              }
-            );
+            this.openFileSelector();
           }
         },
         {
           label: this.$t('menubar.importJson'),
           accelerator: 'Ctrl+Shift+O',
-          click: () => console.log('Click on subitem 1')
+          click: () => this.openJsonFileSelector()
         }
       ];
 
@@ -223,6 +213,49 @@ export default {
         })
       );
       this.titlebar.updateMenu(menu);
+    },
+    openFileSelector() {
+      remote.dialog.showOpenDialog(
+        {
+          defaultPath: getSaveGamesFolderPath(),
+          filters: [
+            {
+              name: this.$t('desktop.saveExtension'),
+              extensions: ['sav']
+            }
+          ]
+        },
+        filePaths => {
+          console.log(filePaths);
+          if (filePaths.length === 1) {
+            this.$router.push({
+              name: '/'
+            });
+            openFileAndMoveToEditor(this, filePaths[0], false);
+          }
+        }
+      );
+    },
+    openJsonFileSelector() {
+      remote.dialog.showOpenDialog(
+        {
+          defaultPath: getSaveGamesFolderPath(),
+          filters: [
+            {
+              name: this.$t('desktop.jsonExtension'),
+              extensions: ['json']
+            }
+          ]
+        },
+        filePaths => {
+          if (filePaths.length === 1) {
+            this.$router.push({
+              name: '/'
+            });
+            openFileAndMoveToEditor(this, filePaths[0], true);
+          }
+        }
+      );
     }
   }
 };

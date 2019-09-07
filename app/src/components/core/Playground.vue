@@ -48,7 +48,12 @@
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
     -->
 
-    <BugReportDialog ref="bugReport" :filename="filename" :uuid="uuid" :defaultIncludeSave="false"></BugReportDialog>
+    <BugReportDialog
+      ref="bugReport"
+      :filename="filename"
+      :uuid="uuid"
+      :defaultIncludeSave="false"
+    ></BugReportDialog>
   </div>
 </template>
 

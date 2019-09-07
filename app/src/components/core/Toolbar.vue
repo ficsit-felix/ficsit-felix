@@ -1,41 +1,40 @@
 <template>
   <div class="toolbar">
     <div class="section">
-      <a @mousedown.stop="$emit('setTranslate')" :class="{ active: translateActive }">
-        {{ $t('toolbar.translate')
-        }}
+      <a
+        @mousedown.stop="$emit('setTranslate')"
+        :class="{ active: translateActive }"
+      >
+        {{ $t('toolbar.translate') }}
         <md-tooltip md-direction="bottom" md-delay="500">G</md-tooltip>
       </a>
       <a @mousedown.stop="$emit('setRotate')" :class="{ active: rotateActive }">
-        {{ $t('toolbar.rotate')
-        }}
+        {{ $t('toolbar.rotate') }}
         <md-tooltip md-direction="bottom" md-delay="500">R</md-tooltip>
       </a>
       <a @mousedown.stop="$emit('setScale')" :class="{ active: scaleActive }">
-        {{ $t('toolbar.scale')
-        }}
+        {{ $t('toolbar.scale') }}
         <md-tooltip md-direction="bottom" md-delay="500">S</md-tooltip>
       </a>
     </div>
     <div class="section">
       <a @mousedown.stop="$emit('setWorld')" :class="{ active: worldActive }">
-        {{ $t('toolbar.world')
-        }}
+        {{ $t('toolbar.world') }}
         <md-tooltip md-direction="bottom" md-delay="500">W</md-tooltip>
       </a>
       <a @mousedown.stop="$emit('setLocal')" :class="{ active: localActive }">
-        {{ $t('toolbar.local')
-        }}
+        {{ $t('toolbar.local') }}
         <md-tooltip md-direction="bottom" md-delay="500">L</md-tooltip>
       </a>
     </div>
     <div class="spacer"></div>
-    <span @click="$emit('reportBug')" style="cursor: pointer;margin-right: 10px;">
+    <span
+      @click="$emit('reportBug')"
+      style="cursor: pointer;margin-right: 10px;"
+    >
       <md-icon class="bugReportIcon">bug_report</md-icon>
       <md-tooltip md-direction="bottom" md-delay="500">
-        {{
-        $t('toolbar.reportBug')
-        }}
+        {{ $t('toolbar.reportBug') }}
       </md-tooltip>
     </span>
   </div>

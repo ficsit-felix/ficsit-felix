@@ -2,6 +2,10 @@
   "classList": {
     "allClasses": "all classes"
   },
+  "desktop": {
+    "saveExtension": "Satisfactory save files",
+    "jsonExtension": "JSON files"
+  },
   "dialog": {
     "about": {
       "authors": "authors",

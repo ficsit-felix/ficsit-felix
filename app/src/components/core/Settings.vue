@@ -7,47 +7,52 @@
 
     <h3>{{ $t('settings.graphicsSectionTitle') }}</h3>
     <md-checkbox :model="showMap" @change="updateShowMap">
-      {{
-      $t('settings.showMap')
-      }}
+      {{ $t('settings.showMap') }}
     </md-checkbox>
     <md-checkbox :model="showModels" @change="updateShowModels">
-      {{
-      $t('settings.showModels')
-      }}
+      {{ $t('settings.showModels') }}
     </md-checkbox>
     <md-checkbox :model="showCustomPaints" @change="updateShowCustomPaints">
-      {{
-      $t('settings.showCustomPaints')
-      }}
+      {{ $t('settings.showCustomPaints') }}
     </md-checkbox>
     <h4>{{ $t('settings.advancedSectionTitle') }}</h4>
     <md-field>
       <label>{{ $t('settings.farPlane') }}</label>
-      <md-input :value="farPlane" @input="updateFarPlane" type="number"></md-input>
+      <md-input
+        :value="farPlane"
+        @input="updateFarPlane"
+        type="number"
+      ></md-input>
       <span class="md-helper-text">{{ $t('settings.farPlaneHelp') }}</span>
     </md-field>
     <md-field>
       <label>{{ $t('settings.nearPlane') }}</label>
-      <md-input :value="nearPlane" @input="updateNearPlane" type="number"></md-input>
+      <md-input
+        :value="nearPlane"
+        @input="updateNearPlane"
+        type="number"
+      ></md-input>
       <span class="md-helper-text">{{ $t('settings.nearPlaneHelp') }}</span>
     </md-field>
 
     <md-field>
       <label>{{ $t('settings.conveyorBeltResolution') }}</label>
-      <md-input :value="conveyorBeltResolution" @input="updateConveyorBeltResolution" type="number"></md-input>
+      <md-input
+        :value="conveyorBeltResolution"
+        @input="updateConveyorBeltResolution"
+        type="number"
+      ></md-input>
 
       <span class="md-helper-text">
-        {{
-        $t('settings.conveyorBeltResolutionHelp')
-        }}
+        {{ $t('settings.conveyorBeltResolutionHelp') }}
       </span>
     </md-field>
     <md-checkbox
       v-if="showSaveAsZip"
       :model="saveAsZip"
       @change="setSaveAsZip"
-    >{{ $t('settings.saveAsZip') }}</md-checkbox>
+      >{{ $t('settings.saveAsZip') }}</md-checkbox
+    >
 
     <br />
     <h3 class="clickable" @click="toggleShowDevelopSettings">
@@ -58,35 +63,31 @@
 
     <div v-if="showDevelopSettings">
       <md-checkbox :model="editClassColors" @change="updateEditClassColors">
-        {{
-        $t('settings.editClassColors')
-        }}
+        {{ $t('settings.editClassColors') }}
       </md-checkbox>
       <md-button class="md-raised" @click="exportClassColors">
-        {{
-        $t('settings.copyClassColorsButton')
-        }}
+        {{ $t('settings.copyClassColorsButton') }}
       </md-button>
       <md-button class="md-raised" @click="clearClassColors">
-        {{
-        $t('settings.clearClassColorsButton')
-        }}
+        {{ $t('settings.clearClassColorsButton') }}
       </md-button>
 
       <md-checkbox
         :model="experimentalFeatures"
         @change="updateExperimentalFeatures"
-      >{{ $t('settings.experimentalFeatures') }}</md-checkbox>
+        >{{ $t('settings.experimentalFeatures') }}</md-checkbox
+      >
 
       <md-field>
         <label>{{ $t('settings.autoLoadSaveFile') }}</label>
-        <md-input :value="autoLoadSaveFile" @input="updateAutoLoadSaveFile"></md-input>
+        <md-input
+          :value="autoLoadSaveFile"
+          @input="updateAutoLoadSaveFile"
+        ></md-input>
       </md-field>
 
       <md-checkbox :model="showFps" @change="setShowFps">
-        {{
-        $t('settings.showFps')
-        }}
+        {{ $t('settings.showFps') }}
       </md-checkbox>
     </div>
   </div>

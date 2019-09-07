@@ -34,8 +34,10 @@ import {
 } from '../../ts/constants';
 import { openFileFromFilesystem } from './openFile';
 import { mapActions } from 'vuex';
-import { getSaveFilesPath } from './fileUtil';
-import { v4 } from 'uuid';
+import {
+  getSaveGamesFolderPath,
+  openFileAndMoveToEditor
+} from './desktopUtils';
 
 export default {
   name: 'MainScreen',
@@ -65,11 +67,9 @@ export default {
 
     // read files
 
-    this.saveFilesPath = getSaveFilesPath();
-
     const fs = require('fs');
 
-    fs.readdir(this.saveFilesPath, (err, files) => {
+    fs.readdir(getSaveGamesFolderPath(), (err, files) => {
       console.log(err);
       if (err) {
         this.saveFolderNotFound = true;
@@ -113,52 +113,12 @@ export default {
       window.close();
     },
 
-    openFile(file) {
-      this.setProgressText({
-        title: this.$t('openPage.subtitleSav'),
-        currentStep: this.$t('openPage.readingFile'),
-        showCloseButton: false
-      });
-      EventBus.$emit(DIALOG_PROGRESS, true);
-      setTimeout(() => {
-        // give the dialog time to be open
-        this.setFilename(file);
-        const uuid = v4();
-        this.setUUID(uuid);
-
-        reportContext('uuid', uuid);
-        reportContext('savename', file);
-
-        //      setTimeout(() => {
-        console.time('openFile');
-        openFileFromFilesystem(
-          this.saveFilesPath + '/' + file,
-          (err, progress, saveGame) => {
-            if (err) {
-              // TODO open bug report window
-              console.error(err);
-              return;
-            }
-
-            if (progress) {
-              this.setProgress(progress);
-              return;
-            }
-
-            console.time('setVuex');
-            this.setLoadedData(saveGame).then(() => {
-              console.timeEnd('setVuex');
-              console.timeEnd('openFile');
-
-              this.setShowSaveMenuEntries(true);
-              this.$router.push({
-                name: 'editor'
-              });
-            });
-          }
-        );
-      }, DIALOG_OPEN_TIME_MS);
-      //}, 1000);
+    openFile(name) {
+      openFileAndMoveToEditor(
+        this,
+        getSaveGamesFolderPath() + '/' + name,
+        false
+      );
     }
   }
 };

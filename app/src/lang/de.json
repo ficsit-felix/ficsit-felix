@@ -2,6 +2,10 @@
   "classList": {
     "allClasses": "Alle Klassen"
   },
+  "desktop": {
+    "saveExtension": "Satisfactory Spielstände",
+    "jsonExtension": "JSON Dateien"
+  },
   "dialog": {
     "about": {
       "authors": "Autoren",

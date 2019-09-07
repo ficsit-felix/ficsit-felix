@@ -3,6 +3,7 @@ import { sav2json, SaveGame } from 'satisfactory-json';
 
 export function openFileFromFilesystem(
   path: string,
+  asJson: boolean,
   callback: (err?: Error, progress?: number, saveGame?: SaveGame) => void
 ): void {
   console.time('readDesktop');
@@ -20,9 +21,14 @@ export function openFileFromFilesystem(
     setTimeout(() => {
       // TODO refactor: move common (desktop/web) code into own file
       try {
-        console.time('sav2json');
-        const json = sav2json(data);
-        console.timeEnd('sav2json');
+        let json;
+        if (asJson) {
+          json = JSON.parse(data.toString('utf-8'));
+        } else {
+          console.time('sav2json');
+          json = sav2json(data);
+          console.timeEnd('sav2json');
+        }
         callback(undefined, 50, undefined);
         callback(undefined, undefined, json);
       } catch (err) {
