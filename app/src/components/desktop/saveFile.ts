@@ -5,20 +5,21 @@ import { saveAs } from 'file-saver';
 import { isElectron } from '@/ts/isElectron';
 import { getSaveGamesFolderPath } from './desktopUtils';
 import { writeFile, fstat, existsSync, copyFileSync } from 'fs';
+import { parse } from 'path';
 
 export function saveFileToFilesystem(
   saveGame: SaveGame,
-  filename: string,
+  path: string,
   asJson: boolean,
   asZip: boolean,
   callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
-  transformFile(callback, asZip, filename, asJson);
+  transformFile(callback, asZip, path, asJson);
 }
 function transformFile(
   callback: (err?: Error, progress?: number, success?: boolean) => void,
   asZip: boolean,
-  filename: string,
+  path: string,
   asJson: boolean
 ) {
   const worker = new Json2SavWorker();
@@ -34,10 +35,10 @@ function transformFile(
 
       // TODO convert to zip
 
-      saveDesktop(filename, data, callback);
+      saveDesktop(path, data, callback);
     } else {
       // web version
-      saveWeb(asZip, filename, data, callback);
+      saveWeb(asZip, path, data, callback);
     }
   });
   worker.postMessage({
@@ -47,11 +48,11 @@ function transformFile(
 }
 
 function saveDesktop(
-  filename: string,
+  path: string,
   data: any,
   callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
-  const path = getSaveGamesFolderPath() + '/' + filename;
+  // const path = getSaveGamesFolderPath() + '/' + path;
 
   if (existsSync(path)) {
     // make a backup
@@ -60,9 +61,12 @@ function saveDesktop(
       .toISOString()
       .replace('T', '_')
       .replace('Z', '');
-    copyFileSync(
+
+    const parsedPath = parse(path);
+
+    const folderPath = copyFileSync(
       path,
-      getSaveGamesFolderPath() + '/' + filename + '_' + timestamp + '.bak'
+      parsedPath.dir + '/' + parsedPath.base + '_' + timestamp + '.bak'
     );
   }
 
@@ -84,13 +88,13 @@ function saveDesktop(
 
 function saveWeb(
   asZip: boolean,
-  filename: string,
+  path: string,
   data: any,
   callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
   if (asZip) {
     let zip = new JSZip();
-    zip.file(filename, data, { binary: true });
+    zip.file(path, data, { binary: true });
     zip
       .generateAsync({
         type: 'blob',
@@ -106,7 +110,7 @@ function saveWeb(
           content,
           // TODO make sure we only cut of the extension
           // TODO make sure the path is actually stil the filename
-          filename.replace('.json', '').replace('.sav', '') + '.zip'
+          path.replace('.json', '').replace('.sav', '') + '.zip'
         );
         callback(undefined, undefined, true);
       })
@@ -119,7 +123,7 @@ function saveWeb(
       type: 'application/octet-stream'
     });
     element.href = window.URL.createObjectURL(blob);
-    element.download = filename; // TODO make sure it's the filename
+    element.download = path; // TODO make sure it's the filename
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);

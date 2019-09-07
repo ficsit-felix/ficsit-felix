@@ -45,7 +45,8 @@ import { dialog, remote, shell } from 'electron';
 const { Menu, MenuItem } = require('electron').remote;
 import {
   getSaveGamesFolderPath,
-  openFileAndMoveToEditor
+  openFileAndMoveToEditor,
+  saveFileAndShowProgress
 } from './desktopUtils';
 import { EventBus } from '../../event-bus';
 import {
@@ -96,7 +97,6 @@ export default {
       this.setDefaultMenu(); // TODO rebuild the currently selected menu
     },
     setDefaultMenu() {
-      const self = this;
       const menu = new Menu();
 
       let fileEntries = [
@@ -121,14 +121,15 @@ export default {
           },
           {
             label: this.$t('menubar.save'),
-            click() {
-              self.$router.push('save/sav');
+            click: () => {
+              this.$router.push('save/sav');
             }
           },
           {
             label: this.$t('menubar.exportJson'),
-            click() {
-              self.$router.push('save/json');
+            click: () => {
+              this.openJsonSaveSelector();
+              // this.$router.push('save/json');
             }
           }
         ]);
@@ -217,6 +218,7 @@ export default {
     openFileSelector() {
       remote.dialog.showOpenDialog(
         {
+          title: this.$t('desktop.openSavTitle'),
           defaultPath: getSaveGamesFolderPath(),
           filters: [
             {
@@ -239,6 +241,7 @@ export default {
     openJsonFileSelector() {
       remote.dialog.showOpenDialog(
         {
+          title: this.$t('desktop.openJsonTitle'),
           defaultPath: getSaveGamesFolderPath(),
           filters: [
             {
@@ -256,6 +259,28 @@ export default {
           }
         }
       );
+    },
+    openJsonSaveSelector() {
+      const name = this.$store.state.filename.replace('.sav', '.json');
+
+      remote.dialog
+        .showSaveDialog({
+          title: this.$t('desktop.saveJsonTitle'),
+          defaultPath: name,
+          filters: [
+            {
+              name: this.$t('desktop.jsonExtension'),
+              extensions: ['json']
+            }
+          ]
+        })
+        .then(value => {
+          if (value.canceled) {
+            return;
+          }
+
+          saveFileAndShowProgress(this, value.filePath, true, false);
+        });
     }
   }
 };

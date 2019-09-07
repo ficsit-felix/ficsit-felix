@@ -4,7 +4,10 @@
   },
   "desktop": {
     "saveExtension": "Satisfactory Spielstände",
-    "jsonExtension": "JSON Dateien"
+    "jsonExtension": "JSON Dateien",
+    "openSavTitle": "Spielstand öffnen",
+    "openJsonTitle": "JSON Datei öffnen",
+    "saveJsonTitle": "JSON Datei speichern"
   },
   "dialog": {
     "about": {

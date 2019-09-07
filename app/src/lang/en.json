@@ -4,7 +4,10 @@
   },
   "desktop": {
     "saveExtension": "Satisfactory save files",
-    "jsonExtension": "JSON files"
+    "jsonExtension": "JSON files",
+    "openSavTitle": "Open save game",
+    "openJsonTitle": "Open json file",
+    "saveJsonTitle": "Save JSON file"
   },
   "dialog": {
     "about": {

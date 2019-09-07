@@ -6,6 +6,7 @@ import { v4 } from 'uuid';
 import { reportContext } from '@/ts/errorReporting';
 import { openFileFromFilesystem } from './openFile';
 import Vue from 'vue';
+import { saveFileToFilesystem } from './saveFile';
 
 export function getSaveGamesFolderPath() {
   /*this.saveFilesPath = 
@@ -24,11 +25,11 @@ export function openFileAndMoveToEditor(
   asJson: boolean
 ) {
   vue.$store.dispatch('setProgressText', {
-    title: vue.$t('openPage.subtitleSav'),
+    title: vue.$t('openPage.subtitleSav'), // TODO asJson
     currentStep: vue.$t('openPage.readingFile'),
     showCloseButton: false
   });
-
+  vue.$store.dispatch('setProgress', 0);
   EventBus.$emit(DIALOG_PROGRESS, true);
   setTimeout(() => {
     // give the dialog time to be open
@@ -70,5 +71,51 @@ export function openFileAndMoveToEditor(
         });
       });
     });
+  }, DIALOG_OPEN_TIME_MS);
+}
+
+export function saveFileAndShowProgress(
+  vue: Vue,
+  path: string,
+  asJson: boolean,
+  asZip: boolean
+) {
+  vue.$store.dispatch('setProgress', 0);
+  vue.$store.dispatch('setProgressText', {
+    title: vue.$t('savePage.savSubtitle'), // TODO asJson
+    currentStep: vue.$t('savePage.processingFile'),
+    showCloseButton: false
+  });
+
+  EventBus.$emit(DIALOG_PROGRESS, true);
+  setTimeout(() => {
+    // give the dialog time to be open
+
+    saveFileToFilesystem(
+      window.data,
+      path,
+      asJson,
+      asZip,
+      (err, progress, success) => {
+        if (err) {
+          // TODO open bug report window
+          console.error(err);
+          return;
+        }
+
+        if (progress) {
+          vue.$store.dispatch('setProgress', progress);
+          return;
+        }
+
+        if (success) {
+          vue.$store.dispatch('setProgress', 100);
+          vue.$store.dispatch('setProgressText', {
+            currentStep: vue.$t('savePage.saveFinished'),
+            showCloseButton: true
+          });
+        }
+      }
+    );
   }, DIALOG_OPEN_TIME_MS);
 }
