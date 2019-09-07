@@ -185,6 +185,7 @@ const settingsModule: Module<SettingsRootState, RootState> = {
 };
 
 interface RootState {
+  [x: string]: any;
   loading: boolean;
 
   selectedPathNames: string[];

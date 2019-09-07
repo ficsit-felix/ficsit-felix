@@ -68,12 +68,6 @@ export default {
     };
   },
   mounted() {
-    // Set persisted locale
-    const lang = this.$store.state.settings.locale;
-    import(`@/lang/${lang}.json`).then(msgs => {
-      this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
-      this.$i18n.locale = lang;
-    });
   }
 };
 </script>

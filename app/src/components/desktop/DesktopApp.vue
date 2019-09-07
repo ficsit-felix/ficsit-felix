@@ -85,7 +85,9 @@ export default {
       itemBackgroundColor: Color.fromHex('#26262d')
     });
     this.titlebar.updateTitle('FICSIT - FeliX');
+
     this.setDefaultMenu();
+
     EventBus.$on(CHANGE_LOCALE, this.onChangeLocale);
   },
   beforeDestroy() {
@@ -144,22 +146,25 @@ export default {
           click() {
             EventBus.$emit(DIALOG_SETTINGS);
           }
-        },
-        {
-          label: this.$t('menubar.mainScreen'),
-          click() {
-            self.$router.push('/');
-          }
-        },
-        {
-          label: this.$t('menubar.exit'),
-          accelerator: 'Ctrl+Q',
-          click() {
-            var window = remote.getCurrentWindow();
-            window.close();
-          }
         }
       ]);
+      if (this.showSaveMenuEntries) {
+        fileEntries.push({
+          label: this.$t('menubar.mainScreen'),
+          click: () => {
+            this.$router.push('/');
+          }
+        });
+      }
+
+      fileEntries.push({
+        label: this.$t('menubar.exit'),
+        accelerator: 'Ctrl+Q',
+        click() {
+          var window = remote.getCurrentWindow();
+          window.close();
+        }
+      });
 
       menu.append(
         new MenuItem({

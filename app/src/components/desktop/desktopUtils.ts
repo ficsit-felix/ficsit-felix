@@ -34,7 +34,7 @@ export function openFileAndMoveToEditor(
   setTimeout(() => {
     // give the dialog time to be open
 
-    const name = path.replace(/^.*[\\\/]/, '');
+    const name = path.replace(/^.*[\\/]/, '');
 
     vue.$store.dispatch('setFilename', name);
     const uuid = v4();

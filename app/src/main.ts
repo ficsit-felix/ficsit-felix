@@ -52,6 +52,8 @@ Vue.use(MdList);
 Vue.use(MdProgress);
 // vue-split-panel
 import VueSplit from 'vue-split-panel';
+import { EventBus } from './event-bus';
+import { CHANGE_LOCALE } from './ts/constants';
 Vue.use(VueSplit);
 
 // vue-shortkey
@@ -80,3 +82,11 @@ new Vue({
         : require('./components/web/WebApp.vue').default
     )
 }).$mount('#app');
+
+// Set persisted locale
+const lang = store.state.settings.locale;
+import(`@/lang/${lang}.json`).then(msgs => {
+  i18n.setLocaleMessage(lang, msgs.default || msgs);
+  i18n.locale = lang;
+  EventBus.$emit(CHANGE_LOCALE);
+});
