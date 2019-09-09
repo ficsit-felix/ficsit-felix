@@ -9,13 +9,38 @@
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
     </ul>
-    <ul class="filebrowser" ref="filebrowser">
+
+    <ul class="filebrowser" ref="filebrowser" v-if="showFilebrowser">
       <li
-        v-bind:key="file.filename"
-        v-for="file in files"
-        @click="openFile(file)"
-      >{{ file.filename }}</li>
+        v-bind:key="sessionName"
+        v-for="(sFiles, sessionName) in files"
+        @click="sessionFiles=sFiles"
+      >
+        <div class="session-name">{{sessionName}}</div>
+        <div class="bottom-info">
+          <!-- TODO select newest save file -->
+          <div class="filename">{{sFiles[0].filename}}</div>
+          <div class="last-time">{{sFiles[0].saveDateTime}}</div>
+        </div>
+      </li>
     </ul>
+
+    <ul
+      class="filebrowser sessionbrowser"
+      ref="sessionbrowser"
+      v-if="showFilebrowser && sessionFiles.length > 0"
+    >
+      <li v-bind:key="file.filename" v-for="file in sessionFiles" @click="openFile(file.filename)">
+        <div class="session-name">{{file.sessionName}}</div>
+
+        <div class="bottom-info">
+          <div class="filename">{{ file.filename }}</div>
+
+          <div class="last-time">{{file.saveDateTime}}</div>
+        </div>
+      </li>
+    </ul>
+
     <div class="content">
       <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
     </div>
@@ -27,7 +52,7 @@ import * as Sentry from '@sentry/browser';
 import { commithash } from '@/js/commithash';
 import { reportMessage, reportContext } from '@/ts/errorReporting';
 import CenterWhiteBox from '@/components/core/CenterWhiteBox';
-import { app, remote } from 'electron';
+import { app, remote, session } from 'electron';
 import electron from 'electron';
 import { EventBus } from '../../event-bus';
 import {
@@ -49,8 +74,10 @@ export default {
   data: function() {
     return {
       commithash: commithash,
-      files: [],
-      saveFolderNotFound: false
+      files: {},
+      saveFolderNotFound: false,
+      sessionFiles: [],
+      showFilebrowser: false
     };
   },
   mounted() {
@@ -121,7 +148,7 @@ export default {
             function assertNullByte() {
               const data = stream.read(1);
               if (data[0] !== 0) {
-                console.error('NOT ZERO, but ', data);
+                throw new Error('NOT ZERO, but ', data);
               }
             }
 
@@ -148,8 +175,18 @@ export default {
                 saveDateTime: readLong(),
                 sessionVisibility: readByte()
               };
+              console.log('read header');
 
-              this.files.push(header);
+              if (this.files[header.sessionName] === undefined) {
+                //Object.assign({}, this.files, {header.sessionName: })
+                //this.files[header.sessionName] = [];
+                this.$set(this.files, header.sessionName, []);
+              }
+
+              console.log('GOT HEADER');
+              //Vue.set(this.files, header.sessionName, header);
+              this.files[header.sessionName].push(header);
+              console.log(this.files);
             } catch (e) {
               // TODO do we want to inform the user about broken saves?
               // maybe add a red X icon next to them?
@@ -187,11 +224,10 @@ export default {
       'setProgressText'
     ]),
     openFilebrowser() {
-      const filebrowser = this.$refs.filebrowser;
-      if (filebrowser.classList.contains('visible')) {
-        filebrowser.classList.remove('visible');
-      } else {
-        filebrowser.classList.add('visible');
+      this.showFilebrowser = !this.showFilebrowser;
+      if (this.showFilebrowser === false) {
+        // also empty the session list
+        this.sessionFiles = [];
       }
     },
     openSettings() {
@@ -283,6 +319,10 @@ export default {
   background: #cccccc22;
   margin: 0px;
   padding: 30px 0px;
+  &.sessionbrowser {
+    background: #cccccc33;
+  }
+
   li {
     list-style-type: none;
     padding: 10px 20px;
@@ -293,14 +333,26 @@ export default {
     &:hover {
       background: #ffffff20;
     }
+    .session-name {
+      color: #fff;
+    }
+
+    .bottom-info {
+      display: flex;
+      flex-direction: row;
+      font-size: 14px;
+      color: #ddd;
+      padding-top: 2px;
+    }
+    .filename {
+      font-weight: bold;
+    }
+    .last-time {
+      padding-left: 10px;
+    }
   }
   overflow-y: auto;
   overflow-x: hidden;
-  display: none;
-
-  &.visible {
-    display: block;
-  }
 }
 
 .content {
