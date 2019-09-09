@@ -10,7 +10,11 @@
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
     </ul>
     <ul class="filebrowser" ref="filebrowser">
-      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">{{ file }}</li>
+      <li
+        v-bind:key="file.filename"
+        v-for="file in files"
+        @click="openFile(file)"
+      >{{ file.filename }}</li>
     </ul>
     <div class="content">
       <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
@@ -38,6 +42,7 @@ import {
   getSaveGamesFolderPath,
   openFileAndMoveToEditor
 } from './desktopUtils';
+import { createReadStream } from 'fs';
 
 export default {
   name: 'MainScreen',
@@ -72,7 +77,101 @@ export default {
 
       files.forEach(file => {
         if (file.endsWith('.sav')) {
-          this.files.push(file);
+          // READ HEADER OF SAVE FILE
+          console.log('read ', file);
+          const stream = createReadStream(
+            getSaveGamesFolderPath() + '/' + file
+          );
+          stream.on('readable', () => {
+            function readInt() {
+              const data = stream.read(4);
+              return data.readInt32LE(0);
+            }
+
+            // TODO: add this into satisfactory-json
+            function readString() {
+              let length = readInt();
+              if (length === 0) {
+                return '';
+              }
+              let utf16 = false;
+              if (length < 0) {
+                // Thanks to @Goz3rr we know that this is now an utf16 based string
+                // throw new Error('length of string < 0: ' + length);
+                length = -2 * length;
+                utf16 = true;
+              }
+              let resultStr;
+              if (utf16) {
+                const result = stream.read(length - 2);
+                resultStr = this.decodeUTF16LE(result.toString('binary'));
+              } else {
+                const result = stream.read(length - 1);
+                resultStr = result.toString('utf8');
+              }
+              if (utf16) {
+                assertNullByte();
+                //this.assertNullByteString(length, resultStr); // two null bytes for utf16
+              }
+              assertNullByte();
+              //this.assertNullByteString(length, resultStr);
+              return resultStr;
+            }
+
+            function assertNullByte() {
+              const data = stream.read(1);
+              if (data[0] !== 0) {
+                console.error('NOT ZERO, but ', data);
+              }
+            }
+
+            function readLong() {
+              const data = stream.read(8);
+              return data.toString('hex');
+            }
+
+            function readByte() {
+              const data = stream.read(1);
+              return data.readUInt8(0);
+            }
+
+            try {
+              const header = {
+                filename: file,
+                saveHeaderType: readInt(),
+                saveVersion: readInt(),
+                buildVersion: readInt(),
+                mapName: readString(),
+                mapOptions: readString(),
+                sessionName: readString(),
+                playDurationSeconds: readInt(),
+                saveDateTime: readLong(),
+                sessionVisibility: readByte()
+              };
+
+              this.files.push(header);
+            } catch (e) {
+              // TODO do we want to inform the user about broken saves?
+              // maybe add a red X icon next to them?
+              console.warn(e);
+            }
+            /*
+  ar.transformInt(saveGame.saveHeaderType);
+  ar.transformInt(saveGame.saveVersion);
+  ar.transformInt(saveGame.buildVersion);
+  ar.transformString(saveGame.mapName);
+  ar.transformString(saveGame.mapOptions);
+  ar.transformString(saveGame.sessionName);
+  ar.transformInt(saveGame.playDurationSeconds);
+  ar.transformLong(saveGame.saveDateTime);
+  if (saveGame.saveHeaderType > 4) {
+    ar.transformByte(saveGame.sessionVisibility);
+  }
+*/
+            //stream.read(1);
+            stream.close();
+          });
+          console.log(stream);
         }
         //console.log(file);
       });
