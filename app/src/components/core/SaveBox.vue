@@ -97,7 +97,7 @@ export default {
         let filename;
 
         if (this.exportJson) {
-          // TODO make sure we only cut of the extension
+          // TO#DO make sure we only cut of the extension
           filename =
             this.filename.replace('.json', '').replace('.sav', '') + '.json';
         } else {

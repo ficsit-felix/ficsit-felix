@@ -1,7 +1,11 @@
 import { remote } from 'electron';
 import { EventBus } from '@/event-bus';
 import { Store } from 'vuex';
-import { DIALOG_PROGRESS, DIALOG_OPEN_TIME_MS } from '@/ts/constants';
+import {
+  DIALOG_PROGRESS,
+  DIALOG_OPEN_TIME_MS,
+  DIALOG_BUGREPORT
+} from '@/ts/constants';
 import { v4 } from 'uuid';
 import { reportContext } from '@/ts/errorReporting';
 import { openFileFromFilesystem } from './openFile';
@@ -50,8 +54,8 @@ export function openFileAndMoveToEditor(
 
     openFileFromFilesystem(path, asJson, (err, progress, saveGame) => {
       if (err) {
-        // TODO open bug report window
-        console.error(err);
+        // open bug report window
+        EventBus.$emit(DIALOG_BUGREPORT, err.message);
         return;
       }
 
@@ -98,8 +102,8 @@ export function saveFileAndShowProgress(
       asZip,
       (err, progress, success) => {
         if (err) {
-          // TODO open bug report window
-          console.error(err);
+          // open bug report window
+          EventBus.$emit(DIALOG_BUGREPORT, err.message);
           return;
         }
 

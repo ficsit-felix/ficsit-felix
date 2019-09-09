@@ -7,7 +7,8 @@
     "jsonExtension": "JSON files",
     "openSavTitle": "Open save game",
     "openJsonTitle": "Open json file",
-    "saveJsonTitle": "Save JSON file"
+    "saveJsonTitle": "Save JSON file",
+    "saveSaveTitle": "Save save game"
   },
   "dialog": {
     "about": {
@@ -93,6 +94,7 @@
     "open": "Open",
     "openSource": "Open Source Licenses",
     "save": "Save",
+    "saveAs": "Save as...",
     "settings": "Settings",
     "file": "File",
     "exit": "Exit",

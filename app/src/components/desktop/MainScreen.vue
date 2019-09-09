@@ -3,23 +3,17 @@
     <ul class="menu">
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
-      <li class="small">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">
-        {{ $t('menubar.settings') }}
-      </li>
+      <li class="small" @click="openJsonFilebrowser()">{{ $t('menubar.importJson') }}</li>
+      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
     </ul>
     <ul class="filebrowser" ref="filebrowser">
-      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">
-        {{ file }}
-      </li>
+      <li v-bind:key="file" v-for="file in files" @click="openFile(file)">{{ file }}</li>
     </ul>
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">
-        Could not locate save folder
-      </div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
     </div>
   </div>
 </template>
@@ -117,6 +111,30 @@ export default {
         this,
         getSaveGamesFolderPath() + '/' + name,
         false
+      );
+    },
+
+    openJsonFilebrowser() {
+      // TODO deduplicate with openJsonFileSelector in DesktopApp
+      remote.dialog.showOpenDialog(
+        {
+          title: this.$t('desktop.openJsonTitle'),
+          defaultPath: getSaveGamesFolderPath(),
+          filters: [
+            {
+              name: this.$t('desktop.jsonExtension'),
+              extensions: ['json']
+            }
+          ]
+        },
+        filePaths => {
+          if (filePaths.length === 1) {
+            this.$router.push({
+              name: '/'
+            });
+            openFileAndMoveToEditor(this, filePaths[0], true);
+          }
+        }
       );
     }
   }

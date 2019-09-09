@@ -4,13 +4,10 @@
       <md-dialog-title>{{ $t('dialog.bugReport.title') }}</md-dialog-title>
       <md-dialog-content>
         <div class="dialog-content">
-          <p v-if="message">{{ message }}</p>
+          <p v-if="message" class="errorMessage">{{ message }}</p>
           <md-field>
             <label>{{ $t('dialog.bugReport.userMessage') }}</label>
-            <md-textarea
-              v-model="userMessage"
-              :disabled="formDisabled"
-            ></md-textarea>
+            <md-textarea v-model="userMessage" :disabled="formDisabled"></md-textarea>
           </md-field>
 
           <md-field>
@@ -18,36 +15,32 @@
             <md-input v-model="userContact" :disabled="formDisabled"></md-input>
           </md-field>
 
-          <md-checkbox v-model="includeSave" :disabled="formDisabled">
-            {{ $t('dialog.bugReport.includeSave') }}
-          </md-checkbox>
+          <md-checkbox
+            v-model="includeSave"
+            :disabled="formDisabled"
+          >{{ $t('dialog.bugReport.includeSave') }}</md-checkbox>
           <div v-if="screenshotDataUrl !== ''">
-            <md-checkbox v-model="includeScreenshot" :disabled="formDisabled">
-              {{ $t('dialog.bugReport.includeScreenshot') }}
-            </md-checkbox>
+            <md-checkbox
+              v-model="includeScreenshot"
+              :disabled="formDisabled"
+            >{{ $t('dialog.bugReport.includeScreenshot') }}</md-checkbox>
 
             <img :src="screenshotDataUrl" v-if="includeScreenshot" />
           </div>
 
-          <md-progress-spinner
-            v-if="formDisabled"
-            md-mode="indeterminate"
-            class="floating"
-          ></md-progress-spinner>
+          <md-progress-spinner v-if="formDisabled" md-mode="indeterminate" class="floating"></md-progress-spinner>
         </div>
       </md-dialog-content>
       <md-dialog-actions>
         <md-button
           @click="showBugReportDialog = false"
           :disabled="formDisabled"
-          >{{ $t('general.close') }}</md-button
-        >
+        >{{ $t('general.close') }}</md-button>
         <md-button
           class="md-primary"
           @click="sendReport()"
           :disabled="formDisabled"
-          >{{ $t('dialog.bugReport.send') }}</md-button
-        >
+        >{{ $t('dialog.bugReport.send') }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -152,9 +145,6 @@ uuid: ${this.uuid}
         }*/
       )
       .then((content: Uint8Array) => {
-        this.showBugReportDialog = false;
-        this.formDisabled = false;
-        this.showSentDialog = true;
         window
           .fetch(
             'https://owl.yt/ficsit-felix/?uuid=' +
@@ -205,6 +195,9 @@ uuid: ${this.uuid}
   /* As we need to place the md-dialog outside of this component, so that clicking on the background can work */
   display: flex;
   flex-direction: column;
+}
+.errorMessage {
+  overflow: auto;
 }
 .dialog-content {
   width: 500px;

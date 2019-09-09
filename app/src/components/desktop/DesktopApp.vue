@@ -54,7 +54,9 @@ import {
   DIALOG_OPEN_SOURCE,
   DIALOG_HELP,
   DIALOG_SETTINGS,
-  CHANGE_LOCALE
+  CHANGE_LOCALE,
+  ON_SAVE_PRESSED,
+  DIALOG_SAVE
 } from '../../ts/constants';
 import { debug } from 'util';
 import { mapState } from 'vuex';
@@ -89,9 +91,12 @@ export default {
     this.setDefaultMenu();
 
     EventBus.$on(CHANGE_LOCALE, this.onChangeLocale);
+
+    EventBus.$on(ON_SAVE_PRESSED, this.onSavePressed);
   },
   beforeDestroy() {
     EventBus.$off(CHANGE_LOCALE, this.onChangeLocale);
+    EventBus.$off(ON_SAVE_PRESSED, this.onSavePressed);
     this.titlebar.dispose();
   },
   methods: {
@@ -124,14 +129,19 @@ export default {
           {
             label: this.$t('menubar.save'),
             click: () => {
-              this.$router.push('save/sav');
+              this.saveFile();
+            }
+          },
+          {
+            label: this.$t('menubar.saveAs'),
+            click: () => {
+              this.openSaveSaveSelector();
             }
           },
           {
             label: this.$t('menubar.exportJson'),
             click: () => {
               this.openJsonSaveSelector();
-              // this.$router.push('save/json');
             }
           }
         ]);
@@ -244,6 +254,7 @@ export default {
       );
     },
     openJsonFileSelector() {
+      // TODO deduplicate with openJsonFilebrowser in MainScreen
       remote.dialog.showOpenDialog(
         {
           title: this.$t('desktop.openJsonTitle'),
@@ -285,6 +296,47 @@ export default {
           }
 
           saveFileAndShowProgress(this, value.filePath, true, false);
+        });
+    },
+
+    // save the file to the place where it was previously stored
+    saveFile() {
+      // show confirmation dialog
+      EventBus.$emit(DIALOG_SAVE);
+    },
+
+    onSavePressed() {
+      // TODO maybe store to the location the file was actually loaded from?
+      saveFileAndShowProgress(
+        this,
+        getSaveGamesFolderPath() +
+          '/' +
+          this.$store.state.filename.replace('.json', '.sav'),
+        false,
+        false
+      );
+    },
+
+    openSaveSaveSelector() {
+      const name = this.$store.state.filename.replace('.json', '.sav');
+
+      remote.dialog
+        .showSaveDialog({
+          title: this.$t('desktop.saveSaveTitle'),
+          defaultPath: name,
+          filters: [
+            {
+              name: this.$t('desktop.saveExtension'),
+              extensions: ['sav']
+            }
+          ]
+        })
+        .then(value => {
+          if (value.canceled) {
+            return;
+          }
+
+          saveFileAndShowProgress(this, value.filePath, false, false);
         });
     }
   }

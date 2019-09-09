@@ -25,7 +25,7 @@ function transformFile(
   const worker = new Json2SavWorker();
   worker.addEventListener('message', message => {
     if (message.data.status === 'error') {
-      callback(message.data.error, undefined, undefined);
+      callback(new Error(message.data.error), undefined, undefined);
       return;
     }
     const data = message.data.data;
