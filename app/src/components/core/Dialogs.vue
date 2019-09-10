@@ -177,9 +177,9 @@ export default Vue.extend({
         () => (this.showSaveDialog = true)
       );
     });
-    EventBus.$on(DIALOG_BUGREPORT, errorMessage => {
+    EventBus.$on(DIALOG_BUGREPORT, (errorMessage: string) => {
       this.closeDialogs(false, () => {
-        this.$refs.bugReport.openReportWindow(
+        (this.$refs.bugReport as any).openReportWindow(
           this.$t('savePage.error') + ' ' + errorMessage
         );
       });

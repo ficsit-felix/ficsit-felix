@@ -12,6 +12,17 @@ module.exports = {
         productName: 'FICSIT - FeliX',
         win: {
           publisherName: 'bitowl'
+        },
+        publish: [
+          {
+            provider: 'github',
+            owner: 'ficsit-felix',
+            repo: 'ficsit-felix'
+          }
+        ],
+        linux: {
+          synopsis: 'Save file analyzer for Satisfactory',
+          category: 'Game'
         }
       }
     }

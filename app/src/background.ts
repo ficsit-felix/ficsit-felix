@@ -6,6 +6,7 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib';
 import path from 'path';
+import { autoUpdater } from 'electron-updater';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -91,7 +92,11 @@ app.on('ready', async () => {
     // } catch (e) {
     //   console.error('Vue Devtools failed to install:', e.toString())
     // }
+  } else {
+    autoUpdater.logger = console;
+    autoUpdater.checkForUpdatesAndNotify();
   }
+
   createWindow();
 });
 
