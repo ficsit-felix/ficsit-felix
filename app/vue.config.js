@@ -20,11 +20,20 @@ module.exports = {
             repo: 'ficsit-felix'
           }
         ],
+        nsis: {
+          artifactName: 'FICSIT-FeliX.exe'
+        },
+        dmg: {
+          artifactName: 'ficsit-felix.dmg'
+        },
         linux: {
           target: 'AppImage',
           executableName: 'ficsit-felix',
           synopsis: 'Save file analyzer for Satisfactory',
           category: 'Game'
+        },
+        appImage: {
+          artifactName: 'ficsit-felix.AppImage'
         }
       }
     }
