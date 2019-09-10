@@ -67,8 +67,7 @@ export default {
       commithash: commithash
     };
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 

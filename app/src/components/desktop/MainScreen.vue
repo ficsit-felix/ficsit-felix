@@ -3,8 +3,12 @@
     <ul class="menu">
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
-      <li class="small" @click="openJsonFilebrowser()">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
+      <li class="small" @click="openJsonFilebrowser()">
+        {{ $t('menubar.importJson') }}
+      </li>
+      <li class="small" @click="openSettings()">
+        {{ $t('menubar.settings') }}
+      </li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
@@ -14,13 +18,13 @@
       <li
         v-bind:key="sessionName"
         v-for="(sFiles, sessionName) in files"
-        @click="sessionFiles=sFiles"
+        @click="sessionFiles = sFiles"
       >
-        <div class="session-name">{{sessionName}}</div>
+        <div class="session-name">{{ sessionName }}</div>
         <div class="bottom-info">
           <!-- TODO select newest save file -->
-          <div class="filename">{{sFiles[0].filename}}</div>
-          <div class="last-time">{{sFiles[0].saveDateTime}}</div>
+          <div class="filename">{{ sFiles[0].filename }}</div>
+          <div class="last-time">{{ sFiles[0].saveDateTime }}</div>
         </div>
       </li>
     </ul>
@@ -30,19 +34,25 @@
       ref="sessionbrowser"
       v-if="showFilebrowser && sessionFiles.length > 0"
     >
-      <li v-bind:key="file.filename" v-for="file in sessionFiles" @click="openFile(file.filename)">
-        <div class="session-name">{{file.sessionName}}</div>
+      <li
+        v-bind:key="file.filename"
+        v-for="file in sessionFiles"
+        @click="openFile(file.filename)"
+      >
+        <div class="session-name">{{ file.sessionName }}</div>
 
         <div class="bottom-info">
           <div class="filename">{{ file.filename }}</div>
 
-          <div class="last-time">{{file.saveDateTime}}</div>
+          <div class="last-time">{{ file.saveDateTime }}</div>
         </div>
       </li>
     </ul>
 
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">
+        Could not locate save folder
+      </div>
     </div>
   </div>
 </template>

@@ -21,6 +21,8 @@ module.exports = {
           }
         ],
         linux: {
+          target: 'AppImage',
+          executableName: 'ficsit-felix',
           synopsis: 'Save file analyzer for Satisfactory',
           category: 'Game'
         }
