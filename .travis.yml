@@ -28,7 +28,7 @@ script:
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine \
-        /bin/bash -c "yarn --link-duplicates --pure-lockfile --ignore-engines && yarn electron:release --ignore-engines --linux --win"
+        /bin/bash -c "yarn --link-duplicates --pure-lockfile --ignore-engines && yarn electron:release --linux --win"
     else
       yarn && yarn electron:release
     fi
