@@ -11,7 +11,9 @@ module.exports = {
       builderOptions: {
         productName: 'FICSIT - FeliX',
         win: {
-          publisherName: 'bitowl'
+          publisherName: 'bitowl',
+          // We don't have a certificate
+          verifyUpdateCodeSignature: false
         },
         publish: [
           {
