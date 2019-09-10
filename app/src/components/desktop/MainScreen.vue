@@ -3,12 +3,8 @@
     <ul class="menu">
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
-      <li class="small" @click="openJsonFilebrowser()">
-        {{ $t('menubar.importJson') }}
-      </li>
-      <li class="small" @click="openSettings()">
-        {{ $t('menubar.settings') }}
-      </li>
+      <li class="small" @click="openJsonFilebrowser()">{{ $t('menubar.importJson') }}</li>
+      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
@@ -34,11 +30,7 @@
       ref="sessionbrowser"
       v-if="showFilebrowser && sessionFiles.length > 0"
     >
-      <li
-        v-bind:key="file.filename"
-        v-for="file in sessionFiles"
-        @click="openFile(file.filename)"
-      >
+      <li v-bind:key="file.filename" v-for="file in sessionFiles" @click="openFile(file.filename)">
         <div class="session-name">{{ file.sessionName }}</div>
 
         <div class="bottom-info">
@@ -50,9 +42,12 @@
     </ul>
 
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">
-        Could not locate save folder
-      </div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
+    </div>
+
+    <div class="version">
+      {{version}}
+      <div class="commithash">{{commithash}}</div>
     </div>
   </div>
 </template>
@@ -87,7 +82,8 @@ export default {
       files: {},
       saveFolderNotFound: false,
       sessionFiles: [],
-      showFilebrowser: false
+      showFilebrowser: false,
+      version: remote.app.getVersion()
     };
   },
   mounted() {
@@ -377,5 +373,18 @@ export default {
   margin: 30px 20px;
   box-sizing: border-box;
   border-radius: 5px;
+}
+
+.version {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: #666;
+  font-size: 20px;
+  line-height: 1.2;
+}
+.commithash {
+  font-size: 12px;
+  color: #555;
 }
 </style>

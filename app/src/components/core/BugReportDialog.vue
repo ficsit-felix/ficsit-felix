@@ -70,6 +70,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
+
 @Component({})
 export default class BugReportDialog extends Vue {
   @Prop({ default: '' }) readonly uuid!: string;

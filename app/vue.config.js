@@ -21,7 +21,7 @@ module.exports = {
           }
         ],
         nsis: {
-          artifactName: 'FICSIT-FeliX-Setup.exe'
+          artifactName: 'FICSIT-FeliX-setup.exe'
         },
         dmg: {
           artifactName: 'FICSIT-FeliX.dmg'
