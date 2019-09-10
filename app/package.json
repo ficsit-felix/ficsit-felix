@@ -11,6 +11,7 @@
     "electron:build": "vue-cli-service electron:build",
     "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "electron:serve": "vue-cli-service electron:serve",
+    "electron:release": "build -p always",
     "now-build": "yarn build",
     "postbuild": "./rebuild-commithash.sh develop",
     "postinstall": "electron-builder install-app-deps",
