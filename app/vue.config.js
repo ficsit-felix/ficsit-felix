@@ -21,10 +21,13 @@ module.exports = {
           }
         ],
         nsis: {
-          artifactName: 'FICSIT-FeliX.exe'
+          artifactName: 'FICSIT-FeliX-Setup.exe'
         },
         dmg: {
-          artifactName: 'ficsit-felix.dmg'
+          artifactName: 'FICSIT-FeliX.dmg'
+        },
+        mac: {
+          target: 'dmg'
         },
         linux: {
           target: 'AppImage',
@@ -33,7 +36,7 @@ module.exports = {
           category: 'Game'
         },
         appImage: {
-          artifactName: 'ficsit-felix.AppImage'
+          artifactName: 'FICSIT-FeliX.AppImage'
         }
       }
     }
