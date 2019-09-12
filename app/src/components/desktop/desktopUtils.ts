@@ -1,4 +1,5 @@
 import { remote } from 'electron';
+import electron from 'electron';
 import { EventBus } from '@/event-bus';
 import { Store } from 'vuex';
 import {
@@ -13,11 +14,13 @@ import Vue from 'vue';
 import { saveFileToFilesystem } from './saveFile';
 
 export function getSaveGamesFolderPath() {
-  /*this.saveFilesPath = 
-        (electron.app || electron.remote.app).getPath('home') +
-        '/AppData/Local/FactoryGame/Saved/SaveGames';*/
-
-  return '/home/stream/saves';
+  const home = (electron.app || electron.remote.app).getPath('home');
+  if (home === '/home/stream') {
+    // development test
+    return '/home/stream/saves';
+  } else {
+    return home + '/AppData/Local/FactoryGame/Saved/SaveGames';
+  }
 }
 
 /**

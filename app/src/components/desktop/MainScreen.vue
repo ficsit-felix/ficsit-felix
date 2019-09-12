@@ -20,7 +20,7 @@
         <div class="bottom-info">
           <!-- TODO select newest save file -->
           <div class="filename">{{ sFiles[0].filename }}</div>
-          <div class="last-time">{{ sFiles[0].saveDateTime }}</div>
+          <div class="last-time">{{ dateToString(sFiles[0].saveDateTime) }}</div>
         </div>
       </li>
     </ul>
@@ -36,7 +36,7 @@
         <div class="bottom-info">
           <div class="filename">{{ file.filename }}</div>
 
-          <div class="last-time">{{ file.saveDateTime }}</div>
+          <div class="last-time">{{ dateToString(file.saveDateTime) }}</div>
         </div>
       </li>
     </ul>
@@ -46,17 +46,17 @@
     </div>
 
     <div class="version">
-      {{version}}
-      <div class="commithash">{{commithash}}</div>
+      {{ version }}
+      <div class="commithash">{{ commithash }}</div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import * as Sentry from '@sentry/browser';
-import { commithash } from '@/js/commithash';
-import { reportMessage, reportContext } from '@/ts/errorReporting';
-import CenterWhiteBox from '@/components/core/CenterWhiteBox';
+import { commithash } from '../../js/commithash';
+import { reportMessage, reportContext } from '../../ts/errorReporting';
+import CenterWhiteBox from '../core/CenterWhiteBox.vue';
 import { app, remote, session } from 'electron';
 import electron from 'electron';
 import { EventBus } from '../../event-bus';
@@ -73,22 +73,23 @@ import {
   openFileAndMoveToEditor
 } from './desktopUtils';
 import { createReadStream } from 'fs';
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import fs from 'fs';
+import { FileHeaderReader, FileHeader } from './FileHeaderReader';
+import moment from 'moment';
 
-export default {
-  name: 'MainScreen',
-  data: function() {
-    return {
-      commithash: commithash,
-      files: {},
-      saveFolderNotFound: false,
-      sessionFiles: [],
-      showFilebrowser: false,
-      version: remote.app.getVersion()
-    };
-  },
+@Component({})
+export default class MainScreen extends Vue {
+  private commithash = commithash;
+  private files: { [id: string]: FileHeader[] } = {};
+  private saveFolderNotFound = false;
+  private sessionFiles = [];
+  private showFilebrowser = false;
+  private version = remote.app.getVersion();
+
   mounted() {
     // hide save menu entries
-    this.setShowSaveMenuEntries(false);
+    this.$store.dispatch('setShowSaveMenuEntries', false);
 
     if (this.$store.state.settings.autoLoadSaveFile !== '') {
       this.$router.push({
@@ -97,9 +98,6 @@ export default {
     }
 
     // read files
-
-    const fs = require('fs');
-
     fs.readdir(getSaveGamesFolderPath(), (err, files) => {
       console.log(err);
       if (err) {
@@ -111,175 +109,75 @@ export default {
       files.forEach(file => {
         if (file.endsWith('.sav')) {
           // READ HEADER OF SAVE FILE
-          console.log('read ', file);
           const stream = createReadStream(
             getSaveGamesFolderPath() + '/' + file
           );
-          stream.on('readable', () => {
-            function readInt() {
-              const data = stream.read(4);
-              return data.readInt32LE(0);
+          new FileHeaderReader(file, stream, header => {
+            if (this.files[header.sessionName] === undefined) {
+              this.$set(this.files, header.sessionName, []);
             }
 
-            // TODO: add this into satisfactory-json
-            function readString() {
-              let length = readInt();
-              if (length === 0) {
-                return '';
-              }
-              let utf16 = false;
-              if (length < 0) {
-                // Thanks to @Goz3rr we know that this is now an utf16 based string
-                // throw new Error('length of string < 0: ' + length);
-                length = -2 * length;
-                utf16 = true;
-              }
-              let resultStr;
-              if (utf16) {
-                const result = stream.read(length - 2);
-                resultStr = this.decodeUTF16LE(result.toString('binary'));
-              } else {
-                const result = stream.read(length - 1);
-                resultStr = result.toString('utf8');
-              }
-              if (utf16) {
-                assertNullByte();
-                //this.assertNullByteString(length, resultStr); // two null bytes for utf16
-              }
-              assertNullByte();
-              //this.assertNullByteString(length, resultStr);
-              return resultStr;
-            }
-
-            function assertNullByte() {
-              const data = stream.read(1);
-              if (data[0] !== 0) {
-                throw new Error('NOT ZERO, but ', data);
-              }
-            }
-
-            function readLong() {
-              const data = stream.read(8);
-              return data.toString('hex');
-            }
-
-            function readByte() {
-              const data = stream.read(1);
-              return data.readUInt8(0);
-            }
-
-            try {
-              const header = {
-                filename: file,
-                saveHeaderType: readInt(),
-                saveVersion: readInt(),
-                buildVersion: readInt(),
-                mapName: readString(),
-                mapOptions: readString(),
-                sessionName: readString(),
-                playDurationSeconds: readInt(),
-                saveDateTime: readLong(),
-                sessionVisibility: readByte()
-              };
-              console.log('read header');
-
-              if (this.files[header.sessionName] === undefined) {
-                //Object.assign({}, this.files, {header.sessionName: })
-                //this.files[header.sessionName] = [];
-                this.$set(this.files, header.sessionName, []);
-              }
-
-              console.log('GOT HEADER');
-              //Vue.set(this.files, header.sessionName, header);
-              this.files[header.sessionName].push(header);
-              console.log(this.files);
-            } catch (e) {
-              // TODO do we want to inform the user about broken saves?
-              // maybe add a red X icon next to them?
-              console.warn(e);
-            }
-            /*
-  ar.transformInt(saveGame.saveHeaderType);
-  ar.transformInt(saveGame.saveVersion);
-  ar.transformInt(saveGame.buildVersion);
-  ar.transformString(saveGame.mapName);
-  ar.transformString(saveGame.mapOptions);
-  ar.transformString(saveGame.sessionName);
-  ar.transformInt(saveGame.playDurationSeconds);
-  ar.transformLong(saveGame.saveDateTime);
-  if (saveGame.saveHeaderType > 4) {
-    ar.transformByte(saveGame.sessionVisibility);
-  }
-*/
-            //stream.read(1);
-            stream.close();
+            this.files[header.sessionName].push(header);
           });
-          console.log(stream);
         }
-        //console.log(file);
       });
+
+      // TODO sort by sessionSaveDate
     });
-  },
-  methods: {
-    ...mapActions([
-      'setLoadedData',
-      'setProgress',
-      'setFilename',
-      'setUUID',
-      'setShowSaveMenuEntries',
-      'setProgressText'
-    ]),
-    openFilebrowser() {
-      this.showFilebrowser = !this.showFilebrowser;
-      if (this.showFilebrowser === false) {
-        // also empty the session list
-        this.sessionFiles = [];
-      }
-    },
-    openSettings() {
-      EventBus.$emit(DIALOG_SETTINGS);
-    },
-    openAbout() {
-      EventBus.$emit(DIALOG_ABOUT);
-    },
-    openExit() {
-      var window = remote.getCurrentWindow();
-      window.close();
-    },
+  }
 
-    openFile(name) {
-      openFileAndMoveToEditor(
-        this,
-        getSaveGamesFolderPath() + '/' + name,
-        false
-      );
-    },
-
-    openJsonFilebrowser() {
-      // TODO deduplicate with openJsonFileSelector in DesktopApp
-      remote.dialog.showOpenDialog(
-        {
-          title: this.$t('desktop.openJsonTitle'),
-          defaultPath: getSaveGamesFolderPath(),
-          filters: [
-            {
-              name: this.$t('desktop.jsonExtension'),
-              extensions: ['json']
-            }
-          ]
-        },
-        filePaths => {
-          if (filePaths.length === 1) {
-            this.$router.push({
-              name: '/'
-            });
-            openFileAndMoveToEditor(this, filePaths[0], true);
-          }
-        }
-      );
+  openFilebrowser() {
+    this.showFilebrowser = !this.showFilebrowser;
+    if (this.showFilebrowser === false) {
+      // also empty the session list
+      this.sessionFiles = [];
     }
   }
-};
+  openSettings() {
+    EventBus.$emit(DIALOG_SETTINGS);
+  }
+  openAbout() {
+    EventBus.$emit(DIALOG_ABOUT);
+  }
+  openExit() {
+    var window = remote.getCurrentWindow();
+    window.close();
+  }
+
+  openFile(name: string) {
+    openFileAndMoveToEditor(this, getSaveGamesFolderPath() + '/' + name, false);
+  }
+
+  openJsonFilebrowser() {
+    // TODO deduplicate with openJsonFileSelector in DesktopApp
+    remote.dialog.showOpenDialog(
+      {
+        title: this.$t('desktop.openJsonTitle').toString(),
+        defaultPath: getSaveGamesFolderPath(),
+        filters: [
+          {
+            name: this.$t('desktop.jsonExtension').toString(),
+            extensions: ['json']
+          }
+        ]
+      },
+      (filePaths: any) => {
+        if (filePaths.length === 1) {
+          this.$router.push({
+            name: '/'
+          });
+          openFileAndMoveToEditor(this, filePaths[0], true);
+        }
+      }
+    );
+  }
+
+  dateToString(date: Date): string {
+    return moment(date)
+      .locale(this.$i18n.locale)
+      .format('lll');
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -355,6 +253,7 @@ export default {
     }
     .last-time {
       padding-left: 10px;
+      white-space: nowrap;
     }
   }
   overflow-y: auto;
