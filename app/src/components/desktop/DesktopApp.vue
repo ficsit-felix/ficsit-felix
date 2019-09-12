@@ -84,7 +84,8 @@ export default {
   mounted() {
     this.titlebar = new Titlebar({
       backgroundColor: Color.fromHex('#16161d'),
-      itemBackgroundColor: Color.fromHex('#26262d')
+      itemBackgroundColor: Color.fromHex('#26262d'),
+      enableMnemonics: true
     });
     this.titlebar.updateTitle('FICSIT - FeliX');
 
@@ -109,14 +110,14 @@ export default {
       let fileEntries = [
         {
           label: this.$t('menubar.open'),
-          accelerator: 'Ctrl+O',
+          accelerator: 'CmdOrCtrl+O',
           click: () => {
             this.openFileSelector();
           }
         },
         {
           label: this.$t('menubar.importJson'),
-          accelerator: 'Ctrl+Shift+O',
+          accelerator: 'CmdOrCtrl+Shift+O',
           click: () => this.openJsonFileSelector()
         }
       ];
@@ -128,18 +129,21 @@ export default {
           },
           {
             label: this.$t('menubar.save'),
+            accelerator: 'CmdOrCtrl+S',
             click: () => {
               this.saveFile();
             }
           },
           {
             label: this.$t('menubar.saveAs'),
+            accelerator: 'CmdOrCtrl+Shift+S',
             click: () => {
               this.openSaveSaveSelector();
             }
           },
           {
             label: this.$t('menubar.exportJson'),
+            accelerator: 'CmdOrCtrl+E',
             click: () => {
               this.openJsonSaveSelector();
             }
@@ -189,6 +193,7 @@ export default {
           submenu: [
             {
               label: this.$t('menubar.help'),
+              accelerator: 'F1',
               click() {
                 EventBus.$emit(DIALOG_HELP);
               }
@@ -229,6 +234,7 @@ export default {
         })
       );
       this.titlebar.updateMenu(menu);
+      Menu.setApplicationMenu(menu);
     },
     openFileSelector() {
       remote.dialog.showOpenDialog(

@@ -93,7 +93,8 @@ export class FileHeaderReader {
 
   private readLong(): bigint {
     const data = this.stream.read(8) as Buffer;
-    return data.readBigInt64LE(0); // TODO polyfill for web?
+    const long = data.readBigInt64LE(0); // TODO polyfill for web?
+    return long;
   }
 
   private readByte() {
@@ -117,6 +118,7 @@ export class FileHeaderReader {
     const microsecondsSince1970 =
       microsecondsSince0001 - BigInt(62135596800000);
 
-    return new Date(Number(microsecondsSince1970));
+    const date = new Date(Number(microsecondsSince1970));
+    return date;
   }
 }

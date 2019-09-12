@@ -3,8 +3,12 @@
     <ul class="menu">
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
-      <li class="small" @click="openJsonFilebrowser()">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
+      <li class="small" @click="openJsonFilebrowser()">
+        {{ $t('menubar.importJson') }}
+      </li>
+      <li class="small" @click="openSettings()">
+        {{ $t('menubar.settings') }}
+      </li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
@@ -18,9 +22,10 @@
       >
         <div class="session-name">{{ session.sessionName }}</div>
         <div class="bottom-info">
-          <!-- TODO select newest save file -->
           <div class="filename">{{ session.saves[0].filename }}</div>
-          <div class="last-time">{{ dateToString(session.saves[0].saveDateTime) }}</div>
+          <div class="last-time">
+            {{ dateToString(session.saves[0].saveDateTime) }}
+          </div>
         </div>
       </li>
     </ul>
@@ -30,7 +35,11 @@
       ref="sessionbrowser"
       v-if="showFilebrowser && sessionFiles.length > 0"
     >
-      <li v-bind:key="file.filename" v-for="file in sessionFiles" @click="openFile(file.filename)">
+      <li
+        v-bind:key="file.filename"
+        v-for="file in sessionFiles"
+        @click="openFile(file.filename)"
+      >
         <div class="session-name">{{ file.sessionName }}</div>
 
         <div class="bottom-info">
@@ -41,7 +50,9 @@
     </ul>
 
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">
+        Could not locate save folder
+      </div>
     </div>
 
     <div class="version">
@@ -196,7 +207,6 @@ export default class MainScreen extends Vue {
         b.saves[0].saveDateTime.getTime() - a.saves[0].saveDateTime.getTime()
       );
     });
-
     return sortedFiles;
   }
 }
