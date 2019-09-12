@@ -12,15 +12,15 @@
 
     <ul class="filebrowser" ref="filebrowser" v-if="showFilebrowser">
       <li
-        v-bind:key="sessionName"
-        v-for="(sFiles, sessionName) in files"
-        @click="sessionFiles = sFiles"
+        v-bind:key="session.sessionName"
+        v-for="session in sortedFiles"
+        @click="sessionFiles = session.saves"
       >
-        <div class="session-name">{{ sessionName }}</div>
+        <div class="session-name">{{ session.sessionName }}</div>
         <div class="bottom-info">
           <!-- TODO select newest save file -->
-          <div class="filename">{{ sFiles[0].filename }}</div>
-          <div class="last-time">{{ dateToString(sFiles[0].saveDateTime) }}</div>
+          <div class="filename">{{ session.saves[0].filename }}</div>
+          <div class="last-time">{{ dateToString(session.saves[0].saveDateTime) }}</div>
         </div>
       </li>
     </ul>
@@ -35,7 +35,6 @@
 
         <div class="bottom-info">
           <div class="filename">{{ file.filename }}</div>
-
           <div class="last-time">{{ dateToString(file.saveDateTime) }}</div>
         </div>
       </li>
@@ -121,8 +120,6 @@ export default class MainScreen extends Vue {
           });
         }
       });
-
-      // TODO sort by sessionSaveDate
     });
   }
 
@@ -177,6 +174,31 @@ export default class MainScreen extends Vue {
       .locale(this.$i18n.locale)
       .format('lll');
   }
+
+  get sortedFiles() {
+    const sortedFiles = [];
+
+    for (const key of Object.keys(this.files)) {
+      // sort saves
+      this.files[key].sort((a, b) => {
+        return b.saveDateTime.getTime() - a.saveDateTime.getTime();
+      });
+
+      sortedFiles.push({
+        sessionName: key,
+        saves: this.files[key]
+      });
+    }
+
+    // sort sessions
+    sortedFiles.sort((a, b) => {
+      return (
+        b.saves[0].saveDateTime.getTime() - a.saves[0].saveDateTime.getTime()
+      );
+    });
+
+    return sortedFiles;
+  }
 }
 </script>
 
@@ -225,6 +247,7 @@ export default class MainScreen extends Vue {
   padding: 30px 0px;
   &.sessionbrowser {
     background: #cccccc33;
+    flex-grow: 1;
   }
 
   li {

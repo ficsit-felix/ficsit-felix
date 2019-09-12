@@ -10,7 +10,7 @@ export interface FileHeader {
   mapOptions: string;
   sessionName: string;
   playDurationSeconds: number;
-  saveDateTime: bigint;
+  saveDateTime: Date;
   sessionVisibility: number;
 }
 
