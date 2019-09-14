@@ -42,6 +42,9 @@
       {{ version }}
       <div class="commithash">{{ commithash }}</div>
     </div>
+    <div class="content">
+      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
+    </div>
   </div>
 </template>
 

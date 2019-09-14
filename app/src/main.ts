@@ -10,7 +10,7 @@ import { i18n } from './plugins/i18n';
 import { isElectron } from './ts/isElectron';
 import '@/helpers/cmdHelper';
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
     dsn: 'https://4bee35ee7cba4ba194c9e1a575948656@sentry.io/1416938',
     release: commithash,

@@ -191,7 +191,7 @@ export default {
         })
       );
 
-      if (remote.process.env.NODE_ENV !== 'production') {
+      if (remote.process.env.NODE_ENV === 'development') {
         // Add develoment menu entries
         menu.append(
           new MenuItem({
