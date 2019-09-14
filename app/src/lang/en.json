@@ -9,7 +9,6 @@
     "openJsonTitle": "Open json file",
     "saveJsonTitle": "Save JSON file",
     "saveSaveTitle": "Save save game"
-    
   },
   "dialog": {
     "about": {
@@ -82,6 +81,7 @@
   },
   "landingPage": {
     "authors": "authors",
+    "downloadDesktop": "Download Desktop application",
     "firstParagraph": "FeliX is a save file visualizer for the game Satisfactory. Open the .sav file and you can view a low poly 3D representation of your factory and the surrounding area. The save file is processed in your browser and not uploaded to a server.",
     "openJsonButton": "Open .json file",
     "openSavButton": "Open .sav file",

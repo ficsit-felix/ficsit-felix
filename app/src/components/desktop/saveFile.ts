@@ -3,7 +3,6 @@ import Json2SavWorker from 'worker-loader?name=[name].js!@/transformation/json2s
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { isElectron } from '@/ts/isElectron';
-import { getSaveGamesFolderPath } from './desktopUtils';
 import { writeFile, fstat, existsSync, copyFileSync } from 'fs';
 import { parse } from 'path';
 
@@ -14,9 +13,10 @@ export function saveFileToFilesystem(
   asZip: boolean,
   callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
-  transformFile(callback, asZip, path, asJson);
+  transformFile(saveGame, callback, asZip, path, asJson);
 }
 function transformFile(
+  saveGame: SaveGame,
   callback: (err?: Error, progress?: number, success?: boolean) => void,
   asZip: boolean,
   path: string,
@@ -43,7 +43,7 @@ function transformFile(
   });
   worker.postMessage({
     exportJson: asJson,
-    data: window.data
+    data: saveGame
   });
 }
 

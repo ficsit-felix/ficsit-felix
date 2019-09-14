@@ -41,7 +41,7 @@ import { reportMessage, reportError } from '@/ts/errorReporting';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { saveFileToFilesystem } from '../desktop/saveFile';
-import { getSaveGamesFolderPath } from '../desktop/desktopUtils';
+import { getSaveGamesFolderPath } from '../desktop/getSaveGamesFolderPath';
 
 export default {
   name: 'SaveBox',

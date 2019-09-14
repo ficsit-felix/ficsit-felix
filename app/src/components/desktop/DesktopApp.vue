@@ -44,10 +44,13 @@ import { dialog, remote, shell } from 'electron';
 
 const { Menu, MenuItem } = require('electron').remote;
 import {
-  getSaveGamesFolderPath,
+
   openFileAndMoveToEditor,
   saveFileAndShowProgress
 } from './desktopUtils';
+import {
+  getSaveGamesFolderPath
+  } from './getSaveGamesFolderPath';
 import { EventBus } from '../../event-bus';
 import {
   DIALOG_ABOUT,

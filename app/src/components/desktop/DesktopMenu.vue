@@ -65,15 +65,13 @@ import {
 } from '../../ts/constants';
 import { openFileFromFilesystem } from './openFile';
 import { mapActions } from 'vuex';
-import {
-  getSaveGamesFolderPath,
-  openFileAndMoveToEditor
-} from './desktopUtils';
+import { openFileAndMoveToEditor } from './desktopUtils';
 import { createReadStream } from 'fs';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import fs from 'fs';
 import { FileHeaderReader, FileHeader } from './FileHeaderReader';
 import moment from 'moment';
+import { getSaveGamesFolderPath } from './getSaveGamesFolderPath';
 
 @Component({})
 export default class DesktopMenu extends Vue {

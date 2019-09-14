@@ -81,6 +81,7 @@
   },
   "landingPage": {
     "authors": "Autoren",
+    "downloadDesktop": "Desktop-App herunterladen",
     "firstParagraph": "FeliX ist ein Spielstandvisualisierer für das Spiel Satisfactory. Öffne die .sav Datei und du kannst eine low poly 3D Repräsentation deiner Fabrik und der umgebenden Gegend betrachten. Der Spielstand wird dabei nur in deinem Browser verarbeitet und wird zu keinem Server hochgeladen.",
     "openJsonButton": ".json Datei öffnen",
     "openSavButton": ".sav Datei öffnen",

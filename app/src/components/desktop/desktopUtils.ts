@@ -1,5 +1,4 @@
 import { remote } from 'electron';
-import electron from 'electron';
 import { EventBus } from '@/event-bus';
 import { Store } from 'vuex';
 import {
@@ -12,16 +11,6 @@ import { reportContext } from '@/ts/errorReporting';
 import { openFileFromFilesystem } from './openFile';
 import Vue from 'vue';
 import { saveFileToFilesystem } from './saveFile';
-
-export function getSaveGamesFolderPath() {
-  const home = (electron.app || electron.remote.app).getPath('home');
-  if (home === '/home/stream') {
-    // development test
-    return '/home/stream/saves';
-  } else {
-    return home + '/AppData/Local/FactoryGame/Saved/SaveGames';
-  }
-}
 
 /**
  * Supply a file path to open the file
