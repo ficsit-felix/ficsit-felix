@@ -5,9 +5,11 @@
       <p v-else>{{ $t('savePage.error') }}</p>
       <br />
       <br />
-      <md-button class="md-raised" @click="$router.push({ name: 'editor' })">{{
+      <md-button class="md-raised" @click="$router.push({ name: 'editor' })">
+        {{
         $t('savePage.backButton')
-      }}</md-button>
+        }}
+      </md-button>
     </div>
     <div v-else class="infobox">
       <p v-if="exportJson">{{ $t('savePage.jsonSubtitle') }}</p>
@@ -22,9 +24,11 @@
       <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
       <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">{{
+        <md-button class="md-primary" @click="showErrorDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -41,7 +45,6 @@ import { reportMessage, reportError } from '@/ts/errorReporting';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { saveFileToFilesystem } from '../desktop/saveFile';
-import { getSaveGamesFolderPath } from '../desktop/getSaveGamesFolderPath';
 
 export default {
   name: 'SaveBox',
