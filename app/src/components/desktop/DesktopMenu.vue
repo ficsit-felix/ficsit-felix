@@ -57,7 +57,8 @@ import {
   DIALOG_SETTINGS,
   DIALOG_ABOUT,
   DIALOG_PROGRESS,
-  DIALOG_OPEN_TIME_MS
+  DIALOG_OPEN_TIME_MS,
+  DIALOG_CONFIRM_EXIT
 } from '../../ts/constants';
 import { openFileFromFilesystem } from './openFile';
 import { mapActions } from 'vuex';
@@ -124,8 +125,7 @@ export default class DesktopMenu extends Vue {
     EventBus.$emit(DIALOG_ABOUT);
   }
   openExit() {
-    var window = remote.getCurrentWindow();
-    window.close();
+    EventBus.$emit(DIALOG_CONFIRM_EXIT);
   }
 
   openFile(name: string) {

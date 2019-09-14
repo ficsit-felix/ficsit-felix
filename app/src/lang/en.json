@@ -26,6 +26,10 @@
       "content": "Do you really want to delete this object?",
       "title": "Delete object"
     },
+    "exit": {
+      "content": "Do you really want to exit FeliX?",
+      "title": "Exit program"
+    },
     "help": {
       "changeJsonWarning": "If you change the JSON you need to save it before clicking anywhere in the scene, else it will be overwritten!",
       "controlsText": "Middle mouse pressed: move\nRight mouse: rotate\nScroll wheel: zoom\nLeft mouse: select objects",

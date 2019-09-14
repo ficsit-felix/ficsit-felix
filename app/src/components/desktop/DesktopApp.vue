@@ -57,7 +57,8 @@ import {
   CHANGE_LOCALE,
   ON_SAVE_PRESSED,
   DIALOG_SAVE,
-  TOGGLE_MENU
+  TOGGLE_MENU,
+  DIALOG_CONFIRM_EXIT
 } from '../../ts/constants';
 import { debug } from 'util';
 import { mapState } from 'vuex';
@@ -179,8 +180,7 @@ export default {
         label: this.$t('menubar.exit'),
         accelerator: 'Ctrl+Q',
         click() {
-          var window = remote.getCurrentWindow();
-          window.close();
+          EventBus.$emit(DIALOG_CONFIRM_EXIT);
         }
       });
 

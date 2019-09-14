@@ -25,6 +25,10 @@
       "content": "Willst du dieses Objekt wirklich löschen?",
       "title": "Objekt löschen"
     },
+    "exit": {
+      "content": "Willst du FeliX wirklich beenden?",
+      "title": "Programm beenden"
+    },
     "help": {
       "changeJsonWarning": "Wenn du das JSON änderst, musst du es noch speichern, bevor du irgendwo anders in die Szene klickst. Sonst wird es wieder überschrieben!",
       "controlsText": "Mittleres Mausrad gedrückt: Bewegen\nRechte Maustaste: Drehen\nMausrad: Rotieren\nLinke Maustaste: Objekte auswählen",

@@ -10,9 +10,11 @@
         <br />
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false">{{
+        <md-button class="md-primary" @click="showHelpDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -23,9 +25,11 @@
         <Settings></Settings>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false">{{
+        <md-button class="md-primary" @click="showSettingsDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -36,9 +40,11 @@
         <LicensesDialog></LicensesDialog>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showLicensesDialog = false">{{
+        <md-button class="md-primary" @click="showLicensesDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -49,9 +55,7 @@
         <p>{{ $t('dialog.about.row1') }}</p>
         <p>
           <i18n path="dialog.about.row2">
-            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
-              >GitHub</a
-            >
+            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github">GitHub</a>
           </i18n>
         </p>
         <p>
@@ -59,15 +63,16 @@
             <a
               href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
               slot="authors"
-              >{{ $t('dialog.about.authors') }}</a
-            >
+            >{{ $t('dialog.about.authors') }}</a>
           </i18n>
         </p>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showAboutDialog = false">{{
+        <md-button class="md-primary" @click="showAboutDialog = false">
+          {{
           $t('general.close')
-        }}</md-button>
+          }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -100,11 +105,22 @@
       "
     />
 
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-    ></BugReportDialog>
+    <BugReportDialog ref="bugReport" :filename="filename" :uuid="uuid"></BugReportDialog>
+
+    <!-- confirm exit dialog -->
+    <md-dialog-confirm
+      :md-active.sync="showConfirmExitDialog"
+      :md-title="$t('dialog.exit.title')"
+      :md-content="$t('dialog.exit.content')"
+      :md-confirm-text="$t('general.yes')"
+      :md-cancel-text="$t('general.no')"
+      @md-cancel="showConfirmExitDialog = false"
+      @md-confirm="exit"
+      @keydown.enter="
+        showSaveDialog = false;
+        exit();
+      "
+    />
   </div>
 </template>
 
@@ -123,11 +139,13 @@ import {
   DIALOG_PROGRESS,
   DIALOG_SAVE,
   ON_SAVE_PRESSED,
-  DIALOG_BUGREPORT
+  DIALOG_BUGREPORT,
+  DIALOG_CONFIRM_EXIT
 } from '../../ts/constants';
 import { EventBufferer } from 'custom-electron-titlebar/lib/common/event';
 import { setTimeout } from 'timers';
 import { mapState } from 'vuex';
+import { remote } from 'electron';
 
 export default Vue.extend({
   name: 'Dialogs',
@@ -144,7 +162,8 @@ export default Vue.extend({
       showLicensesDialog: false,
       showAboutDialog: false,
       showProgressDialog: false,
-      showSaveDialog: false
+      showSaveDialog: false,
+      showConfirmExitDialog: false
     };
   },
   computed: {
@@ -198,6 +217,12 @@ export default Vue.extend({
         );
       });
     });
+    EventBus.$on(DIALOG_CONFIRM_EXIT, () => {
+      this.closeDialogs(
+        this.showConfirmExitDialog,
+        () => (this.showConfirmExitDialog = true)
+      );
+    });
   },
   beforeDestroy() {
     EventBus.$off(DIALOG_HELP);
@@ -207,6 +232,7 @@ export default Vue.extend({
     EventBus.$off(DIALOG_PROGRESS);
     EventBus.$off(DIALOG_SAVE);
     EventBus.$off(DIALOG_BUGREPORT);
+    EventBus.$off(DIALOG_CONFIRM_EXIT);
   },
   methods: {
     closeDialogs(dialogAlreadyOpenDontClose: boolean, callback: () => void) {
@@ -221,7 +247,8 @@ export default Vue.extend({
         this.showLicensesDialog ||
         this.showAboutDialog ||
         this.showProgressDialog ||
-        this.showSaveDialog;
+        this.showSaveDialog ||
+        this.showConfirmExitDialog;
       this.closeAllDialogs();
       if (dialogPreviouslyOpen) {
         // wait for the dialog to close
@@ -237,10 +264,15 @@ export default Vue.extend({
       this.showAboutDialog = false;
       this.showProgressDialog = false;
       this.showSaveDialog = false;
+      this.showConfirmExitDialog = false;
     },
 
     save() {
       EventBus.$emit(ON_SAVE_PRESSED);
+    },
+    exit() {
+      var window = remote.getCurrentWindow();
+      window.close();
     }
   }
 });
