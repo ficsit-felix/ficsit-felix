@@ -187,6 +187,23 @@ export default {
         })
       );
 
+      console.log('IS_TEST', remote.process.env.NODE_ENV);
+      if (remote.process.env.NODE_ENV !== 'production') {
+        // Add develoment menu entries
+        menu.append(
+          new MenuItem({
+            label: 'Develop',
+            submenu: [
+              { role: 'reload' },
+              { role: 'forcereload' },
+              { role: 'toggledevtools' },
+              { type: 'separator' },
+              { role: 'togglefullscreen' }
+            ]
+          })
+        );
+      }
+
       menu.append(
         new MenuItem({
           label: this.$t('menubar.help'),
