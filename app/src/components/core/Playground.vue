@@ -48,12 +48,7 @@
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
     -->
 
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-      :defaultIncludeSave="false"
-    ></BugReportDialog>
+    <BugReportDialog ref="bugReport" :filename="filename" :uuid="uuid" :defaultIncludeSave="false"></BugReportDialog>
   </div>
 </template>
 
@@ -153,7 +148,7 @@ export default {
       }
 
       if (val != this.lastSelectedActors) {
-        // selection needs to changex
+        // selection needs to change
 
         for (const actor of this.lastSelectedActors) {
           if (!val.includes(actor)) {
@@ -453,6 +448,7 @@ export default {
     },
 
     handleResize() {
+      console.log('RESIZE');
       var elem = document.getElementById('scene');
       if (elem === undefined || elem === null) {
         return;

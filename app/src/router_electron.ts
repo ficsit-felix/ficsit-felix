@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Editor from './components/core/Editor.vue';
+import EditorView from './components/desktop/EditorView.vue';
+//import Editor from './components/core/Editor.vue';
 import MainScreen from './components/desktop/MainScreen.vue';
 import ProgressBarDialog from './components/core/ProgressBarDialog.vue';
 Vue.use(Router);
@@ -22,7 +23,7 @@ export default new Router({
     {
       path: '/editor',
       name: 'editor',
-      component: Editor
+      component: EditorView
     },
     {
       path: '/open/*',

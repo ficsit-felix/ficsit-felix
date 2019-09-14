@@ -56,7 +56,8 @@ import {
   DIALOG_SETTINGS,
   CHANGE_LOCALE,
   ON_SAVE_PRESSED,
-  DIALOG_SAVE
+  DIALOG_SAVE,
+  TOGGLE_MENU
 } from '../../ts/constants';
 import { debug } from 'util';
 import { mapState } from 'vuex';
@@ -155,6 +156,7 @@ export default {
         {
           type: 'separator'
         },
+        { role: 'togglefullscreen' },
         {
           label: this.$t('menubar.settings'),
           click() {
@@ -165,8 +167,10 @@ export default {
       if (this.showSaveMenuEntries) {
         fileEntries.push({
           label: this.$t('menubar.mainScreen'),
+          accelerator: 'Esc',
           click: () => {
-            this.$router.push('/');
+            EventBus.$emit(TOGGLE_MENU);
+            //this.$router.push('/');
           }
         });
       }
@@ -187,7 +191,6 @@ export default {
         })
       );
 
-      console.log('IS_TEST', remote.process.env.NODE_ENV);
       if (remote.process.env.NODE_ENV !== 'production') {
         // Add develoment menu entries
         menu.append(
@@ -196,9 +199,7 @@ export default {
             submenu: [
               { role: 'reload' },
               { role: 'forcereload' },
-              { role: 'toggledevtools' },
-              { type: 'separator' },
-              { role: 'togglefullscreen' }
+              { role: 'toggledevtools' }
             ]
           })
         );
@@ -250,6 +251,7 @@ export default {
           ]
         })
       );
+
       this.titlebar.updateMenu(menu);
       Menu.setApplicationMenu(menu);
     },

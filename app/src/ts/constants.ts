@@ -6,6 +6,8 @@ export const DIALOG_PROGRESS = 'DIALOG_PROGRESS';
 export const DIALOG_SAVE = 'DIALOG_SAVE';
 export const DIALOG_BUGREPORT = 'DIALOG_BUGREPORT';
 export const CHANGE_LOCALE = 'CHANGE_LOCALE';
+export const TOGGLE_MENU = 'TOGGLE_MENU';
+
 
 export const DIALOG_OPEN_TIME_MS = 300;
 export const ON_SAVE_PRESSED = 'ON_SAVE_PRESSED';
