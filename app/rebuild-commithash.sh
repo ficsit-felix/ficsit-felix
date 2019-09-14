@@ -3,11 +3,19 @@
 HASH="development build"
 LICENSES="placeholder for open source licenses"
 if [[ "$@" == "build" ]]; then
-    if [ -z $NOW_GITHUB_COMMIT_SHA ]; then
-        HASH="$(git rev-parse HEAD)"
-    else
+
+
+    if [ ! -z $NOW_GITHUB_COMMIT_SHA ]; then
+        # zeit CI
         HASH=$NOW_GITHUB_COMMIT_SHA
+    elif [ ! -z $TRAVIS_COMMIT ]; then
+        # Travis CI
+        HASH=$TRAVIS_COMMIT
+    else
+        HASH="$(git rev-parse HEAD)"
     fi
+
+
     LICENSES="$(
         (
         echo -e "ficsit-felix (https://github.com/ficsit-felix/ficsit-felix)\n";
