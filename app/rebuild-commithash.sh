@@ -15,19 +15,21 @@ if [[ "$@" == "build" ]]; then
         HASH="$(git rev-parse HEAD)"
     fi
 
+    # https://stackoverflow.com/a/246128
+    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
     LICENSES="$(
         (
         echo -e "ficsit-felix (https://github.com/ficsit-felix/ficsit-felix)\n";
-        cat ../LICENSE;
+        cat $DIR/../LICENSE;
         echo -e "\n-----\n\nThe low poly 3d models were created by Cale Flanagan, CVex2150J and bitowl and are distributed under the Creative Commons Attribution-ShareAlike 4.0 International license:";
-        cat public/models/LICENSE;
+        cat $DIR/public/models/LICENSE;
         echo -e "-----\n"
         yarn licenses generate-disclaimer | tail -n+3 | tr "\`" "'"
         ))"
 fi
 echo "const commithash = '$HASH';
-export { commithash };" > src/js/commithash.ts;
+export { commithash };" > $DIR/src/js/commithash.ts;
 
 echo "const licenses = \`$LICENSES\`;
-export { licenses };" > src/js/licenses.ts;
+export { licenses };" > $DIR/src/js/licenses.ts;
