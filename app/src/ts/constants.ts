@@ -9,6 +9,5 @@ export const DIALOG_CONFIRM_EXIT = 'DIALOG_CONFIRM_EXIT';
 export const CHANGE_LOCALE = 'CHANGE_LOCALE';
 export const TOGGLE_MENU = 'TOGGLE_MENU';
 
-
 export const DIALOG_OPEN_TIME_MS = 300;
 export const ON_SAVE_PRESSED = 'ON_SAVE_PRESSED';

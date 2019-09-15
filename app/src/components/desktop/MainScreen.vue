@@ -10,7 +10,7 @@ import DesktopMenu from './DesktopMenu.vue';
 
 @Component({
   components: {
-  DesktopMenu
+    DesktopMenu
   }
 })
 export default class MainScreen extends Vue {

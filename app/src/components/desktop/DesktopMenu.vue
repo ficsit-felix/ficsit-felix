@@ -3,8 +3,12 @@
     <ul class="menu">
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
       <div class="spacer"></div>
-      <li class="small" @click="openJsonFilebrowser()">{{ $t('menubar.importJson') }}</li>
-      <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
+      <li class="small" @click="openJsonFilebrowser()">
+        {{ $t('menubar.importJson') }}
+      </li>
+      <li class="small" @click="openSettings()">
+        {{ $t('menubar.settings') }}
+      </li>
       <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
       <div class="spacer"></div>
       <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
@@ -19,7 +23,9 @@
         <div class="session-name">{{ session.sessionName }}</div>
         <div class="bottom-info">
           <div class="filename">{{ session.saves[0].filename }}</div>
-          <div class="last-time">{{ dateToString(session.saves[0].saveDateTime) }}</div>
+          <div class="last-time">
+            {{ dateToString(session.saves[0].saveDateTime) }}
+          </div>
         </div>
       </li>
     </ul>
@@ -29,7 +35,11 @@
       ref="sessionbrowser"
       v-if="showFilebrowser && sessionFiles.length > 0"
     >
-      <li v-bind:key="file.filename" v-for="file in sessionFiles" @click="openFile(file.filename)">
+      <li
+        v-bind:key="file.filename"
+        v-for="file in sessionFiles"
+        @click="openFile(file.filename)"
+      >
         <div class="session-name">{{ file.sessionName }}</div>
 
         <div class="bottom-info">
@@ -43,7 +53,9 @@
       <div class="commithash">{{ commithash }}</div>
     </div>
     <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
+      <div v-if="saveFolderNotFound" class="saveFolderError">
+        Could not locate save folder
+      </div>
     </div>
   </div>
 </template>
@@ -87,9 +99,7 @@ export default class DesktopMenu extends Vue {
 
   mounted() {
     // read files
-    console.log(getSaveGamesFolderPath());
     fs.readdir(getSaveGamesFolderPath(), (err, files) => {
-      console.log(err, files);
       if (err) {
         this.saveFolderNotFound = true;
         // TODO: SaveGames folder not found
@@ -133,7 +143,11 @@ export default class DesktopMenu extends Vue {
 
   openFile(name: string) {
     this.$router.push('/');
-    openFileAndMoveToEditor(this, path.join(getSaveGamesFolderPath(), name), false);
+    openFileAndMoveToEditor(
+      this,
+      path.join(getSaveGamesFolderPath(), name),
+      false
+    );
   }
 
   openJsonFilebrowser() {

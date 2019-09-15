@@ -1,5 +1,5 @@
 <template>
-  <div class="editor">   
+  <div class="editor">
     <div class="maincolumn">
       <Menubar v-if="showMenubar" />
       <div class="mainrow">

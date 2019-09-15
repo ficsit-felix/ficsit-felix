@@ -53,7 +53,6 @@ function saveDesktop(
   data: any,
   callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
-
   if (existsSync(filePath)) {
     // make a backup
     // TODO maybe zip the backup?
@@ -61,7 +60,7 @@ function saveDesktop(
       .toISOString()
       .replace('T', '_')
       .replace('Z', '')
-      .replace(/:/g,'_');
+      .replace(/:/g, '_');
 
     const parsedPath = parse(filePath);
     copyFileSync(

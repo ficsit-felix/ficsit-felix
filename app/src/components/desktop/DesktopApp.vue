@@ -44,13 +44,10 @@ import { dialog, remote, shell } from 'electron';
 
 const { Menu, MenuItem } = require('electron').remote;
 import {
-
   openFileAndMoveToEditor,
   saveFileAndShowProgress
 } from './desktopUtils';
-import {
-  getSaveGamesFolderPath
-  } from './getSaveGamesFolderPath';
+import { getSaveGamesFolderPath } from './getSaveGamesFolderPath';
 import { EventBus } from '../../event-bus';
 import {
   DIALOG_ABOUT,
@@ -334,8 +331,10 @@ export default {
       // TODO maybe store to the location the file was actually loaded from?
       saveFileAndShowProgress(
         this,
-        path.join(getSaveGamesFolderPath(),
-          this.$store.state.filename.replace('.json', '.sav')),
+        path.join(
+          getSaveGamesFolderPath(),
+          this.$store.state.filename.replace('.json', '.sav')
+        ),
         false,
         false
       );
