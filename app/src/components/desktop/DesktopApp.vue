@@ -65,6 +65,7 @@ import {
 } from '../../ts/constants';
 import { debug } from 'util';
 import { mapState } from 'vuex';
+import path from 'path';
 
 export default {
   name: 'DesktopApp',
@@ -273,9 +274,7 @@ export default {
         filePaths => {
           console.log(filePaths);
           if (filePaths.length === 1) {
-            this.$router.push({
-              name: '/'
-            });
+            this.$router.push('/');
             openFileAndMoveToEditor(this, filePaths[0], false);
           }
         }
@@ -296,9 +295,7 @@ export default {
         },
         filePaths => {
           if (filePaths.length === 1) {
-            this.$router.push({
-              name: '/'
-            });
+            this.$router.push('/');
             openFileAndMoveToEditor(this, filePaths[0], true);
           }
         }
@@ -337,9 +334,8 @@ export default {
       // TODO maybe store to the location the file was actually loaded from?
       saveFileAndShowProgress(
         this,
-        getSaveGamesFolderPath() +
-          '/' +
-          this.$store.state.filename.replace('.json', '.sav'),
+        path.join(getSaveGamesFolderPath(),
+          this.$store.state.filename.replace('.json', '.sav')),
         false,
         false
       );

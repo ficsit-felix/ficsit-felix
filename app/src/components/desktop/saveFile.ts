@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import { isElectron } from '@/ts/isElectron';
 import { writeFile, fstat, existsSync, copyFileSync } from 'fs';
 import { parse } from 'path';
+import path from 'path';
 
 export function saveFileToFilesystem(
   saveGame: SaveGame,
@@ -48,30 +49,29 @@ function transformFile(
 }
 
 function saveDesktop(
-  path: string,
+  filePath: string,
   data: any,
   callback: (err?: Error, progress?: number, success?: boolean) => void
 ) {
-  // const path = getSaveGamesFolderPath() + '/' + path;
 
-  if (existsSync(path)) {
+  if (existsSync(filePath)) {
     // make a backup
     // TODO maybe zip the backup?
     const timestamp = new Date()
       .toISOString()
       .replace('T', '_')
-      .replace('Z', '');
+      .replace('Z', '')
+      .replace(/:/g,'_');
 
-    const parsedPath = parse(path);
-
-    const folderPath = copyFileSync(
-      path,
-      parsedPath.dir + '/' + parsedPath.base + '_' + timestamp + '.bak'
+    const parsedPath = parse(filePath);
+    copyFileSync(
+      filePath,
+      path.join(parsedPath.dir, parsedPath.base + '_' + timestamp + '.bak')
     );
   }
 
   writeFile(
-    path,
+    filePath,
     data,
     {
       encoding: 'binary'

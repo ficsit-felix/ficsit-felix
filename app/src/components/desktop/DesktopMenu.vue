@@ -72,6 +72,7 @@ import fs from 'fs';
 import { FileHeaderReader, FileHeader } from './FileHeaderReader';
 import moment from 'moment';
 import { getSaveGamesFolderPath } from './getSaveGamesFolderPath';
+import path from 'path';
 
 @Component({})
 export default class DesktopMenu extends Vue {
@@ -86,8 +87,9 @@ export default class DesktopMenu extends Vue {
 
   mounted() {
     // read files
+    console.log(getSaveGamesFolderPath());
     fs.readdir(getSaveGamesFolderPath(), (err, files) => {
-      console.log(err);
+      console.log(err, files);
       if (err) {
         this.saveFolderNotFound = true;
         // TODO: SaveGames folder not found
@@ -98,7 +100,7 @@ export default class DesktopMenu extends Vue {
         if (file.endsWith('.sav')) {
           // READ HEADER OF SAVE FILE
           const stream = createReadStream(
-            getSaveGamesFolderPath() + '/' + file
+            path.join(getSaveGamesFolderPath(), file)
           );
           new FileHeaderReader(file, stream, header => {
             if (this.files[header.sessionName] === undefined) {
@@ -130,10 +132,8 @@ export default class DesktopMenu extends Vue {
   }
 
   openFile(name: string) {
-    this.$router.push({
-      name: '/'
-    });
-    openFileAndMoveToEditor(this, getSaveGamesFolderPath() + '/' + name, false);
+    this.$router.push('/');
+    openFileAndMoveToEditor(this, path.join(getSaveGamesFolderPath(), name), false);
   }
 
   openJsonFilebrowser() {
@@ -151,9 +151,7 @@ export default class DesktopMenu extends Vue {
       },
       (filePaths: any) => {
         if (filePaths.length === 1) {
-          this.$router.push({
-            name: '/'
-          });
+          this.$router.push('/');
           openFileAndMoveToEditor(this, filePaths[0], true);
         }
       }
