@@ -4,5 +4,43 @@ module.exports = {
     historyApiFallback: false
   },
   // To fix "No ESLint configuration found" when using yarn link https://github.com/vuejs/vue-cli/issues/2948#issuecomment-438589725
-  chainWebpack: config => config.resolve.symlinks(false)
+  chainWebpack: config => config.resolve.symlinks(false),
+
+  pluginOptions: {
+    electronBuilder: {
+      builderOptions: {
+        productName: 'FICSIT - FeliX',
+        win: {
+          publisherName: 'bitowl',
+          // We don't have a certificate
+          verifyUpdateCodeSignature: false
+        },
+        publish: [
+          {
+            provider: 'github',
+            owner: 'ficsit-felix',
+            repo: 'ficsit-felix'
+          }
+        ],
+        nsis: {
+          artifactName: 'FICSIT-FeliX-setup.exe'
+        },
+        dmg: {
+          artifactName: 'FICSIT-FeliX.dmg'
+        },
+        mac: {
+          target: 'dmg'
+        },
+        linux: {
+          target: 'AppImage',
+          executableName: 'ficsit-felix',
+          synopsis: 'Save file analyzer for Satisfactory',
+          category: 'Game'
+        },
+        appImage: {
+          artifactName: 'FICSIT-FeliX.AppImage'
+        }
+      }
+    }
+  }
 };

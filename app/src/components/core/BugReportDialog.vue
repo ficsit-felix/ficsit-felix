@@ -4,7 +4,7 @@
       <md-dialog-title>{{ $t('dialog.bugReport.title') }}</md-dialog-title>
       <md-dialog-content>
         <div class="dialog-content">
-          <p v-if="message">{{ message }}</p>
+          <p v-if="message" class="errorMessage">{{ message }}</p>
           <md-field>
             <label>{{ $t('dialog.bugReport.userMessage') }}</label>
             <md-textarea
@@ -46,9 +46,8 @@
           class="md-primary"
           @click="sendReport()"
           :disabled="formDisabled"
+          >{{ $t('dialog.bugReport.send') }}</md-button
         >
-          {{ $t('dialog.bugReport.send') }}
-        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -153,9 +152,6 @@ uuid: ${this.uuid}
         }*/
       )
       .then((content: Uint8Array) => {
-        this.showBugReportDialog = false;
-        this.formDisabled = false;
-        this.showSentDialog = true;
         window
           .fetch(
             'https://owl.yt/ficsit-felix/?uuid=' +
@@ -206,6 +202,9 @@ uuid: ${this.uuid}
   /* As we need to place the md-dialog outside of this component, so that clicking on the background can work */
   display: flex;
   flex-direction: column;
+}
+.errorMessage {
+  overflow: auto;
 }
 .dialog-content {
   width: 500px;

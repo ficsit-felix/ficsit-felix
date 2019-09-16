@@ -5,9 +5,9 @@
       <p v-else>{{ $t('savePage.error') }}</p>
       <br />
       <br />
-      <md-button class="md-raised" @click="$router.push({ name: 'editor' })">{{
-        $t('savePage.backButton')
-      }}</md-button>
+      <md-button class="md-raised" @click="$router.push({ name: 'editor' })">
+        {{ $t('savePage.backButton') }}
+      </md-button>
     </div>
     <div v-else class="infobox">
       <p v-if="exportJson">{{ $t('savePage.jsonSubtitle') }}</p>
@@ -22,9 +22,9 @@
       <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
       <span class="dialog-content">{{ errorText }}</span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">{{
-          $t('general.close')
-        }}</md-button>
+        <md-button class="md-primary" @click="showErrorDialog = false">
+          {{ $t('general.close') }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>
@@ -40,6 +40,7 @@ import { json2sav } from 'satisfactory-json';
 import { reportMessage, reportError } from '@/ts/errorReporting';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { saveFileToFilesystem } from '../desktop/saveFile';
 
 export default {
   name: 'SaveBox',
@@ -92,25 +93,41 @@ export default {
         this.isSaving = true;
         this.infoText = this.$t('savePage.readingFile');
 
-        var data;
+        let filename;
+
         if (this.exportJson) {
-          data = JSON.stringify(window.data);
+          // TO#DO make sure we only cut of the extension
+          filename =
+            this.filename.replace('.json', '').replace('.sav', '') + '.json';
         } else {
-          data = json2sav(window.data);
+          filename =
+            this.filename.replace('.json', '').replace('.sav', '') + '.sav';
         }
 
-        this.infoText = this.$t('savePage.processingFile');
-        this.progress = 50;
-        this.buildInterval = setInterval(() => {
-          this.progress += 1;
-          if (this.progress >= 100) {
-            this.progress = 100;
-            clearInterval(this.buildInterval);
-            setTimeout(() => {
-              this.downloadData(data);
-            }, 100);
+        saveFileToFilesystem(
+          window.data,
+          filename,
+          this.exportJson,
+          this.saveAsZip,
+          (err, progress, success) => {
+            if (err) {
+              // TODO show bug report window
+              console.error(err);
+              return;
+            }
+
+            if (progress) {
+              this.progress = progress;
+
+              // 50: this.infoText = this.$t('savePage.processingFile');
+              return;
+            }
+
+            if (success) {
+              this.isSaving = false;
+            }
           }
-        }, 30);
+        );
       } catch (error) {
         reportError(error);
         this.handleError(error.message);
@@ -120,55 +137,6 @@ export default {
 
     downloadData(data) {
       let filename;
-      if (this.exportJson) {
-        // TODO make sure we only cut of the extension
-        filename =
-          this.filename.replace('.json', '').replace('.sav', '') + '.json';
-      } else {
-        filename =
-          this.filename.replace('.json', '').replace('.sav', '') + '.sav';
-      }
-
-      if (this.saveAsZip) {
-        let zip = new JSZip();
-
-        zip.file(filename, data, { binary: true });
-
-        zip
-          .generateAsync({
-            type: 'blob',
-            compression: 'DEFLATE',
-            compressionOptions: {
-              level: 9
-            }
-          })
-          .then(content => {
-            // see FileSaver.js
-            saveAs(
-              content,
-              // TODO make sure we only cut of the extension
-              filename.replace('.json', '').replace('.sav', '') + '.zip'
-            );
-          })
-          .catch(error => {
-            reportError(error);
-            this.handleError(error.message);
-          });
-      } else {
-        var element = document.createElement('a');
-
-        var blob = new Blob([Buffer.from(data, 'binary')], {
-          type: 'application/octet-stream'
-        });
-        element.href = window.URL.createObjectURL(blob);
-        element.download = filename;
-
-        document.body.appendChild(element);
-
-        element.click();
-
-        document.body.removeChild(element);
-      }
 
       this.isSaving = false;
     }

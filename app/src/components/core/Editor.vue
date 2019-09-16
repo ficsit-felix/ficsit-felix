@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <div class="maincolumn">
-      <Menubar />
+      <Menubar v-if="showMenubar" />
       <div class="mainrow">
         <Split @onDrag="onDrag">
           <SplitArea :size="60">
@@ -34,12 +34,13 @@
 
 <script>
 // @ is an alias to /src
-import Menubar from '@/components/Menubar.vue';
-import Playground from '@/components/Playground.vue';
-import ObjectList from '@/components/ObjectList.vue';
-import PropertyEditor from '@/components/PropertyEditor.vue';
-import ClassList from '@/components/ClassList.vue';
+import Menubar from './Menubar.vue';
+import Playground from './Playground.vue';
+import ObjectList from './ObjectList.vue';
+import PropertyEditor from './PropertyEditor.vue';
+import ClassList from './ClassList.vue';
 import { mapState } from 'vuex';
+import { isElectron } from '../../ts/isElectron';
 
 export default {
   name: 'editor',
@@ -52,6 +53,11 @@ export default {
   },
   computed: {
     ...mapState(['dataLoaded'])
+  },
+  data() {
+    return {
+      showMenubar: !isElectron()
+    };
   },
 
   created() {

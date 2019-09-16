@@ -185,6 +185,7 @@ const settingsModule: Module<SettingsRootState, RootState> = {
 };
 
 interface RootState {
+  [x: string]: any;
   loading: boolean;
 
   selectedPathNames: string[];
@@ -207,6 +208,15 @@ interface RootState {
   selectionDisabled: boolean;
   boxSelect: boolean;
   shiftSelect: boolean;
+
+  // loading
+  progress: number;
+  progressText: {
+    title: string;
+    currentStep: string;
+    showCloseButton: boolean;
+  };
+  showSaveMenuEntries: boolean;
 }
 
 export default new Vuex.Store<RootState>({
@@ -231,7 +241,15 @@ export default new Vuex.Store<RootState>({
 
     selectionDisabled: false,
     boxSelect: false,
-    shiftSelect: false
+    shiftSelect: false,
+
+    progress: 0,
+    progressText: {
+      title: '',
+      currentStep: '',
+      showCloseButton: false
+    },
+    showSaveMenuEntries: false
   },
   getters: {
     getNames: state => {
@@ -462,6 +480,23 @@ export default new Vuex.Store<RootState>({
     },
     SET_SHIFT_SELECT(state, payload) {
       state.shiftSelect = payload;
+    },
+    SET_PROGRESS(state, payload) {
+      state.progress = payload;
+    },
+    SET_PROGRESS_TEXT(state, payload) {
+      if (payload.title !== undefined) {
+        state.progressText.title = payload.title;
+      }
+      if (payload.currentStep !== undefined) {
+        state.progressText.currentStep = payload.currentStep;
+      }
+      if (payload.showCloseButton !== undefined) {
+        state.progressText.showCloseButton = payload.showCloseButton;
+      }
+    },
+    SET_SHOW_SAVE_MENU_ENTRIES(state, payload) {
+      state.showSaveMenuEntries = payload;
     }
   },
   actions: {
@@ -520,6 +555,15 @@ export default new Vuex.Store<RootState>({
     },
     setShiftSelect(context, payload) {
       context.commit('SET_SHIFT_SELECT', payload);
+    },
+    setProgress(context, payload) {
+      context.commit('SET_PROGRESS', payload);
+    },
+    setProgressText(context, payload) {
+      context.commit('SET_PROGRESS_TEXT', payload);
+    },
+    setShowSaveMenuEntries(context, payload) {
+      context.commit('SET_SHOW_SAVE_MENU_ENTRIES', payload);
     }
   }
 });

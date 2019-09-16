@@ -8,7 +8,12 @@
         <Logo :height="180" black="#000" :animating="logoAnimating" />
       </div>
       <p>{{ $t('landingPage.firstParagraph') }}</p>
-      <p>
+      <p class="buttonRow">
+        <md-button
+          class="md-raised md-primary md-dense"
+          @click="downloadDesktop()"
+          >{{ $t('landingPage.downloadDesktop') }}</md-button
+        >&nbsp;
         <md-button
           class="md-raised"
           @click="$router.push({ path: '/open/sav' })"
@@ -27,12 +32,12 @@
 
       <p class="left">
         <i18n path="landingPage.thirdParagraph">
-          <a href="https://github.com/ficsit-felix/ficsit-felix" place="github"
+          <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
             >GitHub</a
           >
           <a
             href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
-            place="authors"
+            slot="authors"
             >{{ $t('landingPage.authors') }}</a
           >
         </i18n>
@@ -47,12 +52,12 @@
 </template>
 
 <script>
-import Logo from '@/components/Logo';
+import Logo from '@/components/core/Logo';
 import * as Sentry from '@sentry/browser';
 import { commithash } from '@/js/commithash';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
+import LanguageSwitcher from '@/components/core/LanguageSwitcher';
 import { reportMessage } from '@/ts/errorReporting';
-import CenterWhiteBox from '@/components/CenterWhiteBox';
+import CenterWhiteBox from '@/components/core/CenterWhiteBox';
 
 export default {
   name: 'LandingPage',
@@ -67,19 +72,12 @@ export default {
       commithash: commithash
     };
   },
-  mounted() {
-    if (this.$store.state.settings.autoLoadSaveFile !== '') {
-      this.$router.push({
-        path: 'open/auto'
-      });
+  mounted() {},
+  methods: {
+    downloadDesktop() {
+      location.href =
+        'https://github.com/ficsit-felix/ficsit-felix/releases/latest';
     }
-
-    // Set persisted locale
-    const lang = this.$store.state.settings.locale;
-    import(`@/lang/${lang}.json`).then(msgs => {
-      this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
-      this.$i18n.locale = lang;
-    });
   }
 };
 </script>
@@ -109,6 +107,12 @@ p {
 }
 
 .languageSelection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonRow {
   display: flex;
   justify-content: center;
   align-items: center;

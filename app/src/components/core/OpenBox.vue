@@ -31,9 +31,7 @@
         <p v-if="importJson" class="dragInstruction">
           {{ $t('openPage.dragJson') }}
         </p>
-        <p v-else class="dragInstruction">
-          {{ $t('openPage.dragSav') }}
-        </p>
+        <p v-else class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
       </div>
     </form>
     <div v-else class="infobox">
@@ -47,24 +45,25 @@
 
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
-      <span class="dialog-content"
-        >{{ errorText
-        }}<span v-if="showSendSave"
-          ><br /><br />
+      <span class="dialog-content">
+        {{ errorText }}
+        <span v-if="showSendSave">
+          <br />
+          <br />
           <i18n path="openPage.errorText">
             <a
               href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
-              place="dropbox"
+              slot="dropbox"
               >{{ $t('openPage.dropboxText') }}</a
             >
-            <a href="mailto:felix@owl.yt" place="mail">felix@owl.yt</a>
+            <a href="mailto:felix@owl.yt" slot="mail">felix@owl.yt</a>
           </i18n>
-        </span></span
-      >
+        </span>
+      </span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">{{
-          $t('general.close')
-        }}</md-button>
+        <md-button class="md-primary" @click="showErrorDialog = false">
+          {{ $t('general.close') }}
+        </md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -85,10 +84,12 @@ import { modelHelper } from '@/helpers/modelHelper';
 import { modelConfig } from '@/definitions/models';
 
 import { reportMessage, reportContext, reportError } from '@/ts/errorReporting';
-import { reportException } from '../ts/errorReporting';
+import { reportException } from '@/ts/errorReporting';
 import { sav2json } from 'satisfactory-json';
 
-import BugReportDialog from '@/components/BugReportDialog';
+import BugReportDialog from './BugReportDialog';
+
+import * as Sav2JsonWorker from 'worker-loader?name=[name].js!@/transformation/sav2json.worker.js';
 
 export default {
   components: {
@@ -188,6 +189,9 @@ export default {
         return;
       }
 
+      console.time('openFile');
+      console.time('readWeb');
+
       var reader = new FileReader();
       reader.onprogress = evt => {
         if (evt.lengthComputable) {
@@ -196,7 +200,8 @@ export default {
         }
       };
       reader.onload = response => {
-        this.processFile(response.target.result);
+        console.timeEnd('readWeb');
+        this.processFile(reader.result);
       };
       reader.readAsArrayBuffer(file);
     },
@@ -205,40 +210,58 @@ export default {
       // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
       window.data = data;
 
+      if (this.$store.state.settings.autoLoadSaveFile !== '') {
+        this.$router.push({
+          path: 'open/auto'
+        });
+      }
+
       this.infoText = this.$t('openPage.processing');
       this.progress = 50;
       try {
-        var json;
-        if (this.importJson) {
-          json = JSON.parse(Buffer.from(data).toString('utf-8'));
-        } else {
-          json = sav2json(Buffer.from(data));
-        }
+        console.time('sav2json');
+        const worker = new Sav2JsonWorker(); //Worker(workerPath);
 
-        // reportMessage("debugSav2Json");
+        //console.log(workerPath, worker);
+        worker.addEventListener('message', message => {
+          if (message.data.status === 'error') {
+            reportException(message.data.error);
+            this.handleError(message.data.error);
+            return;
+          }
+          console.timeEnd('sav2json');
+          this.progress = 70;
+          // reportMessage("debugSav2Json");
 
-        this.infoText = this.$t('openPage.buildingWorld');
-        // give us some time to build the 3d world while animating the progress bar
-        this.setLoadedData(json)
-          .then(() => {
-            this.buildInterval = setInterval(() => {
-              this.progress += 1;
-              if (this.progress >= 100) {
-                this.progress = 100;
-                clearInterval(this.buildInterval);
-                setTimeout(() => {
-                  // let the user at least see the full bar
-                  this.$router.push({
-                    name: 'editor'
-                  });
-                }, 100);
-              }
-            }, 30);
-          })
-          .catch(error => {
-            reportError(error);
-            this.handleError(error.message);
-          });
+          this.infoText = this.$t('openPage.buildingWorld');
+          // give us some time to build the 3d world while animating the progress bar
+          this.setLoadedData(message.data.data)
+            .then(() => {
+              this.buildInterval = setInterval(() => {
+                this.progress += 1;
+                if (this.progress >= 100) {
+                  this.progress = 100;
+                  clearInterval(this.buildInterval);
+                  setTimeout(() => {
+                    console.timeEnd('openFile');
+                    // let the user at least see the full bar
+                    this.$router.push({
+                      name: 'editor'
+                    });
+                  }, 100);
+                }
+              }, 30);
+            })
+            .catch(error => {
+              reportError(error);
+              this.handleError(error.message);
+            });
+        });
+
+        worker.postMessage({
+          importJson: this.importJson,
+          data
+        });
       } catch (error) {
         reportError(error);
         this.handleError(error.message);

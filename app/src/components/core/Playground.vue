@@ -42,11 +42,6 @@
       {{ commithash }}
     </div>
 
-    <div v-if="loadingProgress < 100" class="loadingProgress">
-      <div class="progressBar" :style="{ width: loadingProgress + '%' }"></div>
-      <div class="progressText">{{ Math.round(loadingProgress) }} %</div>
-    </div>
-
     <Compass></Compass>
     <!--
       //currently disabled https://github.com/ficsit-felix/ficsit-felix/issues/86#issuecomment-512925021
@@ -66,36 +61,37 @@
 import * as THREE from 'three';
 import { OrbitControls } from '@/js/OrbitControls';
 import { TransformControls } from '@/js/TransformControls';
-import { mapActions, mapGetters, mapState } from 'vuex';
-import Scene from '@/components/scene/Scene';
-import Renderer from '@/components/scene/Renderer';
-import Camera from '@/components/scene/Camera';
+import _default, { mapActions, mapGetters, mapState } from 'vuex';
+import Scene from './scene/Scene';
+import Renderer from './scene/Renderer';
+import Camera from './scene/Camera';
 import { BoxBufferGeometry, LineCurve3, Mesh, error } from 'three';
 import { setTimeout } from 'timers';
 import { GLTFLoader } from '@/js/GLTFLoader';
 import { modelHelper } from '@/helpers/modelHelper';
 import { modelConfig } from '@/definitions/models';
 import * as Sentry from '@sentry/browser';
-import Toolbar from '@/components/Toolbar';
+import Toolbar from './Toolbar';
 import { commithash } from '@/js/commithash';
 import { getProperty, findActorByName } from '@/helpers/entityHelper';
-import Compass from '@/components/Compass';
+import Compass from './Compass';
 import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
 import GeometryFactory from '@/graphics/GeometryFactory';
 import ColorFactory from '@/graphics/ColorFactory';
 import MeshFactory from '@/graphics/MeshFactory';
 import MeshManager from '@/graphics/MeshManager';
 import { updateActorMeshTransform } from '@/helpers/meshHelper';
-import BugReportDialog from '@/components/BugReportDialog';
+import BugReportDialog from './BugReportDialog';
 
 import {
   isConveyorBelt,
   isConveyorLift,
   isPowerLine,
   isRailroadTrack
-} from '../helpers/entityHelper';
-import { EventBus } from '../event-bus';
-import { reportError } from '../ts/errorReporting';
+} from '@/helpers/entityHelper';
+import { EventBus } from '@/event-bus';
+import { reportError } from '@/ts/errorReporting';
+import { DIALOG_PROGRESS, DIALOG_OPEN_TIME_MS } from '../../ts/constants';
 
 export default {
   name: 'Playground',
@@ -121,7 +117,6 @@ export default {
       commithash,
       rotateX: 0,
       rotateZ: 0,
-      loadingProgress: 50,
       bugReportVisible: false
     };
   },
@@ -158,7 +153,7 @@ export default {
       }
 
       if (val != this.lastSelectedActors) {
-        // selection needs to changex
+        // selection needs to change
 
         for (const actor of this.lastSelectedActors) {
           if (!val.includes(actor)) {
@@ -268,6 +263,12 @@ export default {
   },
 
   mounted() {
+    this.setProgressText({
+      currentStep: this.$t('openPage.buildingWorld'),
+      showCloseButton: false
+    });
+    this.setProgress(50);
+    EventBus.$emit(DIALOG_PROGRESS, true);
     this.geometryFactory = new GeometryFactory(
       this.showModels,
       this.conveyorBeltResolution
@@ -351,7 +352,9 @@ export default {
       'setSelectedObject',
       'setSelectionDisabled',
       'setBoxSelect',
-      'setShiftSelect'
+      'setShiftSelect',
+      'setProgress',
+      'setProgressText'
     ]),
 
     updateCompass() {
@@ -397,11 +400,14 @@ export default {
       // we want to create them synchroniously so that we can track progress
       // and build all the instancedMeshGroups at the end
 
-      this.loadingProgress = (index / window.data.actors.length) * 100;
+      this.setProgress((index / window.data.actors.length) * 50 + 50);
 
       if (index >= window.data.actors.length) {
         // created all meshes
         this.meshManager.buildInstancedMeshGroups();
+
+        // hide progress bar dialog
+        EventBus.$emit(DIALOG_PROGRESS, false);
         return;
       }
 
@@ -447,6 +453,7 @@ export default {
     },
 
     handleResize() {
+      console.log('RESIZE');
       var elem = document.getElementById('scene');
       if (elem === undefined || elem === null) {
         return;
@@ -536,29 +543,6 @@ export default {
   text-shadow: 1px 1px 1px #000;
   line-height: 1.1;
   font-size: 14px;
-}
-
-.loadingProgress {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 20px;
-
-  background: #00bcd43d;
-  color: #fff;
-
-  .progressBar {
-    background: #00bcd4;
-    height: 100%;
-  }
-
-  .progressText {
-    position: absolute;
-    top: 0px;
-    text-align: center;
-    width: 100%;
-  }
 }
 </style>
 
