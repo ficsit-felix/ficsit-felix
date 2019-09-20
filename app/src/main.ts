@@ -1,8 +1,6 @@
 import Vue from 'vue';
 
 import store from './store';
-import { commithash } from '@/js/commithash';
-
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 
@@ -13,7 +11,7 @@ import '@/helpers/cmdHelper';
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
     dsn: 'https://4bee35ee7cba4ba194c9e1a575948656@sentry.io/1416938',
-    release: commithash,
+    release: process.env.PACKAGE_VERSION,
     integrations: [
       new Integrations.Vue({
         Vue,
