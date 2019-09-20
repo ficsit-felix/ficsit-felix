@@ -53,8 +53,7 @@ export default class GeometryFactory {
     var className = actor.className;
 
     return new Promise((resolve, reject) => {
-      if (!this.showModels) {
-        // return single sized cube
+      const resolveWithBox = () => {
         if (this.geometries['box'] === undefined) {
           // 800 is size of foundations
           this.geometries['box'] = {
@@ -63,6 +62,11 @@ export default class GeometryFactory {
           };
         }
         resolve(this.geometries['box']);
+      }
+
+      if (!this.showModels) {
+        // return single sized cube
+        resolveWithBox();
         return;
       }
 
@@ -86,7 +90,9 @@ export default class GeometryFactory {
         if (geom !== undefined) {
           resolve(geom);
         } else {
-          reject('Could not create power line geometry');
+          // Show broken power lines as boxes
+          resolveWithBox();
+          //reject('Could not create power line geometry');
         }
 
         return;
@@ -253,7 +259,7 @@ export default class GeometryFactory {
     );
     if (sourceConnection === undefined) {
       // TODO error
-      console.error(
+      console.warn(
         'source connection of power line ' +
         actor.entity.extra.sourcePathName +
         ' not found.'
@@ -265,7 +271,7 @@ export default class GeometryFactory {
     );
     if (targetConnection === undefined) {
       // TODO error
-      console.error(
+      console.warn(
         'target connection of power line ' +
         actor.entity.extra.targetPathName +
         ' not found.'
@@ -276,7 +282,7 @@ export default class GeometryFactory {
     const source = findActorByName(sourceConnection.outerPathName);
     if (source === undefined) {
       // TODO error
-      console.error(
+      console.warn(
         'source of power line ' + sourceConnection.outerPathName + ' not found.'
       );
       return;
@@ -285,7 +291,7 @@ export default class GeometryFactory {
     const target = findActorByName(targetConnection.outerPathName);
     if (target === undefined) {
       // TODO error
-      console.error(
+      console.warn(
         'target of power line ' + targetConnection.outerPathName + ' not found.'
       );
       return;
