@@ -1,4 +1,4 @@
-import { modelConfig } from '@/definitions/models';
+import { modelConfig, modClassNames } from '@/definitions/models';
 import {
   findActorByName,
   getProperty,
@@ -133,7 +133,7 @@ export default class GeometryFactory {
               resolve(this.geometries[className]);
             });
         } else {
-          if (modelConfig[className] === undefined) {
+          if (modelConfig[className] === undefined && !modClassNames.includes(className)) {
             console.error('missing model definition: ' + className);
             reportMessage('missing model definition: ' + className);
           }
@@ -179,11 +179,11 @@ export default class GeometryFactory {
         // This should prevent twirls as described in https://github.com/ficsit-felix/ficsit-felix/issues/42
         const sqrDist =
           (location.value.x - lastLoc.value.x) *
-            (location.value.x - lastLoc.value.x) +
+          (location.value.x - lastLoc.value.x) +
           (location.value.y - lastLoc.value.y) *
-            (location.value.y - lastLoc.value.y) +
+          (location.value.y - lastLoc.value.y) +
           (location.value.z - lastLoc.value.z) *
-            (location.value.z - lastLoc.value.z);
+          (location.value.z - lastLoc.value.z);
         if (sqrDist < 0.1) {
           continue;
         }
@@ -255,8 +255,8 @@ export default class GeometryFactory {
       // TODO error
       console.error(
         'source connection of power line ' +
-          actor.entity.extra.sourcePathName +
-          ' not found.'
+        actor.entity.extra.sourcePathName +
+        ' not found.'
       );
       return;
     }
@@ -267,8 +267,8 @@ export default class GeometryFactory {
       // TODO error
       console.error(
         'target connection of power line ' +
-          actor.entity.extra.targetPathName +
-          ' not found.'
+        actor.entity.extra.targetPathName +
+        ' not found.'
       );
       return;
     }
@@ -310,7 +310,7 @@ export default class GeometryFactory {
         y: transformedSourceOffset.y,
         z: transformedSourceOffset.z
       };
-    } else {
+    } else if (!modClassNames.includes(source.className)) {
       console.error('No power line offset for ' + source.className);
       reportException('No power line offset for ' + source.className);
     }
@@ -334,7 +334,7 @@ export default class GeometryFactory {
         y: transformedTargetOffset.y,
         z: transformedTargetOffset.z
       };
-    } else {
+    } else if (!modClassNames.includes(target.className)) {
       console.error('No power line offset for ' + target.className);
       reportException('No power line offset for ' + target.className);
     }
@@ -342,25 +342,25 @@ export default class GeometryFactory {
     const extrudePath = new LineCurve3(
       new Vector3(
         source.transform.translation[1] -
-          actor.transform.translation[1] +
-          sourceOffset.x,
+        actor.transform.translation[1] +
+        sourceOffset.x,
         source.transform.translation[0] -
-          actor.transform.translation[0] +
-          sourceOffset.y,
+        actor.transform.translation[0] +
+        sourceOffset.y,
         source.transform.translation[2] -
-          actor.transform.translation[2] +
-          sourceOffset.z
+        actor.transform.translation[2] +
+        sourceOffset.z
       ),
       new Vector3(
         target.transform.translation[1] -
-          actor.transform.translation[1] +
-          targetOffset.x,
+        actor.transform.translation[1] +
+        targetOffset.x,
         target.transform.translation[0] -
-          actor.transform.translation[0] +
-          targetOffset.y,
+        actor.transform.translation[0] +
+        targetOffset.y,
         target.transform.translation[2] -
-          actor.transform.translation[2] +
-          targetOffset.z
+        actor.transform.translation[2] +
+        targetOffset.z
       )
     );
 

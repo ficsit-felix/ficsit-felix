@@ -21,7 +21,7 @@ let foundationColor = 0x756f6c;
 let rampColor = 0x5f6264;
 
 // This list is sorted alphabetically to ease adding new entries and seeing wether ones exist already
-let modelConfig: { [id: string]: ModelConfig } = {
+export let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/-Shared/Blueprint/BP_BuildableSubsystem.BP_BuildableSubsystem_C': {
     model: '',
     color: 0xff00ff,
@@ -1199,4 +1199,25 @@ let modelConfig: { [id: string]: ModelConfig } = {
   }
 };
 
-export { modelConfig };
+// Well known class names that are used by mods that we don't want to store a modelConfig for
+export let modClassNames = [
+  '/Game/FactoryGame/AreaActions/Actions/ActionsSettings.ActionsSettings_C',
+  '/Game/FactoryGame/AreaActions/Equipment/AreaActions/Equip_AreaActions.Equip_AreaActions_C',
+  '/Game/FactoryGame/AreaActions/Tutorial/AreaActionsTutorialSubsystem.AreaActionsTutorialSubsystem_C',
+  '/Game/FactoryGame/InfiniteStorage/Buildable/InfStorage/Build_InfStorage.Build_InfStorage_C',
+  '/Game/FactoryGame/LightItUp/Lamps/ConstructionLight/ConstructionLight.ConstructionLight_C',
+  '/Game/FactoryGame/LightItUp/Lamps/LampController.LampController_C',
+  '/Game/FactoryGame/LightItUp/Lamps/PowerPoleLight/PowerPoleLight.PowerPoleLight_C',
+  '/Game/FactoryGame/MinerMk4_Mod/MinerMk4.MinerMk4_C',
+  '/Game/FactoryGame/Mk6_Mod/Build_BeltMk61.Build_BeltMk61_C',
+  '/Game/FactoryGame/Mk6_Mod/Build_ConveyorLiftMk61.Build_ConveyorLiftMk61_C',
+  '/Game/FactoryGame/Mod/Buildable/Factory/InfiniteStorage/Network_InfiniteStorage.Network_InfiniteStorage_C',
+  '/Game/FactoryGame/Mod/Buildable/Factory/ItemCounter/Build_ItemCounter.Build_ItemCounter_C',
+  '/Game/FactoryGame/Mod/Buildable/Factory/ItemDeleter/Build_ItemDeleter.Build_ItemDeleter_C',
+  '/Game/FactoryGame/OilPumpMk2_Mod/OilPumpMk2.OilPumpMk2_C',
+  '/Game/FactoryGame/PanaMod/Lamps/Lamp1.Lamp1_C',
+  '/Game/FactoryGame/PanaMod/Lamps/Lamp2.Lamp2_C',
+  '/Game/FactoryGame/SKEM/buildable/Processing/Build_ProcessingFacility.Build_ProcessingFacility_C',
+  '/Game/FactoryGame/Teleporter/Buildable/EnergyConverter/Build_EnergyConverter.Build_EnergyConverter_C',
+  '/Game/FactoryGame/Teleporter/Buildable/Teleporter/Build_Teleporter.Build_Teleporter_C'
+];
