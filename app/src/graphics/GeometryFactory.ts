@@ -62,7 +62,7 @@ export default class GeometryFactory {
           };
         }
         resolve(this.geometries['box']);
-      }
+      };
 
       if (!this.showModels) {
         // return single sized cube
@@ -139,7 +139,10 @@ export default class GeometryFactory {
               resolve(this.geometries[className]);
             });
         } else {
-          if (modelConfig[className] === undefined && !modClassNames.includes(className)) {
+          if (
+            modelConfig[className] === undefined &&
+            !modClassNames.includes(className)
+          ) {
             console.error('missing model definition: ' + className);
             reportMessage('missing model definition: ' + className);
           }
@@ -297,7 +300,7 @@ export default class GeometryFactory {
       return;
     }
     var sourceOffset = { x: 0, y: 0, z: 0 };
-    if (modelConfig[source.className].powerLineOffset !== undefined) {
+    if (modelConfig[source.className] != undefined && modelConfig[source.className].powerLineOffset !== undefined) {
       sourceOffset = modelConfig[source.className].powerLineOffset!;
       const transformedSourceOffset = new Vector3(
         sourceOffset.y,
@@ -321,7 +324,7 @@ export default class GeometryFactory {
       reportException('No power line offset for ' + source.className);
     }
     var targetOffset = { x: 0, y: 0, z: 0 };
-    if (modelConfig[target.className].powerLineOffset !== undefined) {
+    if (modelConfig[target.className] !== undefined && modelConfig[target.className].powerLineOffset !== undefined) {
       targetOffset = modelConfig[target.className].powerLineOffset!;
       const transformedTargetOffset = new Vector3(
         targetOffset.y,

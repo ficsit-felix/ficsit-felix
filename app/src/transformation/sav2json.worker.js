@@ -3,6 +3,7 @@ console.log('hello from a webworker');
   ''
 );*/
 const satisfactory = require('satisfactory-json');
+const fileReaderStream = require('filereader-stream');
 //import { sav2json } from 'satisfactory-json';
 
 /*addEventListener('message', (message) => {
@@ -20,16 +21,22 @@ addEventListener('message', message => {
     let json;
     if (message.data.importJson) {
       json = JSON.parse(Buffer.from(message.data.data).toString('utf-8'));
+      postMessage({
+        status: 'ok',
+        data: json
+      });
     } else {
       //console.time('sav2json');
-      json = satisfactory.sav2json(Buffer.from(message.data.data));
+      satisfactory.sav2json(fileReaderStream(message.data.data)).then(json => {
+        postMessage({
+          status: 'ok',
+          data: json
+        });
+      });
       //console.timeEnd('sav2json');
     }
     //console.log('FINISHED');
-    postMessage({
-      status: 'ok',
-      data: json
-    });
+
   } catch (error) {
     console.error(error);
     // TODO pass stack trace

@@ -1176,6 +1176,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: false
   },
+  
   '/Script/FactoryGame.FGWorldSettings': {
     model: '',
     color: 0xff00ff,
@@ -1211,12 +1212,23 @@ export let modClassNames = [
   '/Game/FactoryGame/MinerMk4_Mod/MinerMk4.MinerMk4_C',
   '/Game/FactoryGame/Mk6_Mod/Build_BeltMk61.Build_BeltMk61_C',
   '/Game/FactoryGame/Mk6_Mod/Build_ConveyorLiftMk61.Build_ConveyorLiftMk61_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation001.Build_MF_Foundation001_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation002.Build_MF_Foundation002_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation003.Build_MF_Foundation003_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation004.Build_MF_Foundation004_C',
   '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation005.Build_MF_Foundation005_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation006.Build_MF_Foundation006_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation007.Build_MF_Foundation007_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation008.Build_MF_Foundation008_C',
+  '/Game/FactoryGame/MoarFactory_Stair/Buildable/Building/Stair/Build_MF_Stair001.Build_MF_Stair001_C',
   '/Game/FactoryGame/MoarFactory_Stair/Buildable/Building/Stair/Build_MF_Stair002.Build_MF_Stair002_C',
   '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall001.Build_MF_Wall001_C',
   '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall002.Build_MF_Wall002_C',
   '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall003.Build_MF_Wall003_C',
   '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall004.Build_MF_Wall004_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall005.Build_MF_Wall005_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall006.Build_MF_Wall006_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall007.Build_MF_Wall007_C',
   '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall008.Build_MF_Wall008_C',
   '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall011.Build_MF_Wall011_C',
   '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall012.Build_MF_Wall012_C',
@@ -1228,11 +1240,14 @@ export let modClassNames = [
   '/Game/FactoryGame/PanaMod/Lamps/Lamp1.Lamp1_C',
   '/Game/FactoryGame/PanaMod/Lamps/Lamp2.Lamp2_C',
   '/Game/FactoryGame/RenewablePower/Buildable/Factory/WaterTurbine/Build_WaterTurbine.Build_WaterTurbine_C',
+  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WaterTurbineMk1/Build_WaterTurbineMk1.Build_WaterTurbineMk1_C',
   '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbine/Build_WindTurbine.Build_WindTurbine_C',
   '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbineMk1/Build_WindTurbineMk1.Build_WindTurbineMk1_C',
+  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbineMk2/Build_WindTurbineMk2.Build_WindTurbineMk2_C',
   '/Game/FactoryGame/SKEM/buildable/Processing/Build_ProcessingFacility.Build_ProcessingFacility_C',
   '/Game/FactoryGame/SolarPanels/Buildable/Factory/Batteries/Build_BatteryStorage.Build_BatteryStorage_C',
   '/Game/FactoryGame/SolarPanels/Buildable/Factory/SolarPanels/Build_SolarPanelMk1.Build_SolarPanelMk1_C',
   '/Game/FactoryGame/Teleporter/Buildable/EnergyConverter/Build_EnergyConverter.Build_EnergyConverter_C',
-  '/Game/FactoryGame/Teleporter/Buildable/Teleporter/Build_Teleporter.Build_Teleporter_C'
+  '/Game/FactoryGame/Teleporter/Buildable/Teleporter/Build_Teleporter.Build_Teleporter_C',
+  '/Game/FactoryGame/Teleporter/Items/TeleportCore/Desc_TeleportCore.Desc_TeleportCore_C'
 ];

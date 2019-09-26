@@ -453,7 +453,6 @@ export default {
     },
 
     handleResize() {
-      console.log('RESIZE');
       var elem = document.getElementById('scene');
       if (elem === undefined || elem === null) {
         return;

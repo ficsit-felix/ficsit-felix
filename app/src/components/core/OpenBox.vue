@@ -86,6 +86,7 @@ import { modelConfig } from '@/definitions/models';
 import { reportMessage, reportContext, reportError } from '@/ts/errorReporting';
 import { reportException } from '@/ts/errorReporting';
 import { sav2json } from 'satisfactory-json';
+import FileReaderStream from 'filereader-stream';
 
 import BugReportDialog from './BugReportDialog';
 
@@ -192,7 +193,7 @@ export default {
       console.time('openFile');
       console.time('readWeb');
 
-      var reader = new FileReader();
+      /*var reader = new FileReader();
       reader.onprogress = evt => {
         if (evt.lengthComputable) {
           var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
@@ -203,7 +204,8 @@ export default {
         console.timeEnd('readWeb');
         this.processFile(reader.result);
       };
-      reader.readAsArrayBuffer(file);
+      reader.readAsArrayBuffer(file);*/
+      this.processFile(file);
     },
 
     processFile(data) {
