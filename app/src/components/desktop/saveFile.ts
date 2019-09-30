@@ -6,6 +6,9 @@ import { isElectron } from '@/ts/isElectron';
 import { writeFile, fstat, existsSync, copyFileSync } from 'fs';
 import { parse } from 'path';
 import path from 'path';
+import streamSaver from 'streamsaver';
+import { Json2SavTransform } from 'satisfactory-json';
+import { Writable } from 'stream';
 
 export function saveFileToFilesystem(
   saveGame: SaveGame,
@@ -16,6 +19,31 @@ export function saveFileToFilesystem(
 ) {
   transformFile(saveGame, callback, asZip, path, asJson);
 }
+
+class FileWriter extends Writable {
+
+  private writer: any;
+
+  constructor(writer: any) {
+    super();
+    this.writer = writer;
+  }
+
+  _write(chunk: any, encoding: string, callback: (error?: Error | null) => void): void {
+    console.log('cu8nk', chunk);
+    this.writer.write(chunk).then((err: string) => {
+      console.log('cb', err);
+      callback();
+    });
+  }
+
+  _final(callback: (error?: Error | null) => void): void {
+    console.log('..finished');
+    this.writer.close();
+    callback();
+  }
+}
+
 function transformFile(
   saveGame: SaveGame,
   callback: (err?: Error, progress?: number, success?: boolean) => void,
@@ -23,29 +51,52 @@ function transformFile(
   path: string,
   asJson: boolean
 ) {
-  const worker = new Json2SavWorker();
-  worker.addEventListener('message', message => {
-    if (message.data.status === 'error') {
-      callback(new Error(message.data.error), undefined, undefined);
-      return;
-    }
-    const data = message.data.data;
-    callback(undefined, 50, undefined);
-    if (isElectron()) {
-      // desktop version
+  const transform = new Json2SavTransform();
+  const fileStream = streamSaver.createWriteStream(path);
+  const writer = fileStream.getWriter();
+  window.onunload = () => writer.abort()
+  transform.pipe(new FileWriter(writer))
+    .on('finish', () => {
+      callback(undefined, undefined, true);
+    });
+  /*  transform.on('data', chunk => {
+      console.log('data', chunk)
+      writer.write(chunk);
+    })
+    transform
+      .on('end', () => {
+        writer.close();
+        console.timeEnd('json2sav');
+        console.log('finished');
+      });*/
 
-      // TODO convert to zip
+  console.time('json2sav');
+  transform.write(saveGame);
+  transform.end();
 
-      saveDesktop(path, data, callback);
-    } else {
-      // web version
-      saveWeb(asZip, path, data, callback);
-    }
-  });
-  worker.postMessage({
-    exportJson: asJson,
-    data: saveGame
-  });
+  /*  const worker = new Json2SavWorker();
+    worker.addEventListener('message', message => {
+      if (message.data.status === 'error') {
+        callback(new Error(message.data.error), undefined, undefined);
+        return;
+      }
+      const data = message.data.data;
+      callback(undefined, 50, undefined);
+      if (isElectron()) {
+        // desktop version
+  
+        // TODO convert to zip
+  
+        saveDesktop(path, data, callback);
+      } else {
+        // web version
+        saveWeb(asZip, path, data, callback);
+      }
+    });
+    worker.postMessage({
+      exportJson: asJson,
+      data: saveGame
+    });*/
 }
 
 function saveDesktop(
