@@ -9,11 +9,11 @@
       </div>
       <p>{{ $t('landingPage.firstParagraph') }}</p>
       <p class="buttonRow">
-        <md-button
+        <!--<md-button
           class="md-raised md-primary md-dense"
           @click="downloadDesktop()"
           >{{ $t('landingPage.downloadDesktop') }}</md-button
-        >&nbsp;
+        >&nbsp;-->
         <md-button
           class="md-raised"
           @click="$router.push({ path: '/open/sav' })"

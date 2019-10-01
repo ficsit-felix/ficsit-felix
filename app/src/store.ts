@@ -36,7 +36,6 @@ interface SettingsRootState {
   locale: string;
   experimentalFeatures: boolean;
   autoLoadSaveFile: string;
-  saveAsZip: boolean;
   showFps: boolean;
   showDevelopSettings: boolean;
 }
@@ -61,7 +60,6 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     locale: 'en',
     experimentalFeatures: false,
     autoLoadSaveFile: '',
-    saveAsZip: false,
     showFps: false,
     showDevelopSettings: false
   },
@@ -122,10 +120,6 @@ const settingsModule: Module<SettingsRootState, RootState> = {
       state.autoLoadSaveFile = payload;
       updateLocalStorage(state);
     },
-    SET_SAVE_AS_ZIP(state, payload) {
-      state.saveAsZip = payload;
-      updateLocalStorage(state);
-    },
     SET_SHOW_FPS(state, payload) {
       state.showFps = payload;
       updateLocalStorage(state);
@@ -171,9 +165,6 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setAutoLoadSaveFile(context, payload) {
       context.commit('SET_AUTO_LOAD_SAVE_FILE', payload);
-    },
-    setSaveAsZip(context, payload) {
-      context.commit('SET_SAVE_AS_ZIP', payload);
     },
     setShowFps(context, payload) {
       context.commit('SET_SHOW_FPS', payload);
