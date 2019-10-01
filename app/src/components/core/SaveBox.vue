@@ -108,7 +108,6 @@ export default {
           window.data,
           filename,
           this.exportJson,
-          this.saveAsZip,
           (err, progress, success) => {
             if (err) {
               // TODO show bug report window

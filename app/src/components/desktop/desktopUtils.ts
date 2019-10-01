@@ -91,7 +91,6 @@ export function saveFileAndShowProgress(
       window.data,
       path,
       asJson,
-      asZip,
       (err, progress, success) => {
         if (err) {
           // open bug report window
