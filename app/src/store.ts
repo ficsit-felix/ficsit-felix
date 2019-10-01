@@ -190,6 +190,7 @@ interface RootState {
   visibleObjects: any[];
   uuid: string;
   filename: string;
+  filepath: string;
   classes: any[];
 
   cameraTarget?: Vector3;
@@ -228,6 +229,7 @@ export default new Vuex.Store<RootState>({
     visibleObjects: [],
     uuid: '',
     filename: '',
+    filepath: '',
     classes: [],
 
     selectionDisabled: false,
@@ -386,6 +388,9 @@ export default new Vuex.Store<RootState>({
     SET_FILENAME(state, filename) {
       state.filename = filename;
     },
+    SET_FILEPATH(state, filepath) {
+      state.filepath = filepath;
+    },
     SET_UUID(state, uuid) {
       state.uuid = uuid;
     },
@@ -522,6 +527,9 @@ export default new Vuex.Store<RootState>({
     },
     setFilename(context, filename) {
       context.commit('SET_FILENAME', filename);
+    },
+    setFilepath(context, filepath) {
+      context.commit('SET_FILEPATH', filepath);
     },
     setUUID(context, uuid) {
       context.commit('SET_UUID', uuid);

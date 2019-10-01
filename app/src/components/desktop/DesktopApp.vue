@@ -331,10 +331,10 @@ export default {
       // TODO maybe store to the location the file was actually loaded from?
       saveFileAndShowProgress(
         this,
-        path.join(
-          getSaveGamesFolderPath(),
-          this.$store.state.filename.replace('.json', '.sav')
-        ),
+        /*path.join(
+          getSaveGamesFolderPath(),*/
+        this.$store.state.filepath.replace('.json', '.sav'),
+        //),
         false,
         false
       );

@@ -3,6 +3,7 @@ import { ReadStream } from 'fs';
 
 export interface FileHeader {
   filename: string;
+  filepath: string;
   saveHeaderType: number;
   saveVersion: number;
   buildVersion: number;
@@ -18,7 +19,8 @@ export class FileHeaderReader {
   private stream: ReadStream;
 
   constructor(
-    file: string,
+    filename: string,
+    filepath: string,
     stream: ReadStream,
     callback: (files: any) => void
   ) {
@@ -26,7 +28,8 @@ export class FileHeaderReader {
     stream.on('readable', () => {
       try {
         const header: FileHeader = {
-          filename: file,
+          filename: filename,
+          filepath: filepath,
           saveHeaderType: this.readInt(),
           saveVersion: this.readInt(),
           buildVersion: this.readInt(),

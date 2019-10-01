@@ -38,7 +38,7 @@
       <li
         v-bind:key="file.filename"
         v-for="file in sessionFiles"
-        @click="openFile(file.filename)"
+        @click="openFile(file.filepath)"
       >
         <div class="session-name">{{ file.sessionName }}</div>
 
@@ -99,7 +99,12 @@ export default class DesktopMenu extends Vue {
 
   mounted() {
     // read files
-    fs.readdir(getSaveGamesFolderPath(), (err, files) => {
+
+    this.readFiles(getSaveGamesFolderPath());
+  }
+
+  readFiles(dir: string) {
+    fs.readdir(dir, (err, files) => {
       if (err) {
         this.saveFolderNotFound = true;
         // TODO: SaveGames folder not found
@@ -107,19 +112,28 @@ export default class DesktopMenu extends Vue {
       }
 
       files.forEach(file => {
-        if (file.endsWith('.sav')) {
-          // READ HEADER OF SAVE FILE
-          const stream = createReadStream(
-            path.join(getSaveGamesFolderPath(), file)
-          );
-          new FileHeaderReader(file, stream, header => {
-            if (this.files[header.sessionName] === undefined) {
-              this.$set(this.files, header.sessionName, []);
-            }
+        const filePath = path.resolve(dir, file);
 
-            this.files[header.sessionName].push(header);
-          });
-        }
+        fs.stat(filePath, (err, stat) => {
+          if (stat && stat.isDirectory()) {
+            console.log('dir', filePath);
+            this.readFiles(filePath);
+          } else {
+            if (file.endsWith('.sav')) {
+              // READ HEADER OF SAVE FILE
+              const stream = createReadStream(path.join(filePath));
+              new FileHeaderReader(file, filePath, stream, header => {
+                if (this.files[header.sessionName] === undefined) {
+                  this.$set(this.files, header.sessionName, []);
+                }
+
+                this.files[header.sessionName].push(header);
+              });
+            }
+          }
+        });
+
+        console.log(file);
       });
     });
   }
@@ -141,13 +155,9 @@ export default class DesktopMenu extends Vue {
     EventBus.$emit(DIALOG_CONFIRM_EXIT);
   }
 
-  openFile(name: string) {
+  openFile(filepath: string) {
     this.$router.push('/');
-    openFileAndMoveToEditor(
-      this,
-      path.join(getSaveGamesFolderPath(), name),
-      false
-    );
+    openFileAndMoveToEditor(this, filepath, false);
   }
 
   openJsonFilebrowser() {

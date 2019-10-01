@@ -5,6 +5,8 @@ export function getSaveGamesFolderPath() {
   if (home === '/home/stream') {
     // development test
     return '/home/stream/saves';
+  } else if (home === '/home/bitowl') {
+    return '/home/bitowl/saves';
   } else {
     return home + normalize('/AppData/Local/FactoryGame/Saved/SaveGames');
   }

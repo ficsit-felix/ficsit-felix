@@ -33,6 +33,7 @@ export function openFileAndMoveToEditor(
     const name = path.replace(/^.*[\\/]/, '');
 
     vue.$store.dispatch('setFilename', name);
+    vue.$store.dispatch('setFilepath', path);
     const uuid = v4();
     vue.$store.dispatch('setUUID', uuid);
 
