@@ -58,10 +58,14 @@ function transformFile(
   transform.pipe(new FileWriter(writer)).on('finish', () => {
     callback(undefined, undefined, true);
   });
+  transform.on('error', error => {
+    writer.abort();
+    callback(error, undefined, undefined);
+  });
   /*  transform.on('data', chunk => {
       console.log('data', chunk)
       writer.write(chunk);
-    })
+    }) 
     transform
       .on('end', () => {
         writer.close();

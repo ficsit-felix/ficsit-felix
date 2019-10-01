@@ -2,7 +2,7 @@
   <div>
     <div v-if="!isSaving" class="infobox">
       <p v-if="errorText == ''">{{ $t('savePage.saveFinished') }}</p>
-      <p v-else>{{ $t('savePage.error') }}</p>
+      <p v-else>{{ $t('savePage.error') }} {{ errorText }}</p>
       <br />
       <br />
       <md-button class="md-raised" @click="$router.push({ name: 'editor' })">
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     handleError(errorMessage) {
-      this.showErrorDialog = true;
+      //this.showErrorDialog = true;
       this.errorText = errorMessage;
       this.isSaving = false;
       this.progress = 0;
@@ -113,6 +113,8 @@ export default {
             if (err) {
               // TODO show bug report window
               console.error(err);
+              reportError(err);
+              this.handleError(err.message);
               return;
             }
 

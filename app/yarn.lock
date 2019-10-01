@@ -1168,10 +1168,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
-"@types/node-fetch@^2.5.1":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.1.tgz#9e4daffa983eb098d25c2cb410c949678f3aee78"
-  integrity sha512-nYsC20tHanaNa4coFvCDcuIvtdvu8YkQz0XQOoBHL1X1y1QxeNe73dg1PaLGqsJNWiVwK0bjn5Jf+ZQpE6acJg==
+"@types/node-fetch@^2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.2.tgz#76906dea5b3d6901e50e63e15249c9bcd6e9676e"
+  integrity sha512-djYYKmdNRSBtL1x4CiE9UJb9yZhwtI1VC+UxZD0psNznrUj80ywsxKlEGAE+QL1qvLjPbfb24VosjkYM6W4RSQ==
   dependencies:
     "@types/node" "*"
 
@@ -1180,10 +1180,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.2.tgz#a5ccec6abb6060d5f20d256fb03ed743e9774999"
   integrity sha512-gojym4tX0FWeV2gsW4Xmzo5wxGjXGm550oVUII7f7G5o4BV6c7DBdiG1RRQd+y1bvqRyYtPfMK85UM95vsapqQ==
 
-"@types/node@12.7.5":
-  version "12.7.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.5.tgz#e19436e7f8e9b4601005d73673b6dc4784ffcc2f"
-  integrity sha512-9fq4jZVhPNW8r+UYKnxF1e2HkDWOWKM5bC2/7c9wPV835I0aOrVbS/Hw/pWPk2uKrNXQqg9Z959Kz+IYDd5p3w==
+"@types/node@12.7.8":
+  version "12.7.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.8.tgz#cb1bf6800238898bc2ff6ffa5702c3cadd350708"
+  integrity sha512-FMdVn84tJJdV+xe+53sYiZS4R5yn1mAIxfj+DVoNiQjTYz1+OYmjwEZr1ev9nU0axXwda0QDbYl06QHanRVH3A==
 
 "@types/node@^10.12.18":
   version "10.14.16"
@@ -4340,10 +4340,10 @@ eslint@^4.19.1:
     table "4.0.2"
     text-table "~0.2.0"
 
-eslint@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.4.0.tgz#5aa9227c3fbe921982b2eda94ba0d7fae858611a"
-  integrity sha512-WTVEzK3lSFoXUovDHEbkJqCVPEPwbhCq4trDktNI6ygs7aO41d4cDT0JFAT5MivzZeVLWlg7vHL+bgrQv/t3vA==
+eslint@^6.5.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.5.1.tgz#828e4c469697d43bb586144be152198b91e96ed6"
+  integrity sha512-32h99BoLYStT1iq1v2P9uwpyznQ4M2jRiFB6acitKz52Gqn+vPaMDUTB1bYi1WN4Nquj2w+t+bimYUG83DC55A==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -6552,10 +6552,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-lint-staged@^9.2.5:
-  version "9.2.5"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-9.2.5.tgz#5a3e1e0a539a403bd7f88542bc3d34ce52efdbb3"
-  integrity sha512-d99gTBFMJ29159+9iRvaMEQstmNcPAbQbhHSYw6D/1FncvFdIj8lWHztaq3Uq+tbZPABHXQ/fyN7Rp1QwF8HIw==
+lint-staged@^9.4.1:
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-9.4.1.tgz#60c0f85745bd398e6460aa7f5adb3cad3a2b862c"
+  integrity sha512-zFRbo1bAJEVf1m33paTTjDVfy2v3lICCqHfmQSgNoI+lWpi7HPG5y/R2Y7Whdce+FKxlZYs/U1sDSx8+nmQdDA==
   dependencies:
     chalk "^2.4.2"
     commander "^2.20.0"
@@ -9195,12 +9195,12 @@ satisfactory-blueprint@^0.0.3:
     satisfactory-json "^0.0.9"
     three "^0.105.2"
 
-satisfactory-json@^0.0.23:
-  version "0.0.23"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.23.tgz#b5a3c3ea044b185022bd98f2fe7b19270daf195e"
-  integrity sha512-QjEwTewW/txlOQrNN9AxJp4pC1NmemDp6s4+TKN/gKPng+tO07SLjjIt54pwPp/NszcT3hZUgPwM1iMbOA0qZQ==
+satisfactory-json@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.24.tgz#a9dfc71d51e7e58bcf271eadfd4e2c9bb9105d23"
+  integrity sha512-VdKZNkD3D0J78JEIgSGkyiSmUN0whyOddrFu4KSkkroUog7gEEN+YJBnJgOHZ5YG09Tgz4mdWjB4wPqz83QgOw==
   dependencies:
-    commander "^2.20.0"
+    pako "^1.0.10"
 
 satisfactory-json@^0.0.9:
   version "0.0.9"
@@ -10139,10 +10139,10 @@ thread-loader@^2.1.2:
     loader-utils "^1.1.0"
     neo-async "^2.6.0"
 
-three@0.108.0:
-  version "0.108.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.108.0.tgz#53d26597c7932f214bb43f4655e566d2058143b5"
-  integrity sha512-d1ysIXwi8qTlbmMwrTxi5pYiiYIflEr0e48krP0LAY8ndS8c6fkLHn6NvRT+o76/Fs9PBLxFViuI62iGVWwwlg==
+three@0.109.0:
+  version "0.109.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.109.0.tgz#611c9ef860d10bd107695cead6c6abcd2422e5fd"
+  integrity sha512-XT99T3Hvgh2CEvwPdHYEunNE+clLK6KiT1U8En7YOgIqTUw4MrLeIc8zxQAJ6wbP8hhJaY5+Cff3jwBPpBa0gA==
 
 three@^0.105.2:
   version "0.105.2"
@@ -10341,10 +10341,10 @@ ts-loader@^5.3.3:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-ts-loader@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-6.1.1.tgz#f30c68aa1ce59fa266f0bb70a36959ca68f40ddc"
-  integrity sha512-AoOek8ZWJlWwTRH5ttNmZPBRcASUJZc8wc8E/2PGOXef96H97J8KaLXaW/zUnvyFjvCoRBhTGh9ZIMKL1arcCA==
+ts-loader@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-6.2.0.tgz#52d3993ecbc5474c1513242388e1049da0fce880"
+  integrity sha512-Da8h3fD+HiZ9GvZJydqzk3mTC9nuOKYlJcpuk+Zv6Y1DPaMvBL+56GRzZFypx2cWrZFMsQr869+Ua2slGoLxvQ==
   dependencies:
     chalk "^2.3.0"
     enhanced-resolve "^4.0.0"
