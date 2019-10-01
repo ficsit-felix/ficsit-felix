@@ -20,11 +20,32 @@ addEventListener('message', message => {
     //console.log('STARTED');
     let json;
     if (message.data.importJson) {
-      json = JSON.parse(Buffer.from(message.data.data).toString('utf-8'));
-      postMessage({
-        status: 'ok',
-        data: json
-      });
+      var reader = new FileReader();
+      /*reader.onprogress = evt => {
+        if (evt.lengthComputable) {
+          var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+          this.progress = percentLoaded / 2;
+        }
+      };*/
+      reader.onload = response => {
+        try {
+          json = JSON.parse(Buffer.from(reader.result).toString('utf-8'));
+          postMessage({
+            status: 'ok',
+            data: json
+          });
+        } catch (error) {
+          console.error(error);
+          // TODO pass stack trace
+          postMessage({
+            status: 'error',
+            error: error.message
+          });
+        }
+      };
+      reader.readAsArrayBuffer(message.data.data);
+
+
     } else {
       //console.time('sav2json');
       const reader = fileReaderStream(message.data.data);
