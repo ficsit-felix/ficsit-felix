@@ -49,7 +49,6 @@ function transformFile(
   path: string,
   asJson: boolean
 ) {
-
   if (isElectron()) {
     // desktop version
     saveDesktop(path, saveGame, callback, asJson);
@@ -137,7 +136,6 @@ function saveWeb(
       writer.close();
       callback(undefined, undefined, true);
     });
-
   } else {
     const transform = new Json2SavTransform();
     const fileStream = streamSaver.createWriteStream(path);
@@ -153,7 +151,6 @@ function saveWeb(
     console.time('json2sav');
     transform.write(saveGame);
     transform.end();
-
   }
   /*  if (asZip) {
       let zip = new JSZip();

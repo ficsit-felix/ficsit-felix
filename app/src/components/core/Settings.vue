@@ -47,12 +47,6 @@
         {{ $t('settings.conveyorBeltResolutionHelp') }}
       </span>
     </md-field>
-    <md-checkbox
-      v-if="showSaveAsZip"
-      :model="saveAsZip"
-      @change="setSaveAsZip"
-      >{{ $t('settings.saveAsZip') }}</md-checkbox
-    >
 
     <br />
     <h3 class="clickable" @click="toggleShowDevelopSettings">
@@ -116,14 +110,8 @@ export default {
       'experimentalFeatures',
       'autoLoadSaveFile',
       'showFps',
-      'saveAsZip',
       'showDevelopSettings'
     ])
-  },
-  data() {
-    return {
-      showSaveAsZip: !isElectron() // hide saveAsZip setting on desktop
-    };
   },
   methods: {
     ...mapActions('settings', [
@@ -138,7 +126,6 @@ export default {
       'setExperimentalFeatures',
       'setAutoLoadSaveFile',
       'setShowFps',
-      'setSaveAsZip',
       'setShowDevelopSettings'
     ]),
     updateNearPlane(value) {

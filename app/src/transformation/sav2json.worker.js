@@ -44,18 +44,18 @@ addEventListener('message', message => {
         }
       };
       reader.readAsArrayBuffer(message.data.data);
-
-
     } else {
       //console.time('sav2json');
       const reader = fileReaderStream(message.data.data);
-      reader.pipe(new satisfactory.Sav2JsonTransform()).on('data', data => {
-        console.log('gotData', data);
-        postMessage({
-          status: 'ok',
-          data: data
-        });
-      })
+      reader
+        .pipe(new satisfactory.Sav2JsonTransform())
+        .on('data', data => {
+          console.log('gotData', data);
+          postMessage({
+            status: 'ok',
+            data: data
+          });
+        })
         .on('error', error => {
           postMessage({
             status: 'error',
