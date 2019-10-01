@@ -10,7 +10,7 @@ import {
 
 // patch the THREE instance
 import * as THREE from 'three';
-import index from 'three-instanced-mesh';
+import index from '@bitowl/three-instanced-mesh';
 const InstancedMesh = index(THREE);
 
 var farAway = new Vector3(1000000000, 0, 0);
