@@ -1176,7 +1176,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: false
   },
-  
+
   '/Script/FactoryGame.FGWorldSettings': {
     model: '',
     color: 0xff00ff,

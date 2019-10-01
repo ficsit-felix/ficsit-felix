@@ -21,7 +21,6 @@ export function saveFileToFilesystem(
 }
 
 class FileWriter extends Writable {
-
   private writer: any;
 
   constructor(writer: any) {
@@ -29,16 +28,17 @@ class FileWriter extends Writable {
     this.writer = writer;
   }
 
-  _write(chunk: any, encoding: string, callback: (error?: Error | null) => void): void {
-    console.log('cu8nk', chunk);
+  _write(
+    chunk: any,
+    encoding: string,
+    callback: (error?: Error | null) => void
+  ): void {
     this.writer.write(chunk).then((err: string) => {
-      console.log('cb', err);
       callback();
     });
   }
 
   _final(callback: (error?: Error | null) => void): void {
-    console.log('..finished');
     this.writer.close();
     callback();
   }
@@ -54,11 +54,10 @@ function transformFile(
   const transform = new Json2SavTransform();
   const fileStream = streamSaver.createWriteStream(path);
   const writer = fileStream.getWriter();
-  window.onunload = () => writer.abort()
-  transform.pipe(new FileWriter(writer))
-    .on('finish', () => {
-      callback(undefined, undefined, true);
-    });
+  window.onunload = () => writer.abort();
+  transform.pipe(new FileWriter(writer)).on('finish', () => {
+    callback(undefined, undefined, true);
+  });
   /*  transform.on('data', chunk => {
       console.log('data', chunk)
       writer.write(chunk);
