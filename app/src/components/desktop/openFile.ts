@@ -44,7 +44,6 @@ export function openFileFromFilesystem(
       .on('error', error => {
         callback(error, undefined, undefined);
       });
-
   }
   /*
     fs.readFile(path, (err, data) => {

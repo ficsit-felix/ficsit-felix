@@ -3,7 +3,13 @@ import Json2SavWorker from 'worker-loader?name=[name].js!@/transformation/json2s
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { isElectron } from '@/ts/isElectron';
-import { writeFile, fstat, existsSync, copyFileSync, createWriteStream } from 'fs';
+import {
+  writeFile,
+  fstat,
+  existsSync,
+  copyFileSync,
+  createWriteStream
+} from 'fs';
 import { parse } from 'path';
 import path from 'path';
 import streamSaver from 'streamsaver';
@@ -128,20 +134,15 @@ function saveDesktop(
     json2sav
       .pipe(outStream)
       .on('finish', () => {
-        console.log('o')
+        console.log('o');
         callback(undefined, undefined, true);
       })
       .on('error', (error: Error) => {
         callback(error, undefined, undefined);
-
       });
     json2sav.write(saveGame);
     json2sav.end();
-
   }
-
-
-
 
   /*writeFile(
     filePath,
