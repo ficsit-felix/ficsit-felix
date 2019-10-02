@@ -2,6 +2,14 @@
   "classList": {
     "allClasses": "Alle Klassen"
   },
+  "desktop": {
+    "saveExtension": "Satisfactory Spielstände",
+    "jsonExtension": "JSON Dateien",
+    "openSavTitle": "Spielstand öffnen",
+    "openJsonTitle": "JSON Datei öffnen",
+    "saveJsonTitle": "JSON Datei speichern",
+    "saveSaveTitle": "Spielstand speichern"
+  },
   "dialog": {
     "about": {
       "authors": "Autoren",
@@ -16,6 +24,10 @@
     "delete": {
       "content": "Willst du dieses Objekt wirklich löschen?",
       "title": "Objekt löschen"
+    },
+    "exit": {
+      "content": "Willst du FeliX wirklich beenden?",
+      "title": "Programm beenden"
     },
     "help": {
       "changeJsonWarning": "Wenn du das JSON änderst, musst du es noch speichern, bevor du irgendwo anders in die Szene klickst. Sonst wird es wieder überschrieben!",
@@ -69,7 +81,8 @@
   },
   "landingPage": {
     "authors": "Autoren",
-    "firstParagraph": "FeliX ist ein Spielstandvisualisierer für das Spiel Satisfactory. Öffne die .sav Datei und du kannst eine low poly 3D Repräsentation deiner Fabrik under umgebenden Gegend betrachten. Der Spielstand wird dabei nur in deinem Browser verarbeitet und wird zu keinem Server hochgeladen.",
+    "downloadDesktop": "Desktop-App herunterladen",
+    "firstParagraph": "FeliX ist ein Spielstandvisualisierer für das Spiel Satisfactory. Öffne die .sav Datei und du kannst eine low poly 3D Repräsentation deiner Fabrik und der umgebenden Gegend betrachten. Der Spielstand wird dabei nur in deinem Browser verarbeitet und wird zu keinem Server hochgeladen.",
     "openJsonButton": ".json Datei öffnen",
     "openSavButton": ".sav Datei öffnen",
     "secondParagraph": "FeliX hat auch ein paar grundlegende Bearbeitungsfähigkeiten. Es kann das .sav Format in ein menschenlesbares .json Format umwandeln. Du kannst die .json Dateien außerhalb bearbeiten und sie dann wieder in FeliX laden, um sie zurück zu .sav zu konvertieren.",
@@ -86,7 +99,11 @@
     "open": "Öffnen",
     "openSource": "Open Source Lizenzen",
     "save": "Speichern",
-    "settings": "Einstellungen"
+    "saveAs": "Speichern als...",
+    "settings": "Einstellungen",
+    "file": "Datei",
+    "exit": "Beenden",
+    "mainScreen": "Zurück zum Hauptmenü"
   },
   "objectList": {
     "filterField": "Filtern",

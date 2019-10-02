@@ -21,7 +21,7 @@ let foundationColor = 0x756f6c;
 let rampColor = 0x5f6264;
 
 // This list is sorted alphabetically to ease adding new entries and seeing wether ones exist already
-let modelConfig: { [id: string]: ModelConfig } = {
+export let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/-Shared/Blueprint/BP_BuildableSubsystem.BP_BuildableSubsystem_C': {
     model: '',
     color: 0xff00ff,
@@ -1176,6 +1176,7 @@ let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: false
   },
+
   '/Script/FactoryGame.FGWorldSettings': {
     model: '',
     color: 0xff00ff,
@@ -1199,4 +1200,60 @@ let modelConfig: { [id: string]: ModelConfig } = {
   }
 };
 
-export { modelConfig };
+// Well known class names that are used by mods that we don't want to store a modelConfig for
+export let modClassNames = [
+  '/Game/FactoryGame/AreaActions/Actions/ActionsSettings.ActionsSettings_C',
+  '/Game/FactoryGame/AreaActions/Equipment/AreaActions/Equip_AreaActions.Equip_AreaActions_C',
+  '/Game/FactoryGame/AreaActions/Tutorial/AreaActionsTutorialSubsystem.AreaActionsTutorialSubsystem_C',
+  '/Game/FactoryGame/InfiniteStorage/Buildable/InfStorage/Build_InfStorage.Build_InfStorage_C',
+  '/Game/FactoryGame/LightItUp/Lamps/ConstructionLight/ConstructionLight.ConstructionLight_C',
+  '/Game/FactoryGame/LightItUp/Lamps/LampController.LampController_C',
+  '/Game/FactoryGame/LightItUp/Lamps/LampPole/LampPole.LampPole_C',
+  '/Game/FactoryGame/LightItUp/Lamps/PowerPoleLight/PowerPoleLight.PowerPoleLight_C',
+  '/Game/FactoryGame/MinerMk4_Mod/MinerMk4.MinerMk4_C',
+  '/Game/FactoryGame/Mk6_Mod/Build_BeltMk61.Build_BeltMk61_C',
+  '/Game/FactoryGame/Mk6_Mod/Build_ConveyorLiftMk61.Build_ConveyorLiftMk61_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation001.Build_MF_Foundation001_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation002.Build_MF_Foundation002_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation003.Build_MF_Foundation003_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation004.Build_MF_Foundation004_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation005.Build_MF_Foundation005_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation006.Build_MF_Foundation006_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation007.Build_MF_Foundation007_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation008.Build_MF_Foundation008_C',
+  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation026.Build_MF_Foundation026_C',
+  '/Game/FactoryGame/MoarFactory_Stair/Buildable/Building/Stair/Build_MF_Stair001.Build_MF_Stair001_C',
+  '/Game/FactoryGame/MoarFactory_Stair/Buildable/Building/Stair/Build_MF_Stair002.Build_MF_Stair002_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall001.Build_MF_Wall001_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall002.Build_MF_Wall002_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall003.Build_MF_Wall003_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall004.Build_MF_Wall004_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall005.Build_MF_Wall005_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall006.Build_MF_Wall006_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall007.Build_MF_Wall007_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall008.Build_MF_Wall008_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall011.Build_MF_Wall011_C',
+  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall012.Build_MF_Wall012_C',
+  '/Game/FactoryGame/MoarFactory/Buildable/Factory/PowerPlugMk1/Build_MF_PowerPlugMk1.Build_MF_PowerPlugMk1_C',
+  '/Game/FactoryGame/MoarFactory/Buildable/Factory/PowerPlugMk2/Build_MF_PowerPlugMk2.Build_MF_PowerPlugMk2_C',
+  '/Game/FactoryGame/Mod/Buildable/Factory/InfiniteStorage/Network_InfiniteStorage.Network_InfiniteStorage_C',
+  '/Game/FactoryGame/Mod/Buildable/Factory/ItemCounter/Build_ItemCounter.Build_ItemCounter_C',
+  '/Game/FactoryGame/Mod/Buildable/Factory/ItemDeleter/Build_ItemDeleter.Build_ItemDeleter_C',
+  '/Game/FactoryGame/Mod/Buildable/Factory/MixedSplitter/Build_MixedSplitter.Build_MixedSplitter_C',
+  '/Game/FactoryGame/OilPumpMk2_Mod/OilPumpMk2.OilPumpMk2_C',
+  '/Game/FactoryGame/PanaMod/Lamps/Lamp1.Lamp1_C',
+  '/Game/FactoryGame/PanaMod/Lamps/Lamp2.Lamp2_C',
+  '/Game/FactoryGame/RenewablePower/Buildable/Factory/ArcReactorMk1/Build_ArcReactorMk1.Build_ArcReactorMk1_C',
+  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WaterTurbine/Build_WaterTurbine.Build_WaterTurbine_C',
+  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WaterTurbineMk1/Build_WaterTurbineMk1.Build_WaterTurbineMk1_C',
+  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbine/Build_WindTurbine.Build_WindTurbine_C',
+  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbineMk1/Build_WindTurbineMk1.Build_WindTurbineMk1_C',
+  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbineMk2/Build_WindTurbineMk2.Build_WindTurbineMk2_C',
+  '/Game/FactoryGame/SKEM/buildable/Processing/Build_ProcessingFacility.Build_ProcessingFacility_C',
+  '/Game/FactoryGame/SolarPanels/Buildable/Factory/Batteries/BatteryController.BatteryController_C',
+  '/Game/FactoryGame/SolarPanels/Buildable/Factory/Batteries/Build_BatteryStorage.Build_BatteryStorage_C',
+  '/Game/FactoryGame/SolarPanels/Buildable/Factory/SolarPanels/Build_SolarPanelMk1.Build_SolarPanelMk1_C',
+  '/Game/FactoryGame/Teleporter/Buildable/EnergyConverter/Build_EnergyConverter.Build_EnergyConverter_C',
+  '/Game/FactoryGame/Teleporter/Buildable/Teleporter/Build_Teleporter.Build_Teleporter_C',
+  '/Game/FactoryGame/Teleporter/Items/TeleportCore/Desc_TeleportCore.Desc_TeleportCore_C'
+];

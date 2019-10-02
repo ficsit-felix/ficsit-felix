@@ -7,5 +7,6 @@ import Vue from 'vue';
  *
  * currently used for
  * - delete: {actors:[], components:[]} // emitted whenever something is deleted, so that the Playground can remove the corresponding meshes
+ * - opening dialogs in Dialogs.vue
  */
 export const EventBus = new Vue();

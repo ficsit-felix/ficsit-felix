@@ -1,4 +1,4 @@
-import { modelConfig } from '@/definitions/models';
+import { modelConfig, modClassNames } from '@/definitions/models';
 import {
   findActorByName,
   getProperty,
@@ -53,8 +53,7 @@ export default class GeometryFactory {
     var className = actor.className;
 
     return new Promise((resolve, reject) => {
-      if (!this.showModels) {
-        // return single sized cube
+      const resolveWithBox = () => {
         if (this.geometries['box'] === undefined) {
           // 800 is size of foundations
           this.geometries['box'] = {
@@ -63,6 +62,11 @@ export default class GeometryFactory {
           };
         }
         resolve(this.geometries['box']);
+      };
+
+      if (!this.showModels) {
+        // return single sized cube
+        resolveWithBox();
         return;
       }
 
@@ -86,7 +90,9 @@ export default class GeometryFactory {
         if (geom !== undefined) {
           resolve(geom);
         } else {
-          reject('Could not create power line geometry');
+          // Show broken power lines as boxes
+          resolveWithBox();
+          //reject('Could not create power line geometry');
         }
 
         return;
@@ -133,7 +139,10 @@ export default class GeometryFactory {
               resolve(this.geometries[className]);
             });
         } else {
-          if (modelConfig[className] === undefined) {
+          if (
+            modelConfig[className] === undefined &&
+            !modClassNames.includes(className)
+          ) {
             console.error('missing model definition: ' + className);
             reportMessage('missing model definition: ' + className);
           }
@@ -253,7 +262,7 @@ export default class GeometryFactory {
     );
     if (sourceConnection === undefined) {
       // TODO error
-      console.error(
+      console.warn(
         'source connection of power line ' +
           actor.entity.extra.sourcePathName +
           ' not found.'
@@ -265,7 +274,7 @@ export default class GeometryFactory {
     );
     if (targetConnection === undefined) {
       // TODO error
-      console.error(
+      console.warn(
         'target connection of power line ' +
           actor.entity.extra.targetPathName +
           ' not found.'
@@ -276,7 +285,7 @@ export default class GeometryFactory {
     const source = findActorByName(sourceConnection.outerPathName);
     if (source === undefined) {
       // TODO error
-      console.error(
+      console.warn(
         'source of power line ' + sourceConnection.outerPathName + ' not found.'
       );
       return;
@@ -285,13 +294,16 @@ export default class GeometryFactory {
     const target = findActorByName(targetConnection.outerPathName);
     if (target === undefined) {
       // TODO error
-      console.error(
+      console.warn(
         'target of power line ' + targetConnection.outerPathName + ' not found.'
       );
       return;
     }
     var sourceOffset = { x: 0, y: 0, z: 0 };
-    if (modelConfig[source.className].powerLineOffset !== undefined) {
+    if (
+      modelConfig[source.className] != undefined &&
+      modelConfig[source.className].powerLineOffset !== undefined
+    ) {
       sourceOffset = modelConfig[source.className].powerLineOffset!;
       const transformedSourceOffset = new Vector3(
         sourceOffset.y,
@@ -310,12 +322,15 @@ export default class GeometryFactory {
         y: transformedSourceOffset.y,
         z: transformedSourceOffset.z
       };
-    } else {
+    } else if (!modClassNames.includes(source.className)) {
       console.error('No power line offset for ' + source.className);
       reportException('No power line offset for ' + source.className);
     }
     var targetOffset = { x: 0, y: 0, z: 0 };
-    if (modelConfig[target.className].powerLineOffset !== undefined) {
+    if (
+      modelConfig[target.className] !== undefined &&
+      modelConfig[target.className].powerLineOffset !== undefined
+    ) {
       targetOffset = modelConfig[target.className].powerLineOffset!;
       const transformedTargetOffset = new Vector3(
         targetOffset.y,
@@ -334,7 +349,7 @@ export default class GeometryFactory {
         y: transformedTargetOffset.y,
         z: transformedTargetOffset.z
       };
-    } else {
+    } else if (!modClassNames.includes(target.className)) {
       console.error('No power line offset for ' + target.className);
       reportException('No power line offset for ' + target.className);
     }

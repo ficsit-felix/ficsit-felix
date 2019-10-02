@@ -2,6 +2,14 @@
   "classList": {
     "allClasses": "all classes"
   },
+  "desktop": {
+    "saveExtension": "Satisfactory save files",
+    "jsonExtension": "JSON files",
+    "openSavTitle": "Open save game",
+    "openJsonTitle": "Open json file",
+    "saveJsonTitle": "Save JSON file",
+    "saveSaveTitle": "Save save game"
+  },
   "dialog": {
     "about": {
       "authors": "authors",
@@ -16,6 +24,10 @@
     "delete": {
       "content": "Do you really want to delete this object?",
       "title": "Delete object"
+    },
+    "exit": {
+      "content": "Do you really want to exit FeliX?",
+      "title": "Exit program"
     },
     "help": {
       "changeJsonWarning": "If you change the JSON you need to save it before clicking anywhere in the scene, else it will be overwritten!",
@@ -69,6 +81,7 @@
   },
   "landingPage": {
     "authors": "authors",
+    "downloadDesktop": "Download Desktop application",
     "firstParagraph": "FeliX is a save file visualizer for the game Satisfactory. Open the .sav file and you can view a low poly 3D representation of your factory and the surrounding area. The save file is processed in your browser and not uploaded to a server.",
     "openJsonButton": "Open .json file",
     "openSavButton": "Open .sav file",
@@ -86,7 +99,11 @@
     "open": "Open",
     "openSource": "Open Source Licenses",
     "save": "Save",
-    "settings": "Settings"
+    "saveAs": "Save as...",
+    "settings": "Settings",
+    "file": "File",
+    "exit": "Exit",
+    "mainScreen": "Back to main menu"
   },
   "objectList": {
     "filterField": "Filter",

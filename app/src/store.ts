@@ -36,7 +36,6 @@ interface SettingsRootState {
   locale: string;
   experimentalFeatures: boolean;
   autoLoadSaveFile: string;
-  saveAsZip: boolean;
   showFps: boolean;
   showDevelopSettings: boolean;
 }
@@ -61,7 +60,6 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     locale: 'en',
     experimentalFeatures: false,
     autoLoadSaveFile: '',
-    saveAsZip: false,
     showFps: false,
     showDevelopSettings: false
   },
@@ -122,10 +120,6 @@ const settingsModule: Module<SettingsRootState, RootState> = {
       state.autoLoadSaveFile = payload;
       updateLocalStorage(state);
     },
-    SET_SAVE_AS_ZIP(state, payload) {
-      state.saveAsZip = payload;
-      updateLocalStorage(state);
-    },
     SET_SHOW_FPS(state, payload) {
       state.showFps = payload;
       updateLocalStorage(state);
@@ -172,9 +166,6 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     setAutoLoadSaveFile(context, payload) {
       context.commit('SET_AUTO_LOAD_SAVE_FILE', payload);
     },
-    setSaveAsZip(context, payload) {
-      context.commit('SET_SAVE_AS_ZIP', payload);
-    },
     setShowFps(context, payload) {
       context.commit('SET_SHOW_FPS', payload);
     },
@@ -185,6 +176,7 @@ const settingsModule: Module<SettingsRootState, RootState> = {
 };
 
 interface RootState {
+  [x: string]: any;
   loading: boolean;
 
   selectedPathNames: string[];
@@ -198,6 +190,7 @@ interface RootState {
   visibleObjects: any[];
   uuid: string;
   filename: string;
+  filepath: string;
   classes: any[];
 
   cameraTarget?: Vector3;
@@ -207,6 +200,15 @@ interface RootState {
   selectionDisabled: boolean;
   boxSelect: boolean;
   shiftSelect: boolean;
+
+  // loading
+  progress: number;
+  progressText: {
+    title: string;
+    currentStep: string;
+    showCloseButton: boolean;
+  };
+  showSaveMenuEntries: boolean;
 }
 
 export default new Vuex.Store<RootState>({
@@ -227,11 +229,20 @@ export default new Vuex.Store<RootState>({
     visibleObjects: [],
     uuid: '',
     filename: '',
+    filepath: '',
     classes: [],
 
     selectionDisabled: false,
     boxSelect: false,
-    shiftSelect: false
+    shiftSelect: false,
+
+    progress: 0,
+    progressText: {
+      title: '',
+      currentStep: '',
+      showCloseButton: false
+    },
+    showSaveMenuEntries: false
   },
   getters: {
     getNames: state => {
@@ -377,6 +388,9 @@ export default new Vuex.Store<RootState>({
     SET_FILENAME(state, filename) {
       state.filename = filename;
     },
+    SET_FILEPATH(state, filepath) {
+      state.filepath = filepath;
+    },
     SET_UUID(state, uuid) {
       state.uuid = uuid;
     },
@@ -462,6 +476,23 @@ export default new Vuex.Store<RootState>({
     },
     SET_SHIFT_SELECT(state, payload) {
       state.shiftSelect = payload;
+    },
+    SET_PROGRESS(state, payload) {
+      state.progress = payload;
+    },
+    SET_PROGRESS_TEXT(state, payload) {
+      if (payload.title !== undefined) {
+        state.progressText.title = payload.title;
+      }
+      if (payload.currentStep !== undefined) {
+        state.progressText.currentStep = payload.currentStep;
+      }
+      if (payload.showCloseButton !== undefined) {
+        state.progressText.showCloseButton = payload.showCloseButton;
+      }
+    },
+    SET_SHOW_SAVE_MENU_ENTRIES(state, payload) {
+      state.showSaveMenuEntries = payload;
     }
   },
   actions: {
@@ -497,6 +528,9 @@ export default new Vuex.Store<RootState>({
     setFilename(context, filename) {
       context.commit('SET_FILENAME', filename);
     },
+    setFilepath(context, filepath) {
+      context.commit('SET_FILEPATH', filepath);
+    },
     setUUID(context, uuid) {
       context.commit('SET_UUID', uuid);
     },
@@ -520,6 +554,15 @@ export default new Vuex.Store<RootState>({
     },
     setShiftSelect(context, payload) {
       context.commit('SET_SHIFT_SELECT', payload);
+    },
+    setProgress(context, payload) {
+      context.commit('SET_PROGRESS', payload);
+    },
+    setProgressText(context, payload) {
+      context.commit('SET_PROGRESS_TEXT', payload);
+    },
+    setShowSaveMenuEntries(context, payload) {
+      context.commit('SET_SHOW_SAVE_MENU_ENTRIES', payload);
     }
   }
 });
