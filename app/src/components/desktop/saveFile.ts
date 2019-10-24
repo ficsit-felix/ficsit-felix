@@ -16,6 +16,8 @@ import streamSaver from 'streamsaver';
 import { Json2SavTransform } from 'satisfactory-json';
 import { Writable } from 'stream';
 
+streamSaver.mitm = '/streamsaver.html';
+
 export function saveFileToFilesystem(
   saveGame: SaveGame,
   path: string,
