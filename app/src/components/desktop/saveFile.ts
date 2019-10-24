@@ -134,6 +134,9 @@ function saveDesktop(
     const outStream = createWriteStream(filePath);
 
     json2sav
+      .on('error', (error: Error) => {
+        callback(error, undefined, undefined);
+      })
       .pipe(outStream)
       .on('finish', () => {
         console.log('o');

@@ -107,14 +107,31 @@ export default class BugReportDialog extends Vue {
     }
   }
 
-  fetchFileForBugReport(file): Promise<Buffer> {
+  fetchFileForBugReport(file: File): Promise<Buffer> {
     return new Promise<Buffer>((resolve, reject) => {
       var reader = new FileReader();
       reader.onload = response => {
-        resolve(response.target.result);
+        if (response === null || response.target === null) {
+          reject();
+          return;
+        }
+        resolve(response.target.result as Buffer);
       };
       reader.readAsArrayBuffer(file);
       // TODO error handling?
+    });
+  }
+
+  readFileForBugReport(file: string): Promise<Buffer> {
+    return new Promise<Buffer>((resolve, reject) => {
+      const fs = require('fs');
+      fs.readFile(file, (err: Error, data: Buffer) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
     });
   }
 
@@ -122,12 +139,17 @@ export default class BugReportDialog extends Vue {
     this.formDisabled = true;
 
     let zip = new JSZip();
+    debugger;
     if (this.includeSave) {
       if (window.data instanceof File) {
-        // The file has not been read completely, we need to reread it ourselves
-
+        // The file has not been read completely, we need to reread it ourselves (browser)
         zip.file(window.data.name, this.fetchFileForBugReport(window.data));
-        // TODO binary true?
+      } else if (typeof window.data === 'string') {
+        // The file has not been read completely, we need to reread it ourselves (desktop)
+        zip.file(
+          window.data.replace(/^.*[\\/]/, ''),
+          this.readFileForBugReport(window.data)
+        );
       } else if (window.data instanceof ArrayBuffer) {
         zip.file(this.filename + '.sav', window.data, { binary: true });
       } else {
@@ -168,6 +190,7 @@ uuid: ${this.uuid}
         }*/
       )
       .then((content: Uint8Array) => {
+        debugger;
         window
           .fetch(
             'https://owl.yt/ficsit-felix/?uuid=' +

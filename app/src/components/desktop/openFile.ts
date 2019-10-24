@@ -13,7 +13,7 @@ export function openFileFromFilesystem(
   callback: (err?: Error, progress?: number, saveGame?: SaveGame) => void
 ): void {
   console.time('readDesktop');
-
+  window.data = path;
   if (asJson) {
     fs.readFile(path, (err, data) => {
       console.timeEnd('readDesktop');
