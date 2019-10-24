@@ -18,13 +18,13 @@
             <md-input v-model="userContact" :disabled="formDisabled"></md-input>
           </md-field>
 
-          <md-checkbox v-model="includeSave" :disabled="formDisabled">{{
-            $t('dialog.bugReport.includeSave')
-          }}</md-checkbox>
+          <md-checkbox v-model="includeSave" :disabled="formDisabled">
+            {{ $t('dialog.bugReport.includeSave') }}
+          </md-checkbox>
           <div v-if="screenshotDataUrl !== ''">
-            <md-checkbox v-model="includeScreenshot" :disabled="formDisabled">{{
-              $t('dialog.bugReport.includeScreenshot')
-            }}</md-checkbox>
+            <md-checkbox v-model="includeScreenshot" :disabled="formDisabled">
+              {{ $t('dialog.bugReport.includeScreenshot') }}
+            </md-checkbox>
 
             <img :src="screenshotDataUrl" v-if="includeScreenshot" />
           </div>
@@ -107,12 +107,28 @@ export default class BugReportDialog extends Vue {
     }
   }
 
+  fetchFileForBugReport(file): Promise<Buffer> {
+    return new Promise<Buffer>((resolve, reject) => {
+      var reader = new FileReader();
+      reader.onload = response => {
+        resolve(response.target.result);
+      };
+      reader.readAsArrayBuffer(file);
+      // TODO error handling?
+    });
+  }
+
   sendReport() {
     this.formDisabled = true;
 
     let zip = new JSZip();
     if (this.includeSave) {
-      if (window.data instanceof ArrayBuffer) {
+      if (window.data instanceof File) {
+        // The file has not been read completely, we need to reread it ourselves
+
+        zip.file(window.data.name, this.fetchFileForBugReport(window.data));
+        // TODO binary true?
+      } else if (window.data instanceof ArrayBuffer) {
         zip.file(this.filename + '.sav', window.data, { binary: true });
       } else {
         zip.file(this.filename + '.json', JSON.stringify(window.data));

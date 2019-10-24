@@ -1,6 +1,12 @@
 import fs from 'fs';
 import { sav2json, SaveGame, Sav2JsonTransform } from 'satisfactory-json';
 
+/**
+ * Read files on desktop
+ * @param path
+ * @param asJson
+ * @param callback
+ */
 export function openFileFromFilesystem(
   path: string,
   asJson: boolean,
