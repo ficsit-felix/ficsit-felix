@@ -262,7 +262,7 @@ export default {
 
         worker.postMessage({
           importJson: this.importJson,
-          file
+          data: file
         });
       } catch (error) {
         reportError(error);
