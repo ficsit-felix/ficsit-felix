@@ -10,9 +10,9 @@
         <br />
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false">
-          {{ $t('general.close') }}
-        </md-button>
+        <md-button class="md-primary" @click="showHelpDialog = false">{{
+          $t('general.close')
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -23,9 +23,9 @@
         <Settings></Settings>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false">
-          {{ $t('general.close') }}
-        </md-button>
+        <md-button class="md-primary" @click="showSettingsDialog = false">{{
+          $t('general.close')
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -36,9 +36,9 @@
         <LicensesDialog></LicensesDialog>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showLicensesDialog = false">
-          {{ $t('general.close') }}
-        </md-button>
+        <md-button class="md-primary" @click="showLicensesDialog = false">{{
+          $t('general.close')
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -65,9 +65,9 @@
         </p>
       </md-dialog-content>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showAboutDialog = false">
-          {{ $t('general.close') }}
-        </md-button>
+        <md-button class="md-primary" @click="showAboutDialog = false">{{
+          $t('general.close')
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -96,6 +96,20 @@
       @md-confirm="save"
       @keydown.enter="
         showSaveDialog = false;
+        save();
+      "
+    />
+
+    <md-dialog-confirm
+      :md-active.sync="showSaveDesktopDialog"
+      :md-title="$t('dialog.save.title')"
+      :md-content="$t('dialog.saveDesktop.content')"
+      :md-confirm-text="$t('general.yes')"
+      :md-cancel-text="$t('general.no')"
+      @md-cancel="showSaveDesktopDialog = false"
+      @md-confirm="save"
+      @keydown.enter="
+        showSaveDesktopDialog = false;
         save();
       "
     />
@@ -139,7 +153,8 @@ import {
   DIALOG_SAVE,
   ON_SAVE_PRESSED,
   DIALOG_BUGREPORT,
-  DIALOG_CONFIRM_EXIT
+  DIALOG_CONFIRM_EXIT,
+  DIALOG_SAVE_DESKTOP
 } from '../../ts/constants';
 import { EventBufferer } from 'custom-electron-titlebar/lib/common/event';
 import { setTimeout } from 'timers';
@@ -162,6 +177,7 @@ export default Vue.extend({
       showAboutDialog: false,
       showProgressDialog: false,
       showSaveDialog: false,
+      showSaveDesktopDialog: false,
       showConfirmExitDialog: false
     };
   },
@@ -209,6 +225,12 @@ export default Vue.extend({
         () => (this.showSaveDialog = true)
       );
     });
+    EventBus.$on(DIALOG_SAVE_DESKTOP, () => {
+      this.closeDialogs(
+        this.showSaveDesktopDialog,
+        () => (this.showSaveDesktopDialog = true)
+      );
+    });
     EventBus.$on(DIALOG_BUGREPORT, (errorMessage: string) => {
       this.closeDialogs(false, () => {
         (this.$refs.bugReport as any).openReportWindow(
@@ -230,6 +252,7 @@ export default Vue.extend({
     EventBus.$off(DIALOG_SETTINGS);
     EventBus.$off(DIALOG_PROGRESS);
     EventBus.$off(DIALOG_SAVE);
+    EventBus.$off(DIALOG_SAVE_DESKTOP);
     EventBus.$off(DIALOG_BUGREPORT);
     EventBus.$off(DIALOG_CONFIRM_EXIT);
   },
@@ -247,6 +270,7 @@ export default Vue.extend({
         this.showAboutDialog ||
         this.showProgressDialog ||
         this.showSaveDialog ||
+        this.showSaveDesktopDialog ||
         this.showConfirmExitDialog;
       this.closeAllDialogs();
       if (dialogPreviouslyOpen) {
@@ -263,6 +287,7 @@ export default Vue.extend({
       this.showAboutDialog = false;
       this.showProgressDialog = false;
       this.showSaveDialog = false;
+      this.showSaveDesktopDialog = false;
       this.showConfirmExitDialog = false;
     },
 
