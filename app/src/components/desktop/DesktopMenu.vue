@@ -1,11 +1,19 @@
 <template>
   <div class="mainmenu" v-if="visible">
     <ul class="menu">
+      <li @click="saveFile()" v-if="showSaveMenuEntries">
+        {{ $t('menubar.save') }}
+      </li>
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
+
       <div class="spacer"></div>
+      <li class="small" @click="exportJson()" v-if="showSaveMenuEntries">
+        {{ $t('menubar.exportJson') }}
+      </li>
       <li class="small" @click="openJsonFilebrowser()">
         {{ $t('menubar.importJson') }}
       </li>
+
       <li class="small" @click="openSettings()">
         {{ $t('menubar.settings') }}
       </li>
@@ -73,11 +81,15 @@ import {
   DIALOG_ABOUT,
   DIALOG_PROGRESS,
   DIALOG_OPEN_TIME_MS,
-  DIALOG_CONFIRM_EXIT
+  DIALOG_CONFIRM_EXIT,
+  DIALOG_SAVE
 } from '../../ts/constants';
 import { openFileFromFilesystem } from './openFile';
-import { mapActions } from 'vuex';
-import { openFileAndMoveToEditor } from './desktopUtils';
+import { mapActions, mapState } from 'vuex';
+import {
+  openFileAndMoveToEditor,
+  saveFileAndShowProgress
+} from './desktopUtils';
 import { createReadStream } from 'fs';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import fs from 'fs';
@@ -86,7 +98,16 @@ import moment from 'moment';
 import { getSaveGamesFolderPath } from './getSaveGamesFolderPath';
 import path from 'path';
 
-@Component({})
+@Component({
+  computed: {
+    ...mapState(['showSaveMenuEntries'])
+  } /*,
+  watch: {
+    showSaveMenuEntries() {
+      // update the menu
+    }
+  }*/
+})
 export default class DesktopMenu extends Vue {
   @Prop({ default: false }) readonly visible!: boolean;
 
@@ -137,6 +158,10 @@ export default class DesktopMenu extends Vue {
       });
     });
   }
+  saveFile() {
+    // show confirmation dialog
+    EventBus.$emit(DIALOG_SAVE);
+  }
 
   openFilebrowser() {
     this.showFilebrowser = !this.showFilebrowser;
@@ -145,6 +170,31 @@ export default class DesktopMenu extends Vue {
       this.sessionFiles = [];
     }
   }
+
+  exportJson() {
+    // TODO deduplicate with DesktopApp.openJsonSaveSelector
+    const name = this.$store.state.filename.replace('.sav', '.json');
+
+    remote.dialog
+      .showSaveDialog({
+        title: this.$t('desktop.saveJsonTitle') as string,
+        defaultPath: name,
+        filters: [
+          {
+            name: this.$t('desktop.jsonExtension') as string,
+            extensions: ['json']
+          }
+        ]
+      })
+      .then(value => {
+        if (value.canceled) {
+          return;
+        }
+
+        saveFileAndShowProgress(this, value.filePath!, true, false);
+      });
+  }
+
   openSettings() {
     EventBus.$emit(DIALOG_SETTINGS);
   }

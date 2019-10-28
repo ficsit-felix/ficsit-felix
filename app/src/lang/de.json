@@ -103,7 +103,8 @@
     "settings": "Einstellungen",
     "file": "Datei",
     "exit": "Beenden",
-    "mainScreen": "Zurück zum Hauptmenü"
+    "mainScreen": "Zurück zum Hauptmenü",
+    "toggleMenu": "Menü öffnen"
   },
   "objectList": {
     "filterField": "Filtern",
