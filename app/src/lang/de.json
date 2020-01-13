@@ -8,7 +8,9 @@
     "openSavTitle": "Spielstand öffnen",
     "openJsonTitle": "JSON Datei öffnen",
     "saveJsonTitle": "JSON Datei speichern",
-    "saveSaveTitle": "Spielstand speichern"
+    "saveSaveTitle": "Spielstand speichern",
+    "playDuration": "Spieldauer:",
+    "brokenSaveFile": "Spielstand kann nicht gelesen werden!"
   },
   "dialog": {
     "about": {
@@ -103,7 +105,8 @@
     "settings": "Einstellungen",
     "file": "Datei",
     "exit": "Beenden",
-    "mainScreen": "Zurück zum Hauptmenü"
+    "mainScreen": "Zurück zum Hauptmenü",
+    "toggleMenu": "Menü öffnen"
   },
   "objectList": {
     "filterField": "Filtern",

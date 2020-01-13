@@ -16,6 +16,8 @@ import streamSaver from 'streamsaver';
 import { Json2SavTransform } from 'satisfactory-json';
 import { Writable } from 'stream';
 
+streamSaver.mitm = '/streamsaver.html';
+
 export function saveFileToFilesystem(
   saveGame: SaveGame,
   path: string,
@@ -132,6 +134,9 @@ function saveDesktop(
     const outStream = createWriteStream(filePath);
 
     json2sav
+      .on('error', (error: Error) => {
+        callback(error, undefined, undefined);
+      })
       .pipe(outStream)
       .on('finish', () => {
         console.log('o');

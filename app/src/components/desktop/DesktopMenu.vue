@@ -1,11 +1,19 @@
 <template>
   <div class="mainmenu" v-if="visible">
     <ul class="menu">
+      <li @click="saveFile()" v-if="showSaveMenuEntries">
+        {{ $t('menubar.save') }}
+      </li>
       <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
+
       <div class="spacer"></div>
+      <li class="small" @click="exportJson()" v-if="showSaveMenuEntries">
+        {{ $t('menubar.exportJson') }}
+      </li>
       <li class="small" @click="openJsonFilebrowser()">
         {{ $t('menubar.importJson') }}
       </li>
+
       <li class="small" @click="openSettings()">
         {{ $t('menubar.settings') }}
       </li>
@@ -20,11 +28,19 @@
         v-for="session in sortedFiles"
         @click="sessionFiles = session.saves"
       >
-        <div class="session-name">{{ session.sessionName }}</div>
-        <div class="bottom-info">
-          <div class="filename">{{ session.saves[0].filename }}</div>
-          <div class="last-time">
-            {{ dateToString(session.saves[0].saveDateTime) }}
+        <div class="bar-entry">
+          <div class="icon">
+            <md-icon v-if="session.saves[0].broken" class="error"
+              >error</md-icon
+            >
+            <md-icon v-else>folder_open</md-icon>
+          </div>
+          <div class="information">
+            <div class="session-name">{{ session.sessionName }}</div>
+            <div class="bottom-info">
+              <div class="filename">{{ session.saves[0].filename }}</div>
+              <!--<div class="last-time">{{ dateToString(session.saves[0].saveDateTime) }}</div>-->
+            </div>
           </div>
         </div>
       </li>
@@ -40,11 +56,25 @@
         v-for="file in sessionFiles"
         @click="openFile(file.filepath)"
       >
-        <div class="session-name">{{ file.sessionName }}</div>
-
-        <div class="bottom-info">
-          <div class="filename">{{ file.filename }}</div>
-          <div class="last-time">{{ dateToString(file.saveDateTime) }}</div>
+        <div class="bar-entry">
+          <div class="icon">
+            <md-icon v-if="file.broken" class="error">error</md-icon>
+            <md-icon v-else>save</md-icon>
+          </div>
+          <div class="information">
+            <div class="session-name">{{ file.filename }}</div>
+            <div class="bottom-info" v-if="file.broken">
+              <div class="error">{{ $t('desktop.brokenSaveFile') }}</div>
+            </div>
+            <div class="bottom-info" v-else>
+              <div class="filename">
+                {{ $t('desktop.playDuration') }}
+                {{ secondsToTime(file.playDurationSeconds) }}
+              </div>
+              <div class="last-time">{{ dateToString(file.saveDateTime) }}</div>
+              <div class="last-time">{{ bytesToSize(file.size) }}</div>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -73,11 +103,16 @@ import {
   DIALOG_ABOUT,
   DIALOG_PROGRESS,
   DIALOG_OPEN_TIME_MS,
-  DIALOG_CONFIRM_EXIT
+  DIALOG_CONFIRM_EXIT,
+  DIALOG_SAVE,
+  DIALOG_SAVE_DESKTOP
 } from '../../ts/constants';
 import { openFileFromFilesystem } from './openFile';
-import { mapActions } from 'vuex';
-import { openFileAndMoveToEditor } from './desktopUtils';
+import { mapActions, mapState } from 'vuex';
+import {
+  openFileAndMoveToEditor,
+  saveFileAndShowProgress
+} from './desktopUtils';
 import { createReadStream } from 'fs';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import fs from 'fs';
@@ -86,7 +121,16 @@ import moment from 'moment';
 import { getSaveGamesFolderPath } from './getSaveGamesFolderPath';
 import path from 'path';
 
-@Component({})
+@Component({
+  computed: {
+    ...mapState(['showSaveMenuEntries'])
+  } /*,
+  watch: {
+    showSaveMenuEntries() {
+      // update the menu
+    }
+  }*/
+})
 export default class DesktopMenu extends Vue {
   @Prop({ default: false }) readonly visible!: boolean;
 
@@ -123,6 +167,9 @@ export default class DesktopMenu extends Vue {
               // READ HEADER OF SAVE FILE
               const stream = createReadStream(path.join(filePath));
               new FileHeaderReader(file, filePath, stream, header => {
+                // add file size to header
+                header.size = stat.size;
+
                 if (this.files[header.sessionName] === undefined) {
                   this.$set(this.files, header.sessionName, []);
                 }
@@ -137,6 +184,10 @@ export default class DesktopMenu extends Vue {
       });
     });
   }
+  saveFile() {
+    // show confirmation dialog
+    EventBus.$emit(DIALOG_SAVE_DESKTOP);
+  }
 
   openFilebrowser() {
     this.showFilebrowser = !this.showFilebrowser;
@@ -145,6 +196,31 @@ export default class DesktopMenu extends Vue {
       this.sessionFiles = [];
     }
   }
+
+  exportJson() {
+    // TODO deduplicate with DesktopApp.openJsonSaveSelector
+    const name = this.$store.state.filename.replace('.sav', '.json');
+
+    remote.dialog
+      .showSaveDialog({
+        title: this.$t('desktop.saveJsonTitle') as string,
+        defaultPath: name,
+        filters: [
+          {
+            name: this.$t('desktop.jsonExtension') as string,
+            extensions: ['json']
+          }
+        ]
+      })
+      .then(value => {
+        if (value.canceled) {
+          return;
+        }
+
+        saveFileAndShowProgress(this, value.filePath!, true, false);
+      });
+  }
+
   openSettings() {
     EventBus.$emit(DIALOG_SETTINGS);
   }
@@ -182,10 +258,42 @@ export default class DesktopMenu extends Vue {
     );
   }
 
+  /**
+   * Formats the last save time
+   */
   dateToString(date: Date): string {
     return moment(date)
       .locale(this.$i18n.locale)
       .format('lll');
+  }
+
+  /**
+   * Formats the current time played
+   */
+  secondsToTime(seconds: number): string {
+    // TODO localize?
+    if (seconds < 60) {
+      return Math.floor(seconds) + 's';
+    }
+    seconds /= 60;
+    if (seconds < 60) {
+      return Math.floor(seconds) + 'm';
+    }
+    seconds /= 60;
+    return Math.floor(seconds) + 'h';
+  }
+  /**
+   * Formats the save game size
+   */
+  bytesToSize(bytes: number): string {
+    // TODO localize?
+    // https://stackoverflow.com/a/20732091
+    var i = Math.floor(Math.log(bytes) / Math.log(1024));
+    return (
+      (bytes / Math.pow(1024, i)).toFixed(2) +
+      ' ' +
+      ['B', 'kB', 'MB', 'GB', 'TB'][i]
+    );
   }
 
   get sortedFiles() {
@@ -332,5 +440,31 @@ export default class DesktopMenu extends Vue {
 .commithash {
   font-size: 12px;
   color: #555;
+}
+
+.bar-entry {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .icon {
+    background: #666;
+    border-radius: 20px;
+    padding: 5px;
+    display: inline-block;
+    margin-right: 7px;
+
+    .error {
+      color: #ff8239;
+    }
+  }
+
+  .information {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.error {
+  color: #ff8239;
 }
 </style>

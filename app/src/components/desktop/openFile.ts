@@ -1,13 +1,19 @@
 import fs from 'fs';
 import { sav2json, SaveGame, Sav2JsonTransform } from 'satisfactory-json';
 
+/**
+ * Read files on desktop
+ * @param path
+ * @param asJson
+ * @param callback
+ */
 export function openFileFromFilesystem(
   path: string,
   asJson: boolean,
   callback: (err?: Error, progress?: number, saveGame?: SaveGame) => void
 ): void {
   console.time('readDesktop');
-
+  window.data = path;
   if (asJson) {
     fs.readFile(path, (err, data) => {
       console.timeEnd('readDesktop');

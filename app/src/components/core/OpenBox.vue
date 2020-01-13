@@ -61,9 +61,9 @@
         </span>
       </span>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">
-          {{ $t('general.close') }}
-        </md-button>
+        <md-button class="md-primary" @click="showErrorDialog = false">{{
+          $t('general.close')
+        }}</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -208,9 +208,9 @@ export default {
       this.processFile(file);
     },
 
-    processFile(data) {
+    processFile(file) {
       // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
-      window.data = data;
+      window.data = file;
 
       if (this.$store.state.settings.autoLoadSaveFile !== '') {
         this.$router.push({
@@ -262,7 +262,7 @@ export default {
 
         worker.postMessage({
           importJson: this.importJson,
-          data
+          data: file
         });
       } catch (error) {
         reportError(error);

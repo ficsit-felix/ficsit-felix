@@ -2,6 +2,7 @@ import { Readable } from 'stream';
 import { ReadStream } from 'fs';
 
 export interface FileHeader {
+  broken: boolean;
   filename: string;
   filepath: string;
   saveHeaderType: number;
@@ -28,6 +29,7 @@ export class FileHeaderReader {
     stream.on('readable', () => {
       try {
         const header: FileHeader = {
+          broken: false,
           filename: filename,
           filepath: filepath,
           saveHeaderType: this.readInt(),
@@ -45,7 +47,15 @@ export class FileHeaderReader {
       } catch (e) {
         // TODO do we want to inform the user about broken saves?
         // maybe add a red X icon next to them?
-        console.warn(e);
+        //console.warn(e);
+
+        callback({
+          broken: true,
+          filename: filename,
+          filepath: filepath,
+          saveDateTime: new Date(0),
+          sessionName: 'error'
+        });
       }
 
       stream.close();

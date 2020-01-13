@@ -57,6 +57,7 @@ addEventListener('message', message => {
           });
         })
         .on('error', error => {
+          console.error('error', error);
           postMessage({
             status: 'error',
             error: error.message

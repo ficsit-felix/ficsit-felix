@@ -168,7 +168,7 @@ export default {
       ]);
       if (this.showSaveMenuEntries) {
         fileEntries.push({
-          label: this.$t('menubar.mainScreen'),
+          label: this.$t('menubar.toggleMenu'),
           accelerator: 'Esc',
           click: () => {
             EventBus.$emit(TOGGLE_MENU);

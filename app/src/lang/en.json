@@ -8,7 +8,9 @@
     "openSavTitle": "Open save game",
     "openJsonTitle": "Open json file",
     "saveJsonTitle": "Save JSON file",
-    "saveSaveTitle": "Save save game"
+    "saveSaveTitle": "Save save game",
+    "playDuration": "Play duration:",
+    "brokenSaveFile": "Save file cannot be read!"
   },
   "dialog": {
     "about": {
@@ -49,6 +51,9 @@
     "save": {
       "content": "Do you want to download this save as a .sav file? Please backup your old save file before you overwrite it!",
       "title": "Save save file"
+    },
+    "saveDesktop": {
+      "content": "Do you want to save the file? A backup of the previous one will be made"
     },
     "saveJson": {
       "content": "Do you want to export this save as a JSON file?",
@@ -103,7 +108,8 @@
     "settings": "Settings",
     "file": "File",
     "exit": "Exit",
-    "mainScreen": "Back to main menu"
+    "mainScreen": "Back to main menu",
+    "toggleMenu": "Toggle menu"
   },
   "objectList": {
     "filterField": "Filter",
