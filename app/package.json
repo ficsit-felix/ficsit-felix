@@ -2,7 +2,7 @@
   "name": "ficsit-felix",
   "description": "Save file visualizer for Satisfactory",
   "author": "bitowl",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
