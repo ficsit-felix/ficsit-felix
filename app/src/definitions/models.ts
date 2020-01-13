@@ -1200,6 +1200,35 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   }
 };
 
+export let modClassNamePrefixes = [
+  '/Game/FactoryGame/AreaActions/',
+  '/Game/FactoryGame/CrazyMod/',
+  '/Game/FactoryGame/FarmingMod/',
+  '/Game/FactoryGame/FoundationsIndustrie/',
+  '/Game/FactoryGame/HealSpheres/',
+  '/Game/FactoryGame/InfiniteStorage/',
+  '/Game/FactoryGame/LightItUp/',
+  '/Game/FactoryGame/MinerMk4_Mod/',
+  '/Game/FactoryGame/Mk6_Mod/',
+  '/Game/FactoryGame/MoarFactory_Foundation/',
+  '/Game/FactoryGame/MoarFactory_Shape/',
+  '/Game/FactoryGame/MoarFactory_Stair/',
+  '/Game/FactoryGame/MoarFactory_Wall/',
+  '/Game/FactoryGame/MoarFactory/',
+  '/Game/FactoryGame/Mod/',
+  '/Game/FactoryGame/OilPumpMk2_Mod/',
+  '/Game/FactoryGame/PanaMod/',
+  '/Game/FactoryGame/RenewablePower/',
+  '/Game/FactoryGame/SatisfyingComputers/',
+  '/Game/FactoryGame/SKEM/',
+  '/Game/FactoryGame/SlowItdown/',
+  '/Game/FactoryGame/SolarPanels/',
+  '/Game/FactoryGame/sweetTransportal/',
+  '/Game/FactoryGame/Teleporter/',
+  '/Game/FactoryGame/Unlocks/',
+  '/Game/FactoryGame/UtilityMod/',
+];
+
 // Well known class names that are used by mods that we don't want to store a modelConfig for
 export let modClassNames = [
   '/Game/FactoryGame/AreaActions/Actions/ActionsSettings.ActionsSettings_C',
@@ -1271,3 +1300,9 @@ export let modClassNames = [
   '/Game/FactoryGame/Teleporter/Buildable/Teleporter/Build_Teleporter.Build_Teleporter_C',
   '/Game/FactoryGame/Teleporter/Items/TeleportCore/Desc_TeleportCore.Desc_TeleportCore_C'
 ];
+
+
+export function isModClassName(className: string) {
+  //return modClassNames.includes(className);
+  return modClassNamePrefixes.some((prefix) => className.startsWith(prefix));
+}
