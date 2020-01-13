@@ -3787,7 +3787,7 @@ destroy@~1.0.4:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
-detect-libc@^1.0.2, detect-libc@^1.0.3:
+detect-libc@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
@@ -4734,13 +4734,6 @@ fd-slicer@~1.0.1:
   integrity sha1-i1vL2ewyfFBBv5qwI/1nUPEXfmU=
   dependencies:
     pend "~1.2.0"
-
-fibers@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/fibers/-/fibers-4.0.1.tgz#34fe8a8d010db7f9096adb2558a45bbc1d03fe45"
-  integrity sha512-H79EJn7DMWXk48ygmC82bMP8KNcFBZF1CPfwBpYF6cO85hGWoIrlu7eyX9ayxfjP9Nsl0JXxdI6fpYU4DWVw2w==
-  dependencies:
-    detect-libc "^1.0.3"
 
 figgy-pudding@^3.5.1:
   version "3.5.1"
@@ -9200,10 +9193,10 @@ satisfactory-blueprint@^0.0.3:
     satisfactory-json "^0.0.9"
     three "^0.105.2"
 
-satisfactory-json@0.0.28:
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.28.tgz#617005656facbaea7f010ba6a5a179a2ce3af8bb"
-  integrity sha512-VGQ9IY0+oub9LXIBDI6ymdkjQdKCg+WtH9/PIWVkxv55sjakSOndbFJ8j//A5WDrj1bkMZ6/OWfS++shiKDm1g==
+satisfactory-json@0.0.30:
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.30.tgz#6b935b23ecafd12d2d1431eacbf135e202051f61"
+  integrity sha512-H3ifI0oCNHTGWLyKbzp1hlNYGCvukIg1JPr5KZ4OkDiESjbf4622If/W+egc29fNlBf2VArE9sHvrWlGJqnFLw==
   dependencies:
     jsbi "^3.1.1"
     pako "^1.0.10"

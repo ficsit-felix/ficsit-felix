@@ -35,7 +35,6 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  src: url('roboto-v20-latin-500.eot');
   /* IE9 Compat Modes */
   src: local('Roboto Medium'), local('Roboto-Medium'),
     url('roboto-v20-latin-500.woff2') format('woff2'),
@@ -51,7 +50,6 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: url('roboto-v20-latin-700.eot');
   /* IE9 Compat Modes */
   src: local('Roboto Bold'), local('Roboto-Bold'),
     url('roboto-v20-latin-700.woff2') format('woff2'),
