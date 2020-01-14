@@ -1223,6 +1223,8 @@ export let modClassNamePrefixes = [
   '/Game/FactoryGame/SKEM/',
   '/Game/FactoryGame/SlowItdown/',
   '/Game/FactoryGame/SolarPanels/',
+  '/Game/FactoryGame/sweetComposter/',
+  '/Game/FactoryGame/sweetSpeedBoosters',
   '/Game/FactoryGame/sweetTransportal/',
   '/Game/FactoryGame/Teleporter/',
   '/Game/FactoryGame/Unlocks/',
