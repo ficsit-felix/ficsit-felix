@@ -1204,6 +1204,7 @@ export let modClassNamePrefixes = [
   '/Game/FactoryGame/AreaActions/',
   '/Game/FactoryGame/CrazyMod/',
   '/Game/FactoryGame/FarmingMod/',
+  '/Game/FactoryGame/FencesMod/',
   '/Game/FactoryGame/FoundationsIndustrie/',
   '/Game/FactoryGame/HealSpheres/',
   '/Game/FactoryGame/InfiniteStorage/',
@@ -1228,7 +1229,7 @@ export let modClassNamePrefixes = [
   '/Game/FactoryGame/sweetTransportal/',
   '/Game/FactoryGame/Teleporter/',
   '/Game/FactoryGame/Unlocks/',
-  '/Game/FactoryGame/UtilityMod/',
+  '/Game/FactoryGame/UtilityMod/'
 ];
 
 // Well known class names that are used by mods that we don't want to store a modelConfig for
@@ -1303,8 +1304,13 @@ export let modClassNames = [
   '/Game/FactoryGame/Teleporter/Items/TeleportCore/Desc_TeleportCore.Desc_TeleportCore_C'
 ];
 
-
 export function isModClassName(className: string) {
   //return modClassNames.includes(className);
-  return modClassNamePrefixes.some((prefix) => className.startsWith(prefix));
+  const isMod = modClassNamePrefixes.some(prefix =>
+    className.startsWith(prefix)
+  );
+  if (isMod) {
+    console.log(`Mod: ${className}`);
+  }
+  return isMod;
 }
