@@ -525,12 +525,17 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true,
     powerLineOffset: { x: -660, y: -1900, z: 900 }
   },
+  '/Game/FactoryGame/Buildable/Factory/HadronCollider/Build_HadronCollider.Build_HadronCollider_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C': {
     model: 'HubTerminal.glb',
     color: 0x693fb0,
     paintable: false
   },
-  '/Game/FactoryGame/Buildable/Factory/HadronCollider/Build_HadronCollider.Build_HadronCollider_C': {
+  '/Game/FactoryGame/Buildable/Factory/IndustrialFluidContainer/Build_IndustrialTank.Build_IndustrialTank_C': {
     model: '',
     color: 0xff00ff,
     paintable: false
@@ -556,6 +561,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/LookoutTower/Build_LookoutTower.Build_LookoutTower_C': {
     model: 'LookoutTower.glb',
     color: 0x811396,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/Mam/Build_Mam.Build_Mam_C': {
+    model: '',
+    color: 0xff00ff,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/Mam/Build_MamIntegrated.Build_MamIntegrated_C': {
@@ -605,6 +615,48 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false,
     powerLineOffset: { x: 0, y: -800, z: 1825 }
   },
+  '/Game/FactoryGame/Buildable/Factory/PipeHyper/Build_PipeHyper.Build_PipeHyper_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipeHyperStart/Build_PipeHyperStart.Build_PipeHyperStart_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipeHyperSupport/Build_PipeHyperSupport.Build_PipeHyperSupport_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipeJunction/Build_PipelineJunction_Cross.Build_PipelineJunction_Cross_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/Pipeline/Build_Pipeline.Build_Pipeline_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipelineSupport/Build_PipelineSupport.Build_PipelineSupport_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipelineSupport/Build_PipeSupportStackable.Build_PipeSupportStackable_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipePump/Build_PipelinePump.Build_PipelinePump_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+
+
   '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C': {
     model: 'Build_PowerLine_C.glb',
     color: 0xaaaaaa,
@@ -628,6 +680,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true,
     powerLineOffset: { x: 0, y: 0, z: 850 }
   },
+  '/Game/FactoryGame/Buildable/Factory/PowerPoleWall/Build_PowerPoleWall.Build_PowerPoleWall_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C': {
     model: '',
     color: 0xff00ff,
@@ -643,6 +700,16 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xaceef1,
     paintable: true,
     powerLineOffset: { x: 115, y: -340, z: 1730 }
+  },
+  '/Game/FactoryGame/Buildable/Factory/ResourceSink/Build_ResourceSink.Build_ResourceSink_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/ResourceSinkShop/Build_ResourceSinkShop.Build_ResourceSinkShop_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/SmelterMk1/Build_SmelterMk1.Build_SmelterMk1_C': {
     model: 'SmelterMk1.glb',
@@ -684,6 +751,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     model: 'Build_StoragePlayer_C.glb', // r z 90
     color: 0x450352,
     paintable: true
+  },
+  '/Game/FactoryGame/Buildable/Factory/StorageTank/Build_PipeStorageTank.Build_PipeStorageTank_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/TradingPost/BP_StartingPod.BP_StartingPod_C': {
     model: '',
@@ -731,6 +803,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x472596,
     paintable: true,
     powerLineOffset: { x: 165, y: -1170, z: 1080 }
+  },
+  '/Game/FactoryGame/Buildable/Factory/WaterPump/Build_WaterPump.Build_WaterPump_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C': {
     model: 'Workbench.glb',
@@ -1156,12 +1233,27 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: false
   },
+  '/Script/FactoryGame.FGPipeNetwork': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Script/FactoryGame.FGPipeSubsystem': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Script/FactoryGame.FGRailroadTimeTable': {
     model: '',
     color: 0xff00ff,
     paintable: false
   },
   '/Script/FactoryGame.FGRecipeManager': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Script/FactoryGame.FGResourceSinkSubsystem': {
     model: '',
     color: 0xff00ff,
     paintable: false
@@ -1232,80 +1324,7 @@ export let modClassNamePrefixes = [
   '/Game/FactoryGame/UtilityMod/'
 ];
 
-// Well known class names that are used by mods that we don't want to store a modelConfig for
-export let modClassNames = [
-  '/Game/FactoryGame/AreaActions/Actions/ActionsSettings.ActionsSettings_C',
-  '/Game/FactoryGame/AreaActions/Equipment/AreaActions/Equip_AreaActions.Equip_AreaActions_C',
-  '/Game/FactoryGame/AreaActions/Tutorial/AreaActionsTutorialSubsystem.AreaActionsTutorialSubsystem_C',
-  '/Game/FactoryGame/HealSpheres/Buildable/SuperStormShield.SuperStormShield_C',
-  '/Game/FactoryGame/InfiniteStorage/Buildable/InfStorage/Build_InfStorage.Build_InfStorage_C',
-  '/Game/FactoryGame/LightItUp/Lamps/CeilingLamp/CeilingLamp.CeilingLamp_C',
-  '/Game/FactoryGame/LightItUp/Lamps/ConstructionLight/ConstructionLight.ConstructionLight_C',
-  '/Game/FactoryGame/LightItUp/Lamps/LampController.LampController_C',
-  '/Game/FactoryGame/LightItUp/Lamps/LampPole/LampPole.LampPole_C',
-  '/Game/FactoryGame/LightItUp/Lamps/PowerPoleLight/PowerPoleLight.PowerPoleLight_C',
-  '/Game/FactoryGame/LightItUp/Lamps/StreetLamp/StreetLamp.StreetLamp_C',
-  '/Game/FactoryGame/LightItUp/Lamps/WallLamp/WallLamp.WallLamp_C',
-  '/Game/FactoryGame/LightItUp/Power/LightPowerDistributor/LightPowerDistributor.LightPowerDistributor_C',
-  '/Game/FactoryGame/MinerMk4_Mod/MinerMk4.MinerMk4_C',
-  '/Game/FactoryGame/Mk6_Mod/Build_BeltMk61.Build_BeltMk61_C',
-  '/Game/FactoryGame/Mk6_Mod/Build_ConveyorLiftMk61.Build_ConveyorLiftMk61_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation001.Build_MF_Foundation001_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation002.Build_MF_Foundation002_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation003.Build_MF_Foundation003_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation004.Build_MF_Foundation004_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation005.Build_MF_Foundation005_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation006.Build_MF_Foundation006_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation007.Build_MF_Foundation007_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation008.Build_MF_Foundation008_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation011.Build_MF_Foundation011_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation015.Build_MF_Foundation015_C',
-  '/Game/FactoryGame/MoarFactory_Foundation/Buildable/Building/Foundation/Build_MF_Foundation026.Build_MF_Foundation026_C',
-  '/Game/FactoryGame/MoarFactory_Stair/Buildable/Building/Stair/Build_MF_Stair001.Build_MF_Stair001_C',
-  '/Game/FactoryGame/MoarFactory_Stair/Buildable/Building/Stair/Build_MF_Stair002.Build_MF_Stair002_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall001.Build_MF_Wall001_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall002.Build_MF_Wall002_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall003.Build_MF_Wall003_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall004.Build_MF_Wall004_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall005.Build_MF_Wall005_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall006.Build_MF_Wall006_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall007.Build_MF_Wall007_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall008.Build_MF_Wall008_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall011.Build_MF_Wall011_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall012.Build_MF_Wall012_C',
-  '/Game/FactoryGame/MoarFactory_Wall/Buildable/Building/Wall/Build_MF_Wall013.Build_MF_Wall013_C',
-  '/Game/FactoryGame/MoarFactory/Buildable/Factory/PowerPlugMk1/Build_MF_PowerPlugMk1.Build_MF_PowerPlugMk1_C',
-  '/Game/FactoryGame/MoarFactory/Buildable/Factory/PowerPlugMk2/Build_MF_PowerPlugMk2.Build_MF_PowerPlugMk2_C',
-  '/Game/FactoryGame/Mod/Buildable/Factory/InfiniteStorage/Network_InfiniteStorage.Network_InfiniteStorage_C',
-  '/Game/FactoryGame/Mod/Buildable/Factory/ItemCounter/Build_ItemCounter.Build_ItemCounter_C',
-  '/Game/FactoryGame/Mod/Buildable/Factory/ItemDeleter/Build_ItemDeleter.Build_ItemDeleter_C',
-  '/Game/FactoryGame/Mod/Buildable/Factory/MixedSplitter/Build_MixedSplitter.Build_MixedSplitter_C',
-  '/Game/FactoryGame/OilPumpMk2_Mod/OilPumpMk2.OilPumpMk2_C',
-  '/Game/FactoryGame/PanaMod/Lamps/Lamp1.Lamp1_C',
-  '/Game/FactoryGame/PanaMod/Lamps/Lamp2.Lamp2_C',
-  '/Game/FactoryGame/RenewablePower/Buildable/Factory/ArcReactorMk1/Build_ArcReactorMk1.Build_ArcReactorMk1_C',
-  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WaterTurbine/Build_WaterTurbine.Build_WaterTurbine_C',
-  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WaterTurbineMk1/Build_WaterTurbineMk1.Build_WaterTurbineMk1_C',
-  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbine/Build_WindTurbine.Build_WindTurbine_C',
-  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbineMk1/Build_WindTurbineMk1.Build_WindTurbineMk1_C',
-  '/Game/FactoryGame/RenewablePower/Buildable/Factory/WindTurbineMk2/Build_WindTurbineMk2.Build_WindTurbineMk2_C',
-  '/Game/FactoryGame/SatisfyingComputers/Components/LEDDisplay/LEDDisplay.LEDDisplay_C',
-  '/Game/FactoryGame/SatisfyingComputers/Components/PowerController/PowerController.PowerController_C',
-  '/Game/FactoryGame/SatisfyingComputers/Components/PowerController/PowerCotrollerPole.PowerCotrollerPole_C',
-  '/Game/FactoryGame/SatisfyingComputers/ComputerNetwork/Computer/Computer.Computer_C',
-  '/Game/FactoryGame/SatisfyingComputers/ComputerNetwork/NetworkCable/NetworkCable.NetworkCable_C',
-  '/Game/FactoryGame/SatisfyingComputers/ComputerNetwork/NetworkPole/NetworkPole.NetworkPole_C',
-  '/Game/FactoryGame/SKEM/buildable/Processing/Build_ProcessingFacility.Build_ProcessingFacility_C',
-  '/Game/FactoryGame/SolarPanels/Buildable/Factory/Batteries/BatteryController.BatteryController_C',
-  '/Game/FactoryGame/SolarPanels/Buildable/Factory/Batteries/Build_BatteryStorage.Build_BatteryStorage_C',
-  '/Game/FactoryGame/SolarPanels/Buildable/Factory/SolarPanels/Build_SolarPanelMk1.Build_SolarPanelMk1_C',
-  '/Game/FactoryGame/Teleporter/Buildable/EnergyConverter/Build_EnergyConverter.Build_EnergyConverter_C',
-  '/Game/FactoryGame/Teleporter/Buildable/Teleporter/Build_Teleporter.Build_Teleporter_C',
-  '/Game/FactoryGame/Teleporter/Items/TeleportCore/Desc_TeleportCore.Desc_TeleportCore_C'
-];
-
 export function isModClassName(className: string) {
-  //return modClassNames.includes(className);
   const isMod = modClassNamePrefixes.some(prefix =>
     className.startsWith(prefix)
   );
