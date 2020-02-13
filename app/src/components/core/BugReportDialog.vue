@@ -139,7 +139,6 @@ export default class BugReportDialog extends Vue {
     this.formDisabled = true;
 
     let zip = new JSZip();
-    debugger;
     if (this.includeSave) {
       if (window.data instanceof File) {
         // The file has not been read completely, we need to reread it ourselves (browser)
@@ -190,7 +189,6 @@ uuid: ${this.uuid}
         }*/
       )
       .then((content: Uint8Array) => {
-        debugger;
         window
           .fetch(
             'https://owl.yt/ficsit-felix/?uuid=' +
