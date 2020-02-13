@@ -120,9 +120,9 @@ export default class MeshManager {
    */
   buildInstancedMeshGroups() {
     for (const key in this.instancedMeshGroups) {
-      this.scene.add(this.instancedMeshGroups[
-        key
-      ].buildInstancedMesh() as Object3D);
+      this.scene.add(
+        this.instancedMeshGroups[key].buildInstancedMesh() as Object3D
+      );
     }
   }
 

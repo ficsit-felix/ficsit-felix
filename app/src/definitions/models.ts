@@ -656,7 +656,6 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
 
-
   '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C': {
     model: 'Build_PowerLine_C.glb',
     color: 0xaaaaaa,
