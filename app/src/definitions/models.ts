@@ -98,6 +98,51 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: false
   },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_Frame_01.Build_Foundation_Frame_01_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_FoundationGlass_01.Build_FoundationGlass_01_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_PillarBase.Build_PillarBase_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_PillarMiddle.Build_PillarMiddle_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_PillarTop.Build_PillarTop_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_QuarterPipe_02.Build_QuarterPipe_02_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_QuarterPipe.Build_QuarterPipe_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_QuarterPipeCorner_01.Build_QuarterPipeCorner_01_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/Build_QuarterPipeCorner_02.Build_QuarterPipeCorner_02_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x1_01.Build_Ramp_8x1_01_C': {
     model: 'Ramp_8x1_01.glb',
     color: rampColor,
@@ -111,6 +156,46 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_01.Build_Ramp_8x4_01_C': {
     model: 'Build_Ramp_8x4_01_C.glb', // z-200
     color: rampColor,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x4_Inverted_01.Build_Ramp_8x4_Inverted_01_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x8x8.Build_Ramp_8x8x8_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_Diagonal_8x1_01.Build_Ramp_Diagonal_8x1_01_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_Diagonal_8x1_02.Build_Ramp_Diagonal_8x1_02_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_Diagonal_8x2_01.Build_Ramp_Diagonal_8x2_01_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_Diagonal_8x2_02.Build_Ramp_Diagonal_8x2_02_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_Diagonal_8x4_01.Build_Ramp_Diagonal_8x4_01_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_Diagonal_8x4_02.Build_Ramp_Diagonal_8x4_02_C': {
+    model: '',
+    color: 0xff00ff,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Building/Stair/Build_Stair_1b.Build_Stair_1b_C': {
@@ -256,7 +341,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: wallWoodColor,
     paintable: true
   },
-
+  '/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Window_8x4_01.Build_Wall_Window_8x4_01_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Building/Wall/Build_Wall_Window_8x4_02.Build_Wall_Window_8x4_02_C': {
     model: '',
     color: 0xff00ff,
@@ -470,6 +559,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: true
   },
+  '/Game/FactoryGame/Buildable/Factory/ConveyorPoleWall/Build_ConveyorPoleWall.Build_ConveyorPoleWall_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Factory/Elevator/Build_Elevator.Build_Elevator_C': {
     // TODO what is this?
     model: '',
@@ -623,7 +717,8 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/PipeHyperStart/Build_PipeHyperStart.Build_PipeHyperStart_C': {
     model: '',
     color: 0xff00ff,
-    paintable: false
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/PipeHyperSupport/Build_PipeHyperSupport.Build_PipeHyperSupport_C': {
     model: '',
@@ -650,10 +745,21 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: false
   },
-  '/Game/FactoryGame/Buildable/Factory/PipePump/Build_PipelinePump.Build_PipelinePump_C': {
+  '/Game/FactoryGame/Buildable/Factory/PipelineSupportWall/Build_PipelineSupportWall.Build_PipelineSupportWall_C': {
     model: '',
     color: 0xff00ff,
     paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipelineSupportWallHole/Build_PipelineSupportWallHole.Build_PipelineSupportWallHole_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipePump/Build_PipelinePump.Build_PipelinePump_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
 
   '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C': {
@@ -679,10 +785,41 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true,
     powerLineOffset: { x: 0, y: 0, z: 850 }
   },
+  '/Game/FactoryGame/Buildable/Factory/PowerPoleWall/Build_PowerPoleWall_Mk2.Build_PowerPoleWall_Mk2_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
+  '/Game/FactoryGame/Buildable/Factory/PowerPoleWall/Build_PowerPoleWall_Mk3.Build_PowerPoleWall_Mk3_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWall/Build_PowerPoleWall.Build_PowerPoleWall_C': {
     model: '',
     color: 0xff00ff,
-    paintable: false
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
+  '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble_Mk2.Build_PowerPoleWallDouble_Mk2_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
+  '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble_Mk3.Build_PowerPoleWallDouble_Mk3_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
+  '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble.Build_PowerPoleWallDouble_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C': {
     model: '',
@@ -703,7 +840,8 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/ResourceSink/Build_ResourceSink.Build_ResourceSink_C': {
     model: '',
     color: 0xff00ff,
-    paintable: false
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/ResourceSinkShop/Build_ResourceSinkShop.Build_ResourceSinkShop_C': {
     model: '',
@@ -771,6 +909,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x108873,
     paintable: true
   },
+  '/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainDockingStationLiquid.Build_TrainDockingStationLiquid_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainPlatformEmpty.Build_TrainPlatformEmpty_C': {
     model: 'TrainPlatformEmpty.glb',
     color: 0x108873,
@@ -806,7 +949,8 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/WaterPump/Build_WaterPump.Build_WaterPump_C': {
     model: '',
     color: 0xff00ff,
-    paintable: false
+    paintable: false,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C': {
     model: 'Workbench.glb',
@@ -831,9 +975,19 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0x4157bd,
     paintable: false
   },
+  '/Game/FactoryGame/Buildable/Vehicle/Cyberwagon/Testa_BP_WB.Testa_BP_WB_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Vehicle/Explorer/BP_Explorer.BP_Explorer_C': {
     model: 'Explorer.glb',
     color: 0x7f28b0,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Vehicle/Golfcart/BP_Golfcart.BP_Golfcart_C': {
+    model: '',
+    color: 0xff00ff,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Vehicle/Tractor/BP_Tractor.BP_Tractor_C': {
@@ -1007,6 +1161,16 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     model: '',
     color: 0x0c1289,
     paintable: true
+  },
+  '/Game/FactoryGame/Equipment/Cup/Equip_Cup.Equip_Cup_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
+  '/Game/FactoryGame/Equipment/Decoration/BP_Decoration.BP_Decoration_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
   },
   '/Game/FactoryGame/Equipment/GasMask/Equip_GasMask.Equip_GasMask_C': {
     model: '',
