@@ -8,7 +8,7 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'off' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'prettier/prettier': ['error', { singleQuote: true }]
+    'prettier/prettier': [process.env.NODE_ENV === 'production' ? 'error' : 'warn', { singleQuote: true }]
   },
 
   parserOptions: {
