@@ -172,3 +172,14 @@ export function isPowerLine(actor: Actor) {
     '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C'
   );
 }
+
+export function isPipe(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Factory/Pipeline/Build_Pipeline.Build_Pipeline_C'
+  );
+}
+
+export function isSpline(actor: Actor) {
+  return isConveyorBelt(actor) || isRailroadTrack(actor) || isPipe(actor);
+}

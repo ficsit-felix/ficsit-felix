@@ -5,7 +5,8 @@ import {
   isConveyorBelt,
   isPowerLine,
   findComponentByName,
-  isRailroadTrack
+  isRailroadTrack,
+  isPipe
 } from '@/helpers/entityHelper';
 import { modelHelper } from '@/helpers/modelHelper';
 import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
@@ -33,6 +34,13 @@ import { reportMessage, reportException } from '@/ts/errorReporting';
 interface GeometryResult {
   geometry: BufferGeometry;
   instance: string | undefined;
+}
+
+// Different geometries for splines
+enum SplineType {
+  ConveyorBelt,
+  RailroadTrack,
+  Pipe
 }
 
 /**
@@ -73,14 +81,14 @@ export default class GeometryFactory {
       // special cases for geometry
       if (isConveyorBelt(actor)) {
         resolve({
-          geometry: this.createConveyorBeltGeometry(actor, true),
+          geometry: this.createSplineGeometry(actor, SplineType.ConveyorBelt),
           instance: undefined
         });
         return;
       }
       if (isRailroadTrack(actor)) {
         resolve({
-          geometry: this.createConveyorBeltGeometry(actor, false),
+          geometry: this.createSplineGeometry(actor, SplineType.RailroadTrack),
           instance: undefined
         });
         return;
@@ -95,6 +103,13 @@ export default class GeometryFactory {
           //reject('Could not create power line geometry');
         }
 
+        return;
+      }
+      if (isPipe(actor)) {
+        resolve({
+          geometry: this.createSplineGeometry(actor, SplineType.Pipe),
+          instance: undefined
+        });
         return;
       }
 
@@ -164,9 +179,9 @@ export default class GeometryFactory {
   /**
    *
    * @param actor
-   * @param conveyorBelt false => railroadTrack
+   * @param splineType
    */
-  createConveyorBeltGeometry(actor: Actor, conveyorBelt: boolean) {
+  createSplineGeometry(actor: Actor, splineType: SplineType): BufferGeometry {
     const splineData = getProperty(actor, 'mSplineData') as ArrayProperty;
     //actor.entity.properties[0]; // TODO actually search for mSplineData as it might not be the first
 
@@ -222,27 +237,37 @@ export default class GeometryFactory {
     }
 
     var shape = new Shape();
-    if (conveyorBelt) {
-      // Conveyor Belt rectangle
-      var length = 38,
-        width = 180;
 
-      shape.moveTo(-length / 2, -width / 2);
-      shape.lineTo(-length / 2, width / 2);
-      shape.lineTo(length / 2, width / 2);
-      shape.lineTo(length / 2, -width / 2);
-      shape.lineTo(-length / 2, -width / 2);
-    } else {
-      // Railroad Track trapezoid
-      const bottomWidth = 520,
-        topWidth = 150,
-        height = 130;
+    switch (splineType) {
+      case SplineType.Pipe:
+        return new TubeBufferGeometry(extrudePath, undefined, 75); // TODO more parameters
 
-      shape.moveTo(0, -bottomWidth / 2);
-      shape.lineTo(0, bottomWidth / 2);
-      shape.lineTo(-height, topWidth / 2);
-      shape.lineTo(-height, -topWidth / 2);
-      shape.lineTo(0, -bottomWidth / 2);
+      // The other two types use the ExtrudeBufferGeometry with different shapes
+      case SplineType.ConveyorBelt:
+        // Conveyor Belt rectangle
+        var length = 38,
+          width = 180;
+
+        shape.moveTo(-length / 2, -width / 2);
+        shape.lineTo(-length / 2, width / 2);
+        shape.lineTo(length / 2, width / 2);
+        shape.lineTo(length / 2, -width / 2);
+        shape.lineTo(-length / 2, -width / 2);
+        break;
+      case SplineType.RailroadTrack:
+        // Railroad Track trapezoid
+        var bottomWidth = 520,
+          topWidth = 150,
+          height = 130;
+
+        shape.moveTo(0, -bottomWidth / 2);
+        shape.lineTo(0, bottomWidth / 2);
+        shape.lineTo(-height, topWidth / 2);
+        shape.lineTo(-height, -topWidth / 2);
+        shape.lineTo(0, -bottomWidth / 2);
+        break;
+      default:
+        throw new Error(`Unknown spline type ${splineType}`);
     }
 
     var extrudeSettings = {

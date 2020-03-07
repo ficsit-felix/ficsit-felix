@@ -1,6 +1,6 @@
 import { Mesh, Vector3, Quaternion, Euler, Matrix4 } from 'three';
 import { Actor } from 'satisfactory-json';
-import { isConveyorBelt, isPowerLine, isRailroadTrack } from './entityHelper';
+import { isPowerLine, isSpline } from './entityHelper';
 
 /*
  * Unreal coordinate system:
@@ -52,7 +52,7 @@ export function updateActorMeshTransform(mesh: Mesh, actor: Actor) {
     actor.transform.rotation[3]
   );
 
-  if (isConveyorBelt(actor) || isRailroadTrack(actor)) {
+  if (isSpline(actor)) {
     mesh.setRotationFromQuaternion(quat);
   } else if (isPowerLine(actor)) {
     mesh.setRotationFromQuaternion(new Quaternion()); // identity
@@ -75,7 +75,7 @@ export function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
   // TODO directly apply this rotation on the quaternion so we don't need to reverse it afterwards
   let quat;
 
-  if (isConveyorBelt(actor) || isRailroadTrack(actor)) {
+  if (isSpline(actor)) {
     // TODO conveyor belt coordinates are given without rotation?
     quat = mesh.quaternion;
   } else if (isPowerLine(actor)) {

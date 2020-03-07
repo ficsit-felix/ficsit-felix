@@ -64,7 +64,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   '/Game/FactoryGame/-Shared/Crate/BP_Crate.BP_Crate_C': {
-    model: 'Build_StoragePlayer_C.glb',
+    model: 'StoragePlayer.glb',
     color: 0x0c2a89,
     paintable: false
   },
@@ -414,17 +414,17 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   '/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C': {
-    model: 'Build_Wall_1a_C.glb', // TODO
+    model: 'Wall_8x4_01.glb', // TODO
     color: 0xff00ff,
     paintable: true
   },
   '/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1c.Build_Wall_1c_C': {
-    model: 'Build_Wall_1a_C.glb', // TODO
+    model: 'Wall_8x4_01.glb', // TODO
     color: 0xff00ff,
     paintable: true
   },
   '/Game/FactoryGame/Buildable/Building/Wall/Wall_Set02/Build_Wall_2a.Build_Wall_2a_C': {
-    model: 'Build_Wall_1a_C.glb', // TODO
+    model: 'Wall_8x4_01.glb', // TODO
     color: 0xff00ff,
     paintable: true
   },
