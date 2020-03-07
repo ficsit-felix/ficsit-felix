@@ -24,7 +24,7 @@
   "dependencies": {
     "@bitowl/three-instanced-mesh": "^0.97.0",
     "@caohenghu/vue-colorpicker": "^1.2.2",
-    "@sentry/browser": "5.12.1",
+    "@sentry/browser": "5.13.2",
     "@sentry/integrations": "^5.7.1",
     "core-js": "^3.6.4",
     "custom-electron-titlebar": "^3.1.0",
@@ -35,7 +35,7 @@
     "jszip": "^3.2.1",
     "moment": "^2.24.0",
     "satisfactory-blueprint": "^0.0.3",
-    "satisfactory-json": "0.0.31",
+    "satisfactory-json": "0.0.32",
     "stats.js": "^0.17.0",
     "streamsaver": "^2.0.3",
     "three": "0.108.0",
@@ -73,7 +73,7 @@
     "sass": "^1.23.1",
     "sass-loader": "^8.0.2",
     "ts-loader": "^6.2.1",
-    "typescript": "~3.7.5",
+    "typescript": "~3.8.3",
     "vue-cli-plugin-electron-builder": "~1.4.5",
     "vue-template-compiler": "^2.5.21",
     "worker-loader": "^2.0.0"
