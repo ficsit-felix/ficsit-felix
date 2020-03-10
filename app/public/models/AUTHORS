@@ -61,7 +61,6 @@ Cale Flanagan
 - Cyberwagon.glb
 - Fence.glb
 - Pipe_Junction_Cross.glb
-- Pipe_Temp.glb
 - StorageContainerMk1.glb
 - StoragePlayer.glb
 - WallSteel_Conveyor_8x4_01.glb
@@ -85,6 +84,33 @@ Cale Flanagan
 - Wall_Window_8x4_02.glb
 - Wall_Window_8x4_03.glb
 - Wall_Window_8x4_04.glb
+- Foundation_8x1_Corner.glb
+- Foundation_8x2_Corner.glb
+- Foundation_8x4_Corner.glb
+- Foundation_Frame.glb
+- Foundation_Glass.glb
+- Golfcart.glb
+- Pillar_Base.glb
+- Pillar_Middle.glb
+- Pillar_Top.glb
+- QuarterPipeCorner_01.glb
+- QuarterPipeCorner_02.glb
+- QuarterPipeCorner_03.glb
+- QuarterPipeCorner_04.glb
+- QuarterPipe_01.glb
+- QuarterPipe_02.glb
+- RampDouble_8x1.glb
+- RampDouble_8x2.glb
+- RampDouble_8x4.glb
+- RampInv_8x1.glb
+- RampInv_8x1_Corner.glb
+- RampInv_8x2.glb
+- RampInv_8x2_Corner.glb
+- RampInv_8x4.glb
+- RampInv_8x4_Corner.glb
+- Ramp_8x1_Corner.glb
+- Ramp_8x2_Corner.glb
+- Ramp_8x4_Corner.glb
 
 
 CVex2150J
@@ -97,7 +123,6 @@ bitowl
 - BP_ResourceNode_C.glb
 - BP_Shroom_01_C.glb
 - BP_VehicleTargetPoint_C
-- Build_ConveyorBelt.glb
 - Build_ConveyorPoleStackable_C.glb
 - Build_ConveyorPole_C.glb
 - Build_Foundation_8x2_01_C.glb
