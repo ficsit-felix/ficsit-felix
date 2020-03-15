@@ -64,7 +64,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   },
 
   '/Game/FactoryGame/-Shared/Crate/BP_Crate.BP_Crate_C': {
-    model: 'StoragePlayer.glb',
+    model: 'Build_StoragePlayer_C.glb',
     color: 0x0c2a89,
     paintable: false
   },
@@ -605,7 +605,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/ConveyorPoleWall/Build_ConveyorPoleWall.Build_ConveyorPoleWall_C': {
-    model: '',
+    model: 'ConveyorPoleWall.glb',
     color: 0xff00ff,
     paintable: false
   },
@@ -675,12 +675,12 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/HyperTubeWallSupport/Build_HyperTubeWallHole.Build_HyperTubeWallHole_C': {
-    model: '',
+    model: 'HyperPipeSupport_WallHole.glb',
     color: 0xff00ff,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/HyperTubeWallSupport/Build_HyperTubeWallSupport.Build_HyperTubeWallSupport_C': {
-    model: '',
+    model: 'HyperPipeSupport_Wall.glb',
     color: 0xff00ff,
     paintable: false
   },
@@ -765,18 +765,18 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 0, y: -800, z: 1825 }
   },
   '/Game/FactoryGame/Buildable/Factory/PipeHyper/Build_PipeHyper.Build_PipeHyper_C': {
-    model: '',
-    color: 0xff00ff,
+    model: '', // spline
+    color: 0xf7db95,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/PipeHyperStart/Build_PipeHyperStart.Build_PipeHyperStart_C': {
-    model: '',
+    model: 'HyperPipeStart.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: -160, y: 0, z: 200 } // no powerpole
   },
   '/Game/FactoryGame/Buildable/Factory/PipeHyperSupport/Build_PipeHyperSupport.Build_PipeHyperSupport_C': {
-    model: '',
+    model: 'HyperPipeSupport.glb',
     color: 0xff00ff,
     paintable: false
   },
@@ -790,31 +790,36 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff9900,
     paintable: false
   },
+  '/Game/FactoryGame/Buildable/Factory/PipelineSupport/Build_HyperPoleStackable.Build_HyperPoleStackable_C': {
+    model: 'HyperPipeSupport_Stackable.glb',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Factory/PipelineSupport/Build_PipelineSupport.Build_PipelineSupport_C': {
-    model: '',
+    model: 'PipelineSupport.glb',
     color: 0xff00ff,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/PipelineSupport/Build_PipeSupportStackable.Build_PipeSupportStackable_C': {
-    model: '',
+    model: 'PipelineSupport_Stackable.glb',
     color: 0xff00ff,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/PipelineSupportWall/Build_PipelineSupportWall.Build_PipelineSupportWall_C': {
-    model: '',
+    model: 'PipelineSupport_Wall.glb',
     color: 0xff00ff,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/PipelineSupportWallHole/Build_PipelineSupportWallHole.Build_PipelineSupportWallHole_C': {
-    model: '',
+    model: 'PipelineSupport_WallHole.glb',
     color: 0xff00ff,
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/PipePump/Build_PipelinePump.Build_PipelinePump_C': {
-    model: '',
+    model: 'PipePump.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: -71, y: -220, z: -27 }
   },
 
   '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C': {
@@ -826,55 +831,55 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     model: 'PowerPoleMk1.glb',
     color: 0x6042d5,
     paintable: true,
-    powerLineOffset: { x: 0, y: 0, z: 615 }
+    powerLineOffset: { x: 0, y: 0, z: 610 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleMk2/Build_PowerPoleMk2.Build_PowerPoleMk2_C': {
     model: 'PowerPoleMk2.glb',
     color: 0x6042d5,
     paintable: true,
-    powerLineOffset: { x: 0, y: 0, z: 715 }
+    powerLineOffset: { x: 0, y: 0, z: 710 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleMk3/Build_PowerPoleMk3.Build_PowerPoleMk3_C': {
     model: 'PowerPoleMk3.glb',
     color: 0x6042d5,
     paintable: true,
-    powerLineOffset: { x: 0, y: 0, z: 850 }
+    powerLineOffset: { x: 0, y: 0, z: 840 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWall/Build_PowerPoleWall_Mk2.Build_PowerPoleWall_Mk2_C': {
-    model: '',
+    model: 'PowerPoleWall.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 80, y: 0, z: 0 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWall/Build_PowerPoleWall_Mk3.Build_PowerPoleWall_Mk3_C': {
-    model: '',
+    model: 'PowerPoleWall.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 80, y: 0, z: 0 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWall/Build_PowerPoleWall.Build_PowerPoleWall_C': {
-    model: '',
+    model: 'PowerPoleWall.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 80, y: 0, z: 0 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble_Mk2.Build_PowerPoleWallDouble_Mk2_C': {
-    model: '',
+    model: 'PowerPoleWallDouble.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 0, y: 0, z: 0 } // in middle
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble_Mk3.Build_PowerPoleWallDouble_Mk3_C': {
-    model: '',
+    model: 'PowerPoleWallDouble.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 0, y: 0, z: 0 } // in middle
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble.Build_PowerPoleWallDouble_C': {
-    model: '',
+    model: 'PowerPoleWallDouble.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 0, y: 0, z: 0 } // in middle, would need 2nd offset, wire between conn otherwise not visible
   },
   '/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C': {
     model: '',
@@ -899,7 +904,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/ResourceSinkShop/Build_ResourceSinkShop.Build_ResourceSinkShop_C': {
-    model: '',
+    model: 'ResourceSinkShop.glb',
     color: 0xff00ff,
     paintable: false
   },
@@ -965,7 +970,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/Train/Station/Build_TrainDockingStationLiquid.Build_TrainDockingStationLiquid_C': {
-    model: '',
+    model: 'TrainDockingStationLiquid.glb',
     color: 0xff00ff,
     paintable: false
   },
@@ -1005,7 +1010,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     model: '',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 415, y: -320, z: 1100 } // powerpole missing
   },
   '/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C': {
     model: 'Workbench.glb',
@@ -1405,6 +1410,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
 
+  '/Game/FactoryGame/Unlocks/BP_UnlockSubsystem.BP_UnlockSubsystem_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: false
+  },
   '/Game/FactoryGame/World/Benefit/BerryBush/BP_BerryBush.BP_BerryBush_C': {
     model: 'BP_BerryBush_C.glb',
     color: 0x2dba20,
@@ -1538,7 +1548,6 @@ export let modClassNamePrefixes = [
   '/Game/FactoryGame/sweetSpeedBoosters',
   '/Game/FactoryGame/sweetTransportal/',
   '/Game/FactoryGame/Teleporter/',
-  '/Game/FactoryGame/Unlocks/',
   '/Game/FactoryGame/UtilityMod/'
 ];
 

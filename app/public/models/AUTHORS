@@ -111,7 +111,21 @@ Cale Flanagan
 - Ramp_8x1_Corner.glb
 - Ramp_8x2_Corner.glb
 - Ramp_8x4_Corner.glb
-
+- ConveyorPoleWall.glb
+- HyperPipeStart.glb
+- HyperPipeSupport.glb
+- HyperPipeSupport_Stackable.glb
+- HyperPipeSupport_Wall.glb
+- HyperPipeSupport_WallHole.glb
+- PipePump.glb
+- PipelineSupport.glb
+- PipelineSupport_Stackable.glb
+- PipelineSupport_Wall.glb
+- PipelineSupport_WallHole.glb
+- PowerPoleWall.glb
+- PowerPoleWallDouble.glb
+- ResourceSinkShop.glb
+- TrainDockingStationLiquid.glb
 
 CVex2150J
 - Build_Ramp_8x2_01_C.glb
