@@ -185,3 +185,14 @@ export function isPipe(actor: Actor) {
 export function isSpline(actor: Actor) {
   return isConveyorBelt(actor) || isRailroadTrack(actor) || isPipe(actor);
 }
+
+export function isPowerPoleWallDouble(actor: Actor) {
+  return (
+    actor.className ===
+      '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble_Mk2.Build_PowerPoleWallDouble_Mk2_C' ||
+    actor.className ===
+      '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble_Mk3.Build_PowerPoleWallDouble_Mk3_C' ||
+    actor.className ===
+      '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble.Build_PowerPoleWallDouble_C'
+  );
+}

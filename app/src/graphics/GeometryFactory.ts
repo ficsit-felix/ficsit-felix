@@ -6,7 +6,8 @@ import {
   isPowerLine,
   findComponentByName,
   isRailroadTrack,
-  isPipe
+  isPipe,
+  isPowerPoleWallDouble
 } from '@/helpers/entityHelper';
 import { modelHelper } from '@/helpers/modelHelper';
 import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
@@ -336,6 +337,19 @@ export default class GeometryFactory {
       modelConfig[source.className].powerLineOffset !== undefined
     ) {
       sourceOffset = modelConfig[source.className].powerLineOffset!;
+
+      // Invert offset for second connection to PowerPoleWallDouble
+      if (
+        isPowerPoleWallDouble(source) &&
+        sourceConnection.pathName.endsWith('2')
+      ) {
+        sourceOffset = {
+          x: -sourceOffset.x,
+          y: sourceOffset.y,
+          z: sourceOffset.z
+        };
+      }
+
       const transformedSourceOffset = new Vector3(
         sourceOffset.y,
         sourceOffset.x,
@@ -363,6 +377,18 @@ export default class GeometryFactory {
       modelConfig[target.className].powerLineOffset !== undefined
     ) {
       targetOffset = modelConfig[target.className].powerLineOffset!;
+      // Invert offset for second connection to PowerPoleWallDouble
+      if (
+        isPowerPoleWallDouble(target) &&
+        targetConnection.pathName.endsWith('2')
+      ) {
+        targetOffset = {
+          x: -targetOffset.x,
+          y: targetOffset.y,
+          z: targetOffset.z
+        };
+      }
+
       const transformedTargetOffset = new Vector3(
         targetOffset.y,
         targetOffset.x,

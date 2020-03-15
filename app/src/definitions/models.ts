@@ -867,19 +867,19 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     model: 'PowerPoleWallDouble.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // in middle
+    powerLineOffset: { x: 80, y: 0, z: 0 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble_Mk3.Build_PowerPoleWallDouble_Mk3_C': {
     model: 'PowerPoleWallDouble.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // in middle
+    powerLineOffset: { x: 80, y: 0, z: 0 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble.Build_PowerPoleWallDouble_C': {
     model: 'PowerPoleWallDouble.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // in middle, would need 2nd offset, wire between conn otherwise not visible
+    powerLineOffset: { x: 80, y: 0, z: 0 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C': {
     model: '',
