@@ -196,3 +196,11 @@ export function isPowerPoleWallDouble(actor: Actor) {
       '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble.Build_PowerPoleWallDouble_C'
   );
 }
+export function isPipeSupport(actor: Actor) {
+  return (
+    actor.className ===
+      '/Game/FactoryGame/Buildable/Factory/PipeHyperSupport/Build_PipeHyperSupport.Build_PipeHyperSupport_C' ||
+    actor.className ===
+      '/Game/FactoryGame/Buildable/Factory/PipelineSupport/Build_PipelineSupport.Build_PipelineSupport_C'
+  );
+}

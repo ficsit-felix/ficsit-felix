@@ -1,12 +1,17 @@
-import { BoxBufferGeometry, Mesh, Material } from 'three';
+import { BoxBufferGeometry, Mesh, Material, Vector3, Math } from 'three';
 
-import { isConveyorLift } from '@/helpers/entityHelper';
+import {
+  isConveyorLift,
+  isPipeSupport,
+  getProperty
+} from '@/helpers/entityHelper';
 
 import { modelHelper } from '@/helpers/modelHelper';
 import GeometryFactory from './GeometryFactory';
 import ColorFactory from './ColorFactory';
 import { Actor, StructProperty } from 'satisfactory-json';
 import { applyRotation, applyTranslation } from '@/helpers/meshHelper';
+import { modelConfig } from '@/definitions/models';
 
 export interface MeshResult {
   mesh: Mesh;
@@ -29,6 +34,9 @@ export default class MeshFactoy {
     // create multiple meshes for conveyor lift
     if (isConveyorLift(actor)) {
       return this.addConveyorLift(actor, i);
+    }
+    if (isPipeSupport(actor)) {
+      return this.addPipeSupport(actor, i);
     }
 
     return new Promise((resolve, reject) => {
@@ -119,10 +127,7 @@ export default class MeshFactoy {
                   ? topPartTranslationZ
                   : -topPartTranslationZ
               );
-              var middleMesh = new Mesh(
-                middleGeometry,
-                this.materialFactory.createMaterial(actor)
-              );
+              var middleMesh = new Mesh(middleGeometry, material);
               middleMesh.position.x = -60;
               middleMesh.position.z = topPartTranslationZ / 2;
               mesh.add(middleMesh);
@@ -134,6 +139,51 @@ export default class MeshFactoy {
                 instance: undefined
               });
             });
+        });
+    });
+  }
+
+  addPipeSupport(actor: Actor, index: number): Promise<MeshResult> {
+    return new Promise((resolve, reject) => {
+      modelHelper
+        .loadModel('/models/' + modelConfig[actor.className].model)
+        .then(ringGeometry => {
+          const material = this.materialFactory.createMaterial(actor);
+
+          // read length from mLength property and substract 100 to get length of support beam only (75 for mLength 175)
+          const length =
+            parseInt((getProperty(actor, 'mLength')?.value ?? '0') + '') -
+              100 ?? 0;
+
+          const verticalAngle =
+            parseInt(
+              (getProperty(actor, 'mVerticalAngle')?.value ?? '0') + ''
+            ) ?? 0;
+
+          var mesh = new Mesh(undefined, material);
+
+          // move the ring geometry to the correct position and angle it correctly
+          var ringMesh = new Mesh(ringGeometry);
+
+          ringMesh.position.z = length;
+          ringMesh.quaternion.setFromAxisAngle(
+            new Vector3(0, -1, 0),
+            Math.DEG2RAD * verticalAngle
+          );
+          mesh.add(ringMesh);
+
+          // create support beam and position it correctly
+          const supportGeometry = new BoxBufferGeometry(24, 24, length);
+          const supportMesh = new Mesh(supportGeometry);
+          supportMesh.position.z = length / 2;
+          mesh.add(supportMesh);
+
+          mesh.userData = { id: index, pathName: actor.pathName };
+
+          resolve({
+            mesh,
+            instance: undefined
+          });
         });
     });
   }
