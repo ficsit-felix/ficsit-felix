@@ -726,13 +726,13 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     model: 'ManufacturerMk1.glb',
     color: 0x4e2596,
     paintable: false,
-    powerLineOffset: { x: 905, y: -700, z: 770 }
+    powerLineOffset: { x: 835, y: 495, z: 1010 }
   },
   '/Game/FactoryGame/Buildable/Factory/ManufacturerMk2/Build_ManufacturerMk2.Build_ManufacturerMk2_C': {
     model: 'ManufacturerMk1.glb',
     color: 0x6e309c,
     paintable: false,
-    powerLineOffset: { x: 905, y: -700, z: 770 }
+    powerLineOffset: { x: 835, y: 495, z: 1010 }
   },
   '/Game/FactoryGame/Buildable/Factory/MinerMK1/Build_MinerMk1.Build_MinerMk1_C': {
     model: 'MinerMk1.glb',
@@ -1010,7 +1010,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     model: '',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 415, y: -320, z: 1100 } // powerpole missing
+    powerLineOffset: { x: -415, y: 320, z: 1100 } // powerpole missing
   },
   '/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C': {
     model: 'Workbench.glb',
@@ -1521,6 +1521,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
 };
 
 export let modClassNamePrefixes = [
+  '/Game/AreaActions/',
   '/Game/FactoryGame/AreaActions/',
   '/Game/FactoryGame/CrazyMod/',
   '/Game/FactoryGame/FarmingMod/',
@@ -1548,7 +1549,9 @@ export let modClassNamePrefixes = [
   '/Game/FactoryGame/sweetSpeedBoosters',
   '/Game/FactoryGame/sweetTransportal/',
   '/Game/FactoryGame/Teleporter/',
-  '/Game/FactoryGame/UtilityMod/'
+  '/Game/FactoryGame/Unlocks/',
+  '/Game/FactoryGame/UtilityMod/',
+  '/Game/UtilityMod/'
 ];
 
 export function isModClassName(className: string) {
