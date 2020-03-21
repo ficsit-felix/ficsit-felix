@@ -4,7 +4,7 @@
 Create a draft release on https://github.com/ficsit-felix/satisfactory-json/releases/new
 Tag version: `v0.0.0`
 Release title: `0.0.0`
-Change Target to: `master`
+Target: `master`
 Save as draft
 Add changes to draft message
 Increase version in package.json to `0.0.0`

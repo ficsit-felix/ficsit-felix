@@ -147,7 +147,7 @@
 
 <script lang="ts">
 import { Watch, Component, Vue, Prop } from 'vue-property-decorator';
-import { TimelineLite, Power2, Power3 } from 'gsap';
+import { gsap, Power2, Power3 } from 'gsap';
 
 @Component({
   //props: ['height', 'black', 'animating']
@@ -156,8 +156,7 @@ export default class Logo extends Vue {
   @Prop(Number) readonly height: number | undefined;
   @Prop(String) readonly black: string | undefined;
   @Prop(Boolean) readonly animating: boolean | undefined;
-
-  private tl: TimelineLite | null = new TimelineLite({
+  private tl: gsap.core.Timeline | null = gsap.timeline({
     onComplete: () => {
       if (this.animating && this.tl !== null) {
         this.tl.restart();

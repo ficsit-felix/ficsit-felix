@@ -238,8 +238,8 @@ export default class DesktopMenu extends Vue {
 
   openJsonFilebrowser() {
     // TODO deduplicate with openJsonFileSelector in DesktopApp
-    remote.dialog.showOpenDialog(
-      {
+    remote.dialog
+      .showOpenDialog({
         title: this.$t('desktop.openJsonTitle').toString(),
         defaultPath: getSaveGamesFolderPath(),
         filters: [
@@ -248,14 +248,13 @@ export default class DesktopMenu extends Vue {
             extensions: ['json']
           }
         ]
-      },
-      (filePaths: any) => {
-        if (filePaths.length === 1) {
+      })
+      .then(result => {
+        if (result.filePaths.length === 1) {
           this.$router.push('/');
-          openFileAndMoveToEditor(this, filePaths[0], true);
+          openFileAndMoveToEditor(this, result.filePaths[0], true);
         }
-      }
-    );
+      });
   }
 
   /**
