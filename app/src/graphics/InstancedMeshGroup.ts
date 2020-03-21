@@ -11,7 +11,7 @@ import {
 // patch the THREE instance
 import * as THREE from 'three';
 import index from '@bitowl/three-instanced-mesh';
-const InstancedMesh = index(THREE);
+const ThreeInstancedMesh = index(THREE);
 
 var farAway = new Vector3(1000000000, 0, 0);
 
@@ -31,7 +31,7 @@ export interface InstancedMeshElement {
  */
 export default class InstancedMeshGroup {
   private material: Material;
-  public instancedMesh?: typeof InstancedMesh;
+  public instancedMesh?: typeof ThreeInstancedMesh;
   private geometry: BufferGeometry;
   public nodes: InstancedMeshElement[] = [];
 
@@ -46,8 +46,8 @@ export default class InstancedMeshGroup {
     return index;
   }
 
-  public buildInstancedMesh(): typeof InstancedMesh {
-    this.instancedMesh = new InstancedMesh(
+  public buildInstancedMesh(): typeof ThreeInstancedMesh {
+    this.instancedMesh = new ThreeInstancedMesh(
       this.geometry,
       this.material,
       this.nodes.length, // instance count

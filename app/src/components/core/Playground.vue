@@ -67,7 +67,7 @@ import Renderer from './scene/Renderer';
 import Camera from './scene/Camera';
 import { BoxBufferGeometry, LineCurve3, Mesh, error } from 'three';
 import { setTimeout } from 'timers';
-import { GLTFLoader } from '@/js/GLTFLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { modelHelper } from '@/helpers/modelHelper';
 import { modelConfig } from '@/definitions/models';
 import * as Sentry from '@sentry/browser';

@@ -1,4 +1,4 @@
-import { GLTFLoader } from '@/js/GLTFLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
 // singleton class that helps with loading all the models
