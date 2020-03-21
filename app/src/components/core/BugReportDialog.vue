@@ -166,12 +166,12 @@ export default class BugReportDialog extends Vue {
 
       zip.file('screenshot.jpg', screenshot, { binary: true });
     }
-
     const meta = `message: ${this.message}
 userContact: ${this.userContact}
 userMessage: ${this.userMessage}
 filename: ${this.filename}
 uuid: ${this.uuid}
+version: ${process.env.PACKAGE_VERSION}
 `;
     zip.file('meta.txt', meta);
 

@@ -1,20 +1,13 @@
 import {
   Mesh,
   Scene,
-  Color,
   Material,
-  UniformsLib,
-  ShaderChunk,
   BufferGeometry,
   MeshMatcapMaterial,
   Object3D
 } from 'three';
 import GeometryFactory from './GeometryFactory';
-import {
-  findActorByName,
-  isConveyorBelt,
-  isRailroadTrack
-} from '@/helpers/entityHelper';
+import { findActorByName, isSpline } from '@/helpers/entityHelper';
 import { Actor } from 'satisfactory-json';
 import { Component } from 'vue';
 import { MeshResult } from './MeshFactory';
@@ -232,7 +225,7 @@ export default class MeshManager {
       // TODO here we should certainly dispose of the old conveyor belts
       //mesh.geometry.dispose();
 
-      if (isConveyorBelt(actor) || isRailroadTrack(actor)) {
+      if (isSpline(actor)) {
         mesh.rebuildGeometry(actor, geometryFactory);
       }
     }
