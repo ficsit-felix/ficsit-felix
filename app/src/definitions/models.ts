@@ -1551,7 +1551,10 @@ export let modClassNamePrefixes = [
   '/Game/FactoryGame/Teleporter/',
   '/Game/FactoryGame/Unlocks/',
   '/Game/FactoryGame/UtilityMod/',
-  '/Game/UtilityMod/'
+  '/Game/LightItUp/',
+  '/Game/ProgrammableElevatorMod/',
+  '/Game/UtilityMod/',
+  '/Script/LightItUp.'
 ];
 
 export function isModClassName(className: string) {
