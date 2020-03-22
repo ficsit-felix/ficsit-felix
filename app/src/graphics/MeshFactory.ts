@@ -1,4 +1,4 @@
-import { BoxBufferGeometry, Mesh, Material, Vector3, Math } from 'three';
+import { BoxBufferGeometry, Mesh, Material, Vector3, MathUtils } from 'three';
 
 import {
   isConveyorLift,
@@ -168,7 +168,7 @@ export default class MeshFactoy {
           ringMesh.position.z = length;
           ringMesh.quaternion.setFromAxisAngle(
             new Vector3(0, -1, 0),
-            Math.DEG2RAD * verticalAngle
+            MathUtils.DEG2RAD * verticalAngle
           );
           mesh.add(ringMesh);
 
