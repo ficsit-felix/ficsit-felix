@@ -35,7 +35,7 @@ class ModelHelper {
     });
   }
 
-  loadScene(path: string): Promise<THREE.Scene> {
+  loadGroup(path: string): Promise<THREE.Group> {
     return new Promise((resolve, reject) => {
       this.loader.load(
         path,

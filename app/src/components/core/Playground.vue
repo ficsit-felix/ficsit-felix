@@ -377,7 +377,7 @@ export default {
 
     loadMap() {
       if (this.mapModel === undefined) {
-        modelHelper.loadScene('/models/map.glb').then(model => {
+        modelHelper.loadGroup('/models/map.glb').then(model => {
           this.mapModel = model;
           if (this.showMap) {
             this.scene.add(model);
