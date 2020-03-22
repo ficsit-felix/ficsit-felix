@@ -810,10 +810,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@bitowl/three-instanced-mesh@^0.97.0":
-  version "0.97.0"
-  resolved "https://registry.yarnpkg.com/@bitowl/three-instanced-mesh/-/three-instanced-mesh-0.97.0.tgz#9a3838a579d9688ef0e85f2010ad22786c096500"
-  integrity sha512-ha2l91MhHXwQyHALh55b3OLdesZnLC0sOwW1w8D4DnusfCTAbOOoJ1PiEMH/mz9aYgtWsqpqsP8+YN/tt72NiQ==
+"@bitowl/three-instanced-mesh@^0.98.0":
+  version "0.98.0"
+  resolved "https://registry.yarnpkg.com/@bitowl/three-instanced-mesh/-/three-instanced-mesh-0.98.0.tgz#96715a7a9d30d9949b1363130185b1e2b212ac91"
+  integrity sha512-EhiBLCRkniIozwq1LoKwdjVt1ECzgNwNW1nug7lOhJ3rOweRxZsoNWUid1H4BgIfZs735/Bp0TuPmxqO/CKRkw==
 
 "@caohenghu/vue-colorpicker@^1.2.2":
   version "1.2.4"

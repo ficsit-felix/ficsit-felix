@@ -25,9 +25,6 @@
           class="input-file"
           @change="openFile($event.target.files[0])"
         />
-        <!--
-            
-        @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"-->
         <p v-if="importJson" class="dragInstruction">
           {{ $t('openPage.dragJson') }}
         </p>
@@ -191,20 +188,6 @@ export default {
       }
 
       console.time('openFile');
-      console.time('readWeb');
-
-      /*var reader = new FileReader();
-      reader.onprogress = evt => {
-        if (evt.lengthComputable) {
-          var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-          this.progress = percentLoaded / 2;
-        }
-      };
-      reader.onload = response => {
-        console.timeEnd('readWeb');
-        this.processFile(reader.result);
-      };
-      reader.readAsArrayBuffer(file);*/
       this.processFile(file);
     },
 

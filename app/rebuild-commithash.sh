@@ -27,6 +27,4 @@ fi
 echo "const commithash = '$HASH';
 export { commithash };" > src/js/commithash.ts;
 
-echo "/*eslint-disable*/
-const licenses = \`$LICENSES\`;
-export { licenses };" > src/js/licenses.ts;
+echo -e "$LICENSES" > public/licenses.txt;

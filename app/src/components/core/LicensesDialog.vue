@@ -13,7 +13,14 @@ export default {
     };
   },
   mounted() {
-    import('@/js/licenses').then(module => (this.licenses = module.licenses));
+    setTimeout(
+      () =>
+        window
+          .fetch('/licenses.txt')
+          .then(response => response.text())
+          .then(text => (this.licenses = text)),
+      200 // Delay a short bit to actually show the dialog already while loading
+    );
   }
 };
 </script>
