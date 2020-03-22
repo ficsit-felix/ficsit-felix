@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-/* eslint-disable */ 
+/* eslint-disable */
 /**
  * @author arodic / https://github.com/arodic
  */
 
-var TransformControls = function(camera, domElement) {
+var TransformControls = function (camera, domElement) {
   THREE.Object3D.call(this);
 
   domElement = domElement !== undefined ? domElement : document;
@@ -115,7 +115,7 @@ var TransformControls = function(camera, domElement) {
     domElement.addEventListener("touchleave", onPointerUp, false);
   }
 
-  this.dispose = function() {
+  this.dispose = function () {
     domElement.removeEventListener("mousedown", onPointerDown);
     domElement.removeEventListener("touchstart", onPointerDown);
     domElement.removeEventListener("mousemove", onPointerHover);
@@ -128,13 +128,13 @@ var TransformControls = function(camera, domElement) {
   };
 
   // Set current object
-  this.attach = function(object) {
+  this.attach = function (object) {
     this.object = object;
     this.visible = true;
   };
 
   // Detatch from object
-  this.detach = function() {
+  this.detach = function () {
     this.object = undefined;
     this.visible = false;
     this.axis = null;
@@ -145,11 +145,11 @@ var TransformControls = function(camera, domElement) {
     var propValue = defaultValue;
 
     Object.defineProperty(scope, propName, {
-      get: function() {
+      get: function () {
         return propValue !== undefined ? propValue : defaultValue;
       },
 
-      set: function(value) {
+      set: function (value) {
         if (propValue !== value) {
           propValue = value;
           _plane[propName] = value;
@@ -167,21 +167,21 @@ var TransformControls = function(camera, domElement) {
   }
 
   // updateMatrixWorld  updates key transformation variables
-  this.updateMatrixWorld = function() {
+  this.updateMatrixWorld = function () {
     if (this.object !== undefined) {
       this.object.updateMatrixWorld();
 
       if (this.object.parent !== undefined && this.object.parent !== null) {
-       this.object.parent.matrixWorld.decompose(
-         parentPosition,
-         parentQuaternion,
-         parentScale
+        this.object.parent.matrixWorld.decompose(
+          parentPosition,
+          parentQuaternion,
+          parentScale
         );
       } else {
         // this object is not placed in a scene
-        parentPosition.set(0,0,0);
-        parentQuaternion.set(0,0,0,1);
-        parentScale.set(1,1,1);
+        parentPosition.set(0, 0, 0);
+        parentQuaternion.set(0, 0, 0, 1);
+        parentScale.set(1, 1, 1);
       }
       this.object.matrixWorld.decompose(
         worldPosition,
@@ -212,7 +212,7 @@ var TransformControls = function(camera, domElement) {
     THREE.Object3D.prototype.updateMatrixWorld.call(this);
   };
 
-  this.pointerHover = function(pointer) {
+  this.pointerHover = function (pointer) {
     if (
       this.object === undefined ||
       this.dragging === true ||
@@ -232,7 +232,7 @@ var TransformControls = function(camera, domElement) {
     }
   };
 
-  this.pointerDown = function(pointer) {
+  this.pointerDown = function (pointer) {
     if (
       this.object === undefined ||
       this.dragging === true ||
@@ -298,7 +298,7 @@ var TransformControls = function(camera, domElement) {
     }
   };
 
-  this.pointerMove = function(pointer) {
+  this.pointerMove = function (pointer) {
     var axis = this.axis;
     var mode = this.mode;
     var object = this.object;
@@ -499,7 +499,7 @@ var TransformControls = function(camera, domElement) {
     this.dispatchEvent(objectChangeEvent);
   };
 
-  this.pointerUp = function(pointer) {
+  this.pointerUp = function (pointer) {
     if (pointer.button !== undefined && pointer.button !== 0) return;
 
     if (this.dragging && this.axis !== null) {
@@ -559,31 +559,31 @@ var TransformControls = function(camera, domElement) {
 
   // TODO: depricate
 
-  this.getMode = function() {
+  this.getMode = function () {
     return scope.mode;
   };
 
-  this.setMode = function(mode) {
+  this.setMode = function (mode) {
     scope.mode = mode;
   };
 
-  this.setTranslationSnap = function(translationSnap) {
+  this.setTranslationSnap = function (translationSnap) {
     scope.translationSnap = translationSnap;
   };
 
-  this.setRotationSnap = function(rotationSnap) {
+  this.setRotationSnap = function (rotationSnap) {
     scope.rotationSnap = rotationSnap;
   };
 
-  this.setSize = function(size) {
+  this.setSize = function (size) {
     scope.size = size;
   };
 
-  this.setSpace = function(space) {
+  this.setSpace = function (space) {
     scope.space = space;
   };
 
-  this.update = function() {
+  this.update = function () {
     console.warn(
       "THREE.TransformControls: update function has been depricated."
     );
@@ -599,7 +599,7 @@ TransformControls.prototype = Object.assign(
   }
 );
 
-var TransformControlsGizmo = function() {
+var TransformControlsGizmo = function () {
   "use strict";
 
   THREE.Object3D.call(this);
@@ -694,12 +694,12 @@ var TransformControlsGizmo = function() {
   var scaleHandleGeometry = new THREE.BoxBufferGeometry(0.125, 0.125, 0.125);
 
   var lineGeometry = new THREE.BufferGeometry();
-  lineGeometry.addAttribute(
+  lineGeometry.setAttribute(
     "position",
     new THREE.Float32BufferAttribute([0, 0, 0, 1, 0, 0], 3)
   );
 
-  var CircleGeometry = function(radius, arc) {
+  var CircleGeometry = function (radius, arc) {
     var geometry = new THREE.BufferGeometry();
     var vertices = [];
 
@@ -711,7 +711,7 @@ var TransformControlsGizmo = function() {
       );
     }
 
-    geometry.addAttribute(
+    geometry.setAttribute(
       "position",
       new THREE.Float32BufferAttribute(vertices, 3)
     );
@@ -721,10 +721,10 @@ var TransformControlsGizmo = function() {
 
   // Special geometry for transform helper. If scaled with position vector it spans from [0,0,0] to position
 
-  var TranslateHelperGeometry = function(radius, arc) {
+  var TranslateHelperGeometry = function (radius, arc) {
     var geometry = new THREE.BufferGeometry();
 
-    geometry.addAttribute(
+    geometry.setAttribute(
       "position",
       new THREE.Float32BufferAttribute([0, 0, 0, 1, 1, 1], 3)
     );
@@ -1348,11 +1348,11 @@ var TransformControlsGizmo = function() {
 
   // Creates an Object3D with gizmos described in custom hierarchy definition.
 
-  var setupGizmo = function(gizmoMap) {
+  var setupGizmo = function (gizmoMap) {
     var gizmo = new THREE.Object3D();
 
     for (var name in gizmoMap) {
-      for (var i = gizmoMap[name].length; i--; ) {
+      for (var i = gizmoMap[name].length; i--;) {
         var object = gizmoMap[name][i][0].clone();
         var position = gizmoMap[name][i][1];
         var rotation = gizmoMap[name][i][2];
@@ -1429,7 +1429,7 @@ var TransformControlsGizmo = function() {
 
   // updateMatrixWorld will update transformations and appearance of individual handles
 
-  this.updateMatrixWorld = function() {
+  this.updateMatrixWorld = function () {
     var space = this.space;
 
     if (this.mode === "scale") space = "local"; // scale always oriented to local rotation
@@ -1785,7 +1785,7 @@ var TransformControlsGizmo = function() {
           handle.material.opacity = 1.0;
           handle.material.color.lerp(new THREE.Color(1, 1, 1), 0.5);
         } else if (
-          this.axis.split("").some(function(a) {
+          this.axis.split("").some(function (a) {
             return handle.name === a;
           })
         ) {
@@ -1811,7 +1811,7 @@ TransformControlsGizmo.prototype = Object.assign(
   }
 );
 
-var TransformControlsPlane = function() {
+var TransformControlsPlane = function () {
   "use strict";
 
   THREE.Mesh.call(
@@ -1838,7 +1838,7 @@ var TransformControlsPlane = function() {
   var tempMatrix = new THREE.Matrix4();
   var identityQuaternion = new THREE.Quaternion();
 
-  this.updateMatrixWorld = function() {
+  this.updateMatrixWorld = function () {
     var space = this.space;
 
     this.position.copy(this.worldPosition);
