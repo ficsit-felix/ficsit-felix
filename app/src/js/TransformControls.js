@@ -105,10 +105,10 @@ var TransformControls = function (camera, domElement) {
 
   {
     domElement.addEventListener("mousedown", onPointerDown, false);
-    domElement.addEventListener("touchstart", onPointerDown, false);
+    domElement.addEventListener("touchstart", onPointerDown, { passive: true });
     domElement.addEventListener("mousemove", onPointerHover, false);
-    domElement.addEventListener("touchmove", onPointerHover, false);
-    domElement.addEventListener("touchmove", onPointerMove, false);
+    domElement.addEventListener("touchmove", onPointerHover, { passive: true });
+    domElement.addEventListener("touchmove", onPointerMove, { passive: true });
     document.addEventListener("mouseup", onPointerUp, false);
     domElement.addEventListener("touchend", onPointerUp, false);
     domElement.addEventListener("touchcancel", onPointerUp, false);

@@ -49,7 +49,7 @@ Vue.use(MdMenu);
 Vue.use(MdList);
 Vue.use(MdProgress);
 // vue-split-panel
-import VueSplit from 'vue-split-panel';
+import VueSplit from '@bitowl/vue-split-panel';
 import { EventBus } from './event-bus';
 import { CHANGE_LOCALE } from './ts/constants';
 Vue.use(VueSplit);

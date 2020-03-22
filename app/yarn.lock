@@ -810,10 +810,22 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@bitowl/split.js@^1.5.12":
+  version "1.5.12"
+  resolved "https://registry.yarnpkg.com/@bitowl/split.js/-/split.js-1.5.12.tgz#83ede553763dc840e1413b6248f276a083030919"
+  integrity sha512-uXzSw6epk2CJ49il8yzxnem2xreTpNuWvB0eIvS3yjGQwLz7QstzD9x/AXvaV4Iaom5gXENQRP0R8duBQrK+qg==
+
 "@bitowl/three-instanced-mesh@^0.98.0":
   version "0.98.0"
   resolved "https://registry.yarnpkg.com/@bitowl/three-instanced-mesh/-/three-instanced-mesh-0.98.0.tgz#96715a7a9d30d9949b1363130185b1e2b212ac91"
   integrity sha512-EhiBLCRkniIozwq1LoKwdjVt1ECzgNwNW1nug7lOhJ3rOweRxZsoNWUid1H4BgIfZs735/Bp0TuPmxqO/CKRkw==
+
+"@bitowl/vue-split-panel@^1.1.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@bitowl/vue-split-panel/-/vue-split-panel-1.1.1.tgz#4b7098cfa81ee9de8ae513c65a824f805913d0c6"
+  integrity sha512-+UMqavWGuoGx08CsNWh2W0zMA6juQLis+kpzmSTJsHDZDPCg/49Cel8VMTA1AiPZBloS9YVTuQk4of4rg4ecXA==
+  dependencies:
+    "@bitowl/split.js" "^1.5.12"
 
 "@caohenghu/vue-colorpicker@^1.2.2":
   version "1.2.4"
@@ -9585,11 +9597,6 @@ split-string@^3.0.1, split-string@^3.0.2:
   dependencies:
     extend-shallow "^3.0.0"
 
-split.js@^1.3.5:
-  version "1.5.11"
-  resolved "https://registry.yarnpkg.com/split.js/-/split.js-1.5.11.tgz#3654b2a8c625994e33c531df5c4dea83ca8af011"
-  integrity sha512-ec0sAbWnaMGpNHWo1ZgIlF3Mx7GzSyaO0GlcEBZGIFZQwYPPkbDV6JRpDmpzIshVig7USREuEPudy0ygQaskXg==
-
 split2@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/split2/-/split2-3.1.1.tgz#c51f18f3e06a8c4469aaab487687d8d956160bb6"
@@ -10755,13 +10762,6 @@ vue-shortkey@^3.1.7:
   dependencies:
     custom-event-polyfill "^1.0.7"
     element-matches "^0.1.2"
-
-vue-split-panel@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/vue-split-panel/-/vue-split-panel-1.0.4.tgz#77b75399236bb7610e053598cc33c4988573ad6b"
-  integrity sha512-OGR+2vIHGcXjpXMh7Pv6uG0t6ihL8o8wmHLeKfvArNPJs/Z0GYLplDcUdTg7Z/Et+IsYVlR13f83oiuRVLYOkw==
-  dependencies:
-    split.js "^1.3.5"
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"
