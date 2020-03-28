@@ -1,42 +1,43 @@
 <template>
   <div class="class-list panel">
     <div class="content">
-    <md-checkbox
-      :model="allVisible"
-      @change="changeVisibilityOfAllClasses($event)"
-      >{{ $t('classList.allClasses') }}</md-checkbox
-    >
-    <ul>
-      <li v-for="item in classes" v-bind:key="item.name">
-        <div
-          v-if="editClassColors"
-          class="color"
-          v-bind:style="{ background: classColorStrings[item.name] }"
-          @click="showColor(item.name)"
-        ></div>
-        <md-checkbox
-          :model="item.visible"
-          @change="changeVisibility(item.name, $event)"
-          >{{ item.name }}</md-checkbox
-        >
-      </li>
-    </ul>
+      <md-checkbox
+        :model="allVisible"
+        @change="changeVisibilityOfAllClasses($event)"
+        >{{ $t('classList.allClasses') }}</md-checkbox
+      >
+      <ul>
+        <li v-for="item in classes" v-bind:key="item.name">
+          <div
+            v-if="editClassColors"
+            class="color"
+            v-bind:style="{ background: classColorStrings[item.name] }"
+            @click="showColor(item.name)"
+          ></div>
+          <md-checkbox
+            :model="item.visible"
+            @change="changeVisibility(item.name, $event)"
+            >{{ item.name }}</md-checkbox
+          >
+        </li>
+      </ul>
 
-    <md-dialog :md-active.sync="showColorDialog">
-      <md-dialog-title>{{ $t('dialog.color.title') }}</md-dialog-title>
-      <md-dialog-content class="colorPickerDialogContent">
-        <colorPicker
-          :color="selectedColor"
-          @changeColor="changeColor"
-        ></colorPicker>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showColorDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-  </div></div>
+      <md-dialog :md-active.sync="showColorDialog">
+        <md-dialog-title>{{ $t('dialog.color.title') }}</md-dialog-title>
+        <md-dialog-content class="colorPickerDialogContent">
+          <colorPicker
+            :color="selectedColor"
+            @changeColor="changeColor"
+          ></colorPicker>
+        </md-dialog-content>
+        <md-dialog-actions>
+          <md-button class="md-primary" @click="showColorDialog = false">{{
+            $t('general.close')
+          }}</md-button>
+        </md-dialog-actions>
+      </md-dialog>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -120,7 +121,7 @@ export default {
 .class-list {
   .content {
     height: 100%;
-    overflow: scroll;    
+    overflow: scroll;
   }
   ul {
     list-style-type: none;

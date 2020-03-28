@@ -3,6 +3,7 @@ import Vue from 'vue';
 import store from './store';
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
+import vuetify from './plugins/vuetify';
 
 import { i18n } from './plugins/i18n';
 import { isElectron } from './ts/isElectron';
@@ -68,6 +69,7 @@ if (isElectron()) {
 new Vue({
   router,
   store,
+  vuetify,
   i18n,
   beforeCreate() {
     this.$store.commit;
