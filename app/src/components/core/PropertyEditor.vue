@@ -37,15 +37,17 @@
         >{{ $t('propertyEditor.copyAsBlueprint') }}</md-button
       >
     </div>
-    <md-field :class="jsonClass">
-      <label>{{ $t('propertyEditor.jsonLabel') }}</label>
-      <md-textarea
-        v-model="selectedJson"
-        :disabled="this.selectedJson == ''"
-        rows="200"
-      ></md-textarea>
-      <span class="md-error">{{ jsonError }}</span>
-    </md-field>
+
+    <v-textarea
+      class="json-editor"
+      outlined
+      :label="$t('propertyEditor.jsonLabel')"
+      v-model="selectedJson"
+      :disabled="this.selectedJson === ''"
+      :error-messages="jsonError"
+      style="height:100%"
+    >
+    </v-textarea>
 
     <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">{{
       $t('propertyEditor.objectSavedSnack')
@@ -76,8 +78,7 @@ export default {
   data: function() {
     return {
       selectedJson: '',
-      jsonClass: '',
-      jsonError: '',
+      jsonError: [],
       showSnackbar: false,
       showDeleteDialog: false
     };
@@ -110,8 +111,7 @@ export default {
         } else {
           this.selectedJson = JSON.stringify(this.selectedJsonToEdit, null, 2);
 
-          this.jsonClass = '';
-          this.jsonError = '';
+          this.jsonError = [];
         }
       }
     }
@@ -128,12 +128,10 @@ export default {
       try {
         var obj = JSON.parse(this.selectedJson);
         this.setSelectedObject(obj);
-        this.jsonClass = '';
-        this.jsonError = '';
+        this.jsonError = [];
         this.showSnackbar = true;
       } catch (e) {
-        this.jsonClass = 'md-invalid';
-        this.jsonError = e;
+        this.jsonError = [e.message];
       }
     },
     deleteKeyPressed() {
@@ -179,8 +177,8 @@ export default {
 .json-editor {
   width: 100%;
   height: 100%;
-  color: $textGray;
-  border: 0px;
+  /*color: $textGray;
+  border: 0px;*/
 }
 textarea {
   height: 100% !important;

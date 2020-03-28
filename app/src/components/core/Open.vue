@@ -22,17 +22,23 @@
       </div>
     </CenterWhiteBox>
 
-    <md-dialog :md-active.sync="showSettingsDialog">
-      <md-dialog-title>{{ $t('dialog.settings.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <Settings></Settings>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
+    <v-dialog v-model="showSettingsDialog" width="500" scrollable>
+      <v-card>
+        <v-card-title>
+          {{ $t('dialog.settings.title') }}
+        </v-card-title>
+
+        <v-card-text>
+          <Settings></Settings>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="showSettingsDialog = false">{{
+            $t('general.close')
+          }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 

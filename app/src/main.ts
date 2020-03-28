@@ -23,7 +23,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 // vue-material
-import {
+/*import {
   MdButton,
   MdField,
   MdSnackbar,
@@ -48,7 +48,8 @@ Vue.use(MdCheckbox);
 Vue.use(MdTooltip);
 Vue.use(MdMenu);
 Vue.use(MdList);
-Vue.use(MdProgress);
+Vue.use(MdProgress);*/
+
 // vue-split-panel
 import VueSplit from '@bitowl/vue-split-panel';
 import { EventBus } from './event-bus';

@@ -168,7 +168,11 @@ export default class Logo extends Vue {
   @Watch('animating', { immediate: true })
   onAnimatingChanged(val: boolean) {
     if (val && this.tl !== null) {
-      this.tl.play();
+      if (!this.tl.isActive()) {
+        this.tl.restart();
+      } else {
+        this.tl.play();
+      }
     }
   }
 

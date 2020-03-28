@@ -1,11 +1,9 @@
 <template>
   <div class="object-list panel">
     <div class="filter-field">
-      <md-field md-inline>
-        <label>{{ $t('objectList.filterField') }}</label>
-        <md-input v-model="filterTerm"></md-input>
-        <md-icon>search</md-icon>
-      </md-field>
+      
+      <v-text-field filled :label=" $t('objectList.filterField') " v-model="filterTerm" append-icon="mdi-magnify" hide-details>
+      </v-text-field>
     </div>
     <virtual-list
       :size="20"
@@ -114,8 +112,8 @@ export default {
   user-select: none;
 
   .filter-field {
-    margin-top: -16px;
-    margin-bottom: -10px;
+    /*margin-top: -16px;
+    margin-bottom: -10px;*/
     /*padding: 0px 8px;*/
     flex-shrink: 0;
   }

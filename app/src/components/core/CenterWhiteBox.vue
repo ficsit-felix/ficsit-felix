@@ -16,7 +16,7 @@ export default class CenterWhiteBox extends Vue {}
 .centerBox {
   margin: auto; // fix scrolling in vertically centered flex box, see https://stackoverflow.com/a/33455342
   width: 700px;
-  background: $boxWhite;
+  // background: $boxWhite;
   border-radius: 10px;
   text-align: center;
   position: relative;

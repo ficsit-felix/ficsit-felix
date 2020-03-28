@@ -1,11 +1,11 @@
 <template>
   <div class="class-list panel">
     <div class="content">
-      <md-checkbox
-        :model="allVisible"
+      <v-checkbox
+        :input-value="allVisible"
         @change="changeVisibilityOfAllClasses($event)"
-        >{{ $t('classList.allClasses') }}</md-checkbox
-      >
+        :label="$t('classList.allClasses')"
+      ></v-checkbox>
       <ul>
         <li v-for="item in classes" v-bind:key="item.name">
           <div
@@ -14,11 +14,12 @@
             v-bind:style="{ background: classColorStrings[item.name] }"
             @click="showColor(item.name)"
           ></div>
-          <md-checkbox
-            :model="item.visible"
+          <v-checkbox
+            :input-value="item.visible"
             @change="changeVisibility(item.name, $event)"
-            >{{ item.name }}</md-checkbox
-          >
+            :label="item.name"
+            hide-details
+          ></v-checkbox>
         </li>
       </ul>
 

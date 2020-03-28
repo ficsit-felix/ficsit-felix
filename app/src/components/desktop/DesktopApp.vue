@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <div
-      @mouseover="logoAnimating = true"
-      @mouseleave="logoAnimating = false"
-      class="titlebar-logo"
-    >
-      <Logo :height="25" black="#505050" :animating="logoAnimating"></Logo>
-    </div>
-    <router-view />
-    <Dialogs></Dialogs>
+    <v-app>
+      <div
+        @mouseover="logoAnimating = true"
+        @mouseleave="logoAnimating = false"
+        class="titlebar-logo"
+      >
+        <Logo :height="25" black="#505050" :animating="logoAnimating"></Logo>
+      </div>
+      <router-view />
+      <Dialogs></Dialogs>
+    </v-app>
   </div>
 </template>
 

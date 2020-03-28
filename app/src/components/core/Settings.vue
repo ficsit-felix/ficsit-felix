@@ -6,49 +6,54 @@
     </div>
 
     <h3>{{ $t('settings.graphicsSectionTitle') }}</h3>
-    <md-checkbox :model="showMap" @change="updateShowMap">
-      {{ $t('settings.showMap') }}
-    </md-checkbox>
-    <md-checkbox :model="showModels" @change="updateShowModels">
-      {{ $t('settings.showModels') }}
-    </md-checkbox>
-    <md-checkbox :model="showCustomPaints" @change="updateShowCustomPaints">
-      {{ $t('settings.showCustomPaints') }}
-    </md-checkbox>
+    <v-checkbox
+      hide-details
+      :input-value="showMap"
+      @change="updateShowMap"
+      :label="$t('settings.showMap')"
+    ></v-checkbox>
+    <v-checkbox
+      hide-details
+      :input-value="showModels"
+      @change="updateShowModels"
+      :label="$t('settings.showModels')"
+    ></v-checkbox>
+    <v-checkbox
+      :input-value="showCustomPaints"
+      @change="updateShowCustomPaints"
+      :label="$t('settings.showCustomPaints')"
+    >
+    </v-checkbox>
     <h4>{{ $t('settings.advancedSectionTitle') }}</h4>
-    <md-field>
-      <label>{{ $t('settings.farPlane') }}</label>
-      <md-input
-        :value="farPlane"
-        @input="updateFarPlane"
-        type="number"
-      ></md-input>
-      <span class="md-helper-text">{{ $t('settings.farPlaneHelp') }}</span>
-    </md-field>
-    <md-field>
-      <label>{{ $t('settings.nearPlane') }}</label>
-      <md-input
-        :value="nearPlane"
-        @input="updateNearPlane"
-        type="number"
-      ></md-input>
-      <span class="md-helper-text">{{ $t('settings.nearPlaneHelp') }}</span>
-    </md-field>
 
-    <md-field>
-      <label>{{ $t('settings.conveyorBeltResolution') }}</label>
-      <md-input
-        :value="conveyorBeltResolution"
-        @input="updateConveyorBeltResolution"
-        type="number"
-      ></md-input>
+    <v-text-field
+      :label="$t('settings.farPlane')"
+      :value="farPlane"
+      @input="updateFarPlane"
+      :hint="$t('settings.farPlaneHelp')"
+      type="number"
+    >
+    </v-text-field>
 
-      <span class="md-helper-text">
-        {{ $t('settings.conveyorBeltResolutionHelp') }}
-      </span>
-    </md-field>
+    <v-text-field
+      :label="$t('settings.nearPlane')"
+      :value="nearPlane"
+      @input="updateNearPlane"
+      type="number"
+      :hint="$t('settings.nearPlaneHelp')"
+    ></v-text-field>
+
+    <v-text-field
+      :label="$t('settings.conveyorBeltResolution')"
+      :value="conveyorBeltResolution"
+      @input="updateConveyorBeltResolution"
+      type="number"
+      :hint="$t('settings.conveyorBeltResolutionHelp')"
+    ></v-text-field>
 
     <br />
+
+    <!-- TODO use v-expansion-panel instead? -->
     <h3 class="clickable" @click="toggleShowDevelopSettings">
       {{ $t('settings.developSectionTitle') }}
       <md-icon v-if="showDevelopSettings">expand_less</md-icon>
@@ -56,33 +61,41 @@
     </h3>
 
     <div v-if="showDevelopSettings">
-      <md-checkbox :model="editClassColors" @change="updateEditClassColors">
-        {{ $t('settings.editClassColors') }}
-      </md-checkbox>
-      <md-button class="md-raised" @click="exportClassColors">
-        {{ $t('settings.copyClassColorsButton') }}
-      </md-button>
-      <md-button class="md-raised" @click="clearClassColors">
-        {{ $t('settings.clearClassColorsButton') }}
-      </md-button>
-
-      <md-checkbox
-        :model="experimentalFeatures"
-        @change="updateExperimentalFeatures"
-        >{{ $t('settings.experimentalFeatures') }}</md-checkbox
+      <v-checkbox
+        hide-details
+        :input-value="editClassColors"
+        @change="updateEditClassColors"
+        :label="$t('settings.editClassColors')"
       >
+      </v-checkbox>
+      <v-btn @click="exportClassColors">
+        {{ $t('settings.copyClassColorsButton') }}
+      </v-btn>
+      <v-btn @click="clearClassColors">
+        {{ $t('settings.clearClassColorsButton') }}
+      </v-btn>
 
-      <md-field>
-        <label>{{ $t('settings.autoLoadSaveFile') }}</label>
-        <md-input
-          :value="autoLoadSaveFile"
-          @input="updateAutoLoadSaveFile"
-        ></md-input>
-      </md-field>
+      <v-checkbox
+        :input-value="experimentalFeatures"
+        @change="updateExperimentalFeatures"
+        :label="$t('settings.experimentalFeatures')"
+        hide-details
+      ></v-checkbox>
 
-      <md-checkbox :model="showFps" @change="setShowFps">
-        {{ $t('settings.showFps') }}
-      </md-checkbox>
+      <v-text-field
+        :label="$t('settings.autoLoadSaveFile')"
+        :value="autoLoadSaveFile"
+        @input="updateAutoLoadSaveFile"
+        hide-details
+      >
+      </v-text-field>
+
+      <v-checkbox
+        :input-value="showFps"
+        @change="setShowFps"
+        :label="$t('settings.showFps')"
+      >
+      </v-checkbox>
     </div>
   </div>
 </template>
@@ -141,6 +154,7 @@ export default {
       this.setShowCustomPaints(value);
     },
     updateShowMap(value) {
+      console.log(value);
       this.setShowMap(value);
     },
     updateConveyorBeltResolution(value) {
@@ -172,10 +186,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .settings {
-  width: 400px;
+  /*width: 400px;
   @media (max-width: 500px) {
     width: 100%;
-  }
+  }*/
 }
 
 .clickable {

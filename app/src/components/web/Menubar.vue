@@ -12,7 +12,7 @@
       v-shortkey.once="['ctrl', 'o']"
       @shortkey="showOpenDialog = true"
     >
-      <md-icon>folder_open</md-icon>
+      <v-icon>mdi-home</v-icon>
       {{ $t('menubar.open') }}
       <md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+O</md-tooltip>
     </span>
