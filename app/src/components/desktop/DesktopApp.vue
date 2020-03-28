@@ -257,8 +257,8 @@ export default {
       Menu.setApplicationMenu(menu);
     },
     openFileSelector() {
-      remote.dialog.showOpenDialog(
-        {
+      remote.dialog
+        .showOpenDialog({
           title: this.$t('desktop.openSavTitle'),
           defaultPath: getSaveGamesFolderPath(),
           filters: [
@@ -267,20 +267,19 @@ export default {
               extensions: ['sav']
             }
           ]
-        },
-        filePaths => {
-          console.log(filePaths);
-          if (filePaths.length === 1) {
+        })
+        .then(value => {
+          console.log(value.filePaths);
+          if (value.filePaths.length === 1) {
             this.$router.push('/');
-            openFileAndMoveToEditor(this, filePaths[0], false);
+            openFileAndMoveToEditor(this, value.filePaths[0], false);
           }
-        }
-      );
+        });
     },
     openJsonFileSelector() {
       // TODO deduplicate with openJsonFilebrowser in MainScreen
-      remote.dialog.showOpenDialog(
-        {
+      remote.dialog
+        .showOpenDialog({
           title: this.$t('desktop.openJsonTitle'),
           defaultPath: getSaveGamesFolderPath(),
           filters: [
@@ -289,14 +288,13 @@ export default {
               extensions: ['json']
             }
           ]
-        },
-        filePaths => {
-          if (filePaths.length === 1) {
+        })
+        .then(value => {
+          if (value.filePaths.length === 1) {
             this.$router.push('/');
-            openFileAndMoveToEditor(this, filePaths[0], true);
+            openFileAndMoveToEditor(this, value.filePaths[0], true);
           }
-        }
-      );
+        });
     },
     openJsonSaveSelector() {
       const name = this.$store.state.filename.replace('.sav', '.json');

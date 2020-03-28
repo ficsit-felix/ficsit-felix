@@ -108,7 +108,6 @@ export default {
 
 .object-list {
   background: $middleGray;
-  border-right: 1px solid $toolbarGray;
   display: flex;
   flex-direction: column;
   height: 100%;

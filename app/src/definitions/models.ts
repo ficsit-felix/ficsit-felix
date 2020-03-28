@@ -685,7 +685,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/IndustrialFluidContainer/Build_IndustrialTank.Build_IndustrialTank_C': {
-    model: '',
+    model: 'IndustrialFluidContainer.glb',
     color: 0xff00ff,
     paintable: false
   },
@@ -713,7 +713,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: false
   },
   '/Game/FactoryGame/Buildable/Factory/Mam/Build_Mam.Build_Mam_C': {
-    model: '',
+    model: 'MAM.glb',
     color: 0xff00ff,
     paintable: false
   },
@@ -898,10 +898,10 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 115, y: -340, z: 1730 }
   },
   '/Game/FactoryGame/Buildable/Factory/ResourceSink/Build_ResourceSink.Build_ResourceSink_C': {
-    model: '',
+    model: 'ResourceSink.glb',
     color: 0xff00ff,
     paintable: false,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: -360, y: -320, z: 860 }
   },
   '/Game/FactoryGame/Buildable/Factory/ResourceSinkShop/Build_ResourceSinkShop.Build_ResourceSinkShop_C': {
     model: 'ResourceSinkShop.glb',
@@ -950,7 +950,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     paintable: true
   },
   '/Game/FactoryGame/Buildable/Factory/StorageTank/Build_PipeStorageTank.Build_PipeStorageTank_C': {
-    model: '',
+    model: 'FluidContainer.glb',
     color: 0xff00ff,
     paintable: false
   },
@@ -1007,7 +1007,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 165, y: -1170, z: 1080 }
   },
   '/Game/FactoryGame/Buildable/Factory/WaterPump/Build_WaterPump.Build_WaterPump_C': {
-    model: '',
+    model: 'WaterPump.glb',
     color: 0xff00ff,
     paintable: false,
     powerLineOffset: { x: -415, y: 320, z: 1100 } // powerpole missing
