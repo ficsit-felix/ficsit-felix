@@ -20,12 +20,12 @@ export default {
   // overwrite existing mounted
   mounted() {
     this.renderer.scene = this.scene;
-    this.scene.background = new Color(0x000000);
-    this.scene.fog = new Fog(0x000000, 0.8 * this.farPlane, this.farPlane);
+    this.scene.background = new Color(0x111618);
+    this.scene.fog = new Fog(0x111618, 0.8 * this.farPlane, this.farPlane);
   },
   watch: {
     farPlane(value) {
-      this.scene.fog = new Fog(0x000000, 0.8 * this.farPlane, this.farPlane);
+      this.scene.fog = new Fog(0x111618, 0.8 * this.farPlane, this.farPlane);
     }
   }
 };

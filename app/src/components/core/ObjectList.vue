@@ -1,5 +1,5 @@
 <template>
-  <div class="object-list">
+  <div class="object-list panel">
     <div class="filter-field">
       <md-field md-inline>
         <label>{{ $t('objectList.filterField') }}</label>
@@ -107,7 +107,6 @@ export default {
 }
 
 .object-list {
-  background: $middleGray;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -115,9 +114,9 @@ export default {
   user-select: none;
 
   .filter-field {
-    margin-top: -10px;
+    margin-top: -16px;
     margin-bottom: -10px;
-    padding: 0px 8px;
+    /*padding: 0px 8px;*/
     flex-shrink: 0;
   }
   .list {

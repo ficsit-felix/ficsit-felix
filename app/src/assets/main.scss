@@ -1,7 +1,7 @@
 @import 'colors.scss';
 
 body {
-  background: $eigenblack;
+  background: $surface;
 }
 
 html,
@@ -19,30 +19,24 @@ body {
 // custom theme
 @import '~vue-material/dist/theme/engine'; // Import the theme engine
 
-@include md-register-theme(
-  'default',
-  (
-    primary: md-get-palette-color(orange, A200),
+@include md-register-theme('default',
+  (primary: md-get-palette-color(orange, 200),
     // The primary color of your application
-      accent: md-get-palette-color(cyan, 500),
+    accent: md-get-palette-color(cyan, 200),
+    background: $surface,
     // The accent or secondary color
-      theme: dark
-  )
-);
+    theme: dark));
 @import '~vue-material/dist/theme/all'; // Apply the theme
 // @import "~vue-material/dist/components/MdButton/theme"; // Apply the theme
 // @import "~vue-material/dist/components/MdField/theme"; // Apply the theme
 
-@include md-register-theme(
-  'default',
-  (
-    primary: md-get-palette-color(orange, A200),
+@include md-register-theme('default',
+  (primary: md-get-palette-color(orange, 200),
     // The primary color of your application
-      accent: md-get-palette-color(cyan, 400),
+    accent: md-get-palette-color(cyan, 200),
+    background: $surface,
     // The accent or secondary color
-      theme: light
-  )
-);
+    theme: light));
 @import '~vue-material/dist/components/MdSnackbar/theme'; // Apply the theme
 
 // increase dialog animation speed
@@ -98,4 +92,10 @@ body {
 // put titlebar below dialog overlay layer
 .titlebar {
   z-index: 9 !important;
+}
+
+.panel {
+  background: $elevation8dp;
+  border-radius: 4px;
+  padding: 16px;
 }

@@ -1,5 +1,6 @@
 <template>
-  <div class="class-list">
+  <div class="class-list panel">
+    <div class="content">
     <md-checkbox
       :model="allVisible"
       @change="changeVisibilityOfAllClasses($event)"
@@ -35,7 +36,7 @@
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
-  </div>
+  </div></div>
 </template>
 
 <script>
@@ -117,14 +118,17 @@ export default {
 @import '@/assets/colors.scss';
 
 .class-list {
+  .content {
+    height: 100%;
+    overflow: scroll;    
+  }
   ul {
     list-style-type: none;
     padding: 0px;
   }
 
-  background: $middleGray;
   height: 100%;
-  overflow: scroll;
+
   user-select: none;
 
   li {
@@ -143,7 +147,7 @@ export default {
   }
 
   .md-checkbox {
-    margin: 3px 8px;
+    margin: 3px 0px;
     white-space: nowrap;
   }
   .md-checkbox .md-checkbox-container:before {

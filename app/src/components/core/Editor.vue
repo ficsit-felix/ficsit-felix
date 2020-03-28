@@ -34,7 +34,7 @@
 
 <script>
 // @ is an alias to /src
-import Menubar from './Menubar.vue';
+import Menubar from '../web/Menubar.vue';
 import Playground from './Playground.vue';
 import ObjectList from './ObjectList.vue';
 import PropertyEditor from './PropertyEditor.vue';
@@ -112,6 +112,7 @@ export default {
   overflow: hidden !important;
 }
 .gutter {
-  background-color: $toolbarGray !important;
+  background-color: $surface !important;
+  opacity: 0.4; // lessen the brightness of the gutter background image
 }
 </style>

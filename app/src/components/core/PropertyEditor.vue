@@ -1,5 +1,5 @@
 <template>
-  <div class="property-editor">
+  <div class="property-editor panel">
     <div class="buttons">
       <md-button
         class="md-raised"
@@ -163,7 +163,6 @@ export default {
 .property-editor {
   /*width: 300px;
   flex-shrink: 0;*/
-  background: $middleGray;
   height: 100%;
   overflow: hidden;
   display: flex;

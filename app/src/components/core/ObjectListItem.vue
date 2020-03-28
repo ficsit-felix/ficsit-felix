@@ -67,8 +67,8 @@ export default {
 }
 
 .item {
-  height: 20px;
-  padding: 0px 8px;
+  height: 22px;
+  /*padding: 0px 8px;*/
   cursor: pointer;
 }
 </style>

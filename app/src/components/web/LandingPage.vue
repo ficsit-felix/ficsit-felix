@@ -1,5 +1,12 @@
 <template>
   <div class="landingpage">
+
+      <div class="languageSelection">
+        {{ $t('landingPage.language') }}:
+        <LanguageSwitcher></LanguageSwitcher>
+      </div>
+
+
     <CenterWhiteBox>
       <div
         @mouseover="logoAnimating = true"
@@ -42,10 +49,7 @@
           >
         </i18n>
       </p>
-      <div class="languageSelection">
-        {{ $t('landingPage.language') }}:
-        <LanguageSwitcher></LanguageSwitcher>
-      </div>
+
     </CenterWhiteBox>
     <div class="commithash">{{ commithash }}</div>
   </div>

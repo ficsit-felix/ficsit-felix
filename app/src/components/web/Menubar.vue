@@ -196,9 +196,9 @@
 </template>
 
 <script>
-import Logo from './Logo';
-import LicensesDialog from './LicensesDialog';
-import Settings from './Settings';
+import Logo from '../core/Logo';
+import LicensesDialog from '../core/LicensesDialog';
+import Settings from '../core/Settings';
 import { findActorByName } from '@/helpers/entityHelper';
 
 export default {
@@ -246,7 +246,7 @@ export default {
 @import '@/assets/colors.scss';
 .menubar {
   display: flex;
-  background: $toolbarGray;
+  background: $surface;
   flex-shrink: 0;
   padding-left: 30px;
   padding-right: 30px;
