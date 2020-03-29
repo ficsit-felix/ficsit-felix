@@ -756,7 +756,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     model: 'OilPump.glb',
     color: 0x5549bf,
     paintable: false,
-    powerLineOffset: { x: 100, y: -520, z: 1640 }
+    powerLineOffset: { x: 100, y: -400, z: 1640 }
   },
   '/Game/FactoryGame/Buildable/Factory/OilRefinery/Build_OilRefinery.Build_OilRefinery_C': {
     model: 'OilRefinery.glb',
