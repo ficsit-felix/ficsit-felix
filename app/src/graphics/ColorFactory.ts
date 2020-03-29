@@ -1,4 +1,4 @@
-import { modelConfig } from '@/definitions/models';
+import { modelConfig, isModClassName } from '@/definitions/models';
 import { Color, MeshMatcapMaterial, Material, Texture } from 'three';
 import { findActorByName } from '@/helpers/entityHelper';
 import { Actor, ByteProperty, StructProperty } from 'satisfactory-json';
@@ -114,7 +114,7 @@ export default class ColorFactory {
       for (let i = 0; i < actor.entity.properties.length; i++) {
         const element = actor.entity.properties[i] as ByteProperty;
         if (element.name === 'mColorSlot') {
-          if (!isPaintable) {
+          if (!isPaintable && !isModClassName(actor.className)) {
             console.warn('paintable should be true for: ' + actor.className);
             /*reportMessage(
               "paintable should be true for: " + actor.className
