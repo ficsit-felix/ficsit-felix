@@ -1,15 +1,28 @@
 <template>
-  <div class="progress-bar-view">
-    <div class="title">{{ progressText.title }}</div>
-    <ProgressBar :progress="progress"></ProgressBar>
-    <div class="currentStep">{{ progressText.currentStep }}</div>
-    <md-button
-      v-if="progressText.showCloseButton"
+  <v-card class="progress-bar-view">
+    <v-card-title>{{ progressText.title }}</v-card-title>
+    <v-card-text>
+    
+    <v-progress-linear value="progress" height="50" rounded>
+      <strong style="text-shadow: 1px 1px 3px #000000cc">
+        {{ Math.round(progress) }} %
+        </strong>
+    </v-progress-linear>
+    <!--<ProgressBar :progress="progress"></ProgressBar>-->
+    <div class="mt-2">{{ progressText.currentStep }}</div>
+    </v-card-text>
+    <v-card-actions v-if="progressText.showCloseButton">
+      <v-spacer></v-spacer>
+    <v-btn
+      
+      color="primary"
+      text
       @click="hideProgressDialog()"
     >
       {{ $t('general.close') }}
-    </md-button>
-  </div>
+    </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -22,7 +35,7 @@ import { DIALOG_PROGRESS } from '../../ts/constants';
 
 @Component({
   components: {
-    ProgressBar
+    // ProgressBar
   },
   computed: {
     ...mapState(['progress', 'progressText'])
@@ -38,11 +51,11 @@ export default class ProgressBarDialog extends Vue {
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
 .progress-bar-view {
-  display: flex;
+  /*display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100%;*/
 }
 .title {
   font-size: 30px;

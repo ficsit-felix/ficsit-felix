@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="switcher">
     <span
       class="lang"
       v-for="lang in languages"
@@ -43,19 +43,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/colors.scss';
+
+.switcher {
+  margin: 16px;
+}
 .lang {
   display: inline-block;
   padding: 11px;
-  margin: 5px;
-  border-radius: 2px;
+  border-radius: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
   cursor: pointer;
   user-select: none;
   color: #888;
+  margin-left: -1px;
+}
+.lang:first-child {
+  border-radius: 4px 0px 0px 4px;
+}
+.lang:last-child {
+  border-radius: 0px 4px 4px 0px;
 }
 .lang.active {
-  color: #666;
+  color: $primaryOrange;
+  border-color: rgba(255, 204, 128, 0.6);
+  background: rgba(255, 204, 128, 0.1);
 }
 .lang:hover {
-  background: rgba(128, 128, 128, 0.2);
+  background: rgba(128, 128, 128, 0.5);
 }
 </style>

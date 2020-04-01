@@ -56,22 +56,21 @@
     <!-- TODO use v-expansion-panel instead? -->
     <h3 class="clickable" @click="toggleShowDevelopSettings">
       {{ $t('settings.developSectionTitle') }}
-      <md-icon v-if="showDevelopSettings">expand_less</md-icon>
-      <md-icon v-else>expand_more</md-icon>
+      <v-icon v-if="showDevelopSettings">mdi-chevron-up</v-icon>
+      <v-icon v-else>mdi-chevron-down</v-icon>
     </h3>
 
     <div v-if="showDevelopSettings">
       <v-checkbox
-        hide-details
         :input-value="editClassColors"
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       >
       </v-checkbox>
-      <v-btn @click="exportClassColors">
+      <v-btn @click="exportClassColors" class="ma-2">
         {{ $t('settings.copyClassColorsButton') }}
       </v-btn>
-      <v-btn @click="clearClassColors">
+      <v-btn @click="clearClassColors" class="ma-2">
         {{ $t('settings.clearClassColorsButton') }}
       </v-btn>
 
@@ -80,6 +79,7 @@
         @change="updateExperimentalFeatures"
         :label="$t('settings.experimentalFeatures')"
         hide-details
+        class="my-2"
       ></v-checkbox>
 
       <v-text-field

@@ -1,28 +1,25 @@
 <template>
   <div class="open">
     <CenterWhiteBox>
-      <Logo :height="180" black="#000" :animating="logoAnimating" />
+      <Logo :height="128" black="#fff" :animating="logoAnimating" />
       <h1>{{ $t('openPage.title') }}</h1>
       <OpenBox
         @startAnimating="logoAnimating = true"
         @stopAnimating="logoAnimating = false"
       />
       <div style="display: flex; flex-direction: row;">
-        <md-button
-          class="md-raised"
-          @click="$router.push({ name: 'landingpage' })"
-        >
+        <v-btn @click="$router.push({ name: 'landingpage' })">
           {{ $t('openPage.backButton') }}
-        </md-button>
+        </v-btn>
         <div class="spacer"></div>
-        <md-button class="md-raised" @click="showSettingsDialog = true">
-          <md-icon>settings</md-icon>
+        <v-btn class="md-raised" @click="showSettingsDialog = true">
+          <v-icon left>mdi-cog</v-icon>
           {{ $t('menubar.settings') }}
-        </md-button>
+        </v-btn>
       </div>
     </CenterWhiteBox>
 
-    <v-dialog v-model="showSettingsDialog" width="500" scrollable>
+    <v-dialog v-model="showSettingsDialog" width="700" scrollable>
       <v-card>
         <v-card-title>
           {{ $t('dialog.settings.title') }}
@@ -67,6 +64,13 @@ export default class Open extends Vue {
 
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
+.open {
+  background: $surface url('/pipes_blurry.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 .open {
   display: flex;
   height: 100%;

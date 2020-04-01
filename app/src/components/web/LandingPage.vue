@@ -12,27 +12,34 @@
       >
         <Logo :height="128" black="#fff" :animating="logoAnimating" />
       </div>
-      <p>{{ $t('landingPage.firstParagraph') }}</p>
+      <p class="my-2">{{ $t('landingPage.firstParagraph') }}</p>
       <p class="buttonRow">
         <v-btn
           color="primary black--text"
           @click="$router.push({ path: '/open/sav' })"
+          class="ma-2"
           >{{ $t('landingPage.openSavButton') }}</v-btn
         >
         &nbsp;
-        <v-btn color="secondary black--text" @click="downloadDesktop()">{{
-          $t('landingPage.downloadDesktop')
-        }}</v-btn>
+        <v-btn
+          color="secondary black--text"
+          @click="downloadDesktop()"
+          class="ma-2"
+          >{{ $t('landingPage.downloadDesktop') }}</v-btn
+        >
       </p>
       <a href="/screenshot.png">
         <img src="/screenshot.png" />
       </a>
-      <p>{{ $t('landingPage.secondParagraph') }}</p>
-      <v-btn @click="$router.push({ path: '/open/json' })">{{
-        $t('landingPage.openJsonButton')
-      }}</v-btn>
+      <p class="my-2">{{ $t('landingPage.secondParagraph') }}</p>
+      <v-btn
+        @click="$router.push({ path: '/open/json' })"
+        class="ma-2"
+        outlined
+        >{{ $t('landingPage.openJsonButton') }}</v-btn
+      >
 
-      <p class="left">
+      <p class="left my-4">
         <i18n path="landingPage.thirdParagraph">
           <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
             >GitHub</a
@@ -84,30 +91,48 @@ export default {
 @import '@/assets/colors.scss';
 
 .landingpage {
+  background: $surface url('/pipes_blurry.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.landingpage {
   overflow: auto;
   display: flex;
   height: 100%;
   flex-direction: column;
+  position: relative;
 }
 
-p {
-  color: $textGray;
-  padding: 0px 15px;
-}
 .left {
   text-align: left;
 }
 
 .commithash {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.4);
   text-align: center;
   font-size: 12px;
+  text-align: right;
+  padding-right: 16px;
+  padding-bottom: 16px;
 }
 
 .languageSelection {
+  position: absolute;
+  top: 0px;
+  right: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 800px) {
+  .languageSelection {
+    position: inherit;
+    justify-content: flex-end;
+  }
 }
 
 .buttonRow {

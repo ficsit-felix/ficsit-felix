@@ -1,5 +1,6 @@
 <template>
   <div class="mainmenu" v-if="visible">
+    <div class="menu-content">
     <ul class="menu">
       <li @click="saveFile()" v-if="showSaveMenuEntries">
         {{ $t('menubar.save') }}
@@ -30,10 +31,10 @@
       >
         <div class="bar-entry">
           <div class="icon">
-            <md-icon v-if="session.saves[0].broken" class="error"
-              >error</md-icon
+            <v-icon v-if="session.saves[0].broken" class="error"
+              >mdi-alert-circle</v-icon
             >
-            <md-icon v-else>folder_open</md-icon>
+            <v-icon v-else>mdi-folder-open</v-icon>
           </div>
           <div class="information">
             <div class="session-name">{{ session.sessionName }}</div>
@@ -58,8 +59,8 @@
       >
         <div class="bar-entry">
           <div class="icon">
-            <md-icon v-if="file.broken" class="error">error</md-icon>
-            <md-icon v-else>save</md-icon>
+            <v-icon v-if="file.broken" class="error">mdi-alert-circle</v-icon>
+            <v-icon v-else>mdi-content-save</v-icon>
           </div>
           <div class="information">
             <div class="session-name">{{ file.filename }}</div>
@@ -78,14 +79,16 @@
         </div>
       </li>
     </ul>
-    <div class="version">
-      {{ version }}
-      <div class="commithash">{{ commithash }}</div>
-    </div>
     <div class="content">
       <div v-if="saveFolderNotFound" class="saveFolderError">
         Could not locate save folder
       </div>
+    </div>
+    </div>
+
+    <div class="version">
+      {{ version }}
+      <div class="commithash">{{ commithash }}</div>
     </div>
   </div>
 </template>
@@ -326,22 +329,29 @@ export default class DesktopMenu extends Vue {
 .mainmenu {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: row;
+  /*height: calc(100% - 30px);*/
   position: absolute;
-  z-index: 8;
-  backdrop-filter: blur(4px);
+  top: 0px;
+  left: 0px;
+  z-index: 8; 
   background: #00000040;
 }
 
+.menu-content {
+  display: inline-flex;
+  height: 100%;
+  flex-direction: row;
+  backdrop-filter: blur(10px);
+  /*background: #00000040;*/
+}
 .menu {
   list-style-type: none;
   margin: 0px;
   padding: 80px 0px;
   width: 300px;
   height: 100%;
-  background: #3e3f40cc;
-  box-shadow: 10px 0px 7px #00000040;
+  background: #00000088;
+  /*box-shadow: 10px 0px 7px #00000040;*/
   z-index: 5;
   li {
     margin: 0px;
@@ -356,7 +366,7 @@ export default class DesktopMenu extends Vue {
       padding: 10px 40px;
     }
     &:hover {
-      background: #e59345bb;
+      background: #ffa726bb;
     }
   }
   .spacer {
@@ -365,19 +375,19 @@ export default class DesktopMenu extends Vue {
 }
 
 .browser {
-  width: 300px;
+  width: 400px;
   height: 100%;
 
   margin: 0px;
   padding: 30px 0px;
   &.filebrowser {
-    background: #00000030;
-    box-shadow: 10px 0px 7px #00000040;
+    background: #66666620;
+    /*box-shadow: 10px 0px 7px #00000040;*/
     z-index: 4;
   }
 
   &.sessionbrowser {
-    background: #00000020;
+    background: #ffffff20;
     flex-grow: 1;
   }
 
@@ -430,15 +440,16 @@ export default class DesktopMenu extends Vue {
 
 .version {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
-  color: #666;
+  bottom: 16px;
+  right: 16px;
+  color: #ffffff80;
   font-size: 20px;
   line-height: 1.2;
+  text-align: right;
 }
 .commithash {
   font-size: 12px;
-  color: #555;
+  color: #ffffff60;
 }
 
 .bar-entry {
@@ -447,11 +458,13 @@ export default class DesktopMenu extends Vue {
   align-items: center;
 
   .icon {
-    background: #666;
+    background: #ffffff20;
     border-radius: 20px;
-    padding: 5px;
+    border: 1px solid #ffffff30;
     display: inline-block;
     margin-right: 7px;
+    padding: 8px;
+
 
     .error {
       color: #ff8239;

@@ -1,40 +1,52 @@
 <template>
   <div class="property-editor panel">
     <div class="buttons">
-      <md-button
-        class="md-raised"
-        :disabled="focusDisabled"
-        @click="focusSelectedObject"
-      >
-        {{ $t('propertyEditor.focusButton') }}
-        <md-tooltip md-delay="500">F</md-tooltip>
-      </md-button>
-      <md-button
-        class="md-raised md-accent"
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            class="ma-2"
+            :disabled="focusDisabled"
+            @click="focusSelectedObject"
+            v-on="on"
+          >
+            {{ $t('propertyEditor.focusButton') }}
+          </v-btn>
+        </template>
+        F
+      </v-tooltip>
+      <v-btn
+        class="ma-2"
+        color="secondary black--text"
         :disabled="this.selectedJsonToEdit == null"
         @click="saveJson"
-        >{{ $t('propertyEditor.saveJsonButton') }}</md-button
+        >{{ $t('propertyEditor.saveJsonButton') }}</v-btn
       >
       <div class="spacer"></div>
-      <md-button
-        class="md-raised md-primary"
-        :disabled="
-          this.selectedJsonToEdit == null ||
-            (this.selectedPathNames.length === 1 &&
-              this.selectedPathNames[0] === '---save-header---')
-        "
-        @click="showDeleteDialog = true"
-      >
-        {{ $t('propertyEditor.deleteButton') }}
-        <md-tooltip md-delay="500">{{ $t('keyboard.del') }}</md-tooltip>
-      </md-button>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            color="primary black--text"
+            :disabled="
+              selectedJsonToEdit == null ||
+                (selectedPathNames.length === 1 &&
+                  selectedPathNames[0] === '---save-header---')
+            "
+            @click="showDeleteDialog = true"
+            class="ma-2"
+            v-on="on"
+          >
+            <span>{{ $t('propertyEditor.deleteButton') }}</span>
+          </v-btn>
+        </template>
+        {{ $t('keyboard.del') }}
+      </v-tooltip>
     </div>
     <div v-if="experimentalFeatures">
-      <md-button
-        class="md-raised"
+      <v-btn
         @click="copyAsBlueprint"
         :disabled="copyAsBlueprintDisabled"
-        >{{ $t('propertyEditor.copyAsBlueprint') }}</md-button
+        class="ma-2"
+        >{{ $t('propertyEditor.copyAsBlueprint') }}</v-btn
       >
     </div>
 
@@ -49,6 +61,7 @@
     >
     </v-textarea>
 
+    <!-- TODO
     <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">{{
       $t('propertyEditor.objectSavedSnack')
     }}</md-snackbar>
@@ -66,6 +79,8 @@
         deleteSelected();
       "
     />
+
+    -->
   </div>
 </template>
 

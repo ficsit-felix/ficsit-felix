@@ -1,5 +1,6 @@
 <template>
   <div class="bugreport">
+    <!-- TODO
     <md-dialog :md-active.sync="showBugReportDialog">
       <md-dialog-title>{{ $t('dialog.bugReport.title') }}</md-dialog-title>
       <md-dialog-content>
@@ -61,6 +62,7 @@
       :md-content="$t('dialog.bugReport.errorMessage')"
       :md-confirm-text="$t('general.ok')"
     />
+    -->
   </div>
 </template>
 

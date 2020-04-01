@@ -7,69 +7,114 @@
     >
       <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
     </div>
-    <span
-      @click="showOpenDialog = true"
-      v-shortkey.once="['ctrl', 'o']"
-      @shortkey="showOpenDialog = true"
-    >
-      <v-icon>mdi-home</v-icon>
-      {{ $t('menubar.open') }}
-      <md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+O</md-tooltip>
-    </span>
-    <span
-      @click="showSaveDialog = true"
-      v-shortkey.once="['ctrl', 's']"
-      @shortkey="showSaveDialog = true"
-    >
-      <md-icon>save</md-icon>
-      {{ $t('menubar.save') }}
-      <md-tooltip md-delay="500">{{ $t('keyboard.ctrl') }}+S</md-tooltip>
-    </span>
-    <span
-      @click="showHelpDialog = true"
-      v-shortkey.once="['f1']"
-      @shortkey="showHelpDialog = true"
-    >
-      <md-icon>help</md-icon>
-      {{ $t('menubar.help') }}
-      <md-tooltip md-delay="500">F1</md-tooltip>
-    </span>
-    <span @click="showSettingsDialog = true">
-      <md-icon>settings</md-icon>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <span
+          class="menu-item"
+          @click="showOpenDialog = true"
+          v-shortkey.once="['ctrl', 'o']"
+          @shortkey="showOpenDialog = true"
+          v-on="on"
+        >
+          <v-icon>mdi-home</v-icon>
+          {{ $t('menubar.open') }}
+        </span>
+      </template>
+      {{ $t('keyboard.ctrl') }}+O
+    </v-tooltip>
+
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <span
+          class="menu-item"
+          @click="showSaveDialog = true"
+          v-shortkey.once="['ctrl', 's']"
+          @shortkey="showSaveDialog = true"
+          v-on="on"
+        >
+          <v-icon>mdi-content-save</v-icon>
+          {{ $t('menubar.save') }}
+        </span>
+      </template>
+      {{ $t('keyboard.ctrl') }}+S
+    </v-tooltip>
+
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <span
+          class="menu-item"
+          @click="showHelpDialog = true"
+          v-shortkey.once="['f1']"
+          @shortkey="showHelpDialog = true"
+          v-on="on"
+        >
+          <v-icon>mdi-help-circle</v-icon>
+          {{ $t('menubar.help') }}
+        </span>
+      </template>
+      F1
+    </v-tooltip>
+    <span class="menu-item" @click="showSettingsDialog = true">
+      <v-icon>mdi-cog</v-icon>
       {{ $t('menubar.settings') }}
     </span>
     <div class="spacer"></div>
 
-    <md-menu md-direction="bottom-end">
-      <md-button md-menu-trigger>
-        <md-icon>menu</md-icon>
-        {{ $t('menubar.more') }}
-      </md-button>
+    <v-menu bottom left>
+      <template v-slot:activator="{ on }">
+        <v-btn text v-on="on">
+          <v-icon left>mdi-menu</v-icon>
+          {{ $t('menubar.more') }}
+        </v-btn>
+      </template>
 
-      <md-menu-content class="menubar-content">
-        <md-menu-item @click="showOpenJsonDialog = true">
-          <md-icon>file_upload</md-icon>
-          {{ $t('menubar.importJson') }}
-        </md-menu-item>
-        <md-menu-item @click="showSaveJsonDialog = true">
-          <md-icon>file_download</md-icon>
-          {{ $t('menubar.exportJson') }}
-        </md-menu-item>
-        <md-menu-item @click="openGithub()">
-          <md-icon>code</md-icon>
-          {{ $t('menubar.github') }}
-        </md-menu-item>
-        <md-menu-item @click="showLicensesDialog = true">
-          <md-icon>view_headline</md-icon>
-          {{ $t('menubar.openSource') }}
-        </md-menu-item>
-        <md-menu-item @click="showAboutDialog = true">
-          <md-icon>info_outline</md-icon>
-          {{ $t('menubar.about') }}
-        </md-menu-item>
-      </md-menu-content>
-    </md-menu>
+      <v-list>
+        <v-list-item @click="showOpenJsonDialog = true">
+          <v-list-item-icon>
+            <v-icon>mdi-upload</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>
+            {{ $t('menubar.importJson') }}
+          </v-list-item-title>
+        </v-list-item>
 
+        <v-list-item @click="showSaveJsonDialog = true">
+          <v-list-item-icon>
+            <v-icon>mdi-download</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>
+            {{ $t('menubar.exportJson') }}
+          </v-list-item-title>
+        </v-list-item>
+
+        <v-list-item @click="openGithub()">
+          <v-list-item-icon>
+            <v-icon>mdi-github</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>
+            {{ $t('menubar.github') }}
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="showLicensesDialog = true">
+          <v-list-item-icon>
+            <v-icon>mdi-view-headline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>
+            {{ $t('menubar.openSource') }}
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="showAboutDialog = true">
+          <v-list-item-icon>
+            <v-icon>mdi-information-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>
+            {{ $t('menubar.about') }}
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+
+    <!-- TODO
     <md-dialog-confirm
       :md-active.sync="showOpenDialog"
       :md-title="$t('dialog.open.title')"
@@ -192,6 +237,8 @@
         }}</md-button>
       </md-dialog-actions>
     </md-dialog>
+
+    -->
   </div>
 </template>
 
@@ -204,9 +251,9 @@ import { findActorByName } from '@/helpers/entityHelper';
 export default {
   name: 'Menubar',
   components: {
-    Logo,
-    LicensesDialog,
-    Settings
+    Logo
+    //LicensesDialog,
+    //Settings
   },
   data: function() {
     return {
@@ -251,6 +298,7 @@ export default {
   padding-left: 30px;
   padding-right: 30px;
   user-select: none;
+  align-items: center;
   .logoContainer {
     margin-right: 60px;
   }
@@ -258,14 +306,14 @@ export default {
   .spacer {
     flex-grow: 1;
   }
-  span {
+  span.menu-item {
     display: inline-block;
     padding: 10px 10px;
     padding-right: 20px;
     font-size: 16px;
     line-height: 33px;
     i {
-      padding-right: 12px;
+      padding-right: 5px;
     }
     color: #e3d3d3;
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -273,7 +321,7 @@ export default {
   span:hover {
     color: $primaryOrange;
     cursor: pointer;
-    .md-icon.md-theme-default.md-icon-font {
+    .v-icon {
       color: $primaryOrange;
     }
   }
@@ -298,10 +346,10 @@ b {
   .md-list-item-content {
     justify-content: left !important;
   }
-  .md-list-item-content > .md-icon:last-child {
+  .md-list-item-content > .v-icon:last-child {
     margin-left: 0px;
   }
-  .md-list-item-content > .md-icon:first-child {
+  .md-list-item-content > .v-icon:first-child {
     margin-right: 12px;
   }
 }

@@ -23,6 +23,7 @@
         </li>
       </ul>
 
+      <!-- TODO
       <md-dialog :md-active.sync="showColorDialog">
         <md-dialog-title>{{ $t('dialog.color.title') }}</md-dialog-title>
         <md-dialog-content class="colorPickerDialogContent">
@@ -37,6 +38,7 @@
           }}</md-button>
         </md-dialog-actions>
       </md-dialog>
+      -->
     </div>
   </div>
 </template>
@@ -49,7 +51,7 @@ import { modelConfig } from '@/definitions/models';
 export default {
   name: 'ClassList',
   components: {
-    colorPicker
+    //colorPicker
   },
   data: function() {
     return {

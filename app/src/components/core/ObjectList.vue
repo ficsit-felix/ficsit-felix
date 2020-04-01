@@ -1,8 +1,13 @@
 <template>
   <div class="object-list panel">
     <div class="filter-field">
-      
-      <v-text-field filled :label=" $t('objectList.filterField') " v-model="filterTerm" append-icon="mdi-magnify" hide-details>
+      <v-text-field
+        filled
+        :label="$t('objectList.filterField')"
+        v-model="filterTerm"
+        append-icon="mdi-magnify"
+        hide-details
+      >
       </v-text-field>
     </div>
     <virtual-list

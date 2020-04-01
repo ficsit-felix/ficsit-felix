@@ -14,27 +14,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #adadad;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
 
-.titlebar-logo {
-  display: inline-block;
-  position: fixed;
-  margin-top: -30px;
-  left: 10px;
-  z-index: 100000;
-  -webkit-app-region: no-drag;
-}
-</style>
 
 <script>
 import '@/assets/main.scss';
@@ -365,3 +345,24 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #adadad;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.titlebar-logo {
+  display: inline-block;
+  position: fixed;
+  margin-top: -30px;
+  left: 10px;
+  z-index: 100000;
+  -webkit-app-region: no-drag;
+}
+</style>
