@@ -1,66 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      var deployedUrls = [
-        "https://ficsit-felix.netlify.com/",
-        "https://ficsit-felix.now.sh/"
-      ];
 
-      function redirectTo(url) {
-        location.href = url + location.hash;
-      }
+<head>
+  <script>
+    var deployedUrls = [
+      "https://ficsit-felix.netlify.app/",
+      "https://ficsit-felix.now.sh/"
+    ];
 
-      function getRandomDeployedUrl() {
-        return deployedUrls[Math.floor(Math.random() * deployedUrls.length)];
-      }
+    function redirectTo(url) {
+      location.href = url + location.hash;
+    }
 
-      function redirectToDeployedUrl() {
-        // if there was a previous redirect, redirect to the same site to reuse cache if possible
-        if (
-          localStorage !== undefined &&
-          localStorage.getItem("url") !== null
-        ) {
-          var url = localStorage.getItem("url");
-          if (deployedUrls.includes(url)) {
-            redirectTo(url);
-            return;
-          }
-        }
+    function getRandomDeployedUrl() {
+      return deployedUrls[Math.floor(Math.random() * deployedUrls.length)];
+    }
 
-        // choose a deployed url at random and cache it
-        var url = getRandomDeployedUrl();
-        if (localStorage !== undefined) {
-          localStorage.setItem("url", url);
+    function redirectToDeployedUrl() {
+      // if there was a previous redirect, redirect to the same site to reuse cache if possible
+      if (
+        localStorage !== undefined &&
+        localStorage.getItem("url") !== null
+      ) {
+        var url = localStorage.getItem("url");
+        if (deployedUrls.includes(url)) {
           redirectTo(url);
+          return;
         }
       }
 
-      redirectToDeployedUrl();
-    </script>
-    <title>FICSIT - FeliX</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="favicon.ico" />
-    <link rel="stylesheet" href="style.css" />
-    <meta
-      name="description"
-      content="FeliX is a save file visualizer for the game Satisfactory."
-    />
-    <meta
-      name="keywords"
-      content="Satisfactory,FICSIT,FeliX,save,file,editor"
-    />
-  </head>
-  <body>
-    <h1>FICSIT - FeliX</h1>
-    <p>FeliX is a save file visualizer for the game Satisfactory.</p>
-    <noscript>
-      You need JavaScript enabled to be able to use FeliX.
-    </noscript>
-    <a href="javascript:redirectToDeployedUrl()">
-      You can currently find FeliX here.
-    </a>
-  </body>
+      // choose a deployed url at random and cache it
+      var url = getRandomDeployedUrl();
+      if (localStorage !== undefined) {
+        localStorage.setItem("url", url);
+        redirectTo(url);
+      }
+    }
+
+    redirectToDeployedUrl();
+  </script>
+  <title>FICSIT - FeliX</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="FeliX is a save file visualizer for the game Satisfactory." />
+  <meta name="keywords" content="Satisfactory,FICSIT,FeliX,save,file,editor" />
+</head>
+
+<body>
+  <h1>FICSIT - FeliX</h1>
+  <p>FeliX is a save file visualizer for the game Satisfactory.</p>
+  <noscript>
+    You need JavaScript enabled to be able to use FeliX.
+  </noscript>
+  <a href="javascript:redirectToDeployedUrl()">
+    You can currently find FeliX here.
+  </a>
+</body>
+
 </html>
