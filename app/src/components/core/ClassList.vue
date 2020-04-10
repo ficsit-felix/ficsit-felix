@@ -106,7 +106,7 @@ export default {
 
       this.setClassColor({
         className: this.selectedClassName,
-        color: color.hex,
+        color: color.hex
       });
     }
   }
