@@ -1528,8 +1528,6 @@ export let modelConfig: { [id: string]: ModelConfig } = {
 };
 
 export let modClassNamePrefixes = [
-  '/Game/AreaActions/',
-  '/Game/Conveyors_Mod/',
   '/Game/FactoryGame/AreaActions/',
   '/Game/FactoryGame/CrazyMod/',
   '/Game/FactoryGame/FarmingMod/',
@@ -1559,17 +1557,14 @@ export let modClassNamePrefixes = [
   '/Game/FactoryGame/Teleporter/',
   '/Game/FactoryGame/Unlocks/',
   '/Game/FactoryGame/UtilityMod/',
-  '/Game/LightItUp/',
-  '/Game/Miner_Mk4/',
-  '/Game/ProgrammableElevatorMod/',
-  '/Game/UtilityMod/',
   '/Script/LightItUp.'
 ];
 
 export function isModClassName(className: string) {
-  const isMod = modClassNamePrefixes.some(prefix =>
-    className.startsWith(prefix)
-  );
+  const isMod =
+    (className.startsWith('/Game/') &&
+      !className.startsWith('/Game/FactoryGame/')) ||
+    modClassNamePrefixes.some(prefix => className.startsWith(prefix));
   if (isMod) {
     console.log(`Mod: ${className}`);
   }
