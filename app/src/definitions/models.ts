@@ -230,6 +230,11 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: rampColor,
     paintable: false
   },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_RampInverted_8x1_Corner_02.Build_RampInverted_8x1_Corner_02_C': {
+    model: 'FoundationInv_8x1_Corner.glb',
+    color: rampColor,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_RampInverted_8x1.Build_RampInverted_8x1_C': {
     model: 'RampInv_8x1.glb',
     color: rampColor,
@@ -245,8 +250,18 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: rampColor,
     paintable: false
   },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_RampInverted_8x2_Corner_02.Build_RampInverted_8x2_Corner_02_C': {
+    model: 'FoundationInv_8x2_Corner.glb',
+    color: rampColor,
+    paintable: false
+  },
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_RampInverted_8x4_Corner_01.Build_RampInverted_8x4_Corner_01_C': {
     model: 'RampInv_8x4_Corner.glb',
+    color: rampColor,
+    paintable: false
+  },
+  '/Game/FactoryGame/Buildable/Building/Ramp/Build_RampInverted_8x4_Corner_02.Build_RampInverted_8x4_Corner_02_C': {
+    model: 'FoundationInv_8x4_Corner.glb',
     color: rampColor,
     paintable: false
   },
