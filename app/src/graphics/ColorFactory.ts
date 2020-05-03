@@ -1,4 +1,4 @@
-import { modelConfig } from '@/definitions/models';
+import { modelConfig, isModClassName } from '@/definitions/models';
 import { Color, MeshMatcapMaterial, Material, Texture } from 'three';
 import { findActorByName } from '@/helpers/entityHelper';
 import { Actor, ByteProperty, StructProperty } from 'satisfactory-json';
@@ -83,6 +83,7 @@ export default class ColorFactory {
         const element = buildableSubsystem.entity.properties[
           i
         ] as StructProperty;
+
         if (element.name === 'mColorSlotsPrimary') {
           // this primary color was changed by the user
           defaultColors[element.index] = new Color(
@@ -90,6 +91,16 @@ export default class ColorFactory {
             element.value.g / 255,
             element.value.b / 255
           );
+        }
+
+        // Linear colors are used from save version 23 on
+        if (element.name === 'mColorSlotsPrimary_Linear') {
+          for (let j = 0; j < element.value.values.length; j++) {
+            const color = element.value.values[j];
+            defaultColors[j] = new Color(color.r, color.g, color.b);
+          }
+
+          break;
         }
       }
     }
@@ -114,7 +125,7 @@ export default class ColorFactory {
       for (let i = 0; i < actor.entity.properties.length; i++) {
         const element = actor.entity.properties[i] as ByteProperty;
         if (element.name === 'mColorSlot') {
-          if (!isPaintable) {
+          if (!isPaintable && !isModClassName(actor.className)) {
             console.warn('paintable should be true for: ' + actor.className);
             /*reportMessage(
               "paintable should be true for: " + actor.className

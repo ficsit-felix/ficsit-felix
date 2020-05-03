@@ -109,7 +109,7 @@ export default {
 
       this.setClassColor({
         className: this.selectedClassName,
-        color: color.rgba.toHexString()
+        color: color.hex
       });
     }
   }
