@@ -83,6 +83,7 @@ export default class ColorFactory {
         const element = buildableSubsystem.entity.properties[
           i
         ] as StructProperty;
+
         if (element.name === 'mColorSlotsPrimary') {
           // this primary color was changed by the user
           defaultColors[element.index] = new Color(
@@ -90,6 +91,16 @@ export default class ColorFactory {
             element.value.g / 255,
             element.value.b / 255
           );
+        }
+
+        // Linear colors are used from save version 23 on
+        if (element.name === 'mColorSlotsPrimary_Linear') {
+          for (let j = 0; j < element.value.values.length; j++) {
+            const color = element.value.values[j];
+            defaultColors[j] = new Color(color.r, color.g, color.b);
+          }
+
+          break;
         }
       }
     }
