@@ -2,6 +2,7 @@
   <div id="app">
     <v-app>
       <router-view />
+      <Dialogs></Dialogs>
     </v-app>
   </div>
 </template>
@@ -33,9 +34,13 @@
 <script>
 import '@/assets/main.scss';
 import { mapState } from 'vuex';
+import Dialogs from '../core/Dialogs.vue';
 
 export default {
   name: 'App',
+  components: {
+    Dialogs
+  },
   computed: mapState(['title']),
   methods: {
     testError: function() {

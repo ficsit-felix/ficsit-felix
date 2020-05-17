@@ -14,23 +14,19 @@
           $t('general.close')
         }}</md-button>
       </md-dialog-actions>
-    </md-dialog> -->
+    </md-dialog>-->
 
     <!-- settings dialog -->
 
     <v-dialog v-model="showSettingsDialog" width="700" scrollable>
       <v-card>
-        <v-card-title>
-          {{ $t('dialog.settings.title') }}
-        </v-card-title>
+        <v-card-title>{{ $t('dialog.settings.title') }}</v-card-title>
         <v-card-text>
           <Settings></Settings>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showSettingsDialog = false">
-            {{ $t('general.close') }}
-          </v-btn>
+          <v-btn color="primary" text @click="showSettingsDialog = false">{{ $t('general.close') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -46,7 +42,7 @@
           $t('general.close')
         }}</md-button>
       </md-dialog-actions>
-    </md-dialog> -->
+    </md-dialog>-->
 
     <!-- about dialog -->
     <v-dialog v-model="showAboutDialog" width="600" scrollable>
@@ -56,11 +52,7 @@
           <p>{{ $t('dialog.about.row1') }}</p>
           <p>
             <i18n path="dialog.about.row2">
-              <a
-                href="https://github.com/ficsit-felix/ficsit-felix"
-                slot="github"
-                >GitHub</a
-              >
+              <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github">GitHub</a>
             </i18n>
           </p>
           <p>
@@ -68,21 +60,22 @@
               <a
                 href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
                 slot="authors"
-                >{{ $t('dialog.about.authors') }}</a
-              >
+              >{{ $t('dialog.about.authors') }}</a>
             </i18n>
           </p>
         </v-card-text>
         <v-card-actions>
-          <v-spacer> </v-spacer>
-          <v-btn color="primary" text @click="showAboutDialog = false">{{
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="showAboutDialog = false">
+            {{
             $t('general.close')
-          }}</v-btn>
+            }}
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!-- progress dialog-->
 
+    <!-- progress dialog-->
     <v-dialog v-model="showProgressDialog" width="600" persistent>
       <ProgressBarDialog></ProgressBarDialog>
     </v-dialog>
@@ -94,7 +87,7 @@
       <md-dialog-content>
         <ProgressBarDialog></ProgressBarDialog>
       </md-dialog-content>
-    </md-dialog> -->
+    </md-dialog>-->
 
     <!-- <md-dialog-confirm
       :md-active.sync="showSaveDialog"
@@ -128,9 +121,9 @@
       ref="bugReport"
       :filename="filename"
       :uuid="uuid"
-    ></BugReportDialog> -->
+    ></BugReportDialog>-->
 
-    <!-- confirm exit dialog -->
+    <!-- confirm exit dialog (desktop only) -->
     <v-dialog
       v-model="showConfirmExitDialog"
       width="600"
@@ -156,7 +149,7 @@
         showSaveDialog = false;
         exit();
       "
-    /> -->
+    />-->
   </div>
 </template>
 
@@ -179,10 +172,9 @@ import {
   DIALOG_CONFIRM_EXIT,
   DIALOG_SAVE_DESKTOP
 } from '../../ts/constants';
-import { EventBufferer } from 'custom-electron-titlebar/lib/common/event';
 import { setTimeout } from 'timers';
 import { mapState } from 'vuex';
-import { remote } from 'electron';
+// import { remote } from 'electron';
 
 export default Vue.extend({
   name: 'Dialogs',
@@ -318,8 +310,9 @@ export default Vue.extend({
       EventBus.$emit(ON_SAVE_PRESSED);
     },
     exit() {
-      var window = remote.getCurrentWindow();
-      window.close();
+      // TODO replace with event listener
+      // var window = remote.getCurrentWindow();
+      // window.close();
     }
   }
 });

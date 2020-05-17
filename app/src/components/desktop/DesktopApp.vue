@@ -66,8 +66,8 @@ export default {
   },
   mounted() {
     this.titlebar = new Titlebar({
-      backgroundColor: Color.fromHex('#16161d'),
-      itemBackgroundColor: Color.fromHex('#26262d'),
+      backgroundColor: Color.fromHex('#111618'),
+      itemBackgroundColor: Color.fromHex('#1d2223'),
       enableMnemonics: true
     });
     this.titlebar.updateTitle('FICSIT - FeliX');

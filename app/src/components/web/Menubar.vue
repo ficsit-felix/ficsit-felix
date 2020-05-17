@@ -43,9 +43,9 @@
       <template v-slot:activator="{ on }">
         <span
           class="menu-item"
-          @click="showHelpDialog = true"
+          @click="showHelpDialog()"
           v-shortkey.once="['f1']"
-          @shortkey="showHelpDialog = true"
+          @shortkey="showHelpDialog()"
           v-on="on"
         >
           <v-icon>mdi-help-circle</v-icon>
@@ -54,7 +54,7 @@
       </template>
       F1
     </v-tooltip>
-    <span class="menu-item" @click="showSettingsDialog = true">
+    <span class="menu-item" @click="showSettingsDialog()">
       <v-icon>mdi-cog</v-icon>
       {{ $t('menubar.settings') }}
     </span>
@@ -73,43 +73,33 @@
           <v-list-item-icon>
             <v-icon>mdi-upload</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>
-            {{ $t('menubar.importJson') }}
-          </v-list-item-title>
+          <v-list-item-title>{{ $t('menubar.importJson') }}</v-list-item-title>
         </v-list-item>
 
         <v-list-item @click="showSaveJsonDialog = true">
           <v-list-item-icon>
             <v-icon>mdi-download</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>
-            {{ $t('menubar.exportJson') }}
-          </v-list-item-title>
+          <v-list-item-title>{{ $t('menubar.exportJson') }}</v-list-item-title>
         </v-list-item>
 
         <v-list-item @click="openGithub()">
           <v-list-item-icon>
             <v-icon>mdi-github</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>
-            {{ $t('menubar.github') }}
-          </v-list-item-title>
+          <v-list-item-title>{{ $t('menubar.github') }}</v-list-item-title>
         </v-list-item>
         <v-list-item @click="showLicensesDialog = true">
           <v-list-item-icon>
             <v-icon>mdi-view-headline</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>
-            {{ $t('menubar.openSource') }}
-          </v-list-item-title>
+          <v-list-item-title>{{ $t('menubar.openSource') }}</v-list-item-title>
         </v-list-item>
-        <v-list-item @click="showAboutDialog = true">
+        <v-list-item @click="showAboutDialog()">
           <v-list-item-icon>
             <v-icon>mdi-information-outline</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>
-            {{ $t('menubar.about') }}
-          </v-list-item-title>
+          <v-list-item-title>{{ $t('menubar.about') }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -210,33 +200,6 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <md-dialog :md-active.sync="showAboutDialog">
-      <md-dialog-title>{{ $t('dialog.about.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <p>{{ $t('dialog.about.row1') }}</p>
-        <p>
-          <i18n path="dialog.about.row2">
-            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
-              >GitHub</a
-            >
-          </i18n>
-        </p>
-        <p>
-          <i18n path="dialog.about.row3">
-            <a
-              href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
-              slot="authors"
-              >{{ $t('dialog.about.authors') }}</a
-            >
-          </i18n>
-        </p>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showAboutDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
 
     -->
   </div>
@@ -247,6 +210,8 @@ import Logo from '../core/Logo';
 import LicensesDialog from '../core/LicensesDialog';
 import Settings from '../core/Settings';
 import { findActorByName } from '@/helpers/entityHelper';
+import { EventBus } from '../../event-bus';
+import { DIALOG_ABOUT, DIALOG_SETTINGS, DIALOG_HELP } from '../../ts/constants';
 
 export default {
   name: 'Menubar',
@@ -258,14 +223,11 @@ export default {
   data: function() {
     return {
       logoAnimating: false,
-      showHelpDialog: false,
       showOpenDialog: false,
       showSaveDialog: false,
       showOpenJsonDialog: false,
       showSaveJsonDialog: false,
-      showSettingsDialog: false,
-      showLicensesDialog: false,
-      showAboutDialog: false
+      showLicensesDialog: false
     };
   },
   methods: {
@@ -283,6 +245,15 @@ export default {
     },
     openGithub() {
       window.open('https://github.com/ficsit-felix/ficsit-felix', '_blank');
+    },
+    showAboutDialog() {
+      EventBus.$emit(DIALOG_ABOUT);
+    },
+    showSettingsDialog() {
+      EventBus.$emit(DIALOG_SETTINGS);
+    },
+    showHelpDialog() {
+      EventBus.$emit(DIALOG_HELP);
     }
   },
   mounted() {}
