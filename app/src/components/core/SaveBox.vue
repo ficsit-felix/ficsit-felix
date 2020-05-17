@@ -15,7 +15,7 @@
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
-      <p class="secondary">{{ infoText }}</p>
+      <p class="info-text">{{ infoText }}</p>
     </div>
 
     <md-dialog :md-active.sync="showErrorDialog">
@@ -199,7 +199,7 @@ export default {
   }
 }
 
-.secondary {
+.info-text {
   font-size: 15px;
   margin-top: 10px;
   color: $logoColorLight;

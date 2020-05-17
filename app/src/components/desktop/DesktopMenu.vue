@@ -1,91 +1,96 @@
 <template>
   <div class="mainmenu" v-if="visible">
-    <ul class="menu">
-      <li @click="saveFile()" v-if="showSaveMenuEntries">
-        {{ $t('menubar.save') }}
-      </li>
-      <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
+    <div class="menu-content">
+      <ul class="menu">
+        <li @click="saveFile()" v-if="showSaveMenuEntries">
+          {{ $t('menubar.save') }}
+        </li>
+        <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
 
-      <div class="spacer"></div>
-      <li class="small" @click="exportJson()" v-if="showSaveMenuEntries">
-        {{ $t('menubar.exportJson') }}
-      </li>
-      <li class="small" @click="openJsonFilebrowser()">
-        {{ $t('menubar.importJson') }}
-      </li>
+        <div class="spacer"></div>
+        <li class="small" @click="exportJson()" v-if="showSaveMenuEntries">
+          {{ $t('menubar.exportJson') }}
+        </li>
+        <li class="small" @click="openJsonFilebrowser()">
+          {{ $t('menubar.importJson') }}
+        </li>
 
-      <li class="small" @click="openSettings()">
-        {{ $t('menubar.settings') }}
-      </li>
-      <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
-      <div class="spacer"></div>
-      <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
-    </ul>
+        <li class="small" @click="openSettings()">
+          {{ $t('menubar.settings') }}
+        </li>
+        <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
+        <div class="spacer"></div>
+        <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
+      </ul>
 
-    <ul class="browser filebrowser" ref="filebrowser" v-if="showFilebrowser">
-      <li
-        v-bind:key="session.sessionName"
-        v-for="session in sortedFiles"
-        @click="sessionFiles = session.saves"
-      >
-        <div class="bar-entry">
-          <div class="icon">
-            <md-icon v-if="session.saves[0].broken" class="error"
-              >error</md-icon
-            >
-            <md-icon v-else>folder_open</md-icon>
-          </div>
-          <div class="information">
-            <div class="session-name">{{ session.sessionName }}</div>
-            <div class="bottom-info">
-              <div class="filename">{{ session.saves[0].filename }}</div>
-              <!--<div class="last-time">{{ dateToString(session.saves[0].saveDateTime) }}</div>-->
+      <ul class="browser filebrowser" ref="filebrowser" v-if="showFilebrowser">
+        <li
+          v-bind:key="session.sessionName"
+          v-for="session in sortedFiles"
+          @click="sessionFiles = session.saves"
+        >
+          <div class="bar-entry">
+            <div class="icon">
+              <v-icon v-if="session.saves[0].broken" class="error"
+                >mdi-alert-circle</v-icon
+              >
+              <v-icon v-else>mdi-folder-open</v-icon>
             </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-
-    <ul
-      class="browser sessionbrowser"
-      ref="sessionbrowser"
-      v-if="showFilebrowser && sessionFiles.length > 0"
-    >
-      <li
-        v-bind:key="file.filename"
-        v-for="file in sessionFiles"
-        @click="openFile(file.filepath)"
-      >
-        <div class="bar-entry">
-          <div class="icon">
-            <md-icon v-if="file.broken" class="error">error</md-icon>
-            <md-icon v-else>save</md-icon>
-          </div>
-          <div class="information">
-            <div class="session-name">{{ file.filename }}</div>
-            <div class="bottom-info" v-if="file.broken">
-              <div class="error">{{ $t('desktop.brokenSaveFile') }}</div>
-            </div>
-            <div class="bottom-info" v-else>
-              <div class="filename">
-                {{ $t('desktop.playDuration') }}
-                {{ secondsToTime(file.playDurationSeconds) }}
+            <div class="information">
+              <div class="session-name">{{ session.sessionName }}</div>
+              <div class="bottom-info">
+                <div class="filename">{{ session.saves[0].filename }}</div>
+                <!--<div class="last-time">{{ dateToString(session.saves[0].saveDateTime) }}</div>-->
               </div>
-              <div class="last-time">{{ dateToString(file.saveDateTime) }}</div>
-              <div class="last-time">{{ bytesToSize(file.size) }}</div>
             </div>
           </div>
+        </li>
+      </ul>
+
+      <ul
+        class="browser sessionbrowser"
+        ref="sessionbrowser"
+        v-if="showFilebrowser && sessionFiles.length > 0"
+      >
+        <li
+          v-bind:key="file.filename"
+          v-for="file in sessionFiles"
+          @click="openFile(file.filepath)"
+        >
+          <div class="bar-entry">
+            <div class="icon">
+              <v-icon v-if="file.broken" class="error">mdi-alert-circle</v-icon>
+              <v-icon v-else>mdi-content-save</v-icon>
+            </div>
+            <div class="information">
+              <div class="session-name">{{ file.filename }}</div>
+              <div class="bottom-info" v-if="file.broken">
+                <div class="error">{{ $t('desktop.brokenSaveFile') }}</div>
+              </div>
+              <div class="bottom-info" v-else>
+                <div class="filename">
+                  {{ $t('desktop.playDuration') }}
+                  {{ secondsToTime(file.playDurationSeconds) }}
+                </div>
+                <div class="last-time">
+                  {{ dateToString(file.saveDateTime) }}
+                </div>
+                <div class="last-time">{{ bytesToSize(file.size) }}</div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="content">
+        <div v-if="saveFolderNotFound" class="saveFolderError">
+          Could not locate save folder
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+
     <div class="version">
       {{ version }}
       <div class="commithash">{{ commithash }}</div>
-    </div>
-    <div class="content">
-      <div v-if="saveFolderNotFound" class="saveFolderError">
-        Could not locate save folder
-      </div>
     </div>
   </div>
 </template>
@@ -326,22 +331,29 @@ export default class DesktopMenu extends Vue {
 .mainmenu {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: row;
+  /*height: calc(100% - 30px);*/
   position: absolute;
+  top: 0px;
+  left: 0px;
   z-index: 8;
-  backdrop-filter: blur(4px);
   background: #00000040;
 }
 
+.menu-content {
+  display: inline-flex;
+  height: 100%;
+  flex-direction: row;
+  backdrop-filter: blur(10px);
+  /*background: #00000040;*/
+}
 .menu {
   list-style-type: none;
   margin: 0px;
   padding: 80px 0px;
   width: 300px;
   height: 100%;
-  background: #3e3f40cc;
-  box-shadow: 10px 0px 7px #00000040;
+  background: #00000088;
+  /*box-shadow: 10px 0px 7px #00000040;*/
   z-index: 5;
   li {
     margin: 0px;
@@ -356,7 +368,7 @@ export default class DesktopMenu extends Vue {
       padding: 10px 40px;
     }
     &:hover {
-      background: #e59345bb;
+      background: #ffa726bb;
     }
   }
   .spacer {
@@ -365,19 +377,19 @@ export default class DesktopMenu extends Vue {
 }
 
 .browser {
-  width: 300px;
+  width: 400px;
   height: 100%;
 
   margin: 0px;
   padding: 30px 0px;
   &.filebrowser {
-    background: #00000030;
-    box-shadow: 10px 0px 7px #00000040;
+    background: #66666620;
+    /*box-shadow: 10px 0px 7px #00000040;*/
     z-index: 4;
   }
 
   &.sessionbrowser {
-    background: #00000020;
+    background: #ffffff20;
     flex-grow: 1;
   }
 
@@ -430,15 +442,16 @@ export default class DesktopMenu extends Vue {
 
 .version {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
-  color: #666;
+  bottom: 16px;
+  right: 16px;
+  color: #ffffff80;
   font-size: 20px;
   line-height: 1.2;
+  text-align: right;
 }
 .commithash {
   font-size: 12px;
-  color: #555;
+  color: #ffffff60;
 }
 
 .bar-entry {
@@ -447,11 +460,12 @@ export default class DesktopMenu extends Vue {
   align-items: center;
 
   .icon {
-    background: #666;
+    background: #ffffff20;
     border-radius: 20px;
-    padding: 5px;
+    border: 1px solid #ffffff30;
     display: inline-block;
     margin-right: 7px;
+    padding: 8px;
 
     .error {
       color: #ff8239;

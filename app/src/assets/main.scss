@@ -1,7 +1,9 @@
-@import 'colors.scss';
+@import "colors.scss";
 
 body {
   background: $surface;
+  //font-family: "Roboto"; // To set the font of the desktop menubar
+  font-family: sans-serif;
 }
 
 html,
@@ -15,29 +17,37 @@ body {
 * {
   box-sizing: border-box;
 }
-
+/*
 // custom theme
-@import '~vue-material/dist/theme/engine'; // Import the theme engine
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
 
-@include md-register-theme('default',
-  (primary: md-get-palette-color(orange, 200),
+@include md-register-theme(
+  "default",
+  (
+    primary: md-get-palette-color(orange, 200),
     // The primary color of your application
-    accent: md-get-palette-color(cyan, 200),
+      accent: md-get-palette-color(cyan, 200),
     background: $surface,
     // The accent or secondary color
-    theme: dark));
-@import '~vue-material/dist/theme/all'; // Apply the theme
+      theme: dark
+  )
+);
+@import "~vue-material/dist/theme/all"; // Apply the theme
 // @import "~vue-material/dist/components/MdButton/theme"; // Apply the theme
 // @import "~vue-material/dist/components/MdField/theme"; // Apply the theme
 
-@include md-register-theme('default',
-  (primary: md-get-palette-color(orange, 200),
+@include md-register-theme(
+  "default",
+  (
+    primary: md-get-palette-color(orange, 200),
     // The primary color of your application
-    accent: md-get-palette-color(cyan, 200),
+      accent: md-get-palette-color(cyan, 200),
     background: $surface,
     // The accent or secondary color
-    theme: light));
-@import '~vue-material/dist/components/MdSnackbar/theme'; // Apply the theme
+      theme: light
+  )
+);
+@import "~vue-material/dist/components/MdSnackbar/theme"; // Apply the theme
 
 // increase dialog animation speed
 .md-dialog {
@@ -48,6 +58,7 @@ body {
 .md-dialog .md-dialog-container {
   transform: none;
 }
+*/
 
 // don't underline menu entries in the titlebar
 .titlebar .action-menu-item:hover {
@@ -67,7 +78,10 @@ body {
 
 // need to be flex so that our hack for centering VueMaterial dialogs still works
 .container-after-titlebar {
-  display: flex;
+}
+
+.v-application--wrap {
+  min-height: 0px;
 }
 
 // put titlebar below dialog overlay layer
@@ -79,4 +93,15 @@ body {
   background: $elevation8dp;
   border-radius: 4px;
   padding: 16px;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }

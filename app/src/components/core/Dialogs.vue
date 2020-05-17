@@ -1,7 +1,7 @@
 <template>
   <div class="dialogs">
     <!-- help dialog -->
-    <md-dialog :md-active.sync="showHelpDialog">
+    <!-- <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>{{ $t('dialog.help.title') }}</md-dialog-title>
       <md-dialog-content>
         <b>{{ $t('dialog.help.controlsTitle') }}</b>
@@ -14,23 +14,29 @@
           $t('general.close')
         }}</md-button>
       </md-dialog-actions>
-    </md-dialog>
+    </md-dialog> -->
 
     <!-- settings dialog -->
-    <md-dialog :md-active.sync="showSettingsDialog">
-      <md-dialog-title>{{ $t('dialog.settings.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <Settings></Settings>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
+
+    <v-dialog v-model="showSettingsDialog" width="700" scrollable>
+      <v-card>
+        <v-card-title>
+          {{ $t('dialog.settings.title') }}
+        </v-card-title>
+        <v-card-text>
+          <Settings></Settings>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="showSettingsDialog = false">
+            {{ $t('general.close') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <!-- licenses dialog -->
-    <md-dialog :md-active.sync="showLicensesDialog">
+    <!-- <md-dialog :md-active.sync="showLicensesDialog">
       <md-dialog-title>{{ $t('dialog.openSource.title') }}</md-dialog-title>
       <md-dialog-content>
         <LicensesDialog></LicensesDialog>
@@ -40,53 +46,57 @@
           $t('general.close')
         }}</md-button>
       </md-dialog-actions>
-    </md-dialog>
+    </md-dialog> -->
 
     <!-- about dialog -->
-    <md-dialog :md-active.sync="showAboutDialog">
-      <md-dialog-title>{{ $t('dialog.about.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <p>{{ $t('dialog.about.row1') }}</p>
-        <p>
-          <i18n path="dialog.about.row2">
-            <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
-              >GitHub</a
-            >
-          </i18n>
-        </p>
-        <p>
-          <i18n path="dialog.about.row3">
-            <a
-              href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
-              slot="authors"
-              >{{ $t('dialog.about.authors') }}</a
-            >
-          </i18n>
-        </p>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showAboutDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
+    <v-dialog v-model="showAboutDialog" width="600" scrollable>
+      <v-card>
+        <v-card-title>{{ $t('dialog.about.title') }}</v-card-title>
+        <v-card-text>
+          <p>{{ $t('dialog.about.row1') }}</p>
+          <p>
+            <i18n path="dialog.about.row2">
+              <a
+                href="https://github.com/ficsit-felix/ficsit-felix"
+                slot="github"
+                >GitHub</a
+              >
+            </i18n>
+          </p>
+          <p>
+            <i18n path="dialog.about.row3">
+              <a
+                href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
+                slot="authors"
+                >{{ $t('dialog.about.authors') }}</a
+              >
+            </i18n>
+          </p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer> </v-spacer>
+          <v-btn color="primary" text @click="showAboutDialog = false">{{
+            $t('general.close')
+          }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <!-- progress dialog-->
-    <md-dialog
+
+    <v-dialog v-model="showProgressDialog" width="600" persistent>
+      <ProgressBarDialog></ProgressBarDialog>
+    </v-dialog>
+    <!-- <md-dialog
       :md-active.sync="showProgressDialog"
       :md-click-outside-to-close="false"
       style="width:80%"
     >
-      <!--<md-dialog-title>{{ $t('dialog.progress.title') }}</md-dialog-title>-->
       <md-dialog-content>
         <ProgressBarDialog></ProgressBarDialog>
       </md-dialog-content>
-      <!--<md-dialog-actions>
-        <md-button class="md-primary" @click="showProgressDialog = false">{{ $t('general.close') }}</md-button>
-      </md-dialog-actions>-->
-    </md-dialog>
+    </md-dialog> -->
 
-    <md-dialog-confirm
+    <!-- <md-dialog-confirm
       :md-active.sync="showSaveDialog"
       :md-title="$t('dialog.save.title')"
       :md-content="$t('dialog.save.content')"
@@ -118,10 +128,23 @@
       ref="bugReport"
       :filename="filename"
       :uuid="uuid"
-    ></BugReportDialog>
+    ></BugReportDialog> -->
 
     <!-- confirm exit dialog -->
-    <md-dialog-confirm
+    <v-dialog
+      v-model="showConfirmExitDialog"
+      width="600"
+      @keydown.esc="showConfirmExitDialog = false"
+    >
+      <v-card>
+        <v-card-title>{{ $t('dialog.exit.title') }}</v-card-title>
+        <v-card-text>{{ $t('dialog.exit.content') }}</v-card-text>
+        <v-card-actions>
+          <v-btn></v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- <md-dialog-confirm
       :md-active.sync="showConfirmExitDialog"
       :md-title="$t('dialog.exit.title')"
       :md-content="$t('dialog.exit.content')"
@@ -133,7 +156,7 @@
         showSaveDialog = false;
         exit();
       "
-    />
+    /> -->
   </div>
 </template>
 
@@ -164,10 +187,10 @@ import { remote } from 'electron';
 export default Vue.extend({
   name: 'Dialogs',
   components: {
-    LicensesDialog,
+    // LicensesDialog,
     Settings,
-    ProgressBarDialog,
-    BugReportDialog
+    ProgressBarDialog
+    // BugReportDialog
   },
   data: function() {
     return {

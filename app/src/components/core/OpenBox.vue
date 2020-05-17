@@ -37,8 +37,10 @@
       <div class="progressbar">
         <div class="content" v-bind:style="{ width: progress + '%' }"></div>
       </div>
-      <p class="secondary">{{ infoText }}</p>
+      <p class="info-text">{{ infoText }}</p>
     </div>
+
+    <!-- TODO
 
     <md-dialog :md-active.sync="showErrorDialog">
       <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
@@ -69,6 +71,7 @@
       :filename="filename"
       :uuid="uuid"
     ></BugReportDialog>
+    -->
   </div>
 </template>
 
@@ -91,7 +94,7 @@ import * as Sav2JsonWorker from 'worker-loader?name=[name].js!@/transformation/s
 
 export default {
   components: {
-    BugReportDialog
+    //BugReportDialog
   },
   data: function() {
     return {
@@ -259,14 +262,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
-p {
+/*p {
   color: $textGray;
-}
+}*/
 
 .dropbox {
   outline: 2px dashed grey; /* the dash box */
   outline-offset: -20px;
-  color: $textGray;
+  /*color: $textGray;*/
   padding: 10px 10px;
   height: 200px; /* minimum height */
   position: relative;
@@ -274,6 +277,7 @@ p {
   border-radius: 10px;
   display: flex;
   justify-items: center;
+  margin: 16px;
 }
 
 .input-file {
@@ -289,7 +293,7 @@ p {
 }
 
 .dropbox:hover {
-  background: #efeded;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .dropbox p {
@@ -301,7 +305,7 @@ p {
   height: 200px;
   font-size: 17px;
   padding: 20px 40px;
-  color: $textGray;
+  /*color: $textGray;*/
 }
 .progressbar {
   border: 2px solid $middleGray;
@@ -319,10 +323,10 @@ p {
   padding: 0px 30px;
 }
 
-.secondary {
+.info-text {
   font-size: 15px;
   margin-top: 10px;
-  color: $logoColorLight;
+  /*color: $logoColorLight;*/
 }
 
 .dialog-content {

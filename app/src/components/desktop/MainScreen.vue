@@ -36,4 +36,12 @@ export default class MainScreen extends Vue {
   display: flex;
   flex-direction: row;
 }
+
+.landingpage {
+  background: $surface url('/pipes.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 </style>

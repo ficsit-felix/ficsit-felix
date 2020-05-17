@@ -34,7 +34,7 @@
       </Scene>
     </Renderer>
 
-    <div class="info">
+    <div class="details">
       {{ filename }}
       <br />
       {{ uuid }}
@@ -533,7 +533,7 @@ export default {
   height: 100%;
 }
 
-.info {
+.details {
   position: absolute;
   bottom: 0px;
   left: 0px;
