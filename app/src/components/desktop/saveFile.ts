@@ -172,7 +172,6 @@ function saveWeb(
   asJson: boolean
 ) {
   if (asJson) {
-    console.log('asdf');
     const fileStream = streamSaver.createWriteStream(path);
     const writer = fileStream.getWriter();
     window.onunload = () => writer.abort();
@@ -192,7 +191,6 @@ function saveWeb(
       writer.abort();
       callback(error, undefined, undefined);
     });
-    console.time('json2sav');
     transform.write(saveGame);
     transform.end();
   }

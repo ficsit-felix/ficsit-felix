@@ -44,28 +44,9 @@ body {
   transition-duration: 0.1s !important;
 }
 
-// hack until https://github.com/vuematerial/vue-material/pull/2023 is merged
-// fixes the blurry text in the settings dialog in chrome on windows by using flex centering instead of transform centering
-// uses the body as the container that centers the dialog and removes the #app by positioning it absolutely
-// breaks if more than one dialog is on screen
-.md-dialog {
-  transform: initial !important;
-  position: initial !important;
-}
-
-#app {
-  position: absolute;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-// increase z-index of semi-transparent overlay to put it above the railroadWarning, so that it can be higher than the text of material buttons
-.md-overlay {
-  z-index: 10 !important;
+/// Use a different workaround for now https://github.com/vuematerial/vue-material/issues/2209#issuecomment-628165893
+.md-dialog .md-dialog-container {
+  transform: none;
 }
 
 // don't underline menu entries in the titlebar
