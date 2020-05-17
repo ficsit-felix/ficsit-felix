@@ -10868,10 +10868,10 @@ vue-loader@^15.9.1:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-material@^1.0.0-beta-12:
-  version "1.0.0-beta-12"
-  resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-1.0.0-beta-12.tgz#9c7ba28bfa5b14467460ddf4006375685eb0331c"
-  integrity sha512-Kt6wKqZcKAklTpS8on0GLhsIOiuJcwi09iMLgznp8uINmv/fNtaYGNyN8e57Y3FYu0XHH/k5WVSRx0+TipRyGQ==
+vue-material@^1.0.0-beta-13:
+  version "1.0.0-beta-13"
+  resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-1.0.0-beta-13.tgz#a99e05425787d6adbf3237e2d05674e96b6e71d4"
+  integrity sha512-WiKLNX4LlZLtHG59hEd9RoJJsNoQVCkSP8i2lwyTFeEnlC5ElqbeKMcrOpH0MMq650ee1LTI8JLemTnaUguKOw==
   dependencies:
     vue-github-buttons "^3.1.0"
     vue-toc "0.0.1"
