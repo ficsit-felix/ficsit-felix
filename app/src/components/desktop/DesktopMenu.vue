@@ -195,6 +195,9 @@ export default class DesktopMenu extends Vue {
   }
 
   openFilebrowser() {
+    // reload file list TODO do this whenever this menu is shown?
+    // this.readFiles(getSaveGamesFolderPath());
+
     this.showFilebrowser = !this.showFilebrowser;
     if (this.showFilebrowser === false) {
       // also empty the session list
@@ -237,7 +240,6 @@ export default class DesktopMenu extends Vue {
   }
 
   openFile(filepath: string) {
-    this.$router.push('/');
     openFileAndMoveToEditor(this, filepath, false);
   }
 

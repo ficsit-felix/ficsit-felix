@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Editor from './components/core/Editor.vue';
 import LandingPage from './components/web/LandingPage.vue';
 
+import LoadEditorView from './components/core/LoadEditorView.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -11,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'landingpage',
       component: LandingPage
+    },
+    {
+      path: '/loadeditor',
+      name: 'loadEditor',
+      component: LoadEditorView
     },
     {
       path: '/editor',

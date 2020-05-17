@@ -1,6 +1,23 @@
 <template>
   <div class="dialogs">
     <!-- help dialog -->
+
+    <v-dialog v-model="showHelpDialog" width="700" scrollable>
+      <v-card>
+        <v-card-title>{{ $t('dialog.help.title') }}</v-card-title>
+        <v-card-text>
+          <b>{{ $t('dialog.help.controlsTitle') }}</b>
+          <p class="helpControls">{{ $t('dialog.help.controlsText') }}</p>
+          <p>{{ $t('dialog.help.changeJsonWarning') }}</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="showHelpDialog = false">{{
+            $t('general.close')
+          }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <!-- <md-dialog :md-active.sync="showHelpDialog">
       <md-dialog-title>{{ $t('dialog.help.title') }}</md-dialog-title>
       <md-dialog-content>
@@ -26,7 +43,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showSettingsDialog = false">{{ $t('general.close') }}</v-btn>
+          <v-btn color="primary" text @click="showSettingsDialog = false">{{
+            $t('general.close')
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -52,7 +71,11 @@
           <p>{{ $t('dialog.about.row1') }}</p>
           <p>
             <i18n path="dialog.about.row2">
-              <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github">GitHub</a>
+              <a
+                href="https://github.com/ficsit-felix/ficsit-felix"
+                slot="github"
+                >GitHub</a
+              >
             </i18n>
           </p>
           <p>
@@ -60,16 +83,15 @@
               <a
                 href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
                 slot="authors"
-              >{{ $t('dialog.about.authors') }}</a>
+                >{{ $t('dialog.about.authors') }}</a
+              >
             </i18n>
           </p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="primary" text @click="showAboutDialog = false">
-            {{
-            $t('general.close')
-            }}
+            {{ $t('general.close') }}
           </v-btn>
         </v-card-actions>
       </v-card>

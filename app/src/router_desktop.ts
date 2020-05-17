@@ -3,7 +3,8 @@ import Router from 'vue-router';
 import EditorView from './components/desktop/EditorView.vue';
 //import Editor from './components/core/Editor.vue';
 import MainScreen from './components/desktop/MainScreen.vue';
-import ProgressBarDialog from './components/core/ProgressBarDialog.vue';
+import LoadEditorView from './components/core/LoadEditorView.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -13,13 +14,12 @@ export default new Router({
       name: 'landingpage',
       component: MainScreen
     },
-    // TODO REMOVE
-    {
-      path: '/progressbar',
-      name: 'progressbar',
-      component: ProgressBarDialog
-    },
 
+    {
+      path: '/loadeditor',
+      name: 'loadEditor',
+      component: LoadEditorView
+    },
     {
       path: '/editor',
       name: 'editor',

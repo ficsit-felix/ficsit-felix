@@ -63,7 +63,7 @@ Vue.config.productionTip = false;
 
 let router;
 if (isElectron()) {
-  router = require('./router_electron').default;
+  router = require('./router_desktop').default;
 } else {
   router = require('./router_web').default;
 }

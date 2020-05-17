@@ -11,6 +11,32 @@ import { reportContext } from '@/ts/errorReporting';
 import { openFileFromFilesystem } from './openFile';
 import Vue from 'vue';
 import { saveFileToFilesystem } from './saveFile';
+import { SaveFileReader, SaveGameLoading } from '../core/SaveGameLoading';
+
+class DesktopFileReader implements SaveFileReader {
+  readFile(
+    filepath: string,
+    asJson: boolean,
+    progressCallback: (progress: number) => void,
+    errorCallback: (error: Error) => void,
+    successCallback: (saveGame: import('satisfactory-json').SaveGame) => void
+  ): void {
+    openFileFromFilesystem(filepath, asJson, (err, progress, saveGame) => {
+      if (err) {
+        errorCallback(err);
+        return;
+      }
+      if (progress) {
+        progressCallback(progress);
+        return;
+      }
+      if (saveGame) {
+        successCallback(saveGame);
+        return;
+      }
+    });
+  }
+}
 
 /**
  * Supply a file path to open the file
@@ -20,55 +46,13 @@ export function openFileAndMoveToEditor(
   path: string,
   asJson: boolean
 ) {
-  vue.$store.dispatch('setProgressText', {
-    title: vue.$t('openPage.subtitleSav'), // TODO asJson
-    currentStep: vue.$t('openPage.readingFile'),
-    showCloseButton: false
-  });
-  vue.$store.dispatch('setProgress', 0);
-  EventBus.$emit(DIALOG_PROGRESS, true);
-  setTimeout(() => {
-    // give the dialog time to be open
+  const name = path.replace(/^.*[\\/]/, '');
 
-    const name = path.replace(/^.*[\\/]/, '');
-
-    vue.$store.dispatch('setFilename', name);
-    vue.$store.dispatch('setFilepath', path);
-    const uuid = v4();
-    vue.$store.dispatch('setUUID', uuid);
-
-    reportContext('uuid', uuid);
-    reportContext('savename', name);
-
-    // TODO test for file extension when BugReportDialog is built in
-
-    //      setTimeout(() => {
-    console.time('openFile');
-
-    openFileFromFilesystem(path, asJson, (err, progress, saveGame) => {
-      if (err) {
-        // open bug report window
-        EventBus.$emit(DIALOG_BUGREPORT, err.message);
-        return;
-      }
-
-      if (progress) {
-        vue.$store.dispatch('setProgress', progress);
-        return;
-      }
-
-      console.time('setVuex');
-      vue.$store.dispatch('setLoadedData', saveGame).then(() => {
-        console.timeEnd('setVuex');
-        console.timeEnd('openFile');
-
-        vue.$store.dispatch('setShowSaveMenuEntries', true);
-        vue.$router.push({
-          name: 'editor'
-        });
-      });
-    });
-  }, DIALOG_OPEN_TIME_MS);
+  new SaveGameLoading(vue, new DesktopFileReader()).loadSaveGame(
+    name,
+    path,
+    asJson
+  );
 }
 
 export function saveFileAndShowProgress(

@@ -2,19 +2,19 @@
   <v-card class="progress-bar-view">
     <v-card-title>{{ progressText.title }}</v-card-title>
     <v-card-text>
-      <v-progress-linear value="progress" height="50" rounded>
-        <strong style="text-shadow: 1px 1px 3px #000000cc">
-          {{ Math.round(progress) }} %
-        </strong>
+      <v-progress-linear :value="progress" height="50" rounded>
+        <strong style="text-shadow: 1px 1px 3px #000000cc"
+          >{{ Math.round(progress) }} %</strong
+        >
       </v-progress-linear>
       <!--<ProgressBar :progress="progress"></ProgressBar>-->
       <div class="mt-2">{{ progressText.currentStep }}</div>
     </v-card-text>
     <v-card-actions v-if="progressText.showCloseButton">
       <v-spacer></v-spacer>
-      <v-btn color="primary" text @click="hideProgressDialog()">
-        {{ $t('general.close') }}
-      </v-btn>
+      <v-btn color="primary" text @click="hideProgressDialog()">{{
+        $t('general.close')
+      }}</v-btn>
     </v-card-actions>
   </v-card>
 </template>

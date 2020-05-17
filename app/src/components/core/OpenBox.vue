@@ -42,30 +42,6 @@
 
     <!-- TODO
 
-    <md-dialog :md-active.sync="showErrorDialog">
-      <md-dialog-title>{{ $t('openPage.errorTitle') }}</md-dialog-title>
-      <span class="dialog-content">
-        {{ errorText }}
-        <span v-if="showSendSave">
-          <br />
-          <br />
-          <i18n path="openPage.errorText">
-            <a
-              href="https://www.dropbox.com/request/Db1OgmSDra2EEVjPbcmj"
-              slot="dropbox"
-              >{{ $t('openPage.dropboxText') }}</a
-            >
-            <a href="mailto:felix@owl.yt" slot="mail">felix@owl.yt</a>
-          </i18n>
-        </span>
-      </span>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showErrorDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
     <BugReportDialog
       ref="bugReport"
       :filename="filename"
@@ -91,6 +67,8 @@ import FileReaderStream from 'filereader-stream';
 import BugReportDialog from './BugReportDialog';
 
 import * as Sav2JsonWorker from 'worker-loader?name=[name].js!@/transformation/sav2json.worker.js';
+import { SaveGameLoading } from './SaveGameLoading';
+import { WebFileReader } from '../web/WebFileReader';
 
 export default {
   components: {
@@ -101,7 +79,6 @@ export default {
       isSaving: false,
       progress: 0,
       infoText: this.$t('openPage.initializing'),
-      showErrorDialog: false,
       errorText: '',
       showSendSave: false,
       importJson: false
@@ -165,96 +142,23 @@ export default {
     },
     openFile(file) {
       this.isSaving = true;
-      this.infoText = this.$t('openPage.readingFile');
-      console.log('Opening...', file);
-      console.log('name: ' + file.name);
-      console.log('last modified: ' + file.lastModifiedDate);
-      console.log('size: ' + file.size);
-      this.setFilename(file.name);
-      const uuid = v4();
-      this.setUUID(uuid);
+      new SaveGameLoading(
+        this,
+        new WebFileReader(new Sav2JsonWorker(), file)
+      ).loadSaveGame(file.name, file.path, this.importJson);
 
-      reportContext('uuid', uuid);
-      reportContext('savename', file.name);
-      this.setLoading(false).then(() => {});
-
-      const expected = this.importJson ? 'json' : 'sav';
-
-      if (file.name.split('.').pop() !== expected) {
-        const message = this.$t('openPage.extensionError', {
-          expected: expected,
-          actual: file.name.split('.').pop()
-        });
-        reportException(message);
-        this.handleError(message, false);
-        return;
-      }
-
-      console.time('openFile');
-      this.processFile(file);
-    },
-
-    processFile(file) {
+      /*// TODO  how does the BugReportDialog handle this now?
       // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
-      window.data = file;
+      window.data = file;*/
 
-      if (this.$store.state.settings.autoLoadSaveFile !== '') {
+      /*
+      // TODO handle auto load
+            if (this.$store.state.settings.autoLoadSaveFile !== '') {
         this.$router.push({
           path: 'open/auto'
         });
       }
-
-      this.infoText = this.$t('openPage.processing');
-      this.progress = 50;
-      try {
-        console.time('sav2json');
-        const worker = new Sav2JsonWorker(); //Worker(workerPath);
-
-        //console.log(workerPath, worker);
-        worker.addEventListener('message', message => {
-          if (message.data.status === 'error') {
-            reportException(message.data.error);
-            this.handleError(message.data.error);
-            return;
-          }
-          console.timeEnd('sav2json');
-          this.progress = 70;
-          // reportMessage("debugSav2Json");
-
-          this.infoText = this.$t('openPage.buildingWorld');
-          // give us some time to build the 3d world while animating the progress bar
-          this.setLoadedData(message.data.data)
-            .then(() => {
-              this.buildInterval = setInterval(() => {
-                this.progress += 1;
-                if (this.progress >= 100) {
-                  this.progress = 100;
-                  clearInterval(this.buildInterval);
-                  setTimeout(() => {
-                    console.timeEnd('openFile');
-                    // let the user at least see the full bar
-                    this.$router.push({
-                      name: 'editor'
-                    });
-                  }, 100);
-                }
-              }, 30);
-            })
-            .catch(error => {
-              reportError(error);
-              this.handleError(error.message);
-            });
-        });
-
-        worker.postMessage({
-          importJson: this.importJson,
-          data: file
-        });
-      } catch (error) {
-        reportError(error);
-        this.handleError(error.message);
-        console.error(error);
-      }
+      */
     }
   }
 };
