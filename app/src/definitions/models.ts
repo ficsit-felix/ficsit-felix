@@ -1118,16 +1118,6 @@ export let modelConfig: { [id: string]: ModelConfig } = {
     color: 0xd80e2c,
     paintable: Paintable.FALSE
   },
-  '/Game/FactoryGame/Resource/Environment/AnimalParts/BP_AlphaSpitterParts.BP_AlphaSpitterParts_C': {
-    model: '',
-    color: 0xd80e2c,
-    paintable: false
-  },
-  '/Game/FactoryGame/Resource/Environment/AnimalParts/BP_AlphaStingerParts.BP_AlphaStingerParts_C': {
-    model: '',
-    color: 0xd80e2c,
-    paintable: false
-  },
   '/Game/FactoryGame/Character/Creature/Enemy/Hog/Char_Hog.Char_Hog_C': {
     model: '',
     color: 0xd80e2c,
@@ -1147,7 +1137,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Resource/Environment/AnimalParts/BP_StingerParts.BP_StingerParts_C': {
     model: '',
     color: 0xd80e2c,
-    paintable: false
+    paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C': {
     model: '',
