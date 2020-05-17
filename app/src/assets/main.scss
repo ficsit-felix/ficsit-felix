@@ -50,6 +50,11 @@ body {
   transition-duration: 0.1s !important;
 }
 
+/// Use a different workaround for now https://github.com/vuematerial/vue-material/issues/2209#issuecomment-628165893
+.md-dialog .md-dialog-container {
+  transform: none;
+}
+
 // don't underline menu entries in the titlebar
 .titlebar .action-menu-item:hover {
   text-decoration: none;
