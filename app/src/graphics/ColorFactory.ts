@@ -2,7 +2,7 @@ import { modelConfig, isModClassName } from '@/definitions/models';
 import { Color, MeshMatcapMaterial, Material, Texture } from 'three';
 import { findActorByName } from '@/helpers/entityHelper';
 import { Actor, ByteProperty, StructProperty } from 'satisfactory-json';
-
+import { Paintable } from '@/definitions/models';
 /**
  * Factory that creates and caches materials
  */
@@ -117,15 +117,18 @@ export default class ColorFactory {
 
   createMaterial(actor: Actor): Material {
     if (this.showCustomPaints) {
-      const isPaintable =
+      const isPaintable: Paintable =
         modelConfig[actor.className] !== undefined
           ? modelConfig[actor.className].paintable
-          : false;
+          : Paintable.FALSE;
 
       for (let i = 0; i < actor.entity.properties.length; i++) {
         const element = actor.entity.properties[i] as ByteProperty;
         if (element.name === 'mColorSlot') {
-          if (!isPaintable && !isModClassName(actor.className)) {
+          if (
+            isPaintable === Paintable.FALSE &&
+            !isModClassName(actor.className)
+          ) {
             console.warn('paintable should be true for: ' + actor.className);
             /*reportMessage(
               "paintable should be true for: " + actor.className
@@ -136,9 +139,11 @@ export default class ColorFactory {
       }
 
       // mColorSlot is not set if it is colored with material 0
-      if (isPaintable) {
+      if (isPaintable === Paintable.TRUE) {
         return this.coloredMaterials[0];
       }
+      // if isPaintable is Paintable.NOT_SLOT0, slot 0 is not used to color the model, so we use
+      // the default class color
     }
 
     if (this.materials[actor.className] === undefined) {
