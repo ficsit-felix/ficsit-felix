@@ -105,3 +105,22 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+
+
+// Custom dark theme hacks
+// as using a variables.scss leads to up to 100% increase in first build time
+// (too long, so mac build in GitHub actions fails)
+// https://vuetifyjs.com/en/customization/sass-variables/#compilation-time
+.theme--dark.v-card {
+  background-color: $surface;
+}
+.theme--dark.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
+  background-color: $surface;
+}
+.theme--dark.v-sheet {
+  background-color: $surface; 
+}
+.theme--dark.v-list {
+  background-color: $surface; 
+}

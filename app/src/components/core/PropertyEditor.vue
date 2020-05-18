@@ -8,9 +8,8 @@
             :disabled="focusDisabled"
             @click="focusSelectedObject"
             v-on="on"
+            >{{ $t('propertyEditor.focusButton') }}</v-btn
           >
-            {{ $t('propertyEditor.focusButton') }}
-          </v-btn>
         </template>
         F
       </v-tooltip>
@@ -58,8 +57,7 @@
       :disabled="this.selectedJson === ''"
       :error-messages="jsonError"
       style="height:100%"
-    >
-    </v-textarea>
+    ></v-textarea>
 
     <!-- TODO
     <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">{{
@@ -199,5 +197,11 @@ textarea {
   height: 100% !important;
   max-height: none !important;
   font-family: monospace !important;
+}
+
+// Bring textarea to full height
+::v-deep .v-input__control,
+::v-deep .v-input__slot {
+  height: 100%;
 }
 </style>

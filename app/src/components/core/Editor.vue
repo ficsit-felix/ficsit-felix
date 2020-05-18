@@ -106,6 +106,8 @@ export default {
 </style>
 
 <style lang="scss">
+// TODO rewrite to scoped using ::v-deep https://stackoverflow.com/a/55368933
+
 @import '@/assets/colors.scss';
 /* non scoped styles to control split bars */
 .split {

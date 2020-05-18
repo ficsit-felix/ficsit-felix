@@ -304,6 +304,7 @@ b {
 </style>
 
 <style lang="scss">
+// TODO rewrite to scoped using ::v-deep https://stackoverflow.com/a/55368933
 .menubar {
   .md-menu > .md-button {
     margin: 8px;

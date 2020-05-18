@@ -59,6 +59,8 @@ export default {
 </script>
 
 <style lang="scss">
+// TODO rewrite to scoped using ::v-deep https://stackoverflow.com/a/55368933
+
 @import '@/assets/colors.scss';
 
 .selected {

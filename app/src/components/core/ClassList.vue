@@ -166,6 +166,7 @@ export default {
 </style>
 
 <style lang="scss">
+// TODO rewrite to scoped using ::v-deep https://stackoverflow.com/a/55368933
 .colorPickerDialogContent {
   .hu-color-picker {
     width: 218px !important;
