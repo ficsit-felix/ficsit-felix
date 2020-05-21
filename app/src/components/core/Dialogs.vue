@@ -1,7 +1,6 @@
 <template>
   <div class="dialogs">
     <!-- help dialog -->
-
     <v-dialog v-model="showHelpDialog" width="700" scrollable>
       <v-card>
         <v-card-title>{{ $t('dialog.help.title') }}</v-card-title>
@@ -12,29 +11,16 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showHelpDialog = false">{{
+          <v-btn color="primary" text @click="showHelpDialog = false">
+            {{
             $t('general.close')
-          }}</v-btn>
+            }}
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!-- <md-dialog :md-active.sync="showHelpDialog">
-      <md-dialog-title>{{ $t('dialog.help.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <b>{{ $t('dialog.help.controlsTitle') }}</b>
-        <p class="helpControls">{{ $t('dialog.help.controlsText') }}</p>
-        <p>{{ $t('dialog.help.changeJsonWarning') }}</p>
-        <br />
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>-->
 
     <!-- settings dialog -->
-
     <v-dialog v-model="showSettingsDialog" width="700" scrollable>
       <v-card>
         <v-card-title>{{ $t('dialog.settings.title') }}</v-card-title>
@@ -43,25 +29,32 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showSettingsDialog = false">{{
+          <v-btn color="primary" text @click="showSettingsDialog = false">
+            {{
             $t('general.close')
-          }}</v-btn>
+            }}
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <!-- licenses dialog -->
-    <!-- <md-dialog :md-active.sync="showLicensesDialog">
-      <md-dialog-title>{{ $t('dialog.openSource.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <LicensesDialog></LicensesDialog>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showLicensesDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>-->
+    <v-dialog v-model="showLicensesDialog" width="700" scrollable>
+      <v-card>
+        <v-card-title>{{ $t('dialog.openSource.title') }}</v-card-title>
+        <v-card-text>
+          <LicensesDialog></LicensesDialog>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="showLicensesDialog = false">
+            {{
+            $t('general.close')
+            }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <!-- about dialog -->
     <v-dialog v-model="showAboutDialog" width="600" scrollable>
@@ -71,11 +64,7 @@
           <p>{{ $t('dialog.about.row1') }}</p>
           <p>
             <i18n path="dialog.about.row2">
-              <a
-                href="https://github.com/ficsit-felix/ficsit-felix"
-                slot="github"
-                >GitHub</a
-              >
+              <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github">GitHub</a>
             </i18n>
           </p>
           <p>
@@ -83,16 +72,13 @@
               <a
                 href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
                 slot="authors"
-                >{{ $t('dialog.about.authors') }}</a
-              >
+              >{{ $t('dialog.about.authors') }}</a>
             </i18n>
           </p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showAboutDialog = false">
-            {{ $t('general.close') }}
-          </v-btn>
+          <v-btn color="primary" text @click="showAboutDialog = false">{{ $t('general.close') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -101,77 +87,53 @@
     <v-dialog v-model="showProgressDialog" width="600" persistent>
       <ProgressBarDialog></ProgressBarDialog>
     </v-dialog>
-    <!-- <md-dialog
-      :md-active.sync="showProgressDialog"
-      :md-click-outside-to-close="false"
-      style="width:80%"
-    >
-      <md-dialog-content>
-        <ProgressBarDialog></ProgressBarDialog>
-      </md-dialog-content>
-    </md-dialog>-->
 
-    <!-- <md-dialog-confirm
-      :md-active.sync="showSaveDialog"
-      :md-title="$t('dialog.save.title')"
-      :md-content="$t('dialog.save.content')"
-      :md-confirm-text="$t('general.yes')"
-      :md-cancel-text="$t('general.no')"
-      @md-cancel="showSaveDialog = false"
-      @md-confirm="save"
-      @keydown.enter="
-        showSaveDialog = false;
-        save();
-      "
-    />
+    <!-- save web dialog -->
+    <ConfirmDialog
+      v-model="showSaveWebDialog"
+      :title="$t('dialog.save.title')"
+      :content="$t('dialog.save.content')"
+      @confirm="save()"
+    ></ConfirmDialog>
 
-    <md-dialog-confirm
-      :md-active.sync="showSaveDesktopDialog"
-      :md-title="$t('dialog.save.title')"
-      :md-content="$t('dialog.saveDesktop.content')"
-      :md-confirm-text="$t('general.yes')"
-      :md-cancel-text="$t('general.no')"
-      @md-cancel="showSaveDesktopDialog = false"
-      @md-confirm="save"
-      @keydown.enter="
-        showSaveDesktopDialog = false;
-        save();
-      "
-    />
+    <!-- save desktop dialog -->
+    <ConfirmDialog
+      v-model="showSaveDesktopDialog"
+      :title="$t('dialog.save.title')"
+      :content="$t('dialog.saveDesktop.content')"
+      @confirm="save()"
+    ></ConfirmDialog>
 
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-    ></BugReportDialog>-->
+    <BugReportDialog ref="bugReport" :filename="filename" :uuid="uuid"></BugReportDialog>
 
     <!-- confirm exit dialog (desktop only) -->
-    <v-dialog
-      v-model="showConfirmExitDialog"
-      width="600"
-      @keydown.esc="showConfirmExitDialog = false"
-    >
-      <v-card>
-        <v-card-title>{{ $t('dialog.exit.title') }}</v-card-title>
-        <v-card-text>{{ $t('dialog.exit.content') }}</v-card-text>
-        <v-card-actions>
-          <v-btn></v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <!-- <md-dialog-confirm
-      :md-active.sync="showConfirmExitDialog"
-      :md-title="$t('dialog.exit.title')"
-      :md-content="$t('dialog.exit.content')"
-      :md-confirm-text="$t('general.yes')"
-      :md-cancel-text="$t('general.no')"
-      @md-cancel="showConfirmExitDialog = false"
-      @md-confirm="exit"
-      @keydown.enter="
-        showSaveDialog = false;
-        exit();
-      "
-    />-->
+    <ConfirmDialog
+      v-model="showConfirmExitDesktopDialog"
+      :title="$t('dialog.exit.title')"
+      :content="$t('dialog.exit.content')"
+      @confirm="exit()"
+    ></ConfirmDialog>
+
+    <ConfirmDialog
+      v-model="showOpenWebDialog"
+      :title="$t('dialog.open.title')"
+      :content="$t('dialog.open.content')"
+      @confirm="open()"
+    ></ConfirmDialog>
+
+    <ConfirmDialog
+      v-model="showOpenJsonWebDialog"
+      :title="$t('dialog.openJson.title')"
+      :content="$t('dialog.openJson.content')"
+      @confirm="openJson()"
+    ></ConfirmDialog>
+
+    <ConfirmDialog
+      v-model="showSaveJsonWebDialog"
+      :title="$t('dialog.saveJson.title')"
+      :content="$t('dialog.saveJson.content')"
+      @confirm="saveJson()"
+    ></ConfirmDialog>
   </div>
 </template>
 
@@ -179,6 +141,7 @@
 import Vue from 'vue';
 import { EventBus } from '../../event-bus';
 import LicensesDialog from './LicensesDialog.vue';
+import ConfirmDialog from './ConfirmDialog.vue';
 import Settings from './Settings.vue';
 import ProgressBarDialog from './ProgressBarDialog.vue';
 import BugReportDialog from './BugReportDialog.vue';
@@ -188,23 +151,30 @@ import {
   DIALOG_OPEN_SOURCE,
   DIALOG_SETTINGS,
   DIALOG_PROGRESS,
-  DIALOG_SAVE,
+  DIALOG_SAVE_WEB,
   ON_SAVE_PRESSED,
   DIALOG_BUGREPORT,
-  DIALOG_CONFIRM_EXIT,
-  DIALOG_SAVE_DESKTOP
+  DIALOG_CONFIRM_EXIT_DESKTOP,
+  DIALOG_SAVE_DESKTOP,
+  DIALOG_OPEN_WEB,
+  DIALOG_OPEN_JSON_WEB,
+  DIALOG_SAVE_JSON_WEB,
+  ON_SAVE_JSON_PRESSED,
+  ON_EXIT_PRESSED
 } from '../../ts/constants';
 import { setTimeout } from 'timers';
 import { mapState } from 'vuex';
-// import { remote } from 'electron';
+
+// TODO rework this dialog system to avoid repeating code
 
 export default Vue.extend({
   name: 'Dialogs',
   components: {
-    // LicensesDialog,
+    LicensesDialog,
     Settings,
-    ProgressBarDialog
-    // BugReportDialog
+    ProgressBarDialog,
+    ConfirmDialog,
+    BugReportDialog
   },
   data: function() {
     return {
@@ -213,9 +183,12 @@ export default Vue.extend({
       showLicensesDialog: false,
       showAboutDialog: false,
       showProgressDialog: false,
-      showSaveDialog: false,
+      showSaveWebDialog: false,
       showSaveDesktopDialog: false,
-      showConfirmExitDialog: false
+      showConfirmExitDesktopDialog: false,
+      showOpenWebDialog: false,
+      showOpenJsonWebDialog: false,
+      showSaveJsonWebDialog: false
     };
   },
   computed: {
@@ -256,10 +229,10 @@ export default Vue.extend({
         this.showProgressDialog = false;
       }
     });
-    EventBus.$on(DIALOG_SAVE, () => {
+    EventBus.$on(DIALOG_SAVE_WEB, () => {
       this.closeDialogs(
-        this.showSaveDialog,
-        () => (this.showSaveDialog = true)
+        this.showSaveWebDialog,
+        () => (this.showSaveWebDialog = true)
       );
     });
     EventBus.$on(DIALOG_SAVE_DESKTOP, () => {
@@ -275,10 +248,28 @@ export default Vue.extend({
         );
       });
     });
-    EventBus.$on(DIALOG_CONFIRM_EXIT, () => {
+    EventBus.$on(DIALOG_CONFIRM_EXIT_DESKTOP, () => {
       this.closeDialogs(
-        this.showConfirmExitDialog,
-        () => (this.showConfirmExitDialog = true)
+        this.showConfirmExitDesktopDialog,
+        () => (this.showConfirmExitDesktopDialog = true)
+      );
+    });
+    EventBus.$on(DIALOG_OPEN_WEB, () => {
+      this.closeDialogs(
+        this.showOpenWebDialog,
+        () => (this.showOpenWebDialog = true)
+      );
+    });
+    EventBus.$on(DIALOG_OPEN_JSON_WEB, () => {
+      this.closeDialogs(
+        this.showOpenJsonWebDialog,
+        () => (this.showOpenJsonWebDialog = true)
+      );
+    });
+    EventBus.$on(DIALOG_SAVE_JSON_WEB, () => {
+      this.closeDialogs(
+        this.showSaveJsonWebDialog,
+        () => (this.showSaveJsonWebDialog = true)
       );
     });
   },
@@ -288,10 +279,13 @@ export default Vue.extend({
     EventBus.$off(DIALOG_ABOUT);
     EventBus.$off(DIALOG_SETTINGS);
     EventBus.$off(DIALOG_PROGRESS);
-    EventBus.$off(DIALOG_SAVE);
+    EventBus.$off(DIALOG_SAVE_WEB);
     EventBus.$off(DIALOG_SAVE_DESKTOP);
     EventBus.$off(DIALOG_BUGREPORT);
-    EventBus.$off(DIALOG_CONFIRM_EXIT);
+    EventBus.$off(DIALOG_CONFIRM_EXIT_DESKTOP);
+    EventBus.$off(DIALOG_OPEN_WEB);
+    EventBus.$off(DIALOG_OPEN_JSON_WEB);
+    EventBus.$off(DIALOG_SAVE_JSON_WEB);
   },
   methods: {
     closeDialogs(dialogAlreadyOpenDontClose: boolean, callback: () => void) {
@@ -306,9 +300,12 @@ export default Vue.extend({
         this.showLicensesDialog ||
         this.showAboutDialog ||
         this.showProgressDialog ||
-        this.showSaveDialog ||
+        this.showSaveWebDialog ||
         this.showSaveDesktopDialog ||
-        this.showConfirmExitDialog;
+        this.showConfirmExitDesktopDialog ||
+        this.showOpenWebDialog ||
+        this.showOpenJsonWebDialog ||
+        this.showSaveJsonWebDialog;
       this.closeAllDialogs();
       if (dialogPreviouslyOpen) {
         // wait for the dialog to close
@@ -323,18 +320,29 @@ export default Vue.extend({
       this.showLicensesDialog = false;
       this.showAboutDialog = false;
       this.showProgressDialog = false;
-      this.showSaveDialog = false;
+      this.showSaveWebDialog = false;
       this.showSaveDesktopDialog = false;
-      this.showConfirmExitDialog = false;
+      this.showConfirmExitDesktopDialog = false;
+      this.showOpenWebDialog = false;
+      this.showOpenJsonWebDialog = false;
+      this.showSaveJsonWebDialog = false;
     },
 
+    open() {
+      this.$router.push('open/sav');
+    },
+    openJson() {
+      this.$router.push('open/json');
+    },
     save() {
       EventBus.$emit(ON_SAVE_PRESSED);
     },
+    saveJson() {
+      EventBus.$emit(ON_SAVE_JSON_PRESSED);
+    },
+
     exit() {
-      // TODO replace with event listener
-      // var window = remote.getCurrentWindow();
-      // window.close();
+      EventBus.$emit(ON_EXIT_PRESSED);
     }
   }
 });

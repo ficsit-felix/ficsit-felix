@@ -2,13 +2,13 @@
   <div>
     <p v-if="!importJson">
       {{
-        $t('openPage.saveLocation', {
-          saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
-        })
+      $t('openPage.saveLocation', {
+      saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
+      })
       }}
     </p>
-    <form enctype="multipart/form-data" novalidate v-if="!isSaving">
-      <div class="dropbox">
+    <form enctype="multipart/form-data" novalidate>
+      <div class="dropbox" v-ripple>
         <input
           v-if="importJson"
           type="file"
@@ -25,29 +25,10 @@
           class="input-file"
           @change="openFile($event.target.files[0])"
         />
-        <p v-if="importJson" class="dragInstruction">
-          {{ $t('openPage.dragJson') }}
-        </p>
+        <p v-if="importJson" class="dragInstruction">{{ $t('openPage.dragJson') }}</p>
         <p v-else class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
       </div>
     </form>
-    <div v-else class="infobox">
-      <p v-if="importJson">{{ $t('openPage.subtitleJson') }}</p>
-      <p v-else>{{ $t('openPage.subtitleSav') }}</p>
-      <div class="progressbar">
-        <div class="content" v-bind:style="{ width: progress + '%' }"></div>
-      </div>
-      <p class="info-text">{{ infoText }}</p>
-    </div>
-
-    <!-- TODO
-
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-    ></BugReportDialog>
-    -->
   </div>
 </template>
 
@@ -64,16 +45,12 @@ import { reportException } from '@/ts/errorReporting';
 import { sav2json } from 'satisfactory-json';
 import FileReaderStream from 'filereader-stream';
 
-import BugReportDialog from './BugReportDialog';
-
 import * as Sav2JsonWorker from 'worker-loader?name=[name].js!@/transformation/sav2json.worker.js';
-import { SaveGameLoading } from './SaveGameLoading';
-import { WebFileReader } from '../web/WebFileReader';
+import { SaveGameLoading } from '../core/SaveGameLoading';
+import { WebFileReader } from './WebFileReader';
 
 export default {
-  components: {
-    //BugReportDialog
-  },
+  components: {},
   data: function() {
     return {
       isSaving: false,
@@ -102,6 +79,7 @@ export default {
   mounted() {
     this.importJson = this.$route.path === '/open/json';
 
+    /* // TODO read auto load save file
     if (
       this.$route.path == '/open/auto' &&
       this.$store.state.settings.autoLoadSaveFile !== ''
@@ -117,6 +95,7 @@ export default {
         })
         .catch(error => this.handleError(error.message));
     }
+    */
 
     for (var a in modelConfig) {
       if (modelConfig[a].model !== '') {
@@ -127,29 +106,12 @@ export default {
   methods: {
     ...mapActions(['setLoadedData', 'setFilename', 'setUUID', 'setLoading']),
 
-    handleError(errorMessage, showBugReportWindow = true) {
-      if (showBugReportWindow) {
-        this.$refs.bugReport.openReportWindow(
-          this.$t('savePage.error') + ' ' + errorMessage
-        );
-      } else {
-        this.errorText = errorMessage;
-        this.showErrorDialog = true;
-        this.showSendSave = false;
-      }
-      this.isSaving = false;
-      this.progress = 0;
-    },
     openFile(file) {
       this.isSaving = true;
       new SaveGameLoading(
         this,
         new WebFileReader(new Sav2JsonWorker(), file)
       ).loadSaveGame(file.name, file.path, this.importJson);
-
-      /*// TODO  how does the BugReportDialog handle this now?
-      // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
-      window.data = file;*/
 
       /*
       // TODO handle auto load
@@ -197,7 +159,9 @@ export default {
 }
 
 .dropbox:hover {
-  background: rgba(255, 255, 255, 0.1);
+  //background: rgba(255, 255, 255, 0.1);
+  outline-color: #ccc;
+  color: #bbb;
 }
 
 .dropbox p {

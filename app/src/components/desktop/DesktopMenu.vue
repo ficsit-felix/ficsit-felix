@@ -2,22 +2,18 @@
   <div class="mainmenu" v-if="visible">
     <div class="menu-content">
       <ul class="menu">
-        <li @click="saveFile()" v-if="showSaveMenuEntries">
-          {{ $t('menubar.save') }}
-        </li>
+        <li @click="saveFile()" v-if="showSaveMenuEntries">{{ $t('menubar.save') }}</li>
         <li @click="openFilebrowser()">{{ $t('menubar.open') }}</li>
 
         <div class="spacer"></div>
-        <li class="small" @click="exportJson()" v-if="showSaveMenuEntries">
-          {{ $t('menubar.exportJson') }}
-        </li>
-        <li class="small" @click="openJsonFilebrowser()">
-          {{ $t('menubar.importJson') }}
-        </li>
+        <li
+          class="small"
+          @click="exportJson()"
+          v-if="showSaveMenuEntries"
+        >{{ $t('menubar.exportJson') }}</li>
+        <li class="small" @click="openJsonFilebrowser()">{{ $t('menubar.importJson') }}</li>
 
-        <li class="small" @click="openSettings()">
-          {{ $t('menubar.settings') }}
-        </li>
+        <li class="small" @click="openSettings()">{{ $t('menubar.settings') }}</li>
         <li class="small" @click="openAbout()">{{ $t('menubar.about') }}</li>
         <div class="spacer"></div>
         <li class="small" @click="openExit()">{{ $t('menubar.exit') }}</li>
@@ -31,9 +27,7 @@
         >
           <div class="bar-entry">
             <div class="icon">
-              <v-icon v-if="session.saves[0].broken" class="error"
-                >mdi-alert-circle</v-icon
-              >
+              <v-icon v-if="session.saves[0].broken" class="error">mdi-alert-circle</v-icon>
               <v-icon v-else>mdi-folder-open</v-icon>
             </div>
             <div class="information">
@@ -72,9 +66,7 @@
                   {{ $t('desktop.playDuration') }}
                   {{ secondsToTime(file.playDurationSeconds) }}
                 </div>
-                <div class="last-time">
-                  {{ dateToString(file.saveDateTime) }}
-                </div>
+                <div class="last-time">{{ dateToString(file.saveDateTime) }}</div>
                 <div class="last-time">{{ bytesToSize(file.size) }}</div>
               </div>
             </div>
@@ -82,9 +74,7 @@
         </li>
       </ul>
       <div class="content">
-        <div v-if="saveFolderNotFound" class="saveFolderError">
-          Could not locate save folder
-        </div>
+        <div v-if="saveFolderNotFound" class="saveFolderError">Could not locate save folder</div>
       </div>
     </div>
 
@@ -108,8 +98,7 @@ import {
   DIALOG_ABOUT,
   DIALOG_PROGRESS,
   DIALOG_OPEN_TIME_MS,
-  DIALOG_CONFIRM_EXIT,
-  DIALOG_SAVE,
+  DIALOG_CONFIRM_EXIT_DESKTOP,
   DIALOG_SAVE_DESKTOP
 } from '../../ts/constants';
 import { openFileFromFilesystem } from './openFile';
@@ -236,7 +225,7 @@ export default class DesktopMenu extends Vue {
     EventBus.$emit(DIALOG_ABOUT);
   }
   openExit() {
-    EventBus.$emit(DIALOG_CONFIRM_EXIT);
+    EventBus.$emit(DIALOG_CONFIRM_EXIT_DESKTOP);
   }
 
   openFile(filepath: string) {
@@ -258,7 +247,6 @@ export default class DesktopMenu extends Vue {
       })
       .then(result => {
         if (result.filePaths.length === 1) {
-          this.$router.push('/');
           openFileAndMoveToEditor(this, result.filePaths[0], true);
         }
       });

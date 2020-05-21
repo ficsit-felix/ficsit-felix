@@ -53,7 +53,7 @@
       "title": "Save save file"
     },
     "saveDesktop": {
-      "content": "Do you want to save the file? A backup of the previous one will be made"
+      "content": "Do you want to save the file? A backup of the previous one will be made."
     },
     "saveJson": {
       "content": "Do you want to export this save as a JSON file?",
@@ -69,7 +69,7 @@
       "includeSave": "Include save file in bug report",
       "includeScreenshot": "Include screenshot in bug report",
       "send": "Send Bug Report",
-      "sentMessage": "Bug report was successfully submitted.",
+      "sentMessage": "Bug report was successfully submitted. Thank you!",
       "errorMessage": "Unable to send the bug report."
     }
   },

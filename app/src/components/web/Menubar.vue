@@ -11,9 +11,9 @@
       <template v-slot:activator="{ on }">
         <span
           class="menu-item"
-          @click="showOpenDialog = true"
+          @click="showOpenDialog()"
           v-shortkey.once="['ctrl', 'o']"
-          @shortkey="showOpenDialog = true"
+          @shortkey="showOpenDialog()"
           v-on="on"
         >
           <v-icon>mdi-home</v-icon>
@@ -27,9 +27,9 @@
       <template v-slot:activator="{ on }">
         <span
           class="menu-item"
-          @click="showSaveDialog = true"
+          @click="showSaveDialog()"
           v-shortkey.once="['ctrl', 's']"
-          @shortkey="showSaveDialog = true"
+          @shortkey="showSaveDialog()"
           v-on="on"
         >
           <v-icon>mdi-content-save</v-icon>
@@ -69,14 +69,14 @@
       </template>
 
       <v-list>
-        <v-list-item @click="showOpenJsonDialog = true">
+        <v-list-item @click="showOpenJsonDialog()">
           <v-list-item-icon>
             <v-icon>mdi-upload</v-icon>
           </v-list-item-icon>
           <v-list-item-title>{{ $t('menubar.importJson') }}</v-list-item-title>
         </v-list-item>
 
-        <v-list-item @click="showSaveJsonDialog = true">
+        <v-list-item @click="showSaveJsonDialog()">
           <v-list-item-icon>
             <v-icon>mdi-download</v-icon>
           </v-list-item-icon>
@@ -89,7 +89,7 @@
           </v-list-item-icon>
           <v-list-item-title>{{ $t('menubar.github') }}</v-list-item-title>
         </v-list-item>
-        <v-list-item @click="showLicensesDialog = true">
+        <v-list-item @click="showLicensesDialog()">
           <v-list-item-icon>
             <v-icon>mdi-view-headline</v-icon>
           </v-list-item-icon>
@@ -103,131 +103,32 @@
         </v-list-item>
       </v-list>
     </v-menu>
-
-    <!-- TODO
-    <md-dialog-confirm
-      :md-active.sync="showOpenDialog"
-      :md-title="$t('dialog.open.title')"
-      :md-content="$t('dialog.open.content')"
-      :md-confirm-text="$t('general.yes')"
-      :md-cancel-text="$t('general.no')"
-      @md-cancel="showOpenDialog = false"
-      @md-confirm="open"
-      @keydown.enter="
-        showOpenDialog = false;
-        open();
-      "
-    />
-
-    <md-dialog-confirm
-      :md-active.sync="showSaveDialog"
-      :md-title="$t('dialog.save.title')"
-      :md-content="$t('dialog.save.content')"
-      :md-confirm-text="$t('general.yes')"
-      :md-cancel-text="$t('general.no')"
-      @md-cancel="showSaveDialog = false"
-      @md-confirm="save"
-      @keydown.enter="
-        showSaveDialog = false;
-        save();
-      "
-    />
-
-    <md-dialog-confirm
-      :md-active.sync="showOpenJsonDialog"
-      :md-title="$t('dialog.openJson.title')"
-      :md-content="$t('dialog.openJson.content')"
-      :md-confirm-text="$t('general.yes')"
-      :md-cancel-text="$t('general.no')"
-      @md-cancel="showOpenJsonDialog = false"
-      @md-confirm="openJson"
-      @keydown.enter="
-        showOpenJsonDialog = false;
-        openJson();
-      "
-    />
-
-    <md-dialog-confirm
-      :md-active.sync="showSaveJsonDialog"
-      :md-title="$t('dialog.saveJson.title')"
-      :md-content="$t('dialog.saveJson.content')"
-      :md-confirm-text="$t('general.yes')"
-      :md-cancel-text="$t('general.no')"
-      @md-cancel="showSaveJsonDialog = false"
-      @md-confirm="saveJson"
-      @keydown.enter="
-        showSaveJsonDialog = false;
-        saveJson();
-      "
-    />
-
-    <md-dialog :md-active.sync="showHelpDialog">
-      <md-dialog-title>{{ $t('dialog.help.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <b>{{ $t('dialog.help.controlsTitle') }}</b>
-        <p class="helpControls">{{ $t('dialog.help.controlsText') }}</p>
-        <p>{{ $t('dialog.help.changeJsonWarning') }}</p>
-        <br />
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showHelpDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
-    <md-dialog :md-active.sync="showSettingsDialog">
-      <md-dialog-title>{{ $t('dialog.settings.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <Settings></Settings>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showSettingsDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
-    <md-dialog :md-active.sync="showLicensesDialog">
-      <md-dialog-title>{{ $t('dialog.openSource.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <LicensesDialog></LicensesDialog>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showLicensesDialog = false">{{
-          $t('general.close')
-        }}</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
-
-    -->
   </div>
 </template>
 
 <script>
 import Logo from '../core/Logo';
-import LicensesDialog from '../core/LicensesDialog';
-import Settings from '../core/Settings';
 import { findActorByName } from '@/helpers/entityHelper';
 import { EventBus } from '../../event-bus';
-import { DIALOG_ABOUT, DIALOG_SETTINGS, DIALOG_HELP } from '../../ts/constants';
+import {
+  DIALOG_ABOUT,
+  DIALOG_SETTINGS,
+  DIALOG_HELP,
+  DIALOG_OPEN_SOURCE,
+  DIALOG_OPEN_WEB,
+  DIALOG_SAVE_WEB,
+  DIALOG_OPEN_JSON_WEB,
+  DIALOG_SAVE_JSON_WEB
+} from '../../ts/constants';
 
 export default {
   name: 'Menubar',
   components: {
     Logo
-    //LicensesDialog,
-    //Settings
   },
   data: function() {
     return {
-      logoAnimating: false,
-      showOpenDialog: false,
-      showSaveDialog: false,
-      showOpenJsonDialog: false,
-      showSaveJsonDialog: false,
-      showLicensesDialog: false
+      logoAnimating: false
     };
   },
   methods: {
@@ -254,6 +155,22 @@ export default {
     },
     showHelpDialog() {
       EventBus.$emit(DIALOG_HELP);
+    },
+    showLicensesDialog() {
+      EventBus.$emit(DIALOG_OPEN_SOURCE);
+    },
+
+    showOpenDialog() {
+      EventBus.$emit(DIALOG_OPEN_WEB);
+    },
+    showSaveDialog() {
+      EventBus.$emit(DIALOG_SAVE_WEB);
+    },
+    showOpenJsonDialog() {
+      EventBus.$emit(DIALOG_OPEN_JSON_WEB);
+    },
+    showSaveJsonDialog() {
+      EventBus.$emit(DIALOG_SAVE_JSON_WEB);
     }
   },
   mounted() {}

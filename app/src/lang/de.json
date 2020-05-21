@@ -52,6 +52,9 @@
       "content": "Willst du diesen Spielstand als .sav Datei runterladen? Bitte sichere deinen alten Spielstand bevor du ihn überschreibst!",
       "title": "Spielstand speichern"
     },
+    "saveDesktop": {
+      "content": "Willst du den Spielstand speichern? Es wird ein Backup von deinem vorherigen Spielstand erstellt."
+    },
     "saveJson": {
       "content": "Willst du diesen Spielstand als JSON Datei exportieren?",
       "title": "JSON Datei exportieren"
@@ -66,7 +69,7 @@
       "includeSave": "Spielstand an Fehlerbericht anhängen",
       "includeScreenshot": "Bildschirmfoto an Fehlerbericht anhängen",
       "send": "Fehlerbericht abschicken",
-      "sentMessage": "Fehlerbericht wurde erfolgreich versendet.",
+      "sentMessage": "Fehlerbericht wurde erfolgreich versendet. Vielen Dank!",
       "errorMessage": "Es gab ein Problem beim Senden des Fehlerberichtes."
     }
   },

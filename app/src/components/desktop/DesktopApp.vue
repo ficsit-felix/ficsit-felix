@@ -36,9 +36,10 @@ import {
   DIALOG_SETTINGS,
   CHANGE_LOCALE,
   ON_SAVE_PRESSED,
-  DIALOG_SAVE,
   TOGGLE_MENU,
-  DIALOG_CONFIRM_EXIT
+  DIALOG_SAVE_DESKTOP,
+  DIALOG_CONFIRM_EXIT_DESKTOP,
+  ON_EXIT_PRESSED
 } from '../../ts/constants';
 import { debug } from 'util';
 import { mapState } from 'vuex';
@@ -77,10 +78,12 @@ export default {
     EventBus.$on(CHANGE_LOCALE, this.onChangeLocale);
 
     EventBus.$on(ON_SAVE_PRESSED, this.onSavePressed);
+    EventBus.$on(ON_EXIT_PRESSED, this.onExitPressed);
   },
   beforeDestroy() {
     EventBus.$off(CHANGE_LOCALE, this.onChangeLocale);
     EventBus.$off(ON_SAVE_PRESSED, this.onSavePressed);
+    EventBus.$off(ON_EXIT_PRESSED, this.onExitPressed);
     this.titlebar.dispose();
   },
   methods: {
@@ -152,7 +155,6 @@ export default {
           accelerator: 'Esc',
           click: () => {
             EventBus.$emit(TOGGLE_MENU);
-            //this.$router.push('/');
           }
         });
       }
@@ -161,7 +163,7 @@ export default {
         label: this.$t('menubar.exit'),
         accelerator: 'Ctrl+Q',
         click() {
-          EventBus.$emit(DIALOG_CONFIRM_EXIT);
+          EventBus.$emit(DIALOG_CONFIRM_EXIT_DESKTOP);
         }
       });
 
@@ -251,7 +253,6 @@ export default {
         .then(value => {
           console.log(value.filePaths);
           if (value.filePaths.length === 1) {
-            this.$router.push('/');
             openFileAndMoveToEditor(this, value.filePaths[0], false);
           }
         });
@@ -271,7 +272,6 @@ export default {
         })
         .then(value => {
           if (value.filePaths.length === 1) {
-            this.$router.push('/');
             openFileAndMoveToEditor(this, value.filePaths[0], true);
           }
         });
@@ -302,7 +302,7 @@ export default {
     // save the file to the place where it was previously stored
     saveFile() {
       // show confirmation dialog
-      EventBus.$emit(DIALOG_SAVE);
+      EventBus.$emit(DIALOG_SAVE_DESKTOP);
     },
 
     onSavePressed() {
@@ -339,6 +339,10 @@ export default {
 
           saveFileAndShowProgress(this, value.filePath, false, false);
         });
+    },
+    onExitPressed() {
+      var window = remote.getCurrentWindow();
+      window.close();
     }
   }
 };

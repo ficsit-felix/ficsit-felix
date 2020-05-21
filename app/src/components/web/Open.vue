@@ -3,14 +3,13 @@
     <CenterWhiteBox>
       <Logo :height="128" black="#fff" :animating="logoAnimating" />
       <h1>{{ $t('openPage.title') }}</h1>
-      <OpenBox
-        @startAnimating="logoAnimating = true"
-        @stopAnimating="logoAnimating = false"
-      />
+      <OpenBox @startAnimating="logoAnimating = true" @stopAnimating="logoAnimating = false" />
       <div style="display: flex; flex-direction: row;">
-        <v-btn @click="$router.push({ name: 'landingpage' })">{{
+        <v-btn @click="$router.push({ name: 'landingpage' })">
+          {{
           $t('openPage.backButton')
-        }}</v-btn>
+          }}
+        </v-btn>
         <div class="spacer"></div>
         <v-btn @click="showSettingsDialog()">
           <v-icon left>mdi-cog</v-icon>
@@ -25,10 +24,10 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import Logo from './Logo.vue';
+import Logo from '../core/Logo.vue';
 import OpenBox from './OpenBox.vue';
-import CenterWhiteBox from './CenterWhiteBox.vue';
-import Settings from './Settings.vue';
+import CenterWhiteBox from '../core/CenterWhiteBox.vue';
+import Settings from '../core/Settings.vue';
 import { EventBus } from '../../event-bus';
 import { DIALOG_SETTINGS } from '../../ts/constants';
 

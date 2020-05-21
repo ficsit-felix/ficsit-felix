@@ -7,9 +7,7 @@
             @mousedown.stop="$emit('setTranslate')"
             :class="{ active: translateActive }"
             v-on="on"
-          >
-            {{ $t('toolbar.translate') }}
-          </a>
+          >{{ $t('toolbar.translate') }}</a>
         </template>
         <span>G</span>
       </v-tooltip>
@@ -19,9 +17,7 @@
             @mousedown.stop="$emit('setRotate')"
             :class="{ active: rotateActive }"
             v-on="on"
-          >
-            {{ $t('toolbar.rotate') }}
-          </a>
+          >{{ $t('toolbar.rotate') }}</a>
         </template>
         <span>R</span>
       </v-tooltip>
@@ -31,9 +27,7 @@
             @mousedown.stop="$emit('setScale')"
             :class="{ active: scaleActive }"
             v-on="on"
-          >
-            {{ $t('toolbar.scale') }}
-          </a>
+          >{{ $t('toolbar.scale') }}</a>
         </template>
         <span>S</span>
       </v-tooltip>
@@ -45,9 +39,7 @@
             @mousedown.stop="$emit('setWorld')"
             :class="{ active: worldActive }"
             v-on="on"
-          >
-            {{ $t('toolbar.world') }}
-          </a>
+          >{{ $t('toolbar.world') }}</a>
         </template>
         <span>W</span>
       </v-tooltip>
@@ -58,18 +50,13 @@
             @mousedown.stop="$emit('setLocal')"
             :class="{ active: localActive }"
             v-on="on"
-          >
-            {{ $t('toolbar.local') }}
-          </a>
+          >{{ $t('toolbar.local') }}</a>
         </template>
         <span>L</span>
       </v-tooltip>
     </div>
     <div class="spacer"></div>
-    <span
-      @click="$emit('reportBug')"
-      style="cursor: pointer;margin-right: 10px;"
-    >
+    <span @click="$emit('reportBug')" style="cursor: pointer;margin-right: 10px;">
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-icon class="bugReportIcon" v-on="on">mdi-bug</v-icon>

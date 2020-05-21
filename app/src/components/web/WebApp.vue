@@ -35,6 +35,10 @@
 import '@/assets/main.scss';
 import { mapState } from 'vuex';
 import Dialogs from '../core/Dialogs.vue';
+import { EventBus } from '../../event-bus';
+import { ON_SAVE_PRESSED, ON_SAVE_JSON_PRESSED } from '../../ts/constants';
+import { SaveGameSaving } from '../core/SaveGameSaving';
+import { WebFileWriter } from './WebFileWriter';
 
 export default {
   name: 'App',
@@ -42,9 +46,28 @@ export default {
     Dialogs
   },
   computed: mapState(['title']),
+  mounted() {
+    EventBus.$on(ON_SAVE_PRESSED, this.onSavePressed);
+    EventBus.$on(ON_SAVE_JSON_PRESSED, this.onSaveJsonPressed);
+  },
+  beforeDestroy() {
+    EventBus.$off(ON_SAVE_PRESSED, this.onSavePressed);
+    EventBus.$off(ON_SAVE_JSON_PRESSED, this.onSaveJsonPressed);
+  },
   methods: {
-    testError: function() {
-      throw new Error('asdf');
+    onSavePressed() {
+      new SaveGameSaving(this, new WebFileWriter()).saveSaveGame(
+        window.data,
+        this.$store.state.filename.replace('.json', '.sav'),
+        false
+      );
+    },
+    onSaveJsonPressed() {
+      new SaveGameSaving(this, new WebFileWriter()).saveSaveGame(
+        window.data,
+        this.$store.state.filename.replace('.sav', '.json'),
+        true
+      );
     }
   }
 };

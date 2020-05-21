@@ -21,7 +21,7 @@ export interface SaveFileReader {
 
 // Class that handles the pipeline from the moment that the file is known to the moment the editor is fully loaded
 export class SaveGameLoading {
-  constructor(private vue: Vue, private fileReader: SaveFileReader) {}
+  constructor(private vue: Vue, private fileReader: SaveFileReader) { }
 
   loadSaveGame(filename: string, filepath: string, asJson: boolean) {
     // TODO check extension
@@ -52,6 +52,8 @@ export class SaveGameLoading {
       // Create uuid
       const uuid = v4();
       this.vue.$store.dispatch('setUUID', uuid);
+      this.vue.$store.dispatch('setFilename', filename);
+      this.vue.$store.dispatch('setFilepath', filepath);
 
       // Report uuid and save file name to Sentry
       reportContext('uuid', uuid);

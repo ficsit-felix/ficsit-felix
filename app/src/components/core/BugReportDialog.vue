@@ -1,68 +1,66 @@
 <template>
   <div class="bugreport">
-    <!-- TODO
-    <md-dialog :md-active.sync="showBugReportDialog">
-      <md-dialog-title>{{ $t('dialog.bugReport.title') }}</md-dialog-title>
-      <md-dialog-content>
-        <div class="dialog-content">
+    <v-dialog v-model="showBugReportDialog" width="700" scrollable>
+      <v-card>
+        <v-card-title>{{ $t('dialog.bugReport.title') }}</v-card-title>
+        <v-card-text>
           <p v-if="message" class="errorMessage">{{ message }}</p>
-          <md-field>
-            <label>{{ $t('dialog.bugReport.userMessage') }}</label>
-            <md-textarea
-              v-model="userMessage"
-              :disabled="formDisabled"
-            ></md-textarea>
-          </md-field>
 
-          <md-field>
-            <label>{{ $t('dialog.bugReport.userContact') }}</label>
-            <md-input v-model="userContact" :disabled="formDisabled"></md-input>
-          </md-field>
+          <v-textarea
+            :label=" $t('dialog.bugReport.userMessage')"
+            v-model="userMessage"
+            :disabled="formDisabled"
+            outlined
+            class="mt-2"
+            hide-details
+          ></v-textarea>
 
-          <md-checkbox v-model="includeSave" :disabled="formDisabled">
-            {{ $t('dialog.bugReport.includeSave') }}
-          </md-checkbox>
+          <v-text-field
+            :label="$t('dialog.bugReport.userContact')"
+            v-model="userContact"
+            :disabled="formDisabled"
+            outlined
+            hide-details
+            class="mt-4"
+          ></v-text-field>
+
+          <v-checkbox
+            v-model="includeSave"
+            :disabled="formDisabled"
+            :label="$t('dialog.bugReport.includeSave')"
+            hide-details
+          ></v-checkbox>
           <div v-if="screenshotDataUrl !== ''">
-            <md-checkbox v-model="includeScreenshot" :disabled="formDisabled">
-              {{ $t('dialog.bugReport.includeScreenshot') }}
-            </md-checkbox>
+            <v-checkbox
+              v-model="includeScreenshot"
+              :disabled="formDisabled"
+              :label="$t('dialog.bugReport.includeScreenshot')"
+              hide-details
+            ></v-checkbox>
 
             <img :src="screenshotDataUrl" v-if="includeScreenshot" />
           </div>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
 
-          <md-progress-spinner
-            v-if="formDisabled"
-            md-mode="indeterminate"
-            class="floating"
-          ></md-progress-spinner>
-        </div>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button
-          @click="showBugReportDialog = false"
-          :disabled="formDisabled"
-          >{{ $t('general.close') }}</md-button
-        >
-        <md-button
-          class="md-primary"
-          @click="sendReport()"
-          :disabled="formDisabled"
-          >{{ $t('dialog.bugReport.send') }}</md-button
-        >
-      </md-dialog-actions>
-    </md-dialog>
+          <v-btn text @click="showBugReportDialog = false" :disabled="formDisabled">
+            {{
+            $t('general.close')
+            }}
+          </v-btn>
+          <v-progress-circular v-if="formDisabled" indeterminate color="primary"></v-progress-circular>
+          <v-btn color="primary" text @click="sendReport()" :disabled="formDisabled">
+            {{
+            $t('dialog.bugReport.send')
+            }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-    <md-dialog-alert
-      :md-active.sync="showSentDialog"
-      :md-content="$t('dialog.bugReport.sentMessage')"
-      :md-confirm-text="$t('general.ok')"
-    />
-    <md-dialog-alert
-      :md-active.sync="showErrorDialog"
-      :md-content="$t('dialog.bugReport.errorMessage')"
-      :md-confirm-text="$t('general.ok')"
-    />
-    -->
+    <AlertDialog v-model="showSentDialog" :content="$t('dialog.bugReport.sentMessage')"></AlertDialog>
+    <AlertDialog v-model="showErrorDialog" :content="$t('dialog.bugReport.errorMessage')"></AlertDialog>
   </div>
 </template>
 
@@ -71,8 +69,9 @@ import 'whatwg-fetch';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import AlertDialog from './AlertDialog.vue';
 
-@Component({})
+@Component({ components: { AlertDialog } })
 export default class BugReportDialog extends Vue {
   @Prop({ default: '' }) readonly uuid!: string;
   @Prop({ default: '' }) readonly filename!: string;

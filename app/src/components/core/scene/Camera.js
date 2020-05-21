@@ -61,7 +61,9 @@ export default {
   mounted() {
     this.renderer.camera = this;
 
-    this.onChange();
+    // Update once window.onCompassChange is hopefully registered.
+    // Will most probably still be while the progress bar is visible, so it should be fine.
+    setTimeout(() => this.onChange(), 500);
   },
 
   methods: {

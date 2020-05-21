@@ -26,24 +26,6 @@ export default new Router({
       component: EditorView
     },
     {
-      path: '/open/*',
-      name: 'open',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ './components/core/Open.vue')
-    },
-    {
-      path: '/save/*',
-      name: 'save',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ './components/core/Save.vue')
-    },
-    {
       path: '*',
       name: '404',
       component: MainScreen
