@@ -8,8 +8,7 @@
             :disabled="focusDisabled"
             @click="focusSelectedObject"
             v-on="on"
-            >{{ $t('propertyEditor.focusButton') }}</v-btn
-          >
+          >{{ $t('propertyEditor.focusButton') }}</v-btn>
         </template>
         F
       </v-tooltip>
@@ -18,8 +17,7 @@
         color="secondary black--text"
         :disabled="this.selectedJsonToEdit == null"
         @click="saveJson"
-        >{{ $t('propertyEditor.saveJsonButton') }}</v-btn
-      >
+      >{{ $t('propertyEditor.saveJsonButton') }}</v-btn>
       <div class="spacer"></div>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
@@ -45,8 +43,7 @@
         @click="copyAsBlueprint"
         :disabled="copyAsBlueprintDisabled"
         class="ma-2"
-        >{{ $t('propertyEditor.copyAsBlueprint') }}</v-btn
-      >
+      >{{ $t('propertyEditor.copyAsBlueprint') }}</v-btn>
     </div>
 
     <v-textarea
@@ -193,7 +190,7 @@ export default {
   /*color: $textGray;
   border: 0px;*/
 }
-textarea {
+::v-deep textarea {
   height: 100% !important;
   max-height: none !important;
   font-family: monospace !important;

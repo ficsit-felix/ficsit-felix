@@ -289,7 +289,6 @@ export default Vue.extend({
   },
   methods: {
     closeDialogs(dialogAlreadyOpenDontClose: boolean, callback: () => void) {
-      console.log('closeDialogs', dialogAlreadyOpenDontClose);
       if (dialogAlreadyOpenDontClose === true) {
         callback();
         return;
