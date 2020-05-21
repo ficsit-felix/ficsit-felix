@@ -5,6 +5,7 @@
         :input-value="allVisible"
         @change="changeVisibilityOfAllClasses($event)"
         :label="$t('classList.allClasses')"
+        hide-details
       ></v-checkbox>
       <ul>
         <li v-for="item in classes" v-bind:key="item.name">
@@ -23,22 +24,23 @@
         </li>
       </ul>
 
-      <!-- TODO
-      <md-dialog :md-active.sync="showColorDialog">
-        <md-dialog-title>{{ $t('dialog.color.title') }}</md-dialog-title>
-        <md-dialog-content class="colorPickerDialogContent">
-          <colorPicker
-            :color="selectedColor"
-            @changeColor="changeColor"
-          ></colorPicker>
-        </md-dialog-content>
-        <md-dialog-actions>
-          <md-button class="md-primary" @click="showColorDialog = false">{{
-            $t('general.close')
-          }}</md-button>
-        </md-dialog-actions>
-      </md-dialog>
-      -->
+      <v-dialog width="300" v-model="showColorDialog">
+        <v-card>
+          <v-card-title>{{ $t('dialog.color.title') }}</v-card-title>
+          <v-card-text>
+            <colorPicker
+              :color="selectedColor"
+              @changeColor="changeColor"
+            ></colorPicker>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn text @click="showColorDialog = false" color="primary">{{
+              $t('general.close')
+            }}</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -51,7 +53,7 @@ import { modelConfig } from '@/definitions/models';
 export default {
   name: 'ClassList',
   components: {
-    //colorPicker
+    colorPicker
   },
   data: function() {
     return {
@@ -138,46 +140,43 @@ export default {
   li {
     height: 28px;
     white-space: nowrap;
+    display: flex;
   }
   .color {
     width: 19px;
     height: 19px;
     border: 1px solid #eee;
     display: inline-block;
-    margin-left: 8px;
+    margin-left: 2px;
     margin-right: 8px;
     border-radius: 3px;
     cursor: pointer;
+    flex-shrink: 0;
+    // match the v-input--selection-controls
+    margin-top: 22px;
   }
+}
 
-  .md-checkbox {
-    margin: 3px 0px;
-    white-space: nowrap;
-  }
-  .md-checkbox .md-checkbox-container:before {
-    width: 26px;
-    height: 26px;
-  }
+// Customize the color picker
+::v-deep .colors {
+  padding-left: 0px;
+}
+::v-deep .hu-color-picker {
+  width: 218px !important;
+}
+::v-deep .color-alpha {
+  // don't display alpha
+  display: none;
+}
 
-  .md-checkbox .md-checkbox-label {
-    padding-left: 10px;
-  }
+::v-deep .color-type:nth-child(4) {
+  // don't display rgba type
+  display: none !important;
+}
+
+::v-deep .color-set {
+  justify-content: center;
 }
 </style>
 
-<style lang="scss">
-// TODO rewrite to scoped using ::v-deep https://stackoverflow.com/a/55368933
-.colorPickerDialogContent {
-  .hu-color-picker {
-    width: 218px !important;
-  }
-  .alpha {
-    // don't display alpha
-    display: none;
-  }
-  .color-type:nth-child(4) {
-    // don't display rgba type
-    display: none !important;
-  }
-}
-</style>
+<style lang="scss"></style>

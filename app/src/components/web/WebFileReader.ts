@@ -1,6 +1,6 @@
 import { SaveFileReader } from '../core/SaveGameLoading';
 export class WebFileReader implements SaveFileReader {
-  constructor(private worker: any, private file: File) { }
+  constructor(private worker: any, private file: File) {}
 
   readFile(
     filepath: string,
@@ -11,7 +11,6 @@ export class WebFileReader implements SaveFileReader {
   ): void {
     // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
     window.data = this.file;
-
 
     this.worker.addEventListener('message', (message: any) => {
       if (message.data.status === 'error') {

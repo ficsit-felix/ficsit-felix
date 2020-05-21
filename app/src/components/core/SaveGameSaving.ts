@@ -18,7 +18,7 @@ export interface SaveFileWriter {
 }
 
 export class SaveGameSaving {
-  constructor(private vue: Vue, private fileWriter: SaveFileWriter) { }
+  constructor(private vue: Vue, private fileWriter: SaveFileWriter) {}
 
   saveSaveGame(saveGame: SaveGame, filepath: string, asJson: boolean) {
     this.vue.$store.dispatch('setProgress', 0);

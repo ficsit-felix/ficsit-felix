@@ -8,7 +8,8 @@
             :disabled="focusDisabled"
             @click="focusSelectedObject"
             v-on="on"
-          >{{ $t('propertyEditor.focusButton') }}</v-btn>
+            >{{ $t('propertyEditor.focusButton') }}</v-btn
+          >
         </template>
         F
       </v-tooltip>
@@ -17,7 +18,8 @@
         color="secondary black--text"
         :disabled="this.selectedJsonToEdit == null"
         @click="saveJson"
-      >{{ $t('propertyEditor.saveJsonButton') }}</v-btn>
+        >{{ $t('propertyEditor.saveJsonButton') }}</v-btn
+      >
       <div class="spacer"></div>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
@@ -43,7 +45,8 @@
         @click="copyAsBlueprint"
         :disabled="copyAsBlueprintDisabled"
         class="ma-2"
-      >{{ $t('propertyEditor.copyAsBlueprint') }}</v-btn>
+        >{{ $t('propertyEditor.copyAsBlueprint') }}</v-btn
+      >
     </div>
 
     <v-textarea
@@ -56,26 +59,16 @@
       style="height:100%"
     ></v-textarea>
 
-    <!-- TODO
-    <md-snackbar :md-duration="1000" :md-active.sync="showSnackbar">{{
+    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">{{
       $t('propertyEditor.objectSavedSnack')
-    }}</md-snackbar>
+    }}</v-snackbar>
 
-    <md-dialog-confirm
-      :md-active.sync="showDeleteDialog"
-      :md-title="$t('dialog.delete.title')"
-      :md-content="$t('dialog.delete.content')"
-      :md-confirm-text="$t('general.yes')"
-      :md-cancel-text="$t('general.no')"
-      @md-cancel="showDeleteDialog = false"
-      @md-confirm="deleteSelected"
-      @keydown.enter="
-        showDeleteDialog = false;
-        deleteSelected();
-      "
-    />
-
-    -->
+    <ConfirmDialog
+      v-model="showDeleteDialog"
+      :title="$t('dialog.delete.title')"
+      :content="$t('dialog.delete.content')"
+      @confirm="deleteSelected()"
+    ></ConfirmDialog>
   </div>
 </template>
 
@@ -83,8 +76,12 @@
 import { mapGetters, mapState, mapActions } from 'vuex';
 import { createBlueprintFromActors } from 'satisfactory-blueprint'; //"satisfactory-blueprint";
 import copyToClipboard from '@/ts/copyToClipboard';
+import ConfirmDialog from './ConfirmDialog.vue';
 export default {
   name: 'PropertyEditor',
+  components: {
+    ConfirmDialog
+  },
   data: function() {
     return {
       selectedJson: '',
@@ -191,8 +188,6 @@ export default {
   border: 0px;*/
 }
 ::v-deep textarea {
-  height: 100% !important;
-  max-height: none !important;
   font-family: monospace !important;
 }
 

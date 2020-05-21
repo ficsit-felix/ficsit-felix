@@ -7,7 +7,7 @@
           <p v-if="message" class="errorMessage">{{ message }}</p>
 
           <v-textarea
-            :label=" $t('dialog.bugReport.userMessage')"
+            :label="$t('dialog.bugReport.userMessage')"
             v-model="userMessage"
             :disabled="formDisabled"
             outlined
@@ -44,23 +44,38 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text @click="showBugReportDialog = false" :disabled="formDisabled">
-            {{
-            $t('general.close')
-            }}
+          <v-btn
+            text
+            @click="showBugReportDialog = false"
+            :disabled="formDisabled"
+          >
+            {{ $t('general.close') }}
           </v-btn>
-          <v-progress-circular v-if="formDisabled" indeterminate color="primary"></v-progress-circular>
-          <v-btn color="primary" text @click="sendReport()" :disabled="formDisabled">
-            {{
-            $t('dialog.bugReport.send')
-            }}
+          <v-progress-circular
+            v-if="formDisabled"
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+          <v-btn
+            color="primary"
+            text
+            @click="sendReport()"
+            :disabled="formDisabled"
+          >
+            {{ $t('dialog.bugReport.send') }}
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <AlertDialog v-model="showSentDialog" :content="$t('dialog.bugReport.sentMessage')"></AlertDialog>
-    <AlertDialog v-model="showErrorDialog" :content="$t('dialog.bugReport.errorMessage')"></AlertDialog>
+    <AlertDialog
+      v-model="showSentDialog"
+      :content="$t('dialog.bugReport.sentMessage')"
+    ></AlertDialog>
+    <AlertDialog
+      v-model="showErrorDialog"
+      :content="$t('dialog.bugReport.errorMessage')"
+    ></AlertDialog>
   </div>
 </template>
 
@@ -236,11 +251,6 @@ version: ${process.env.PACKAGE_VERSION}
 </script>
 
 <style lang="scss" scoped>
-.bugreport {
-  /* As we need to place the md-dialog outside of this component, so that clicking on the background can work */
-  display: flex;
-  flex-direction: column;
-}
 .errorMessage {
   overflow: auto;
 }
@@ -259,10 +269,6 @@ version: ${process.env.PACKAGE_VERSION}
 }
 </style>
 <style lang="css" scoped>
-.dialog-content >>> .md-checkbox {
-  display: flex !important;
-  margin: 10px 10px 10px 0px !important;
-}
 .dialog-content img {
   max-width: 100%;
   max-height: 300px;

@@ -2,9 +2,9 @@
   <div>
     <p v-if="!importJson">
       {{
-      $t('openPage.saveLocation', {
-      saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
-      })
+        $t('openPage.saveLocation', {
+          saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
+        })
       }}
     </p>
     <form enctype="multipart/form-data" novalidate>
@@ -25,7 +25,9 @@
           class="input-file"
           @change="openFile($event.target.files[0])"
         />
-        <p v-if="importJson" class="dragInstruction">{{ $t('openPage.dragJson') }}</p>
+        <p v-if="importJson" class="dragInstruction">
+          {{ $t('openPage.dragJson') }}
+        </p>
         <p v-else class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
       </div>
     </form>

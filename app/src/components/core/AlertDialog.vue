@@ -13,7 +13,9 @@
       <v-card-text v-html="content"></v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn text @click="close()" color="primary">{{ $t('general.close') }}</v-btn>
+        <v-btn text @click="close()" color="primary">{{
+          $t('general.close')
+        }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

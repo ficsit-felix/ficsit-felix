@@ -19,48 +19,6 @@ body {
 * {
   box-sizing: border-box;
 }
-/*
-// custom theme
-@import "~vue-material/dist/theme/engine"; // Import the theme engine
-
-@include md-register-theme(
-  "default",
-  (
-    primary: md-get-palette-color(orange, 200),
-    // The primary color of your application
-      accent: md-get-palette-color(cyan, 200),
-    background: $surface,
-    // The accent or secondary color
-      theme: dark
-  )
-);
-@import "~vue-material/dist/theme/all"; // Apply the theme
-// @import "~vue-material/dist/components/MdButton/theme"; // Apply the theme
-// @import "~vue-material/dist/components/MdField/theme"; // Apply the theme
-
-@include md-register-theme(
-  "default",
-  (
-    primary: md-get-palette-color(orange, 200),
-    // The primary color of your application
-      accent: md-get-palette-color(cyan, 200),
-    background: $surface,
-    // The accent or secondary color
-      theme: light
-  )
-);
-@import "~vue-material/dist/components/MdSnackbar/theme"; // Apply the theme
-
-// increase dialog animation speed
-.md-dialog {
-  transition-duration: 0.1s !important;
-}
-
-/// Use a different workaround for now https://github.com/vuematerial/vue-material/issues/2209#issuecomment-628165893
-.md-dialog .md-dialog-container {
-  transform: none;
-}
-*/
 
 // don't underline menu entries in the titlebar
 .titlebar .action-menu-item:hover {
@@ -76,10 +34,6 @@ body {
 .titlebar .window-title {
   color: #00000000;
   font-size: 0px !important;
-}
-
-// need to be flex so that our hack for centering VueMaterial dialogs still works
-.container-after-titlebar {
 }
 
 .v-application--wrap {
@@ -129,3 +83,6 @@ a:hover {
 /*.v-overlay__scrim {
   background-color: $elevation8dp !important; // This even overwrites the custom color set directly on the element
 }*/
+.theme--dark.v-application {
+  background-color: $surface; 
+}

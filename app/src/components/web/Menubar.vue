@@ -219,31 +219,3 @@ b {
   padding: 0px 16px;
 }
 </style>
-
-<style lang="scss">
-// TODO rewrite to scoped using ::v-deep https://stackoverflow.com/a/55368933
-.menubar {
-  .md-menu > .md-button {
-    margin: 8px;
-    text-transform: none;
-    font-size: 16px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    color: #e3d3d3;
-  }
-}
-.menubar-content {
-  .md-list-item-content {
-    justify-content: left !important;
-  }
-  .md-list-item-content > .v-icon:last-child {
-    margin-left: 0px;
-  }
-  .md-list-item-content > .v-icon:first-child {
-    margin-right: 12px;
-  }
-}
-
-.md-dialog-content .helpControls {
-  white-space: pre-line;
-}
-</style>

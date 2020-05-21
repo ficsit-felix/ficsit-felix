@@ -22,8 +22,7 @@
       :input-value="showCustomPaints"
       @change="updateShowCustomPaints"
       :label="$t('settings.showCustomPaints')"
-    >
-    </v-checkbox>
+    ></v-checkbox>
     <h4>{{ $t('settings.advancedSectionTitle') }}</h4>
 
     <v-text-field
@@ -32,8 +31,7 @@
       @input="updateFarPlane"
       :hint="$t('settings.farPlaneHelp')"
       type="number"
-    >
-    </v-text-field>
+    ></v-text-field>
 
     <v-text-field
       :label="$t('settings.nearPlane')"
@@ -65,14 +63,13 @@
         :input-value="editClassColors"
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
-      >
-      </v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">
-        {{ $t('settings.copyClassColorsButton') }}
-      </v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">
-        {{ $t('settings.clearClassColorsButton') }}
-      </v-btn>
+      ></v-checkbox>
+      <v-btn @click="exportClassColors" class="ma-2">{{
+        $t('settings.copyClassColorsButton')
+      }}</v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">{{
+        $t('settings.clearClassColorsButton')
+      }}</v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"
@@ -87,15 +84,13 @@
         :value="autoLoadSaveFile"
         @input="updateAutoLoadSaveFile"
         hide-details
-      >
-      </v-text-field>
+      ></v-text-field>
 
       <v-checkbox
         :input-value="showFps"
         @change="setShowFps"
         :label="$t('settings.showFps')"
-      >
-      </v-checkbox>
+      ></v-checkbox>
     </div>
   </div>
 </template>
@@ -200,11 +195,5 @@ export default {
 .languageSelection {
   display: flex;
   align-items: center;
-}
-</style>
-
-<style lang="css" scoped>
-.settings >>> .md-checkbox {
-  display: flex !important;
 }
 </style>
