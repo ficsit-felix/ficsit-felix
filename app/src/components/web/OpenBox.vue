@@ -1,6 +1,10 @@
 <template>
   <div>
-    <p v-if="!importJson">
+    <p
+      v-if="!importJson"
+      @click="copySaveLocationToClipboard"
+      class="saveLocation"
+    >
       {{
         $t('openPage.saveLocation', {
           saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
@@ -15,7 +19,7 @@
           name="openField"
           accept=".json"
           class="input-file"
-          @change="openFile($event.target.files[0])"
+          @change="openFile($event.target)"
         />
         <input
           v-else
@@ -23,7 +27,7 @@
           name="openField"
           accept=".sav"
           class="input-file"
-          @change="openFile($event.target.files[0])"
+          @change="openFile($event.target)"
         />
         <p v-if="importJson" class="dragInstruction">
           {{ $t('openPage.dragJson') }}
@@ -31,36 +35,29 @@
         <p v-else class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
       </div>
     </form>
+    <v-snackbar v-model="showLocationClipboardSnack" :timeout="1000">{{
+      $t('openPage.copiedToClipboard')
+    }}</v-snackbar>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import * as Sentry from '@sentry/browser';
-import { v4 } from 'uuid';
-
 import { modelHelper } from '@/helpers/modelHelper';
 import { modelConfig } from '@/definitions/models';
 
-import { reportMessage, reportContext, reportError } from '@/ts/errorReporting';
-import { reportException } from '@/ts/errorReporting';
-import { sav2json } from 'satisfactory-json';
-import FileReaderStream from 'filereader-stream';
-
 import * as Sav2JsonWorker from 'worker-loader?name=[name].js!@/transformation/sav2json.worker.js';
+
 import { SaveGameLoading } from '../core/SaveGameLoading';
 import { WebFileReader } from './WebFileReader';
+import copyToClipboard from '../../ts/copyToClipboard';
 
 export default {
   components: {},
   data: function() {
     return {
       isSaving: false,
-      progress: 0,
-      infoText: this.$t('openPage.initializing'),
-      errorText: '',
-      showSendSave: false,
-      importJson: false
+      importJson: false,
+      showLocationClipboardSnack: false
     };
   },
   watch: {
@@ -74,9 +71,6 @@ export default {
         }
       }
     }
-  },
-  computed: {
-    ...mapState(['filename', 'uuid'])
   },
   mounted() {
     this.importJson = this.$route.path === '/open/json';
@@ -99,16 +93,21 @@ export default {
     }
     */
 
-    for (var a in modelConfig) {
-      if (modelConfig[a].model !== '') {
-        modelHelper.loadModel('/models/' + modelConfig[a].model);
+    for (var config in modelConfig) {
+      if (modelConfig[config].model !== '') {
+        modelHelper.loadModel('/models/' + modelConfig[config].model);
       }
     }
   },
   methods: {
-    ...mapActions(['setLoadedData', 'setFilename', 'setUUID', 'setLoading']),
+    openFile(input) {
+      const file = input.files[0];
+      if (file === undefined) {
+        return;
+      }
+      // reset input so that the same file can be selected again in case of an error
+      input.value = '';
 
-    openFile(file) {
       this.isSaving = true;
       new SaveGameLoading(
         this,
@@ -123,6 +122,10 @@ export default {
         });
       }
       */
+    },
+    copySaveLocationToClipboard() {
+      copyToClipboard('%localappdata%\\FactoryGame\\Saved\\SaveGames');
+      this.showLocationClipboardSnack = true;
     }
   }
 };
@@ -130,9 +133,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
-/*p {
-  color: $textGray;
-}*/
 
 .dropbox {
   outline: 2px dashed grey; /* the dash box */
@@ -171,35 +171,12 @@ export default {
   text-align: center;
 }
 
-.infobox {
-  height: 200px;
-  font-size: 17px;
-  padding: 20px 40px;
-  /*color: $textGray;*/
-}
-.progressbar {
-  border: 2px solid $middleGray;
-  height: 50px;
-  border-radius: 5px;
-  padding: 3px;
-  .content {
-    background: $middleGray;
-    height: 100%;
-    border-radius: 3px;
-  }
-}
 .dragInstruction {
   margin: auto;
   padding: 0px 30px;
 }
 
-.info-text {
-  font-size: 15px;
-  margin-top: 10px;
-  /*color: $logoColorLight;*/
-}
-
-.dialog-content {
-  padding: 0px 20px;
+.saveLocation {
+  cursor: pointer;
 }
 </style>

@@ -10,7 +10,7 @@ import Router from 'vue-router';
 import { i18n } from './plugins/i18n';
 import { isElectron } from './ts/isElectron';
 import '@/helpers/cmdHelper';
-import './golden-layout-dark.css';
+import './assets/golden-layout-dark.css';
 
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
@@ -54,7 +54,6 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
 
 new Vue({
   router,

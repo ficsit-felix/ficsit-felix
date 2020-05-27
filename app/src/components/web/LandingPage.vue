@@ -6,7 +6,10 @@
     </div>
 
     <CenterWhiteBox>
-      <div @mouseover="logoAnimating = true" @mouseleave="logoAnimating = false">
+      <div
+        @mouseover="logoAnimating = true"
+        @mouseleave="logoAnimating = false"
+      >
         <Logo :height="128" black="#fff" :animating="logoAnimating" />
       </div>
       <p class="my-2 mx-4">{{ $t('landingPage.firstParagraph') }}</p>
@@ -15,12 +18,14 @@
           color="primary black--text"
           @click="$router.push({ path: '/open/sav' })"
           class="ma-2"
-        >{{ $t('landingPage.openSavButton') }}</v-btn>&nbsp;
+          >{{ $t('landingPage.openSavButton') }}</v-btn
+        >&nbsp;
         <v-btn
           color="secondary black--text"
           @click="downloadDesktop()"
           class="ma-2"
-        >{{ $t('landingPage.downloadDesktop') }}</v-btn>
+          >{{ $t('landingPage.downloadDesktop') }}</v-btn
+        >
       </p>
       <a href="/screenshot.png">
         <img src="/screenshot.png" />
@@ -30,15 +35,19 @@
         @click="$router.push({ path: '/open/json' })"
         class="ma-2"
         outlined
-      >{{ $t('landingPage.openJsonButton') }}</v-btn>
+        >{{ $t('landingPage.openJsonButton') }}</v-btn
+      >
 
       <p class="left my-4">
         <i18n path="landingPage.thirdParagraph">
-          <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github">GitHub</a>
+          <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
+            >GitHub</a
+          >
           <a
             href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
             slot="authors"
-          >{{ $t('landingPage.authors') }}</a>
+            >{{ $t('landingPage.authors') }}</a
+          >
         </i18n>
       </p>
     </CenterWhiteBox>

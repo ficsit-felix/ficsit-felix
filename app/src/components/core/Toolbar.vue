@@ -8,7 +8,8 @@
             :class="{ active: translateActive }"
             v-on="on"
             v-ripple
-          >{{ $t('toolbar.translate') }}</a>
+            >{{ $t('toolbar.translate') }}</a
+          >
         </template>
         <span>G</span>
       </v-tooltip>
@@ -19,7 +20,8 @@
             :class="{ active: rotateActive }"
             v-on="on"
             v-ripple
-          >{{ $t('toolbar.rotate') }}</a>
+            >{{ $t('toolbar.rotate') }}</a
+          >
         </template>
         <span>R</span>
       </v-tooltip>
@@ -30,7 +32,8 @@
             :class="{ active: scaleActive }"
             v-on="on"
             v-ripple
-          >{{ $t('toolbar.scale') }}</a>
+            >{{ $t('toolbar.scale') }}</a
+          >
         </template>
         <span>S</span>
       </v-tooltip>
@@ -43,7 +46,8 @@
             :class="{ active: worldActive }"
             v-on="on"
             v-ripple
-          >{{ $t('toolbar.world') }}</a>
+            >{{ $t('toolbar.world') }}</a
+          >
         </template>
         <span>W</span>
       </v-tooltip>
@@ -55,7 +59,8 @@
             :class="{ active: localActive }"
             v-on="on"
             v-ripple
-          >{{ $t('toolbar.local') }}</a>
+            >{{ $t('toolbar.local') }}</a
+          >
         </template>
         <span>L</span>
       </v-tooltip>
@@ -70,14 +75,18 @@
             :disabled="focusDisabled"
             @mousedown.stop="focusSelectedObject"
             v-on="on"
-          >{{ $t('propertyEditor.focusButton') }}</v-btn>
+            >{{ $t('propertyEditor.focusButton') }}</v-btn
+          >
         </template>
         F
       </v-tooltip>
     </div>
 
     <div class="spacer"></div>
-    <span @click="$emit('reportBug')" style="cursor: pointer;margin-right: 10px;margin-top: 8px">
+    <span
+      @click="$emit('reportBug')"
+      style="cursor: pointer;margin-right: 10px;margin-top: 8px"
+    >
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-icon class="bugReportIcon" v-on="on">mdi-bug</v-icon>

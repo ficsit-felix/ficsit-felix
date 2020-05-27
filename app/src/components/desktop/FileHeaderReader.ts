@@ -23,7 +23,7 @@ export class FileHeaderReader {
     filename: string,
     filepath: string,
     stream: ReadStream,
-    callback: (files: any) => void
+    callback: (header: any) => void
   ) {
     this.stream = stream;
     stream.on('readable', () => {

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import EditorView from './components/desktop/EditorView.vue';
-//import Editor from './components/core/Editor.vue';
 import MainScreen from './components/desktop/MainScreen.vue';
 import LoadEditorView from './components/core/LoadEditorView.vue';
 
@@ -18,12 +17,18 @@ export default new Router({
     {
       path: '/loadeditor',
       name: 'loadEditor',
-      component: LoadEditorView
+      component: LoadEditorView,
+      meta: {
+        requiresDataLoaded: true
+      }
     },
     {
       path: '/editor',
       name: 'editor',
-      component: EditorView
+      component: EditorView,
+      meta: {
+        requiresDataLoaded: true
+      }
     },
     {
       path: '*',

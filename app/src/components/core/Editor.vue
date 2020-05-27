@@ -31,21 +31,35 @@
             </gl-component>
 
             <gl-col :width="17">
-              <gl-component :title="$t('panels.objectList.title')" :closable="false" :height="70">
+              <gl-component
+                :title="$t('panels.objectList.title')"
+                :closable="false"
+                :height="70"
+              >
                 <ObjectList ref="objectList" />
               </gl-component>
-              <gl-component :title="$t('panels.classList.title')" :closable="false" :height="30">
+              <gl-component
+                :title="$t('panels.classList.title')"
+                :closable="false"
+                :height="30"
+              >
                 <ClassList />
               </gl-component>
             </gl-col>
             <gl-stack :width="23">
-              <gl-component :title="$t('panels.properties.title')" :closable="false">
+              <gl-component
+                :title="$t('panels.properties.title')"
+                :closable="false"
+              >
                 <div class="panel">
                   <h1>Properties</h1>
                 </div>
               </gl-component>
               <gl-component :title="$t('panels.json.title')" :closable="false">
-                <PropertyEditor ref="propertyEditor" @focusSelectedObject="focusSelectedObject" />
+                <PropertyEditor
+                  ref="propertyEditor"
+                  @focusSelectedObject="focusSelectedObject"
+                />
               </gl-component>
             </gl-stack>
           </gl-row>

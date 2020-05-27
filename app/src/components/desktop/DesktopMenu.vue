@@ -24,6 +24,11 @@
       </ul>
 
       <ul class="browser filebrowser" ref="filebrowser" v-if="showFilebrowser">
+        <v-progress-circular
+          indeterminate
+          v-if="isLoadingFilelist"
+          class="filelistProgressIndicator"
+        ></v-progress-circular>
         <li
           v-bind:key="session.sessionName"
           v-for="session in sortedFiles"
@@ -117,13 +122,17 @@ import {
   openFileAndMoveToEditor,
   saveFileAndShowProgress
 } from './desktopUtils';
-import { createReadStream } from 'fs';
+import { createReadStream, Dir } from 'fs';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import fs from 'fs';
 import { FileHeaderReader, FileHeader } from './FileHeaderReader';
 import moment from 'moment';
 import { getSaveGamesFolderPath } from './getSaveGamesFolderPath';
 import path from 'path';
+
+interface FileList {
+  [id: string]: FileHeader[];
+}
 
 @Component({
   computed: {
@@ -144,50 +153,103 @@ export default class DesktopMenu extends Vue {
   private sessionFiles = [];
   private showFilebrowser = false;
   private version = remote.app.getVersion();
+  private isLoadingFilelist = false;
+  private sortedFiles: { sessionName: string; saves: FileHeader[] }[] = [];
 
   mounted() {
     // read files
+    this.reloadFilelist();
+  }
 
+  reloadFilelist() {
     this.readFiles(getSaveGamesFolderPath());
   }
 
   readFiles(dir: string) {
-    fs.readdir(dir, (err, files) => {
+    this.isLoadingFilelist = true;
+    // For some reason this hangs the first time in debug builds until the page is refreshed
+    // This is no problem in production builds
+    fs.opendir(dir, async (err, iterator) => {
       if (err) {
         this.saveFolderNotFound = true;
+        this.isLoadingFilelist = false;
         // TODO: SaveGames folder not found
         return;
       }
 
-      files.forEach(file => {
-        const filePath = path.resolve(dir, file);
+      // store our fresh copy of the file array here until all are loaded
+      const freshFiles: FileList = {};
+      await this.parseFilelist(freshFiles, dir, iterator);
 
-        fs.stat(filePath, (err, stat) => {
-          if (stat && stat.isDirectory()) {
-            console.log('dir', filePath);
-            this.readFiles(filePath);
-          } else {
-            if (file.endsWith('.sav')) {
-              // READ HEADER OF SAVE FILE
-              const stream = createReadStream(path.join(filePath));
-              new FileHeaderReader(file, filePath, stream, header => {
-                // add file size to header
-                header.size = stat.size;
+      this.sortedFiles = this.sortFiles(freshFiles);
+      this.isLoadingFilelist = false;
+    });
+  }
 
-                if (this.files[header.sessionName] === undefined) {
-                  this.$set(this.files, header.sessionName, []);
-                }
+  async parseFilelist(freshFiles: FileList, dir: string, iterator: Dir) {
+    let dirent;
+    while ((dirent = iterator.readSync()) !== null) {
+      const file = dirent.name;
+      const filePath = path.resolve(dir, file);
 
-                this.files[header.sessionName].push(header);
-              });
-            }
+      const stat = fs.statSync(filePath);
+      if (stat && stat.isDirectory()) {
+        const iter = fs.opendirSync(filePath);
+        await this.parseFilelist(freshFiles, filePath, iter);
+      } else {
+        if (file.endsWith('.sav')) {
+          const header = await this.readFileHeader(file, filePath);
+          // add file size to header
+          header.size = stat.size;
+
+          if (freshFiles[header.sessionName] === undefined) {
+            freshFiles[header.sessionName] = [];
+            //this.$set(this.files, header.sessionName, []);
           }
-        });
 
-        console.log(file);
+          freshFiles[header.sessionName].push(header);
+        }
+      }
+    }
+  }
+
+  async readFileHeader(file: string, filePath: string): Promise<any> {
+    return new Promise<any>(resolve => {
+      // READ HEADER OF SAVE FILE
+      const stream = createReadStream(path.join(filePath));
+      new FileHeaderReader(file, filePath, stream, header => {
+        resolve(header);
       });
     });
   }
+
+  sortFiles(
+    freshFiles: FileList
+  ): { sessionName: string; saves: FileHeader[] }[] {
+    // sort files
+    const sortedFiles = [];
+
+    for (const key of Object.keys(freshFiles)) {
+      // sort saves
+      freshFiles[key].sort((a, b) => {
+        return b.saveDateTime.getTime() - a.saveDateTime.getTime();
+      });
+
+      sortedFiles.push({
+        sessionName: key,
+        saves: freshFiles[key]
+      });
+    }
+
+    // sort sessions
+    sortedFiles.sort((a, b) => {
+      return (
+        b.saves[0].saveDateTime.getTime() - a.saves[0].saveDateTime.getTime()
+      );
+    });
+    return sortedFiles;
+  }
+
   saveFile() {
     // show confirmation dialog
     EventBus.$emit(DIALOG_SAVE_DESKTOP);
@@ -201,6 +263,10 @@ export default class DesktopMenu extends Vue {
     if (this.showFilebrowser === false) {
       // also empty the session list
       this.sessionFiles = [];
+    } else {
+      // reload files
+      // TODO only if some time has passed?
+      this.reloadFilelist();
     }
   }
 
@@ -299,30 +365,6 @@ export default class DesktopMenu extends Vue {
       ['B', 'kB', 'MB', 'GB', 'TB'][i]
     );
   }
-
-  get sortedFiles() {
-    const sortedFiles = [];
-
-    for (const key of Object.keys(this.files)) {
-      // sort saves
-      this.files[key].sort((a, b) => {
-        return b.saveDateTime.getTime() - a.saveDateTime.getTime();
-      });
-
-      sortedFiles.push({
-        sessionName: key,
-        saves: this.files[key]
-      });
-    }
-
-    // sort sessions
-    sortedFiles.sort((a, b) => {
-      return (
-        b.saves[0].saveDateTime.getTime() - a.saves[0].saveDateTime.getTime()
-      );
-    });
-    return sortedFiles;
-  }
 }
 </script>
 
@@ -386,6 +428,7 @@ export default class DesktopMenu extends Vue {
     background: #66666620;
     /*box-shadow: 10px 0px 7px #00000040;*/
     z-index: 4;
+    position: relative;
   }
 
   &.sessionbrowser {
@@ -479,5 +522,11 @@ export default class DesktopMenu extends Vue {
 }
 .error {
   color: #ff8239;
+}
+
+.filelistProgressIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 </style>
