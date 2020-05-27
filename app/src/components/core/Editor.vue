@@ -10,9 +10,11 @@
           :showCloseIcon="false"
           :headerHeight="22"
           :dragProxyHeight="0"
-          v-model="layoutState"
+          @state="changeLayout"
+          :state="layout"
         >
-          <!-- We would want to disable the drop proxy entirely, but that is not yet possible: https://github.com/golden-layout/golden-layout/issues/466 -->
+          <!-- dragProxyHeight = 0  ==>  We would want to disable the drop proxy entirely, but that is not yet possible: https://github.com/golden-layout/golden-layout/issues/466 -->
+
           <gl-row :closeable="false">
             <gl-component
               :title="$t('panels.scene.title')"
@@ -64,27 +66,6 @@
             </gl-stack>
           </gl-row>
         </golden-layout>
-        <!--        <Split @onDrag="onDrag">
-          <SplitArea :size="60">
-            <Playground
-              ref="playground"
-              @askDeleteSelectedObject="$refs.propertyEditor.deleteKeyPressed()"
-            />
-          </SplitArea>
-          <SplitArea :size="17">
-            <Split direction="vertical">
-              <SplitArea :size="70">
-                <ObjectList ref="objectList" />
-              </SplitArea>
-              <SplitArea :size="30">
-                <ClassList />
-              </SplitArea>
-            </Split>
-          </SplitArea>
-          <SplitArea :size="23">
-            <PropertyEditor ref="propertyEditor" @focusSelectedObject="focusSelectedObject" />
-          </SplitArea>
-        </Split>-->
       </div>
     </div>
   </div>
@@ -101,9 +82,6 @@ import ClassList from './ClassList.vue';
 import { mapState } from 'vuex';
 import { isElectron } from '../../ts/isElectron';
 
-import Persistance from 'vue-storage-decorator';
-const Persist = Persistance('EditorLayout');
-
 @Component({
   components: {
     Menubar,
@@ -111,11 +89,17 @@ const Persist = Persistance('EditorLayout');
     ObjectList,
     PropertyEditor,
     ClassList
+  },
+  computed: {
+    ...mapState('settings', ['layout'])
   }
 })
 export default class Editor extends Vue {
   @Prop({ default: !isElectron() }) showMenubar!: boolean;
-  @Persist() layoutState: any = null;
+
+  changeLayout(layout: any) {
+    this.$store.commit('settings/SET_LAYOUT', layout);
+  }
 
   onSceneResize() {
     // todo handle via vuex / EventBus

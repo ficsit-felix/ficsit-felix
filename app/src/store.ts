@@ -38,6 +38,7 @@ interface SettingsRootState {
   autoLoadSaveFile: string;
   showFps: boolean;
   showDevelopSettings: boolean;
+  layout: any; // Golden Layout state
 }
 
 // updates the local storage on settings mutations
@@ -61,7 +62,8 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     experimentalFeatures: false,
     autoLoadSaveFile: '',
     showFps: false,
-    showDevelopSettings: false
+    showDevelopSettings: false,
+    layout: null
   },
   getters: {},
   mutations: {
@@ -127,6 +129,10 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     SET_SHOW_DEVELOP_SETTINGS(state, payload) {
       state.showDevelopSettings = payload;
       updateLocalStorage(state);
+    },
+    SET_LAYOUT(state, payload) {
+      state.layout = payload;
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -171,6 +177,9 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setShowDevelopSettings(context, payload) {
       context.commit('SET_SHOW_DEVELOP_SETTINGS', payload);
+    },
+    setLayout(context, payload) {
+      context.commit('SET_LAYOUT', payload);
     }
   }
 };

@@ -10946,11 +10946,6 @@ vue-shortkey@^3.1.7:
     custom-event-polyfill "^1.0.7"
     element-matches "^0.1.2"
 
-vue-storage-decorator@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/vue-storage-decorator/-/vue-storage-decorator-1.0.7.tgz#857e909cf7c593d6b9a8ae3fde20cd1f6eb2775d"
-  integrity sha512-ZXW84gGb3lLcW6U7KJhdua966IVZeXswOI/8yJW3/JAJD0v2irxwMDdFR1V5+tZMbsGkvdIZIvQ7wLKpXxAuUw==
-
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
