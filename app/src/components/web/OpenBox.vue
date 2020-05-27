@@ -35,9 +35,16 @@
         <p v-else class="dragInstruction">{{ $t('openPage.dragSav') }}</p>
       </div>
     </form>
-    <v-snackbar v-model="showLocationClipboardSnack" :timeout="1000">{{
-      $t('openPage.copiedToClipboard')
-    }}</v-snackbar>
+
+    <AlertDialog
+      v-model="showErrorDialog"
+      :title="$t('openPage.errorTitle')"
+      :content="errorText"
+    ></AlertDialog>
+
+    <v-snackbar v-model="showLocationClipboardSnack" :timeout="1000">
+      {{ $t('openPage.copiedToClipboard') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -51,13 +58,17 @@ import { SaveGameLoading } from '../core/SaveGameLoading';
 import { WebFileReader } from './WebFileReader';
 import copyToClipboard from '../../ts/copyToClipboard';
 
+import AlertDialog from '../core/AlertDialog.vue';
+
 export default {
-  components: {},
+  components: { AlertDialog },
   data: function() {
     return {
       isSaving: false,
       importJson: false,
-      showLocationClipboardSnack: false
+      showLocationClipboardSnack: false,
+      showErrorDialog: false,
+      errorText: ''
     };
   },
   watch: {
@@ -108,7 +119,19 @@ export default {
       // reset input so that the same file can be selected again in case of an error
       input.value = '';
 
-      this.isSaving = true;
+      const expected = this.importJson ? 'json' : 'sav';
+
+      if (file.name.split('.').pop() !== expected) {
+        const message = this.$t('openPage.extensionError', {
+          expected: expected,
+          actual: file.name.split('.').pop()
+        });
+        this.showErrorDialog = true;
+        this.errorText = message;
+        return;
+      }
+
+      // this.isSaving = true;
       new SaveGameLoading(
         this,
         new WebFileReader(new Sav2JsonWorker(), file)

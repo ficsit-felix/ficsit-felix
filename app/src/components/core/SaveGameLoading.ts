@@ -21,22 +21,10 @@ export interface SaveFileReader {
 
 // Class that handles the pipeline from the moment that the file is known to the moment the editor is fully loaded
 export class SaveGameLoading {
-  constructor(private vue: Vue, private fileReader: SaveFileReader) {}
+  constructor(private vue: Vue, private fileReader: SaveFileReader) { }
 
   loadSaveGame(filename: string, filepath: string, asJson: boolean) {
     // TODO check extension
-    /*
-        const expected = this.importJson ? 'json' : 'sav';
-
-        if (file.name.split('.').pop() !== expected) {
-          const message = this.$t('openPage.extensionError', {
-            expected: expected,
-            actual: file.name.split('.').pop()
-          });
-          reportException(message);
-          this.handleError(message, false);
-          return;
-        }*/
 
     // Show progress bar dialog with 0 progress
     this.vue.$store.dispatch('setProgressText', {
