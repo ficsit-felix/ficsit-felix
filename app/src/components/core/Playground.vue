@@ -50,12 +50,7 @@
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
     -->
 
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-      :defaultIncludeSave="false"
-    ></BugReportDialog>
+    <BugReportDialog ref="bugReport" :filename="filename" :uuid="uuid" :defaultIncludeSave="false"></BugReportDialog>
   </div>
 </template>
 
@@ -124,7 +119,6 @@ export default {
   },
   computed: {
     ...mapState([
-      'dataLoaded',
       'uuid',
       'filename',
       'classes',
@@ -142,11 +136,6 @@ export default {
     ...mapGetters(['getVisibleObjects'])
   },
   watch: {
-    dataLoaded(val) {
-      if (val) {
-        this.createMeshesForActors();
-      }
-    },
     selectedActors(val) {
       if (val.length === 1) {
         const mesh = this.meshManager.findMeshByName(val[0].pathName);
@@ -304,9 +293,7 @@ export default {
     this.geometries = {};
 
     this.lastSelectedActors = [];
-    if (this.dataLoaded) {
-      this.createMeshesForActors();
-    }
+    this.createMeshesForActors();
 
     this.transformControl = new TransformControls(
       this.$refs.renderer.camera.obj,

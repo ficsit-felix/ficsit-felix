@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 import vuetify from './plugins/vuetify';
 import vgl from 'vue-golden-layout';
+import Router from 'vue-router';
 
 import { i18n } from './plugins/i18n';
 import { isElectron } from './ts/isElectron';
@@ -38,19 +39,29 @@ Vue.use(vgl);
 
 Vue.config.productionTip = false;
 
-let router;
+let router: Router;
 if (isElectron()) {
   router = require('./router_desktop').default;
 } else {
   router = require('./router_web').default;
 }
+
+// Redirect if data was not yet loaded
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresDataLoaded && !store.state.dataLoaded) {
+    next({ name: 'landingpage' });
+  } else {
+    next();
+  }
+});
+
+
 new Vue({
   router,
   store,
   vuetify,
   i18n,
   beforeCreate() {
-    this.$store.commit;
     this.$store.commit('settings/INIT_STORE_FROM_LOCAL_DATA');
   },
   render: h =>

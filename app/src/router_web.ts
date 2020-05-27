@@ -22,7 +22,10 @@ export default new Router({
     {
       path: '/editor',
       name: 'editor',
-      component: Editor
+      component: Editor,
+      meta: {
+        requiresDataLoaded: true
+      }
     },
     {
       path: '/open/*',

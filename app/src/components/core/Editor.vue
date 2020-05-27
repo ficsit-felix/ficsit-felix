@@ -97,23 +97,12 @@ const Persist = Persistance('EditorLayout');
     ObjectList,
     PropertyEditor,
     ClassList
-  },
-  computed: {
-    ...mapState(['dataLoaded'])
   }
 })
 export default class Editor extends Vue {
   @Prop({ default: !isElectron() }) showMenubar!: boolean;
   @Persist() layoutState: any = null;
 
-  created() {
-    if (!this.$store.state.dataLoaded) {
-      // The user needs to load a file first
-      this.$router.push({
-        name: 'landingpage'
-      });
-    }
-  }
   onSceneResize() {
     // todo handle via vuex / EventBus
     (this.$refs.playground as any).handleResize();
