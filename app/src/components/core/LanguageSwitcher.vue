@@ -6,9 +6,8 @@
       :key="lang"
       @click="changeLang(lang)"
       :class="{ active: lang === $i18n.locale }"
-    >
-      {{ lang.toUpperCase() }}
-    </span>
+      v-ripple
+    >{{ lang.toUpperCase() }}</span>
   </div>
 </template>
 

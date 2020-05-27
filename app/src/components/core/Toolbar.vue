@@ -7,8 +7,8 @@
             @mousedown.stop="$emit('setTranslate')"
             :class="{ active: translateActive }"
             v-on="on"
-            >{{ $t('toolbar.translate') }}</a
-          >
+            v-ripple
+          >{{ $t('toolbar.translate') }}</a>
         </template>
         <span>G</span>
       </v-tooltip>
@@ -18,8 +18,8 @@
             @mousedown.stop="$emit('setRotate')"
             :class="{ active: rotateActive }"
             v-on="on"
-            >{{ $t('toolbar.rotate') }}</a
-          >
+            v-ripple
+          >{{ $t('toolbar.rotate') }}</a>
         </template>
         <span>R</span>
       </v-tooltip>
@@ -29,8 +29,8 @@
             @mousedown.stop="$emit('setScale')"
             :class="{ active: scaleActive }"
             v-on="on"
-            >{{ $t('toolbar.scale') }}</a
-          >
+            v-ripple
+          >{{ $t('toolbar.scale') }}</a>
         </template>
         <span>S</span>
       </v-tooltip>
@@ -42,8 +42,8 @@
             @mousedown.stop="$emit('setWorld')"
             :class="{ active: worldActive }"
             v-on="on"
-            >{{ $t('toolbar.world') }}</a
-          >
+            v-ripple
+          >{{ $t('toolbar.world') }}</a>
         </template>
         <span>W</span>
       </v-tooltip>
@@ -54,17 +54,30 @@
             @mousedown.stop="$emit('setLocal')"
             :class="{ active: localActive }"
             v-on="on"
-            >{{ $t('toolbar.local') }}</a
-          >
+            v-ripple
+          >{{ $t('toolbar.local') }}</a>
         </template>
         <span>L</span>
       </v-tooltip>
     </div>
+
+    <div class="section">
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            small
+            depressed
+            :disabled="focusDisabled"
+            @mousedown.stop="focusSelectedObject"
+            v-on="on"
+          >{{ $t('propertyEditor.focusButton') }}</v-btn>
+        </template>
+        F
+      </v-tooltip>
+    </div>
+
     <div class="spacer"></div>
-    <span
-      @click="$emit('reportBug')"
-      style="cursor: pointer;margin-right: 10px;"
-    >
+    <span @click="$emit('reportBug')" style="cursor: pointer;margin-right: 10px;margin-top: 8px">
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-icon class="bugReportIcon" v-on="on">mdi-bug</v-icon>
@@ -76,11 +89,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'Toolbar',
   components: {},
   props: ['mode', 'local'],
   computed: {
+    ...mapState(['selectedActors']),
     translateActive() {
       return this.mode === 'translate';
     },
@@ -95,6 +110,14 @@ export default {
     },
     worldActive() {
       return !this.local;
+    },
+    focusDisabled() {
+      return this.selectedActors.length !== 1;
+    }
+  },
+  methods: {
+    focusSelectedObject() {
+      this.$emit('focusSelectedObject');
     }
   }
 };
@@ -102,27 +125,30 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar {
+  background: #1d2223;
+  border-radius: 0px 2px 2px 2px;
   width: 100%;
   display: flex;
   position: absolute;
-  top: 10px;
+  overflow: auto;
   .section {
     /*    display: inline-block;*/
     display: flex;
-    padding: 10px;
+    padding: 8px 10px;
   }
   a {
-    padding: 5px 10px;
-    margin: 4px;
+    padding: 2px 10px;
+    margin: 0px 4px;
     background: rgba(255, 255, 255, 0.1);
     color: #fff !important;
     text-shadow: 1px 1px 1px #000;
-    border-radius: 20px;
-    border: rgba(255, 255, 255, 0.2) solid 1px;
+    border-radius: 4px;
+    border: rgba(255, 255, 255, 0) solid 1px;
     cursor: pointer;
     &.active {
-      background: rgba(255, 255, 255, 0.3);
-      border: rgba(255, 255, 255, 0.4) solid 1px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      /*border: rgba(255, 255, 255, 0.4) solid 1px;*/
     }
     user-select: none;
   }
@@ -136,11 +162,11 @@ export default {
   }
 
   a:active {
-    background: rgba(255, 255, 255, 0.3);
+    /*background: rgba(255, 255, 255, 0.3);*/
   }
 
   .v-icon.bugReportIcon {
-    color: #aa4444aa;
+    color: #aa444477;
   }
   span:hover .v-icon.bugReportIcon {
     color: #d44;

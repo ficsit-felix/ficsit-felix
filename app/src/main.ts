@@ -4,10 +4,12 @@ import store from './store';
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 import vuetify from './plugins/vuetify';
+import vgl from 'vue-golden-layout';
 
 import { i18n } from './plugins/i18n';
 import { isElectron } from './ts/isElectron';
 import '@/helpers/cmdHelper';
+import './golden-layout-dark.css';
 
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
@@ -30,6 +32,9 @@ Vue.use(VueSplit);
 
 // vue-shortkey
 Vue.use(require('vue-shortkey'));
+
+// Vue-golden-layout
+Vue.use(vgl);
 
 Vue.config.productionTip = false;
 

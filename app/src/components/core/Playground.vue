@@ -17,6 +17,7 @@
     @keydown.17="updateBoxSelect(true)"
     @keyup.17="updateBoxSelect(false)"
   >
+    <!-- TODO keyup.f only focusses the object here and not in the object view -->
     <Toolbar
       :mode="mode"
       :local="local"
@@ -26,6 +27,7 @@
       @setRotate="setMode('rotate')"
       @setScale="setMode('scale')"
       @reportBug="reportBug()"
+      @focusSelectedObject="focusSelectedObject()"
     />
 
     <Renderer ref="renderer" :width="width" :height="height">
@@ -268,7 +270,7 @@ export default {
       showCloseButton: false
     });
     this.setProgress(50);
-    EventBus.$emit(DIALOG_PROGRESS, true);
+
     this.geometryFactory = new GeometryFactory(
       this.showModels,
       this.conveyorBeltResolution

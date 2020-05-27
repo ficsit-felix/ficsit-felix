@@ -179,5 +179,22 @@
     "translate": "Verschieben",
     "world": "Welt",
     "reportBug": "Einen Fehler melden"
+  },
+  "panels": {
+    "scene": {
+      "title": "Szene"
+    },
+    "objectList": {
+      "title": "Objektliste"
+    },
+    "classList": {
+      "title": "Klassenliste"
+    },
+    "properties": {
+      "title": "Eigenschaften"
+    },
+    "json": {
+      "title": "JSON"
+    }
   }
 }

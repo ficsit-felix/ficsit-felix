@@ -69,7 +69,8 @@ export default {
     this.titlebar = new Titlebar({
       backgroundColor: Color.fromHex('#111618'),
       itemBackgroundColor: Color.fromHex('#1d2223'),
-      enableMnemonics: true
+      enableMnemonics: true,
+      unfocusEffect: false // don't change the color when the window is not focussed
     });
     this.titlebar.updateTitle('FICSIT - FeliX');
 

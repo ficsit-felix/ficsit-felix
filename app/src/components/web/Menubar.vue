@@ -15,6 +15,7 @@
           v-shortkey.once="['ctrl', 'o']"
           @shortkey="showOpenDialog()"
           v-on="on"
+          v-ripple
         >
           <v-icon>mdi-home</v-icon>
           {{ $t('menubar.open') }}
@@ -31,6 +32,7 @@
           v-shortkey.once="['ctrl', 's']"
           @shortkey="showSaveDialog()"
           v-on="on"
+          v-ripple
         >
           <v-icon>mdi-content-save</v-icon>
           {{ $t('menubar.save') }}
@@ -47,6 +49,7 @@
           v-shortkey.once="['f1']"
           @shortkey="showHelpDialog()"
           v-on="on"
+          v-ripple
         >
           <v-icon>mdi-help-circle</v-icon>
           {{ $t('menubar.help') }}
@@ -54,7 +57,7 @@
       </template>
       F1
     </v-tooltip>
-    <span class="menu-item" @click="showSettingsDialog()">
+    <span class="menu-item" @click="showSettingsDialog()" v-ripple>
       <v-icon>mdi-cog</v-icon>
       {{ $t('menubar.settings') }}
     </span>
@@ -205,6 +208,7 @@ export default {
     }
     color: #e3d3d3;
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
   }
   span:hover {
     color: $primaryOrange;

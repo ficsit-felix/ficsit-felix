@@ -6,49 +6,39 @@
     </div>
 
     <CenterWhiteBox>
-      <div
-        @mouseover="logoAnimating = true"
-        @mouseleave="logoAnimating = false"
-      >
+      <div @mouseover="logoAnimating = true" @mouseleave="logoAnimating = false">
         <Logo :height="128" black="#fff" :animating="logoAnimating" />
       </div>
-      <p class="my-2">{{ $t('landingPage.firstParagraph') }}</p>
+      <p class="my-2 mx-4">{{ $t('landingPage.firstParagraph') }}</p>
       <p class="buttonRow">
         <v-btn
           color="primary black--text"
           @click="$router.push({ path: '/open/sav' })"
           class="ma-2"
-          >{{ $t('landingPage.openSavButton') }}</v-btn
-        >
-        &nbsp;
+        >{{ $t('landingPage.openSavButton') }}</v-btn>&nbsp;
         <v-btn
           color="secondary black--text"
           @click="downloadDesktop()"
           class="ma-2"
-          >{{ $t('landingPage.downloadDesktop') }}</v-btn
-        >
+        >{{ $t('landingPage.downloadDesktop') }}</v-btn>
       </p>
       <a href="/screenshot.png">
         <img src="/screenshot.png" />
       </a>
-      <p class="my-2">{{ $t('landingPage.secondParagraph') }}</p>
+      <p class="my-2 mx-4">{{ $t('landingPage.secondParagraph') }}</p>
       <v-btn
         @click="$router.push({ path: '/open/json' })"
         class="ma-2"
         outlined
-        >{{ $t('landingPage.openJsonButton') }}</v-btn
-      >
+      >{{ $t('landingPage.openJsonButton') }}</v-btn>
 
       <p class="left my-4">
         <i18n path="landingPage.thirdParagraph">
-          <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github"
-            >GitHub</a
-          >
+          <a href="https://github.com/ficsit-felix/ficsit-felix" slot="github">GitHub</a>
           <a
             href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
             slot="authors"
-            >{{ $t('landingPage.authors') }}</a
-          >
+          >{{ $t('landingPage.authors') }}</a>
         </i18n>
       </p>
     </CenterWhiteBox>
@@ -139,5 +129,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 600px) {
+    display: block;
+  }
 }
 </style>

@@ -1,18 +1,27 @@
 <template>
   <div class="property-editor panel">
+    <v-textarea
+      class="json-editor"
+      outlined
+      :label="$t('propertyEditor.jsonLabel')"
+      v-model="selectedJson"
+      :disabled="this.selectedJson === ''"
+      :error-messages="jsonError"
+      style="height:100%"
+    ></v-textarea>
+
     <div class="buttons">
-      <v-tooltip bottom>
+      <!-- <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn
             class="ma-2"
             :disabled="focusDisabled"
             @click="focusSelectedObject"
             v-on="on"
-            >{{ $t('propertyEditor.focusButton') }}</v-btn
-          >
+          >{{ $t('propertyEditor.focusButton') }}</v-btn>
         </template>
         F
-      </v-tooltip>
+      </v-tooltip>-->
       <v-btn
         class="ma-2"
         color="secondary black--text"
@@ -48,16 +57,6 @@
         >{{ $t('propertyEditor.copyAsBlueprint') }}</v-btn
       >
     </div>
-
-    <v-textarea
-      class="json-editor"
-      outlined
-      :label="$t('propertyEditor.jsonLabel')"
-      v-model="selectedJson"
-      :disabled="this.selectedJson === ''"
-      :error-messages="jsonError"
-      style="height:100%"
-    ></v-textarea>
 
     <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">{{
       $t('propertyEditor.objectSavedSnack')
@@ -177,6 +176,7 @@ export default {
 .buttons {
   flex-shrink: 0;
   display: flex;
+  overflow: auto;
 }
 .spacer {
   flex-grow: 1;

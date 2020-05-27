@@ -35,9 +35,9 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn text @click="showColorDialog = false" color="primary">{{
-              $t('general.close')
-            }}</v-btn>
+            <v-btn text @click="showColorDialog = false" color="primary">
+              {{ $t('general.close') }}
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -155,6 +155,11 @@ export default {
     // match the v-input--selection-controls
     margin-top: 22px;
   }
+}
+
+// Custom font size
+::v-deep .v-label {
+  font-size: 14px;
 }
 
 // Customize the color picker

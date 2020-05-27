@@ -179,5 +179,22 @@
     "translate": "Translate",
     "world": "World",
     "reportBug": "Report a bug"
+  },
+  "panels": {
+    "scene": {
+      "title": "Scene"
+    },
+    "objectList": {
+      "title": "Object List"
+    },
+    "classList": {
+      "title": "Class List"
+    },
+    "properties": {
+      "title": "Properties"
+    },
+    "json": {
+      "title": "JSON"
+    }
   }
 }
