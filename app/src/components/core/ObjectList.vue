@@ -15,7 +15,6 @@
       :keeps="100"
       class="scroller"
       ref="list"
-      :start="listStart"
       :data-component="item"
       :data-sources="displayedNames"
       :data-key="'pathName'"
@@ -28,6 +27,8 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 
 import virtualList from 'vue-virtual-scroll-list';
 import ObjectListItem from './ObjectListItem.vue';
+import { EventBus } from '../../event-bus';
+import { FOCUS_SELECTED_OBJECT } from '../../ts/constants';
 export default {
   name: 'ObjectList',
   components: {
@@ -36,8 +37,6 @@ export default {
   data: function() {
     return {
       filterTerm: '',
-      listStart: 0,
-
       item: ObjectListItem
     };
   },
@@ -54,6 +53,12 @@ export default {
       );
     }
   },
+  created() {
+    EventBus.$on(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
+  },
+  beforeDestroy() {
+    EventBus.$off(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
+  },
   methods: {
     ...mapActions(['select']),
     focusSelectedObject() {
@@ -61,7 +66,7 @@ export default {
         // TODO optimize
         for (let i = 0; i < this.displayedNames.length; i++) {
           if (this.displayedNames[i].pathName === this.selectedPathNames[0]) {
-            this.listStart = i + 1;
+            this.$refs.list.scrollToIndex(i);
             return;
           }
         }

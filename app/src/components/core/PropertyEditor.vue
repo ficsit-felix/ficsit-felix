@@ -11,17 +11,6 @@
     ></v-textarea>
 
     <div class="buttons">
-      <!-- <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn
-            class="ma-2"
-            :disabled="focusDisabled"
-            @click="focusSelectedObject"
-            v-on="on"
-          >{{ $t('propertyEditor.focusButton') }}</v-btn>
-        </template>
-        F
-      </v-tooltip>-->
       <v-btn
         class="ma-2"
         color="secondary black--text"
@@ -58,9 +47,9 @@
       >
     </div>
 
-    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">
-      {{ $t('propertyEditor.objectSavedSnack') }}
-    </v-snackbar>
+    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">{{
+      $t('propertyEditor.objectSavedSnack')
+    }}</v-snackbar>
 
     <ConfirmDialog
       v-model="showDeleteDialog"

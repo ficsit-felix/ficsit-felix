@@ -32,7 +32,8 @@ function createWindow() {
     icon: path.join(__static, 'icon.png'),
     webPreferences: {
       nodeIntegration: true,
-      nodeIntegrationInWorker: true
+      nodeIntegrationInWorker: true,
+      enableRemoteModule: true
     }
   });
 

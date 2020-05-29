@@ -19,5 +19,7 @@ export const ON_SAVE_PRESSED = 'ON_SAVE_PRESSED';
 export const ON_SAVE_JSON_PRESSED = 'ON_SAVE_JSON_PRESSED';
 export const ON_EXIT_PRESSED = 'ON_EXIT_PRESSED';
 
+// other events
 export const CHANGE_LOCALE = 'CHANGE_LOCALE';
 export const TOGGLE_MENU = 'TOGGLE_MENU';
+export const FOCUS_SELECTED_OBJECT = 'FOCUS_SELECTED_EVENT';

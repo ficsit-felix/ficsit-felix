@@ -99,6 +99,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import { EventBus } from '../../event-bus';
+import { FOCUS_SELECTED_OBJECT } from '../../ts/constants';
 export default {
   name: 'Toolbar',
   components: {},
@@ -126,7 +128,7 @@ export default {
   },
   methods: {
     focusSelectedObject() {
-      this.$emit('focusSelectedObject');
+      EventBus.$emit(FOCUS_SELECTED_OBJECT);
     }
   }
 };

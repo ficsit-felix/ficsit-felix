@@ -28,7 +28,6 @@
                 @askDeleteSelectedObject="
                   $refs.propertyEditor.deleteKeyPressed()
                 "
-                @focusSelectedObject="focusSelectedObject"
               />
             </gl-component>
 
@@ -58,10 +57,7 @@
                 </div>
               </gl-component>
               <gl-component :title="$t('panels.json.title')" :closable="false">
-                <PropertyEditor
-                  ref="propertyEditor"
-                  @focusSelectedObject="focusSelectedObject"
-                />
+                <PropertyEditor ref="propertyEditor" />
               </gl-component>
             </gl-stack>
           </gl-row>
@@ -102,13 +98,7 @@ export default class Editor extends Vue {
   }
 
   onSceneResize() {
-    // todo handle via vuex / EventBus
     (this.$refs.playground as any).handleResize();
-  }
-  focusSelectedObject() {
-    // todo handle via vuex / EventBus
-    (this.$refs.playground as any).focusSelectedObject();
-    (this.$refs.objectList as any).focusSelectedObject();
   }
 }
 </script>

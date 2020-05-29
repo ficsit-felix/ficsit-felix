@@ -10,7 +10,7 @@
     @keyup.g="setMode('translate')"
     @keyup.r="setMode('rotate')"
     @keyup.s="setMode('scale')"
-    @keyup.f="focusSelectedObject()"
+    @keyup.f="sendFocusEvent()"
     @keyup.delete="$emit('askDeleteSelectedObject')"
     @keydown.16="updateShiftSelect(true)"
     @keyup.16="updateShiftSelect(false)"
@@ -27,7 +27,6 @@
       @setRotate="setMode('rotate')"
       @setScale="setMode('scale')"
       @reportBug="reportBug()"
-      @focusSelectedObject="focusSelectedObject()"
     />
 
     <Renderer ref="renderer" :width="width" :height="height">
@@ -93,7 +92,11 @@ import {
 } from '@/helpers/entityHelper';
 import { EventBus } from '@/event-bus';
 import { reportError } from '@/ts/errorReporting';
-import { DIALOG_PROGRESS, DIALOG_OPEN_TIME_MS } from '../../ts/constants';
+import {
+  DIALOG_PROGRESS,
+  DIALOG_OPEN_TIME_MS,
+  FOCUS_SELECTED_OBJECT
+} from '../../ts/constants';
 
 export default {
   name: 'Playground',
@@ -335,10 +338,16 @@ export default {
     window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
 
     EventBus.$on('delete', payload => {
+      // TODO move to constants?
       // remove all actors from scene
       this.meshManager.deleteSelectedMeshes(payload);
       this.transformControl.detach();
     });
+    EventBus.$on(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
+  },
+  beforeDestroy() {
+    EventBus.$off('delete');
+    EventBus.$off(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
   },
   methods: {
     ...mapActions([
@@ -432,6 +441,9 @@ export default {
       this.meshManager.updateAllMaterials(this.colorFactory);
     },
 
+    sendFocusEvent() {
+      EventBus.$emit(FOCUS_SELECTED_OBJECT);
+    },
     focusSelectedObject() {
       if (this.selectedActors.length === 1) {
         let camera = this.$refs.renderer.camera.controls;
