@@ -15,8 +15,9 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 let win: BrowserWindow | null;
 
 // Scheme must be registered before the app is ready
+// supportFetchAPI: true, to be able to load licenses.txt via window.fetch https://github.com/electron/electron/issues/6802#issuecomment-540920466
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
+  { scheme: 'app', privileges: { secure: true, standard: true, supportFetchAPI: true } }
 ]);
 
 function createWindow() {
