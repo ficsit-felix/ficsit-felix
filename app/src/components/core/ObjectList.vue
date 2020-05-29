@@ -45,7 +45,7 @@ export default {
     ...mapGetters(['getNames']),
     displayedNames() {
       if (!this.filterTerm) {
-        return this.getNames;
+        return [{ pathName: '---save-header---', text: '' }, ...this.getNames];
       }
       return this.getNames.filter(
         obj =>

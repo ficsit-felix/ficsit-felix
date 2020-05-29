@@ -268,6 +268,8 @@ export default new Vuex.Store<RootState>({
         };
       };
 
+      console.log('asdf');
+
       return window.data.actors
         .map(transformation)
         .concat(window.data.components.map(transformation));
@@ -429,6 +431,7 @@ export default new Vuex.Store<RootState>({
         window.data.sessionVisibility = obj.sessionVisibility;
         window.data.collected = obj.collected;
         window.data.missing = obj.missing;
+        state.selectedActors = [];
       } else {
         // TODO handle components as well
         if (obj.type === 1) {

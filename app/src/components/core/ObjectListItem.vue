@@ -1,5 +1,5 @@
 <template>
-  <div v-if="index === 0">
+  <div v-if="source.pathName === '---save-header---'">
     <div
       v-bind:class="{
         selected:

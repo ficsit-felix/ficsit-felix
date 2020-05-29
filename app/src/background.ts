@@ -33,7 +33,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       nodeIntegrationInWorker: true,
-      enableRemoteModule: true
+      enableRemoteModule: true // TODO remote module is getting deprecated
     }
   });
 
