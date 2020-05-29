@@ -14,12 +14,12 @@
   </div>
   <div v-else>
     <div
-      :key="info.pathName"
-      v-bind:class="{ selected: selectedPathNames.includes(info.pathName) }"
-      @click="select([info.pathName])"
+      :key="source.pathName"
+      v-bind:class="{ selected: selectedPathNames.includes(source.pathName) }"
+      @click="select([source.pathName])"
       class="item"
     >
-      {{ info.text }}
+      {{ source.text }}
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
       type: Number,
       default: 0
     },
-    info: {
+    source: {
       type: Object,
       default: () => ({
         pathName: ''

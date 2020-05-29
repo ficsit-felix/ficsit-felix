@@ -5,22 +5,21 @@
         filled
         :label="$t('objectList.filterField')"
         v-model="filterTerm"
-        append-icon="mdi-magnify"
+        :append-icon="filterTerm ? null : 'mdi-magnify'"
         hide-details
-      >
-      </v-text-field>
+        clearable
+      ></v-text-field>
     </div>
     <virtual-list
-      :size="20"
-      :remain="100"
+      :estimated-size="22"
+      :keeps="100"
       class="scroller"
       ref="list"
       :start="listStart"
-      :item="item"
-      :itemcount="displayedNames.length + 1"
-      :itemprops="getItemProps"
-    >
-    </virtual-list>
+      :data-component="item"
+      :data-sources="displayedNames"
+      :data-key="'pathName'"
+    ></virtual-list>
   </div>
 </template>
 
@@ -46,6 +45,9 @@ export default {
     ...mapState(['selectedPathNames']),
     ...mapGetters(['getNames']),
     displayedNames() {
+      if (!this.filterTerm) {
+        return this.getNames;
+      }
       return this.getNames.filter(
         obj =>
           obj.text.toLowerCase().indexOf(this.filterTerm.toLowerCase()) > -1
@@ -64,37 +66,6 @@ export default {
           }
         }
       }
-    },
-
-    getItemProps(itemIndex) {
-      if (itemIndex == 0) {
-        return {
-          key: 0,
-          props: {
-            index: 0
-          }
-        };
-      }
-
-      return {
-        key: this.displayedNames[itemIndex - 1].pathName,
-        props: {
-          height: 32,
-          index: itemIndex,
-          info: this.displayedNames[itemIndex - 1]
-        }
-      };
-    }
-  },
-  watch: {
-    // watch getNames as else we need to recompute it every time the search changes for some reason?
-    getNames(val) {
-      /*    if (this.filterTerm.length < 3) {
-        this.displayedNames = val;
-      }
-      this.displayedNames = val.filter(
-        obj => obj.text.indexOf(this.filterTerm) > -1
-      );*/
     }
   }
 };
@@ -121,10 +92,7 @@ export default {
     margin-bottom: -10px;*/
     /*padding: 0px 8px;*/
     flex-shrink: 0;
-  }
-  .list {
-    padding: 8px;
-    margin: 0px;
+    margin-bottom: 4px;
   }
 }
 
