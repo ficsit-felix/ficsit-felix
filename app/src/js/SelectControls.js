@@ -1,7 +1,7 @@
 import { MOUSE, Raycaster } from 'three';
 
 // TODO remove the explicit playground parameter just to get the meshManager
-var SelectControls = function(scene, camera, domElement, callback, playground) {
+let SelectControls = function(scene, camera, domElement, callback, playground) {
   this.callback = null;
   this.disabled = false;
 
@@ -10,19 +10,19 @@ var SelectControls = function(scene, camera, domElement, callback, playground) {
   };
 
   // private
-  var mouse = {
+  let mouse = {
     x: 0,
     y: 0
   };
 
-  var raycaster = new Raycaster();
+  let raycaster = new Raycaster();
 
-  var scope = this;
+  let scope = this;
   this.callback = callback;
 
   function onMouseMove(event) {
     event.preventDefault();
-    var rect = domElement.getBoundingClientRect();
+    let rect = domElement.getBoundingClientRect();
 
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -35,14 +35,14 @@ var SelectControls = function(scene, camera, domElement, callback, playground) {
 
     if (event.button == MOUSE.LEFT) {
       raycaster.setFromCamera(mouse, camera);
-      var intersects = raycaster.intersectObjects(
+      let intersects = raycaster.intersectObjects(
         playground.meshManager.raycastActiveMeshes,
         true
       );
       // recursive, so that we also get intersections with the other parts of a conveyor lift
 
       for (const intersection of intersects) {
-        var object = intersection.object;
+        let object = intersection.object;
 
         if (object.type === 'TransformControlsPlane') {
           // ignore the plane of the TransformHelper

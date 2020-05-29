@@ -13,7 +13,7 @@ import * as THREE from 'three';
 import index from '@bitowl/three-instanced-mesh';
 const ThreeInstancedMesh = index(THREE);
 
-var farAway = new Vector3(1000000000, 0, 0);
+const farAway = new Vector3(1000000000, 0, 0);
 
 export interface InstancedMeshElement {
   pathName: string;
@@ -55,10 +55,10 @@ export default class InstancedMeshGroup {
       true, // does it have color
       false // uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
     );
-    var _v3 = new Vector3();
-    var _q = new Quaternion();
+    const _v3 = new Vector3();
+    const _q = new Quaternion();
 
-    for (var i = 0; i < this.nodes.length; i++) {
+    for (let i = 0; i < this.nodes.length; i++) {
       const node = this.nodes[i];
 
       this.instancedMesh.setQuaternionAt(i, node.quat);

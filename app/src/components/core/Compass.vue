@@ -76,9 +76,9 @@ export default {
 
   mounted() {
     window.onCompassUpdate = matrixWorldInverse => {
-      var position = new Vector3();
-      var quaternion = new Quaternion();
-      var scale = new Vector3();
+      let position = new Vector3();
+      let quaternion = new Quaternion();
+      let scale = new Vector3();
 
       matrixWorldInverse.decompose(position, quaternion, scale);
       const euler = new Euler().setFromQuaternion(quaternion);

@@ -15,8 +15,8 @@
 // This will prevent the sw from restarting
 let keepAlive = () => {
   keepAlive = () => {}
-  var ping = location.href.substr(0, location.href.lastIndexOf('/')) + '/ping'
-  var interval = setInterval(() => {
+  let ping = location.href.substr(0, location.href.lastIndexOf('/')) + '/ping'
+  let interval = setInterval(() => {
     if (sw) {
       sw.postMessage('ping')
     } else {

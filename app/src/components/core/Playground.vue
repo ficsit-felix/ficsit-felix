@@ -162,7 +162,7 @@ export default {
         }
 
         if (val.length > 0) {
-          var visibleSelectedMeshes = [];
+          let visibleSelectedMeshes = [];
           for (const actor of val) {
             // select this actor
             const mesh = this.meshManager.findMeshAndVisibilityByName(
@@ -270,7 +270,7 @@ export default {
       this.conveyorBeltResolution
     );
 
-    var textureLoader = new THREE.TextureLoader();
+    let textureLoader = new THREE.TextureLoader();
     this.matcap = textureLoader.load('textures/matcap-white.png', function(
       matcap
     ) {
@@ -354,9 +354,9 @@ export default {
     updateCompass() {
       // TODO move to a onCameraChanged to only update when necessary
       const camera = this.$refs.renderer.camera.obj;
-      var position = new THREE.Vector3();
-      var quaternion = new THREE.Quaternion();
-      var scale = new THREE.Vector3();
+      let position = new THREE.Vector3();
+      let quaternion = new THREE.Quaternion();
+      let scale = new THREE.Vector3();
 
       camera.matrixWorldInverse.decompose(position, quaternion, scale);
       const euler = new THREE.Euler().setFromQuaternion(quaternion);
@@ -411,8 +411,8 @@ export default {
         .then(result => {
           updateActorMeshTransform(result.mesh, actor);
 
-          var visible = true;
-          for (var i = 0; i < this.classes.length; i++) {
+          let visible = true;
+          for (let i = 0; i < this.classes.length; i++) {
             if (this.classes[i].name === actor.className) {
               visible = this.classes[i].visible;
               break;
@@ -434,7 +434,7 @@ export default {
 
     focusSelectedObject() {
       if (this.selectedActors.length === 1) {
-        var camera = this.$refs.renderer.camera.controls;
+        let camera = this.$refs.renderer.camera.controls;
         const actor = this.selectedActors[0];
         // changed because of coordinate system change
         camera.target.x = actor.transform.translation[1];
@@ -447,12 +447,12 @@ export default {
     },
 
     handleResize() {
-      var elem = document.getElementById('scene');
+      let elem = document.getElementById('scene');
       if (elem === undefined || elem === null) {
         return;
       }
-      var width = elem.offsetWidth;
-      var height = elem.offsetHeight;
+      let width = elem.offsetWidth;
+      let height = elem.offsetHeight;
       this.width = width;
       this.height = height;
     },

@@ -15,16 +15,16 @@ ConveyorCurvePath.prototype.constructor = ConveyorCurvePath;
 ConveyorCurvePath.prototype.computeFrenetFrames = function(segments, closed) {
   // see http://www.cs.indiana.edu/pub/techreports/TR425.pdf
 
-  var normal = new Vector3();
+  let normal = new Vector3();
 
-  var tangents = [];
-  var normals = [];
-  var binormals = [];
+  let tangents = [];
+  let normals = [];
+  let binormals = [];
 
-  var vec = new Vector3();
-  var mat = new Matrix4();
+  let vec = new Vector3();
+  let mat = new Matrix4();
 
-  var i, u, theta;
+  let i, u, theta;
 
   // compute the tangent vectors for each segment on the curve
 

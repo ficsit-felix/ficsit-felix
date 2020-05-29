@@ -4,7 +4,7 @@
 
 import * as THREE from 'three';
 import { MOUSE } from 'three';
-var SelectionHelper = (function() {
+let SelectionHelper = (function() {
   function SelectionHelper(
     selectionBox,
     domElement,

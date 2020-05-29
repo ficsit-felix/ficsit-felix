@@ -39,9 +39,9 @@ export default {
       this.stats = null;
     }
 
-    var elem = document.getElementById('scene');
-    var width = document.getElementById('scene').offsetWidth;
-    var height = document.getElementById('scene').offsetHeight;
+    let elem = document.getElementById('scene');
+    let width = document.getElementById('scene').offsetWidth;
+    let height = document.getElementById('scene').offsetHeight;
     this.renderer.setSize(width, height);
     this.camera.obj.aspect = width / height;
     this.camera.obj.updateProjectionMatrix();

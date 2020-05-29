@@ -4,9 +4,9 @@
  */
 import * as THREE from 'three';
 
-var SelectionBox = (function() {
-  var frustum = new THREE.Frustum();
-  var center = new THREE.Vector3();
+let SelectionBox = (function() {
+  let frustum = new THREE.Frustum();
+  let center = new THREE.Vector3();
 
   function SelectionBox(camera, scene, deep) {
     this.camera = camera;
@@ -24,7 +24,7 @@ var SelectionBox = (function() {
 
     this.updateFrustum(this.startPoint, this.endPoint);
 
-    for (var i = 0; i < meshes.length; i++) {
+    for (let i = 0; i < meshes.length; i++) {
       this.searchChildInFrustum(frustum, meshes[i]);
     }
 
@@ -38,25 +38,25 @@ var SelectionBox = (function() {
     this.camera.updateProjectionMatrix();
     this.camera.updateMatrixWorld();
 
-    var tmpPoint = startPoint.clone();
+    let tmpPoint = startPoint.clone();
     tmpPoint.x = Math.min(startPoint.x, endPoint.x);
     tmpPoint.y = Math.max(startPoint.y, endPoint.y);
     endPoint.x = Math.max(startPoint.x, endPoint.x);
     endPoint.y = Math.min(startPoint.y, endPoint.y);
 
-    var vecNear = this.camera.position.clone();
-    var vecTopLeft = tmpPoint.clone();
-    var vecTopRight = new THREE.Vector3(endPoint.x, tmpPoint.y, 0);
-    var vecDownRight = endPoint.clone();
-    var vecDownLeft = new THREE.Vector3(tmpPoint.x, endPoint.y, 0);
+    let vecNear = this.camera.position.clone();
+    let vecTopLeft = tmpPoint.clone();
+    let vecTopRight = new THREE.Vector3(endPoint.x, tmpPoint.y, 0);
+    let vecDownRight = endPoint.clone();
+    let vecDownLeft = new THREE.Vector3(tmpPoint.x, endPoint.y, 0);
     vecTopLeft.unproject(this.camera);
     vecTopRight.unproject(this.camera);
     vecDownRight.unproject(this.camera);
     vecDownLeft.unproject(this.camera);
 
-    var vectemp1 = vecTopLeft.clone().sub(vecNear);
-    var vectemp2 = vecTopRight.clone().sub(vecNear);
-    var vectemp3 = vecDownRight.clone().sub(vecNear);
+    let vectemp1 = vecTopLeft.clone().sub(vecNear);
+    let vectemp2 = vecTopRight.clone().sub(vecNear);
+    let vectemp3 = vecDownRight.clone().sub(vecNear);
     vectemp1.normalize();
     vectemp2.normalize();
     vectemp3.normalize();
@@ -68,7 +68,7 @@ var SelectionBox = (function() {
     vectemp2.add(vecNear);
     vectemp3.add(vecNear);
 
-    var planes = frustum.planes;
+    let planes = frustum.planes;
 
     planes[0].setFromCoplanarPoints(vecNear, vecTopLeft, vecTopRight);
     planes[1].setFromCoplanarPoints(vecNear, vecTopRight, vecDownRight);
@@ -98,7 +98,7 @@ var SelectionBox = (function() {
     }
 
     if (object.children.length > 0) {
-      for (var x = 0; x < object.children.length; x++) {
+      for (let x = 0; x < object.children.length; x++) {
         this.searchChildInFrustum(frustum, object.children[x]);
       }
     }

@@ -1,7 +1,7 @@
 import { Actor, Component, Property } from 'satisfactory-json';
 
-var actorByPathName: { [id: string]: number } = {};
-var componentByPathName: { [id: string]: number } = {};
+let actorByPathName: { [id: string]: number } = {};
+let componentByPathName: { [id: string]: number } = {};
 
 /**
  * refresh the two dictionaries above that are used to quickly look up actors and components by their path name

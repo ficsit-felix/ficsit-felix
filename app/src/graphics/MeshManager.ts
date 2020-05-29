@@ -186,11 +186,11 @@ export default class MeshManager {
   }
 
   updateClassVisibility(val: { visible: boolean; name: string }[]) {
-    for (var i = 0; i < val.length; i++) {
+    for (let i = 0; i < val.length; i++) {
       const item = val[i];
       if (item.visible) {
         // make invisible objects visible again
-        for (var j = this.invisibleMeshes.length - 1; j >= 0; j--) {
+        for (let j = this.invisibleMeshes.length - 1; j >= 0; j--) {
           const mesh = this.invisibleMeshes[j];
 
           if (findActorByName(mesh.getPathName())!.className === item.name) {
@@ -202,7 +202,7 @@ export default class MeshManager {
           }
         }
       } else {
-        for (var k = this.visibleMeshes.length - 1; k >= 0; k--) {
+        for (let k = this.visibleMeshes.length - 1; k >= 0; k--) {
           const mesh = this.visibleMeshes[k];
 
           if (findActorByName(mesh.getPathName())!.className === item.name) {
@@ -237,7 +237,7 @@ export default class MeshManager {
     this.meshDictionaryDirty = true;
     for (const actor of payload.actors) {
       let found = false;
-      for (var i = this.visibleMeshes.length - 1; i >= 0; i--) {
+      for (let i = this.visibleMeshes.length - 1; i >= 0; i--) {
         if (this.visibleMeshes[i].getPathName() === actor.pathName) {
           this.visibleMeshes[i].removeFromScene(this.scene);
           this.visibleMeshes.splice(i, 1);
@@ -250,7 +250,7 @@ export default class MeshManager {
         break;
       }
 
-      for (var j = this.invisibleMeshes.length - 1; j >= 0; j--) {
+      for (let j = this.invisibleMeshes.length - 1; j >= 0; j--) {
         if (this.invisibleMeshes[j].getPathName() === actor.pathName) {
           this.invisibleMeshes[j].removeFromScene(this.scene);
           this.invisibleMeshes.splice(j, 1);

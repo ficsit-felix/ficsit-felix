@@ -28,7 +28,7 @@ export function openFileFromFilesystem(
       setTimeout(() => {
         // TODO refactor: move common (desktop/web) code into own file
         try {
-          let json = JSON.parse(data.toString('utf-8'));
+          const json = JSON.parse(data.toString('utf-8'));
           callback(undefined, 50, undefined);
           callback(undefined, undefined, json);
         } catch (err) {

@@ -35,9 +35,9 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn text @click="showColorDialog = false" color="primary">
-              {{ $t('general.close') }}
-            </v-btn>
+            <v-btn text @click="showColorDialog = false" color="primary">{{
+              $t('general.close')
+            }}</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -73,7 +73,7 @@ export default {
       function getHexColor(number) {
         return '#' + (number >>> 0).toString(16).slice(-6);
       }
-      var result = {};
+      let result = {};
 
       this.classes.forEach(clazz => {
         if (this.classColors[clazz.name] !== undefined) {

@@ -1,6 +1,6 @@
 const satisfactory = require('satisfactory-json');
 
-var window = self;
+let window = self;
 const streamSaver = require('streamsaver');
 
 addEventListener('message', message => {

@@ -1,4 +1,4 @@
 export function isElectron() {
-  var userAgent = navigator.userAgent.toLowerCase();
+  const userAgent = navigator.userAgent.toLowerCase();
   return userAgent.indexOf(' electron/') > -1;
 }

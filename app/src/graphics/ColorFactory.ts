@@ -36,8 +36,8 @@ export default class ColorFactory {
 
   // setup to use the primary colors of painted buildings
   setupDefaultMaterials() {
-    for (var prop in modelConfig) {
-      var color;
+    for (const prop in modelConfig) {
+      let color;
       if (this.classColors[prop] !== undefined) {
         color = new Color(this.classColors[prop]);
       } else {

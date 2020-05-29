@@ -220,8 +220,8 @@ function saveWeb(
           callback(error, undefined, undefined);
         });
     } else {
-      var element = document.createElement('a');
-      var blob = new Blob([Buffer.from(data, 'binary')], {
+      let element = document.createElement('a');
+      let blob = new Blob([Buffer.from(data, 'binary')], {
         type: 'application/octet-stream'
       });
       element.href = window.URL.createObjectURL(blob);

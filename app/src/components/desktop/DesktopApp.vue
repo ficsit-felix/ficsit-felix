@@ -342,7 +342,7 @@ export default {
         });
     },
     onExitPressed() {
-      var window = remote.getCurrentWindow();
+      let window = remote.getCurrentWindow();
       window.close();
     }
   }

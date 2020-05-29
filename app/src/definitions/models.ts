@@ -13,28 +13,28 @@ export enum Paintable {
 }
 
 // Color palette
-let wallMetalColor = 0x797979;
-let wallWoodColor = 0xecb96c;
+const wallMetalColor = 0x797979;
+const wallWoodColor = 0xecb96c;
 
-let conveyorMk1 = 0x9750a6;
-let conveyorMk2 = 0x7b50a6;
-let conveyorMk3 = 0x5e50a6;
-let conveyorMk4 = 0x505ea6;
-let conveyorMk5 = 0x507ba6;
-let conveyorMk6 = 0x5097a6;
+const conveyorMk1 = 0x9750a6;
+const conveyorMk2 = 0x7b50a6;
+const conveyorMk3 = 0x5e50a6;
+const conveyorMk4 = 0x505ea6;
+const conveyorMk5 = 0x507ba6;
+const conveyorMk6 = 0x5097a6;
 
-let foundationColor = 0x756f6c;
-let rampColor = 0x5f6264;
+const foundationColor = 0x756f6c;
+const rampColor = 0x5f6264;
 
-let trainStationColor = 0x108873;
-let railroadTrackColor = 0x087764;
-let pipelineColor = 0xff9900;
-let pipelineSupportColor = 0xf47365;
-let conveyorPoleColor = 0x5c3ba5;
-let powerPoleColor = 0x6042d5;
+const trainStationColor = 0x108873;
+const railroadTrackColor = 0x087764;
+const pipelineColor = 0xff9900;
+const pipelineSupportColor = 0xf47365;
+const conveyorPoleColor = 0x5c3ba5;
+const powerPoleColor = 0x6042d5;
 
 // This list is sorted alphabetically to ease adding new entries and seeing wether ones exist already
-export let modelConfig: { [id: string]: ModelConfig } = {
+export const modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/-Shared/Blueprint/BP_BuildableSubsystem.BP_BuildableSubsystem_C': {
     model: '',
     color: 0xff00ff,
@@ -1568,7 +1568,7 @@ export let modelConfig: { [id: string]: ModelConfig } = {
   }
 };
 
-export let modClassNamePrefixes = [
+export const modClassNamePrefixes = [
   '/Game/FactoryGame/AreaActions/',
   '/Game/FactoryGame/CrazyMod/',
   '/Game/FactoryGame/FarmingMod/',

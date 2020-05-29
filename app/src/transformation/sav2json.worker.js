@@ -5,10 +5,10 @@ addEventListener('message', message => {
   try {
     let json;
     if (message.data.importJson) {
-      var reader = new FileReader();
+      let reader = new FileReader();
       /*reader.onprogress = evt => {
         if (evt.lengthComputable) {
-          var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+          let percentLoaded = Math.round((evt.loaded / evt.total) * 100);
           this.progress = percentLoaded / 2;
         }
       };*/

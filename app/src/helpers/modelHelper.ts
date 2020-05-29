@@ -68,11 +68,11 @@ class ModelHelper {
         this.loader.load(
           model,
           gltf => {
-            let geometry = (gltf.scene.children[0] as THREE.Mesh)
+            const geometry = (gltf.scene.children[0] as THREE.Mesh)
               .geometry as THREE.BufferGeometry;
             this.loadedModels.set(model, geometry);
             //console.log('loaded model ' + model);
-            for (let resolveX of this.requestedModels.get(model)!) {
+            for (const resolveX of this.requestedModels.get(model)!) {
               resolveX(geometry);
             }
             this.requestedModels.delete(model);
@@ -91,5 +91,5 @@ class ModelHelper {
   }
 }
 
-let modelHelper = new ModelHelper();
+const modelHelper = new ModelHelper();
 export { modelHelper };

@@ -66,7 +66,7 @@ export function updateActorMeshTransform(mesh: Mesh, actor: Actor) {
 export function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
   // TODO need to clone, else change is not detected?
   // find more intelligent way
-  var clone = Object.assign({}, actor);
+  const clone = Object.assign({}, actor);
   // switched to accord for coordinate system change!
   clone.transform.translation[1] = mesh.position.x;
   clone.transform.translation[0] = mesh.position.y;

@@ -59,7 +59,7 @@ export default class GeometryFactory {
   }
 
   createGeometry(actor: Actor): Promise<GeometryResult> {
-    var className = actor.className;
+    let className = actor.className;
 
     return new Promise((resolve, reject) => {
       const resolveWithBox = () => {
@@ -190,8 +190,8 @@ export default class GeometryFactory {
 
     const extrudePath = new ConveyorCurvePath<Vector3>();
 
-    var lastLoc = null;
-    var lastLeave = null;
+    let lastLoc = null;
+    let lastLeave = null;
 
     for (let i = 0; i < splinePoints; i++) {
       const splinePoint = splineData.value.values[i];
@@ -237,7 +237,7 @@ export default class GeometryFactory {
       lastLeave = leaveTangent;
     }
 
-    var shape = new Shape();
+    const shape = new Shape();
 
     switch (splineType) {
       case SplineType.Pipe:
@@ -252,8 +252,8 @@ export default class GeometryFactory {
       // The other two types use the ExtrudeBufferGeometry with different shapes
       case SplineType.ConveyorBelt:
         // Conveyor Belt rectangle
-        var length = 38,
-          width = 180;
+        const length = 38;
+        const width = 180;
 
         shape.moveTo(-length / 2, -width / 2);
         shape.lineTo(-length / 2, width / 2);
@@ -263,9 +263,9 @@ export default class GeometryFactory {
         break;
       case SplineType.RailroadTrack:
         // Railroad Track trapezoid
-        var bottomWidth = 520,
-          topWidth = 150,
-          height = 130;
+        const bottomWidth = 520;
+        const topWidth = 150;
+        const height = 130;
 
         shape.moveTo(0, -bottomWidth / 2);
         shape.lineTo(0, bottomWidth / 2);
@@ -277,7 +277,7 @@ export default class GeometryFactory {
         throw new Error(`Unknown spline type ${splineType}`);
     }
 
-    var extrudeSettings = {
+    const extrudeSettings = {
       // TODO find better values for this?
       curveSegments: (splinePoints * this.conveyorBeltResolution) / 2,
       steps: splinePoints * this.conveyorBeltResolution,
@@ -331,7 +331,7 @@ export default class GeometryFactory {
       );
       return;
     }
-    var sourceOffset = { x: 0, y: 0, z: 0 };
+    let sourceOffset = { x: 0, y: 0, z: 0 };
     if (
       modelConfig[source.className] != undefined &&
       modelConfig[source.className].powerLineOffset !== undefined
@@ -371,7 +371,7 @@ export default class GeometryFactory {
       console.error('No power line offset for ' + source.className);
       reportException('No power line offset for ' + source.className);
     }
-    var targetOffset = { x: 0, y: 0, z: 0 };
+    let targetOffset = { x: 0, y: 0, z: 0 };
     if (
       modelConfig[target.className] !== undefined &&
       modelConfig[target.className].powerLineOffset !== undefined

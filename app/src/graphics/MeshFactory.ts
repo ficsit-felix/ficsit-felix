@@ -43,7 +43,7 @@ export default class MeshFactoy {
       this.geometryFactory
         .createGeometry(actor)
         .then(result => {
-          var mesh = new Mesh(
+          const mesh = new Mesh(
             result.geometry,
             this.materialFactory.createMaterial(actor)
           );
@@ -69,8 +69,8 @@ export default class MeshFactoy {
             .then(topGeometry => {
               const material = this.materialFactory.createMaterial(actor);
 
-              // wether the role of top and bottom are reversed does not seem to depend on the mIsReversed property, but on the sign of the z coordinate of the translation
-              var topPartTranslationZ = 0;
+              // whether the role of top and bottom are reversed does not seem to depend on the mIsReversed property, but on the sign of the z coordinate of the translation
+              let topPartTranslationZ = 0;
               for (let i = 0; i < actor.entity.properties.length; i++) {
                 const element = actor.entity.properties[i] as StructProperty;
                 if (element.name === 'mTopTransform') {
@@ -84,12 +84,12 @@ export default class MeshFactoy {
               }
               const isReversed = topPartTranslationZ < 0;
 
-              var mesh = new Mesh(
+              const mesh = new Mesh(
                 isReversed ? topGeometry : bottomGeometry,
                 material
               );
 
-              var topMesh = new Mesh(
+              const topMesh = new Mesh(
                 isReversed ? bottomGeometry : topGeometry,
                 material
               );
@@ -127,7 +127,7 @@ export default class MeshFactoy {
                   ? topPartTranslationZ
                   : -topPartTranslationZ
               );
-              var middleMesh = new Mesh(middleGeometry, material);
+              const middleMesh = new Mesh(middleGeometry, material);
               middleMesh.position.x = -60;
               middleMesh.position.z = topPartTranslationZ / 2;
               mesh.add(middleMesh);
@@ -160,10 +160,10 @@ export default class MeshFactoy {
               (getProperty(actor, 'mVerticalAngle')?.value ?? '0') + ''
             ) ?? 0;
 
-          var mesh = new Mesh(undefined, material);
+          const mesh = new Mesh(undefined, material);
 
           // move the ring geometry to the correct position and angle it correctly
-          var ringMesh = new Mesh(ringGeometry);
+          const ringMesh = new Mesh(ringGeometry);
 
           ringMesh.position.z = length;
           ringMesh.quaternion.setFromAxisAngle(

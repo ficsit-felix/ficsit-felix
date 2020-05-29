@@ -42,9 +42,9 @@
       :content="errorText"
     ></AlertDialog>
 
-    <v-snackbar v-model="showLocationClipboardSnack" :timeout="1000">
-      {{ $t('openPage.copiedToClipboard') }}
-    </v-snackbar>
+    <v-snackbar v-model="showLocationClipboardSnack" :timeout="1000">{{
+      $t('openPage.copiedToClipboard')
+    }}</v-snackbar>
   </div>
 </template>
 
@@ -104,7 +104,7 @@ export default {
     }
     */
 
-    for (var config in modelConfig) {
+    for (let config in modelConfig) {
       if (modelConfig[config].model !== '') {
         modelHelper.loadModel('/models/' + modelConfig[config].model);
       }

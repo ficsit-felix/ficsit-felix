@@ -58,9 +58,9 @@
       >
     </div>
 
-    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">{{
-      $t('propertyEditor.objectSavedSnack')
-    }}</v-snackbar>
+    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">
+      {{ $t('propertyEditor.objectSavedSnack') }}
+    </v-snackbar>
 
     <ConfirmDialog
       v-model="showDeleteDialog"
@@ -132,7 +132,7 @@ export default {
     saveJson() {
       console.log('save json');
       try {
-        var obj = JSON.parse(this.selectedJson);
+        let obj = JSON.parse(this.selectedJson);
         this.setSelectedObject(obj);
         this.jsonError = [];
         this.showSnackbar = true;

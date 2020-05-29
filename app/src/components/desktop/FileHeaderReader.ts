@@ -120,7 +120,7 @@ export class FileHeaderReader {
     for (let i = 0; i < binaryStr.length; i += 2) {
       cp.push(binaryStr.charCodeAt(i) | (binaryStr.charCodeAt(i + 1) << 8));
     }
-    return String.fromCharCode.apply(String, cp);
+    return String.fromCharCode(...cp);
   }
 
   // Convert FDateTime to a javascript Date

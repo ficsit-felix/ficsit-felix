@@ -48,9 +48,8 @@
             text
             @click="showBugReportDialog = false"
             :disabled="formDisabled"
+            >{{ $t('general.close') }}</v-btn
           >
-            {{ $t('general.close') }}
-          </v-btn>
           <v-progress-circular
             v-if="formDisabled"
             indeterminate
@@ -61,9 +60,8 @@
             text
             @click="sendReport()"
             :disabled="formDisabled"
+            >{{ $t('dialog.bugReport.send') }}</v-btn
           >
-            {{ $t('dialog.bugReport.send') }}
-          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -125,7 +123,7 @@ export default class BugReportDialog extends Vue {
 
   fetchFileForBugReport(file: File): Promise<Buffer> {
     return new Promise<Buffer>((resolve, reject) => {
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.onload = response => {
         if (response === null || response.target === null) {
           reject();

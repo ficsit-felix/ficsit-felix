@@ -3,7 +3,7 @@
 
 <head>
   <script>
-    var deployedUrls = [
+    let deployedUrls = [
       "https://ficsit-felix.netlify.app/",
       "https://ficsit-felix.now.sh/"
     ];
@@ -22,7 +22,7 @@
         localStorage !== undefined &&
         localStorage.getItem("url") !== null
       ) {
-        var url = localStorage.getItem("url");
+        let url = localStorage.getItem("url");
         if (deployedUrls.includes(url)) {
           redirectTo(url);
           return;
@@ -30,7 +30,7 @@
       }
 
       // choose a deployed url at random and cache it
-      var url = getRandomDeployedUrl();
+      let url = getRandomDeployedUrl();
       if (localStorage !== undefined) {
         localStorage.setItem("url", url);
         redirectTo(url);

@@ -358,7 +358,7 @@ export default class DesktopMenu extends Vue {
   bytesToSize(bytes: number): string {
     // TODO localize?
     // https://stackoverflow.com/a/20732091
-    var i = Math.floor(Math.log(bytes) / Math.log(1024));
+    let i = Math.floor(Math.log(bytes) / Math.log(1024));
     return (
       (bytes / Math.pow(1024, i)).toFixed(2) +
       ' ' +
