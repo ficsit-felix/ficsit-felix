@@ -13,12 +13,12 @@
     "electron:release": "yarn electron:build -p always",
     "electron:serve": "vue-cli-service electron:serve",
     "now-build": "yarn build",
-    "postbuild": "./rebuild-commithash.sh develop",
-    "postelectron:build": "./rebuild-commithash.sh develop",
+    "postbuild": "node rebuild-commithash.js develop",
+    "postelectron:build": "node rebuild-commithash.js develop",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
-    "prebuild": "./rebuild-commithash.sh build",
-    "preelectron:build": "./rebuild-commithash.sh build"
+    "prebuild": "node rebuild-commithash.js build",
+    "preelectron:build": "node rebuild-commithash.js build"
   },
   "main": "background.js",
   "dependencies": {

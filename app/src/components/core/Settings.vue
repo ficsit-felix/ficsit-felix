@@ -64,12 +64,12 @@
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       ></v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">{{
-        $t('settings.copyClassColorsButton')
-      }}</v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">{{
-        $t('settings.clearClassColorsButton')
-      }}</v-btn>
+      <v-btn @click="exportClassColors" class="ma-2">
+        {{ $t('settings.copyClassColorsButton') }}
+      </v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">
+        {{ $t('settings.clearClassColorsButton') }}
+      </v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"
@@ -180,13 +180,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.settings {
-  /*width: 400px;
-  @media (max-width: 500px) {
-    width: 100%;
-  }*/
-}
-
 .clickable {
   cursor: pointer;
   user-select: none;

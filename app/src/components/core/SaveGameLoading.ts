@@ -21,7 +21,7 @@ export interface SaveFileReader {
 
 // Class that handles the pipeline from the moment that the file is known to the moment the editor is fully loaded
 export class SaveGameLoading {
-  constructor(private vue: Vue, private fileReader: SaveFileReader) { }
+  constructor(private vue: Vue, private fileReader: SaveFileReader) {}
 
   loadSaveGame(filename: string, filepath: string, asJson: boolean) {
     // TODO check extension
