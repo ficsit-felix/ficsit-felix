@@ -39,7 +39,7 @@
     "jszip": "^3.4.0",
     "moment": "^2.26.0",
     "satisfactory-blueprint": "^0.0.3",
-    "satisfactory-json": "0.0.35",
+    "satisfactory-json": "0.0.36",
     "stats.js": "^0.17.0",
     "streamsaver": "^2.0.4",
     "three": "0.117.1",

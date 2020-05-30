@@ -9516,10 +9516,10 @@ satisfactory-blueprint@^0.0.3:
     satisfactory-json "^0.0.9"
     three "^0.105.2"
 
-satisfactory-json@0.0.35:
-  version "0.0.35"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.35.tgz#16e4e8caff66913747e4cf9be6bc940311a902cf"
-  integrity sha512-9cxAlK5rWzrQgDUDmJrhO+9xt3mQyJ13+cRrX4KEniwPr6lJ4RgIo8+j+yLcJ+y4bi0gpFecO096+0svYggd6w==
+satisfactory-json@0.0.36:
+  version "0.0.36"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.36.tgz#b58fa8ff3b2a8c6502a0ed3e2294856c3196337b"
+  integrity sha512-Ndx2/sELRpRM1GEWpst+LJbbc2rWk6efZhiM1TTD19IeICEHcl4xsv+w0qzFk61bB0/LXRuMlWULf3MgtdUHpw==
   dependencies:
     jsbi "^3.1.2"
     pako "^1.0.11"
