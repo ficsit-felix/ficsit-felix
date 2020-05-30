@@ -510,7 +510,6 @@ export default class DesktopMenu extends Vue {
     display: inline-block;
     margin-right: 7px;
     padding: 8px;
-
   }
 
   .information {
@@ -520,7 +519,7 @@ export default class DesktopMenu extends Vue {
 }
 .v-application .error {
   color: #ff8239;
-      background: transparent !important;
+  background: transparent !important;
 }
 
 .filelistProgressIndicator {
@@ -528,5 +527,4 @@ export default class DesktopMenu extends Vue {
   top: 8px;
   right: 8px;
 }
-
 </style>

@@ -48,10 +48,7 @@
               </gl-component>
             </gl-col>
             <gl-stack :width="23">
-              <gl-component
-                :title="$t('panels.properties.title')"
-                v-if="false"
-              >
+              <gl-component :title="$t('panels.properties.title')" v-if="false">
                 <div class="panel">
                   <h1>Properties</h1>
                 </div>
