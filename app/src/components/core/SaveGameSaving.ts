@@ -31,6 +31,7 @@ export class SaveGameSaving {
     EventBus.$emit(DIALOG_PROGRESS, true);
     setTimeout(() => {
       // give the dialog time to be open
+      console.time('saveFile');
 
       this.fileWriter.writeFile(
         window.data,
@@ -44,6 +45,7 @@ export class SaveGameSaving {
           EventBus.$emit(DIALOG_BUGREPORT, error.message);
         },
         () => {
+          console.timeEnd('saveFile');
           this.vue.$store.dispatch('setProgress', 100);
           this.vue.$store.dispatch('setProgressText', {
             currentStep: this.vue.$t('savePage.saveFinished'),

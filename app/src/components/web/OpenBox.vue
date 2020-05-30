@@ -52,8 +52,6 @@
 import { modelHelper } from '@/helpers/modelHelper';
 import { modelConfig } from '@/definitions/models';
 
-import * as Sav2JsonWorker from 'worker-loader?name=[name].js!@/transformation/sav2json.worker.js';
-
 import { SaveGameLoading } from '../core/SaveGameLoading';
 import { WebFileReader } from './WebFileReader';
 import copyToClipboard from '../../ts/copyToClipboard';
@@ -132,10 +130,11 @@ export default {
       }
 
       // this.isSaving = true;
-      new SaveGameLoading(
-        this,
-        new WebFileReader(new Sav2JsonWorker(), file)
-      ).loadSaveGame(file.name, file.path, this.importJson);
+      new SaveGameLoading(this, new WebFileReader(file)).loadSaveGame(
+        file.name,
+        file.path,
+        this.importJson
+      );
 
       /*
       // TODO handle auto load

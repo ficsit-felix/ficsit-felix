@@ -90,15 +90,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setVisibility']),
+    ...mapActions(['setVisibility', 'setVisibilityForAll']),
     ...mapActions('settings', ['setClassColor']),
     changeVisibility(name, visible) {
       this.setVisibility({ name, visible });
     },
     changeVisibilityOfAllClasses(visible) {
-      this.classes.forEach(item => {
+      /*this.classes.forEach(item => {
         this.setVisibility({ name: item.name, visible });
-      });
+      });*/
+      this.setVisibilityForAll(visible);
     },
     showColor(className) {
       // alert(className);

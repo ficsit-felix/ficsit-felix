@@ -1,15 +1,6 @@
 import { SaveGame } from 'satisfactory-json';
-import Json2SavWorker from 'worker-loader?name=[name].js!@/transformation/json2sav.worker.js';
-import * as JSZip from 'jszip';
-import { saveAs } from 'file-saver';
 import { isElectron } from '@/ts/isElectron';
-import {
-  writeFile,
-  fstat,
-  existsSync,
-  copyFileSync,
-  createWriteStream
-} from 'fs';
+import { writeFile, existsSync, copyFileSync, createWriteStream } from 'fs';
 import { parse } from 'path';
 import path from 'path';
 import streamSaver from 'streamsaver';
@@ -64,30 +55,6 @@ function transformFile(
     // web version
     saveWeb(path, saveGame, callback, asJson);
   }
-
-  /*  const worker = new Json2SavWorker();
-    worker.addEventListener('message', message => {
-      if (message.data.status === 'error') {
-        callback(new Error(message.data.error), undefined, undefined);
-        return;
-      }
-      const data = message.data.data;
-      callback(undefined, 50, undefined);
-      if (isElectron()) {
-        // desktop version
-  
-        // TODO convert to zip
-  
-        saveDesktop(path, data, callback);
-      } else {
-        // web version
-        saveWeb(asZip, path, data, callback);
-      }
-    });
-    worker.postMessage({
-      exportJson: asJson,
-      data: saveGame
-    });*/
 }
 
 function saveDesktop(
@@ -186,6 +153,9 @@ function saveWeb(
     window.onunload = () => writer.abort();
     transform.pipe(new FileWriter(writer)).on('finish', () => {
       callback(undefined, undefined, true);
+    });
+    transform.on('progress', progress => {
+      callback(undefined, progress, undefined);
     });
     transform.on('error', error => {
       writer.abort();

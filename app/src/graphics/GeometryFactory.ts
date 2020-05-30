@@ -64,9 +64,16 @@ export default class GeometryFactory {
     return new Promise((resolve, reject) => {
       const resolveWithBox = () => {
         if (this.geometries['box'] === undefined) {
+          let boxSize = 400;
+          if (
+            actor.className ===
+            '/Game/FactoryGame/Resource/BP_ItemPickup_Spawnable.BP_ItemPickup_Spawnable_C'
+          ) {
+            boxSize /= actor.transform.scale3d[0];
+          }
           // 800 is size of foundations
           this.geometries['box'] = {
-            geometry: this.createBoxGeometry(400),
+            geometry: this.createBoxGeometry(boxSize),
             instance: 'box'
           };
         }
@@ -164,9 +171,15 @@ export default class GeometryFactory {
           }
 
           // 800 is size of foundations
-
+          let boxSize = 200;
+          if (
+            className ===
+            '/Game/FactoryGame/Resource/BP_ItemPickup_Spawnable.BP_ItemPickup_Spawnable_C'
+          ) {
+            boxSize = 2;
+          }
           this.geometries[className] = {
-            geometry: this.createBoxGeometry(200),
+            geometry: this.createBoxGeometry(boxSize),
             instance: className
           };
           resolve(this.geometries[className]);

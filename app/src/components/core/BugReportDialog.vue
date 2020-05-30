@@ -81,7 +81,6 @@
 import 'whatwg-fetch';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import * as JSZip from 'jszip';
-import { saveAs } from 'file-saver';
 import AlertDialog from './AlertDialog.vue';
 
 @Component({ components: { AlertDialog } })

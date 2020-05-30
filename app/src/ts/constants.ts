@@ -1,4 +1,5 @@
 export const DIALOG_OPEN_TIME_MS = 300;
+export const GUI_REFRESH_TIMEOUT = 16;
 
 // Dialogs
 export const DIALOG_HELP = 'DIALOG_HELP';

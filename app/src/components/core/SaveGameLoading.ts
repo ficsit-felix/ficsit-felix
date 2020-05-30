@@ -3,7 +3,8 @@ import { EventBus } from '@/event-bus';
 import {
   DIALOG_PROGRESS,
   DIALOG_OPEN_TIME_MS,
-  DIALOG_BUGREPORT
+  DIALOG_BUGREPORT,
+  GUI_REFRESH_TIMEOUT
 } from '@/ts/constants';
 import { v4 } from 'uuid';
 import { reportContext } from '@/ts/errorReporting';
@@ -51,7 +52,7 @@ export class SaveGameLoading {
         filepath,
         asJson,
         progress => {
-          this.vue.$store.dispatch('setProgress', progress);
+          this.vue.$store.dispatch('setProgress', progress / 2);
         },
         error => {
           EventBus.$emit(DIALOG_BUGREPORT, error.message);

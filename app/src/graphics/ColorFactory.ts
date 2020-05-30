@@ -129,7 +129,7 @@ export default class ColorFactory {
             isPaintable === Paintable.FALSE &&
             !isModClassName(actor.className)
           ) {
-            console.warn('paintable should be true for: ' + actor.className);
+            // console.warn('paintable should be true for: ' + actor.className);
             /*reportMessage(
               "paintable should be true for: " + actor.className
             );*/

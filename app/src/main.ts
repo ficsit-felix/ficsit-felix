@@ -25,11 +25,8 @@ if (process.env.NODE_ENV !== 'development') {
   });
 }
 
-// vue-split-panel
-import VueSplit from '@bitowl/vue-split-panel';
 import { EventBus } from './event-bus';
 import { CHANGE_LOCALE } from './ts/constants';
-Vue.use(VueSplit);
 
 // vue-shortkey
 Vue.use(require('vue-shortkey'));

@@ -193,10 +193,7 @@ interface RootState {
   selectedComponents: Component[];
   selectedJsonToEdit: any; // if one actor or component is selected, it's json is editable
 
-  error: any;
-  title: string;
   dataLoaded: boolean;
-  visibleObjects: any[];
   uuid: string;
   filename: string;
   filepath: string;
@@ -232,10 +229,7 @@ export default new Vuex.Store<RootState>({
     selectedComponents: [],
     selectedJsonToEdit: null,
 
-    error: null,
-    title: 'asdf',
     dataLoaded: false,
-    visibleObjects: [],
     uuid: '',
     filename: '',
     filepath: '',
@@ -268,20 +262,12 @@ export default new Vuex.Store<RootState>({
         };
       };
 
-      console.log('asdf');
-
       return window.data.actors
         .map(transformation)
         .concat(window.data.components.map(transformation));
-    },
-    getVisibleObjects(state) {
-      return state.visibleObjects;
     }
   },
   mutations: {
-    SET_ERROR(state, error) {
-      state.error = error;
-    },
     SET_SELECTED(state, selectedPathNames) {
       if (
         selectedPathNames.length === 1 &&
@@ -374,24 +360,13 @@ export default new Vuex.Store<RootState>({
         }
       }
     },
-    SET_VISIBLE_OBJECTS(state, visibleObjects) {
+    SET_CLASSES(state, classes) {
       state.selectedPathNames = [];
       state.selectedActors = [];
       state.selectedComponents = [];
       state.selectedJsonToEdit = null;
 
-      state.visibleObjects = visibleObjects;
-
-      state.classes = (state.visibleObjects as any[])
-        .map(obj => obj.className)
-        .filter((value, index, self) => self.indexOf(value) === index) // uniq
-        .sort()
-        .map(name => {
-          return {
-            name,
-            visible: true
-          };
-        });
+      state.classes = classes;
     },
     SET_DATA_LOADED(state, dataLoaded) {
       state.dataLoaded = dataLoaded;
@@ -411,6 +386,12 @@ export default new Vuex.Store<RootState>({
           clazz.visible = visible;
           break;
         }
+      }
+    },
+    SET_VISIBILITY_FOR_ALL(state, visible) {
+      // TODO does this send multiple change events or is this already the fastest way?
+      for (const clazz of state.classes) {
+        clazz.visible = visible;
       }
     },
     // TODO rename to update selected json
@@ -522,18 +503,19 @@ export default new Vuex.Store<RootState>({
         refreshActorComponentDictionary();
         context.commit('SET_DATA_LOADED', true);
 
-        // slowly fill visible actors
-        const visible = [];
-        for (let i = 0; i < data.actors.length; i++) {
-          const actor = data.actors[i];
-          visible.push({
-            id: i,
-            className: actor.className,
-            transform: actor.transform
-            // state: 0
+        // set and array spread as a fast way to calculate unique class names https://stackoverflow.com/a/33121880
+        const classNames = [
+          ...new Set((data.actors as Actor[]).map(actor => actor.className))
+        ]
+          .sort()
+          .map(name => {
+            return {
+              name,
+              visible: true
+            };
           });
-        }
-        context.commit('SET_VISIBLE_OBJECTS', visible);
+
+        context.commit('SET_CLASSES', classNames);
         resolve();
       });
     },
@@ -548,6 +530,9 @@ export default new Vuex.Store<RootState>({
     },
     setVisibility(context, payload) {
       context.commit('SET_VISIBILITY', payload);
+    },
+    setVisibilityForAll(context, payload) {
+      context.commit('SET_VISIBILITY_FOR_ALL', payload);
     },
     setSelectedObject(context, payload) {
       context.commit('SET_SELECTED_OBJECT', payload);

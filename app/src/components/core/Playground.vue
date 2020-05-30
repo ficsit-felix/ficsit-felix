@@ -95,7 +95,8 @@ import { reportError } from '@/ts/errorReporting';
 import {
   DIALOG_PROGRESS,
   DIALOG_OPEN_TIME_MS,
-  FOCUS_SELECTED_OBJECT
+  FOCUS_SELECTED_OBJECT,
+  GUI_REFRESH_TIMEOUT
 } from '../../ts/constants';
 
 export default {
@@ -140,8 +141,7 @@ export default {
       'conveyorBeltResolution',
       'classColors',
       'experimentalFeatures'
-    ]),
-    ...mapGetters(['getVisibleObjects'])
+    ])
   },
   watch: {
     selectedActors(val) {
@@ -262,88 +262,96 @@ export default {
   },
 
   mounted() {
+    // show the progress dialog in case it was not already shown (should only happen on reload during development)
+    EventBus.$emit(DIALOG_PROGRESS, true);
+
     this.setProgressText({
       currentStep: this.$t('openPage.buildingWorld'),
       showCloseButton: false
     });
     this.setProgress(50);
 
-    this.geometryFactory = new GeometryFactory(
-      this.showModels,
-      this.conveyorBeltResolution
-    );
+    setTimeout(() => {
+      this.geometryFactory = new GeometryFactory(
+        this.showModels,
+        this.conveyorBeltResolution
+      );
 
-    let textureLoader = new THREE.TextureLoader();
-    this.matcap = textureLoader.load('textures/matcap-white.png', function(
-      matcap
-    ) {
-      matcap.encoding = THREE.sRGBEncoding;
-    });
+      let textureLoader = new THREE.TextureLoader();
+      this.matcap = textureLoader.load('textures/matcap-white.png', function(
+        matcap
+      ) {
+        matcap.encoding = THREE.sRGBEncoding;
+      });
 
-    this.colorFactory = new ColorFactory(
-      this.matcap,
-      this.showCustomPaints,
-      this.classColors
-    );
-    this.meshFactory = new MeshFactory(this.geometryFactory, this.colorFactory);
+      this.colorFactory = new ColorFactory(
+        this.matcap,
+        this.showCustomPaints,
+        this.classColors
+      );
+      this.meshFactory = new MeshFactory(
+        this.geometryFactory,
+        this.colorFactory
+      );
 
-    this.scene = this.$refs.scene.scene;
+      this.scene = this.$refs.scene.scene;
 
-    this.selectedMaterial = new THREE.MeshMatcapMaterial({
-      color: 0xffffff,
-      matcap: this.matcap
-    });
+      this.selectedMaterial = new THREE.MeshMatcapMaterial({
+        color: 0xffffff,
+        matcap: this.matcap
+      });
 
-    this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
+      this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
 
-    this.loader = new GLTFLoader();
+      this.loader = new GLTFLoader();
 
-    this.geometries = {};
+      this.geometries = {};
 
-    this.lastSelectedActors = [];
-    this.createMeshesForActors();
+      this.lastSelectedActors = [];
+      this.createMeshesForActors();
 
-    this.transformControl = new TransformControls(
-      this.$refs.renderer.camera.obj,
-      this.$refs.renderer.renderer.domElement
-    );
-    this.transformControl.space = 'world';
-    // correct way to to this, but i don't want that many updates
-    /*this.transformControl.addEventListener('objectChange', () => {
+      this.transformControl = new TransformControls(
+        this.$refs.renderer.camera.obj,
+        this.$refs.renderer.renderer.domElement
+      );
+      this.transformControl.space = 'world';
+      // correct way to to this, but i don't want that many updates
+      /*this.transformControl.addEventListener('objectChange', () => {
       this.objectChanged();
     })*/
-    this.transformControl.addEventListener(
-      'dragging-changed',
-      event => {
-        // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
-        this.$store.commit('SET_SELECTION_DISABLED', event.value);
-        this.setSelectionDisabled(event.value);
-        if (event.value == false) {
-          this.onSelectedActorTransformChanged();
-        }
-      },
-      false
-    );
-    this.scene.add(this.transformControl);
+      this.transformControl.addEventListener(
+        'dragging-changed',
+        event => {
+          // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
+          this.$store.commit('SET_SELECTION_DISABLED', event.value);
+          this.setSelectionDisabled(event.value);
+          if (event.value == false) {
+            this.onSelectedActorTransformChanged();
+          }
+        },
+        false
+      );
+      this.scene.add(this.transformControl);
 
-    // load map
-    if (this.showMap) {
-      this.loadMap();
-    }
+      // load map
+      if (this.showMap) {
+        this.loadMap();
+      }
 
-    /// EVENT HANDLERS ///
+      /// EVENT HANDLERS ///
 
-    // listen to window resize
-    window.addEventListener('resize', this.handleResize);
-    window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
+      // listen to window resize
+      window.addEventListener('resize', this.handleResize);
+      window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
 
-    EventBus.$on('delete', payload => {
-      // TODO move to constants?
-      // remove all actors from scene
-      this.meshManager.deleteSelectedMeshes(payload);
-      this.transformControl.detach();
-    });
-    EventBus.$on(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
+      EventBus.$on('delete', payload => {
+        // TODO move to constants?
+        // remove all actors from scene
+        this.meshManager.deleteSelectedMeshes(payload);
+        this.transformControl.detach();
+      });
+      EventBus.$on(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
+    }, GUI_REFRESH_TIMEOUT);
   },
   beforeDestroy() {
     EventBus.$off('delete');
@@ -403,8 +411,21 @@ export default {
       // we want to create them synchroniously so that we can track progress
       // and build all the instancedMeshGroups at the end
 
-      this.setProgress((index / window.data.actors.length) * 50 + 50);
+      if (
+        parseInt(((index - 1) / window.data.actors.length) * 50 + 50) <
+        parseInt((index / window.data.actors.length) * 50 + 50)
+      ) {
+        // only change the progress bar, when the displayed number is changed
+        this.setProgress((index / window.data.actors.length) * 50 + 50);
+        setTimeout(() => {
+          this.buildMesh(index);
+        }, GUI_REFRESH_TIMEOUT);
+      } else {
+        this.buildMesh(index);
+      }
+    },
 
+    buildMesh(index) {
       if (index >= window.data.actors.length) {
         // created all meshes
         this.meshManager.buildInstancedMeshGroups();

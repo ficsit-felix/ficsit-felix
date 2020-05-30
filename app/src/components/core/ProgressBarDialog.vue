@@ -3,11 +3,7 @@
     <v-card-title>
       {{ progressText.title }}
       <v-spacer></v-spacer>
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        v-if="!progressText.showCloseButton"
-      ></v-progress-circular>
+      <div class="spinner" v-if="!progressText.showCloseButton"></div>
     </v-card-title>
     <v-card-text>
       <v-progress-linear :value="progress" height="50" rounded>
@@ -72,5 +68,26 @@ export default class ProgressBarDialog extends Vue {
   color: #ccc;
   font-size: 20px;
   line-height: 1;
+}
+
+::v-deep .v-progress-linear__determinate {
+  transition: none; // Because the render thread will be hanging most of the time, transitions will not look good
+}
+
+.spinner {
+  border: 4px solid transparent;
+  border-top: 4px solid $primaryOrange;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  animation: spin 1.5s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

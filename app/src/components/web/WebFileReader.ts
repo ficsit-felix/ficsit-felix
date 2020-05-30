@@ -1,6 +1,11 @@
 import { SaveFileReader } from '../core/SaveGameLoading';
+
+//@ts-ignore
+import fileReaderStream from 'filereader-stream';
+import { Sav2JsonTransform } from 'satisfactory-json';
+
 export class WebFileReader implements SaveFileReader {
-  constructor(private worker: any, private file: File) {}
+  constructor(private file: File) {}
 
   readFile(
     filepath: string,
@@ -12,17 +17,50 @@ export class WebFileReader implements SaveFileReader {
     // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
     window.data = this.file;
 
-    this.worker.addEventListener('message', (message: any) => {
-      if (message.data.status === 'error') {
-        errorCallback(new Error(message.data.error));
-        return;
+    try {
+      let json;
+      if (asJson) {
+        const reader = new FileReader();
+        /*reader.onprogress = evt => {
+          if (evt.lengthComputable) {
+            const percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+            progressCallback(percentLoaded / 2);
+          }
+        };*/
+        reader.onload = response => {
+          try {
+            json = JSON.parse(
+              Buffer.from(reader.result as string).toString('utf-8')
+            );
+            successCallback(json);
+          } catch (error) {
+            console.error(error);
+            // TODO pass stack trace
+            errorCallback(error);
+          }
+        };
+        reader.readAsArrayBuffer(this.file);
+      } else {
+        console.time('sav2json');
+        const reader = fileReaderStream(this.file);
+        reader
+          .pipe(new Sav2JsonTransform())
+          .on('data', (data: any) => {
+            console.timeEnd('sav2json');
+            successCallback(data);
+          })
+          .on('progress', (progress: number) => {
+            progressCallback(progress);
+          })
+          .on('error', (error: any) => {
+            console.error('error', error);
+            errorCallback(error);
+          });
       }
-      successCallback(message.data.data);
-    });
-
-    this.worker.postMessage({
-      importJson: asJson,
-      data: this.file
-    });
+    } catch (error) {
+      console.error(error);
+      // TODO pass stack trace
+      errorCallback(error);
+    }
   }
 }
