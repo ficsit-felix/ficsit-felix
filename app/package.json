@@ -35,7 +35,7 @@
     "jszip": "^3.4.0",
     "moment": "^2.26.0",
     "satisfactory-blueprint": "^0.0.3",
-    "satisfactory-json": "0.0.35",
+    "satisfactory-json": "0.0.36",
     "stats.js": "^0.17.0",
     "streamsaver": "^2.0.4",
     "three": "0.117.1",
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@mdi/font": "^5.3.45",
     "@types/jszip": "^3.4.1",
-    "@types/node": "^14.0.5",
+    "@types/node": "^14.0.6",
     "@types/node-fetch": "^2.5.7",
     "@types/uuid": "^8.0.0",
     "@typescript-eslint/eslint-plugin": "^3.0.2",

@@ -1618,10 +1618,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.39.tgz#532d25c1e639d89dd6f3aa1d7b3962e3e7fa943d"
   integrity sha512-pADGfwnDkr6zagDwEiCVE4yQrv7XDkoeVa4OfA9Ju/zRTk6YNDLGtQbkdL4/56mCQQCs4AhNrBIag6jrp7ZuOg==
 
-"@types/node@^14.0.5":
-  version "14.0.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.5.tgz#3d03acd3b3414cf67faf999aed11682ed121f22b"
-  integrity sha512-90hiq6/VqtQgX8Sp0EzeIsv3r+ellbGj4URKj5j30tLlZvRUpnAe9YbYnjl3pJM93GyXU0tghHhvXHq+5rnCKA==
+"@types/node@^14.0.6":
+  version "14.0.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.6.tgz#f9e178b2da31a4b0ec60b64649e244c31ce18daf"
+  integrity sha512-FbNmu4F67d3oZMWBV6Y4MaPER+0EpE9eIYf2yaHhCWovc1dlXCZkqGX4NLHfVVr6umt20TNBdRzrNJIzIKfdbw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -9494,10 +9494,10 @@ satisfactory-blueprint@^0.0.3:
     satisfactory-json "^0.0.9"
     three "^0.105.2"
 
-satisfactory-json@0.0.35:
-  version "0.0.35"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.35.tgz#16e4e8caff66913747e4cf9be6bc940311a902cf"
-  integrity sha512-9cxAlK5rWzrQgDUDmJrhO+9xt3mQyJ13+cRrX4KEniwPr6lJ4RgIo8+j+yLcJ+y4bi0gpFecO096+0svYggd6w==
+satisfactory-json@0.0.36:
+  version "0.0.36"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.36.tgz#b58fa8ff3b2a8c6502a0ed3e2294856c3196337b"
+  integrity sha512-Ndx2/sELRpRM1GEWpst+LJbbc2rWk6efZhiM1TTD19IeICEHcl4xsv+w0qzFk61bB0/LXRuMlWULf3MgtdUHpw==
   dependencies:
     jsbi "^3.1.2"
     pako "^1.0.11"

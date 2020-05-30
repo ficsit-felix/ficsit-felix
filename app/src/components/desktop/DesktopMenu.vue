@@ -211,6 +211,7 @@ export default class DesktopMenu extends Vue {
         }
       }
     }
+    iterator.closeSync();
   }
 
   async readFileHeader(file: string, filePath: string): Promise<any> {
@@ -510,9 +511,6 @@ export default class DesktopMenu extends Vue {
     margin-right: 7px;
     padding: 8px;
 
-    .error {
-      color: #ff8239;
-    }
   }
 
   .information {
@@ -520,8 +518,9 @@ export default class DesktopMenu extends Vue {
     flex-direction: column;
   }
 }
-.error {
+.v-application .error {
   color: #ff8239;
+      background: transparent !important;
 }
 
 .filelistProgressIndicator {
@@ -529,4 +528,5 @@ export default class DesktopMenu extends Vue {
   top: 8px;
   right: 8px;
 }
+
 </style>

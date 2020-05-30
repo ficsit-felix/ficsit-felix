@@ -104,9 +104,12 @@ function saveDesktop(
       .on('error', (error: Error) => {
         callback(error, undefined, undefined);
       })
+
+      .on('progress', progress => {
+        callback(undefined, progress, undefined);
+      })
       .pipe(outStream)
       .on('finish', () => {
-        console.log('o');
         callback(undefined, undefined, true);
       })
       .on('error', (error: Error) => {

@@ -50,7 +50,7 @@
             <gl-stack :width="23">
               <gl-component
                 :title="$t('panels.properties.title')"
-                :closable="false"
+                v-if="false"
               >
                 <div class="panel">
                   <h1>Properties</h1>

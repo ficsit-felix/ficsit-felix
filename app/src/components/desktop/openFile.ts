@@ -37,15 +37,16 @@ export function openFileFromFilesystem(
       }, 100);
     });
   } else {
-    console.log('read stream', path);
     const stream = fs.createReadStream(path);
     const sav2json = new Sav2JsonTransform();
     stream
       .pipe(sav2json)
       .on('data', (saveGame: SaveGame) => {
         console.timeEnd('readDesktop');
-        callback(undefined, 50, undefined);
         callback(undefined, undefined, saveGame);
+      })
+      .on('progress', (progress: number) => {
+        callback(undefined, progress, undefined);
       })
       .on('error', error => {
         callback(error, undefined, undefined);
