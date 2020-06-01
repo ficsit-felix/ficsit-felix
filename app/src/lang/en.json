@@ -163,10 +163,15 @@
     "farPlane": "Far Plane",
     "farPlaneHelp": "How far away you can see objects",
     "graphicsSectionTitle": "Graphics",
+    "mapType": {
+      "label": "Map Type",
+      "none": "None",
+      "render": "Render",
+      "ingame": "Ingame"
+    },
     "nearPlane": "Near Plane",
     "nearPlaneHelp": "Nearer objects are cut away",
     "showCustomPaints": "Show custom paints",
-    "showMap": "Show map",
     "showModels": "Show models",
     "experimentalFeatures": "Experimental features",
     "autoLoadSaveFile": "Auto-load save file",

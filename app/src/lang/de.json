@@ -163,10 +163,15 @@
     "farPlane": "Hintere Clippingebene",
     "farPlaneHelp": "Wie weit in der Ferne Objekte dargestellt werden",
     "graphicsSectionTitle": "Grafik",
+    "mapType": {
+      "label": "Karte",
+      "none": "Nicht anzeigen",
+      "render": "Gerenderte Karte",
+      "ingame": "Spiel Karte"
+    },
     "nearPlane": "Vordere Clippingebene",
     "nearPlaneHelp": "Nähere Objekte sind abgeschnitten",
     "showCustomPaints": "Eigene Einfärbung anzeigen",
-    "showMap": "Karte anzeigen",
     "showModels": "Modelle anzeigen",
     "experimentalFeatures": "Experimentelle Funktionen",
     "autoLoadSaveFile": "Spielstand automatisch laden",

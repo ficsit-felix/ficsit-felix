@@ -24,12 +24,18 @@ declare global {
   }
 }
 
+export enum MapType {
+  None,
+  Render,
+  Ingame
+}
+
 interface SettingsRootState {
   nearPlane: number;
   farPlane: number;
   showModels: boolean;
   showCustomPaints: boolean;
-  showMap: boolean;
+  mapType: MapType;
   conveyorBeltResolution: number;
   editClassColors: boolean;
   classColors: { [id: string]: string };
@@ -54,7 +60,7 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     farPlane: 200000,
     showModels: true,
     showCustomPaints: true,
-    showMap: true,
+    mapType: MapType.Render,
     conveyorBeltResolution: 4,
     editClassColors: false,
     classColors: {},
@@ -89,8 +95,8 @@ const settingsModule: Module<SettingsRootState, RootState> = {
       state.showCustomPaints = payload;
       updateLocalStorage(state);
     },
-    SET_SHOW_MAP(state, payload) {
-      state.showMap = payload;
+    SET_MAP_TYPE(state, payload) {
+      state.mapType = payload;
       updateLocalStorage(state);
     },
     SET_CONVEYOR_BELT_RESOLUTION(state, payload) {
@@ -148,8 +154,8 @@ const settingsModule: Module<SettingsRootState, RootState> = {
     setShowCustomPaints(context, payload) {
       context.commit('SET_SHOW_CUSTOM_PAINTS', payload);
     },
-    setShowMap(context, payload) {
-      context.commit('SET_SHOW_MAP', payload);
+    setMapType(context, payload) {
+      context.commit('SET_MAP_TYPE', payload);
     },
     setConveyorBeltResolution(context, payload) {
       context.commit('SET_CONVEYOR_BELT_RESOLUTION', payload);

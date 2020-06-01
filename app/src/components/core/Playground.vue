@@ -98,6 +98,7 @@ import {
   FOCUS_SELECTED_OBJECT,
   GUI_REFRESH_TIMEOUT
 } from '../../ts/constants';
+import { MapType } from '../../store';
 
 export default {
   name: 'Playground',
@@ -137,7 +138,7 @@ export default {
     ...mapState('settings', [
       'showCustomPaints',
       'showModels',
-      'showMap',
+      'mapType',
       'conveyorBeltResolution',
       'classColors',
       'experimentalFeatures'
@@ -235,14 +236,8 @@ export default {
       this.meshManager.rebuildConveyorBelts(this.geometryFactory);
     },
 
-    showMap(value) {
-      if (value) {
-        this.loadMap();
-      } else {
-        if (this.mapModel !== undefined) {
-          this.scene.remove(this.mapModel);
-        }
-      }
+    mapType(value) {
+      this.loadMap();
     },
     classColors: {
       deep: true,
@@ -262,16 +257,15 @@ export default {
   },
 
   mounted() {
-    // show the progress dialog in case it was not already shown (should only happen on reload during development)
-    EventBus.$emit(DIALOG_PROGRESS, true);
-
-    this.setProgressText({
-      currentStep: this.$t('openPage.buildingWorld'),
-      showCloseButton: false
-    });
-    this.setProgress(50);
-
     setTimeout(() => {
+      // show the progress dialog in case it was not already shown (should only happen on reload during development)
+      EventBus.$emit(DIALOG_PROGRESS, true);
+
+      this.setProgressText({
+        currentStep: this.$t('openPage.buildingWorld'),
+        showCloseButton: false
+      });
+      this.setProgress(50);
       this.geometryFactory = new GeometryFactory(
         this.showModels,
         this.conveyorBeltResolution
@@ -334,9 +328,7 @@ export default {
       this.scene.add(this.transformControl);
 
       // load map
-      if (this.showMap) {
-        this.loadMap();
-      }
+      this.loadMap();
 
       /// EVENT HANDLERS ///
 
@@ -387,19 +379,44 @@ export default {
     },
 
     loadMap() {
-      if (this.mapModel === undefined) {
-        modelHelper.loadGroup('/models/map.glb').then(model => {
-          this.mapModel = model;
-          if (this.showMap) {
-            this.scene.add(model);
+      if (this.mapType === this.activeMapType) {
+        return;
+      }
+
+      // hide old map
+      switch (this.activeMapType) {
+        case MapType.Render:
+          this.scene.remove(this.mapRenderModel);
+          break;
+        case MapType.Ingame:
+          this.scene.remove(this.mapIngameModel);
+          break;
+      }
+
+      this.activeMapType = this.mapType;
+
+      // show new map
+      switch (this.mapType) {
+        case MapType.Render:
+          if (this.mapRenderModel === undefined) {
+            modelHelper.loadGroup('/models/map_render.glb').then(model => {
+              this.mapRenderModel = model;
+              this.scene.add(this.mapRenderModel);
+            });
+          } else {
+            this.scene.add(this.mapRenderModel);
           }
-        });
-      } else {
-        if (this.showMap) {
-          this.scene.add(this.mapModel);
-        } else {
-          this.scene.remove(this.mapModel);
-        }
+          break;
+        case MapType.Ingame:
+          if (this.mapIngameModel === undefined) {
+            modelHelper.loadGroup('/models/map_ingame.glb').then(model => {
+              this.mapIngameModel = model;
+              this.scene.add(this.mapIngameModel);
+            });
+          } else {
+            this.scene.add(this.mapIngameModel);
+          }
+          break;
       }
     },
 

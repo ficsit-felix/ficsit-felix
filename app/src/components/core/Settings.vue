@@ -6,12 +6,27 @@
     </div>
 
     <h3>{{ $t('settings.graphicsSectionTitle') }}</h3>
-    <v-checkbox
+
+    <v-radio-group
+      :value="mapType"
+      @change="setMapType"
+      :label="$t('settings.mapType.label')"
       hide-details
-      :input-value="showMap"
-      @change="updateShowMap"
-      :label="$t('settings.showMap')"
-    ></v-checkbox>
+    >
+      <v-radio
+        :label="$t('settings.mapType.none')"
+        :value="MapType.None"
+      ></v-radio>
+      <v-radio
+        :label="$t('settings.mapType.render')"
+        :value="MapType.Render"
+      ></v-radio>
+      <v-radio
+        :label="$t('settings.mapType.ingame')"
+        :value="MapType.Ingame"
+      ></v-radio>
+    </v-radio-group>
+
     <v-checkbox
       hide-details
       :input-value="showModels"
@@ -64,12 +79,12 @@
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       ></v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">
-        {{ $t('settings.copyClassColorsButton') }}
-      </v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">
-        {{ $t('settings.clearClassColorsButton') }}
-      </v-btn>
+      <v-btn @click="exportClassColors" class="ma-2">{{
+        $t('settings.copyClassColorsButton')
+      }}</v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">{{
+        $t('settings.clearClassColorsButton')
+      }}</v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"
@@ -100,10 +115,17 @@ import { mapState, mapActions } from 'vuex';
 import copyToClipboard from '@/ts/copyToClipboard';
 import LanguageSwitcher from './LanguageSwitcher';
 import { isElectron } from '../../ts/isElectron';
+import { MapType } from '../../store';
+
 export default {
   name: 'Settings',
   components: {
     LanguageSwitcher
+  },
+  data: () => {
+    return {
+      MapType
+    };
   },
   computed: {
     ...mapState('settings', [
@@ -111,7 +133,7 @@ export default {
       'farPlane',
       'showModels',
       'showCustomPaints',
-      'showMap',
+      'mapType',
       'conveyorBeltResolution',
       'classColors',
       'editClassColors',
@@ -127,7 +149,7 @@ export default {
       'setFarPlane',
       'setShowModels',
       'setShowCustomPaints',
-      'setShowMap',
+      'setMapType',
       'setConveyorBeltResolution',
       'setEditClassColors',
       'clearClassColors',
@@ -147,10 +169,6 @@ export default {
     },
     updateShowCustomPaints(value) {
       this.setShowCustomPaints(value);
-    },
-    updateShowMap(value) {
-      console.log(value);
-      this.setShowMap(value);
     },
     updateConveyorBeltResolution(value) {
       if (value > 10) {
