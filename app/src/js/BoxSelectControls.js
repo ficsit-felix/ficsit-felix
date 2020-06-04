@@ -8,7 +8,7 @@ let BoxSelectControls = function(
   camera,
   domElement,
   callback, // renderer object
-  playground
+  meshManager
 ) {
   this.disabled = true;
   this.isDown = false;
@@ -75,7 +75,7 @@ let BoxSelectControls = function(
       0.5
     );
     let allSelected = selectionBox.select(
-      playground.meshManager.raycastActiveMeshes
+      meshManager.raycastActiveMeshes
     );
     let selectedPathNames = [];
     for (const mesh of allSelected) {

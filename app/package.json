@@ -48,6 +48,7 @@
     "vue-virtual-scroll-list": "2.2.6",
     "vuetify": "^2.2.30",
     "vuex": "^3.4.0",
+    "vuex-class": "^0.3.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {

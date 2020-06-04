@@ -11,7 +11,7 @@ export default {
     width: Number,
     height: Number
   },
-  inject: ['playground'],
+  inject: ['meshManager'],
 
   provide() {
     this.renderer = new WebGLRenderer({
@@ -51,14 +51,14 @@ export default {
       this.camera.obj,
       elem,
       this,
-      this.playground
+      this.meshManager
     );
     this.boxSelectControls = new BoxSelectControls(
       this.scene,
       this.camera.obj,
       elem,
       this,
-      this.playground
+      this.meshManager
     );
 
     this.camera.setupControl(elem);
