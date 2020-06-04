@@ -34,7 +34,7 @@ if (process.argv.length > 2 && process.argv[2] === 'build') {
 }
 
 writeFileSync(
-  'src/js/commithash.ts',
+  'src/lib/core/commithash.ts',
   "const commithash = '" + hash + "';\nexport { commithash };\n"
 );
 writeFileSync('public/licenses.txt', licenses);
