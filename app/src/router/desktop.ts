@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import EditorView from './components/desktop/EditorView.vue';
-import MainScreen from './components/desktop/MainScreen.vue';
-import LoadEditorView from './components/core/LoadEditorView.vue';
+import EditorView from '../components/desktop/EditorView.vue';
+import WelcomeView from '../components/desktop/WelcomeView.vue';
+import LoadEditorView from '../components/core/views/LoadEditorView.vue';
 
 Vue.use(Router);
 
@@ -11,7 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'landingpage',
-      component: MainScreen
+      component: WelcomeView
     },
 
     {
@@ -33,7 +33,7 @@ export default new Router({
     {
       path: '*',
       name: '404',
-      component: MainScreen
+      component: WelcomeView
     }
   ]
 });

@@ -1,4 +1,4 @@
-import { modelConfig, isModClassName } from '@/definitions/models';
+import { modelConfig, isModClassName } from '@lib/definitions/models';
 import {
   findActorByName,
   getProperty,
@@ -8,16 +8,12 @@ import {
   isRailroadTrack,
   isPipe,
   isPowerPoleWallDouble
-} from '@/helpers/entityHelper';
-import { modelHelper } from '@/helpers/modelHelper';
-import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
-import * as Sentry from '@sentry/browser';
-import {
-  Actor,
-  ArrayProperty,
-  Component,
-  ObjectProperty
-} from 'satisfactory-json';
+} from '@lib/graphics/entityHelper';
+import { modelHelper } from '@lib/graphics/modelHelper';
+// FIXME
+//@ts-ignore
+import { ConveyorCurvePath } from '@lib/graphics/ConveyorCurvePath.js';
+import { Actor, ArrayProperty, ObjectProperty } from 'satisfactory-json';
 import {
   BoxBufferGeometry,
   BufferGeometry,
@@ -30,7 +26,7 @@ import {
   Shape
 } from 'three';
 
-import { reportMessage, reportException } from '@/ts/errorReporting';
+import { reportMessage, reportException } from '@lib/errorReporting';
 
 interface GeometryResult {
   geometry: BufferGeometry;

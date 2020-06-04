@@ -6,7 +6,7 @@ import ColorFactory from './ColorFactory';
 import {
   applyMeshTransformToActor,
   updateActorMeshTransform
-} from '@/helpers/meshHelper';
+} from '@lib/graphics/meshHelper';
 
 /**
  * Interface for Meshes

@@ -26,10 +26,10 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import ProgressBar from './ProgressBar.vue';
-import { EventBus } from '../../event-bus';
+import ProgressBar from '../ProgressBar.vue';
+import { EventBus } from '@lib/event-bus';
 import { cursorTo } from 'readline';
-import { DIALOG_PROGRESS } from '../../ts/constants';
+import { DIALOG_PROGRESS } from '@lib/constants';
 
 @Component({
   components: {

@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Editor from './components/core/Editor.vue';
-import LandingPage from './components/web/LandingPage.vue';
-
-import LoadEditorView from './components/core/LoadEditorView.vue';
+import Editor from '@/components/core/Editor.vue';
+import LandingPageView from '@/components/web/LandingPageView.vue';
+import LoadEditorView from '@/components/core/views/LoadEditorView.vue';
 
 Vue.use(Router);
 
@@ -12,7 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'landingpage',
-      component: LandingPage
+      component: LandingPageView
     },
     {
       path: '/loadeditor',
@@ -34,12 +33,12 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ './components/web/Open.vue')
+        import(/* webpackChunkName: "about" */ '../components/web/OpenView.vue')
     },
     {
       path: '*',
       name: '404',
-      component: LandingPage
+      component: LandingPageView
     }
   ]
 });

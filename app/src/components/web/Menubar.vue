@@ -110,9 +110,9 @@
 </template>
 
 <script>
-import Logo from '../core/Logo';
-import { findActorByName } from '@/helpers/entityHelper';
-import { EventBus } from '../../event-bus';
+import Logo from '../core/Logo.vue';
+import { findActorByName } from '@lib/graphics/entityHelper';
+import { EventBus } from '@lib/event-bus';
 import {
   DIALOG_ABOUT,
   DIALOG_SETTINGS,
@@ -122,7 +122,7 @@ import {
   DIALOG_SAVE_WEB,
   DIALOG_OPEN_JSON_WEB,
   DIALOG_SAVE_JSON_WEB
-} from '../../ts/constants';
+} from '@lib/constants';
 
 export default {
   name: 'Menubar',

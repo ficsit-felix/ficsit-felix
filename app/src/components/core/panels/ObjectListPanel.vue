@@ -26,11 +26,11 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 
 import virtualList from 'vue-virtual-scroll-list';
-import ObjectListItem from './ObjectListItem.vue';
-import { EventBus } from '../../event-bus';
-import { FOCUS_SELECTED_OBJECT } from '../../ts/constants';
+import ObjectListItem from '../ObjectListItem.vue';
+import { EventBus } from '@lib/event-bus';
+import { FOCUS_SELECTED_OBJECT } from '@lib/constants';
 export default {
-  name: 'ObjectList',
+  name: 'ObjectListPanel',
   components: {
     virtualList
   },

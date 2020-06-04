@@ -23,7 +23,7 @@
               :width="60"
               @resize="onSceneResize"
             >
-              <Playground
+              <ScenePanel
                 ref="playground"
                 @askDeleteSelectedObject="
                   $refs.propertyEditor.deleteKeyPressed()
@@ -37,14 +37,14 @@
                 :closable="false"
                 :height="70"
               >
-                <ObjectList ref="objectList" />
+                <ObjectListPanel ref="objectList" />
               </gl-component>
               <gl-component
                 :title="$t('panels.classList.title')"
                 :closable="false"
                 :height="30"
               >
-                <ClassList />
+                <ClassListPanel />
               </gl-component>
             </gl-col>
             <gl-stack :width="23">
@@ -54,7 +54,7 @@
                 </div>
               </gl-component>
               <gl-component :title="$t('panels.json.title')" :closable="false">
-                <PropertyEditor ref="propertyEditor" />
+                <JsonPanel ref="propertyEditor" />
               </gl-component>
             </gl-stack>
           </gl-row>
@@ -66,22 +66,21 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
-// @ is an alias to /src
 import Menubar from '../web/Menubar.vue';
-import Playground from './Playground.vue';
-import ObjectList from './ObjectList.vue';
-import PropertyEditor from './PropertyEditor.vue';
-import ClassList from './ClassList.vue';
+import ScenePanel from './panels/ScenePanel.vue';
+import ObjectListPanel from './panels/ObjectListPanel.vue';
+import JsonPanel from './panels/JsonPanel.vue';
+import ClassListPanel from './panels/ClassListPanel.vue';
 import { mapState } from 'vuex';
-import { isElectron } from '../../ts/isElectron';
+import { isElectron } from '@lib/isElectron';
 
 @Component({
   components: {
     Menubar,
-    Playground,
-    ObjectList,
-    PropertyEditor,
-    ClassList
+    ScenePanel,
+    ObjectListPanel,
+    JsonPanel,
+    ClassListPanel
   },
   computed: {
     ...mapState('settings', ['layout'])

@@ -29,8 +29,8 @@ import Logo from '../core/Logo.vue';
 import OpenBox from './OpenBox.vue';
 import CenterWhiteBox from '../core/CenterWhiteBox.vue';
 import Settings from '../core/Settings.vue';
-import { EventBus } from '../../event-bus';
-import { DIALOG_SETTINGS } from '../../ts/constants';
+import { EventBus } from '@lib/event-bus';
+import { DIALOG_SETTINGS } from '@lib/constants';
 
 @Component({
   components: {
@@ -39,7 +39,7 @@ import { DIALOG_SETTINGS } from '../../ts/constants';
     CenterWhiteBox
   }
 })
-export default class Open extends Vue {
+export default class OpenView extends Vue {
   logoAnimating: boolean = false;
   showSettingsDialog() {
     EventBus.$emit(DIALOG_SETTINGS);

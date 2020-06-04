@@ -55,13 +55,13 @@
   </div>
 </template>
 
-<script>
-import Logo from '@/components/core/Logo';
+<script lang="ts">
+import Logo from '@/components/core/Logo.vue';
 import * as Sentry from '@sentry/browser';
-import { commithash } from '@/js/commithash';
-import LanguageSwitcher from '@/components/core/LanguageSwitcher';
-import { reportMessage } from '@/ts/errorReporting';
-import CenterWhiteBox from '@/components/core/CenterWhiteBox';
+import { commithash } from '@lib/commithash';
+import LanguageSwitcher from '@/components/core/LanguageSwitcher.vue';
+import { reportMessage } from '@lib/errorReporting';
+import CenterWhiteBox from '@/components/core/CenterWhiteBox.vue';
 
 export default {
   name: 'LandingPage',

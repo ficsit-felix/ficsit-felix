@@ -48,10 +48,10 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import colorPicker from '@caohenghu/vue-colorpicker';
-import { modelConfig } from '@/definitions/models';
+import { modelConfig } from '@lib/definitions/models';
 
 export default {
-  name: 'ClassList',
+  name: 'ClassListPanel',
   components: {
     colorPicker
   },

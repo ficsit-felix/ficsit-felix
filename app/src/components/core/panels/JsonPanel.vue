@@ -63,10 +63,10 @@
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex';
 import { createBlueprintFromActors } from 'satisfactory-blueprint'; //"satisfactory-blueprint";
-import copyToClipboard from '@/ts/copyToClipboard';
-import ConfirmDialog from './ConfirmDialog.vue';
+import copyToClipboard from '@lib/copyToClipboard';
+import ConfirmDialog from '../dialogs/ConfirmDialog.vue';
 export default {
-  name: 'PropertyEditor',
+  name: 'JsonPanel',
   components: {
     ConfirmDialog
   },

@@ -17,18 +17,15 @@
 <script>
 import '@/assets/main.scss';
 import Logo from '../core/Logo.vue';
-import Dialogs from '../core/Dialogs.vue';
+import Dialogs from '../core/dialogs/Dialogs.vue';
 import { Titlebar, Color } from 'custom-electron-titlebar';
 import Vue from 'vue';
 import { dialog, remote, shell } from 'electron';
 
 const { Menu, MenuItem } = require('electron').remote;
-import {
-  openFileAndMoveToEditor,
-  saveFileAndShowProgress
-} from './desktopUtils';
-import { getSaveGamesFolderPath } from './getSaveGamesFolderPath';
-import { EventBus } from '../../event-bus';
+
+import { getSaveGamesFolderPath } from '@/lib/desktop/getSaveGamesFolderPath';
+import { EventBus } from '@lib/event-bus';
 import {
   DIALOG_ABOUT,
   DIALOG_OPEN_SOURCE,
@@ -40,10 +37,12 @@ import {
   DIALOG_SAVE_DESKTOP,
   DIALOG_CONFIRM_EXIT_DESKTOP,
   ON_EXIT_PRESSED
-} from '../../ts/constants';
-import { debug } from 'util';
+} from '@lib/constants';
 import { mapState } from 'vuex';
 import path from 'path';
+// TODO use SaveFileReader/Writer instead
+import { openFileAndMoveToEditor } from '../../lib/desktop/DesktopFileReader';
+import { saveFileAndShowProgress } from '../../lib/desktop/DesktopFileWriter';
 
 export default {
   name: 'DesktopApp',

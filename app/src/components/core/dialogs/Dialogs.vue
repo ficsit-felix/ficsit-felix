@@ -144,10 +144,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { EventBus } from '../../event-bus';
+import { EventBus } from '@lib/event-bus';
 import LicensesDialog from './LicensesDialog.vue';
 import ConfirmDialog from './ConfirmDialog.vue';
-import Settings from './Settings.vue';
+import Settings from '../Settings.vue';
 import ProgressBarDialog from './ProgressBarDialog.vue';
 import BugReportDialog from './BugReportDialog.vue';
 import {
@@ -166,7 +166,7 @@ import {
   DIALOG_SAVE_JSON_WEB,
   ON_SAVE_JSON_PRESSED,
   ON_EXIT_PRESSED
-} from '../../ts/constants';
+} from '@lib/constants';
 import { setTimeout } from 'timers';
 import { mapState } from 'vuex';
 

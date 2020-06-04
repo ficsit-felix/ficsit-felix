@@ -2,7 +2,7 @@ import { SaveFileReader } from '../core/SaveGameLoading';
 
 //@ts-ignore
 import fileReaderStream from 'filereader-stream';
-import { Sav2JsonTransform } from 'satisfactory-json';
+import { Sav2JsonTransform, SaveGame } from 'satisfactory-json';
 
 export class WebFileReader implements SaveFileReader {
   constructor(private file: File) {}
@@ -12,7 +12,7 @@ export class WebFileReader implements SaveFileReader {
     asJson: boolean,
     progressCallback: (progress: number) => void,
     errorCallback: (error: Error) => void,
-    successCallback: (saveGame: import('satisfactory-json').SaveGame) => void
+    successCallback: (saveGame: SaveGame) => void
   ): void {
     // put save file data on window object to make it accessible to the BugReportDialog without polluting Vue
     window.data = this.file;

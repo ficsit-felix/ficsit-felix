@@ -7,7 +7,7 @@ import {
   Object3D
 } from 'three';
 import GeometryFactory from './GeometryFactory';
-import { findActorByName, isSpline } from '@/helpers/entityHelper';
+import { findActorByName, isSpline } from '@lib/graphics/entityHelper';
 import { Actor } from 'satisfactory-json';
 import { Component } from 'vue';
 import { MeshResult } from './MeshFactory';

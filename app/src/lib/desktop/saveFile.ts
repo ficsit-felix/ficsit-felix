@@ -1,5 +1,5 @@
 import { SaveGame } from 'satisfactory-json';
-import { isElectron } from '@/ts/isElectron';
+import { isElectron } from '@lib/isElectron';
 import { writeFile, existsSync, copyFileSync, createWriteStream } from 'fs';
 import { parse } from 'path';
 import path from 'path';

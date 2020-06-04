@@ -1,6 +1,6 @@
 import { WebGLRenderer } from 'three';
-import { SelectControls } from '@/js/SelectControls';
-import { BoxSelectControls } from '@/js/BoxSelectControls';
+import { SelectControls } from '@lib/graphics/SelectControls.js';
+import { BoxSelectControls } from '@lib/graphics/BoxSelectControls.js';
 import { mapActions, mapState } from 'vuex';
 
 import * as Stats from 'stats.js';
@@ -11,7 +11,7 @@ export default {
     width: Number,
     height: Number
   },
-  inject: ['meshManager'],
+  inject: ['playground'],
 
   provide() {
     this.renderer = new WebGLRenderer({
@@ -51,14 +51,14 @@ export default {
       this.camera.obj,
       elem,
       this,
-      this.meshManager
+      this.playground
     );
     this.boxSelectControls = new BoxSelectControls(
       this.scene,
       this.camera.obj,
       elem,
       this,
-      this.meshManager
+      this.playground
     );
 
     this.camera.setupControl(elem);

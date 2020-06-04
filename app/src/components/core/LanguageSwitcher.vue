@@ -14,8 +14,8 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { EventBus } from '../../event-bus';
-import { CHANGE_LOCALE } from '../../ts/constants';
+import { EventBus } from '@lib/event-bus';
+import { CHANGE_LOCALE } from '@lib/constants';
 
 export default {
   name: 'LanguageSwitcher',
@@ -31,7 +31,7 @@ export default {
         return;
       }
       // dynamically load locale
-      import(`@/lang/${lang}.json`).then(msgs => {
+      import(`@/assets/i18n/${lang}.json`).then(msgs => {
         this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
         this.$i18n.locale = lang;
         this.setLocale(lang);

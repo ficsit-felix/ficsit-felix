@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import * as Sentry from '@sentry/browser';
 
 export function reportError(error: Error) {

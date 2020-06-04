@@ -61,51 +61,57 @@
 <script lang="ts">
 import * as THREE from 'three';
 //@ts-ignore
-import { OrbitControls } from '@/js/OrbitControls';
+import { OrbitControls } from '@lib/graphics/OrbitControls';
 //@ts-ignore
-import { TransformControls } from '@/js/TransformControls.js';
+import { TransformControls } from '@lib/graphics/TransformControls.js';
 import _default, { mapActions, mapGetters, mapState } from 'vuex';
 //@ts-ignore
-import Scene from './scene/Scene.js';
+import Scene from '../scene/Scene.js';
 //@ts-ignore
-import Renderer from './scene/Renderer.js';
+import Renderer from '../scene/Renderer.js';
 //@ts-ignore
-import Camera from './scene/Camera.js';
+import Camera from '../scene/Camera.js';
 import { BoxBufferGeometry, LineCurve3, Mesh, error } from 'three';
 import { setTimeout } from 'timers';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { modelHelper } from '@/helpers/modelHelper';
-import { modelConfig } from '@/definitions/models';
+import { modelHelper } from '@lib/graphics/modelHelper';
+import { modelConfig } from '@lib/definitions/models';
 import * as Sentry from '@sentry/browser';
-import Toolbar from './Toolbar.vue';
-import { commithash } from '@/js/commithash';
-import { getProperty, findActorByName } from '@/helpers/entityHelper';
-import Compass from './Compass.vue';
-import { ConveyorCurvePath } from '@/js/ConveyorCurvePath';
-import GeometryFactory from '@/graphics/GeometryFactory';
-import ColorFactory from '@/graphics/ColorFactory';
-import MeshFactory from '@/graphics/MeshFactory';
-import { updateActorMeshTransform } from '@/helpers/meshHelper.ts';
-import BugReportDialog from './BugReportDialog.vue';
+import Toolbar from '../Toolbar.vue';
+import { commithash } from '@lib/commithash';
+import { getProperty, findActorByName } from '@lib/graphics/entityHelper';
+import Compass from '@/components/core/Compass.vue';
+import { ConveyorCurvePath } from '@lib/graphics/ConveyorCurvePath';
+import GeometryFactory from '@lib/graphics/GeometryFactory';
+import ColorFactory from '@lib/graphics/ColorFactory';
+import MeshFactory from '@lib/graphics/MeshFactory';
+import { updateActorMeshTransform } from '@lib/graphics/meshHelper';
+import BugReportDialog from '@/components/core/dialogs/BugReportDialog.vue';
 
 import {
   isConveyorBelt,
   isConveyorLift,
   isPowerLine,
   isRailroadTrack
-} from '@/helpers/entityHelper';
-import { EventBus } from '@/event-bus';
-import { reportError } from '@/ts/errorReporting';
+} from '@lib/graphics/entityHelper';
+import { EventBus } from '@lib/event-bus';
+import { reportError } from '@lib/errorReporting';
 import {
   DIALOG_PROGRESS,
   DIALOG_OPEN_TIME_MS,
   FOCUS_SELECTED_OBJECT,
   GUI_REFRESH_TIMEOUT
-} from '../../ts/constants';
+} from '@lib/constants';
 import { MapType } from '@/store/settings';
 import { TransformAction } from '@/store/undo';
-import { Component, Vue, Prop, Watch, Provide } from 'vue-property-decorator';
-import MeshManager from '@/graphics/MeshManager';
+import {
+  Component,
+  Vue,
+  Prop,
+  Watch,
+  ProvideReactive
+} from 'vue-property-decorator';
+import MeshManager from '@lib/graphics/MeshManager';
 import { Action, namespace, State } from 'vuex-class';
 
 const undoNamespace = namespace('undo');
@@ -117,9 +123,14 @@ const undoNamespace = namespace('undo');
     Toolbar,
     Compass,
     BugReportDialog
+  },
+  provide() {
+    return {
+      playground: this
+    };
   }
 })
-export default class Playground extends Vue {
+export default class ScenePanel extends Vue {
   width = 100;
   height = 100;
   mode = 'translate';
@@ -179,8 +190,6 @@ export default class Playground extends Vue {
   meshFactory!: MeshFactory;
   scene: any;
   selectedMaterial: any;
-  // FIXME this does not yet sucessfully provide the meshManager to the renderer
-  @Provide('meshManager')
   meshManager: any;
   loader: any;
   geometries: any;
@@ -303,12 +312,6 @@ export default class Playground extends Vue {
     }
   }
 
-
-/*  provide() {
-    return {
-      playground: this
-    };
-  }*/
   mounted() {
     setTimeout(() => {
       // show the progress dialog in case it was not already shown (should only happen on reload during development)

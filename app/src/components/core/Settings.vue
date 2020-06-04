@@ -112,9 +112,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import copyToClipboard from '@/ts/copyToClipboard';
-import LanguageSwitcher from './LanguageSwitcher';
-import { isElectron } from '../../ts/isElectron';
+import copyToClipboard from '@lib/copyToClipboard';
+import LanguageSwitcher from './LanguageSwitcher.vue';
+import { isElectron } from '@lib/isElectron';
 import { MapType } from '@/store/settings';
 
 export default {

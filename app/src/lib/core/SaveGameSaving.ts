@@ -3,8 +3,8 @@ import {
   DIALOG_PROGRESS,
   DIALOG_OPEN_TIME_MS,
   DIALOG_BUGREPORT
-} from '@/ts/constants';
-import { EventBus } from '@/event-bus';
+} from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
 
 export interface SaveFileWriter {
   writeFile(

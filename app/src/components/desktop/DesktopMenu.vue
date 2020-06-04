@@ -102,12 +102,12 @@
 
 <script lang="ts">
 import * as Sentry from '@sentry/browser';
-import { commithash } from '../../js/commithash';
-import { reportMessage, reportContext } from '../../ts/errorReporting';
+import { commithash } from '@lib/commithash';
+import { reportMessage, reportContext } from '@lib/errorReporting';
 import CenterWhiteBox from '../core/CenterWhiteBox.vue';
 import { app, remote, session } from 'electron';
 import electron from 'electron';
-import { EventBus } from '../../event-bus';
+import { EventBus } from '@lib/event-bus';
 import {
   DIALOG_SETTINGS,
   DIALOG_ABOUT,
@@ -115,20 +115,20 @@ import {
   DIALOG_OPEN_TIME_MS,
   DIALOG_CONFIRM_EXIT_DESKTOP,
   DIALOG_SAVE_DESKTOP
-} from '../../ts/constants';
-import { openFileFromFilesystem } from './openFile';
+} from '@lib/constants';
+import { openFileFromFilesystem } from '@lib/../desktop/openFile';
 import { mapActions, mapState } from 'vuex';
-import {
-  openFileAndMoveToEditor,
-  saveFileAndShowProgress
-} from './desktopUtils';
 import { createReadStream, Dir } from 'fs';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import fs from 'fs';
-import { FileHeaderReader, FileHeader } from './FileHeaderReader';
+import { FileHeaderReader, FileHeader } from '@/lib/desktop/FileHeaderReader';
 import moment from 'moment';
-import { getSaveGamesFolderPath } from './getSaveGamesFolderPath';
+import { getSaveGamesFolderPath } from '@/lib/desktop/getSaveGamesFolderPath';
 import path from 'path';
+
+// TODO use SaveFileReader/Writer instead?
+import { openFileAndMoveToEditor } from '../../lib/desktop/DesktopFileReader';
+import { saveFileAndShowProgress } from '../../lib/desktop/DesktopFileWriter';
 
 interface FileList {
   [id: string]: FileHeader[];

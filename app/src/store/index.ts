@@ -9,10 +9,10 @@ import {
   indexOfComponent,
   indexOfActor,
   refreshActorComponentDictionary
-} from '../helpers/entityHelper';
+} from '@lib/graphics/entityHelper';
 import * as Sentry from '@sentry/browser';
-import { EventBus } from '../event-bus';
-import { reportException } from '@/ts/errorReporting';
+import { EventBus } from '@lib/event-bus';
+import { reportException } from '@lib/errorReporting';
 import { settingsModule } from './settings';
 import { undo } from './undo';
 Vue.use(Vuex);

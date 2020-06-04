@@ -34,11 +34,11 @@
 <script>
 import '@/assets/main.scss';
 import { mapState } from 'vuex';
-import Dialogs from '../core/Dialogs.vue';
-import { EventBus } from '../../event-bus';
-import { ON_SAVE_PRESSED, ON_SAVE_JSON_PRESSED } from '../../ts/constants';
-import { SaveGameSaving } from '../core/SaveGameSaving';
-import { WebFileWriter } from './WebFileWriter';
+import Dialogs from '../core/dialogs/Dialogs.vue';
+import { EventBus } from '@lib/event-bus';
+import { ON_SAVE_PRESSED, ON_SAVE_JSON_PRESSED } from '@lib/constants';
+import { SaveGameSaving } from '@lib/SaveGameSaving';
+import { WebFileWriter } from '@/lib/web/WebFileWriter';
 
 export default {
   name: 'App',

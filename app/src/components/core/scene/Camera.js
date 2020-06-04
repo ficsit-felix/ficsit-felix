@@ -1,6 +1,6 @@
 import Object3D from './Object3D';
 import { PerspectiveCamera } from 'three';
-import { OrbitControls } from '@/js/OrbitControls';
+import { OrbitControls } from '@lib/graphics/OrbitControls.js';
 import { mapActions, mapState } from 'vuex';
 
 export default {

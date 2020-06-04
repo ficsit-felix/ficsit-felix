@@ -99,8 +99,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EventBus } from '../../event-bus';
-import { FOCUS_SELECTED_OBJECT } from '../../ts/constants';
+import { EventBus } from '@lib/event-bus';
+import { FOCUS_SELECTED_OBJECT } from '@lib/constants';
 export default {
   name: 'Toolbar',
   components: {},

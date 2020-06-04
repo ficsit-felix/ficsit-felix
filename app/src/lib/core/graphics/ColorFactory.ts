@@ -1,8 +1,11 @@
-import { modelConfig, isModClassName } from '@/definitions/models';
+import {
+  modelConfig,
+  isModClassName,
+  Paintable
+} from '@lib/definitions/models';
 import { Color, MeshMatcapMaterial, Material, Texture } from 'three';
-import { findActorByName } from '@/helpers/entityHelper';
+import { findActorByName } from '@lib/graphics/entityHelper';
 import { Actor, ByteProperty, StructProperty } from 'satisfactory-json';
-import { Paintable } from '@/definitions/models';
 /**
  * Factory that creates and caches materials
  */

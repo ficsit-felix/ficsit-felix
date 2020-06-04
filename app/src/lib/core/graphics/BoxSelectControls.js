@@ -1,5 +1,5 @@
-import { SelectionBox } from '@/js/SelectionBox';
-import { SelectionHelper } from '@/js/SelectionHelper';
+import { SelectionBox } from '@lib/graphics/SelectionBox.js';
+import { SelectionHelper } from '@lib/graphics/SelectionHelper.js';
 import * as THREE from 'three';
 import { MOUSE } from 'three';
 
@@ -8,7 +8,7 @@ let BoxSelectControls = function(
   camera,
   domElement,
   callback, // renderer object
-  meshManager
+  playground
 ) {
   this.disabled = true;
   this.isDown = false;
@@ -75,7 +75,7 @@ let BoxSelectControls = function(
       0.5
     );
     let allSelected = selectionBox.select(
-      meshManager.raycastActiveMeshes
+      playground.meshManager.raycastActiveMeshes
     );
     let selectedPathNames = [];
     for (const mesh of allSelected) {
