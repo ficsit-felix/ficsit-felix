@@ -98,7 +98,8 @@ import {
   FOCUS_SELECTED_OBJECT,
   GUI_REFRESH_TIMEOUT
 } from '../../ts/constants';
-import { MapType } from '../../store';
+import { MapType } from '@/store/settings';
+import {TransformAction} from '@/store/undo';
 
 export default {
   name: 'Playground',
@@ -318,7 +319,6 @@ export default {
         event => {
           // this change needs to be synchronally, so that SelectControls / BoxSelectControls will be disabled before their mousedown fires
           this.$store.commit('SET_SELECTION_DISABLED', event.value);
-          this.setSelectionDisabled(event.value);
           if (event.value == false) {
             this.onSelectedActorTransformChanged();
           }
@@ -360,6 +360,7 @@ export default {
       'setProgressText'
     ]),
 
+    ...mapActions('undo', ['recordAction']),
     updateCompass() {
       // TODO move to a onCameraChanged to only update when necessary
       const camera = this.$refs.renderer.camera.obj;
@@ -514,6 +515,15 @@ export default {
       const mesh = this.meshManager.findMeshByName(
         this.selectedActors[0].pathName
       );
+      // Make this undoable TODO localize, different move, rot, scale
+      this.recordAction(
+        new TransformAction(
+          'transform',
+          this.selectedActors[0].pathName,
+          this.selectedActors[0].transform
+        )
+      );
+
       const actor = mesh.applyTransformToActor(this.selectedActors[0]);
 
       this.setSelectedObject(actor);

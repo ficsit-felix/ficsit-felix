@@ -14,7 +14,7 @@ import * as Sentry from '@sentry/browser';
 import { EventBus } from '../event-bus';
 import { reportException } from '@/ts/errorReporting';
 import { settingsModule } from './settings';
-
+import { undo } from './undo';
 Vue.use(Vuex);
 
 // Add the data object to the window interface
@@ -60,7 +60,8 @@ export interface RootState {
 
 export default new Vuex.Store<RootState>({
   modules: {
-    settings: settingsModule
+    settings: settingsModule,
+    undo
   },
   state: {
     loading: false,
