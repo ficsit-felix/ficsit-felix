@@ -23,11 +23,7 @@
         <template v-slot:activator="{ on }">
           <v-btn
             color="primary black--text"
-            :disabled="
-              selectedJsonToEdit == null ||
-                (selectedPathNames.length === 1 &&
-                  selectedPathNames[0] === '---save-header---')
-            "
+            :disabled="deleteDisabled"
             @click="showDeleteDialog = true"
             class="ma-2"
             v-on="on"
@@ -47,9 +43,9 @@
       >
     </div>
 
-    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">
-      {{ $t('propertyEditor.objectSavedSnack') }}
-    </v-snackbar>
+    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">{{
+      $t('propertyEditor.objectSavedSnack')
+    }}</v-snackbar>
 
     <ConfirmDialog
       v-model="showDeleteDialog"
@@ -87,15 +83,13 @@ export default {
     },
     copyAsBlueprintDisabled() {
       return this.selectedActors.length < 2;
+    },
+    deleteDisabled() {
+      return (
+        this.selectedPathNames.length < 1 ||
+        this.selectedPathNames[0] === '---save-header---'
+      );
     }
-    //  ...mapGetters(["getSelectedObject"])
-    /*selectedJson() {
-            if (this.getSelectedObject == null) {
-                return "";
-            } else {
-                return JSON.stringify(this.getSelectedObject);
-            }
-        }*/
   },
   watch: {
     selectedJsonToEdit: {
@@ -136,9 +130,8 @@ export default {
     },
     deleteKeyPressed() {
       if (
-        this.selectedJsonToEdit !== null &&
-        (this.selectedPathNames.length !== 1 ||
-          this.selectedPathNames[0] !== '---save-header---')
+        this.selectedPathNames.length !== 1 ||
+        this.selectedPathNames[0] !== '---save-header---'
       ) {
         this.showDeleteDialog = true;
       }

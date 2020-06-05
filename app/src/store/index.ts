@@ -14,7 +14,8 @@ import * as Sentry from '@sentry/browser';
 import { EventBus } from '@lib/event-bus';
 import { reportException } from '@lib/errorReporting';
 import { settingsModule } from './settings';
-import { undo, SelectAction } from './undo';
+import { undo, SelectAction, DeleteAction } from './undo';
+import { DELETE_OBJECTS, CREATE_OBJECTS } from '@/lib/core/constants';
 Vue.use(Vuex);
 
 // Add the data object to the window interface
@@ -287,12 +288,41 @@ export default new Vuex.Store<RootState>({
       };
 
       state.dataLoaded = false; // trigger recalculation of getNames
-      for (const actor of state.selectedActors) {
-        window.data.actors.splice(indexOfActor(actor.pathName), 1);
+
+      if (state.selectedActors.length === 1) {
+        // We can utilize the dictionary
+        window.data.actors.splice(
+          indexOfActor(state.selectedActors[0].pathName),
+          1
+        );
+      } else if (state.selectedActors.length > 1) {
+        // Because the dictionary is changed after the first element is removed, we cannot depend on it, but need to iterate over all actors
+        const pathNames = state.selectedActors.map(actor => actor.pathName);
+        for (let i = window.data.actors.length - 1; i >= 0; i--) {
+          if (pathNames.includes(window.data.actors[i].pathName)) {
+            window.data.actors.splice(i, 1);
+          }
+        }
       }
-      for (const component of state.selectedComponents) {
-        window.data.components.splice(indexOfComponent(component.pathName), 1);
+
+      if (state.selectedComponents.length === 1) {
+        // We can utilize the dictionary
+        window.data.components.splice(
+          indexOfComponent(state.selectedComponents[0].pathName),
+          1
+        );
+      } else if (state.selectedComponents.length > 1) {
+        // Because the dictionary is changed after the first element is removed, we cannot depend on it, but need to iterate over all components
+        const pathNames = state.selectedComponents.map(
+          component => component.pathName
+        );
+        for (let i = window.data.components.length - 1; i >= 0; i--) {
+          if (pathNames.includes(window.data.components[i].pathName)) {
+            window.data.components.splice(i, 1);
+          }
+        }
       }
+
       refreshActorComponentDictionary();
 
       state.selectedActors = [];
@@ -300,7 +330,21 @@ export default new Vuex.Store<RootState>({
       state.selectedJsonToEdit = null;
       state.selectedPathNames = [];
       state.dataLoaded = true;
-      EventBus.$emit('delete', eventPayload);
+      EventBus.$emit(DELETE_OBJECTS, eventPayload);
+    },
+    CREATE_OBJECTS(state, payload) {
+      state.dataLoaded = false; // trigger recalculation of getNames
+      // TODO if index of actors and components is important, we need to store it in the action as well
+      for (const actor of payload.actors) {
+        window.data.actors.push(actor);
+      }
+      for (const component of payload.components) {
+        window.data.components.push(component);
+      }
+      refreshActorComponentDictionary();
+
+      state.dataLoaded = true;
+      EventBus.$emit(CREATE_OBJECTS, payload);
     },
 
     SET_SELECTION_DISABLED(state, payload) {
@@ -332,7 +376,7 @@ export default new Vuex.Store<RootState>({
   },
   actions: {
     select(context, selectedPathNames) {
-      if (selectedPathNames != this.state.selectedPathNames) {
+      if (!arePathNamesSame(selectedPathNames, this.state.selectedPathNames)) {
         // only add undo if this changed
         context.commit(
           'undo/ADD_ACTION',
@@ -390,6 +434,14 @@ export default new Vuex.Store<RootState>({
       context.commit('SET_CAMERA_DATA', payload);
     },
     deleteSelected(context, payload) {
+      context.commit(
+        'undo/ADD_ACTION',
+        new DeleteAction(
+          'DELETE',
+          JSON.stringify(this.state.selectedActors),
+          JSON.stringify(this.state.selectedComponents)
+        )
+      );
       context.commit('DELETE_SELECTED', payload);
     },
     setSelectionDisabled(context, payload) {
@@ -412,3 +464,16 @@ export default new Vuex.Store<RootState>({
     }
   }
 });
+
+function arePathNamesSame(a: string[], b: string[]) {
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) {
+      return false;
+    }
+  }
+  return true;
+}

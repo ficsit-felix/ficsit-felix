@@ -58,7 +58,7 @@ export default class MeshManager {
   /**
    * Adds a new mesh to be handled by the MeshManager
    * @param result the MeshResult created by the MeshFactory
-   * @param visible wheter this mesh should currently be visible
+   * @param visible whether this mesh should currently be visible
    */
   add(result: MeshResult, visible: boolean) {
     let modelMesh;
@@ -231,11 +231,11 @@ export default class MeshManager {
     }
   }
 
-  deleteSelectedMeshes(payload: { actors: Actor[]; components: Component[] }) {
+  deleteMeshesForActors(actors: Actor[]) {
     // TODO delete geometry if not used by anything else?
 
     this.meshDictionaryDirty = true;
-    for (const actor of payload.actors) {
+    for (const actor of actors) {
       let found = false;
       for (let i = this.visibleMeshes.length - 1; i >= 0; i--) {
         if (this.visibleMeshes[i].getPathName() === actor.pathName) {
@@ -247,7 +247,7 @@ export default class MeshManager {
         }
       }
       if (found) {
-        break;
+        continue;
       }
 
       for (let j = this.invisibleMeshes.length - 1; j >= 0; j--) {

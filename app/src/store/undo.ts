@@ -1,8 +1,6 @@
 import { Module, Commit } from 'vuex';
-import Vue from 'vue';
 import { RootState } from '.';
-import { Actor } from 'satisfactory-json';
-import { glStack } from 'vue-golden-layout';
+import { Actor, Component } from 'satisfactory-json';
 
 interface Action {
   name: string;
@@ -32,23 +30,14 @@ export const undo: Module<UndoState, RootState> = {
     ADD_ACTION(state, payload) {
       state.undoStack.push(payload);
       state.redoStack = [];
-      console.log(
-        `undo: ${state.undoStack.length} redo: ${state.redoStack.length}`
-      );
     },
     UNDO_ACTION(state, action) {
       state.redoStack.push(action);
       state.undoStack.pop();
-      console.log(
-        `undo: ${state.undoStack.length} redo: ${state.redoStack.length}`
-      );
     },
     REDO_ACTION(state, action) {
       state.undoStack.push(action);
       state.redoStack.pop();
-      console.log(
-        `undo: ${state.undoStack.length} redo: ${state.redoStack.length}`
-      );
     }
   },
   actions: {
@@ -80,7 +69,6 @@ export class SelectAction implements Action {
   constructor(public name: string, private selectedPathNames: string[]) {}
   undo(commit: Commit, rootState: RootState) {
     const redo = new SelectAction(this.name, rootState.selectedPathNames);
-    console.log('undo: ' + this.selectedPathNames.length);
     commit('SET_SELECTED', this.selectedPathNames, { root: true });
     return redo;
   }
@@ -118,6 +106,51 @@ export class JsonAction implements Action {
       JSON.stringify(rootState.selectedJsonToEdit)
     );
     commit('SET_SELECTED_OBJECT', JSON.parse(this.json), { root: true });
+    return redo;
+  }
+}
+
+export class DeleteAction implements Action {
+  constructor(
+    public name: string,
+    private actorsJson: string,
+    private componentsJson: string
+  ) {}
+
+  undo(commit: Commit, rootState: RootState) {
+    const actors = JSON.parse(this.actorsJson);
+    const components = JSON.parse(this.componentsJson);
+
+    // TODO is it important that they are added at the same location? then we need to store the indices as well
+    commit('CREATE_OBJECTS', { actors, components }, { root: true });
+    // gather path names
+    const actorPathNames = actors.map((actor: Actor) => actor.pathName);
+    const componentPathNames = components.map(
+      (component: Component) => component.pathName
+    );
+
+    // TODO wait until all meshes are generated
+    setTimeout(() => {
+      // FIXME
+      //commit('SET_SELECTED', [...actorPathNames, ...componentPathNames], { root: true });
+    }, 200);
+
+    return new CreateAction(this.name, actorPathNames, componentPathNames);
+  }
+}
+export class CreateAction implements Action {
+  constructor(
+    public name: string,
+    private actorPathNames: string[],
+    private componentsPathNames: string[]
+  ) {}
+  undo(commit: Commit, rootState: RootState) {
+    const redo = new DeleteAction(
+      this.name,
+      JSON.stringify(rootState.selectedActors),
+      JSON.stringify(rootState.selectedComponents)
+    );
+    commit('DELETE_SELECTED', null, { root: true });
     return redo;
   }
 }

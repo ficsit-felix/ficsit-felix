@@ -51,14 +51,14 @@ let SelectControls = function(scene, camera, domElement, callback, playground) {
 
         while (
           object !== null &&
-          object.userData.id === undefined &&
+          object.userData.pathName === undefined &&
           object.parent !== undefined
         ) {
           // the id is only defined on the topmost object
           object = object.parent;
         }
         // object.material.emissive.setHex(0xff00ff);
-        if (object !== null && object.userData.id !== undefined) {
+        if (object !== null && object.userData.pathName !== undefined) {
           scope.callback.select([object.userData.pathName]);
         } else {
           scope.callback.select([]);

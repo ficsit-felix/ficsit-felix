@@ -63,6 +63,12 @@ export default {
     showSaveMenuEntries() {
       // update the menu
       this.setDefaultMenu();
+    },
+    undoDisabled(value) {
+      Menu.getApplicationMenu().getMenuItemById('undo').enabled = !value;
+    },
+    redoDisabled(value) {
+      Menu.getApplicationMenu().getMenuItemById('redo').enabled = !value;
     }
   },
   mounted() {

@@ -61,6 +61,10 @@
       <v-icon>mdi-cog</v-icon>
       {{ $t('menubar.settings') }}
     </span>
+    <!-- because the other menu items are not always visible, define the shortkeys here -->
+    <span v-shortkey.once="['ctrl', 'z']" @shortkey="undo"></span>
+    <span v-shortkey.once="['ctrl', 'shift', 'z']" @shortkey="redo"></span>
+
     <div class="spacer"></div>
 
     <v-menu bottom left>
@@ -74,13 +78,7 @@
       <v-list>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-list-item
-              @click="undo"
-              v-shortkey.once="['ctrl', 'z']"
-              @shortkey="undo"
-              :disabled="undoDisabled"
-              v-on="on"
-            >
+            <v-list-item @click="undo" :disabled="undoDisabled" v-on="on">
               <v-list-item-icon>
                 <v-icon>mdi-undo</v-icon>
               </v-list-item-icon>
@@ -91,13 +89,7 @@
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-list-item
-              @click="redo"
-              v-shortkey.once="['ctrl', 'shift', 'z']"
-              @shortkey="redo"
-              :disabled="redoDisabled"
-              v-on="on"
-            >
+            <v-list-item @click="redo" :disabled="redoDisabled" v-on="on">
               <v-list-item-icon>
                 <v-icon>mdi-redo</v-icon>
               </v-list-item-icon>

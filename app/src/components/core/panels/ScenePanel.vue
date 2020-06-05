@@ -100,7 +100,9 @@ import {
   DIALOG_PROGRESS,
   DIALOG_OPEN_TIME_MS,
   FOCUS_SELECTED_OBJECT,
-  GUI_REFRESH_TIMEOUT
+  GUI_REFRESH_TIMEOUT,
+  DELETE_OBJECTS,
+  CREATE_OBJECTS
 } from '@lib/constants';
 import { MapType } from '@/store/settings';
 import { TransformAction } from '@/store/undo';
@@ -113,6 +115,7 @@ import {
 } from 'vue-property-decorator';
 import MeshManager from '@lib/graphics/MeshManager';
 import { Action, namespace, State } from 'vuex-class';
+import { Actor, Component as Component2 } from 'satisfactory-json';
 
 const undoNamespace = namespace('undo');
 @Component({
@@ -203,7 +206,6 @@ export default class ScenePanel extends Vue {
   @Watch('selectedActors')
   onSelectedActors(val: any) {
     if (val.length === 1) {
-      console.log('update mesh transform');
       const mesh = this.meshManager.findMeshByName(val[0].pathName);
       mesh.applyTransform(val[0]);
       //        updateActorMeshTransform(mesh, val[0]);
@@ -397,18 +399,15 @@ export default class ScenePanel extends Vue {
       window.addEventListener('resize', this.handleResize);
       window.setTimeout(this.handleResize, 50); // TODO replace with correct initial state somewhere
 
-      EventBus.$on('delete', (payload: any) => {
-        // TODO move to constants?
-        // remove all actors from scene
-        this.meshManager.deleteSelectedMeshes(payload);
-        this.transformControl.detach();
-      });
+      EventBus.$on(DELETE_OBJECTS, this.onDeleteObjects);
+      EventBus.$on(CREATE_OBJECTS, this.onCreateObjects);
       EventBus.$on(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
     }, GUI_REFRESH_TIMEOUT);
   }
 
   beforeDestroy() {
-    EventBus.$off('delete');
+    EventBus.$off(DELETE_OBJECTS, this.onDeleteObjects);
+    EventBus.$off(CREATE_OBJECTS, this.onCreateObjects);
     EventBus.$off(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
 
     this.transformControl.detach();
@@ -514,7 +513,7 @@ export default class ScenePanel extends Vue {
 
     let actor = window.data.actors[index];
     this.meshFactory
-      .createMesh(actor, index)
+      .createMesh(actor)
       .then(result => {
         updateActorMeshTransform(result.mesh, actor);
 
@@ -575,6 +574,8 @@ export default class ScenePanel extends Vue {
       return; // TODO multiple actors
     }
 
+    // TODO detect when the mesh has not moved at all (just a click and not a drag) and don't do anything
+
     const mesh = this.meshManager.findMeshByName(
       this.selectedActors[0].pathName
     );
@@ -625,8 +626,64 @@ export default class ScenePanel extends Vue {
   }
   reportBug() {
     // FIXME
-    //this.$refs.bugReport.openReportWindow('');
+    //@ts-ignore
+    this.$refs.bugReport.openReportWindow('');
   }
+
+  onDeleteObjects(payload: { actors: Actor[]; components: Component2[] }) {
+    // remove all actors from scene
+    this.meshManager.deleteMeshesForActors(payload.actors);
+    this.transformControl.detach();
+  }
+
+  onCreateObjects(payload: { actors: Actor[]; components: Component2[] }) {
+    Promise.all(
+      payload.actors.map(actor =>
+        this.meshFactory
+          .createMesh(actor)
+          .then(result => {
+            return new Promise<string>((resolve, reject) => {
+              updateActorMeshTransform(result.mesh, actor);
+
+              let visible = true;
+              for (let i = 0; i < this.classes.length; i++) {
+                if (this.classes[i].name === actor.className) {
+                  visible = this.classes[i].visible;
+                  break;
+                }
+              }
+
+              // TODO If this mesh already exists in the InstancedMeshGroup, but was just made invisible (during the previous delete that we are undoing now), don't add a new mesh, but just make that one visible
+              this.meshManager.add(result, visible);
+              resolve(result.instance);
+            });
+          })
+          .catch(error => {
+            reportError(error);
+            return new Promise<string>((resolve, reject) => resolve(undefined));
+          })
+      )
+    ).then(instances => {
+      // Rebuild all InstancedMeshGroups where we added an instance
+      const instancesUnique = new Set<string>(instances);
+      for (const instance of instancesUnique) {
+        if (instance !== undefined) {
+          this.meshManager.instancedMeshGroups[instance].rebuild();
+        }
+      }
+      // This is called when all models are added
+      // select the models now
+      this.$store.commit('SET_SELECTED', [
+        ...payload.actors.map(actor => actor.pathName),
+        ...payload.components.map(component => component.pathName)
+      ]);
+    });
+
+    for (const actor of payload.actors) {
+      this.meshFactory.createMesh(actor);
+    }
+  }
+
   /*
   provide() {
     return {

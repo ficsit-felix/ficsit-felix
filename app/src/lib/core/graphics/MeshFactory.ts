@@ -30,13 +30,13 @@ export default class MeshFactoy {
     this.materialFactory = materialFactory;
   }
 
-  createMesh(actor: Actor, i: number): Promise<MeshResult> {
+  createMesh(actor: Actor): Promise<MeshResult> {
     // create multiple meshes for conveyor lift
     if (isConveyorLift(actor)) {
-      return this.addConveyorLift(actor, i);
+      return this.addConveyorLift(actor);
     }
     if (isPipeSupport(actor)) {
-      return this.addPipeSupport(actor, i);
+      return this.addPipeSupport(actor);
     }
 
     return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export default class MeshFactoy {
             this.materialFactory.createMaterial(actor)
           );
 
-          mesh.userData = { id: i, pathName: actor.pathName };
+          mesh.userData = { pathName: actor.pathName };
           resolve({
             mesh,
             instance: result.instance
@@ -58,7 +58,7 @@ export default class MeshFactoy {
     });
   }
 
-  addConveyorLift(actor: Actor, index: number): Promise<MeshResult> {
+  addConveyorLift(actor: Actor): Promise<MeshResult> {
     return new Promise((resolve, reject) => {
       // add other parts to conveyor lift
       modelHelper
@@ -132,7 +132,7 @@ export default class MeshFactoy {
               middleMesh.position.z = topPartTranslationZ / 2;
               mesh.add(middleMesh);
 
-              mesh.userData = { id: index, pathName: actor.pathName };
+              mesh.userData = { pathName: actor.pathName };
 
               resolve({
                 mesh,
@@ -143,7 +143,7 @@ export default class MeshFactoy {
     });
   }
 
-  addPipeSupport(actor: Actor, index: number): Promise<MeshResult> {
+  addPipeSupport(actor: Actor): Promise<MeshResult> {
     return new Promise((resolve, reject) => {
       modelHelper
         .loadModel('/models/' + modelConfig[actor.className].model)
@@ -178,7 +178,7 @@ export default class MeshFactoy {
           supportMesh.position.z = length / 2;
           mesh.add(supportMesh);
 
-          mesh.userData = { id: index, pathName: actor.pathName };
+          mesh.userData = { pathName: actor.pathName };
 
           resolve({
             mesh,
