@@ -1011,7 +1011,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     model: 'TrainStation.glb',
     color: trainStationColor,
     paintable: Paintable.TRUE,
-    powerLineOffset: { x: 710, y: -925, z: 1025 }
+    powerLineOffset: { x: -25, y: -1662, z: 1875 }
   },
   '/Game/FactoryGame/Buildable/Factory/Train/SwitchControl/Build_RailroadSwitchControl.Build_RailroadSwitchControl_C': {
     model: 'RailroadSwitchControl.glb',
