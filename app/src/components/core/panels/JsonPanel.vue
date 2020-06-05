@@ -47,9 +47,9 @@
       >
     </div>
 
-    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">{{
-      $t('propertyEditor.objectSavedSnack')
-    }}</v-snackbar>
+    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">
+      {{ $t('propertyEditor.objectSavedSnack') }}
+    </v-snackbar>
 
     <ConfirmDialog
       v-model="showDeleteDialog"
@@ -65,6 +65,7 @@ import { mapGetters, mapState, mapActions } from 'vuex';
 import { createBlueprintFromActors } from 'satisfactory-blueprint'; //"satisfactory-blueprint";
 import copyToClipboard from '@lib/copyToClipboard';
 import ConfirmDialog from '../dialogs/ConfirmDialog.vue';
+import { JsonAction } from '../../../store/undo';
 export default {
   name: 'JsonPanel',
   components: {
@@ -114,6 +115,7 @@ export default {
 
   methods: {
     ...mapActions(['setSelectedObject', 'deleteSelected']),
+    ...mapActions('undo', ['recordAction']),
     focusSelectedObject() {
       this.$emit('focusSelectedObject');
     },
@@ -121,6 +123,9 @@ export default {
     saveJson() {
       console.log('save json');
       try {
+        this.recordAction(
+          new JsonAction('JSON', JSON.stringify(this.selectedJsonToEdit))
+        );
         let obj = JSON.parse(this.selectedJson);
         this.setSelectedObject(obj);
         this.jsonError = [];

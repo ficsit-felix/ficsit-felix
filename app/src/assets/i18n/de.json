@@ -82,7 +82,8 @@
   },
   "keyboard": {
     "ctrl": "Strg",
-    "del": "Entf"
+    "del": "Entf",
+    "shift": "Umschalt"
   },
   "landingPage": {
     "authors": "Autoren",
@@ -109,7 +110,10 @@
     "file": "Datei",
     "exit": "Beenden",
     "mainScreen": "Zurück zum Hauptmenü",
-    "toggleMenu": "Menü öffnen"
+    "toggleMenu": "Menü öffnen",
+    "undo": "Rückgängig",
+    "redo": "Wiederherstellen",
+    "edit": "Bearbeiten"
   },
   "objectList": {
     "filterField": "Filtern",

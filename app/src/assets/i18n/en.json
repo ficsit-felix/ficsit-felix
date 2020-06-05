@@ -82,7 +82,8 @@
   },
   "keyboard": {
     "ctrl": "Ctrl",
-    "del": "Del"
+    "del": "Del",
+    "shift": "Shift"
   },
   "landingPage": {
     "authors": "authors",
@@ -109,7 +110,10 @@
     "file": "File",
     "exit": "Exit",
     "mainScreen": "Back to main menu",
-    "toggleMenu": "Toggle menu"
+    "toggleMenu": "Toggle menu",
+    "undo": "Undo",
+    "redo": "Redo",
+    "edit": "Edit"
   },
   "objectList": {
     "filterField": "Filter",

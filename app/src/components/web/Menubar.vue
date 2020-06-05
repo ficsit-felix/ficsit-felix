@@ -72,6 +72,41 @@
       </template>
 
       <v-list>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-list-item
+              @click="undo"
+              v-shortkey.once="['ctrl', 'z']"
+              @shortkey="undo"
+              :disabled="undoDisabled"
+              v-on="on"
+            >
+              <v-list-item-icon>
+                <v-icon>mdi-undo</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ $t('menubar.undo') }}</v-list-item-title>
+            </v-list-item>
+          </template>
+          {{ $t('keyboard.ctrl') }}+Z
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-list-item
+              @click="redo"
+              v-shortkey.once="['ctrl', 'shift', 'z']"
+              @shortkey="redo"
+              :disabled="redoDisabled"
+              v-on="on"
+            >
+              <v-list-item-icon>
+                <v-icon>mdi-redo</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ $t('menubar.redo') }}</v-list-item-title>
+            </v-list-item>
+          </template>
+          {{ $t('keyboard.ctrl') }}+{{ $t('keyboard.shift') }}+Z
+        </v-tooltip>
+
         <v-list-item @click="showOpenJsonDialog()">
           <v-list-item-icon>
             <v-icon>mdi-upload</v-icon>
@@ -123,6 +158,7 @@ import {
   DIALOG_OPEN_JSON_WEB,
   DIALOG_SAVE_JSON_WEB
 } from '@lib/constants';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Menubar',
@@ -134,7 +170,11 @@ export default {
       logoAnimating: false
     };
   },
+  computed: {
+    ...mapGetters('undo', ['undoDisabled', 'redoDisabled'])
+  },
   methods: {
+    ...mapActions('undo', ['undoLastAction', 'redoLastAction']),
     open() {
       this.$router.push('open/sav');
     },
@@ -174,6 +214,13 @@ export default {
     },
     showSaveJsonDialog() {
       EventBus.$emit(DIALOG_SAVE_JSON_WEB);
+    },
+
+    undo() {
+      this.undoLastAction();
+    },
+    redo() {
+      this.redoLastAction();
     }
   },
   mounted() {}

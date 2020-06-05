@@ -38,7 +38,7 @@ import {
   DIALOG_CONFIRM_EXIT_DESKTOP,
   ON_EXIT_PRESSED
 } from '@lib/constants';
-import { mapState } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import path from 'path';
 // TODO use SaveFileReader/Writer instead
 import { openFileAndMoveToEditor } from '../../lib/desktop/DesktopFileReader';
@@ -56,7 +56,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(['showSaveMenuEntries'])
+    ...mapState(['showSaveMenuEntries']),
+    ...mapGetters('undo', ['undoDisabled', 'redoDisabled'])
   },
   watch: {
     showSaveMenuEntries() {
@@ -87,6 +88,8 @@ export default {
     this.titlebar.dispose();
   },
   methods: {
+    ...mapActions('undo', ['undoLastAction', 'redoLastAction']),
+
     onChangeLocale() {
       this.setDefaultMenu(); // TODO rebuild the currently selected menu
     },
@@ -173,6 +176,34 @@ export default {
           submenu: fileEntries
         })
       );
+      if (this.showSaveMenuEntries) {
+        menu.append(
+          new MenuItem({
+            label: this.$t('menubar.edit'),
+            submenu: [
+              {
+                id: 'undo',
+                label: this.$t('menubar.undo'),
+                accelerator: 'Ctrl+Z',
+                enabled: !this.undoDisabled,
+                click: () => {
+                  console.log(this);
+                  this.undoLastAction();
+                }
+              },
+              {
+                id: 'redo',
+                label: this.$t('menubar.redo'),
+                accelerator: 'Ctrl+Shift+Z',
+                enabled: !this.redoDisabled,
+                click: () => {
+                  this.redoLastAction();
+                }
+              }
+            ]
+          })
+        );
+      }
 
       if (remote.process.env.NODE_ENV === 'development') {
         // Add develoment menu entries
@@ -341,6 +372,7 @@ export default {
         });
     },
     onExitPressed() {
+      // TODO evaluate why this does not close the window if the dev tools are open
       let window = remote.getCurrentWindow();
       window.close();
     }

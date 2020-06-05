@@ -14,7 +14,7 @@ import * as Sentry from '@sentry/browser';
 import { EventBus } from '@lib/event-bus';
 import { reportException } from '@lib/errorReporting';
 import { settingsModule } from './settings';
-import { undo } from './undo';
+import { undo, SelectAction } from './undo';
 Vue.use(Vuex);
 
 // Add the data object to the window interface
@@ -332,7 +332,14 @@ export default new Vuex.Store<RootState>({
   },
   actions: {
     select(context, selectedPathNames) {
-      context.commit('SET_SELECTED', selectedPathNames);
+      if (selectedPathNames != this.state.selectedPathNames) {
+        // only add undo if this changed
+        context.commit(
+          'undo/ADD_ACTION',
+          new SelectAction('SELECT', this.state.selectedPathNames)
+        );
+        context.commit('SET_SELECTED', selectedPathNames);
+      }
     },
     setLoading(context, value) {
       // this is needed so that the objects list will be updated

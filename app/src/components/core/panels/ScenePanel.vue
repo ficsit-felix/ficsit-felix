@@ -203,6 +203,7 @@ export default class ScenePanel extends Vue {
   @Watch('selectedActors')
   onSelectedActors(val: any) {
     if (val.length === 1) {
+      console.log('update mesh transform');
       const mesh = this.meshManager.findMeshByName(val[0].pathName);
       mesh.applyTransform(val[0]);
       //        updateActorMeshTransform(mesh, val[0]);
@@ -581,8 +582,7 @@ export default class ScenePanel extends Vue {
     this.recordAction(
       new TransformAction(
         'transform',
-        this.selectedActors[0].pathName,
-        this.selectedActors[0].transform
+        JSON.stringify(this.selectedActors[0].transform)
       )
     );
 
