@@ -65,7 +65,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "babel-eslint": "^10.0.3",
-    "electron": "^9.0.1",
+    "electron": "^9.0.2",
     "electron-icon-builder": "^1.0.1",
     "eslint": "^7.1.0",
     "eslint-plugin-prettier": "^3.1.3",
