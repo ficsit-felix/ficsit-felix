@@ -74,7 +74,7 @@
     "sass": "^1.26.7",
     "sass-loader": "^8.0.2",
     "ts-loader": "^7.0.5",
-    "typescript": "~3.9.3",
+    "typescript": "~3.9.5",
     "vue-cli-plugin-electron-builder": "~1.4.5",
     "vue-cli-plugin-vuetify": "~2.0.5",
     "vue-template-compiler": "^2.5.21",
