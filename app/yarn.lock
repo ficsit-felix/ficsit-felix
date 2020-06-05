@@ -1042,9 +1042,9 @@
     to-fast-properties "^2.0.0"
 
 "@bitowl/three-instanced-mesh@^0.117.0":
-  version "0.117.0"
-  resolved "https://registry.yarnpkg.com/@bitowl/three-instanced-mesh/-/three-instanced-mesh-0.117.0.tgz#65e6941b03b7be6efa98312efc94f81a86dd033a"
-  integrity sha512-fs6wnmaRJ5Zyy4PLnqpfj09cbXERthETLJfR7rmlR+TKNaWLmrF/yiLB2uikIptnzyrYKsQR+sd/HAECGFNI+g==
+  version "0.117.1"
+  resolved "https://registry.yarnpkg.com/@bitowl/three-instanced-mesh/-/three-instanced-mesh-0.117.1.tgz#b060336f737423c03dbd1822b09d0851fe3a4dbb"
+  integrity sha512-q6jq30Rs4qNcGlg0EIZBzzEwnDfWUZ6ik+J8xlceY5S8GiPcpJgxshDe2w8eaKEQf0Jz7dyaJ0RMEaD7MHvt9w==
 
 "@caohenghu/vue-colorpicker@^1.2.2":
   version "1.2.4"
