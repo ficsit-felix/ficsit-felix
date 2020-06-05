@@ -9,8 +9,8 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import DesktopMenu from './DesktopMenu.vue';
 import Editor from '../core/Editor.vue';
-import { EventBus } from '../../event-bus';
-import { TOGGLE_MENU } from '../../ts/constants';
+import { EventBus } from '@lib/event-bus';
+import { TOGGLE_MENU } from '@lib/constants';
 
 @Component({
   components: {

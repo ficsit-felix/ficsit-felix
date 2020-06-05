@@ -8,8 +8,8 @@ import vgl from 'vue-golden-layout';
 import Router from 'vue-router';
 
 import { i18n } from './plugins/i18n';
-import { isElectron } from './ts/isElectron';
-import '@/helpers/cmdHelper';
+import { isElectron } from '@lib/isElectron';
+import '@lib/cmdHelper';
 import './assets/golden-layout-dark.css';
 
 if (process.env.NODE_ENV !== 'development') {
@@ -18,15 +18,14 @@ if (process.env.NODE_ENV !== 'development') {
     release: process.env.PACKAGE_VERSION,
     integrations: [
       new Integrations.Vue({
-        Vue,
         attachProps: true
       })
     ]
   });
 }
 
-import { EventBus } from './event-bus';
-import { CHANGE_LOCALE } from './ts/constants';
+import { EventBus } from '@lib/event-bus';
+import { CHANGE_LOCALE } from '@lib/constants';
 
 // vue-shortkey
 Vue.use(require('vue-shortkey'));
@@ -38,9 +37,9 @@ Vue.config.productionTip = false;
 
 let router: Router;
 if (isElectron()) {
-  router = require('./router_desktop').default;
+  router = require('./router/desktop').default;
 } else {
-  router = require('./router_web').default;
+  router = require('./router/web').default;
 }
 
 // Redirect if data was not yet loaded
@@ -70,7 +69,7 @@ new Vue({
 
 // Set persisted locale
 const lang = store.state.settings.locale;
-import(`@/lang/${lang}.json`).then(msgs => {
+import(`@/assets/i18n/${lang}.json`).then(msgs => {
   i18n.setLocaleMessage(lang, msgs.default || msgs);
   i18n.locale = lang;
   EventBus.$emit(CHANGE_LOCALE);

@@ -1,6 +1,6 @@
 {
   "name": "ficsit-felix",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "private": true,
   "description": "Save file visualizer for Satisfactory",
   "author": "bitowl",
@@ -48,6 +48,7 @@
     "vue-virtual-scroll-list": "2.2.6",
     "vuetify": "^2.2.32",
     "vuex": "^3.4.0",
+    "vuex-class": "^0.3.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
@@ -74,6 +75,7 @@
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
     "ts-loader": "^7.0.5",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "~3.9.5",
     "vue-cli-plugin-electron-builder": "~1.4.5",
     "vue-cli-plugin-vuetify": "~2.0.5",

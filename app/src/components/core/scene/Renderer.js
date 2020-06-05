@@ -1,6 +1,6 @@
 import { WebGLRenderer } from 'three';
-import { SelectControls } from '@/js/SelectControls';
-import { BoxSelectControls } from '@/js/BoxSelectControls';
+import { SelectControls } from '@lib/graphics/SelectControls.js';
+import { BoxSelectControls } from '@lib/graphics/BoxSelectControls.js';
 import { mapActions, mapState } from 'vuex';
 
 import * as Stats from 'stats.js';
