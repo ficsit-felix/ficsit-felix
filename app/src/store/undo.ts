@@ -82,7 +82,6 @@ export class TransformAction implements Action {
   // TODO handle multiple selected
   undo(commit: Commit, rootState: RootState) {
     const transformedActor = rootState.selectedActors[0];
-    console.log(transformedActor.transform.translation);
 
     const redo = new TransformAction(
       this.name,
@@ -90,7 +89,6 @@ export class TransformAction implements Action {
     );
 
     transformedActor.transform = JSON.parse(this.transform);
-    console.log(transformedActor.transform.translation);
     commit('SET_SELECTED_OBJECT', transformedActor, { root: true });
     return redo;
   }
@@ -128,12 +126,6 @@ export class DeleteAction implements Action {
     const componentPathNames = components.map(
       (component: Component) => component.pathName
     );
-
-    // TODO wait until all meshes are generated
-    setTimeout(() => {
-      // FIXME
-      //commit('SET_SELECTED', [...actorPathNames, ...componentPathNames], { root: true });
-    }, 200);
 
     return new CreateAction(this.name, actorPathNames, componentPathNames);
   }

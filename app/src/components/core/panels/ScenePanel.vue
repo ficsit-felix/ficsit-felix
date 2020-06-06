@@ -61,8 +61,6 @@
 <script lang="ts">
 import * as THREE from 'three';
 //@ts-ignore
-import { OrbitControls } from '@lib/graphics/OrbitControls';
-//@ts-ignore
 import { TransformControls } from '@lib/graphics/TransformControls.js';
 import _default, { mapActions, mapGetters, mapState } from 'vuex';
 //@ts-ignore
@@ -71,9 +69,15 @@ import Scene from '../scene/Scene.js';
 import Renderer from '../scene/Renderer.js';
 //@ts-ignore
 import Camera from '../scene/Camera.js';
-import { BoxBufferGeometry, LineCurve3, Mesh, error } from 'three';
+import {
+  BoxBufferGeometry,
+  LineCurve3,
+  Mesh,
+  error,
+  Texture,
+  Group
+} from 'three';
 import { setTimeout } from 'timers';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { modelHelper } from '@lib/graphics/modelHelper';
 import { modelConfig } from '@lib/definitions/models';
 import * as Sentry from '@sentry/browser';
@@ -111,7 +115,8 @@ import {
   Vue,
   Prop,
   Watch,
-  ProvideReactive
+  ProvideReactive,
+  Ref
 } from 'vue-property-decorator';
 import MeshManager from '@lib/graphics/MeshManager';
 import { Action, namespace, State } from 'vuex-class';
@@ -134,14 +139,9 @@ const undoNamespace = namespace('undo');
   }
 })
 export default class ScenePanel extends Vue {
-  width = 100;
-  height = 100;
-  mode = 'translate';
-  local = false;
-  commithash = commithash;
-  rotateX = 0;
-  rotateZ = 0;
-  bugReportVisible = false;
+  @Ref('scene') readonly sceneRef!: ScenePanel;
+  @Ref('renderer') readonly rendererRef!: any;
+  @Ref('bugReport') readonly bugReportRef!: BugReportDialog;
 
   // state
   @State(state => state.uuid)
@@ -149,24 +149,24 @@ export default class ScenePanel extends Vue {
   @State(state => state.filename)
   filename!: string;
   @State(state => state.classes)
-  classes!: any; //FIXME
+  classes!: any[];
   @State(state => state.selectedPathNames)
-  selectedPathNames!: any; //FIXME
+  selectedPathNames!: string[];
   @State(state => state.selectedActors)
-  selectedActors!: any; //FIXME
+  selectedActors!: Actor[];
 
   @State(state => state.settings.showCustomPaints)
-  showCustomPaints!: any; //FIXME
+  showCustomPaints!: boolean;
   @State(state => state.settings.showModels)
-  showModels!: any; //FIXME
+  showModels!: boolean;
   @State(state => state.settings.mapType)
-  mapType!: any; //FIXME
+  mapType!: MapType;
   @State(state => state.settings.conveyorBeltResolution)
-  conveyorBeltResolution!: any; //FIXME
+  conveyorBeltResolution!: number;
   @State(state => state.settings.classColors)
-  classColors!: any; //FIXME
+  classColors!: { [id: string]: string };
   @State(state => state.settings.experimentalFeatures)
-  experimentalFeatures!: any; //FIXME
+  experimentalFeatures!: boolean;
 
   // actions
   @Action('loadData')
@@ -186,28 +186,34 @@ export default class ScenePanel extends Vue {
   @undoNamespace.Action('recordAction')
   recordAction: any;
 
-  // vars FIXME
-  geometryFactory: any;
-  matcap: any;
-  colorFactory: any;
+  // vars
+  matcap!: Texture;
+  geometryFactory!: GeometryFactory;
+  colorFactory!: ColorFactory;
   meshFactory!: MeshFactory;
+  meshManager!: MeshManager;
   scene: any;
-  selectedMaterial: any;
-  meshManager: any;
-  loader: any;
-  geometries: any;
-  lastSelectedActors: any;
+  selectedMaterial!: THREE.MeshMatcapMaterial;
+  lastSelectedActors: Actor[] = [];
   transformControl: any;
-  mapIngameModel: any;
-  mapRenderModel: any;
-  activeMapType: any;
+  mapIngameModel?: Group;
+  mapRenderModel?: Group;
+  activeMapType = MapType.None;
+  width = 100;
+  height = 100;
+  mode = 'translate';
+  local = false;
+  commithash = commithash;
+  rotateX = 0;
+  rotateZ = 0;
+  bugReportVisible = false;
 
   // watchers
   @Watch('selectedActors')
   onSelectedActors(val: any) {
     if (val.length === 1) {
       const mesh = this.meshManager.findMeshByName(val[0].pathName);
-      mesh.applyTransform(val[0]);
+      mesh?.applyTransform(val[0]);
       //        updateActorMeshTransform(mesh, val[0]);
     }
 
@@ -232,9 +238,9 @@ export default class ScenePanel extends Vue {
             actor.pathName
           );
           if (!this.lastSelectedActors.includes(actor)) {
-            mesh.mesh.setSelected(true, this.colorFactory, this.scene);
+            mesh?.mesh.setSelected(true, this.colorFactory, this.scene);
           }
-          if (mesh.visible) {
+          if (mesh?.visible) {
             visibleSelectedMeshes.push(mesh.mesh.getRaycastMesh());
           }
         }
@@ -346,9 +352,7 @@ export default class ScenePanel extends Vue {
         this.geometryFactory,
         this.colorFactory
       );
-      // FIXME
-      //@ts-ignore
-      this.scene = this.$refs.scene.scene;
+      this.scene = this.sceneRef.scene;
 
       this.selectedMaterial = new THREE.MeshMatcapMaterial({
         color: 0xffffff,
@@ -357,20 +361,12 @@ export default class ScenePanel extends Vue {
 
       this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
 
-      this.loader = new GLTFLoader();
-
-      this.geometries = {};
-
       this.lastSelectedActors = [];
       this.createMeshesForActors();
 
       this.transformControl = new TransformControls(
-        // FIXME
-        //@ts-ignore
-        this.$refs.renderer.camera.obj,
-        // FIXME
-        //@ts-ignore
-        this.$refs.renderer.renderer.domElement
+        this.rendererRef.camera.obj,
+        this.rendererRef.renderer.domElement
       );
       this.transformControl.space = 'world';
       // correct way to to this, but i don't want that many updates
@@ -419,9 +415,7 @@ export default class ScenePanel extends Vue {
 
   updateCompass() {
     // TODO move to a onCameraChanged to only update when necessary
-    // FIXME
-    //@ts-ignore
-    const camera = this.$refs.renderer.camera.obj;
+    const camera = this.rendererRef.camera.obj;
     let position = new THREE.Vector3();
     let quaternion = new THREE.Quaternion();
     let scale = new THREE.Vector3();
@@ -543,9 +537,7 @@ export default class ScenePanel extends Vue {
   }
   focusSelectedObject() {
     if (this.selectedActors.length === 1) {
-      // FIXME
-      //@ts-ignore
-      let camera = this.$refs.renderer.camera.controls;
+      let camera = this.rendererRef.camera.controls;
       const actor = this.selectedActors[0];
       // changed because of coordinate system change
       camera.target.x = actor.transform.translation[1];
@@ -554,9 +546,7 @@ export default class ScenePanel extends Vue {
     }
   }
   storeCameraState() {
-    // FIXME
-    //@ts-ignore
-    this.$refs.renderer.camera.updateCameraState();
+    this.rendererRef.camera.updateCameraState();
   }
 
   handleResize() {
@@ -587,7 +577,7 @@ export default class ScenePanel extends Vue {
       )
     );
 
-    const actor = mesh.applyTransformToActor(this.selectedActors[0]);
+    const actor = mesh?.applyTransformToActor(this.selectedActors[0]);
 
     this.setSelectedObject(actor);
   }
@@ -625,9 +615,7 @@ export default class ScenePanel extends Vue {
     }
   }
   reportBug() {
-    // FIXME
-    //@ts-ignore
-    this.$refs.bugReport.openReportWindow('');
+    this.bugReportRef.openReportWindow('');
   }
 
   onDeleteObjects(payload: { actors: Actor[]; components: Component2[] }) {
