@@ -5,7 +5,7 @@
       <v-col>
         <v-text-field
           label="X"
-          :value="value[0]"
+          :value="euler.x * RAD2DEG"
           hide-details
           outlined
           dense
@@ -15,7 +15,7 @@
       <v-col>
         <v-text-field
           label="Y"
-          :value="value[1]"
+          :value="euler.y * RAD2DEG"
           hide-details
           outlined
           dense
@@ -25,7 +25,7 @@
       <v-col>
         <v-text-field
           label="Z"
-          :value="value[2]"
+          :value="euler.z * RAD2DEG"
           hide-details
           outlined
           dense
@@ -44,31 +44,45 @@ import {
   Watch
 } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
+import { Euler, Quaternion, MathUtils } from 'three';
 @VueComponent({})
-export default class Vector3PropertyDrawer extends Vue {
+export default class QuaternionPropertyDrawer extends Vue {
   @Prop() path!: string;
   @Prop() value!: number[];
   @Prop() label!: string;
   @Action('updateObjectValue') updateObjectValue: any;
+  RAD2DEG = MathUtils.RAD2DEG;
+
+  get euler() {
+    // TODO do this without creating garbage?
+    return new Euler().setFromQuaternion(
+      new Quaternion(this.value[0], this.value[1], this.value[2], this.value[3])
+    );
+  }
 
   changeX(value: string) {
-    this.updateObjectValue({
-      path: this.path + '.0',
-      value: parseFloat(value)
-    });
+    const rot = this.euler;
+    rot.x = parseFloat(value) * MathUtils.DEG2RAD;
+    this.change(rot);
   }
 
   changeY(value: string) {
-    this.updateObjectValue({
-      path: this.path + '.1',
-      value: parseFloat(value)
-    });
+    const rot = this.euler;
+    rot.y = parseFloat(value) * MathUtils.DEG2RAD;
+    this.change(rot);
   }
 
   changeZ(value: string) {
+    const rot = this.euler;
+    rot.z = parseFloat(value) * MathUtils.DEG2RAD;
+    this.change(rot);
+  }
+
+  change(euler: Euler) {
+    const quat = new Quaternion().setFromEuler(euler);
     this.updateObjectValue({
-      path: this.path + '.2',
-      value: parseFloat(value)
+      path: this.path,
+      value: [quat.x, quat.y, quat.z, quat.w]
     });
   }
 }
