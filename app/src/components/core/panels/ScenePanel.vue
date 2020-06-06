@@ -110,14 +110,7 @@ import {
 } from '@lib/constants';
 import { MapType } from '@/store/settings';
 import { TransformAction } from '@/store/undo';
-import {
-  Component,
-  Vue,
-  Prop,
-  Watch,
-  ProvideReactive,
-  Ref
-} from 'vue-property-decorator';
+import { Component, Vue, Prop, Watch, Ref } from 'vue-property-decorator';
 import MeshManager from '@lib/graphics/MeshManager';
 import { Action, namespace, State } from 'vuex-class';
 import { Actor, Component as Component2 } from 'satisfactory-json';
