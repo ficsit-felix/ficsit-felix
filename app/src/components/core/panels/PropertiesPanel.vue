@@ -6,12 +6,12 @@
       {{ selectedActors[0].className }}
       <Vector3PropertyDrawer
         label="Translation"
-        path="transform.translation"
+        path="selectedActors.0.transform.translation"
         :value="selectedActors[0].transform.translation"
       />
       <Vector3PropertyDrawer
         label="Scale"
-        path="transform.scale3d"
+        path="selectedActors.0.transform.scale3d"
         :value="selectedActors[0].transform.scale3d"
       />
     </div>

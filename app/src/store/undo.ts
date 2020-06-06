@@ -146,3 +146,36 @@ export class CreateAction implements Action {
     return redo;
   }
 }
+
+export class ChangeValueAction implements Action {
+  constructor(public name: string, private path: string, private value: any) {}
+  undo(commit: Commit, rootState: RootState) {
+    // gather the current value
+    const value = gatherValue(this.path, rootState);
+
+    const redo = new ChangeValueAction(this.name, this.path, value);
+    commit(
+      'UPDATE_OBJECT_VALUE',
+      { path: this.path, value: this.value },
+      { root: true }
+    );
+    return redo;
+  }
+}
+
+export function gatherValue(path: string, rootState: RootState) {
+  const segments = path.split('.');
+  let elem: any = rootState;
+  // descend path
+  for (let i = 0; i < segments.length; i++) {
+    // TODO check that elements exist
+    if (Number.isInteger(Number(segments[i]))) {
+      // array index
+      elem = elem[segments[i]];
+    } else {
+      // object property
+      elem = elem[segments[i]];
+    }
+  }
+  return elem;
+}
