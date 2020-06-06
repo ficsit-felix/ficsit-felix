@@ -1,13 +1,16 @@
-name: Build
+name: Release
 
-on:
+on: 
   push:
-    branches-ignore: master
-  pull_request:
+    branches: master
 
 jobs:
-  build:
-    runs-on: windows-latest
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -23,14 +26,9 @@ jobs:
         working-directory: app
 
       - name: Build the electron app
-        run: yarn electron:build -p never
+        run: yarn electron:build
         working-directory: app
         env:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           GH_TOKEN:  ${{ secrets.github_token }}
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: FICSIT-FeliX-setup.exe
-          path: app/dist_electron/FICSIT-FeliX-setup.exe

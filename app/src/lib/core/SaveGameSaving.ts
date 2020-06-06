@@ -5,6 +5,7 @@ import {
   DIALOG_BUGREPORT
 } from '@lib/constants';
 import { EventBus } from '@lib/event-bus';
+import { reportError } from './errorReporting';
 
 export interface SaveFileWriter {
   writeFile(
@@ -41,6 +42,7 @@ export class SaveGameSaving {
           this.vue.$store.dispatch('setProgress', progress);
         },
         error => {
+          reportError(error);
           // open bug report window
           EventBus.$emit(DIALOG_BUGREPORT, error.message);
         },

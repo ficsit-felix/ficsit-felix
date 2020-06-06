@@ -7,7 +7,7 @@ import {
   GUI_REFRESH_TIMEOUT
 } from '@lib/constants';
 import { v4 } from 'uuid';
-import { reportContext } from '@lib/errorReporting';
+import { reportContext, reportError } from '@lib/errorReporting';
 import { SaveGame } from 'satisfactory-json';
 
 export interface SaveFileReader {
@@ -55,6 +55,7 @@ export class SaveGameLoading {
           this.vue.$store.dispatch('setProgress', progress / 2);
         },
         error => {
+          reportError(error);
           EventBus.$emit(DIALOG_BUGREPORT, error.message);
         },
         saveGame => {
