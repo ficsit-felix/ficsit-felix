@@ -40,8 +40,5 @@ Models in `app/public/models` except for `map_ingame.glb` and `map_render.glb` a
 https://github.com/ficsit-felix/satisfactory-json  
 Library to convert from Satisfactory save files to a JSON format and back
 
-https://github.com/Vilsol/satisfactory-tool  
-Save file to json converter written in Go
-
 https://github.com/Goz3rr/SatisfactorySaveEditor  
 Save file editor for Windows written in C#

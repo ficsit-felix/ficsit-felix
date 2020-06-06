@@ -48,10 +48,8 @@
               </gl-component>
             </gl-col>
             <gl-stack :width="23">
-              <gl-component :title="$t('panels.properties.title')" v-if="false">
-                <div class="panel">
-                  <h1>Properties</h1>
-                </div>
+              <gl-component :title="$t('panels.properties.title')">
+                <PropertiesPanel />
               </gl-component>
               <gl-component :title="$t('panels.json.title')" :closable="false">
                 <JsonPanel ref="propertyEditor" />
@@ -73,6 +71,7 @@ import JsonPanel from './panels/JsonPanel.vue';
 import ClassListPanel from './panels/ClassListPanel.vue';
 import { mapState } from 'vuex';
 import { isElectron } from '@lib/isElectron';
+import PropertiesPanel from './panels/PropertiesPanel.vue';
 
 @Component({
   components: {
@@ -80,7 +79,8 @@ import { isElectron } from '@lib/isElectron';
     ScenePanel,
     ObjectListPanel,
     JsonPanel,
-    ClassListPanel
+    ClassListPanel,
+    PropertiesPanel
   },
   computed: {
     ...mapState('settings', ['layout'])

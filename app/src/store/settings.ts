@@ -10,10 +10,11 @@ export enum MapType {
 
 // Whenever the vue components in the editor is changed, we need to use a new layout version and reset old layout states
 enum LayoutVersion {
-  Initial
+  Initial,
+  AddPropertiesPanel
 }
 
-const currentLayoutVersion = LayoutVersion.Initial;
+const currentLayoutVersion = LayoutVersion.AddPropertiesPanel;
 
 interface SettingsRootState {
   nearPlane: number;
@@ -67,6 +68,7 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
         // Reset the layout state if it was not created with the current component tree
         if (state.layoutVersion !== currentLayoutVersion) {
           state.layout = null;
+          state.layoutVersion = currentLayoutVersion;
         }
       }
     },
