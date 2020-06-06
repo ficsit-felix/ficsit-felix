@@ -9,7 +9,6 @@
           hide-details
           outlined
           dense
-          type="number"
           @change="changeX"
         />
       </v-col>
@@ -20,7 +19,6 @@
           hide-details
           outlined
           dense
-          type="number"
           @change="changeY"
         />
       </v-col>
@@ -31,7 +29,6 @@
           hide-details
           outlined
           dense
-          type="number"
           @change="changeZ"
         />
       </v-col>
@@ -54,20 +51,25 @@ export default class Vector3PropertyDrawer extends Vue {
   @Prop() label!: string;
   @Action('updateObjectValue') updateObjectValue: any;
 
-  @Watch('value') onValueChange(value: number[]) {
-    console.log('change', value);
+  changeX(value: string) {
+    this.updateObjectValue({
+      path: this.path + '.0',
+      value: parseFloat(value)
+    });
   }
 
-  changeX(value: number) {
-    this.updateObjectValue({ path: this.path + '.0', value });
+  changeY(value: string) {
+    this.updateObjectValue({
+      path: this.path + '.1',
+      value: parseFloat(value)
+    });
   }
 
-  changeY(value: number) {
-    this.updateObjectValue({ path: this.path + '.1', value });
-  }
-
-  changeZ(value: number) {
-    this.updateObjectValue({ path: this.path + '.2', value });
+  changeZ(value: string) {
+    this.updateObjectValue({
+      path: this.path + '.2',
+      value: parseFloat(value)
+    });
   }
 }
 </script>

@@ -14,7 +14,13 @@ import * as Sentry from '@sentry/browser';
 import { EventBus } from '@lib/event-bus';
 import { reportException } from '@lib/errorReporting';
 import { settingsModule } from './settings';
-import { undo, SelectAction, DeleteAction } from './undo';
+import {
+  undo,
+  SelectAction,
+  DeleteAction,
+  ChangeValueAction,
+  gatherValue
+} from './undo';
 import { DELETE_OBJECTS, CREATE_OBJECTS } from '@/lib/core/constants';
 Vue.use(Vuex);
 
@@ -377,11 +383,11 @@ export default new Vuex.Store<RootState>({
       // Updates a value on an actor/component
 
       const segments = payload.path.split('.');
-      let elem: any = state.selectedActors[0];
+      let elem: any = state;
       // descend path
       for (let i = 0; i < segments.length - 1; i++) {
         // TODO check that elements exist
-        if (Number.isInteger(segments[i])) {
+        if (Number.isInteger(Number(segments[i]))) {
           // array index
           elem = elem[segments[i]];
         } else {
@@ -484,6 +490,18 @@ export default new Vuex.Store<RootState>({
       context.commit('SET_SHOW_SAVE_MENU_ENTRIES', payload);
     },
     updateObjectValue(context, payload) {
+      const previousValue = gatherValue(payload.path, this.state);
+      if (previousValue === payload.value) {
+        return; // no need to change
+      }
+      context.commit(
+        'undo/ADD_ACTION',
+        new ChangeValueAction(
+          'CHANGE',
+          payload.path,
+          previousValue //does this need JSON.stringify() ?
+        )
+      );
       context.commit('UPDATE_OBJECT_VALUE', payload);
     }
   }
