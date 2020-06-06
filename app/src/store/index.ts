@@ -372,6 +372,27 @@ export default new Vuex.Store<RootState>({
     },
     SET_SHOW_SAVE_MENU_ENTRIES(state, payload) {
       state.showSaveMenuEntries = payload;
+    },
+    UPDATE_OBJECT_VALUE(state, payload) {
+      // Updates a value on an actor/component
+
+      const segments = payload.path.split('.');
+      let elem: any = state.selectedActors[0];
+      // descend path
+      for (let i = 0; i < segments.length - 1; i++) {
+        // TODO check that elements exist
+        if (Number.isInteger(segments[i])) {
+          // array index
+          elem = elem[segments[i]];
+        } else {
+          // object property
+          elem = elem[segments[i]];
+        }
+      }
+      Vue.set(elem, segments[segments.length - 1], payload.value);
+      /*      console.log(elem);
+      
+            Vue.set(state.selectedActors[0], payload.path, payload.value);*/
     }
   },
   actions: {
@@ -461,6 +482,9 @@ export default new Vuex.Store<RootState>({
     },
     setShowSaveMenuEntries(context, payload) {
       context.commit('SET_SHOW_SAVE_MENU_ENTRIES', payload);
+    },
+    updateObjectValue(context, payload) {
+      context.commit('UPDATE_OBJECT_VALUE', payload);
     }
   }
 });

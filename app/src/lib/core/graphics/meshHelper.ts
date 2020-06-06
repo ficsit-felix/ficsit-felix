@@ -1,6 +1,7 @@
 import { Mesh, Vector3, Quaternion, Euler, Matrix4 } from 'three';
 import { Actor } from 'satisfactory-json';
 import { isPowerLine, isSpline } from './entityHelper';
+import Vue from 'vue';
 
 /*
  * Unreal coordinate system:
@@ -63,14 +64,13 @@ export function updateActorMeshTransform(mesh: Mesh, actor: Actor) {
   applyScale(mesh, actor.transform.scale3d);
 }
 
-export function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
-  // TODO need to clone, else change is not detected?
-  // find more intelligent way
-  const clone = Object.assign({}, actor);
+export function applyMeshTransformToActor(mesh: Mesh, actor: Actor) {
+  // Use Vue.set() to set array values reactively
+
   // switched to accord for coordinate system change!
-  clone.transform.translation[1] = mesh.position.x;
-  clone.transform.translation[0] = mesh.position.y;
-  clone.transform.translation[2] = mesh.position.z;
+  Vue.set(actor.transform.translation, 1, mesh.position.x);
+  Vue.set(actor.transform.translation, 0, mesh.position.y);
+  Vue.set(actor.transform.translation, 2, mesh.position.z);
 
   // TODO directly apply this rotation on the quaternion so we don't need to reverse it afterwards
   let quat;
@@ -84,13 +84,12 @@ export function applyMeshTransformToActor(mesh: Mesh, actor: Actor): Actor {
     quat = mesh.quaternion.multiply(rotateNeg90);
   }
 
-  clone.transform.rotation[0] = -quat.y;
-  clone.transform.rotation[1] = -quat.x;
-  clone.transform.rotation[2] = -quat.z;
-  clone.transform.rotation[3] = quat.w;
+  Vue.set(actor.transform.rotation, 0, -quat.y);
+  Vue.set(actor.transform.rotation, 1, -quat.x);
+  Vue.set(actor.transform.rotation, 2, -quat.z);
+  Vue.set(actor.transform.rotation, 3, quat.w);
 
-  clone.transform.scale3d[0] = mesh.scale.x;
-  clone.transform.scale3d[1] = mesh.scale.y;
-  clone.transform.scale3d[2] = mesh.scale.z;
-  return clone;
+  Vue.set(actor.transform.scale3d, 0, mesh.scale.x);
+  Vue.set(actor.transform.scale3d, 1, mesh.scale.y);
+  Vue.set(actor.transform.scale3d, 2, mesh.scale.z);
 }

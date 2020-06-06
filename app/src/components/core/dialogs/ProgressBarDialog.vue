@@ -16,22 +16,22 @@
     </v-card-text>
     <v-card-actions v-if="progressText.showCloseButton">
       <v-spacer></v-spacer>
-      <v-btn color="primary" text @click="hideProgressDialog()">
-        {{ $t('general.close') }}
-      </v-btn>
+      <v-btn color="primary" text @click="hideProgressDialog()">{{
+        $t('general.close')
+      }}</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import ProgressBar from '../ProgressBar.vue';
 import { EventBus } from '@lib/event-bus';
 import { cursorTo } from 'readline';
 import { DIALOG_PROGRESS } from '@lib/constants';
 
-@Component({
+@VueComponent({
   components: {
     // ProgressBar
   },
