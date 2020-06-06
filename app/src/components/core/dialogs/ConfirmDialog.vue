@@ -14,21 +14,26 @@
       <v-card-actions>
         <v-spacer />
         <v-btn text @click="choose(false)">{{ $t('general.no') }}</v-btn>
-        <v-btn text @click="choose(true)" color="primary">{{
-          $t('general.yes')
-        }}</v-btn>
+        <v-btn text @click="choose(true)" color="primary">
+          {{ $t('general.yes') }}
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import {
+  Component as VueComponent,
+  Vue,
+  Prop,
+  Watch
+} from 'vue-property-decorator';
 
 /**
  * Simple component for a confirm dialog that also reacts to ESC and Enter
  */
-@Component({})
+@VueComponent({})
 export default class ConfirmDialog extends Vue {
   @Prop() value!: boolean;
   @Prop() title!: string;

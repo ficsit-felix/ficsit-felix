@@ -6,13 +6,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
 import DesktopMenu from './DesktopMenu.vue';
 import Editor from '../core/Editor.vue';
 import { EventBus } from '@lib/event-bus';
 import { TOGGLE_MENU } from '@lib/constants';
 
-@Component({
+@VueComponent({
   components: {
     DesktopMenu,
     Editor

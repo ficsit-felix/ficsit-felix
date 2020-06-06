@@ -79,11 +79,11 @@
 
 <script lang="ts">
 import 'whatwg-fetch';
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
 import * as JSZip from 'jszip';
 import AlertDialog from './AlertDialog.vue';
 
-@Component({ components: { AlertDialog } })
+@VueComponent({ components: { AlertDialog } })
 export default class BugReportDialog extends Vue {
   @Prop({ default: '' }) readonly uuid!: string;
   @Prop({ default: '' }) readonly filename!: string;

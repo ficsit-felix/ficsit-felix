@@ -8,9 +8,9 @@
         @stopAnimating="logoAnimating = false"
       />
       <div style="display: flex; flex-direction: row;">
-        <v-btn @click="$router.push({ name: 'landingpage' })">
-          {{ $t('openPage.backButton') }}
-        </v-btn>
+        <v-btn @click="$router.push({ name: 'landingpage' })">{{
+          $t('openPage.backButton')
+        }}</v-btn>
         <div class="spacer"></div>
         <v-btn @click="showSettingsDialog()">
           <v-icon left>mdi-cog</v-icon>
@@ -22,8 +22,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Component as VueComponent, Vue } from 'vue-property-decorator';
 
 import Logo from '../core/Logo.vue';
 import OpenBox from './OpenBox.vue';
@@ -32,7 +31,7 @@ import Settings from '../core/Settings.vue';
 import { EventBus } from '@lib/event-bus';
 import { DIALOG_SETTINGS } from '@lib/constants';
 
-@Component({
+@VueComponent({
   components: {
     Logo,
     OpenBox,

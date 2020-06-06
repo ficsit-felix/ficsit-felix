@@ -29,7 +29,7 @@ export interface ModelMesh {
     colorFactory: ColorFactory,
     scene: Scene
   ): void;
-  applyTransformToActor(actor: Actor): Actor;
+  applyTransformToActor(actor: Actor): void;
   applyTransform(actor: Actor): void;
 }
 
@@ -99,8 +99,8 @@ export class ThreeModelMesh implements ModelMesh {
     }
   }
 
-  applyTransformToActor(actor: Actor): Actor {
-    return applyMeshTransformToActor(this.mesh, actor);
+  applyTransformToActor(actor: Actor) {
+    applyMeshTransformToActor(this.mesh, actor);
   }
 
   applyTransform(actor: Actor) {
@@ -170,8 +170,9 @@ export class InstancedModelMesh implements ModelMesh {
     this.instancedMeshGroup.setVisible(this.index, !selected);
   }
 
-  applyTransformToActor(actor: Actor): Actor {
+  applyTransformToActor(actor: Actor) {
     // apply the changes to the instanced mesh group as well
+    // this is currently not necessary, because only selected meshes will be transformed and the transform in the instancedMeshGroup will be set on deselect
     /*this.instancedMeshGroup.setTransform(
       this.index,
       this.raycastMesh.position,
@@ -179,7 +180,7 @@ export class InstancedModelMesh implements ModelMesh {
       this.raycastMesh.scale
     );*/
 
-    return applyMeshTransformToActor(this.raycastMesh, actor);
+    applyMeshTransformToActor(this.raycastMesh, actor);
   }
 
   applyTransform(actor: Actor) {

@@ -110,13 +110,19 @@ import {
 } from '@lib/constants';
 import { MapType } from '@/store/settings';
 import { TransformAction } from '@/store/undo';
-import { Component, Vue, Prop, Watch, Ref } from 'vue-property-decorator';
+import {
+  Component as VueComponent,
+  Vue,
+  Prop,
+  Watch,
+  Ref
+} from 'vue-property-decorator';
 import MeshManager from '@lib/graphics/MeshManager';
 import { Action, namespace, State } from 'vuex-class';
-import { Actor, Component as Component2 } from 'satisfactory-json';
+import { Actor, Component } from 'satisfactory-json';
 
 const undoNamespace = namespace('undo');
-@Component({
+@VueComponent({
   components: {
     Renderer,
     Scene,
@@ -164,8 +170,6 @@ export default class ScenePanel extends Vue {
   // actions
   @Action('loadData')
   loadData: any;
-  @Action('setSelectedObject')
-  setSelectedObject: any;
   @Action('setSelectionDisabled')
   setSelectionDisabled: any;
   @Action('setBoxSelect')
@@ -202,7 +206,7 @@ export default class ScenePanel extends Vue {
   bugReportVisible = false;
 
   // watchers
-  @Watch('selectedActors')
+  @Watch('selectedActors', { deep: true })
   onSelectedActors(val: any) {
     if (val.length === 1) {
       const mesh = this.meshManager.findMeshByName(val[0].pathName);
@@ -570,9 +574,8 @@ export default class ScenePanel extends Vue {
       )
     );
 
-    const actor = mesh?.applyTransformToActor(this.selectedActors[0]);
-
-    this.setSelectedObject(actor);
+    // apply the transformation from the mesh to the actor
+    mesh?.applyTransformToActor(this.selectedActors[0]);
   }
 
   // transform control
@@ -611,13 +614,13 @@ export default class ScenePanel extends Vue {
     this.bugReportRef.openReportWindow('');
   }
 
-  onDeleteObjects(payload: { actors: Actor[]; components: Component2[] }) {
+  onDeleteObjects(payload: { actors: Actor[]; components: Component[] }) {
     // remove all actors from scene
     this.meshManager.deleteMeshesForActors(payload.actors);
     this.transformControl.detach();
   }
 
-  onCreateObjects(payload: { actors: Actor[]; components: Component2[] }) {
+  onCreateObjects(payload: { actors: Actor[]; components: Component[] }) {
     Promise.all(
       payload.actors.map(actor =>
         this.meshFactory
@@ -664,56 +667,6 @@ export default class ScenePanel extends Vue {
       this.meshFactory.createMesh(actor);
     }
   }
-
-  /*
-  provide() {
-    return {
-      playground: this
-    };
-  },
-  data: function() {
-    return {
-      width: 100,
-      height: 100,
-      mode: 'translate',
-      local: false,
-      commithash,
-      rotateX: 0,
-      rotateZ: 0,
-      bugReportVisible: false
-    };
-  },
-  computed: {
-    ...mapState([
-      'uuid',
-      'filename',
-      'classes',
-      'selectedPathNames',
-      'selectedActors'
-    ]),
-    ...mapState('settings', [
-      'showCustomPaints',
-      'showModels',
-      'mapType',
-      'conveyorBeltResolution',
-      'classColors',
-      'experimentalFeatures'
-    ])
-  },
-,
-  methods: {
-    ...mapActions([
-      'loadData',
-      'setSelectedObject',
-      'setSelectionDisabled',
-      'setBoxSelect',
-      'setShiftSelect',
-      'setProgress',
-      'setProgressText'
-    ]),
-
-    ...mapActions('undo', ['recordAction']),
-*/
 }
 </script>
 

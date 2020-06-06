@@ -119,7 +119,7 @@ import {
 import { openFileFromFilesystem } from '@lib/../desktop/openFile';
 import { mapActions, mapState } from 'vuex';
 import { createReadStream, Dir } from 'fs';
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
 import fs from 'fs';
 import { FileHeaderReader, FileHeader } from '@/lib/desktop/FileHeaderReader';
 import moment from 'moment';
@@ -134,7 +134,7 @@ interface FileList {
   [id: string]: FileHeader[];
 }
 
-@Component({
+@VueComponent({
   computed: {
     ...mapState(['showSaveMenuEntries'])
   } /*,

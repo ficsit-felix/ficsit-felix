@@ -63,7 +63,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import {
+  Component as VueComponent,
+  Vue,
+  Prop,
+  Watch
+} from 'vue-property-decorator';
 import Menubar from '../web/Menubar.vue';
 import ScenePanel from './panels/ScenePanel.vue';
 import ObjectListPanel from './panels/ObjectListPanel.vue';
@@ -73,7 +78,7 @@ import { mapState } from 'vuex';
 import { isElectron } from '@lib/isElectron';
 import PropertiesPanel from './panels/PropertiesPanel.vue';
 
-@Component({
+@VueComponent({
   components: {
     Menubar,
     ScenePanel,

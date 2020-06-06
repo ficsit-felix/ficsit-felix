@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component as VueComponent, Vue } from 'vue-property-decorator';
 
-@Component({})
+@VueComponent({})
 export default class CenterWhiteBox extends Vue {}
 </script>
 
