@@ -1,4 +1,4 @@
-import { WebGLRenderer } from 'three';
+import { WebGLRenderer, sRGBEncoding } from 'three';
 import { SelectControls } from '@lib/graphics/SelectControls.js';
 import { BoxSelectControls } from '@lib/graphics/BoxSelectControls.js';
 import { mapActions, mapState } from 'vuex';
@@ -20,6 +20,8 @@ export default {
       // necessary for the screenshot feature of the BugReportDialog
       preserveDrawingBuffer: true
     });
+    // Set the encoding to correctly load Textures from glTF files
+    this.renderer.outputEncoding = sRGBEncoding;
 
     return {
       renderer: this
