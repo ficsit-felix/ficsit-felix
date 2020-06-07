@@ -1,6 +1,16 @@
 <template>
   <div class="panel">
-    <div v-if="selectedActors.length === 1 && selectedComponents.length === 0">
+    <div
+      v-if="
+        selectedPathNames.length === 1 &&
+          selectedPathNames[0] === '---save-header---'
+      "
+    >
+      <v-label>___Save_Header___</v-label>
+    </div>
+    <div
+      v-else-if="selectedActors.length === 1 && selectedComponents.length === 0"
+    >
       <v-label>{{ formatPathName(selectedActors[0].pathName) }}</v-label>
       <Vector3PropertyDrawer
         label="Translation"
@@ -41,9 +51,9 @@
         {{ formatPathName(selectedComponents[0].pathName) }}
       </div>
       <span class="label">Parent</span>
-      <a class="link" @click="select([selectedComponents[0].outerPathName])">{{
-        formatPathName(selectedComponents[0].outerPathName)
-      }}</a>
+      <a class="link" @click="select([selectedComponents[0].outerPathName])">
+        {{ formatPathName(selectedComponents[0].outerPathName) }}
+      </a>
 
       <PropertyPropertyDrawer
         v-for="(property, index) in selectedComponents[0].entity.properties"
@@ -76,6 +86,8 @@ export default class PropertiesPanel extends Vue {
   selectedActors!: Actor[];
   @State(state => state.selectedComponents)
   selectedComponents!: Component[];
+  @State(state => state.selectedPathNames)
+  selectedPathNames!: string[];
 
   @Action('select')
   select: any;
