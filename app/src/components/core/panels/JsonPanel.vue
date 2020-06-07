@@ -9,7 +9,6 @@
       :error-messages="jsonError"
       style="height:100%"
     ></v-textarea>
-
     <div class="buttons">
       <v-btn
         class="ma-2"
@@ -43,9 +42,9 @@
       >
     </div>
 
-    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">{{
-      $t('propertyEditor.objectSavedSnack')
-    }}</v-snackbar>
+    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">
+      {{ $t('propertyEditor.objectSavedSnack') }}
+    </v-snackbar>
 
     <ConfirmDialog
       v-model="showDeleteDialog"

@@ -48,7 +48,10 @@
               </gl-component>
             </gl-col>
             <gl-stack :width="23">
-              <gl-component :title="$t('panels.properties.title')">
+              <gl-component
+                :title="$t('panels.properties.title')"
+                :closable="false"
+              >
                 <PropertiesPanel />
               </gl-component>
               <gl-component :title="$t('panels.json.title')" :closable="false">
