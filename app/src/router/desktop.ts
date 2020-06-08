@@ -17,7 +17,10 @@ export default new Router({
     {
       path: '/loadeditor',
       name: 'loadEditor',
-      component: LoadEditorView,
+      component: () =>
+        import(
+          /* webpackChunkName: "editor" */ '@components/views/LoadEditorView.vue'
+        ),
       meta: {
         requiresDataLoaded: true
       }
@@ -25,7 +28,10 @@ export default new Router({
     {
       path: '/editor',
       name: 'editor',
-      component: EditorView,
+      component: () =>
+        import(
+          /* webpackChunkName: "editor" */ '../components/desktop/EditorView.vue'
+        ),
       meta: {
         requiresDataLoaded: true
       }
