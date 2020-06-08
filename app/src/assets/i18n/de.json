@@ -188,7 +188,7 @@
     "cameraType": {
       "label": "Kamera",
       "orbit": "Orbit-Kamera",
-      "fly": "Fliegenkamera",
+      "fly": "Fliege-Kamera",
       "flat": "2D-Kamera"
     }
   },
