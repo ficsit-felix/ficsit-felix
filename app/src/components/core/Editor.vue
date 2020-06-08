@@ -6,7 +6,7 @@
         <golden-layout
           class="main-layout"
           :showPopoutIcon="false"
-          :showMaximiseIcon="false"
+          :showMaximiseIcon="true"
           :showCloseIcon="false"
           :headerHeight="22"
           :dragProxyHeight="0"
@@ -48,14 +48,15 @@
               </gl-component>
             </gl-col>
             <gl-stack :width="23">
+              <gl-component :title="$t('panels.json.title')" :closable="false">
+                <JsonPanel ref="propertyEditor" />
+              </gl-component>
               <gl-component
                 :title="$t('panels.properties.title')"
+                v-if="showPropertiesPanel"
                 :closable="false"
               >
                 <PropertiesPanel />
-              </gl-component>
-              <gl-component :title="$t('panels.json.title')" :closable="false">
-                <JsonPanel ref="propertyEditor" />
               </gl-component>
             </gl-stack>
           </gl-row>
@@ -91,7 +92,7 @@ import PropertiesPanel from './panels/PropertiesPanel.vue';
     PropertiesPanel
   },
   computed: {
-    ...mapState('settings', ['layout'])
+    ...mapState('settings', ['layout', 'showPropertiesPanel'])
   }
 })
 export default class Editor extends Vue {

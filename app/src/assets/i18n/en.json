@@ -190,7 +190,9 @@
       "orbit": "Orbit Camera",
       "fly": "Fly Camera",
       "flat": "2D Camera"
-    }
+    },
+    "showPropertiesPanel": "Show Properties Panel",
+    "resetSettingsButton": "Reset all settings"
   },
   "toolbar": {
     "local": "Local",
@@ -216,5 +218,16 @@
     "json": {
       "title": "JSON"
     }
+  },
+  "photoMode": {
+    "title": "Take a photo",
+    "width": "Image Width",
+    "height": "Image Height",
+    "text": "Text (optional)",
+    "includeLogo": "Include FeliX Logo",
+    "downloadButton": "Download",
+    "clipboardButton": "Copy to clipboard",
+    "downloaded": "Image is downloaded.",
+    "copiedToClipboard": "Image is copied to clipboard (if supported by browser)."
   }
 }

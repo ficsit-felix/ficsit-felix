@@ -190,7 +190,9 @@
       "orbit": "Orbit-Kamera",
       "fly": "Fliege-Kamera",
       "flat": "2D-Kamera"
-    }
+    },
+    "showPropertiesPanel": "Eigenschaften Panel anzeigen",
+    "resetSettingsButton": "Alle Einstellungen zurücksetzen"
   },
   "toolbar": {
     "local": "Lokal",
@@ -216,5 +218,16 @@
     "json": {
       "title": "JSON"
     }
+  },
+  "photoMode": {
+    "title": "Foto aufnehmen",
+    "width": "Bildbreite",
+    "height": "Bildhöhe",
+    "text": "Text (optional)",
+    "includeLogo": "FeliX Logo einfügen",
+    "downloadButton": "Herunterladen",
+    "clipboardButton": "Per Zwischenablage kopieren",
+    "downloaded": "Bild wird heruntergeladen.",
+    "copiedToClipboard": "Bild wird in die Zwischenablage kopiert (falls vom Browser unterstützt)."
   }
 }

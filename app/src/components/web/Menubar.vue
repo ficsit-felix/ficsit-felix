@@ -5,7 +5,7 @@
       @mouseleave="logoAnimating = false"
       class="logoContainer"
     >
-      <Logo :height="48" black="#707070" :animating="logoAnimating"></Logo>
+      <Logo :height="48" black="#a0a0a0" :animating="logoAnimating"></Logo>
     </div>
     <v-tooltip bottom>
       <template v-slot:activator="{ on }">

@@ -35,7 +35,6 @@
               v-model="includeScreenshot"
               :disabled="formDisabled"
               :label="$t('dialog.bugReport.includeScreenshot')"
-              hide-details
             ></v-checkbox>
 
             <img :src="screenshotDataUrl" v-if="includeScreenshot" />
