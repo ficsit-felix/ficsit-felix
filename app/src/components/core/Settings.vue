@@ -123,12 +123,12 @@
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       ></v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">{{
-        $t('settings.copyClassColorsButton')
-      }}</v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">{{
-        $t('settings.clearClassColorsButton')
-      }}</v-btn>
+      <v-btn @click="exportClassColors" class="ma-2">
+        {{ $t('settings.copyClassColorsButton') }}
+      </v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">
+        {{ $t('settings.clearClassColorsButton') }}
+      </v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"
@@ -149,14 +149,25 @@
         :input-value="showFps"
         @change="setShowFps"
         :label="$t('settings.showFps')"
+        hide-details
       ></v-checkbox>
+
+      <v-checkbox
+        :input-value="showPropertiesPanel"
+        @change="setShowPropertiesPanel"
+        :label="$t('settings.showPropertiesPanel')"
+        hide-details
+      ></v-checkbox>
+      <v-btn @click="resetSettings" class="ma-2">
+        {{ $t('settings.resetSettingsButton') }}
+      </v-btn>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import copyToClipboard from '@lib/copyToClipboard';
+import { copyToClipboard } from '@lib/copyToClipboard';
 import LanguageSwitcher from './LanguageSwitcher.vue';
 import { isElectron } from '@lib/isElectron';
 import { MapType, CameraType } from '@/store/settings';
@@ -189,7 +200,8 @@ export default {
       'snapping',
       'translationSnap',
       'rotationSnap',
-      'cameraType'
+      'cameraType',
+      'showPropertiesPanel'
     ])
   },
   methods: {
@@ -209,7 +221,9 @@ export default {
       'setSnapping',
       'setTranslationSnap',
       'setRotationSnap',
-      'setCameraType'
+      'setCameraType',
+      'setShowPropertiesPanel',
+      'resetSettings'
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);

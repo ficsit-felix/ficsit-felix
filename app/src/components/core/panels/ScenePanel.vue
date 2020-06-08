@@ -110,7 +110,8 @@ import {
   GUI_REFRESH_TIMEOUT,
   DELETE_OBJECTS,
   CREATE_OBJECTS,
-  CAMERA_CHANGE
+  CAMERA_CHANGE,
+  SCENE_RESIZE
 } from '@lib/constants';
 import { MapType } from '@/store/settings';
 import { TransformAction } from '@/store/undo';
@@ -437,6 +438,7 @@ export default class ScenePanel extends Vue {
       EventBus.$on(CREATE_OBJECTS, this.onCreateObjects);
       EventBus.$on(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
       EventBus.$on(CAMERA_CHANGE, this.onCameraChange);
+      EventBus.$on(SCENE_RESIZE, this.handleResize);
     }, GUI_REFRESH_TIMEOUT);
   }
 
@@ -445,6 +447,7 @@ export default class ScenePanel extends Vue {
     EventBus.$off(CREATE_OBJECTS, this.onCreateObjects);
     EventBus.$off(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
     EventBus.$off(CAMERA_CHANGE, this.onCameraChange);
+    EventBus.$off(SCENE_RESIZE, this.handleResize);
 
     this.transformControl.detach();
     this.transformControl.dispose();

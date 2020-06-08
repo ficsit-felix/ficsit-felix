@@ -1,6 +1,16 @@
 <template>
-  <div class="toolbar">
+  <div
+    class="toolbar"
+    @mousedown.stop="/*prevent deselect when clicking on toolbar button*/"
+  >
     <div class="section">
+      <!--      <v-icon>mdi-axis-arrow</v-icon>
+      <v-icon>mdi-rotate-orbit</v-icon>
+      <v-icon>mdi-arrow-expand-all</v-icon>
+      <v-icon>mdi-cube</v-icon>
+      <v-icon>mdi-earth</v-icon>
+
+      <v-icon>mdi-cube-scan</v-icon>-->
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <a
@@ -82,27 +92,61 @@
       </v-tooltip>
     </div>
 
-    <v-checkbox
+    <!--    <v-checkbox
       :input-value="snapping"
       @change="setSnapping"
       :label="$t('settings.snapping')"
       hide-details
       dense
       class="snapping-checkbox"
-    ></v-checkbox>
+    ></v-checkbox>-->
+
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <v-icon
+          v-on="on"
+          class="icn-btn"
+          v-ripple
+          v-if="snapping"
+          @click.stop="setSnapping(false)"
+          >mdi-grid</v-icon
+        >
+        <v-icon
+          v-on="on"
+          class="icn-btn"
+          v-ripple
+          v-else
+          @click="setSnapping(true)"
+          >mdi-grid-off</v-icon
+        >
+      </template>
+      {{ $t('settings.snapping') }}
+    </v-tooltip>
 
     <div class="spacer"></div>
-    <span
-      @click="$emit('reportBug')"
-      style="cursor: pointer;margin-right: 10px;margin-top: 8px"
-    >
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-icon class="bugReportIcon" v-on="on">mdi-bug</v-icon>
-        </template>
-        {{ $t('toolbar.reportBug') }}
-      </v-tooltip>
-    </span>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <v-icon v-on="on" class="icn-btn" v-ripple @click="showPhotoMode = true"
+          >mdi-camera</v-icon
+        >
+      </template>
+      {{ $t('photoMode.title') }}
+    </v-tooltip>
+
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <v-icon
+          class="bugReportIcon icn-btn"
+          v-ripple
+          v-on="on"
+          @click="$emit('reportBug')"
+          >mdi-bug</v-icon
+        >
+      </template>
+      {{ $t('toolbar.reportBug') }}
+    </v-tooltip>
+
+    <PhotoModeDialog v-model="showPhotoMode" />
   </div>
 </template>
 
@@ -110,9 +154,12 @@
 import { mapState, mapActions } from 'vuex';
 import { EventBus } from '@lib/event-bus';
 import { FOCUS_SELECTED_OBJECT } from '@lib/constants';
+import PhotoModeDialog from './dialogs/PhotoModeDialog.vue';
 export default {
   name: 'Toolbar',
-  components: {},
+  components: {
+    PhotoModeDialog
+  },
   props: ['mode', 'local'],
   computed: {
     ...mapState(['selectedActors']),
@@ -135,6 +182,11 @@ export default {
     focusDisabled() {
       return this.selectedActors.length !== 1;
     }
+  },
+  data: () => {
+    return {
+      showPhotoMode: false
+    };
   },
   methods: {
     ...mapActions('settings', ['setSnapping']),
@@ -188,17 +240,27 @@ export default {
   }
 
   .v-icon.bugReportIcon {
-    color: #aa444477;
-  }
-  span:hover .v-icon.bugReportIcon {
-    color: #d44;
+    color: #aa4444;
+    &:hover {
+      color: #d44;
+    }
   }
 }
 .spacer {
   flex-grow: 1;
 }
 
-.snapping-checkbox {
-  margin-top: 6px;
+.icn-btn {
+  width: 44px;
+  height: 44px;
+  padding: 4px;
+  opacity: 0.4;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.icn-btn::after {
+  height: auto;
 }
 </style>

@@ -80,6 +80,9 @@ export default {
       if (this.cameraPosition !== undefined) {
         cameraPosition = this.cameraPosition;
       }
+      if (this.obj !== undefined) {
+        cameraPosition = this.obj.position;
+      }
 
       let camera;
       if (this.cameraType === CameraType.Flat) {
@@ -158,7 +161,7 @@ export default {
             this.obj.rotation.z === 0
           ) {
             // Initial rotation
-            this.obj.lookAt(0, 0, 0);
+            this.controls.focus(0, 0, 0);
           }
           break;
         case CameraType.Flat:

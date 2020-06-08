@@ -42,6 +42,7 @@ interface SettingsRootState {
   translationSnap: number;
   rotationSnap: number;
   cameraType: CameraType;
+  showPropertiesPanel: boolean;
 }
 
 // updates the local storage on settings mutations
@@ -50,9 +51,8 @@ function updateLocalStorage(state: SettingsRootState) {
   localStorage.setItem('settings', JSON.stringify(state));
 }
 
-export const settingsModule: Module<SettingsRootState, RootState> = {
-  namespaced: true,
-  state: {
+const defaultState = () => {
+  return {
     nearPlane: 100,
     farPlane: 200000,
     showModels: true,
@@ -71,8 +71,14 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     snapping: false,
     translationSnap: 100,
     rotationSnap: 45,
-    cameraType: CameraType.Orbit
-  },
+    cameraType: CameraType.Orbit,
+    showPropertiesPanel: false
+  };
+};
+
+export const settingsModule: Module<SettingsRootState, RootState> = {
+  namespaced: true,
+  state: defaultState(),
   getters: {},
   mutations: {
     INIT_STORE_FROM_LOCAL_DATA(state) {
@@ -163,6 +169,18 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     SET_CAMERA_TYPE(state, payload) {
       state.cameraType = payload;
       updateLocalStorage(state);
+    },
+    SET_SHOW_PROPERTIES_PANEL(state, payload) {
+      state.showPropertiesPanel = payload;
+      updateLocalStorage(state);
+    },
+    RESET_SETTINGS(state) {
+      const s = defaultState();
+      Object.keys(s).forEach(key => {
+        //@ts-ignore
+        state[key] = s[key];
+      });
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -222,6 +240,12 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setCameraType(context, payload) {
       context.commit('SET_CAMERA_TYPE', payload);
+    },
+    setShowPropertiesPanel(context, payload) {
+      context.commit('SET_SHOW_PROPERTIES_PANEL', payload);
+    },
+    resetSettings(context, payload) {
+      context.commit('RESET_SETTINGS');
     }
   }
 };
