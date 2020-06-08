@@ -1,6 +1,6 @@
 import { Camera, MOUSE, TOUCH, Vector3 } from 'three';
 
-export class OrbitControls {
+export class FlatControls {
   constructor(object: Camera, domElement?: HTMLElement);
 
   object: Camera;
@@ -70,8 +70,4 @@ export class OrbitControls {
 
   // Focus an object
   focus(x: number, y: number, z: number): void;
-}
-
-export class MapControls extends OrbitControls {
-  constructor(object: Camera, domElement?: HTMLElement);
 }

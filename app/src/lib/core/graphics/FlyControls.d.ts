@@ -1,4 +1,4 @@
-import { Camera } from '../../../src/Three';
+import { Camera } from 'three';
 
 export class FlyControls {
   constructor(object: Camera, domElement?: HTMLElement);
@@ -13,4 +13,7 @@ export class FlyControls {
 
   update(delta: number): void;
   dispose(): void;
+
+  // Focus an object
+  focus(x: number, y: number, z: number): void;
 }

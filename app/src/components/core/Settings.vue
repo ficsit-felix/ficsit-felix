@@ -21,12 +21,18 @@
         :label="$t('settings.cameraType.fly')"
         :value="CameraType.Fly"
       ></v-radio>
+      <v-radio
+        :label="$t('settings.cameraType.flat')"
+        :value="CameraType.Flat"
+      ></v-radio>
     </v-radio-group>
 
     <v-checkbox
       :input-value="snapping"
       @change="setSnapping"
       :label="$t('settings.snapping')"
+      hide-details
+      class="mb-4"
     ></v-checkbox>
 
     <v-text-field
@@ -117,12 +123,12 @@
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       ></v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">
-        {{ $t('settings.copyClassColorsButton') }}
-      </v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">
-        {{ $t('settings.clearClassColorsButton') }}
-      </v-btn>
+      <v-btn @click="exportClassColors" class="ma-2">{{
+        $t('settings.copyClassColorsButton')
+      }}</v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">{{
+        $t('settings.clearClassColorsButton')
+      }}</v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"

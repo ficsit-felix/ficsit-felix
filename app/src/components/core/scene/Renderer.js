@@ -50,14 +50,14 @@ export default {
     this.animate();
     this.selectControls = new SelectControls(
       this.scene,
-      this.camera.obj,
+      this.camera,
       elem,
       this,
       this.playground
     );
     this.boxSelectControls = new BoxSelectControls(
       this.scene,
-      this.camera.obj,
+      this.camera,
       elem,
       this,
       this.playground

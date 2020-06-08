@@ -31,7 +31,6 @@ var FlyControls = function(object, domElement) {
 
   this.tmpQuaternion = new Quaternion();
 
-  console.log(object.rotation);
   this.tmpEuler = object.rotation.clone();
   this.tmpEuler.reorder('ZYX');
   //this.tmpEuler = new Euler(0, 0, 0, 'ZYX');
@@ -176,8 +175,8 @@ var FlyControls = function(object, domElement) {
       this.domElement.focus();
     }
 
-    event.preventDefault();
-    event.stopPropagation();
+    /*event.preventDefault();
+    event.stopPropagation();*/
 
     if (this.dragToLook && event.button == 2) {
       // right click
@@ -218,8 +217,8 @@ var FlyControls = function(object, domElement) {
   };
 
   this.mouseup = function(event) {
-    event.preventDefault();
-    event.stopPropagation();
+    /*event.preventDefault();
+    event.stopPropagation();*/
 
     if (this.dragToLook && event.button == 2) {
       this.mouseStatus = 0;
@@ -335,6 +334,14 @@ var FlyControls = function(object, domElement) {
   function contextmenu(event) {
     event.preventDefault();
   }
+
+  this.focus = function(x, y, z) {
+    this.object.lookAt(x, y, z);
+
+    // fix euler angle
+    this.tmpEuler = object.rotation.clone();
+    this.tmpEuler.reorder('ZYX');
+  };
 
   this.dispose = function() {
     this.domElement.removeEventListener('contextmenu', contextmenu, false);
