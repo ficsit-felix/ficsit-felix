@@ -60,8 +60,9 @@
 
 <script lang="ts">
 import * as THREE from 'three';
-//@ts-ignore
-import { TransformControls } from '@lib/graphics/TransformControls.js';
+
+import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
+
 import _default, { mapActions, mapGetters, mapState } from 'vuex';
 //@ts-ignore
 import Scene from '../scene/Scene.js';
@@ -75,7 +76,8 @@ import {
   Mesh,
   error,
   Texture,
-  Group
+  Group,
+  MathUtils
 } from 'three';
 import { setTimeout } from 'timers';
 import { modelHelper } from '@lib/graphics/modelHelper';
@@ -166,6 +168,12 @@ export default class ScenePanel extends Vue {
   classColors!: { [id: string]: string };
   @State(state => state.settings.experimentalFeatures)
   experimentalFeatures!: boolean;
+  @State(state => state.settings.snapping)
+  snapping!: boolean;
+  @State(state => state.settings.translationSnap)
+  translationSnap!: number;
+  @State(state => state.settings.rotationSnap)
+  rotationSnap!: number;
 
   // actions
   @Action('loadData')
@@ -192,7 +200,7 @@ export default class ScenePanel extends Vue {
   scene: any;
   selectedMaterial!: THREE.MeshMatcapMaterial;
   lastSelectedActors: Actor[] = [];
-  transformControl: any;
+  transformControl!: TransformControls;
   mapIngameModel?: Group;
   mapRenderModel?: Group;
   activeMapType = MapType.None;
@@ -318,6 +326,32 @@ export default class ScenePanel extends Vue {
     }
   }
 
+  @Watch('snapping')
+  onSnappingChange(value: boolean) {
+    if (value) {
+      this.transformControl.translationSnap = this.translationSnap;
+      this.transformControl.rotationSnap =
+        this.rotationSnap * MathUtils.DEG2RAD;
+    } else {
+      this.transformControl.translationSnap = null;
+      this.transformControl.rotationSnap = null;
+    }
+  }
+
+  @Watch('translationSnap')
+  onTranslationSnapChange(value: number) {
+    if (this.snapping) {
+      this.transformControl.translationSnap = value;
+    }
+  }
+
+  @Watch('rotationSnap')
+  onRotationSnapChange(value: number) {
+    if (this.snapping) {
+      this.transformControl.rotationSnap = value * MathUtils.DEG2RAD;
+    }
+  }
+
   mounted() {
     setTimeout(() => {
       // show the progress dialog in case it was not already shown (should only happen on reload during development)
@@ -366,6 +400,12 @@ export default class ScenePanel extends Vue {
         this.rendererRef.renderer.domElement
       );
       this.transformControl.space = 'world';
+      this.transformControl.translationSnap = this.snapping
+        ? this.translationSnap
+        : null;
+      this.transformControl.rotationSnap = this.snapping
+        ? this.rotationSnap * MathUtils.DEG2RAD
+        : null;
       // correct way to to this, but i don't want that many updates
       //this.transformControl.addEventListener('objectChange', () => {
       //this.objectChanged();
@@ -378,8 +418,7 @@ export default class ScenePanel extends Vue {
           if (event.value == false) {
             this.onSelectedActorTransformChanged();
           }
-        },
-        false
+        }
       );
       this.scene.add(this.transformControl);
 

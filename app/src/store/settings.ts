@@ -32,6 +32,9 @@ interface SettingsRootState {
   showDevelopSettings: boolean;
   layout: any; // Golden Layout state
   layoutVersion: LayoutVersion;
+  snapping: boolean;
+  translationSnap: number;
+  rotationSnap: number;
 }
 
 // updates the local storage on settings mutations
@@ -57,7 +60,10 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     showFps: false,
     showDevelopSettings: false,
     layout: null,
-    layoutVersion: currentLayoutVersion
+    layoutVersion: currentLayoutVersion,
+    snapping: false,
+    translationSnap: 100,
+    rotationSnap: 45
   },
   getters: {},
   mutations: {
@@ -133,6 +139,18 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     SET_LAYOUT(state, payload) {
       state.layout = payload;
       updateLocalStorage(state);
+    },
+    SET_SNAPPING(state, payload) {
+      state.snapping = payload;
+      updateLocalStorage(state);
+    },
+    SET_TRANSLATION_SNAP(state, payload) {
+      state.translationSnap = payload;
+      updateLocalStorage(state);
+    },
+    SET_ROTATION_SNAP(state, payload) {
+      state.rotationSnap = payload;
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -180,6 +198,15 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setLayout(context, payload) {
       context.commit('SET_LAYOUT', payload);
+    },
+    setSnapping(context, payload) {
+      context.commit('SET_SNAPPING', payload);
+    },
+    setTranslationSnap(context, payload) {
+      context.commit('SET_TRANSLATION_SNAP', payload);
+    },
+    setRotationSnap(context, payload) {
+      context.commit('SET_ROTATION_SNAP', payload);
     }
   }
 };

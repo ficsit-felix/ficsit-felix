@@ -180,7 +180,11 @@
     "experimentalFeatures": "Experimental features",
     "autoLoadSaveFile": "Auto-load save file",
     "showFps": "Show FPS",
-    "saveAsZip": "Save output as zip file"
+    "saveAsZip": "Save output as zip file",
+    "controlsSectionTitle": "Controls",
+    "snapping": "Snapping",
+    "translationSnap": "Translation Snap",
+    "rotationSnap": "Rotation Snap"
   },
   "toolbar": {
     "local": "Local",
