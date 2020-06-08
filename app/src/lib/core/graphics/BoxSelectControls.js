@@ -13,7 +13,7 @@ let BoxSelectControls = function(
   this.disabled = true;
   this.isDown = false;
 
-  let selectionBox = new SelectionBox(camera, scene);
+  let selectionBox = new SelectionBox(camera.obj, scene);
   let helper = new SelectionHelper(selectionBox, domElement, 'selectBox', this);
   let scope = this;
 

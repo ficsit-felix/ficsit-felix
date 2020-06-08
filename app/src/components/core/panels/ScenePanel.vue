@@ -77,7 +77,8 @@ import {
   error,
   Texture,
   Group,
-  MathUtils
+  MathUtils,
+  Camera as ThreeCamera
 } from 'three';
 import { setTimeout } from 'timers';
 import { modelHelper } from '@lib/graphics/modelHelper';
@@ -108,7 +109,8 @@ import {
   FOCUS_SELECTED_OBJECT,
   GUI_REFRESH_TIMEOUT,
   DELETE_OBJECTS,
-  CREATE_OBJECTS
+  CREATE_OBJECTS,
+  CAMERA_CHANGE
 } from '@lib/constants';
 import { MapType } from '@/store/settings';
 import { TransformAction } from '@/store/undo';
@@ -434,6 +436,7 @@ export default class ScenePanel extends Vue {
       EventBus.$on(DELETE_OBJECTS, this.onDeleteObjects);
       EventBus.$on(CREATE_OBJECTS, this.onCreateObjects);
       EventBus.$on(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
+      EventBus.$on(CAMERA_CHANGE, this.onCameraChange);
     }, GUI_REFRESH_TIMEOUT);
   }
 
@@ -441,6 +444,7 @@ export default class ScenePanel extends Vue {
     EventBus.$off(DELETE_OBJECTS, this.onDeleteObjects);
     EventBus.$off(CREATE_OBJECTS, this.onCreateObjects);
     EventBus.$off(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
+    EventBus.$off(CAMERA_CHANGE, this.onCameraChange);
 
     this.transformControl.detach();
     this.transformControl.dispose();
@@ -575,10 +579,12 @@ export default class ScenePanel extends Vue {
     if (this.selectedActors.length === 1) {
       let camera = this.rendererRef.camera.controls;
       const actor = this.selectedActors[0];
-      // changed because of coordinate system change
-      camera.target.x = actor.transform.translation[1];
-      camera.target.y = actor.transform.translation[0];
-      camera.target.z = actor.transform.translation[2];
+      // changed order because of coordinate system change
+      camera.focus(
+        actor.transform.translation[1],
+        actor.transform.translation[0],
+        actor.transform.translation[2]
+      );
     }
   }
   storeCameraState() {
@@ -594,6 +600,9 @@ export default class ScenePanel extends Vue {
     let height = elem.offsetHeight;
     this.width = width;
     this.height = height;
+
+    let camera = this.rendererRef.camera;
+    camera.resize(width, height);
   }
   onSelectedActorTransformChanged() {
     if (this.selectedActors.length !== 1) {
@@ -705,6 +714,10 @@ export default class ScenePanel extends Vue {
     for (const actor of payload.actors) {
       this.meshFactory.createMesh(actor);
     }
+  }
+
+  onCameraChange(camera: ThreeCamera) {
+    this.transformControl.camera = camera;
   }
 }
 </script>

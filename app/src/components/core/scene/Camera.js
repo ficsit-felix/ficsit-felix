@@ -1,37 +1,25 @@
 import Object3D from './Object3D';
-import { PerspectiveCamera, MOUSE } from 'three';
+import {
+  PerspectiveCamera,
+  MOUSE,
+  OrthographicCamera,
+  Vector3,
+  Euler
+} from 'three';
 import { OrbitControls } from '@lib/graphics/OrbitControls.js';
 import { FlyControls } from '@lib/graphics/FlyControls.js';
+import { FlatControls } from '@lib/graphics/FlatControls.js';
 import { mapActions, mapState } from 'vuex';
 import { CameraType } from '@/store/settings';
+import { EventBus } from '@lib/event-bus';
+import { CAMERA_CHANGE } from '@lib/constants';
 
 export default {
   extends: Object3D,
   inject: ['renderer'],
 
   provide() {
-    const camera = new PerspectiveCamera(
-      70,
-      this.renderer.width / this.renderer.height,
-      this.nearPlane,
-      this.farPlane
-    );
-
-    if (this.cameraPosition !== undefined) {
-      camera.position.x = this.cameraPosition.x;
-      camera.position.z = this.cameraPosition.z;
-      camera.position.y = this.cameraPosition.y;
-    } else {
-      // looking north
-      camera.position.x = 70000;
-      camera.position.y = 0;
-      camera.position.z = 60000;
-    }
-    camera.up.y = 0;
-    camera.up.z = 1;
-    this.obj = camera;
-
-    camera.lookAt(0, 0, 0);
+    this.setupCamera();
     return {
       camera: this.obj
     };
@@ -58,7 +46,13 @@ export default {
       this.obj.far = value;
       this.obj.updateProjectionMatrix();
     },
-    cameraType(value) {
+    cameraType(value, oldValue) {
+      if ((value === CameraType.Flat) !== (oldValue === CameraType.Flat)) {
+        // need to switch camera
+        this.setupCamera();
+        EventBus.$emit(CAMERA_CHANGE, this.obj);
+      }
+
       this.setupControl(this.domElement);
     }
   },
@@ -75,41 +69,116 @@ export default {
   methods: {
     ...mapActions(['setCameraData']),
 
+    setupCamera() {
+      // looking north
+      let cameraPosition = new Vector3(
+        this.cameraType === CameraType.Flat ? 0 : 70000,
+        0,
+        60000
+      );
+
+      if (this.cameraPosition !== undefined) {
+        cameraPosition = this.cameraPosition;
+      }
+
+      let camera;
+      if (this.cameraType === CameraType.Flat) {
+        camera = new OrthographicCamera(
+          this.renderer.width / -2,
+          this.renderer.width / 2,
+          this.renderer.height / 2,
+          this.renderer.height / -2,
+          this.nearPlane,
+          this.farPlane
+        );
+
+        // We want a top down view
+        cameraPosition.z = 60000;
+        camera.rotation.set(0, 0, Math.PI / 2);
+        camera.zoom = 0.005;
+        camera.updateProjectionMatrix();
+      } else {
+        camera = new PerspectiveCamera(
+          70,
+          this.renderer.width / this.renderer.height,
+          this.nearPlane,
+          this.farPlane
+        );
+      }
+
+      camera.position.x = cameraPosition.x;
+      camera.position.z = cameraPosition.z;
+      camera.position.y = cameraPosition.y;
+
+      camera.up.y = 0;
+      camera.up.z = 1;
+
+      this.obj = camera;
+    },
+
     setupControl(domElement) {
       this.domElement = domElement;
       if (this.controls) {
         this.controls.dispose();
       }
-      if (this.cameraType === CameraType.Orbit) {
-        const controls = new OrbitControls(this.obj, domElement);
-        controls.addEventListener('change', this.onChange); // call this only in static scenes (i.e., if there is no animation loop)
-        controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-        controls.dampingFactor = 0.25;
-        controls.screenSpacePanning = false;
-        controls.minDistance = 1000;
-        controls.maxDistance = 100000;
-        controls.maxPolarAngle = Math.PI;
-        controls.rotateSpeed = 1;
-        controls.panSpeed = 1;
-        controls.mouseButtons.LEFT = undefined;
-        controls.mouseButtons.MIDDLE = MOUSE.PAN;
-        controls.mouseButtons.RIGHT = MOUSE.ROTATE;
-        if (this.cameraTarget !== undefined) {
-          controls.target = this.cameraTarget;
-        }
 
-        // controls.addEventListener('end', this.updateCameraState);
-        this.controls = controls;
-      } else {
-        const controls = new FlyControls(this.obj, domElement);
-        controls.movementSpeed = 50000;
-        controls.domElement = domElement;
-        controls.rollSpeed = Math.PI;
-        controls.autoForward = false;
-        controls.dragToLook = true;
-        this.controls = controls;
-        window.controls = controls;
+      switch (this.cameraType) {
+        case CameraType.Orbit:
+          const controls = new OrbitControls(this.obj, domElement);
+          controls.addEventListener('change', this.onChange); // call this only in static scenes (i.e., if there is no animation loop)
+          controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+          controls.dampingFactor = 0.25;
+          controls.screenSpacePanning = false;
+          controls.minDistance = 1000;
+          controls.maxDistance = 100000;
+          controls.maxPolarAngle = Math.PI;
+          controls.rotateSpeed = 1;
+          controls.panSpeed = 1;
+          controls.mouseButtons.LEFT = undefined;
+          controls.mouseButtons.MIDDLE = MOUSE.PAN;
+          controls.mouseButtons.RIGHT = MOUSE.ROTATE;
+          if (this.cameraTarget !== undefined) {
+            controls.target = this.cameraTarget;
+          }
+
+          // controls.addEventListener('end', this.updateCameraState);
+          this.controls = controls;
+          break;
+        case CameraType.Fly:
+          const flyControls = new FlyControls(this.obj, domElement);
+          flyControls.movementSpeed = 50000;
+          flyControls.domElement = domElement;
+          flyControls.rollSpeed = Math.PI;
+          flyControls.autoForward = false;
+          flyControls.dragToLook = true;
+          this.controls = flyControls;
+          if (
+            this.obj.rotation.x === 0 &&
+            this.obj.rotation.y === 0 &&
+            this.obj.rotation.z === 0
+          ) {
+            // Initial rotation
+            this.obj.lookAt(0, 0, 0);
+          }
+          break;
+        case CameraType.Flat:
+          const flatControls = new FlatControls(this.obj, domElement);
+          flatControls.addEventListener('change', this.onChange); // call this only in static scenes (i.e., if there is no animation loop)
+          flatControls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+          flatControls.dampingFactor = 0.5;
+          flatControls.screenSpacePanning = false;
+          flatControls.rotateSpeed = 1;
+          flatControls.panSpeed = 1;
+          flatControls.mouseButtons.LEFT = undefined;
+          flatControls.mouseButtons.MIDDLE = MOUSE.PAN;
+          flatControls.mouseButtons.RIGHT = MOUSE.ROTATE;
+          flatControls.maxZoom = 0.1;
+          flatControls.minZoom = 0.00008;
+
+          this.controls = flatControls;
+          break;
       }
+      this.controls.update(0);
     },
 
     updateCameraState() {
@@ -131,6 +200,15 @@ export default {
       //this.$emit('cameraChange');
       if (window.onCompassUpdate) {
         window.onCompassUpdate(this.obj.matrixWorldInverse);
+      }
+    },
+    resize(width, height) {
+      if (this.cameraType === CameraType.Flat) {
+        this.obj.left = width / -2;
+        this.obj.right = width / 2;
+        this.obj.top = height / 2;
+        this.obj.bottom = height / -2;
+        this.obj.updateProjectionMatrix();
       }
     }
   },

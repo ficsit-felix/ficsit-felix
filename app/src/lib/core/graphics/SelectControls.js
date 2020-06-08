@@ -34,7 +34,7 @@ let SelectControls = function(scene, camera, domElement, callback, playground) {
     }
 
     if (event.button == MOUSE.LEFT) {
-      raycaster.setFromCamera(mouse, camera);
+      raycaster.setFromCamera(mouse, camera.obj);
       let intersects = raycaster.intersectObjects(
         playground.meshManager.raycastActiveMeshes,
         true

@@ -88,7 +88,7 @@
       :label="$t('settings.snapping')"
       hide-details
       dense
-      class="my-1"
+      class="snapping-checkbox"
     ></v-checkbox>
 
     <div class="spacer"></div>
@@ -196,5 +196,9 @@ export default {
 }
 .spacer {
   flex-grow: 1;
+}
+
+.snapping-checkbox {
+  margin-top: 6px;
 }
 </style>

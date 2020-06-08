@@ -145,6 +145,11 @@ var OrbitControls = function(object, domElement) {
     state = STATE.NONE;
   };
 
+  this.focus = function(x, y, z) {
+    scope.target.set(x, y, z);
+    scope.update();
+  };
+
   // this method is exposed, but perhaps it would be better if we can make it private...
   this.update = (function() {
     var offset = new Vector3();

@@ -16,7 +16,8 @@ enum LayoutVersion {
 
 export enum CameraType {
   Orbit,
-  Fly
+  Fly,
+  Flat
 }
 
 const currentLayoutVersion = LayoutVersion.AddPropertiesPanel;

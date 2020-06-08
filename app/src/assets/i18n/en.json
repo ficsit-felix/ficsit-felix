@@ -187,8 +187,9 @@
     "rotationSnap": "Rotation Snap",
     "cameraType": {
       "label": "Camera",
-      "orbit": "Orbit",
-      "fly": "Fly"
+      "orbit": "Orbit Camera",
+      "fly": "Fly Camera",
+      "flat": "2D Camera"
     }
   },
   "toolbar": {
