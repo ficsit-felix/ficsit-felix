@@ -14,6 +14,11 @@ enum LayoutVersion {
   AddPropertiesPanel
 }
 
+export enum CameraType {
+  Orbit,
+  Fly
+}
+
 const currentLayoutVersion = LayoutVersion.AddPropertiesPanel;
 
 interface SettingsRootState {
@@ -35,6 +40,7 @@ interface SettingsRootState {
   snapping: boolean;
   translationSnap: number;
   rotationSnap: number;
+  cameraType: CameraType;
 }
 
 // updates the local storage on settings mutations
@@ -63,7 +69,8 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     layoutVersion: currentLayoutVersion,
     snapping: false,
     translationSnap: 100,
-    rotationSnap: 45
+    rotationSnap: 45,
+    cameraType: CameraType.Orbit
   },
   getters: {},
   mutations: {
@@ -151,6 +158,10 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     SET_ROTATION_SNAP(state, payload) {
       state.rotationSnap = payload;
       updateLocalStorage(state);
+    },
+    SET_CAMERA_TYPE(state, payload) {
+      state.cameraType = payload;
+      updateLocalStorage(state);
     }
   },
   actions: {
@@ -207,6 +218,9 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setRotationSnap(context, payload) {
       context.commit('SET_ROTATION_SNAP', payload);
+    },
+    setCameraType(context, payload) {
+      context.commit('SET_CAMERA_TYPE', payload);
     }
   }
 };
