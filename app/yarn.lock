@@ -9485,10 +9485,10 @@ satisfactory-blueprint@^0.0.3:
     satisfactory-json "^0.0.9"
     three "^0.105.2"
 
-satisfactory-json@0.0.37:
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.37.tgz#aa057d83f4da2975d080993fff4b300d48e0961c"
-  integrity sha512-l2/X44Vr3ZUvZf2MJNeTsyq8kMBlIo7cbmrOVd+2o83IsqrxoScw/XQcJ9w9K5GgUBQqcS/wiOO9nsWrxhW9Dg==
+satisfactory-json@0.0.38:
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.38.tgz#3edb0345ba76d386748effd5a5edc04b532db479"
+  integrity sha512-qo0om96VQ8YezlsEcfHbK+fieq+J+lhFIwuQQyCiW76EuaH0a+MaSyeel2ayDEMNOcTRXgMGf1jOqMR5iLpUHg==
   dependencies:
     jsbi "^3.1.2"
     pako "^1.0.11"
