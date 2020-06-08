@@ -6,6 +6,23 @@
     </div>
 
     <h3>{{ $t('settings.controlsSectionTitle') }}</h3>
+
+    <v-radio-group
+      :value="cameraType"
+      @change="setCameraType"
+      :label="$t('settings.cameraType.label')"
+      hide-details
+    >
+      <v-radio
+        :label="$t('settings.cameraType.orbit')"
+        :value="CameraType.Orbit"
+      ></v-radio>
+      <v-radio
+        :label="$t('settings.cameraType.fly')"
+        :value="CameraType.Fly"
+      ></v-radio>
+    </v-radio-group>
+
     <v-checkbox
       :input-value="snapping"
       @change="setSnapping"
@@ -100,12 +117,12 @@
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       ></v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">
-        {{ $t('settings.copyClassColorsButton') }}
-      </v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">
-        {{ $t('settings.clearClassColorsButton') }}
-      </v-btn>
+      <v-btn @click="exportClassColors" class="ma-2">{{
+        $t('settings.copyClassColorsButton')
+      }}</v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">{{
+        $t('settings.clearClassColorsButton')
+      }}</v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"
@@ -136,7 +153,7 @@ import { mapState, mapActions } from 'vuex';
 import copyToClipboard from '@lib/copyToClipboard';
 import LanguageSwitcher from './LanguageSwitcher.vue';
 import { isElectron } from '@lib/isElectron';
-import { MapType } from '@/store/settings';
+import { MapType, CameraType } from '@/store/settings';
 
 export default {
   name: 'Settings',
@@ -145,7 +162,8 @@ export default {
   },
   data: () => {
     return {
-      MapType
+      MapType,
+      CameraType
     };
   },
   computed: {
@@ -164,7 +182,8 @@ export default {
       'showDevelopSettings',
       'snapping',
       'translationSnap',
-      'rotationSnap'
+      'rotationSnap',
+      'cameraType'
     ])
   },
   methods: {
@@ -183,7 +202,8 @@ export default {
       'setShowDevelopSettings',
       'setSnapping',
       'setTranslationSnap',
-      'setRotationSnap'
+      'setRotationSnap',
+      'setCameraType'
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);

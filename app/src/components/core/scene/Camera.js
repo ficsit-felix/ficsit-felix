@@ -1,7 +1,9 @@
 import Object3D from './Object3D';
-import { PerspectiveCamera } from 'three';
+import { PerspectiveCamera, MOUSE } from 'three';
 import { OrbitControls } from '@lib/graphics/OrbitControls.js';
+import { FlyControls } from '@lib/graphics/FlyControls.js';
 import { mapActions, mapState } from 'vuex';
+import { CameraType } from '@/store/settings';
 
 export default {
   extends: Object3D,
@@ -29,7 +31,7 @@ export default {
     camera.up.z = 1;
     this.obj = camera;
 
-    //new OrbitControls(this.camera)
+    camera.lookAt(0, 0, 0);
     return {
       camera: this.obj
     };
@@ -37,7 +39,7 @@ export default {
 
   computed: {
     ...mapState(['cameraPosition', 'cameraTarget']),
-    ...mapState('settings', ['nearPlane', 'farPlane'])
+    ...mapState('settings', ['nearPlane', 'farPlane', 'cameraType'])
   },
 
   watch: {
@@ -55,6 +57,9 @@ export default {
     farPlane(value) {
       this.obj.far = value;
       this.obj.updateProjectionMatrix();
+    },
+    cameraType(value) {
+      this.setupControl(this.domElement);
     }
   },
 
@@ -64,29 +69,49 @@ export default {
     // Update once window.onCompassChange is hopefully registered.
     // Will most probably still be while the progress bar is visible, so it should be fine.
     setTimeout(() => this.onChange(), 500);
+    this.lastDate = Date.now();
   },
 
   methods: {
     ...mapActions(['setCameraData']),
 
     setupControl(domElement) {
-      const controls = new OrbitControls(this.obj, domElement);
-      controls.addEventListener('change', this.onChange); // call this only in static scenes (i.e., if there is no animation loop)
-      controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-      controls.dampingFactor = 0.25;
-      controls.screenSpacePanning = false;
-      controls.minDistance = 1000;
-      controls.maxDistance = 100000;
-      controls.maxPolarAngle = Math.PI;
-      controls.rotateSpeed = 0.3;
-      controls.panSpeed = 0.3;
-      if (this.cameraTarget !== undefined) {
-        controls.target = this.cameraTarget;
+      this.domElement = domElement;
+      if (this.controls) {
+        this.controls.dispose();
       }
+      if (this.cameraType === CameraType.Orbit) {
+        const controls = new OrbitControls(this.obj, domElement);
+        controls.addEventListener('change', this.onChange); // call this only in static scenes (i.e., if there is no animation loop)
+        controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+        controls.dampingFactor = 0.25;
+        controls.screenSpacePanning = false;
+        controls.minDistance = 1000;
+        controls.maxDistance = 100000;
+        controls.maxPolarAngle = Math.PI;
+        controls.rotateSpeed = 1;
+        controls.panSpeed = 1;
+        controls.mouseButtons.LEFT = undefined;
+        controls.mouseButtons.MIDDLE = MOUSE.PAN;
+        controls.mouseButtons.RIGHT = MOUSE.ROTATE;
+        if (this.cameraTarget !== undefined) {
+          controls.target = this.cameraTarget;
+        }
 
-      // controls.addEventListener('end', this.updateCameraState);
-      this.controls = controls;
+        // controls.addEventListener('end', this.updateCameraState);
+        this.controls = controls;
+      } else {
+        const controls = new FlyControls(this.obj, domElement);
+        controls.movementSpeed = 50000;
+        controls.domElement = domElement;
+        controls.rollSpeed = Math.PI;
+        controls.autoForward = false;
+        controls.dragToLook = true;
+        this.controls = controls;
+        window.controls = controls;
+      }
     },
+
     updateCameraState() {
       this.setCameraData({
         target: this.controls.target,
@@ -95,7 +120,10 @@ export default {
     },
     updateControls() {
       if (this.controls) {
-        this.controls.update();
+        const now = Date.now();
+        const delta = (now - this.lastDate) / 1000.0;
+        this.lastDate = now;
+        this.controls.update(delta); // TODO pass delta time
       }
     },
     onChange() {
