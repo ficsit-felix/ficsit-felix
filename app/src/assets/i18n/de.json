@@ -184,7 +184,12 @@
     "controlsSectionTitle": "Steuerung",
     "snapping": "Einrasten",
     "translationSnap": "Verschiebungsraster",
-    "rotationSnap": "Rotationsraster"
+    "rotationSnap": "Rotationsraster",
+    "cameraType": {
+      "label": "Kamera",
+      "orbit": "Orbit-Kamera",
+      "fly": "Fliegenkamera"
+    }
   },
   "toolbar": {
     "local": "Lokal",

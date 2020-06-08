@@ -164,6 +164,20 @@ var OrbitControls = function(object, domElement) {
 
       offset.copy(position).sub(scope.target);
 
+      // Pan
+      if (scope.moveState.forward) {
+        pan(0, scope.keyPanSpeed);
+      }
+      if (scope.moveState.back) {
+        pan(0, -scope.keyPanSpeed);
+      }
+      if (scope.moveState.left) {
+        pan(scope.keyPanSpeed, 0);
+      }
+      if (scope.moveState.right) {
+        pan(-scope.keyPanSpeed, 0);
+      }
+
       // rotate offset to "y-axis-is-up" space
       offset.applyQuaternion(quat);
 
@@ -269,6 +283,7 @@ var OrbitControls = function(object, domElement) {
     document.removeEventListener('mouseup', onMouseUp, false);
 
     scope.domElement.removeEventListener('keydown', onKeyDown, false);
+    window.removeEventListener('keyup', onKeyUp, false);
 
     //scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
   };
@@ -484,7 +499,7 @@ var OrbitControls = function(object, domElement) {
 
     rotateStart.copy(rotateEnd);
 
-    scope.update();
+    //scope.update();
   }
 
   function handleMouseMoveDolly(event) {
@@ -500,7 +515,7 @@ var OrbitControls = function(object, domElement) {
 
     dollyStart.copy(dollyEnd);
 
-    scope.update();
+    //scope.update();
   }
 
   function handleMouseMovePan(event) {
@@ -512,7 +527,7 @@ var OrbitControls = function(object, domElement) {
 
     panStart.copy(panEnd);
 
-    scope.update();
+    //scope.update();
   }
 
   function handleMouseUp(/*event*/) {
@@ -526,7 +541,7 @@ var OrbitControls = function(object, domElement) {
       dollyOut(getZoomScale());
     }
 
-    scope.update();
+    //scope.update();
   }
 
   function handleKeyDown(event) {
@@ -1033,6 +1048,7 @@ var OrbitControls = function(object, domElement) {
   scope.domElement.addEventListener('touchmove', onTouchMove, false);
 
   scope.domElement.addEventListener('keydown', onKeyDown, false);
+  window.addEventListener('keyup', onKeyUp, false);
 
   // make sure element can receive keys.
 

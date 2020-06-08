@@ -184,7 +184,12 @@
     "controlsSectionTitle": "Controls",
     "snapping": "Snapping",
     "translationSnap": "Translation Snap",
-    "rotationSnap": "Rotation Snap"
+    "rotationSnap": "Rotation Snap",
+    "cameraType": {
+      "label": "Camera",
+      "orbit": "Orbit",
+      "fly": "Fly"
+    }
   },
   "toolbar": {
     "local": "Local",
