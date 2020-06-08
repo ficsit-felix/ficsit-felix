@@ -1,7 +1,7 @@
 <template>
   <div class="settings">
     <div class="languageSelection">
-      {{ $t('landingPage.language') }}:
+      {{ $t('landingPage.language') }}
       <LanguageSwitcher></LanguageSwitcher>
     </div>
 
@@ -117,12 +117,12 @@
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       ></v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">{{
-        $t('settings.copyClassColorsButton')
-      }}</v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">{{
-        $t('settings.clearClassColorsButton')
-      }}</v-btn>
+      <v-btn @click="exportClassColors" class="ma-2">
+        {{ $t('settings.copyClassColorsButton') }}
+      </v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">
+        {{ $t('settings.clearClassColorsButton') }}
+      </v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"

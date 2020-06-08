@@ -1,7 +1,7 @@
 <template>
   <div class="landingpage">
     <div class="languageSelection">
-      {{ $t('landingPage.language') }}:
+      {{ $t('landingPage.language') }}
       <LanguageSwitcher></LanguageSwitcher>
     </div>
 
