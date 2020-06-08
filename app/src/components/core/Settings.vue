@@ -5,6 +5,27 @@
       <LanguageSwitcher></LanguageSwitcher>
     </div>
 
+    <h3>{{ $t('settings.controlsSectionTitle') }}</h3>
+    <v-checkbox
+      :input-value="snapping"
+      @change="setSnapping"
+      :label="$t('settings.snapping')"
+    ></v-checkbox>
+
+    <v-text-field
+      :label="$t('settings.translationSnap')"
+      :value="translationSnap"
+      @change="setTranslationSnap"
+      type="number"
+    ></v-text-field>
+
+    <v-text-field
+      :label="$t('settings.rotationSnap')"
+      :value="rotationSnap"
+      @change="setRotationSnap"
+      type="number"
+    ></v-text-field>
+
     <h3>{{ $t('settings.graphicsSectionTitle') }}</h3>
 
     <v-radio-group
@@ -79,12 +100,12 @@
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       ></v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">{{
-        $t('settings.copyClassColorsButton')
-      }}</v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">{{
-        $t('settings.clearClassColorsButton')
-      }}</v-btn>
+      <v-btn @click="exportClassColors" class="ma-2">
+        {{ $t('settings.copyClassColorsButton') }}
+      </v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">
+        {{ $t('settings.clearClassColorsButton') }}
+      </v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"
@@ -140,7 +161,10 @@ export default {
       'experimentalFeatures',
       'autoLoadSaveFile',
       'showFps',
-      'showDevelopSettings'
+      'showDevelopSettings',
+      'snapping',
+      'translationSnap',
+      'rotationSnap'
     ])
   },
   methods: {
@@ -156,7 +180,10 @@ export default {
       'setExperimentalFeatures',
       'setAutoLoadSaveFile',
       'setShowFps',
-      'setShowDevelopSettings'
+      'setShowDevelopSettings',
+      'setSnapping',
+      'setTranslationSnap',
+      'setRotationSnap'
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);

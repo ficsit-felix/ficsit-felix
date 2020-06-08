@@ -82,6 +82,15 @@
       </v-tooltip>
     </div>
 
+    <v-checkbox
+      :input-value="snapping"
+      @change="setSnapping"
+      :label="$t('settings.snapping')"
+      hide-details
+      dense
+      class="my-1"
+    ></v-checkbox>
+
     <div class="spacer"></div>
     <span
       @click="$emit('reportBug')"
@@ -98,7 +107,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { EventBus } from '@lib/event-bus';
 import { FOCUS_SELECTED_OBJECT } from '@lib/constants';
 export default {
@@ -107,6 +116,7 @@ export default {
   props: ['mode', 'local'],
   computed: {
     ...mapState(['selectedActors']),
+    ...mapState('settings', ['snapping']),
     translateActive() {
       return this.mode === 'translate';
     },
@@ -127,6 +137,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('settings', ['setSnapping']),
     focusSelectedObject() {
       EventBus.$emit(FOCUS_SELECTED_OBJECT);
     }

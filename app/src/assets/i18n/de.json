@@ -180,7 +180,11 @@
     "experimentalFeatures": "Experimentelle Funktionen",
     "autoLoadSaveFile": "Spielstand automatisch laden",
     "showFps": "FPS anzeigen",
-    "saveAsZip": "Ausgabe as zip Datei speichern"
+    "saveAsZip": "Ausgabe as zip Datei speichern",
+    "controlsSectionTitle": "Steuerung",
+    "snapping": "Einrasten",
+    "translationSnap": "Verschiebungsraster",
+    "rotationSnap": "Rotationsraster"
   },
   "toolbar": {
     "local": "Lokal",
