@@ -123,12 +123,12 @@
         @change="updateEditClassColors"
         :label="$t('settings.editClassColors')"
       ></v-checkbox>
-      <v-btn @click="exportClassColors" class="ma-2">
-        {{ $t('settings.copyClassColorsButton') }}
-      </v-btn>
-      <v-btn @click="clearClassColors" class="ma-2">
-        {{ $t('settings.clearClassColorsButton') }}
-      </v-btn>
+      <v-btn @click="exportClassColors" class="ma-2">{{
+        $t('settings.copyClassColorsButton')
+      }}</v-btn>
+      <v-btn @click="clearClassColors" class="ma-2">{{
+        $t('settings.clearClassColorsButton')
+      }}</v-btn>
 
       <v-checkbox
         :input-value="experimentalFeatures"
@@ -158,16 +158,16 @@
         :label="$t('settings.showPropertiesPanel')"
         hide-details
       ></v-checkbox>
-      <v-btn @click="resetSettings" class="ma-2">
-        {{ $t('settings.resetSettingsButton') }}
-      </v-btn>
+      <v-btn @click="resetSettings" class="ma-2">{{
+        $t('settings.resetSettingsButton')
+      }}</v-btn>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { copyToClipboard } from '@lib/copyToClipboard';
+import copyToClipboard from '@lib/copyToClipboard';
 import LanguageSwitcher from './LanguageSwitcher.vue';
 import { isElectron } from '@lib/isElectron';
 import { MapType, CameraType } from '@/store/settings';

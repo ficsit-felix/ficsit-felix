@@ -116,6 +116,7 @@ export default {
           click: () => this.openJsonFileSelector()
         }
       ];
+      let editEntries = [];
 
       if (this.showSaveMenuEntries) {
         fileEntries = fileEntries.concat([
@@ -150,20 +151,34 @@ export default {
         {
           type: 'separator'
         },
-        { role: 'togglefullscreen' },
-        {
-          label: this.$t('menubar.settings'),
-          click() {
-            EventBus.$emit(DIALOG_SETTINGS);
-          }
-        }
+        { role: 'togglefullscreen' }
       ]);
+
       if (this.showSaveMenuEntries) {
         fileEntries.push({
           label: this.$t('menubar.toggleMenu'),
           accelerator: 'Esc',
           click: () => {
             EventBus.$emit(TOGGLE_MENU);
+          }
+        });
+        editEntries.push({
+          id: 'undo',
+          label: this.$t('menubar.undo'),
+          accelerator: 'Ctrl+Z',
+          enabled: !this.undoDisabled,
+          click: () => {
+            console.log(this);
+            this.undoLastAction();
+          }
+        });
+        editEntries.push({
+          id: 'redo',
+          label: this.$t('menubar.redo'),
+          accelerator: 'Ctrl+Shift+Z',
+          enabled: !this.redoDisabled,
+          click: () => {
+            this.redoLastAction();
           }
         });
       }
@@ -175,6 +190,12 @@ export default {
           EventBus.$emit(DIALOG_CONFIRM_EXIT_DESKTOP);
         }
       });
+      editEntries.push({
+        label: this.$t('menubar.settings'),
+        click() {
+          EventBus.$emit(DIALOG_SETTINGS);
+        }
+      });
 
       menu.append(
         new MenuItem({
@@ -182,33 +203,14 @@ export default {
           submenu: fileEntries
         })
       );
+
+      menu.append(
+        new MenuItem({
+          label: this.$t('menubar.edit'),
+          submenu: editEntries
+        })
+      );
       if (this.showSaveMenuEntries) {
-        menu.append(
-          new MenuItem({
-            label: this.$t('menubar.edit'),
-            submenu: [
-              {
-                id: 'undo',
-                label: this.$t('menubar.undo'),
-                accelerator: 'Ctrl+Z',
-                enabled: !this.undoDisabled,
-                click: () => {
-                  console.log(this);
-                  this.undoLastAction();
-                }
-              },
-              {
-                id: 'redo',
-                label: this.$t('menubar.redo'),
-                accelerator: 'Ctrl+Shift+Z',
-                enabled: !this.redoDisabled,
-                click: () => {
-                  this.redoLastAction();
-                }
-              }
-            ]
-          })
-        );
       }
 
       if (remote.process.env.NODE_ENV === 'development') {
