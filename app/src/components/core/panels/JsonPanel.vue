@@ -18,7 +18,7 @@
         >{{ $t('propertyEditor.saveJsonButton') }}</v-btn
       >
       <div class="spacer"></div>
-      <v-tooltip bottom>
+      <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn
             color="primary black--text"
@@ -42,9 +42,9 @@
       >
     </div>
 
-    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">
-      {{ $t('propertyEditor.objectSavedSnack') }}
-    </v-snackbar>
+    <v-snackbar v-model="showSnackbar" :timeout="1000" :right="true">{{
+      $t('propertyEditor.objectSavedSnack')
+    }}</v-snackbar>
 
     <ConfirmDialog
       v-model="showDeleteDialog"
