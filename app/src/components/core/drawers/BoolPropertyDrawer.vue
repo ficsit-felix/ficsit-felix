@@ -1,12 +1,13 @@
 <template>
   <div>
     <v-checkbox
-      :value="value"
+      :input-value="value === 1"
       @change="change"
       hide-details
       dense
       class="my-1"
     />
+    {{ value }}
   </div>
 </template>
 

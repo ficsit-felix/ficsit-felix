@@ -1,22 +1,7 @@
 <template>
   <div class="dialogs">
     <!-- help dialog -->
-    <v-dialog v-model="showHelpDialog" width="700" scrollable>
-      <v-card>
-        <v-card-title>{{ $t('dialog.help.title') }}</v-card-title>
-        <v-card-text>
-          <b>{{ $t('dialog.help.controlsTitle') }}</b>
-          <p class="helpControls">{{ $t('dialog.help.controlsText') }}</p>
-          <p>{{ $t('dialog.help.changeJsonWarning') }}</p>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showHelpDialog = false">
-            {{ $t('general.close') }}
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <HelpDialog v-model="showHelpDialog" />
 
     <!-- settings dialog -->
     <v-dialog v-model="showSettingsDialog" width="700" scrollable>
@@ -27,9 +12,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showSettingsDialog = false">
-            {{ $t('general.close') }}
-          </v-btn>
+          <v-btn color="primary" text @click="showSettingsDialog = false">{{
+            $t('general.close')
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -43,9 +28,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showLicensesDialog = false">
-            {{ $t('general.close') }}
-          </v-btn>
+          <v-btn color="primary" text @click="showLicensesDialog = false">{{
+            $t('general.close')
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -77,9 +62,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showAboutDialog = false">{{
-            $t('general.close')
-          }}</v-btn>
+          <v-btn color="primary" text @click="showAboutDialog = false">
+            {{ $t('general.close') }}
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -169,7 +154,7 @@ import {
 } from '@lib/constants';
 import { setTimeout } from 'timers';
 import { mapState } from 'vuex';
-
+import HelpDialog from './HelpDialog.vue';
 // TODO rework this dialog system to avoid repeating code
 
 export default Vue.extend({
@@ -179,7 +164,8 @@ export default Vue.extend({
     Settings,
     ProgressBarDialog,
     ConfirmDialog,
-    BugReportDialog
+    BugReportDialog,
+    HelpDialog
   },
   data: function() {
     return {
