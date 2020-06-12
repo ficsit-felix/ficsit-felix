@@ -1,11 +1,10 @@
 <template>
   <div>
-    <span class="label">{{ label }}</span>
     <v-row>
       <v-col>
         <v-text-field
           label="X"
-          :value="value[0]"
+          :value="xVal"
           hide-details
           outlined
           dense
@@ -15,7 +14,7 @@
       <v-col>
         <v-text-field
           label="Y"
-          :value="value[1]"
+          :value="yVal"
           hide-details
           outlined
           dense
@@ -25,7 +24,7 @@
       <v-col>
         <v-text-field
           label="Z"
-          :value="value[2]"
+          :value="zVal"
           hide-details
           outlined
           dense
@@ -47,35 +46,42 @@ import { Action } from 'vuex-class';
 @VueComponent({})
 export default class Vector3PropertyDrawer extends Vue {
   @Prop() path!: string;
-  @Prop() value!: number[];
-  @Prop() label!: string;
+  @Prop() value!: any; //number[];
+  // x,y,z object or 3 number array
+  @Prop({ default: false }) named!: boolean;
   @Action('updateObjectValue') updateObjectValue: any;
+
+  get xVal() {
+    return this.named ? this.value.x : this.value[0];
+  }
+  get yVal() {
+    return this.named ? this.value.y : this.value[1];
+  }
+  get zVal() {
+    return this.named ? this.value.z : this.value[2];
+  }
 
   changeX(value: string) {
     this.updateObjectValue({
-      path: this.path + '.0',
+      path: this.path + (this.named ? '.x' : '.0'),
       value: parseFloat(value)
     });
   }
 
   changeY(value: string) {
     this.updateObjectValue({
-      path: this.path + '.1',
+      path: this.path + (this.named ? '.y' : '.1'),
       value: parseFloat(value)
     });
   }
 
   changeZ(value: string) {
     this.updateObjectValue({
-      path: this.path + '.2',
+      path: this.path + (this.named ? '.z' : '.2'),
       value: parseFloat(value)
     });
   }
 }
 </script>
 
-<style lang="scss" scoped>
-/*.label {
-  color: #ffcc80;
-}*/
-</style>
+<style lang="scss" scoped></style>

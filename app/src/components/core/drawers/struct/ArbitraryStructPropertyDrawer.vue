@@ -29,7 +29,6 @@ import { Action } from 'vuex-class';
 export default class BoolPropertyDrawer extends Vue {
   @Prop() path!: string;
   @Prop() value!: any;
-  @Prop() label!: string;
   @Action('updateObjectValue') updateObjectValue: any;
 
   change(value: boolean) {

@@ -77,7 +77,6 @@ import ArrayPropertyDrawer from './ArrayPropertyDrawer.vue';
 export default class PropertyPropertyDrawer extends Vue {
   @Prop() path!: string;
   @Prop() value!: Property;
-  @Prop() label!: string;
 }
 </script>
 

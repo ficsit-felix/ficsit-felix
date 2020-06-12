@@ -23,7 +23,6 @@ import { Action } from 'vuex-class';
 export default class FloatPropertyDrawer extends Vue {
   @Prop() path!: string;
   @Prop() value!: number;
-  @Prop() label!: string;
   @Action('updateObjectValue') updateObjectValue: any;
 
   change(value: string) {
