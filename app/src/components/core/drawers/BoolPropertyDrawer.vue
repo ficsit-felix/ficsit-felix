@@ -7,7 +7,6 @@
       dense
       class="my-1"
     />
-    {{ value }}
   </div>
 </template>
 
@@ -23,7 +22,6 @@ import { Action } from 'vuex-class';
 export default class BoolPropertyDrawer extends Vue {
   @Prop() path!: string;
   @Prop() value!: boolean;
-  @Prop() label!: string;
   @Action('updateObjectValue') updateObjectValue: any;
 
   change(value: boolean) {

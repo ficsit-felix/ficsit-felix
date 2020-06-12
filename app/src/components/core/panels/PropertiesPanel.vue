@@ -12,21 +12,35 @@
       v-else-if="selectedActors.length === 1 && selectedComponents.length === 0"
     >
       <v-label>{{ formatPathName(selectedActors[0].pathName) }}</v-label>
+
+      <span class="label">Translation</span>
       <Vector3PropertyDrawer
-        label="Translation"
         path="selectedActors.0.transform.translation"
         :value="selectedActors[0].transform.translation"
       />
+
+      <span class="label">Rotation</span>
       <QuaternionPropertyDrawer
-        label="Rotation"
         path="selectedActors.0.transform.rotation"
         :value="selectedActors[0].transform.rotation"
       />
 
+      <span class="label">Scale</span>
+
       <Vector3PropertyDrawer
-        label="Scale"
         path="selectedActors.0.transform.scale3d"
         :value="selectedActors[0].transform.scale3d"
+      />
+
+      <span class="label">Needs Transform</span>
+      <BoolPropertyDrawer
+        path="selectedActors.0.needTransform"
+        :value="selectedActors[0].needTransform"
+      />
+      <span class="label">Was placed in level</span>
+      <BoolPropertyDrawer
+        path="selectedActors.0.wasPlacedInLevel"
+        :value="selectedActors[0].wasPlacedInLevel"
       />
       <span class="label">Children</span>
       <a
@@ -51,9 +65,9 @@
         {{ formatPathName(selectedComponents[0].pathName) }}
       </div>
       <span class="label">Parent</span>
-      <a class="link" @click="select([selectedComponents[0].outerPathName])">
-        {{ formatPathName(selectedComponents[0].outerPathName) }}
-      </a>
+      <a class="link" @click="select([selectedComponents[0].outerPathName])">{{
+        formatPathName(selectedComponents[0].outerPathName)
+      }}</a>
 
       <PropertyPropertyDrawer
         v-for="(property, index) in selectedComponents[0].entity.properties"
@@ -73,12 +87,14 @@ import { Actor, Component } from 'satisfactory-json';
 import Vector3PropertyDrawer from '../drawers/Vector3PropertyDrawer.vue';
 import QuaternionPropertyDrawer from '../drawers/QuaternionPropertyDrawer.vue';
 import PropertyPropertyDrawer from '../drawers/PropertyPropertyDrawer.vue';
+import BoolPropertyDrawer from '../drawers/BoolPropertyDrawer.vue';
 
 @VueComponent({
   components: {
     Vector3PropertyDrawer,
     QuaternionPropertyDrawer,
-    PropertyPropertyDrawer
+    PropertyPropertyDrawer,
+    BoolPropertyDrawer
   }
 })
 export default class PropertiesPanel extends Vue {

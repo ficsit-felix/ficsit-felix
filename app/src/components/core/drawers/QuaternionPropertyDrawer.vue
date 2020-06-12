@@ -48,15 +48,24 @@ import { Euler, Quaternion, MathUtils } from 'three';
 @VueComponent({})
 export default class QuaternionPropertyDrawer extends Vue {
   @Prop() path!: string;
-  @Prop() value!: number[];
+  @Prop() value!: any; // number[] | {x:number, y:number, z: number, w:number};
   @Prop() label!: string;
+  // x,y,z,w object or 4 number array
+  @Prop({ default: false }) named!: boolean;
   @Action('updateObjectValue') updateObjectValue: any;
   RAD2DEG = MathUtils.RAD2DEG;
 
   get euler() {
     // TODO do this without creating garbage?
     return new Euler().setFromQuaternion(
-      new Quaternion(this.value[0], this.value[1], this.value[2], this.value[3])
+      this.named
+        ? new Quaternion(this.value.x, this.value.y, this.value.z, this.value.w)
+        : new Quaternion(
+            this.value[0],
+            this.value[1],
+            this.value[2],
+            this.value[3]
+          )
     );
   }
 
@@ -80,16 +89,22 @@ export default class QuaternionPropertyDrawer extends Vue {
 
   change(euler: Euler) {
     const quat = new Quaternion().setFromEuler(euler);
+    let newValue;
+    if (this.named) {
+      newValue = Object.assign({}, this.value); // to keep potential other members
+      newValue.x = quat.x;
+      newValue.y = quat.y;
+      newValue.z = quat.z;
+      newValue.w = quat.w;
+    } else {
+      newValue = [quat.x, quat.y, quat.z, quat.w];
+    }
     this.updateObjectValue({
       path: this.path,
-      value: [quat.x, quat.y, quat.z, quat.w]
+      value: newValue
     });
   }
 }
 </script>
 
-<style lang="scss" scoped>
-/*.label {
-  color: #ffcc80;
-}*/
-</style>
+<style lang="scss" scoped></style>
