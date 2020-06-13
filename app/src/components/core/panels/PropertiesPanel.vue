@@ -6,12 +6,16 @@
           selectedPathNames[0] === '---save-header---'
       "
     >
-      <v-label>___Save_Header___</v-label>
+      <div class="header">
+        ___Save_Header___
+      </div>
     </div>
     <div
       v-else-if="selectedActors.length === 1 && selectedComponents.length === 0"
     >
-      <v-label>{{ formatPathName(selectedActors[0].pathName) }}</v-label>
+      <div class="header">
+        {{ formatPathName(selectedActors[0].pathName) }}
+      </div>
 
       <span class="label">Translation</span>
       <Vector3PropertyDrawer
@@ -116,8 +120,12 @@ export default class PropertiesPanel extends Vue {
 </script>
 
 <style lang="scss" scoped>
+v-label {
+  display: block;
+}
 .header {
   font-size: 16px;
+  display: block;
 }
 a.link {
   display: block;

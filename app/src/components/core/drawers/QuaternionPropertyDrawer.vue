@@ -1,6 +1,5 @@
 <template>
   <div>
-    <span class="label">{{ label }}</span>
     <v-row>
       <v-col>
         <v-text-field
@@ -49,7 +48,6 @@ import { Euler, Quaternion, MathUtils } from 'three';
 export default class QuaternionPropertyDrawer extends Vue {
   @Prop() path!: string;
   @Prop() value!: any; // number[] | {x:number, y:number, z: number, w:number};
-  @Prop() label!: string;
   // x,y,z,w object or 4 number array
   @Prop({ default: false }) named!: boolean;
   @Action('updateObjectValue') updateObjectValue: any;
