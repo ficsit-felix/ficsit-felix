@@ -5,7 +5,7 @@
       @change="change"
       hide-details
       dense
-      class="my-1"
+      class="mt-0 mb-1"
     />
   </div>
 </template>
