@@ -27,7 +27,7 @@
 			"send": "Send Bug Report",
 			"sentMessage": "Bug report was successfully submitted. Thank you!",
 			"title": "Submit Bug Report",
-			"userContact": "E-mail if you want to be informed when the bug is fixed. (optional)",
+			"userContact": "Enter E-mail if you want to be informed when the bug is fixed. (optional)",
 			"userMessage": "Describe the bug or what triggered it (optional)"
 		},
 		"color": {
