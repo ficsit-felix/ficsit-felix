@@ -31,7 +31,7 @@
     "electron-updater": "^4.3.1",
     "filereader-stream": "^2.0.0",
     "golden-layout": "^1.5.9",
-    "gsap": "^3.3.1",
+    "gsap": "^3.3.3",
     "jszip": "^3.4.0",
     "moment": "^2.26.0",
     "satisfactory-blueprint": "^0.0.3",
