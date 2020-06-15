@@ -32,7 +32,7 @@
     "filereader-stream": "^2.0.0",
     "golden-layout": "^1.5.9",
     "gsap": "^3.3.3",
-    "jszip": "^3.4.0",
+    "jszip": "^3.5.0",
     "moment": "^2.26.0",
     "satisfactory-blueprint": "^0.0.3",
     "satisfactory-json": "0.0.38",
