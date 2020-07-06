@@ -41,7 +41,7 @@
     "three": "0.117.1",
     "vue": "^2.6.6",
     "vue-class-component": "^7.2.3",
-    "vue-golden-layout": "^2.0.8",
+    "vue-golden-layout": "^2.0.9",
     "vue-i18n": "^8.18.2",
     "vue-property-decorator": "^9.0.0",
     "vue-router": "^3.3.4",
