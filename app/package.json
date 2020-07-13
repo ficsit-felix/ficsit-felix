@@ -82,7 +82,7 @@
     "vue-cli-plugin-electron-builder": "~1.4.5",
     "vue-cli-plugin-vuetify": "~2.0.5",
     "vue-template-compiler": "^2.5.21",
-    "vuetify-loader": "^1.5.0"
+    "vuetify-loader": "^1.6.0"
   },
   "engines": {
     "node": ">= 10.x"
