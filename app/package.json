@@ -27,7 +27,7 @@
     "@sentry/browser": "^5.20.1",
     "@sentry/integrations": "^5.20.1",
     "core-js": "^3.6.5",
-    "custom-electron-titlebar": "^3.2.3",
+    "custom-electron-titlebar": "^3.2.4",
     "electron-updater": "^4.3.4",
     "filereader-stream": "^2.0.0",
     "golden-layout": "^1.5.9",
