@@ -24,7 +24,7 @@
   "dependencies": {
     "@bitowl/three-instanced-mesh": "^0.118.0",
     "@caohenghu/vue-colorpicker": "^1.2.2",
-    "@sentry/browser": "^5.20.1",
+    "@sentry/browser": "^5.21.4",
     "@sentry/integrations": "^5.21.4",
     "core-js": "^3.6.5",
     "custom-electron-titlebar": "^3.2.4",
