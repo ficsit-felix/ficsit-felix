@@ -148,6 +148,7 @@ export default {
   beforeDestroy() {
     this.selectControls.destroy();
     this.boxSelectControls.destroy();
+    this.renderer.dispose();
     this.hideStats();
     this.animating = false;
   }

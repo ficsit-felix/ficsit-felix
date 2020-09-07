@@ -453,7 +453,6 @@ export default class ScenePanel extends Vue {
     this.transformControl.dispose();
     window.removeEventListener('resize', this.handleResize);
     this.meshManager.dispose(this.scene);
-    this.scene.dispose();
   }
 
   updateCompass() {
