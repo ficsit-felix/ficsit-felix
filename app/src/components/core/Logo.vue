@@ -159,14 +159,7 @@ export default class Logo extends Vue {
   @Prop(Number) readonly height: number | undefined;
   @Prop(String) readonly black: string | undefined;
   @Prop(Boolean) readonly animating: boolean | undefined;
-  private tl: gsap.core.Timeline | null = gsap.timeline({
-    onComplete: () => {
-      if (this.animating && this.tl !== null) {
-        this.tl.restart();
-      }
-    },
-    paused: !this.animating
-  });
+  private tl!: gsap.core.Timeline | null;
 
   @Watch('animating', { immediate: true })
   onAnimatingChanged(val: boolean) {
@@ -180,6 +173,14 @@ export default class Logo extends Vue {
   }
 
   mounted() {
+    this.tl = gsap.timeline({
+      onComplete: () => {
+        if (this.animating && this.tl !== null) {
+          this.tl.restart();
+        }
+      },
+      paused: !this.animating
+    });
     if (this.tl !== null) {
       const hammer = this.$refs.hammer;
       this.tl.set(hammer, { transformOrigin: '80% 64%' });
