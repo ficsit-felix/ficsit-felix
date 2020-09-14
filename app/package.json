@@ -33,7 +33,7 @@
     "golden-layout": "^1.5.9",
     "gsap": "^3.5.0",
     "jszip": "^3.5.0",
-    "moment": "^2.27.0",
+    "moment": "^2.28.0",
     "satisfactory-blueprint": "^0.0.3",
     "satisfactory-json": "0.0.42",
     "stats.js": "^0.17.0",
