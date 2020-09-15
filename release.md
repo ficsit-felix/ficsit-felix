@@ -7,12 +7,12 @@ Release title: `0.0.0`
 Target: `master`
 Save as draft
 Add changes to draft message
-Increase version in package.json to `0.0.0`
 
 ## Release
 Switch to `master` branch
 Merge `develop` branch
 Execute `yarn lint --fix`
+Increase version in package.json to `0.0.0`
 Commit with name `Release 0.0.0`
 Push to master branch
 Wait until the actions build the electron application

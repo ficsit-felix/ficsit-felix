@@ -16,7 +16,7 @@
         />
       </div>
       <!-- ByteProperty -->
-      <div v-if="value.type === 'ByteProperty'">
+      <div v-else-if="value.type === 'ByteProperty'">
         <IntPropertyDrawer
           v-for="(value, index) in value.values"
           :key="index"
@@ -25,7 +25,7 @@
         />
       </div>
       <!-- FloatProperty -->
-      <div v-if="value.type === 'FloatProperty'">
+      <div v-else-if="value.type === 'FloatProperty'">
         <FloatPropertyDrawer
           v-for="(value, index) in value.values"
           :key="index"
@@ -34,7 +34,11 @@
         />
       </div>
       <!-- EnumProperty, StrProperty -->
-      <div v-if="value.type === 'EnumProperty' || value.type === 'StrProperty'">
+      <div
+        v-else-if="
+          value.type === 'EnumProperty' || value.type === 'StrProperty'
+        "
+      >
         <StringPropertyDrawer
           v-for="(value, index) in value.values"
           :key="index"
@@ -43,7 +47,7 @@
         />
       </div>
       <!-- TextProperty -->
-      <div v-if="value.type === 'TextProperty'">
+      <div v-else-if="value.type === 'TextProperty'">
         <TextPropertyDrawer
           v-for="(value, index) in value.values"
           :key="index"
