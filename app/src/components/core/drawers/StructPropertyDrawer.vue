@@ -80,7 +80,7 @@
     />
     <!-- else: error -->
     <div v-else>
-      <div class="err">unimplemented stasdfruct type {{ value.type }}</div>
+      <div class="err">unimplemented struct type {{ value.type }}</div>
     </div>
   </div>
 </template>
