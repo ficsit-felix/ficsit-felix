@@ -14,7 +14,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <a
-            @mousedown.stop="$emit('setTranslate')"
+            @mousedown.stop="$emit('set-translate')"
             :class="{ active: translateActive }"
             v-on="on"
             v-ripple
@@ -26,7 +26,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <a
-            @mousedown.stop="$emit('setRotate')"
+            @mousedown.stop="$emit('set-rotate')"
             :class="{ active: rotateActive }"
             v-on="on"
             v-ripple
@@ -38,7 +38,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <a
-            @mousedown.stop="$emit('setScale')"
+            @mousedown.stop="$emit('set-scale')"
             :class="{ active: scaleActive }"
             v-on="on"
             v-ripple
@@ -52,7 +52,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <a
-            @mousedown.stop="$emit('setWorld')"
+            @mousedown.stop="$emit('set-world')"
             :class="{ active: worldActive }"
             v-on="on"
             v-ripple
@@ -65,7 +65,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <a
-            @mousedown.stop="$emit('setLocal')"
+            @mousedown.stop="$emit('set-local')"
             :class="{ active: localActive }"
             v-on="on"
             v-ripple
@@ -139,7 +139,7 @@
           class="bugReportIcon icn-btn"
           v-ripple
           v-on="on"
-          @click="$emit('reportBug')"
+          @click="$emit('report-bug')"
           >mdi-bug</v-icon
         >
       </template>

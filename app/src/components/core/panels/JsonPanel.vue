@@ -7,7 +7,7 @@
       v-model="selectedJson"
       :disabled="this.selectedJson === ''"
       :error-messages="jsonError"
-      style="height:100%"
+      style="height: 100%"
     ></v-textarea>
     <div class="buttons">
       <v-btn
@@ -61,6 +61,7 @@ import { createBlueprintFromActors } from 'satisfactory-blueprint'; //"satisfact
 import copyToClipboard from '@lib/copyToClipboard';
 import ConfirmDialog from '../dialogs/ConfirmDialog.vue';
 import { JsonAction } from '../../../store/undo';
+import { FOCUS_SELECTED_OBJECT } from '@/lib/core/constants';
 export default {
   name: 'JsonPanel',
   components: {
@@ -110,7 +111,7 @@ export default {
     ...mapActions(['setSelectedObject', 'deleteSelected']),
     ...mapActions('undo', ['recordAction']),
     focusSelectedObject() {
-      this.$emit('focusSelectedObject');
+      this.$emit(FOCUS_SELECTED_OBJECT);
     },
 
     saveJson() {

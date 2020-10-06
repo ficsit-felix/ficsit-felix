@@ -74,9 +74,9 @@ export default {
       immediate: true,
       handler(val) {
         if (val) {
-          this.$emit('startAnimating');
+          this.$emit('start-animating');
         } else {
-          this.$emit('stopAnimating');
+          this.$emit('stop-animating');
         }
       }
     }

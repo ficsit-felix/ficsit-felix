@@ -4,10 +4,10 @@
       <Logo :height="128" black="#fff" :animating="logoAnimating" />
       <h1>{{ $t('openPage.title') }}</h1>
       <OpenBox
-        @startAnimating="logoAnimating = true"
-        @stopAnimating="logoAnimating = false"
+        @start-animating="logoAnimating = true"
+        @stop-animating="logoAnimating = false"
       />
-      <div style="display: flex; flex-direction: row;">
+      <div style="display: flex; flex-direction: row">
         <v-btn @click="$router.push({ name: 'landingpage' })">{{
           $t('openPage.backButton')
         }}</v-btn>

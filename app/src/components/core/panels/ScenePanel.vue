@@ -11,7 +11,7 @@
     @keyup.r="setMode('rotate')"
     @keyup.s="setMode('scale')"
     @keyup.f="sendFocusEvent()"
-    @keyup.delete="$emit('askDeleteSelectedObject')"
+    @keyup.delete="$emit('ask-delete-selected-object')"
     @keydown.16="updateShiftSelect(true)"
     @keyup.16="updateShiftSelect(false)"
     @keydown.17="updateBoxSelect(true)"
@@ -21,12 +21,12 @@
     <Toolbar
       :mode="mode"
       :local="local"
-      @setLocal="setLocal(true)"
-      @setWorld="setLocal(false)"
-      @setTranslate="setMode('translate')"
-      @setRotate="setMode('rotate')"
-      @setScale="setMode('scale')"
-      @reportBug="reportBug()"
+      @set-local="setLocal(true)"
+      @set-world="setLocal(false)"
+      @set-translate="setMode('translate')"
+      @set-rotate="setMode('rotate')"
+      @set-scale="setMode('scale')"
+      @report-bug="reportBug()"
     />
 
     <Renderer ref="renderer" :width="width" :height="height">

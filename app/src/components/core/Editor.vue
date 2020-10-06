@@ -25,7 +25,7 @@
             >
               <ScenePanel
                 ref="playground"
-                @askDeleteSelectedObject="
+                @ask-delete-selected-object="
                   $refs.propertyEditor.deleteKeyPressed()
                 "
               />
