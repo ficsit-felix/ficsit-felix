@@ -12,6 +12,8 @@
           :dragProxyHeight="0"
           @state="changeLayout"
           :state="layout"
+          @creation-error="onLayoutError"
+          :key="layoutComponentKey"
         >
           <!-- dragProxyHeight = 0  ==>  We would want to disable the drop proxy entirely, but that is not yet possible: https://github.com/golden-layout/golden-layout/issues/466 -->
 
@@ -81,6 +83,10 @@ import ClassListPanel from './panels/ClassListPanel.vue';
 import { mapState } from 'vuex';
 import { isElectron } from '@lib/isElectron';
 import PropertiesPanel from './panels/PropertiesPanel.vue';
+import { Action, namespace, State } from 'vuex-class';
+import { reportException } from '@/lib/core/errorReporting';
+
+const settingsNamespace = namespace('settings');
 
 @VueComponent({
   components: {
@@ -92,11 +98,17 @@ import PropertiesPanel from './panels/PropertiesPanel.vue';
     PropertiesPanel
   },
   computed: {
-    ...mapState('settings', ['layout', 'showPropertiesPanel'])
+    ...mapState('settings', ['showPropertiesPanel'])
   }
 })
 export default class Editor extends Vue {
   @Prop({ default: !isElectron() }) showMenubar!: boolean;
+  @State(state => state.settings.layout) layout: any;
+  @settingsNamespace.Action('resetLayout')
+  resetLayout: any;
+
+  // used to remount the golden-layout component after layout reset, see https://stackoverflow.com/a/47466574
+  layoutComponentKey: number = 0;
 
   changeLayout(layout: any) {
     this.$store.commit('settings/SET_LAYOUT', layout);
@@ -104,6 +116,16 @@ export default class Editor extends Vue {
 
   onSceneResize() {
     (this.$refs.playground as any).handleResize();
+  }
+
+  onLayoutError() {
+    // The layout was not compatible with the current settings
+    // Report the current settings state
+    console.log(this.$store.state.settings);
+    reportException('Could not load stored layout');
+    this.resetLayout();
+    // remount the golden-layout component as the layout state is only read on mount
+    this.layoutComponentKey = 1 - this.layoutComponentKey;
   }
 }
 </script>

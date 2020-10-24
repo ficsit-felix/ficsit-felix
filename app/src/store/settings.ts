@@ -229,6 +229,9 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     setLayout(context, payload) {
       context.commit('SET_LAYOUT', payload);
     },
+    resetLayout(context, payload) {
+      context.commit('SET_LAYOUT', null);
+    },
     setSnapping(context, payload) {
       context.commit('SET_SNAPPING', payload);
     },
