@@ -304,9 +304,11 @@ export default class GeometryFactory {
     if (sourceConnection === undefined) {
       // TODO error
       console.warn(
-        'source connection of power line ' +
+        'source connection "' +
           actor.entity.extra.sourcePathName +
-          ' not found.'
+          '" of power line "' +
+          actor.pathName +
+          '" not found.'
       );
       return;
     }
@@ -316,9 +318,11 @@ export default class GeometryFactory {
     if (targetConnection === undefined) {
       // TODO error
       console.warn(
-        'target connection of power line ' +
+        'target connection "' +
           actor.entity.extra.targetPathName +
-          ' not found.'
+          '" of power line "' +
+          actor.pathName +
+          '" not found.'
       );
       return;
     }
@@ -327,7 +331,11 @@ export default class GeometryFactory {
     if (source === undefined) {
       // TODO error
       console.warn(
-        'source of power line ' + sourceConnection.outerPathName + ' not found.'
+        'source "' +
+          sourceConnection.outerPathName +
+          '" of power line "' +
+          actor.pathName +
+          '" not found.'
       );
       return;
     }
@@ -336,7 +344,11 @@ export default class GeometryFactory {
     if (target === undefined) {
       // TODO error
       console.warn(
-        'target of power line ' + targetConnection.outerPathName + ' not found.'
+        'target "' +
+          targetConnection.outerPathName +
+          '" of power line ' +
+          actor.pathName +
+          ' not found.'
       );
       return;
     }

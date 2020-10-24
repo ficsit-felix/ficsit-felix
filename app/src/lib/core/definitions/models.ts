@@ -1598,6 +1598,7 @@ export const modClassNamePrefixes = [
   '/Game/FactoryGame/Teleporter/',
   '/Game/FactoryGame/Unlocks/',
   '/Game/FactoryGame/UtilityMod/',
+  '/Script/FactorySkyline.',
   '/Script/FicsItCam.',
   '/Script/FicsItNetworks.',
   '/Script/LightItUp.',
