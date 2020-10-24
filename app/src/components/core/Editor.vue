@@ -14,6 +14,7 @@
           :state="layout"
           @creation-error="onLayoutError"
           :key="layoutComponentKey"
+          @initialised="onLayoutInitialised"
         >
           <!-- dragProxyHeight = 0  ==>  We would want to disable the drop proxy entirely, but that is not yet possible: https://github.com/golden-layout/golden-layout/issues/466 -->
 
@@ -55,7 +56,7 @@
               </gl-component>
               <gl-component
                 :title="$t('panels.properties.title')"
-                v-if="showPropertiesPanel"
+                v-if="layoutSettings.propertiesPanelEnabled"
                 :closable="false"
               >
                 <PropertiesPanel />
@@ -104,11 +105,30 @@ const settingsNamespace = namespace('settings');
 export default class Editor extends Vue {
   @Prop({ default: !isElectron() }) showMenubar!: boolean;
   @State(state => state.settings.layout) layout: any;
+  @State(state => state.settings.layoutSettings) layoutSettings: any;
+  @State(state => state.settings.showPropertiesPanel)
+  showPropertiesPanel!: boolean;
+
   @settingsNamespace.Action('resetLayout')
   resetLayout: any;
+  @settingsNamespace.Action('setPropertiesPanelEnabled')
+  setPropertiesPanelEnabled: any;
 
   // used to remount the golden-layout component after layout reset, see https://stackoverflow.com/a/47466574
   layoutComponentKey: number = 0;
+
+  // Watch layout settings changes and change the corresponding layout only when the editor is active
+  @Watch('showPropertiesPanel')
+  onPropertiesPanel(value: boolean) {
+    if (value != this.layoutSettings.propertiesPanelEnabled) {
+      this.setPropertiesPanelEnabled(value);
+    }
+  }
+
+  onLayoutInitialised() {
+    // apply possibly changed settings to layout after it is initalized
+    this.onPropertiesPanel(this.showPropertiesPanel);
+  }
 
   changeLayout(layout: any) {
     this.$store.commit('settings/SET_LAYOUT', layout);

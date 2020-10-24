@@ -11,7 +11,8 @@ export enum MapType {
 // Whenever the vue components in the editor is changed, we need to use a new layout version and reset old layout states
 enum LayoutVersion {
   Initial,
-  AddPropertiesPanel
+  AddPropertiesPanel,
+  SeparateLayoutSettings
 }
 
 export enum CameraType {
@@ -20,7 +21,7 @@ export enum CameraType {
   Flat
 }
 
-const currentLayoutVersion = LayoutVersion.AddPropertiesPanel;
+const currentLayoutVersion = LayoutVersion.SeparateLayoutSettings;
 
 interface SettingsRootState {
   nearPlane: number;
@@ -43,6 +44,10 @@ interface SettingsRootState {
   rotationSnap: number;
   cameraType: CameraType;
   showPropertiesPanel: boolean;
+  // Separate properties that describe the current properties of the layout state, necessary as the settings properties can be changed outside of the editor when the layout does not adapt
+  layoutSettings: {
+    propertiesPanelEnabled: boolean;
+  };
 }
 
 // updates the local storage on settings mutations
@@ -72,7 +77,10 @@ const defaultState = () => {
     translationSnap: 100,
     rotationSnap: 45,
     cameraType: CameraType.Orbit,
-    showPropertiesPanel: false
+    showPropertiesPanel: false,
+    layoutSettings: {
+      propertiesPanelEnabled: false
+    }
   };
 };
 
@@ -181,6 +189,10 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
         state[key] = s[key];
       });
       updateLocalStorage(state);
+    },
+    SET_PROPERTIES_PANEL_ENABLED(state, payload) {
+      state.layoutSettings.propertiesPanelEnabled = payload;
+      // no need to update local storage as this should trigger a layout change?
     }
   },
   actions: {
@@ -249,6 +261,9 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     },
     resetSettings(context, payload) {
       context.commit('RESET_SETTINGS');
+    },
+    setPropertiesPanelEnabled(context, payload) {
+      context.commit('SET_PROPERTIES_PANEL_ENABLED', payload);
     }
   }
 };
