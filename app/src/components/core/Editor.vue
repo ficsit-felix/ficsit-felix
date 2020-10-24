@@ -121,7 +121,7 @@ export default class Editor extends Vue {
   onLayoutError() {
     // The layout was not compatible with the current settings
     // Report the current settings state
-    console.log(this.$store.state.settings);
+    console.log(JSON.stringify(this.$store.state.settings));
     reportException('Could not load stored layout');
     this.resetLayout();
     // remount the golden-layout component as the layout state is only read on mount
