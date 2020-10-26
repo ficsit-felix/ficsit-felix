@@ -1,6 +1,8 @@
 import { Module, Commit } from 'vuex';
 import { RootState } from '.';
 import { Actor, Component } from 'satisfactory-json';
+import { Vector3 } from 'three';
+import Vue from 'vue';
 
 interface Action {
   name: string;
@@ -89,7 +91,39 @@ export class TransformAction implements Action {
     );
 
     transformedActor.transform = JSON.parse(this.transform);
+    // committing SET_SELECTED_OBJECT is necessary to also update the properties/json (?)
     commit('SET_SELECTED_OBJECT', transformedActor, { root: true });
+    return redo;
+  }
+}
+
+export class TranslateMultipleAction implements Action {
+  constructor(public name: string, private translation: Vector3) {}
+  undo(commit: Commit, rootState: RootState) {
+    rootState.selectedActors.forEach(actor => {
+      Vue.set(
+        actor.transform.translation,
+        1,
+        actor.transform.translation[1] + this.translation.x
+      );
+      Vue.set(
+        actor.transform.translation,
+        0,
+        actor.transform.translation[0] + this.translation.y
+      );
+      Vue.set(
+        actor.transform.translation,
+        2,
+        actor.transform.translation[2] + this.translation.z
+      );
+    });
+
+    const redo = new TranslateMultipleAction(
+      this.name,
+      this.translation.clone().negate()
+    );
+
+    // commit('SET_SELECTED_OBJECT', transformedActor, { root: true });
     return redo;
   }
 }

@@ -180,7 +180,7 @@ export default {
       return !this.local;
     },
     focusDisabled() {
-      return this.selectedActors.length !== 1;
+      return this.selectedActors.length < 1;
     }
   },
   data: () => {

@@ -78,7 +78,9 @@ import {
   Texture,
   Group,
   MathUtils,
-  Camera as ThreeCamera
+  Camera as ThreeCamera,
+  Vector3,
+  Euler
 } from 'three';
 import { setTimeout } from 'timers';
 import { modelHelper } from '@lib/graphics/modelHelper';
@@ -114,7 +116,7 @@ import {
   SCENE_RESIZE
 } from '@lib/constants';
 import { MapType } from '@/store/settings';
-import { TransformAction } from '@/store/undo';
+import { TransformAction, TranslateMultipleAction } from '@/store/undo';
 import {
   Component as VueComponent,
   Vue,
@@ -125,6 +127,7 @@ import {
 import MeshManager from '@lib/graphics/MeshManager';
 import { Action, namespace, State } from 'vuex-class';
 import { Actor, Component } from 'satisfactory-json';
+import { SelectionBoundsBox } from '@lib/graphics/SelectionBoundsBox';
 
 const undoNamespace = namespace('undo');
 @VueComponent({
@@ -215,18 +218,25 @@ export default class ScenePanel extends Vue {
   rotateX = 0;
   rotateZ = 0;
   bugReportVisible = false;
+  selectionBoundsBox!: SelectionBoundsBox;
 
   // watchers
   @Watch('selectedActors', { deep: true })
   onSelectedActors(val: any) {
+    // Update on transform changes that occured outside
     if (val.length === 1) {
       const mesh = this.meshManager.findMeshByName(val[0].pathName);
       mesh?.applyTransform(val[0]);
       //        updateActorMeshTransform(mesh, val[0]);
+    } else {
+      val.forEach((actor: any) => {
+        const mesh = this.meshManager.findMeshByName(actor.pathName);
+        mesh?.applyTransform(actor);
+      });
     }
 
-    if (val != this.lastSelectedActors) {
-      // selection needs to change
+    if (val != this.lastSelectedActors || val.length > 1) {
+      // selection needs to change, this is always true for multiple selections, because the AABB needs to be updated
 
       for (const actor of this.lastSelectedActors) {
         if (!val.includes(actor)) {
@@ -256,10 +266,15 @@ export default class ScenePanel extends Vue {
         if (visibleSelectedMeshes.length === 1) {
           // TODO multiselection
           this.transformControl.attach(visibleSelectedMeshes[0]);
+          this.selectionBoundsBox.setVisible(false);
         } else {
-          this.transformControl.detach();
+          this.selectionBoundsBox.setBounds(visibleSelectedMeshes);
+          this.selectionBoundsBox.setVisible(true);
+          this.transformControl.attach(this.selectionBoundsBox.helper);
+          //this.transformControl.detach();
         }
       } else {
+        this.selectionBoundsBox.setVisible(false);
         this.transformControl.detach();
       }
       this.lastSelectedActors = val;
@@ -282,6 +297,7 @@ export default class ScenePanel extends Vue {
         this.transformControl.attach(mesh.getRaycastMesh());
       }
     }
+    // TODO fix multiselection!
   }
 
   @Watch('showCustomPaints')
@@ -424,6 +440,9 @@ export default class ScenePanel extends Vue {
         }
       );
       this.scene.add(this.transformControl);
+
+      // box helper
+      this.selectionBoundsBox = new SelectionBoundsBox(this.scene);
 
       // load map
       this.loadMap();
@@ -578,14 +597,21 @@ export default class ScenePanel extends Vue {
     EventBus.$emit(FOCUS_SELECTED_OBJECT);
   }
   focusSelectedObject() {
+    let camera = this.rendererRef.camera.controls;
     if (this.selectedActors.length === 1) {
-      let camera = this.rendererRef.camera.controls;
       const actor = this.selectedActors[0];
       // changed order because of coordinate system change
       camera.focus(
         actor.transform.translation[1],
         actor.transform.translation[0],
         actor.transform.translation[2]
+      );
+    } else if (this.selectedActors.length > 1) {
+      // TODO when multiple objects are selected, focus the center of the AABB
+      camera.focus(
+        this.selectionBoundsBox.helper.position.x,
+        this.selectionBoundsBox.helper.position.y,
+        this.selectionBoundsBox.helper.position.z
       );
     }
   }
@@ -607,12 +633,64 @@ export default class ScenePanel extends Vue {
     camera.resize(width, height);
   }
   onSelectedActorTransformChanged() {
-    if (this.selectedActors.length !== 1) {
-      return; // TODO multiple actors
-    }
+    // This is called when the transform control is released and the move/rotation/scale action is finished
 
     // TODO detect when the mesh has not moved at all (just a click and not a drag) and don't do anything
 
+    if (this.selectedActors.length !== 1) {
+      // until now only the SelectionBoxHelper has been transformed. Apply this transformation to the selected actors now
+      console.log(this.selectionBoundsBox.helper.position);
+      console.log(this.selectionBoundsBox.helper.rotation);
+      console.log(this.selectionBoundsBox.helper.scale);
+
+      if (
+        !this.selectionBoundsBox.helper.position.equals(
+          this.selectionBoundsBox.helper.prevPosition
+        )
+      ) {
+        let distance = new Vector3();
+        distance.subVectors(
+          this.selectionBoundsBox.helper.position,
+          this.selectionBoundsBox.helper.prevPosition
+        );
+
+        this.selectedActors.forEach(actor => {
+          Vue.set(
+            actor.transform.translation,
+            1,
+            actor.transform.translation[1] + distance.x
+          );
+          Vue.set(
+            actor.transform.translation,
+            0,
+            actor.transform.translation[0] + distance.y
+          );
+          Vue.set(
+            actor.transform.translation,
+            2,
+            actor.transform.translation[2] + distance.z
+          );
+        });
+        // Make this undoable TODO localize
+        this.recordAction(
+          new TranslateMultipleAction('translate', distance.negate())
+        );
+        console.log('detect translation', distance);
+      }
+
+      if (
+        !this.selectionBoundsBox.helper.rotation.equals(
+          this.selectionBoundsBox.helper.prevRotation
+        )
+      ) {
+        console.log('detect rotation', this.selectionBoundsBox.helper.rotation);
+      }
+      console.log('multiple actors');
+
+      return;
+    }
+
+    // Update only a single actor
     const mesh = this.meshManager.findMeshByName(
       this.selectedActors[0].pathName
     );
