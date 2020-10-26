@@ -19,7 +19,8 @@ import {
   SelectAction,
   DeleteAction,
   ChangeValueAction,
-  gatherValue
+  gatherValue,
+  TranslateMultipleAction
 } from './undo';
 import { DELETE_OBJECTS, CREATE_OBJECTS } from '@/lib/core/constants';
 Vue.use(Vuex);
@@ -399,6 +400,25 @@ export default new Vuex.Store<RootState>({
       /*      console.log(elem);
       
             Vue.set(state.selectedActors[0], payload.path, payload.value);*/
+    },
+    TRANSLATE_MULTIPLE_ACTORS(state, payload) {
+      state.selectedActors.forEach(actor => {
+        Vue.set(
+          actor.transform.translation,
+          0,
+          actor.transform.translation[0] + payload.x
+        );
+        Vue.set(
+          actor.transform.translation,
+          1,
+          actor.transform.translation[1] + payload.y
+        );
+        Vue.set(
+          actor.transform.translation,
+          2,
+          actor.transform.translation[2] + payload.z
+        );
+      });
     }
   },
   actions: {
@@ -503,6 +523,14 @@ export default new Vuex.Store<RootState>({
         )
       );
       context.commit('UPDATE_OBJECT_VALUE', payload);
+    },
+    translateMultipleActors(context, payload) {
+      // Make this undoable TODO localize
+      context.commit(
+        'undo/ADD_ACTION',
+        new TranslateMultipleAction('translate', payload.clone().negate())
+      );
+      context.commit('TRANSLATE_MULTIPLE_ACTORS', payload);
     }
   }
 });

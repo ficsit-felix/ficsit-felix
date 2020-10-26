@@ -196,6 +196,8 @@ export default class ScenePanel extends Vue {
   setProgressText: any;
   @undoNamespace.Action('recordAction')
   recordAction: any;
+  @Action('translateMultipleActors')
+  translateMultipleActors: any;
 
   // vars
   matcap!: Texture;
@@ -653,28 +655,10 @@ export default class ScenePanel extends Vue {
           this.selectionBoundsBox.helper.position,
           this.selectionBoundsBox.helper.prevPosition
         );
-
-        this.selectedActors.forEach(actor => {
-          Vue.set(
-            actor.transform.translation,
-            1,
-            actor.transform.translation[1] + distance.x
-          );
-          Vue.set(
-            actor.transform.translation,
-            0,
-            actor.transform.translation[0] + distance.y
-          );
-          Vue.set(
-            actor.transform.translation,
-            2,
-            actor.transform.translation[2] + distance.z
-          );
-        });
-        // Make this undoable TODO localize
-        this.recordAction(
-          new TranslateMultipleAction('translate', distance.negate())
+        this.translateMultipleActors(
+          new Vector3(distance.y, distance.x, distance.z)
         );
+
         console.log('detect translation', distance);
       }
 

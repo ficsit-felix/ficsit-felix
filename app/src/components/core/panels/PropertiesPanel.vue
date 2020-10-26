@@ -80,25 +80,34 @@
         :value="property"
       />
     </div>
+    <div v-else-if="selectedActors.length > 1">
+      multiple actors selected
+
+      <span class="label">Translation</span>
+      <MultiTranslateDrawer :value="center" />
+    </div>
     <div v-else>select something to edit</div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component as VueComponent, Vue } from 'vue-property-decorator';
+import { Component as VueComponent, Vue, Watch } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
 import { Actor, Component } from 'satisfactory-json';
 import Vector3PropertyDrawer from '../drawers/Vector3PropertyDrawer.vue';
 import QuaternionPropertyDrawer from '../drawers/QuaternionPropertyDrawer.vue';
 import PropertyPropertyDrawer from '../drawers/PropertyPropertyDrawer.vue';
 import BoolPropertyDrawer from '../drawers/BoolPropertyDrawer.vue';
+import MultiTranslateDrawer from '../drawers/MultiTranslateDrawer.vue';
+import { Vector3 } from 'three';
 
 @VueComponent({
   components: {
     Vector3PropertyDrawer,
     QuaternionPropertyDrawer,
     PropertyPropertyDrawer,
-    BoolPropertyDrawer
+    BoolPropertyDrawer,
+    MultiTranslateDrawer
   }
 })
 export default class PropertiesPanel extends Vue {
@@ -111,6 +120,24 @@ export default class PropertiesPanel extends Vue {
 
   @Action('select')
   select: any;
+
+  // display center point when multiple actors are selected
+  center: number[] = [0, 0, 0];
+
+  @Watch('selectedActors', { deep: true }) // deep:true needed to update when the actors are moved using the helper
+  onSelectedActorsChange(val: any) {
+    if (val.length > 1) {
+      this.center = [0, 0, 0];
+      val.forEach((actor: Actor) => {
+        this.center[0] += actor.transform.translation[0];
+        this.center[1] += actor.transform.translation[1];
+        this.center[2] += actor.transform.translation[2];
+      });
+      this.center[0] /= val.length;
+      this.center[1] /= val.length;
+      this.center[2] /= val.length;
+    }
+  }
 
   // Remove the level from the pathname
   formatPathName(pathName: string) {

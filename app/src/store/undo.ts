@@ -103,13 +103,13 @@ export class TranslateMultipleAction implements Action {
     rootState.selectedActors.forEach(actor => {
       Vue.set(
         actor.transform.translation,
-        1,
-        actor.transform.translation[1] + this.translation.x
+        0,
+        actor.transform.translation[0] + this.translation.x
       );
       Vue.set(
         actor.transform.translation,
-        0,
-        actor.transform.translation[0] + this.translation.y
+        1,
+        actor.transform.translation[1] + this.translation.y
       );
       Vue.set(
         actor.transform.translation,
@@ -120,7 +120,7 @@ export class TranslateMultipleAction implements Action {
 
     const redo = new TranslateMultipleAction(
       this.name,
-      this.translation.clone().negate()
+      this.translation.negate()
     );
 
     // commit('SET_SELECTED_OBJECT', transformedActor, { root: true });
