@@ -166,6 +166,11 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: foundationColor,
     paintable: Paintable.NOT_SLOT0
   },
+  '/Game/FactoryGame/Buildable/Building/Ladder/Build_Ladder.Build_Ladder_C': {
+    model: '', // TODO fluid-update
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x1_01.Build_Ramp_8x1_01_C': {
     model: 'Ramp_8x1_01.glb',
     color: rampColor,
@@ -723,6 +728,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.TRUE,
     powerLineOffset: { x: -25, y: -205, z: 420 }
   },
+  '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadAdjustable.Build_JumpPadAdjustable_C': {
+    model: '', // TODO fluid-update
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
+  },
   '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadTilted.Build_JumpPadTilted_C': {
     model: 'JumpPadTilted.glb',
     color: 0xff00ff,
@@ -792,6 +803,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.TRUE,
     powerLineOffset: { x: 0, y: -800, z: 1825 }
   },
+  '/Game/FactoryGame/Buildable/Factory/Packager/Build_Packager.Build_Packager_C': {
+    model: '', // TODO fluid-update
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
+  },
   '/Game/FactoryGame/Buildable/Factory/PipeHyper/Build_PipeHyper.Build_PipeHyper_C': {
     model: '', // spline
     color: 0xf7db95,
@@ -814,6 +831,11 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.TRUE
   },
   '/Game/FactoryGame/Buildable/Factory/Pipeline/Build_Pipeline.Build_Pipeline_C': {
+    model: '', // spline
+    color: pipelineColor,
+    paintable: Paintable.NOT_SLOT0
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipelineMk2/Build_PipelineMK2.Build_PipelineMK2_C': {
     model: '', // spline
     color: pipelineColor,
     paintable: Paintable.NOT_SLOT0
@@ -849,7 +871,17 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.FALSE,
     powerLineOffset: { x: -71, y: -220, z: -27 }
   },
-
+  '/Game/FactoryGame/Buildable/Factory/PipePumpMk2/Build_PipelinePumpMK2.Build_PipelinePumpMk2_C': {
+    model: '', // TODO fluid-update
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
+  },
+  '/Game/FactoryGame/Buildable/Factory/PipeValve/Build_Valve.Build_Valve_C': {
+    model: '', // TODO fluid-update
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C': {
     model: 'Build_PowerLine_C.glb',
     color: 0x5de8f9,
