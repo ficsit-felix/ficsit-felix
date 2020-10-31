@@ -167,8 +167,8 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.NOT_SLOT0
   },
   '/Game/FactoryGame/Buildable/Building/Ladder/Build_Ladder.Build_Ladder_C': {
-    model: 'Ladder.glb', // TODO fluid-update
-    color: 0xff00ff,
+    model: 'Ladder.glb',
+    color: 0xff00ff, // TODO fluid-update
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x1_01.Build_Ramp_8x1_01_C': {
@@ -729,10 +729,10 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: -25, y: -205, z: 420 }
   },
   '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadAdjustable.Build_JumpPadAdjustable_C': {
-    model: '', // TODO fluid-update
+    model: 'JumpPadBottom.glb',
     color: 0xff00ff,
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
+    powerLineOffset: { x: -212, y: -212, z: 175 }
   },
   '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadTilted.Build_JumpPadTilted_C': {
     model: 'JumpPadTilted.glb',
@@ -805,7 +805,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
   },
   '/Game/FactoryGame/Buildable/Factory/Packager/Build_Packager.Build_Packager_C': {
     model: '', // TODO fluid-update
-    color: 0xff00ff,
+    color: 0xff00ff, // TODO fluid-update
     paintable: Paintable.FALSE,
     powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
   },
@@ -873,13 +873,13 @@ export const modelConfig: { [id: string]: ModelConfig } = {
   },
   '/Game/FactoryGame/Buildable/Factory/PipePumpMk2/Build_PipelinePumpMK2.Build_PipelinePumpMk2_C': {
     model: '', // TODO fluid-update
-    color: 0xff00ff,
+    color: 0xff00ff, // TODO fluid-update
     paintable: Paintable.FALSE,
     powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
   },
   '/Game/FactoryGame/Buildable/Factory/PipeValve/Build_Valve.Build_Valve_C': {
     model: '', // TODO fluid-update
-    color: 0xff00ff,
+    color: 0xff00ff, // TODO fluid-update
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C': {
