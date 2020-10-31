@@ -167,7 +167,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.NOT_SLOT0
   },
   '/Game/FactoryGame/Buildable/Building/Ladder/Build_Ladder.Build_Ladder_C': {
-    model: '', // TODO fluid-update
+    model: 'Ladder.glb', // TODO fluid-update
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },

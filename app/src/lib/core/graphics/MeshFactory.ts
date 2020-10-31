@@ -3,7 +3,8 @@ import { BoxBufferGeometry, Mesh, Vector3, MathUtils } from 'three';
 import {
   isConveyorLift,
   isPipeSupport,
-  getProperty
+  getProperty,
+  isLadder
 } from '@lib/graphics/entityHelper';
 
 import { modelHelper } from '@lib/graphics/modelHelper';
@@ -37,6 +38,9 @@ export default class MeshFactoy {
     }
     if (isPipeSupport(actor)) {
       return this.addPipeSupport(actor);
+    }
+    if (isLadder(actor)) {
+      return this.addLadder(actor);
     }
 
     return new Promise((resolve, reject) => {
@@ -185,6 +189,33 @@ export default class MeshFactoy {
             instance: undefined
           });
         });
+    });
+  }
+
+  addLadder(actor: Actor): Promise<MeshResult> {
+    return new Promise((resolve, reject) => {
+      modelHelper.loadModel('/models/Ladder.glb').then(ladderGeometry => {
+        const material = this.materialFactory.createMaterial(actor);
+
+        const numSegments = parseInt(
+          (getProperty(actor, 'mNumSegments')?.value ?? '0') + ''
+        );
+
+        const mesh = new Mesh(ladderGeometry, material);
+
+        for (let i = 1; i < numSegments; i++) {
+          const segmentMesh = new Mesh(ladderGeometry);
+          segmentMesh.position.z = 200 * i;
+          mesh.add(segmentMesh);
+        }
+
+        mesh.userData = { pathName: actor.pathName };
+
+        resolve({
+          mesh,
+          instance: undefined
+        });
+      });
     });
   }
 }
