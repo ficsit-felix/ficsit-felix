@@ -801,7 +801,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     model: 'OilRefinery.glb',
     color: 0x5549bf,
     paintable: Paintable.TRUE,
-    powerLineOffset: { x: 0, y: -800, z: 1825 }
+    powerLineOffset: { x: 0, y: -963, z: 1880 }
   },
   '/Game/FactoryGame/Buildable/Factory/Packager/Build_Packager.Build_Packager_C': {
     model: 'Packager.glb',
