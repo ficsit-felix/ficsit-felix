@@ -872,7 +872,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 175, y: 40, z: 97 }
   },
   '/Game/FactoryGame/Buildable/Factory/PipePumpMk2/Build_PipelinePumpMK2.Build_PipelinePumpMk2_C': {
-    model: 'PipePump2.glb',
+    model: 'PipePumpMk2.glb',
     color: 0xff00ff, // TODO fluid-update
     paintable: Paintable.TRUE,
     powerLineOffset: { x: 116, y: -125, z: 42 }
@@ -1632,6 +1632,7 @@ export const modClassNamePrefixes = [
   '/Game/FactoryGame/UtilityMod/',
   '/Script/FactorySkyline.',
   '/Script/FicsItCam.',
+  '/Script/FicsitFarming.',
   '/Script/FicsItNetworks.',
   '/Script/LightItUp.',
   '/Script/SatisfactoryHelper.'

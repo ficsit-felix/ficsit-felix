@@ -738,7 +738,7 @@ export default class ScenePanel extends Vue {
         this.meshFactory
           .createMesh(actor)
           .then(result => {
-            return new Promise<string>((resolve, reject) => {
+            return new Promise<string | undefined>((resolve, reject) => {
               updateActorMeshTransform(result.mesh, actor);
 
               let visible = true;
@@ -756,12 +756,14 @@ export default class ScenePanel extends Vue {
           })
           .catch(error => {
             reportError(error);
-            return new Promise<string>((resolve, reject) => resolve(undefined));
+            return new Promise<undefined>((resolve, reject) =>
+              resolve(undefined)
+            );
           })
       )
     ).then(instances => {
       // Rebuild all InstancedMeshGroups where we added an instance
-      const instancesUnique = new Set<string>(instances);
+      const instancesUnique = new Set<string | undefined>(instances);
       for (const instance of instancesUnique) {
         if (instance !== undefined) {
           this.meshManager.instancedMeshGroups[instance].rebuild();
