@@ -438,7 +438,7 @@ export default new Vuex.Store<RootState>({
       context.commit('SET_DATA_LOADED', value);
     },
     setLoadedData(context, data) {
-      return new Promise((resolve, reject) => {
+      return new Promise<void>((resolve, reject) => {
         window.data = data;
         refreshActorComponentDictionary();
         context.commit('SET_DATA_LOADED', true);

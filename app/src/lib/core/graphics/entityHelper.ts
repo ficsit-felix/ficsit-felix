@@ -206,3 +206,15 @@ export function isPipeSupport(actor: Actor) {
       '/Game/FactoryGame/Buildable/Factory/PipelineSupport/Build_PipelineSupport.Build_PipelineSupport_C'
   );
 }
+export function isLadder(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Building/Ladder/Build_Ladder.Build_Ladder_C'
+  );
+}
+export function isAdjustableJumpPad(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadAdjustable.Build_JumpPadAdjustable_C'
+  );
+}

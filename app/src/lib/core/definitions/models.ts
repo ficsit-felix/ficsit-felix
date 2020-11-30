@@ -167,9 +167,9 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.NOT_SLOT0
   },
   '/Game/FactoryGame/Buildable/Building/Ladder/Build_Ladder.Build_Ladder_C': {
-    model: '', // TODO fluid-update
-    color: 0xff00ff,
-    paintable: Paintable.FALSE
+    model: 'Ladder.glb',
+    color: 0xff00ff, // TODO fluid-update
+    paintable: Paintable.TRUE
   },
   '/Game/FactoryGame/Buildable/Building/Ramp/Build_Ramp_8x1_01.Build_Ramp_8x1_01_C': {
     model: 'Ramp_8x1_01.glb',
@@ -729,10 +729,10 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: -25, y: -205, z: 420 }
   },
   '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadAdjustable.Build_JumpPadAdjustable_C': {
-    model: '', // TODO fluid-update
-    color: 0xff00ff,
-    paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
+    model: 'JumpPadBottom.glb',
+    color: 0xff00ff, // TODO fluid-update
+    paintable: Paintable.TRUE,
+    powerLineOffset: { x: -212, y: -212, z: 175 }
   },
   '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadTilted.Build_JumpPadTilted_C': {
     model: 'JumpPadTilted.glb',
@@ -801,13 +801,13 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     model: 'OilRefinery.glb',
     color: 0x5549bf,
     paintable: Paintable.TRUE,
-    powerLineOffset: { x: 0, y: -800, z: 1825 }
+    powerLineOffset: { x: 0, y: -963, z: 1880 }
   },
   '/Game/FactoryGame/Buildable/Factory/Packager/Build_Packager.Build_Packager_C': {
-    model: '', // TODO fluid-update
-    color: 0xff00ff,
-    paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
+    model: 'Packager.glb',
+    color: 0xff00ff, // TODO fluid-update
+    paintable: Paintable.TRUE,
+    powerLineOffset: { x: 219, y: -48, z: 1080 }
   },
   '/Game/FactoryGame/Buildable/Factory/PipeHyper/Build_PipeHyper.Build_PipeHyper_C': {
     model: '', // spline
@@ -868,19 +868,19 @@ export const modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/Buildable/Factory/PipePump/Build_PipelinePump.Build_PipelinePump_C': {
     model: 'PipePump.glb',
     color: pipelineColor,
-    paintable: Paintable.FALSE,
-    powerLineOffset: { x: -71, y: -220, z: -27 }
+    paintable: Paintable.TRUE,
+    powerLineOffset: { x: 175, y: 40, z: 97 }
   },
   '/Game/FactoryGame/Buildable/Factory/PipePumpMk2/Build_PipelinePumpMK2.Build_PipelinePumpMk2_C': {
-    model: '', // TODO fluid-update
-    color: 0xff00ff,
-    paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO fluid-update
+    model: 'PipePumpMk2.glb',
+    color: 0xff00ff, // TODO fluid-update
+    paintable: Paintable.TRUE,
+    powerLineOffset: { x: 116, y: -125, z: 42 }
   },
   '/Game/FactoryGame/Buildable/Factory/PipeValve/Build_Valve.Build_Valve_C': {
-    model: '', // TODO fluid-update
-    color: 0xff00ff,
-    paintable: Paintable.FALSE
+    model: 'PipeValve.glb',
+    color: 0xff00ff, // TODO fluid-update
+    paintable: Paintable.TRUE
   },
   '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C': {
     model: 'Build_PowerLine_C.glb',
@@ -1632,6 +1632,7 @@ export const modClassNamePrefixes = [
   '/Game/FactoryGame/UtilityMod/',
   '/Script/FactorySkyline.',
   '/Script/FicsItCam.',
+  '/Script/FicsitFarming.',
   '/Script/FicsItNetworks.',
   '/Script/LightItUp.',
   '/Script/SatisfactoryHelper.'

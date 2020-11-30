@@ -7,10 +7,7 @@ class ModelHelper {
   requestedModels: Map<
     string,
     ((
-      value?:
-        | THREE.BufferGeometry
-        | PromiseLike<THREE.BufferGeometry>
-        | undefined
+      value: THREE.BufferGeometry | PromiseLike<THREE.BufferGeometry>
     ) => void)[]
   > = new Map();
   loadedModels: Map<string, THREE.BufferGeometry> = new Map();
@@ -18,9 +15,9 @@ class ModelHelper {
   loader = new GLTFLoader();
 
   loadModel(path: string): Promise<THREE.BufferGeometry> {
-    return new Promise((resolve, reject) => {
+    return new Promise<THREE.BufferGeometry>((resolve, reject) => {
       if (this.loadedModels.has(path)) {
-        resolve(this.loadedModels.get(path));
+        resolve(this.loadedModels.get(path)!);
       } else {
         if (this.requestedModels.has(path)) {
           // put request into
