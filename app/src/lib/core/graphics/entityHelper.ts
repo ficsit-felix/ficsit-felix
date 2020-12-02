@@ -169,7 +169,9 @@ export function isRailroadTrack(actor: Actor) {
 export function isPowerLine(actor: Actor) {
   return (
     actor.className ===
-    '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C'
+      '/Game/FactoryGame/Buildable/Factory/PowerLine/Build_PowerLine.Build_PowerLine_C' ||
+    actor.className ===
+      '/Game/FactoryGame/Events/Christmas/Buildings/PowerLineLights/Build_XmassLightsLine.Build_XmassLightsLine_C'
   );
 }
 

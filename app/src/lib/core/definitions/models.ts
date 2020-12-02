@@ -702,6 +702,11 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },
+  '/Game/FactoryGame/Buildable/Factory/Holiday/Build_TreeGiftProducer/Build_TreeGiftProducer.Build_TreeGiftProducer_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Buildable/Factory/HubTerminal/Build_HubTerminal.Build_HubTerminal_C': {
     model: 'HubTerminal.glb',
     color: 0x693fb0,
@@ -1378,6 +1383,46 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Equipment/StunSpear/Equip_StunSpear.Equip_StunSpear_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Events/BP_EventSubsystem.BP_EventSubsystem_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Events/Christmas/BP_GiftBundle.BP_GiftBundle_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Events/Christmas/Buildings/CandyCaneDecor/Build_CandyCaneDecor.Build_CandyCaneDecor_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Events/Christmas/Buildings/PowerLineLights/Build_XmassLightsLine.Build_XmassLightsLine_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Events/Christmas/Buildings/SnowDispenser/Build_SnowDispenser.Build_SnowDispenser_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Events/Christmas/Buildings/SnowmanDecor/Build_Snowman.Build_Snowman_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Events/Christmas/Buildings/TreeDecor/Build_XmassTree.Build_XmassTree_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Events/Christmas/Buildings/WreathDecor/Build_WreathDecor.Build_WreathDecor_C': {
     model: '',
     color: 0xff00ff,
     paintable: Paintable.FALSE
