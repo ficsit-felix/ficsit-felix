@@ -161,7 +161,7 @@ var FlatControls = function(object, domElement) {
       object.up,
       new Vector3(0, 1, 0)
     );
-    var quatInverse = quat.clone().inverse();
+    var quatInverse = quat.clone().invert();
 
     var lastPosition = new Vector3();
     var lastQuaternion = new Quaternion();

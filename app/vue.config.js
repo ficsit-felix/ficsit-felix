@@ -28,8 +28,7 @@ module.exports = {
           PACKAGE_VERSION: '"' + version + '"'
         }
       })
-    ],
-    target: 'electron-renderer' // https://github.com/electron/electron/issues/9920#issuecomment-478826728
+    ]
   },
   pluginOptions: {
     electronBuilder: {
@@ -66,7 +65,8 @@ module.exports = {
           artifactName: 'FICSIT-FeliX.AppImage'
         }
       }
-    }
+    },
+    nodeIntegration: true
   },
   transpileDependencies: ['vuetify']
 };
