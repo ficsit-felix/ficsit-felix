@@ -84,7 +84,7 @@ export class SelectionBoxHelper extends LineSegments {
 
     this.box = box;
 
-    this.type = 'Box3Helper';
+    //this.type = 'Box3Helper';
 
     this.geometry.computeBoundingSphere();
     this.prevPosition = new Vector3();

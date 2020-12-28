@@ -28,9 +28,9 @@ module.exports = {
           PACKAGE_VERSION: '"' + version + '"'
         }
       })
-    ]
+    ],
+    target: 'electron-renderer' // https://github.com/electron/electron/issues/9920#issuecomment-478826728
   },
-
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
