@@ -64,9 +64,9 @@ module.exports = {
         appImage: {
           artifactName: 'FICSIT-FeliX.AppImage'
         }
-      }
-    },
-    nodeIntegration: true
+      },
+      nodeIntegration: true
+    }
   },
   transpileDependencies: ['vuetify']
 };
