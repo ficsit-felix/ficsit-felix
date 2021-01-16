@@ -42,3 +42,6 @@ Library to convert from Satisfactory save files to a JSON format and back
 
 https://github.com/Goz3rr/SatisfactorySaveEditor  
 Save file editor for Windows written in C#
+
+https://github.com/AnthorNet/SC-InteractiveMap
+Satisfactory-Calculator Interactive Map

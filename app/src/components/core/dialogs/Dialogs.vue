@@ -53,7 +53,7 @@
           <p>
             <i18n path="dialog.about.row3">
               <a
-                href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
+                href="https://github.com/ficsit-felix/ficsit-felix/blob/main/app/public/models/AUTHORS"
                 slot="authors"
                 >{{ $t('dialog.about.authors') }}</a
               >

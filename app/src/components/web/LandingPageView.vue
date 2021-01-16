@@ -44,7 +44,7 @@
             >GitHub</a
           >
           <a
-            href="https://github.com/ficsit-felix/ficsit-felix/blob/master/app/public/models/AUTHORS"
+            href="https://github.com/ficsit-felix/ficsit-felix/blob/main/app/public/models/AUTHORS"
             slot="authors"
             >{{ $t('landingPage.authors') }}</a
           >
