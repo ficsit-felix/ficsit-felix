@@ -432,10 +432,10 @@ export default new Vuex.Store<RootState>({
         context.commit('SET_SELECTED', selectedPathNames);
       }
     },
-    setLoading(context, value) {
+    setLoading(context) {
       // this is needed so that the objects list will be updated
       // when we set the dataLoaded state back to true
-      context.commit('SET_DATA_LOADED', value);
+      context.commit('SET_DATA_LOADED', false);
     },
     setLoadedData(context, data) {
       return new Promise<void>((resolve, reject) => {

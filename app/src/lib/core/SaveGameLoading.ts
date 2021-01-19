@@ -26,6 +26,7 @@ export class SaveGameLoading {
 
   loadSaveGame(filename: string, filepath: string, asJson: boolean) {
     // TODO check extension
+    this.vue.$store.dispatch('setLoading');
 
     // Show progress bar dialog with 0 progress
     this.vue.$store.dispatch('setProgressText', {
