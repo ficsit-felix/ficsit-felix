@@ -395,7 +395,7 @@ export default class DesktopMenu extends Vue {
   padding: 80px 0px;
   width: 300px;
   height: 100%;
-  background: #00000088;
+  //background: #00000088;
   /*box-shadow: 10px 0px 7px #00000040;*/
   z-index: 5;
   li {
@@ -426,14 +426,14 @@ export default class DesktopMenu extends Vue {
   margin: 0px;
   padding: 30px 0px;
   &.filebrowser {
-    background: #66666620;
+    background: #00000040;
     /*box-shadow: 10px 0px 7px #00000040;*/
     z-index: 4;
     position: relative;
   }
 
   &.sessionbrowser {
-    background: #ffffff20;
+    background: #00000060;
     flex-grow: 1;
   }
 
@@ -518,7 +518,7 @@ export default class DesktopMenu extends Vue {
   }
 }
 .v-application .error {
-  color: #ff8239;
+  color: #ff5c33;
   background: transparent !important;
 }
 
