@@ -151,6 +151,7 @@
 		"processing": "Datei verarbeiten...",
 		"readingFile": "Datei einlesen...",
 		"saveLocation": "Du findest deine Spielstände im Ordner {saveLocation}",
+		"sizeError": "Die Datei ist zu klein um ein valider Spielstand zu sein. Wenn diese Datei von Satisfactory erstellt wurde, ist sie nicht mehr wiederherzustellen.",
 		"subtitleJson": "JSON Datei importieren...",
 		"subtitleSav": "Spielstand einlesen...",
 		"title": "Spielstand öffnen"

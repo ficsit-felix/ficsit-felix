@@ -151,6 +151,7 @@
 		"processing": "processing file...",
 		"readingFile": "reading file...",
 		"saveLocation": "You can find your save files at {saveLocation}",
+		"sizeError": "This file is too small to be a valid save game. If this file was saved by satisfactory, it is unrepairably corrupted.",
 		"subtitleJson": "Importing JSON file...",
 		"subtitleSav": "Reading save file...",
 		"title": "Open save file"

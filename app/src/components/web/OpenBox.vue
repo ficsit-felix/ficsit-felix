@@ -119,6 +119,7 @@ export default {
 
       const expected = this.importJson ? 'json' : 'sav';
 
+      // Check that the file has the correct extension
       if (file.name.split('.').pop() !== expected) {
         const message = this.$t('openPage.extensionError', {
           expected: expected,
@@ -126,6 +127,13 @@ export default {
         });
         this.showErrorDialog = true;
         this.errorText = message;
+        return;
+      }
+
+      // Check that the file has at least a header
+      if (file.size < 100) {
+        this.showErrorDialog = true;
+        this.errorText = this.$t('openPage.sizeError');
         return;
       }
 
