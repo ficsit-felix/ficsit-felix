@@ -25,7 +25,7 @@
     "@bitowl/three-instanced-mesh": "^0.118.0",
     "@caohenghu/vue-colorpicker": "^1.2.2",
     "@sentry/browser": "^6.0.0",
-    "@sentry/integrations": "^6.0.0",
+    "@sentry/integrations": "^6.0.1",
     "core-js": "^3.8.3",
     "custom-electron-titlebar": "^3.2.6",
     "electron-updater": "^4.3.5",
