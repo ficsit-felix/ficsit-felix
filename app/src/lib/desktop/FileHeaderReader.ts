@@ -13,7 +13,8 @@ export interface FileHeader {
   sessionName: string;
   playDurationSeconds: number;
   saveDateTime: Date;
-  sessionVisibility: number;
+  sessionVisibility?: number;
+  editorObjectVersion?: number;
 }
 
 export class FileHeaderReader {
@@ -39,9 +40,16 @@ export class FileHeaderReader {
           mapOptions: this.readString(),
           sessionName: this.readString(),
           playDurationSeconds: this.readInt(),
-          saveDateTime: this.transformToDate(this.readLong()),
-          sessionVisibility: this.readByte()
+          saveDateTime: this.transformToDate(this.readLong())
         };
+
+        if (header.saveHeaderType >= 5) {
+          header.sessionVisibility = this.readByte();
+        }
+
+        if (header.saveHeaderType <= 7) {
+          header.editorObjectVersion = this.readInt();
+        }
 
         callback(header);
       } catch (e) {

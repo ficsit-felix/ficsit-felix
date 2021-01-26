@@ -134,6 +134,7 @@ export default new Vuex.Store<RootState>({
           playDurationSeconds: window.data.playDurationSeconds,
           saveDateTime: window.data.saveDateTime,
           sessionVisibility: window.data.sessionVisibility,
+          editorObjectVersion: window.data.editorObjectVersion,
           collected: window.data.collected,
           missing: window.data.missing
         };
@@ -260,6 +261,7 @@ export default new Vuex.Store<RootState>({
         window.data.playDurationSeconds = obj.playDurationSeconds;
         window.data.saveDateTime = obj.saveDateTime;
         window.data.sessionVisibility = obj.sessionVisibility;
+        window.data.editorObjectVersion = obj.editorObjectVersion;
         window.data.collected = obj.collected;
         window.data.missing = obj.missing;
         state.selectedActors = [];
