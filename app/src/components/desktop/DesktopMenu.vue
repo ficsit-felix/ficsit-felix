@@ -80,7 +80,7 @@
                 <div class="last-time">
                   {{ dateToString(file.saveDateTime) }}
                 </div>
-                <div class="last-time">{{ bytesToSize(file.size) }}</div>
+                <div class="filesize">{{ bytesToSize(file.size) }}</div>
               </div>
             </div>
           </div>
@@ -101,28 +101,20 @@
 </template>
 
 <script lang="ts">
-import * as Sentry from '@sentry/browser';
 import { commithash } from '@lib/commithash';
-import { reportMessage, reportContext } from '@lib/errorReporting';
-import CenterWhiteBox from '../core/CenterWhiteBox.vue';
-import { app, remote, session } from 'electron';
-import electron from 'electron';
+import { remote } from 'electron';
 import { EventBus } from '@lib/event-bus';
 import {
   DIALOG_SETTINGS,
   DIALOG_ABOUT,
-  DIALOG_PROGRESS,
-  DIALOG_OPEN_TIME_MS,
   DIALOG_CONFIRM_EXIT_DESKTOP,
   DIALOG_SAVE_DESKTOP
 } from '@lib/constants';
-import { openFileFromFilesystem } from '@lib/../desktop/openFile';
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import { createReadStream, Dir } from 'fs';
 import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
 import fs from 'fs';
 import { FileHeaderReader, FileHeader } from '@/lib/desktop/FileHeaderReader';
-import moment from 'moment';
 import { getSaveGamesFolderPath } from '@/lib/desktop/getSaveGamesFolderPath';
 import path from 'path';
 
@@ -333,9 +325,13 @@ export default class DesktopMenu extends Vue {
    * Formats the last save time
    */
   dateToString(date: Date): string {
-    return moment(date)
-      .locale(this.$i18n.locale)
-      .format('lll');
+    return date.toLocaleDateString(this.$i18n.locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    });
   }
 
   /**
@@ -344,14 +340,14 @@ export default class DesktopMenu extends Vue {
   secondsToTime(seconds: number): string {
     // TODO localize?
     if (seconds < 60) {
-      return Math.floor(seconds) + 's';
+      return Math.floor(seconds) + ' s';
     }
     seconds /= 60;
     if (seconds < 60) {
-      return Math.floor(seconds) + 'm';
+      return Math.floor(seconds) + ' m';
     }
     seconds /= 60;
-    return Math.floor(seconds) + 'h';
+    return Math.floor(seconds) + ' h';
   }
   /**
    * Formats the save game size
@@ -454,6 +450,7 @@ export default class DesktopMenu extends Vue {
     .bottom-info {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       font-size: 14px;
       color: #ddd;
       padding-top: 2px;
@@ -462,8 +459,8 @@ export default class DesktopMenu extends Vue {
       font-weight: bold;
     }
     .last-time {
-      padding-left: 10px;
       white-space: nowrap;
+      margin: 0px 8px;
     }
   }
   overflow-y: auto;
