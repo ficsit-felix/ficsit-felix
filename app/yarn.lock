@@ -9332,26 +9332,20 @@ sass@^1.32.4:
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
-satisfactory-blueprint@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/satisfactory-blueprint/-/satisfactory-blueprint-0.0.3.tgz#44c1e51e470fb9101f0d602eb6164aa3adb43ab9"
-  integrity sha512-ldj0niApN5F+c8Rp2Ok/3D/t5JrKNGXtQSNNN/bFoiTctcSAi1Hm8WdybJHCj/oIm768U/LkL4ms9ktdeDcf4g==
+satisfactory-blueprint@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/satisfactory-blueprint/-/satisfactory-blueprint-0.0.4.tgz#5b53e9925f0318a7499f3254d98a66e1c6dc7631"
+  integrity sha512-td8bRALWET1cw1tKO1UyB45dLROff2rjNmX43gcVzTQJC05bggIGLnqTpC2OGE08PPeFhljtHCUntomBoY9VOA==
   dependencies:
-    satisfactory-json "^0.0.9"
-    three "^0.105.2"
+    satisfactory-json "^0.0.53"
 
-satisfactory-json@0.0.53:
+satisfactory-json@0.0.53, satisfactory-json@^0.0.53:
   version "0.0.53"
   resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.53.tgz#e14e690bcb160d1ebc7a4e6fe8d8e6d7fb0e6ed3"
   integrity sha512-bHupzAtcuRtRkfhJNO1PhaNVljRwHkbsJP/qUxuVBrnCs97/K5vTcNivkDaCLFRwK103ALdwE4uxYiliIQ2cmQ==
   dependencies:
     jsbi "^3.1.4"
     pako "^2.0.2"
-
-satisfactory-json@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.9.tgz#37b9d1f663e99fced031223bc7743249b65991dc"
-  integrity sha512-H+wdSbRzg3oGka9mind59dpUmMjA74QxRIjK4pKL+VUbYe+AsXZrbytZWbPVSZcvPBUXfeWV8PRXYMymMgfpfw==
 
 sax@>=0.6.0, sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
@@ -10272,11 +10266,6 @@ three@0.124.0:
   version "0.124.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.124.0.tgz#14ab1a26ba6c56e51190e1b55695cd3c1e69ea55"
   integrity sha512-ROXp1Ly7YyF+jC910DQyAWj++Qlw2lQv0qwYLNQwdDbjk4bsOXAfGO92wYTMPNei1GMJUmCxSxc3MjGBTS09Rg==
-
-three@^0.105.2:
-  version "0.105.2"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.105.2.tgz#d135f1549bdcf5a9acd904ba3dbf9198a0268984"
-  integrity sha512-L3Al37k4g3hVbgFFS251UVtIc25chhyN0/RvXzR0C+uIBToV6EKDG+MZzEXm9L2miGUVMK27W46/VkP6WUZXMg==
 
 throttleit@^1.0.0:
   version "1.0.0"
