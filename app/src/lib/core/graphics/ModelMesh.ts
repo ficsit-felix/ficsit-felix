@@ -39,7 +39,7 @@ export class ThreeModelMesh implements ModelMesh {
   constructor(mesh: Mesh) {
     this.mesh = mesh;
     // need to make a clone of the material as we change its color in rebuildColor()
-    this.material = (mesh.material as MeshMatcapMaterial).clone();
+    this.material = (mesh.material as MeshMatcapMaterial).clone() as MeshMatcapMaterial;
     this.mesh.material = this.material;
     for (const child of this.mesh.children) {
       if (child instanceof Mesh) {

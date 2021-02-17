@@ -1,12 +1,4 @@
-import {
-  Material,
-  UniformsLib,
-  Geometry,
-  Color,
-  Vector3,
-  Quaternion,
-  BufferGeometry
-} from 'three';
+import { Material, Color, Vector3, Quaternion, BufferGeometry } from 'three';
 
 // patch the THREE instance
 import * as THREE from 'three';

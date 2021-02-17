@@ -514,7 +514,7 @@ export default new Vuex.Store<RootState>({
     updateObjectValue(context, payload) {
       const previousValue = gatherValue(payload.path, this.state);
       if (previousValue === payload.value) {
-        return; // no need to change
+        return; // no need to changeq
       }
       context.commit(
         'undo/ADD_ACTION',
