@@ -3,7 +3,7 @@
   "name": "ficsit-felix",
   "alias": "ficsit-felix.now.sh",
   "builds": [
-    {"src": "app/package.json", "use": "@now/static-build",
+    {"src": "app/package.json", "use": "@vercel/static-build",
     
     "config": {
     "distDir": "dist"
