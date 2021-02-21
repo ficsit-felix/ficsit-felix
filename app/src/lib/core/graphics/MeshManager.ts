@@ -9,7 +9,6 @@ import {
 import GeometryFactory from './GeometryFactory';
 import { findActorByName, isSpline } from '@lib/graphics/entityHelper';
 import { Actor } from 'satisfactory-json';
-import { Component } from 'vue';
 import { MeshResult } from './MeshFactory';
 import InstancedMeshGroup from './InstancedMeshGroup';
 import { ModelMesh, ThreeModelMesh, InstancedModelMesh } from './ModelMesh';

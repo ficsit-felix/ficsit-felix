@@ -1,38 +1,34 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import * as THREE from 'three';
+import { BufferGeometry, Group, Mesh } from 'three';
 
 // singleton class that helps with loading all the models
 class ModelHelper {
-  isLoading = false;
   requestedModels: Map<
     string,
-    ((
-      value: THREE.BufferGeometry | PromiseLike<THREE.BufferGeometry>
-    ) => void)[]
+    ((value: BufferGeometry | PromiseLike<BufferGeometry>) => void)[]
   > = new Map();
-  loadedModels: Map<string, THREE.BufferGeometry> = new Map();
+  loadedModels: Map<string, BufferGeometry> = new Map();
 
   loader = new GLTFLoader();
 
-  loadModel(path: string): Promise<THREE.BufferGeometry> {
-    return new Promise<THREE.BufferGeometry>((resolve, reject) => {
+  loadModel(path: string): Promise<BufferGeometry> {
+    return new Promise<BufferGeometry>((resolve, reject) => {
       if (this.loadedModels.has(path)) {
+        // Model has already been loaded, directly resolve it
         resolve(this.loadedModels.get(path)!);
       } else {
         if (this.requestedModels.has(path)) {
-          // put request into
           this.requestedModels.get(path)!.push(resolve);
         } else {
+          // Unknown model -> actually load it
           this.requestedModels.set(path, [resolve]);
-        }
-        if (!this.isLoading) {
-          this.loadMore();
+          this.loadRequestedModel(path);
         }
       }
     });
   }
 
-  loadGroup(path: string): Promise<THREE.Group> {
+  loadGroup(path: string): Promise<Group> {
     return new Promise((resolve, reject) => {
       this.loader.load(
         path,
@@ -42,49 +38,29 @@ class ModelHelper {
         undefined, // TODO use the progress function as well?
         error => {
           console.error(error); // TODO global error
-          this.isLoading = false;
         }
       );
     });
   }
 
-  loadMore() {
-    this.loadFrame().then(() => {
-      requestAnimationFrame(this.loadMore.bind(this));
-    });
-  }
-
-  // loads one model at a time
-  // returns true if it needs to load more models
-  loadFrame(): Promise<void> {
-    this.isLoading = true;
-    return new Promise((resolve, reject) => {
-      const next = this.requestedModels.keys().next();
-      if (!next.done) {
-        const model = next.value;
-        this.loader.load(
-          model,
-          gltf => {
-            const geometry = (gltf.scene.children[0] as THREE.Mesh)
-              .geometry as THREE.BufferGeometry;
-            this.loadedModels.set(model, geometry);
-            //console.log('loaded model ' + model);
-            for (const resolveX of this.requestedModels.get(model)!) {
-              resolveX(geometry);
-            }
-            this.requestedModels.delete(model);
-            resolve();
-          },
-          undefined, // TODO use the progress function as well?
-          error => {
-            console.error(error); // TODO global error
-            this.isLoading = false;
-          }
-        );
-      } else {
-        this.isLoading = false;
+  // Load a model and resolve all promises that requested it
+  private loadRequestedModel(path: string) {
+    this.loader.load(
+      path,
+      gltf => {
+        const geometry = (gltf.scene.children[0] as Mesh)
+          .geometry as BufferGeometry;
+        this.loadedModels.set(path, geometry);
+        for (const resolveX of this.requestedModels.get(path)!) {
+          resolveX(geometry);
+        }
+        this.requestedModels.delete(path);
+      },
+      undefined, // TODO use the progress function as well?
+      error => {
+        console.error(error); // TODO global error
       }
-    });
+    );
   }
 }
 
