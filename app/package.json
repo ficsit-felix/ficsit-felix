@@ -28,7 +28,7 @@
     "@sentry/integrations": "^6.2.0",
     "core-js": "^3.9.1",
     "custom-electron-titlebar": "^3.2.6",
-    "electron-updater": "^4.3.5",
+    "electron-updater": "^4.3.8",
     "filereader-stream": "^2.0.0",
     "golden-layout": "^1.5.9",
     "gsap": "^3.6.0",
