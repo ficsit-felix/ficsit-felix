@@ -474,6 +474,13 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.TRUE,
     powerLineOffset: { x: 475, y: 120, z: 700 }
   },
+  '/Game/FactoryGame/Buildable/Factory/Blender/Build_Blender.Build_Blender_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
   '/Game/FactoryGame/Buildable/Factory/Converter/Build_Converter.Build_Converter_C': {
     model: '',
     color: 0xff00ff,
@@ -499,6 +506,13 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     model: 'ConveyorSplitter.glb',
     color: 0x693d65,
     paintable: Paintable.TRUE
+  },
+  '/Game/FactoryGame/Buildable/Factory/CeilingLight/Build_CeilingLight.Build_CeilingLight_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/CentralStorage/Build_CentralStorage.Build_CentralStorage_C': {
     model: '',
@@ -642,11 +656,31 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: conveyorPoleColor,
     paintable: Paintable.FALSE
   },
+  '/Game/FactoryGame/Buildable/Factory/DroneStation/BP_DroneTransport.BP_DroneTransport_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Factory/DroneStation/Build_DroneStation.Build_DroneStation_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
   '/Game/FactoryGame/Buildable/Factory/Elevator/Build_Elevator.Build_Elevator_C': {
     // TODO what is this?
     model: '',
     color: 0xcb43be,
     paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightPole.Build_FloodlightPole_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/FoundryMk1/Build_FoundryMk1.Build_FoundryMk1_C': {
     model: 'FoundryMk1.glb',
@@ -660,7 +694,19 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.TRUE,
     powerLineOffset: { x: 420, y: -320, z: 580 }
   },
-
+  '/Game/FactoryGame/Buildable/Factory/FrackingExtractor/Build_FrackingExtractor.Build_FrackingExtractor_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Factory/FrackingSmasher/Build_FrackingSmasher.Build_FrackingSmasher_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
   '/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorBiomass.Build_GeneratorBiomass_C': {
     model: 'GeneratorBiomass.glb',
     color: 0xaa3da0,
@@ -750,6 +796,13 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.TRUE,
     powerLineOffset: { x: 400, y: 470, z: 420 }
+  },
+  '/Game/FactoryGame/Buildable/Factory/LightsControlPanel/Build_LightsControlPanel.Build_LightsControlPanel_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/LookoutTower/Build_LookoutTower.Build_LookoutTower_C': {
     model: 'LookoutTower.glb',
@@ -945,6 +998,13 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: powerPoleColor,
     paintable: Paintable.FALSE,
     powerLineOffset: { x: 80, y: 0, z: 0 }
+  },
+  '/Game/FactoryGame/Buildable/Factory/PowerStorage/Build_PowerStorageMk1.Build_PowerStorageMk1_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C': {
     model: '',
@@ -1307,6 +1367,18 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },
+  '/Game/FactoryGame/Equipment/Holiday/SnowballWeapon/Equip_SnowballWeaponMittens.Equip_SnowballWeaponMittens_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Equipment/HoverPack/Equip_HoverPack.Equip_HoverPack_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Equipment/JetPack/Equip_JetPack.Equip_JetPack_C': {
     model: '',
     color: 0xff00ff,
@@ -1382,7 +1454,19 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },
+  '/Game/FactoryGame/Equipment/StunSpear/Equip_CandyCaneBasher.Equip_CandyCaneBasher_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Equipment/StunSpear/Equip_StunSpear.Equip_StunSpear_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Equipment/Zipline/Equip_Zipline.Equip_Zipline_C': {
+    // TODO update4
     model: '',
     color: 0xff00ff,
     paintable: Paintable.FALSE
@@ -1443,6 +1527,18 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Recipes/Research/BP_ResearchManager.BP_ResearchManager_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Resource/BP_FrackingCore.BP_FrackingCore_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Resource/BP_FrackingSatellite.BP_FrackingSatellite_C': {
+    // TODO update4
     model: '',
     color: 0xff00ff,
     paintable: Paintable.FALSE
@@ -1564,6 +1660,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
   '/Game/FactoryGame/World/Hazard/SporeCloudPlant/BP_SporeFlower.BP_SporeFlower_C': {
     model: 'SporeCloudPlant.glb',
     color: 0xb12525,
+    paintable: Paintable.FALSE
+  },
+  '/Script/FactoryGame.FGDroneStationInfo': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
     paintable: Paintable.FALSE
   },
   '/Script/FactoryGame.FGFoliageRemoval': {
