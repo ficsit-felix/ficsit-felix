@@ -11035,10 +11035,10 @@ vue-cli-plugin-electron-builder@~2.0.0-rc.6:
     webpack-merge "^4.2.2"
     yargs "^15.3.1"
 
-vue-cli-plugin-vuetify@~2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.1.0.tgz#1261d5866bca8f5c256f1b13abad2568fbcd6bb2"
-  integrity sha512-cvJR2+6U1PS4UUP7NnuylWfxM3LrzKnusOgrCZUyzr5abyDxf/t0TZy5EqfJwAa9/TsIO0W4gOoaoy/f4Yw0aQ==
+vue-cli-plugin-vuetify@~2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.3.1.tgz#9e45a686902351320e876881d057eb69c646a22b"
+  integrity sha512-96NLmCE12FalyWSxbfFerbOKSwuPq5b4zYRei5BRLbdCBq+YgmCMv8zgZl8Rx/kR/91T4i8XZDCNgfQ78mpQ3A==
   dependencies:
     null-loader "^3.0.0"
     semver "^7.1.2"
