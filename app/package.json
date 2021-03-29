@@ -41,7 +41,7 @@
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-golden-layout": "^2.1.1",
-    "vue-i18n": "^8.24.1",
+    "vue-i18n": "^8.24.2",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.1",
     "vue-shortkey": "^3.1.7",
