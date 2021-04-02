@@ -74,7 +74,6 @@ import {
   BoxBufferGeometry,
   LineCurve3,
   Mesh,
-  error,
   Texture,
   Group,
   MathUtils,
