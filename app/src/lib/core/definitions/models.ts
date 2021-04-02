@@ -682,6 +682,13 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.FALSE,
     powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
+  '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightWall.Build_FloodlightWall_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
   '/Game/FactoryGame/Buildable/Factory/FoundryMk1/Build_FoundryMk1.Build_FoundryMk1_C': {
     model: 'FoundryMk1.glb',
     color: 0x91498a,
@@ -744,9 +751,11 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: -660, y: -1900, z: 900 }
   },
   '/Game/FactoryGame/Buildable/Factory/HadronCollider/Build_HadronCollider.Build_HadronCollider_C': {
+    // TODO update4
     model: '',
     color: 0xff00ff,
-    paintable: Paintable.FALSE
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
   },
   '/Game/FactoryGame/Buildable/Factory/Holiday/Build_TreeGiftProducer/Build_TreeGiftProducer.Build_TreeGiftProducer_C': {
     model: '',
@@ -798,11 +807,10 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 400, y: 470, z: 420 }
   },
   '/Game/FactoryGame/Buildable/Factory/LightsControlPanel/Build_LightsControlPanel.Build_LightsControlPanel_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'LightsControlPanel.glb',
+    color: 0xff00ff,// TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: -85, y: 0, z: 230 }
   },
   '/Game/FactoryGame/Buildable/Factory/LookoutTower/Build_LookoutTower.Build_LookoutTower_C': {
     model: 'LookoutTower.glb',
@@ -876,7 +884,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     model: 'HyperPipeStart.glb',
     color: pipelineSupportColor,
     paintable: Paintable.TRUE,
-    powerLineOffset: { x: -160, y: 0, z: 200 } // no powerpole
+    powerLineOffset: { x: -190, y: 0, z: 230 }
   },
   '/Game/FactoryGame/Buildable/Factory/PipeHyperSupport/Build_PipeHyperSupport.Build_PipeHyperSupport_C': {
     model: 'HyperPipeSupport.glb',
@@ -999,6 +1007,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.FALSE,
     powerLineOffset: { x: 80, y: 0, z: 0 }
   },
+  '/Game/FactoryGame/Buildable/Factory/PowerSwitch/Build_PowerSwitch.Build_PowerSwitch_C': {
+    model: 'PowerSwitch.glb',
+    color: 0xff00ff,// TODO update4
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: -85, y: 0, z: 295 }
+  },
   '/Game/FactoryGame/Buildable/Factory/PowerStorage/Build_PowerStorageMk1.Build_PowerStorageMk1_C': {
     // TODO update4
     model: '',
@@ -1079,6 +1093,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0x2e81ff,
     paintable: Paintable.TRUE
   },
+  '/Game/FactoryGame/Buildable/Factory/StreetLight/Build_StreetLight.Build_StreetLight_C': {   // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE,
+    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+  },
   '/Game/FactoryGame/Buildable/Factory/TradingPost/BP_StartingPod.BP_StartingPod_C': {
     model: '',
     color: 0xff00ff,
@@ -1135,7 +1155,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     model: 'WaterPump.glb',
     color: 0x2e81ff,
     paintable: Paintable.TRUE,
-    powerLineOffset: { x: -415, y: 320, z: 1100 } // powerpole missing
+    powerLineOffset: { x: -610, y: 320, z: 1050 }
   },
   '/Game/FactoryGame/Buildable/Factory/WorkBench/Build_WorkBench.Build_WorkBench_C': {
     model: 'Workbench.glb',

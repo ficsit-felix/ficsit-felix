@@ -220,3 +220,15 @@ export function isAdjustableJumpPad(actor: Actor) {
     '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadAdjustable.Build_JumpPadAdjustable_C'
   );
 }
+export function isPowerSwitch(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Factory/PowerSwitch/Build_PowerSwitch.Build_PowerSwitch_C'
+  );
+}
+export function isLightsControlPanel(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Factory/LightsControlPanel/Build_LightsControlPanel.Build_LightsControlPanel_C'
+  );
+}

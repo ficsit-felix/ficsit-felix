@@ -7,7 +7,9 @@ import {
   findComponentByName,
   isRailroadTrack,
   isPipe,
-  isPowerPoleWallDouble
+  isPowerPoleWallDouble,
+  isPowerSwitch,
+  isLightsControlPanel
 } from '@lib/graphics/entityHelper';
 import { modelHelper } from '@lib/graphics/modelHelper';
 // FIXME
@@ -359,15 +361,17 @@ export default class GeometryFactory {
     ) {
       sourceOffset = modelConfig[source.className].powerLineOffset!;
 
-      // Invert offset for second connection to PowerPoleWallDouble
+      // Invert offset for second connection to PowerPoleWallDouble,
+      // PowerSwitch and LightsControlPanel
       if (
-        isPowerPoleWallDouble(source) &&
-        sourceConnection.pathName.endsWith('2')
+        ((isPowerPoleWallDouble(source) || isPowerSwitch(source)) &&
+        sourceConnection.pathName.endsWith('2')) ||
+        (isLightsControlPanel(source) && sourceConnection.pathName.includes('Downstream'))
       ) {
         sourceOffset = {
           x: -sourceOffset.x,
           y: sourceOffset.y,
-          z: sourceOffset.z
+          z: isLightsControlPanel(source) ? sourceOffset.z + 30 : sourceOffset.z
         };
       }
 
@@ -398,15 +402,17 @@ export default class GeometryFactory {
       modelConfig[target.className].powerLineOffset !== undefined
     ) {
       targetOffset = modelConfig[target.className].powerLineOffset!;
-      // Invert offset for second connection to PowerPoleWallDouble
+      // Invert offset for second connection to PowerPoleWallDouble,
+      // PowerSwitch and LightsControlPanel
       if (
-        isPowerPoleWallDouble(target) &&
-        targetConnection.pathName.endsWith('2')
+        ((isPowerPoleWallDouble(target) || isPowerSwitch(target)) &&
+        targetConnection.pathName.endsWith('2')) ||
+        (isLightsControlPanel(target) && targetConnection.pathName.includes('Downstream'))
       ) {
         targetOffset = {
           x: -targetOffset.x,
           y: targetOffset.y,
-          z: targetOffset.z
+          z: isLightsControlPanel(target) ? targetOffset.z + 30 : targetOffset.z
         };
       }
 
