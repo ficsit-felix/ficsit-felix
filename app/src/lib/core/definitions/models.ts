@@ -1383,7 +1383,19 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },
+  '/Game/FactoryGame/Equipment/GoldenCup/Equip_CupGold.Equip_CupGold_C': {
+    // TODO update4
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Equipment/HazmatSuit/Equip_HazmatSuit.Equip_HazmatSuit_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Equipment/Holiday/SnowballWeapon/BP_SnowballProjectile.BP_SnowballProjectile_C': {
+    // TODO update4
     model: '',
     color: 0xff00ff,
     paintable: Paintable.FALSE
