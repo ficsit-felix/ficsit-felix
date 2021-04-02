@@ -151,10 +151,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { EventBus } from '@lib/event-bus';
 import { FOCUS_SELECTED_OBJECT } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
+import { mapActions, mapState } from 'vuex';
 import PhotoModeDialog from './dialogs/PhotoModeDialog.vue';
+
 export default {
   name: 'Toolbar',
   components: {

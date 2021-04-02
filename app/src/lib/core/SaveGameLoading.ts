@@ -1,14 +1,13 @@
-import Vue from 'vue';
-import { EventBus } from '@lib/event-bus';
 import {
-  DIALOG_PROGRESS,
-  DIALOG_OPEN_TIME_MS,
   DIALOG_BUGREPORT,
-  GUI_REFRESH_TIMEOUT
+  DIALOG_OPEN_TIME_MS,
+  DIALOG_PROGRESS
 } from '@lib/constants';
-import { v4 } from 'uuid';
 import { reportContext, reportError } from '@lib/errorReporting';
+import { EventBus } from '@lib/event-bus';
 import { SaveGame } from 'satisfactory-json';
+import { v4 } from 'uuid';
+import Vue from 'vue';
 
 export interface SaveFileReader {
   readFile(

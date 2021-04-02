@@ -1,34 +1,31 @@
-import { modelConfig, isModClassName } from '@lib/definitions/models';
+import { isModClassName, modelConfig } from '@lib/definitions/models';
+import { reportException, reportMessage } from '@lib/errorReporting';
+import { ConveyorCurvePath } from '@lib/graphics/ConveyorCurvePath.js';
 import {
   findActorByName,
+  findComponentByName,
   getProperty,
   isConveyorBelt,
-  isPowerLine,
-  findComponentByName,
-  isRailroadTrack,
+  isLightsControlPanel,
   isPipe,
+  isPowerLine,
   isPowerPoleWallDouble,
   isPowerSwitch,
-  isLightsControlPanel
+  isRailroadTrack
 } from '@lib/graphics/entityHelper';
 import { modelHelper } from '@lib/graphics/modelHelper';
-// FIXME
-//@ts-ignore
-import { ConveyorCurvePath } from '@lib/graphics/ConveyorCurvePath.js';
 import { Actor, ArrayProperty, ObjectProperty } from 'satisfactory-json';
 import {
   BoxBufferGeometry,
   BufferGeometry,
   CubicBezierCurve3,
+  ExtrudeBufferGeometry,
   LineCurve3,
   Quaternion,
+  Shape,
   TubeBufferGeometry,
-  Vector3,
-  ExtrudeBufferGeometry,
-  Shape
+  Vector3
 } from 'three';
-
-import { reportMessage, reportException } from '@lib/errorReporting';
 
 interface GeometryResult {
   geometry: BufferGeometry;

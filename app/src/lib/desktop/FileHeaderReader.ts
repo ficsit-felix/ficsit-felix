@@ -1,4 +1,3 @@
-import { Readable } from 'stream';
 import { ReadStream } from 'fs';
 
 export interface FileHeader {

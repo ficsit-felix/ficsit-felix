@@ -1,5 +1,5 @@
-import { SaveFileWriter } from '../core/SaveGameSaving';
 import { SaveGame } from 'satisfactory-json';
+import { SaveFileWriter } from '../core/SaveGameSaving';
 import { saveFileToFilesystem } from '../desktop/saveFile';
 
 export class WebFileWriter implements SaveFileWriter {

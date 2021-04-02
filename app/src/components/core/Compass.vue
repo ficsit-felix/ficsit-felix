@@ -63,7 +63,8 @@
 </template>
 
 <script>
-import { Vector3, Quaternion, Euler } from 'three';
+import { Euler, Quaternion, Vector3 } from 'three';
+
 export default {
   name: 'Compass',
   //  props: ['rotateX', 'rotateZ']

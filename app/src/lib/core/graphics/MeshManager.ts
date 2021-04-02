@@ -1,18 +1,18 @@
-import {
-  Mesh,
-  Scene,
-  Material,
-  BufferGeometry,
-  MeshMatcapMaterial,
-  Object3D
-} from 'three';
-import GeometryFactory from './GeometryFactory';
 import { findActorByName, isSpline } from '@lib/graphics/entityHelper';
 import { Actor } from 'satisfactory-json';
-import { MeshResult } from './MeshFactory';
-import InstancedMeshGroup from './InstancedMeshGroup';
-import { ModelMesh, ThreeModelMesh, InstancedModelMesh } from './ModelMesh';
+import {
+  BufferGeometry,
+  Material,
+  Mesh,
+  MeshMatcapMaterial,
+  Object3D,
+  Scene
+} from 'three';
 import ColorFactory from './ColorFactory';
+import GeometryFactory from './GeometryFactory';
+import InstancedMeshGroup from './InstancedMeshGroup';
+import { MeshResult } from './MeshFactory';
+import { InstancedModelMesh, ModelMesh, ThreeModelMesh } from './ModelMesh';
 
 /**
  * manages the meshes displayed on the playground

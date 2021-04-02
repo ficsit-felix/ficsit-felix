@@ -86,24 +86,17 @@
 </template>
 
 <script lang="ts">
-import {
-  Component as VueComponent,
-  Vue,
-  Prop,
-  Watch
-} from 'vue-property-decorator';
-import { Action } from 'vuex-class';
-import { StructProperty } from 'satisfactory-json';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
+import FloatPropertyDrawer from './FloatPropertyDrawer.vue';
+import QuaternionPropertyDrawer from './QuaternionPropertyDrawer.vue';
+import StringPropertyDrawer from './StringPropertyDrawer.vue';
 import ArbitraryStructPropertyDrawer from './struct/ArbitraryStructPropertyDrawer.vue';
 import BoxStructPropertyDrawer from './struct/BoxStructPropertyDrawer.vue';
-import QuaternionPropertyDrawer from './QuaternionPropertyDrawer.vue';
-import Vector3PropertyDrawer from './Vector3PropertyDrawer.vue';
-import LinearColorStructPropertyDrawer from './struct/LinearColorStructPropertyDrawer.vue';
-import InventoryItemStructPropertyDrawer from './struct/InventoryItemStructPropertyDrawer.vue';
 import ColorStructPropertyDrawer from './struct/ColorStructPropertyDrawer.vue';
+import InventoryItemStructPropertyDrawer from './struct/InventoryItemStructPropertyDrawer.vue';
+import LinearColorStructPropertyDrawer from './struct/LinearColorStructPropertyDrawer.vue';
 import RailroadTrackPositionStructPropertyDrawer from './struct/RailroadTrackPositionStructPropertyDrawer.vue';
-import StringPropertyDrawer from './StringPropertyDrawer.vue';
-import FloatPropertyDrawer from './FloatPropertyDrawer.vue';
+import Vector3PropertyDrawer from './Vector3PropertyDrawer.vue';
 
 @VueComponent({
   components: {

@@ -1,16 +1,16 @@
-import Vue from 'vue';
-
-import store from './store';
+import '@lib/cmdHelper';
+import { CHANGE_LOCALE } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
+import { isElectron } from '@lib/isElectron';
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
-import vuetify from './plugins/vuetify';
+import Vue from 'vue';
 import vgl from 'vue-golden-layout';
 import Router from 'vue-router';
-
-import { i18n } from './plugins/i18n';
-import { isElectron } from '@lib/isElectron';
-import '@lib/cmdHelper';
 import './assets/golden-layout-dark.css';
+import { i18n } from './plugins/i18n';
+import vuetify from './plugins/vuetify';
+import store from './store';
 
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
@@ -23,9 +23,6 @@ if (process.env.NODE_ENV !== 'development') {
     ]
   });
 }
-
-import { EventBus } from '@lib/event-bus';
-import { CHANGE_LOCALE } from '@lib/constants';
 
 // vue-shortkey
 Vue.use(require('vue-shortkey'));

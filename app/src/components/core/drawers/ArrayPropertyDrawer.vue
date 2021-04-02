@@ -120,20 +120,13 @@
 </template>
 
 <script lang="ts">
-import {
-  Component as VueComponent,
-  Vue,
-  Prop,
-  Watch
-} from 'vue-property-decorator';
-import { Action } from 'vuex-class';
-import { StructProperty } from 'satisfactory-json';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
+import FloatPropertyDrawer from './FloatPropertyDrawer.vue';
 import IntPropertyDrawer from './IntPropertyDrawer.vue';
 import ObjectPropertyDrawer from './ObjectPropertyDrawer.vue';
-import FloatPropertyDrawer from './FloatPropertyDrawer.vue';
 import StringPropertyDrawer from './StringPropertyDrawer.vue';
-import TextPropertyDrawer from './TextPropertyDrawer.vue';
 import LinearColorStructPropertyDrawer from './struct/LinearColorStructPropertyDrawer.vue';
+import TextPropertyDrawer from './TextPropertyDrawer.vue';
 
 @VueComponent({
   components: {

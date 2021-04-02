@@ -1,7 +1,7 @@
-import { Mesh, Vector3, Quaternion, Euler, Matrix4 } from 'three';
 import { Actor } from 'satisfactory-json';
-import { isPowerLine, isSpline } from './entityHelper';
+import { Euler, Mesh, Quaternion, Vector3 } from 'three';
 import Vue from 'vue';
+import { isPowerLine, isSpline } from './entityHelper';
 
 /*
  * Unreal coordinate system:

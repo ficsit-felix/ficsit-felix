@@ -1,8 +1,8 @@
-import { Module, Commit } from 'vuex';
-import { RootState } from '.';
 import { Actor, Component } from 'satisfactory-json';
 import { Vector3 } from 'three';
 import Vue from 'vue';
+import { Commit, Module } from 'vuex';
+import { RootState } from '.';
 
 interface Action {
   name: string;

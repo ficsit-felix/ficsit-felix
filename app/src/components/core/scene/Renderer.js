@@ -1,9 +1,9 @@
-import { WebGLRenderer, sRGBEncoding } from 'three';
-import { SelectControls } from '@lib/graphics/SelectControls.js';
 import { BoxSelectControls } from '@lib/graphics/BoxSelectControls.js';
+import { SelectControls } from '@lib/graphics/SelectControls.js';
+import * as Stats from 'stats.js';
+import { sRGBEncoding, WebGLRenderer } from 'three';
 import { mapActions, mapState } from 'vuex';
 
-import * as Stats from 'stats.js';
 // see https://github.com/posva/state-animation-demos/tree/master/components/three
 
 export default {

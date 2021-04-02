@@ -1,8 +1,7 @@
-import { SaveFileReader } from '../core/SaveGameLoading';
-
 //@ts-ignore
 import fileReaderStream from 'filereader-stream';
 import { Sav2JsonTransform, SaveGame } from 'satisfactory-json';
+import { SaveFileReader } from '../core/SaveGameLoading';
 
 export class WebFileReader implements SaveFileReader {
   constructor(private file: File) {}

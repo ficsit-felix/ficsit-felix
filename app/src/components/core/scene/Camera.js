@@ -1,18 +1,12 @@
-import Object3D from './Object3D';
-import {
-  PerspectiveCamera,
-  MOUSE,
-  OrthographicCamera,
-  Vector3,
-  Euler
-} from 'three';
-import { OrbitControls } from '@lib/graphics/OrbitControls.js';
-import { FlyControls } from '@lib/graphics/FlyControls.js';
-import { FlatControls } from '@lib/graphics/FlatControls.js';
-import { mapActions, mapState } from 'vuex';
 import { CameraType } from '@/store/settings';
-import { EventBus } from '@lib/event-bus';
 import { CAMERA_CHANGE } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
+import { FlatControls } from '@lib/graphics/FlatControls.js';
+import { FlyControls } from '@lib/graphics/FlyControls.js';
+import { OrbitControls } from '@lib/graphics/OrbitControls.js';
+import { MOUSE, OrthographicCamera, PerspectiveCamera, Vector3 } from 'three';
+import { mapActions, mapState } from 'vuex';
+import Object3D from './Object3D';
 
 export default {
   extends: Object3D,

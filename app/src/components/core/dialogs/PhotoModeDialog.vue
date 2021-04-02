@@ -79,13 +79,13 @@
 <script lang="ts">
 import {
   Component as VueComponent,
-  Vue,
   Prop,
-  Watch,
-  Ref
+  Ref,
+  Vue,
+  Watch
 } from 'vue-property-decorator';
-import { EventBus } from '../../../lib/core/event-bus';
 import { SCENE_RESIZE } from '../../../lib/core/constants';
+import { EventBus } from '../../../lib/core/event-bus';
 import Logo from '../Logo.vue';
 
 @VueComponent({

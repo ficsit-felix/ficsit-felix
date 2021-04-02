@@ -1,28 +1,27 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import { Module } from 'vuex';
-import { Vector3 } from 'three';
-import { Component, Actor } from 'satisfactory-json';
+import { CREATE_OBJECTS, DELETE_OBJECTS } from '@/lib/core/constants';
+import { reportException } from '@lib/errorReporting';
+import { EventBus } from '@lib/event-bus';
 import {
   findActorByName,
   findComponentByName,
-  indexOfComponent,
   indexOfActor,
+  indexOfComponent,
   refreshActorComponentDictionary
 } from '@lib/graphics/entityHelper';
-import * as Sentry from '@sentry/browser';
-import { EventBus } from '@lib/event-bus';
-import { reportException } from '@lib/errorReporting';
+import { Actor, Component } from 'satisfactory-json';
+import { Vector3 } from 'three';
+import Vue from 'vue';
+import Vuex from 'vuex';
 import { settingsModule } from './settings';
 import {
-  undo,
-  SelectAction,
-  DeleteAction,
   ChangeValueAction,
+  DeleteAction,
   gatherValue,
-  TranslateMultipleAction
+  SelectAction,
+  TranslateMultipleAction,
+  undo
 } from './undo';
-import { DELETE_OBJECTS, CREATE_OBJECTS } from '@/lib/core/constants';
+
 Vue.use(Vuex);
 
 // Add the data object to the window interface

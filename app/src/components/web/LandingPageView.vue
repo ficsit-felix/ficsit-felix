@@ -56,12 +56,10 @@
 </template>
 
 <script lang="ts">
-import Logo from '@/components/core/Logo.vue';
-import * as Sentry from '@sentry/browser';
-import { commithash } from '@lib/commithash';
-import LanguageSwitcher from '@/components/core/LanguageSwitcher.vue';
-import { reportMessage } from '@lib/errorReporting';
 import CenterWhiteBox from '@/components/core/CenterWhiteBox.vue';
+import LanguageSwitcher from '@/components/core/LanguageSwitcher.vue';
+import Logo from '@/components/core/Logo.vue';
+import { commithash } from '@lib/commithash';
 
 export default {
   name: 'LandingPage',

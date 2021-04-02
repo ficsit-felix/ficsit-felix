@@ -1,6 +1,6 @@
-import Object3D from './Object3D';
-import { Scene, Color, Fog } from 'three';
+import { Color, Fog, Scene } from 'three';
 import { mapState } from 'vuex';
+import Object3D from './Object3D';
 
 export default {
   ...Object3D,

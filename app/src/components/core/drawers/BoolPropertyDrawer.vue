@@ -11,13 +11,9 @@
 </template>
 
 <script lang="ts">
-import {
-  Component as VueComponent,
-  Vue,
-  Prop,
-  Watch
-} from 'vue-property-decorator';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
+
 @VueComponent({})
 export default class BoolPropertyDrawer extends Vue {
   @Prop() path!: string;

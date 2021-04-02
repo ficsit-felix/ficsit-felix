@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import EditorView from '../components/desktop/EditorView.vue';
 import WelcomeView from '../components/desktop/WelcomeView.vue';
-import LoadEditorView from '../components/core/views/LoadEditorView.vue';
 
 Vue.use(Router);
 

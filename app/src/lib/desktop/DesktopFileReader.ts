@@ -1,5 +1,5 @@
-import { SaveFileReader, SaveGameLoading } from '../core/SaveGameLoading';
 import { SaveGame } from 'satisfactory-json';
+import { SaveFileReader, SaveGameLoading } from '../core/SaveGameLoading';
 import { openFileFromFilesystem } from './openFile';
 
 class DesktopFileReader implements SaveFileReader {

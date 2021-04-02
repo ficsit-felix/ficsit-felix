@@ -1,6 +1,5 @@
 import { SelectionBox } from '@lib/graphics/SelectionBox.js';
 import { SelectionHelper } from '@lib/graphics/SelectionHelper.js';
-import * as THREE from 'three';
 import { MOUSE } from 'three';
 
 let BoxSelectControls = function(

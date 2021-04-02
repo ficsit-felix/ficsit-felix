@@ -25,8 +25,8 @@
 <script lang="ts">
 import {
   Component as VueComponent,
-  Vue,
   Prop,
+  Vue,
   Watch
 } from 'vue-property-decorator';
 

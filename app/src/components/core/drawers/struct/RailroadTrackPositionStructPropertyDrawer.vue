@@ -40,14 +40,9 @@
 </template>
 
 <script lang="ts">
-import {
-  Component as VueComponent,
-  Vue,
-  Prop,
-  Watch
-} from 'vue-property-decorator';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
-import { ObjectProperty } from 'satisfactory-json';
+
 @VueComponent({})
 export default class RailroadTrackPositionStructPropertyDrawer extends Vue {
   @Prop() path!: string;

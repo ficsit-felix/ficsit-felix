@@ -59,74 +59,55 @@
 </template>
 
 <script lang="ts">
+import Compass from '@/components/core/Compass.vue';
+import BugReportDialog from '@/components/core/dialogs/BugReportDialog.vue';
+import { MapType } from '@/store/settings';
+import { TransformAction } from '@/store/undo';
+import { commithash } from '@lib/commithash';
+import {
+  CAMERA_CHANGE,
+  CREATE_OBJECTS,
+  DELETE_OBJECTS,
+  DIALOG_PROGRESS,
+  FOCUS_SELECTED_OBJECT,
+  GUI_REFRESH_TIMEOUT,
+  SCENE_RESIZE
+} from '@lib/constants';
+import { reportError } from '@lib/errorReporting';
+import { EventBus } from '@lib/event-bus';
+import ColorFactory from '@lib/graphics/ColorFactory';
+import GeometryFactory from '@lib/graphics/GeometryFactory';
+import MeshFactory from '@lib/graphics/MeshFactory';
+import { updateActorMeshTransform } from '@lib/graphics/meshHelper';
+import MeshManager from '@lib/graphics/MeshManager';
+import { modelHelper } from '@lib/graphics/modelHelper';
+import { SelectionBoundsBox } from '@lib/graphics/SelectionBoundsBox';
+import { Actor, Component } from 'satisfactory-json';
 import * as THREE from 'three';
-
+import {
+  Camera as ThreeCamera,
+  Group,
+  MathUtils,
+  Texture,
+  Vector3
+} from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
-
-import _default, { mapActions, mapGetters, mapState } from 'vuex';
+import { setTimeout } from 'timers';
+import {
+  Component as VueComponent,
+  Ref,
+  Vue,
+  Watch
+} from 'vue-property-decorator';
+import {} from 'vuex';
+import { Action, namespace, State } from 'vuex-class';
 //@ts-ignore
-import Scene from '../scene/Scene.js';
+import Camera from '../scene/Camera.js';
 //@ts-ignore
 import Renderer from '../scene/Renderer.js';
 //@ts-ignore
-import Camera from '../scene/Camera.js';
-import {
-  BoxBufferGeometry,
-  LineCurve3,
-  Mesh,
-  Texture,
-  Group,
-  MathUtils,
-  Camera as ThreeCamera,
-  Vector3,
-  Euler
-} from 'three';
-import { setTimeout } from 'timers';
-import { modelHelper } from '@lib/graphics/modelHelper';
-import { modelConfig } from '@lib/definitions/models';
-import * as Sentry from '@sentry/browser';
+import Scene from '../scene/Scene.js';
 import Toolbar from '../Toolbar.vue';
-import { commithash } from '@lib/commithash';
-import { getProperty, findActorByName } from '@lib/graphics/entityHelper';
-import Compass from '@/components/core/Compass.vue';
-import { ConveyorCurvePath } from '@lib/graphics/ConveyorCurvePath';
-import GeometryFactory from '@lib/graphics/GeometryFactory';
-import ColorFactory from '@lib/graphics/ColorFactory';
-import MeshFactory from '@lib/graphics/MeshFactory';
-import { updateActorMeshTransform } from '@lib/graphics/meshHelper';
-import BugReportDialog from '@/components/core/dialogs/BugReportDialog.vue';
-
-import {
-  isConveyorBelt,
-  isConveyorLift,
-  isPowerLine,
-  isRailroadTrack
-} from '@lib/graphics/entityHelper';
-import { EventBus } from '@lib/event-bus';
-import { reportError } from '@lib/errorReporting';
-import {
-  DIALOG_PROGRESS,
-  DIALOG_OPEN_TIME_MS,
-  FOCUS_SELECTED_OBJECT,
-  GUI_REFRESH_TIMEOUT,
-  DELETE_OBJECTS,
-  CREATE_OBJECTS,
-  CAMERA_CHANGE,
-  SCENE_RESIZE
-} from '@lib/constants';
-import { MapType } from '@/store/settings';
-import { TransformAction, TranslateMultipleAction } from '@/store/undo';
-import {
-  Component as VueComponent,
-  Vue,
-  Prop,
-  Watch,
-  Ref
-} from 'vue-property-decorator';
-import MeshManager from '@lib/graphics/MeshManager';
-import { Action, namespace, State } from 'vuex-class';
-import { Actor, Component } from 'satisfactory-json';
-import { SelectionBoundsBox } from '@lib/graphics/SelectionBoundsBox';
 
 const undoNamespace = namespace('undo');
 @VueComponent({

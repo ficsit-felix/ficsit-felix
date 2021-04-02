@@ -77,9 +77,9 @@
 </template>
 
 <script lang="ts">
-import 'whatwg-fetch';
-import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
 import * as JSZip from 'jszip';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
+import 'whatwg-fetch';
 import AlertDialog from './AlertDialog.vue';
 
 @VueComponent({ components: { AlertDialog } })

@@ -1,19 +1,17 @@
-import { BoxBufferGeometry, Mesh, Vector3, MathUtils, Group } from 'three';
-
-import {
-  isConveyorLift,
-  isPipeSupport,
-  getProperty,
-  isLadder,
-  isAdjustableJumpPad
-} from '@lib/graphics/entityHelper';
-
-import { modelHelper } from '@lib/graphics/modelHelper';
-import GeometryFactory from './GeometryFactory';
-import ColorFactory from './ColorFactory';
-import { Actor, StructProperty } from 'satisfactory-json';
-import { applyRotation, applyTranslation } from '@lib/graphics/meshHelper';
 import { modelConfig } from '@lib/definitions/models';
+import {
+  getProperty,
+  isAdjustableJumpPad,
+  isConveyorLift,
+  isLadder,
+  isPipeSupport
+} from '@lib/graphics/entityHelper';
+import { applyRotation, applyTranslation } from '@lib/graphics/meshHelper';
+import { modelHelper } from '@lib/graphics/modelHelper';
+import { Actor, StructProperty } from 'satisfactory-json';
+import { BoxBufferGeometry, MathUtils, Mesh, Vector3 } from 'three';
+import ColorFactory from './ColorFactory';
+import GeometryFactory from './GeometryFactory';
 
 export interface MeshResult {
   mesh: Mesh;

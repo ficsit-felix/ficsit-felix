@@ -128,33 +128,33 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { EventBus } from '@lib/event-bus';
-import LicensesDialog from './LicensesDialog.vue';
-import ConfirmDialog from './ConfirmDialog.vue';
-import Settings from '../Settings.vue';
-import ProgressBarDialog from './ProgressBarDialog.vue';
-import BugReportDialog from './BugReportDialog.vue';
 import {
   DIALOG_ABOUT,
-  DIALOG_HELP,
-  DIALOG_OPEN_SOURCE,
-  DIALOG_SETTINGS,
-  DIALOG_PROGRESS,
-  DIALOG_SAVE_WEB,
-  ON_SAVE_PRESSED,
   DIALOG_BUGREPORT,
   DIALOG_CONFIRM_EXIT_DESKTOP,
-  DIALOG_SAVE_DESKTOP,
-  DIALOG_OPEN_WEB,
+  DIALOG_HELP,
   DIALOG_OPEN_JSON_WEB,
+  DIALOG_OPEN_SOURCE,
+  DIALOG_OPEN_WEB,
+  DIALOG_PROGRESS,
+  DIALOG_SAVE_DESKTOP,
   DIALOG_SAVE_JSON_WEB,
+  DIALOG_SAVE_WEB,
+  DIALOG_SETTINGS,
+  ON_EXIT_PRESSED,
   ON_SAVE_JSON_PRESSED,
-  ON_EXIT_PRESSED
+  ON_SAVE_PRESSED
 } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
 import { setTimeout } from 'timers';
+import Vue from 'vue';
 import { mapState } from 'vuex';
+import Settings from '../Settings.vue';
+import BugReportDialog from './BugReportDialog.vue';
+import ConfirmDialog from './ConfirmDialog.vue';
 import HelpDialog from './HelpDialog.vue';
+import LicensesDialog from './LicensesDialog.vue';
+import ProgressBarDialog from './ProgressBarDialog.vue';
 // TODO rework this dialog system to avoid repeating code
 
 export default Vue.extend({

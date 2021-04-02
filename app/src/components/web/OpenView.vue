@@ -22,14 +22,12 @@
 </template>
 
 <script lang="ts">
+import { DIALOG_SETTINGS } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
 import { Component as VueComponent, Vue } from 'vue-property-decorator';
-
+import CenterWhiteBox from '../core/CenterWhiteBox.vue';
 import Logo from '../core/Logo.vue';
 import OpenBox from './OpenBox.vue';
-import CenterWhiteBox from '../core/CenterWhiteBox.vue';
-import Settings from '../core/Settings.vue';
-import { EventBus } from '@lib/event-bus';
-import { DIALOG_SETTINGS } from '@lib/constants';
 
 @VueComponent({
   components: {

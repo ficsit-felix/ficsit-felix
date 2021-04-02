@@ -1,5 +1,5 @@
-import { Module } from 'vuex';
 import Vue from 'vue';
+import { Module } from 'vuex';
 import { RootState } from '.';
 
 export enum MapType {

@@ -91,19 +91,19 @@
 </template>
 
 <script lang="ts">
-import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
 import { Property } from 'satisfactory-json';
-import IntPropertyDrawer from './IntPropertyDrawer.vue';
-import FloatPropertyDrawer from './FloatPropertyDrawer.vue';
-import ObjectPropertyDrawer from './ObjectPropertyDrawer.vue';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
+import ArrayPropertyDrawer from './ArrayPropertyDrawer.vue';
 import BoolPropertyDrawer from './BoolPropertyDrawer.vue';
+import BytePropertyDrawer from './BytePropertyDrawer.vue';
+import EnumPropertyDrawer from './EnumPropertyDrawer.vue';
+import FloatPropertyDrawer from './FloatPropertyDrawer.vue';
+import IntPropertyDrawer from './IntPropertyDrawer.vue';
+import MapPropertyDrawer from './MapPropertyDrawer.vue';
+import ObjectPropertyDrawer from './ObjectPropertyDrawer.vue';
 import StringPropertyDrawer from './StringPropertyDrawer.vue';
 import StructPropertyDrawer from './StructPropertyDrawer.vue';
-import ArrayPropertyDrawer from './ArrayPropertyDrawer.vue';
-import BytePropertyDrawer from './BytePropertyDrawer.vue';
-import MapPropertyDrawer from './MapPropertyDrawer.vue';
 import TextPropertyDrawer from './TextPropertyDrawer.vue';
-import EnumPropertyDrawer from './EnumPropertyDrawer.vue';
 
 @VueComponent({
   components: {

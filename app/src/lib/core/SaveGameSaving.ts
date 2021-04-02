@@ -1,10 +1,10 @@
-import { SaveGame } from 'satisfactory-json';
 import {
-  DIALOG_PROGRESS,
+  DIALOG_BUGREPORT,
   DIALOG_OPEN_TIME_MS,
-  DIALOG_BUGREPORT
+  DIALOG_PROGRESS
 } from '@lib/constants';
 import { EventBus } from '@lib/event-bus';
+import { SaveGame } from 'satisfactory-json';
 import { reportError } from './errorReporting';
 
 export interface SaveFileWriter {

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
+import { Component as VueComponent, Vue } from 'vue-property-decorator';
 import DesktopMenu from './DesktopMenu.vue';
 
 @VueComponent({

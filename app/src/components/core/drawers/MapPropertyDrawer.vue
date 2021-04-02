@@ -71,18 +71,11 @@
 </template>
 
 <script lang="ts">
-import {
-  Component as VueComponent,
-  Vue,
-  Prop,
-  Watch
-} from 'vue-property-decorator';
-import { Action } from 'vuex-class';
-import { StructProperty } from 'satisfactory-json';
-import ArbitraryStructPropertyDrawer from './struct/ArbitraryStructPropertyDrawer.vue';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
 import IntPropertyDrawer from './IntPropertyDrawer.vue';
 import ObjectPropertyDrawer from './ObjectPropertyDrawer.vue';
 import StringPropertyDrawer from './StringPropertyDrawer.vue';
+import ArbitraryStructPropertyDrawer from './struct/ArbitraryStructPropertyDrawer.vue';
 
 @VueComponent({
   components: {

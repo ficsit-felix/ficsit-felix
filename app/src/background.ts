@@ -1,12 +1,9 @@
 'use strict';
 declare const __static: string;
-import { app, protocol, BrowserWindow, shell } from 'electron';
-import {
-  createProtocol,
-  installVueDevtools
-} from 'vue-cli-plugin-electron-builder/lib';
-import path from 'path';
+import { app, BrowserWindow, protocol, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import path from 'path';
+import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

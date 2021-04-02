@@ -49,13 +49,11 @@
 </template>
 
 <script>
-import { modelHelper } from '@lib/graphics/modelHelper';
-import { modelConfig } from '@lib/definitions/models';
-
 import { SaveGameLoading } from '@/lib/core/SaveGameLoading';
 import { WebFileReader } from '@/lib/web/WebFileReader';
 import copyToClipboard from '@lib/copyToClipboard';
-
+import { modelConfig } from '@lib/definitions/models';
+import { modelHelper } from '@lib/graphics/modelHelper';
 import AlertDialog from '../core/dialogs/AlertDialog.vue';
 
 export default {

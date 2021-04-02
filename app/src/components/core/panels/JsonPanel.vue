@@ -56,12 +56,13 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from 'vuex';
-import { createBlueprintFromActors } from 'satisfactory-blueprint'; //"satisfactory-blueprint";
-import copyToClipboard from '@lib/copyToClipboard';
-import ConfirmDialog from '../dialogs/ConfirmDialog.vue';
-import { JsonAction } from '../../../store/undo';
 import { FOCUS_SELECTED_OBJECT } from '@/lib/core/constants';
+import { JsonAction } from '@/store/undo';
+import copyToClipboard from '@lib/copyToClipboard';
+import { createBlueprintFromActors } from 'satisfactory-blueprint'; //"satisfactory-blueprint";
+import { mapActions, mapState } from 'vuex';
+import ConfirmDialog from '../dialogs/ConfirmDialog.vue';
+
 export default {
   name: 'JsonPanel',
   components: {

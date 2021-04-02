@@ -1,4 +1,4 @@
-import { Material, Color, Vector3, Quaternion, BufferGeometry } from 'three';
+import { BufferGeometry, Color, Material, Quaternion, Vector3 } from 'three';
 
 // patch the THREE instance
 import * as THREE from 'three';

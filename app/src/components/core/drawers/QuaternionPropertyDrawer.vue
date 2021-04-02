@@ -36,14 +36,10 @@
 </template>
 
 <script lang="ts">
-import {
-  Component as VueComponent,
-  Vue,
-  Prop,
-  Watch
-} from 'vue-property-decorator';
+import { Euler, MathUtils, Quaternion } from 'three';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
-import { Euler, Quaternion, MathUtils } from 'three';
+
 @VueComponent({})
 export default class QuaternionPropertyDrawer extends Vue {
   @Prop() path!: string;

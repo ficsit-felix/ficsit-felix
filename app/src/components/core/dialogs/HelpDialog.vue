@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
 
 function key(key: any, action: any) {
   return { key, action };

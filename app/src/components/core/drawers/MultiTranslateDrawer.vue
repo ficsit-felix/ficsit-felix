@@ -37,13 +37,9 @@
 
 <script lang="ts">
 import { Vector3 } from 'three';
-import {
-  Component as VueComponent,
-  Vue,
-  Prop,
-  Watch
-} from 'vue-property-decorator';
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
+
 /**
  * Vector3PropertyDrawer, but translates multiple actors at once
  */

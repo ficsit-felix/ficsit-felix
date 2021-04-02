@@ -6,9 +6,7 @@
           selectedPathNames[0] === '---save-header---'
       "
     >
-      <div class="header">
-        ___Save_Header___
-      </div>
+      <div class="header">___Save_Header___</div>
     </div>
     <div
       v-else-if="selectedActors.length === 1 && selectedComponents.length === 0"
@@ -91,15 +89,14 @@
 </template>
 
 <script lang="ts">
-import { Component as VueComponent, Vue, Watch } from 'vue-property-decorator';
-import { State, Action } from 'vuex-class';
 import { Actor, Component } from 'satisfactory-json';
-import Vector3PropertyDrawer from '../drawers/Vector3PropertyDrawer.vue';
-import QuaternionPropertyDrawer from '../drawers/QuaternionPropertyDrawer.vue';
-import PropertyPropertyDrawer from '../drawers/PropertyPropertyDrawer.vue';
+import { Component as VueComponent, Vue, Watch } from 'vue-property-decorator';
+import { Action, State } from 'vuex-class';
 import BoolPropertyDrawer from '../drawers/BoolPropertyDrawer.vue';
 import MultiTranslateDrawer from '../drawers/MultiTranslateDrawer.vue';
-import { Vector3 } from 'three';
+import PropertyPropertyDrawer from '../drawers/PropertyPropertyDrawer.vue';
+import QuaternionPropertyDrawer from '../drawers/QuaternionPropertyDrawer.vue';
+import Vector3PropertyDrawer from '../drawers/Vector3PropertyDrawer.vue';
 
 @VueComponent({
   components: {

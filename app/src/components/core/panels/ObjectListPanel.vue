@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
-
-import virtualList from 'vue-virtual-scroll-list';
-import ObjectListItem from '../ObjectListItem.vue';
-import { EventBus } from '@lib/event-bus';
 import { FOCUS_SELECTED_OBJECT } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
+import virtualList from 'vue-virtual-scroll-list';
+import { mapActions, mapGetters, mapState } from 'vuex';
+import ObjectListItem from '../ObjectListItem.vue';
+
 export default {
   name: 'ObjectListPanel',
   components: {

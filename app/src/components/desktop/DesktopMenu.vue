@@ -101,23 +101,21 @@
 </template>
 
 <script lang="ts">
+import { FileHeader, FileHeaderReader } from '@/lib/desktop/FileHeaderReader';
+import { getSaveGamesFolderPath } from '@/lib/desktop/getSaveGamesFolderPath';
 import { commithash } from '@lib/commithash';
-import { remote } from 'electron';
-import { EventBus } from '@lib/event-bus';
 import {
-  DIALOG_SETTINGS,
   DIALOG_ABOUT,
   DIALOG_CONFIRM_EXIT_DESKTOP,
-  DIALOG_SAVE_DESKTOP
+  DIALOG_SAVE_DESKTOP,
+  DIALOG_SETTINGS
 } from '@lib/constants';
-import { mapState } from 'vuex';
-import { createReadStream, Dir } from 'fs';
-import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
-import fs from 'fs';
-import { FileHeaderReader, FileHeader } from '@/lib/desktop/FileHeaderReader';
-import { getSaveGamesFolderPath } from '@/lib/desktop/getSaveGamesFolderPath';
+import { EventBus } from '@lib/event-bus';
+import { remote } from 'electron';
+import fs, { createReadStream, Dir } from 'fs';
 import path from 'path';
-
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
 // TODO use SaveFileReader/Writer instead?
 import { openFileAndMoveToEditor } from '../../lib/desktop/DesktopFileReader';
 import { saveFileAndShowProgress } from '../../lib/desktop/DesktopFileWriter';

@@ -11,11 +11,10 @@
 </template>
 
 <script lang="ts">
-import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
-import { Action } from 'vuex-class';
-
+import { Component as VueComponent, Prop, Vue } from 'vue-property-decorator';
 import BoolPropertyDrawer from '../BoolPropertyDrawer.vue';
 import Vector3PropertyDrawer from '../Vector3PropertyDrawer.vue';
+
 @VueComponent({
   components: {
     BoolPropertyDrawer,

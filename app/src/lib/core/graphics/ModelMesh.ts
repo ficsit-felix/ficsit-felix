@@ -1,12 +1,12 @@
-import { Mesh, Scene, Color, MeshMatcapMaterial, Material } from 'three';
-import InstancedMeshGroup from './InstancedMeshGroup';
-import GeometryFactory from './GeometryFactory';
-import { Actor } from 'satisfactory-json';
-import ColorFactory from './ColorFactory';
 import {
   applyMeshTransformToActor,
   updateActorMeshTransform
 } from '@lib/graphics/meshHelper';
+import { Actor } from 'satisfactory-json';
+import { Mesh, MeshMatcapMaterial, Scene } from 'three';
+import ColorFactory from './ColorFactory';
+import GeometryFactory from './GeometryFactory';
+import InstancedMeshGroup from './InstancedMeshGroup';
 
 /**
  * Interface for Meshes

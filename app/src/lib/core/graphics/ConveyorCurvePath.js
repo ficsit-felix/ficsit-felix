@@ -1,4 +1,4 @@
-import { CurvePath, Vector3, Matrix4, Math as _Math } from 'three';
+import { CurvePath, Math as _Math, Matrix4, Vector3 } from 'three';
 
 // Custom extension of the CurvePath only used to display Conveyor Belt splines
 class ConveyorCurvePath extends CurvePath {
@@ -73,7 +73,9 @@ class ConveyorCurvePath extends CurvePath {
       theta = Math.acos(_Math.clamp(normals[0].dot(normals[segments]), -1, 1));
       theta /= segments;
 
-      if (tangents[0].dot(vec.crossVectors(normals[0], normals[segments])) > 0) {
+      if (
+        tangents[0].dot(vec.crossVectors(normals[0], normals[segments])) > 0
+      ) {
         theta = -theta;
       }
 
@@ -89,8 +91,7 @@ class ConveyorCurvePath extends CurvePath {
       normals: normals,
       binormals: binormals
     };
-  };
-
+  }
 }
 
 export { ConveyorCurvePath };

@@ -1,5 +1,5 @@
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { BufferGeometry, Group, Mesh } from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // singleton class that helps with loading all the models
 class ModelHelper {

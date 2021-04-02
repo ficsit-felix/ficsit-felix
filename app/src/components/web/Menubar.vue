@@ -137,20 +137,19 @@
 </template>
 
 <script>
-import Logo from '../core/Logo.vue';
-import { findActorByName } from '@lib/graphics/entityHelper';
-import { EventBus } from '@lib/event-bus';
 import {
   DIALOG_ABOUT,
-  DIALOG_SETTINGS,
   DIALOG_HELP,
+  DIALOG_OPEN_JSON_WEB,
   DIALOG_OPEN_SOURCE,
   DIALOG_OPEN_WEB,
+  DIALOG_SAVE_JSON_WEB,
   DIALOG_SAVE_WEB,
-  DIALOG_OPEN_JSON_WEB,
-  DIALOG_SAVE_JSON_WEB
+  DIALOG_SETTINGS
 } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
 import { mapActions, mapGetters } from 'vuex';
+import Logo from '../core/Logo.vue';
 
 export default {
   name: 'Menubar',

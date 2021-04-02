@@ -166,11 +166,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { CameraType, MapType } from '@/store/settings';
 import copyToClipboard from '@lib/copyToClipboard';
+import { mapActions, mapState } from 'vuex';
 import LanguageSwitcher from './LanguageSwitcher.vue';
-import { isElectron } from '@lib/isElectron';
-import { MapType, CameraType } from '@/store/settings';
 
 export default {
   name: 'Settings',

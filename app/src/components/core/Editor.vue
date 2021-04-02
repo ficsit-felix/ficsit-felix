@@ -70,22 +70,22 @@
 </template>
 
 <script lang="ts">
+import { reportException } from '@/lib/core/errorReporting';
+import { isElectron } from '@lib/isElectron';
 import {
   Component as VueComponent,
-  Vue,
   Prop,
+  Vue,
   Watch
 } from 'vue-property-decorator';
-import Menubar from '../web/Menubar.vue';
-import ScenePanel from './panels/ScenePanel.vue';
-import ObjectListPanel from './panels/ObjectListPanel.vue';
-import JsonPanel from './panels/JsonPanel.vue';
-import ClassListPanel from './panels/ClassListPanel.vue';
 import { mapState } from 'vuex';
-import { isElectron } from '@lib/isElectron';
+import { namespace, State } from 'vuex-class';
+import Menubar from '../web/Menubar.vue';
+import ClassListPanel from './panels/ClassListPanel.vue';
+import JsonPanel from './panels/JsonPanel.vue';
+import ObjectListPanel from './panels/ObjectListPanel.vue';
 import PropertiesPanel from './panels/PropertiesPanel.vue';
-import { Action, namespace, State } from 'vuex-class';
-import { reportException } from '@/lib/core/errorReporting';
+import ScenePanel from './panels/ScenePanel.vue';
 
 const settingsNamespace = namespace('settings');
 

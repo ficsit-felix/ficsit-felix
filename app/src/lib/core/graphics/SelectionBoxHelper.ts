@@ -1,12 +1,12 @@
 import {
-  LineSegments,
-  BufferGeometry,
+  Box3,
   BufferAttribute,
+  BufferGeometry,
+  Euler,
   Float32BufferAttribute,
   LineBasicMaterial,
-  Box3,
-  Vector3,
-  Euler
+  LineSegments,
+  Vector3
 } from 'three';
 
 /**

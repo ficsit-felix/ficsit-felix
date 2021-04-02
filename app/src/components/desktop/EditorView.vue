@@ -6,11 +6,11 @@
 </template>
 
 <script lang="ts">
-import { Component as VueComponent, Vue, Prop } from 'vue-property-decorator';
-import DesktopMenu from './DesktopMenu.vue';
-import Editor from '../core/Editor.vue';
-import { EventBus } from '@lib/event-bus';
 import { TOGGLE_MENU } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
+import { Component as VueComponent, Vue } from 'vue-property-decorator';
+import Editor from '../core/Editor.vue';
+import DesktopMenu from './DesktopMenu.vue';
 
 @VueComponent({
   components: {

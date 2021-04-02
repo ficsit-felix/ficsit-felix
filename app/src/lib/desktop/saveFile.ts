@@ -1,11 +1,9 @@
-import { SaveGame } from 'satisfactory-json';
 import { isElectron } from '@lib/isElectron';
-import { writeFile, existsSync, copyFileSync, createWriteStream } from 'fs';
-import { parse } from 'path';
-import path from 'path';
-import streamSaver from 'streamsaver';
-import { Json2SavTransform } from 'satisfactory-json';
+import { copyFileSync, createWriteStream, existsSync, writeFile } from 'fs';
+import path, { parse } from 'path';
+import { Json2SavTransform, SaveGame } from 'satisfactory-json';
 import { Writable } from 'stream';
+import streamSaver from 'streamsaver';
 
 streamSaver.mitm = '/streamsaver.html';
 

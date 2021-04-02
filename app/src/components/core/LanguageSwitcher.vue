@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { EventBus } from '@lib/event-bus';
 import { CHANGE_LOCALE } from '@lib/constants';
+import { EventBus } from '@lib/event-bus';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'LanguageSwitcher',

@@ -16,33 +16,28 @@
 
 <script>
 import '@/assets/main.scss';
-import Logo from '../core/Logo.vue';
-import Dialogs from '../core/dialogs/Dialogs.vue';
-import { Titlebar, Color } from 'custom-electron-titlebar';
-import Vue from 'vue';
-import { dialog, remote, shell } from 'electron';
-
-const { Menu, MenuItem } = require('electron').remote;
-
 import { getSaveGamesFolderPath } from '@/lib/desktop/getSaveGamesFolderPath';
-import { EventBus } from '@lib/event-bus';
 import {
-  DIALOG_ABOUT,
-  DIALOG_OPEN_SOURCE,
-  DIALOG_HELP,
-  DIALOG_SETTINGS,
   CHANGE_LOCALE,
-  ON_SAVE_PRESSED,
-  TOGGLE_MENU,
-  DIALOG_SAVE_DESKTOP,
+  DIALOG_ABOUT,
   DIALOG_CONFIRM_EXIT_DESKTOP,
-  ON_EXIT_PRESSED
+  DIALOG_HELP,
+  DIALOG_OPEN_SOURCE,
+  DIALOG_SAVE_DESKTOP,
+  DIALOG_SETTINGS,
+  ON_EXIT_PRESSED,
+  ON_SAVE_PRESSED,
+  TOGGLE_MENU
 } from '@lib/constants';
-import { mapState, mapActions, mapGetters } from 'vuex';
-import path from 'path';
+import { EventBus } from '@lib/event-bus';
+import { Color, Titlebar } from 'custom-electron-titlebar';
+import { remote, shell } from 'electron';
+import { mapActions, mapGetters, mapState } from 'vuex';
 // TODO use SaveFileReader/Writer instead
 import { openFileAndMoveToEditor } from '../../lib/desktop/DesktopFileReader';
 import { saveFileAndShowProgress } from '../../lib/desktop/DesktopFileWriter';
+import Dialogs from '../core/dialogs/Dialogs.vue';
+import Logo from '../core/Logo.vue';
 
 export default {
   name: 'DesktopApp',

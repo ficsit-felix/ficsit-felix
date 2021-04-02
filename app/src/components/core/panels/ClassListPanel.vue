@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
 import colorPicker from '@caohenghu/vue-colorpicker';
 import { modelConfig } from '@lib/definitions/models';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'ClassListPanel',

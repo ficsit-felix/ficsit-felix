@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { sav2json, SaveGame, Sav2JsonTransform } from 'satisfactory-json';
+import { Sav2JsonTransform, SaveGame } from 'satisfactory-json';
 
 /**
  * Read files on desktop

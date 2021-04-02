@@ -1,12 +1,4 @@
-import {
-  Box3,
-  Box3Helper,
-  BoxGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  Object3D,
-  Scene
-} from 'three';
+import { Box3, Object3D, Scene } from 'three';
 import { SelectionBoxHelper } from './SelectionBoxHelper';
 
 /**

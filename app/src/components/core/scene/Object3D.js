@@ -1,5 +1,3 @@
-// import { Mesh } from 'three'
-
 function walkGet(obj, path) {
   const keys = path.split('.');
   while (keys.length) {
