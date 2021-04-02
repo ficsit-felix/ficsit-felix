@@ -365,8 +365,9 @@ export default class GeometryFactory {
       // PowerSwitch and LightsControlPanel
       if (
         ((isPowerPoleWallDouble(source) || isPowerSwitch(source)) &&
-        sourceConnection.pathName.endsWith('2')) ||
-        (isLightsControlPanel(source) && sourceConnection.pathName.includes('Downstream'))
+          sourceConnection.pathName.endsWith('2')) ||
+        (isLightsControlPanel(source) &&
+          sourceConnection.pathName.includes('Downstream'))
       ) {
         sourceOffset = {
           x: -sourceOffset.x,
@@ -406,8 +407,9 @@ export default class GeometryFactory {
       // PowerSwitch and LightsControlPanel
       if (
         ((isPowerPoleWallDouble(target) || isPowerSwitch(target)) &&
-        targetConnection.pathName.endsWith('2')) ||
-        (isLightsControlPanel(target) && targetConnection.pathName.includes('Downstream'))
+          targetConnection.pathName.endsWith('2')) ||
+        (isLightsControlPanel(target) &&
+          targetConnection.pathName.includes('Downstream'))
       ) {
         targetOffset = {
           x: -targetOffset.x,

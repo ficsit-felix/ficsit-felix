@@ -808,7 +808,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
   },
   '/Game/FactoryGame/Buildable/Factory/LightsControlPanel/Build_LightsControlPanel.Build_LightsControlPanel_C': {
     model: 'LightsControlPanel.glb',
-    color: 0xff00ff,// TODO update4
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
     powerLineOffset: { x: -85, y: 0, z: 230 }
   },
@@ -1009,7 +1009,7 @@ export const modelConfig: { [id: string]: ModelConfig } = {
   },
   '/Game/FactoryGame/Buildable/Factory/PowerSwitch/Build_PowerSwitch.Build_PowerSwitch_C': {
     model: 'PowerSwitch.glb',
-    color: 0xff00ff,// TODO update4
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
     powerLineOffset: { x: -85, y: 0, z: 295 }
   },
@@ -1093,7 +1093,8 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0x2e81ff,
     paintable: Paintable.TRUE
   },
-  '/Game/FactoryGame/Buildable/Factory/StreetLight/Build_StreetLight.Build_StreetLight_C': {   // TODO update4
+  '/Game/FactoryGame/Buildable/Factory/StreetLight/Build_StreetLight.Build_StreetLight_C': {
+    // TODO update4
     model: '',
     color: 0xff00ff,
     paintable: Paintable.FALSE,
