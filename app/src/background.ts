@@ -29,7 +29,8 @@ function createWindow() {
     icon: path.join(__static, 'icon.png'),
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true // TODO remote module is getting deprecated
+      enableRemoteModule: true, // TODO remote module is getting deprecated
+      contextIsolation: false // contextIsolation default changed to true in Electron 12
     }
   });
 

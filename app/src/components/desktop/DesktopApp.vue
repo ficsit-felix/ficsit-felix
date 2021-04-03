@@ -60,10 +60,10 @@ export default {
       this.setDefaultMenu();
     },
     undoDisabled(value) {
-      Menu.getApplicationMenu().getMenuItemById('undo').enabled = !value;
+      remote.Menu.getApplicationMenu().getMenuItemById('undo').enabled = !value;
     },
     redoDisabled(value) {
-      Menu.getApplicationMenu().getMenuItemById('redo').enabled = !value;
+      remote.Menu.getApplicationMenu().getMenuItemById('redo').enabled = !value;
     }
   },
   mounted() {
@@ -78,7 +78,6 @@ export default {
     this.setDefaultMenu();
 
     EventBus.$on(CHANGE_LOCALE, this.onChangeLocale);
-
     EventBus.$on(ON_SAVE_PRESSED, this.onSavePressed);
     EventBus.$on(ON_EXIT_PRESSED, this.onExitPressed);
   },
@@ -95,7 +94,7 @@ export default {
       this.setDefaultMenu(); // TODO rebuild the currently selected menu
     },
     setDefaultMenu() {
-      const menu = new Menu();
+      const menu = new remote.Menu();
 
       let fileEntries = [
         {
@@ -163,7 +162,6 @@ export default {
           accelerator: 'Ctrl+Z',
           enabled: !this.undoDisabled,
           click: () => {
-            console.log(this);
             this.undoLastAction();
           }
         });
@@ -193,14 +191,14 @@ export default {
       });
 
       menu.append(
-        new MenuItem({
+        new remote.MenuItem({
           label: this.$t('menubar.file'),
           submenu: fileEntries
         })
       );
 
       menu.append(
-        new MenuItem({
+        new remote.MenuItem({
           label: this.$t('menubar.edit'),
           submenu: editEntries
         })
@@ -211,7 +209,7 @@ export default {
       if (remote.process.env.NODE_ENV === 'development') {
         // Add develoment menu entries
         menu.append(
-          new MenuItem({
+          new remote.MenuItem({
             label: 'Develop',
             submenu: [
               { role: 'reload' },
@@ -223,7 +221,7 @@ export default {
       }
 
       menu.append(
-        new MenuItem({
+        new remote.MenuItem({
           label: this.$t('menubar.help'),
           submenu: [
             {
@@ -270,7 +268,7 @@ export default {
       );
 
       this.titlebar.updateMenu(menu);
-      Menu.setApplicationMenu(menu);
+      remote.Menu.setApplicationMenu(menu);
     },
     openFileSelector() {
       remote.dialog
@@ -285,7 +283,6 @@ export default {
           ]
         })
         .then(value => {
-          console.log(value.filePaths);
           if (value.filePaths.length === 1) {
             openFileAndMoveToEditor(this, value.filePaths[0], false);
           }
