@@ -26,7 +26,7 @@
     "@caohenghu/vue-colorpicker": "^1.2.2",
     "@sentry/browser": "^6.2.5",
     "@sentry/integrations": "^6.2.5",
-    "core-js": "^3.10.0",
+    "core-js": "^3.10.1",
     "custom-electron-titlebar": "^3.2.6",
     "electron-updater": "^4.3.8",
     "filereader-stream": "^2.0.0",
