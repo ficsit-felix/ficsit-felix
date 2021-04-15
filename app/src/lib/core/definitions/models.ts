@@ -508,11 +508,10 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.TRUE
   },
   '/Game/FactoryGame/Buildable/Factory/CeilingLight/Build_CeilingLight.Build_CeilingLight_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'CeilingLights.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 0, y: -600, z: -50 }
   },
   '/Game/FactoryGame/Buildable/Factory/CentralStorage/Build_CentralStorage.Build_CentralStorage_C': {
     model: '',
@@ -676,18 +675,16 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightPole.Build_FloodlightPole_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'FloodLightTower.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: -142, y: 0, z: 780 }
   },
   '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightWall.Build_FloodlightWall_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'FloodLightWallMount.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 30, y: 0, z: 0 } // TODO no powerpole
   },
   '/Game/FactoryGame/Buildable/Factory/FoundryMk1/Build_FoundryMk1.Build_FoundryMk1_C': {
     model: 'FoundryMk1.glb',
@@ -1014,11 +1011,10 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: -85, y: 0, z: 295 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerStorage/Build_PowerStorageMk1.Build_PowerStorageMk1_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'PowerStorage.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 0, y: -322, z: 1150 }
   },
   '/Game/FactoryGame/Buildable/Factory/PowerWall/Build_PoweredWall.Build_PoweredWall_C': {
     model: '',
@@ -1094,11 +1090,10 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.TRUE
   },
   '/Game/FactoryGame/Buildable/Factory/StreetLight/Build_StreetLight.Build_StreetLight_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'StreetLight.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 0, y: -174, z: 950 }
   },
   '/Game/FactoryGame/Buildable/Factory/TradingPost/BP_StartingPod.BP_StartingPod_C': {
     model: '',
