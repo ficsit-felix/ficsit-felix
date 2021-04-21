@@ -3,6 +3,7 @@ import {
   getProperty,
   isAdjustableJumpPad,
   isConveyorLift,
+  isFloodlightPole,
   isLadder,
   isPipeSupport
 } from '@lib/graphics/entityHelper';
@@ -43,6 +44,9 @@ export default class MeshFactoy {
     }
     if (isAdjustableJumpPad(actor)) {
       return this.addAdjustableJumpPad(actor);
+    }
+    if (isFloodlightPole(actor)) {
+      return this.addFloodlightPole(actor);
     }
 
     return new Promise((resolve, reject) => {
@@ -247,6 +251,38 @@ export default class MeshFactoy {
               instance: undefined
             });
           });
+        });
+    });
+  }
+
+  addFloodlightPole(actor: Actor): Promise<MeshResult> {
+    return new Promise((resolve, reject) => {
+      modelHelper
+        .loadModel('/models/FloodLightTower.glb')
+        .then(poleGeometry => {
+          const material = this.materialFactory.createMaterial(actor);
+
+          modelHelper
+            .loadModel('/models/FloodLight.glb')
+            .then(lightGeometry => {
+              const fixtureAngle = parseInt(
+                (getProperty(actor, 'mFixtureAngle')?.value ?? '50') + ''
+              );
+
+              const mesh = new Mesh(poleGeometry, material);
+              const lightMesh = new Mesh(lightGeometry);
+              lightMesh.rotation.y = -fixtureAngle * MathUtils.DEG2RAD;
+              // move to anchor point
+              lightMesh.position.set(0, 0, 3400);
+              mesh.add(lightMesh);
+
+              mesh.userData = { pathName: actor.pathName };
+
+              resolve({
+                mesh,
+                instance: undefined
+              });
+            });
         });
     });
   }

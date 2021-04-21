@@ -1817,6 +1817,7 @@ export function isModClassName(className: string) {
   const isMod =
     (className.startsWith('/Game/') &&
       !className.startsWith('/Game/FactoryGame/')) ||
+    (!className.startsWith('/Game/') && !className.startsWith('/Script/')) ||
     modClassNamePrefixes.some(prefix => className.startsWith(prefix));
   if (isMod) {
     console.log(`Mod: ${className}`);

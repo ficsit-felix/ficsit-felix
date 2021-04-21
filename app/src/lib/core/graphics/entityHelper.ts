@@ -232,3 +232,9 @@ export function isLightsControlPanel(actor: Actor) {
     '/Game/FactoryGame/Buildable/Factory/LightsControlPanel/Build_LightsControlPanel.Build_LightsControlPanel_C'
   );
 }
+export function isFloodlightPole(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightPole.Build_FloodlightPole_C'
+  );
+}
