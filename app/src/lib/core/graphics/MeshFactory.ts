@@ -266,15 +266,19 @@ export default class MeshFactoy {
           modelHelper
             .loadModel('/models/FloodLight.glb')
             .then(lightGeometry => {
+              const isPole = isFloodlightPole(actor);
+
+              const defaultAngle = isPole ? 50 : 30;
               const fixtureAngle = parseInt(
-                (getProperty(actor, 'mFixtureAngle')?.value ?? '50') + ''
+                (getProperty(actor, 'mFixtureAngle')?.value ?? defaultAngle) +
+                  ''
               );
 
               const mesh = new Mesh(poleGeometry, material);
               const lightMesh = new Mesh(lightGeometry);
               lightMesh.rotation.y = -fixtureAngle * MathUtils.DEG2RAD;
               // move to anchor point
-              if (isFloodlightPole(actor)) {
+              if (isPole) {
                 lightMesh.position.set(0, 0, 3400);
               }
               mesh.add(lightMesh);
