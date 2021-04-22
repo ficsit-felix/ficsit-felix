@@ -475,11 +475,10 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 475, y: 120, z: 700 }
   },
   '/Game/FactoryGame/Buildable/Factory/Blender/Build_Blender.Build_Blender_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'Blender.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: -880, y: -692, z: 1100 }
   },
   '/Game/FactoryGame/Buildable/Factory/Converter/Build_Converter.Build_Converter_C': {
     model: '',
@@ -656,17 +655,15 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Buildable/Factory/DroneStation/BP_DroneTransport.BP_DroneTransport_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'DroneTransport.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Buildable/Factory/DroneStation/Build_DroneStation.Build_DroneStation_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'DroneStation.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 972, y: -846, z: 1360 }
   },
   '/Game/FactoryGame/Buildable/Factory/Elevator/Build_Elevator.Build_Elevator_C': {
     // TODO what is this?
@@ -699,17 +696,15 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: 420, y: -320, z: 580 }
   },
   '/Game/FactoryGame/Buildable/Factory/FrackingExtractor/Build_FrackingExtractor.Build_FrackingExtractor_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'FrackerExtractor.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Buildable/Factory/FrackingSmasher/Build_FrackingSmasher.Build_FrackingSmasher_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'Fracker.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 0, y: -404, z: 1145 }
   },
   '/Game/FactoryGame/Buildable/Factory/GeneratorBiomass/Build_GeneratorBiomass.Build_GeneratorBiomass_C': {
     model: 'GeneratorBiomass.glb',
@@ -748,11 +743,10 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     powerLineOffset: { x: -660, y: -1900, z: 900 }
   },
   '/Game/FactoryGame/Buildable/Factory/HadronCollider/Build_HadronCollider.Build_HadronCollider_C': {
-    // TODO update4
-    model: '',
-    color: 0xff00ff,
+    model: 'HadronCollider.glb',
+    color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
-    powerLineOffset: { x: 0, y: 0, z: 0 } // TODO
+    powerLineOffset: { x: 1836, y: -878, z: 620 }
   },
   '/Game/FactoryGame/Buildable/Factory/Holiday/Build_TreeGiftProducer/Build_TreeGiftProducer.Build_TreeGiftProducer_C': {
     model: '',

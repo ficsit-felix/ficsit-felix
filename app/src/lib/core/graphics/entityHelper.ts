@@ -238,3 +238,9 @@ export function isFloodlightPole(actor: Actor) {
     '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightPole.Build_FloodlightPole_C'
   );
 }
+export function isFloodlightWall(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightWall.Build_FloodlightWall_C'
+  );
+}

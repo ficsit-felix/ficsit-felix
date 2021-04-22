@@ -4,6 +4,7 @@ import {
   isAdjustableJumpPad,
   isConveyorLift,
   isFloodlightPole,
+  isFloodlightWall,
   isLadder,
   isPipeSupport
 } from '@lib/graphics/entityHelper';
@@ -45,8 +46,8 @@ export default class MeshFactoy {
     if (isAdjustableJumpPad(actor)) {
       return this.addAdjustableJumpPad(actor);
     }
-    if (isFloodlightPole(actor)) {
-      return this.addFloodlightPole(actor);
+    if (isFloodlightPole(actor) || isFloodlightWall(actor)) {
+      return this.addFloodlight(actor);
     }
 
     return new Promise((resolve, reject) => {
@@ -255,10 +256,10 @@ export default class MeshFactoy {
     });
   }
 
-  addFloodlightPole(actor: Actor): Promise<MeshResult> {
+  addFloodlight(actor: Actor): Promise<MeshResult> {
     return new Promise((resolve, reject) => {
       modelHelper
-        .loadModel('/models/FloodLightTower.glb')
+        .loadModel('/models/' + modelConfig[actor.className].model)
         .then(poleGeometry => {
           const material = this.materialFactory.createMaterial(actor);
 
@@ -273,7 +274,9 @@ export default class MeshFactoy {
               const lightMesh = new Mesh(lightGeometry);
               lightMesh.rotation.y = -fixtureAngle * MathUtils.DEG2RAD;
               // move to anchor point
-              lightMesh.position.set(0, 0, 3400);
+              if (isFloodlightPole(actor)) {
+                lightMesh.position.set(0, 0, 3400);
+              }
               mesh.add(lightMesh);
 
               mesh.userData = { pathName: actor.pathName };
