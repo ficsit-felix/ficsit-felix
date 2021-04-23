@@ -280,6 +280,8 @@ export default class MeshFactoy {
               // move to anchor point
               if (isPole) {
                 lightMesh.position.set(0, 0, 3400);
+              } else {
+                lightMesh.position.set(60, 0, 20);
               }
               mesh.add(lightMesh);
 
