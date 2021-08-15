@@ -41,7 +41,7 @@ if (isElectron()) {
 
 // Redirect if data was not yet loaded
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresDataLoaded && !store.state.dataLoaded) {
+  if (to.meta?.requiresDataLoaded && !store.state.dataLoaded) {
     next({ name: 'landingpage' });
   } else {
     next();

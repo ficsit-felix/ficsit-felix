@@ -283,7 +283,7 @@ export default class Logo extends Vue {
       paused: !this.animating
     });
     if (this.tl !== null) {
-      const hammer = this.$refs.hammer;
+      const hammer = this.$refs.hammer as any;
       this.tl.set(hammer, { transformOrigin: '80% 64%' });
       this.tl.to(hammer, 0.5, { rotation: 50, ease: Power2.easeIn });
       this.tl.to(hammer, 0.2, { rotation: -10, ease: Power3.easeIn });
