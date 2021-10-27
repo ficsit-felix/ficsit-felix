@@ -1804,7 +1804,10 @@ export const modClassNamePrefixes = [
   '/Script/FicsitFarming.',
   '/Script/FicsItNetworks.',
   '/Script/LightItUp.',
-  '/Script/SatisfactoryHelper.'
+  '/Script/MicroManage.',
+  '/Script/RefinedPower.',
+  '/Script/SatisfactoryHelper.',
+  '/Script/KBFL.',
 ];
 
 export function isModClassName(className: string) {
