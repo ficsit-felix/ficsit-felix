@@ -81,6 +81,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0x0c2a89,
     paintable: Paintable.FALSE
   },
+  '/Game/FactoryGame/Buildable/Building/Fence/Build_Concrete_Barrier_01.Build_Concrete_Barrier_01_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Buildable/Building/Fence/Build_Fence_01.Build_Fence_01_C': {
     model: 'Fence.glb',
     color: foundationColor,
@@ -165,6 +171,36 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     model: 'QuarterPipeCorner_04.glb',
     color: foundationColor,
     paintable: Paintable.NOT_SLOT0
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/ConcreteSet/Build_Foundation_Concrete_8x1.Build_Foundation_Concrete_8x1_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/ConcreteSet/Build_Foundation_Concrete_8x2.Build_Foundation_Concrete_8x2_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/ConcreteSet/Build_Foundation_Concrete_8x4.Build_Foundation_Concrete_8x4_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/ConcreteSet/Build_Ramp_UpCorner_Concrete_8x1.Build_Ramp_UpCorner_Concrete_8x1_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Building/Foundation/ConcreteSet/Build_RampDouble_Concrete_8x1.Build_RampDouble_Concrete_8x1_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Buildable/Building/Ladder/Build_Ladder.Build_Ladder_C': {
     model: 'Ladder.glb',
@@ -445,7 +481,30 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },
-
+  '/Game/FactoryGame/Buildable/Building/Wall/ConcreteWallSet/Build_Wall_Concrete_8x4.Build_Wall_Concrete_8x4_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Building/Wall/ConcreteWallSet/Build_Wall_Concrete_CDoor_8x4.Build_Wall_Concrete_CDoor_8x4_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Building/Wall/ConcreteWallSet/Build_Wall_Concrete_Gate_8x4.Build_Wall_Concrete_Gate_8x4_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Buildable/Building/Wall/ConcreteWallSet/Build_Wall_Concrete_SDoor_8x4.Build_Wall_Concrete_SDoor_8x4_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C': {
     model: 'Wall_8x4_01.glb', // TODO
     color: 0xff00ff,
@@ -1735,6 +1794,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },
+  '/Script/FactoryGame.FGStatisticsSubsystem': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Script/FactoryGame.FGTrain': {
     model: '',
     color: 0xff00ff,
@@ -1745,7 +1810,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },
-
+  '/Script/FactoryGame.FGVehicleSubsystem': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Script/FactoryGame.FGWorldSettings': {
     model: '',
     color: 0xff00ff,
@@ -1807,7 +1877,7 @@ export const modClassNamePrefixes = [
   '/Script/MicroManage.',
   '/Script/RefinedPower.',
   '/Script/SatisfactoryHelper.',
-  '/Script/KBFL.',
+  '/Script/KBFL.'
 ];
 
 export function isModClassName(className: string) {
