@@ -505,6 +505,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff,
     paintable: Paintable.FALSE
   },
+  '/Game/FactoryGame/Buildable/Building/Wall/FicsitWallSet/Build_Wall_Orange_8x1.Build_Wall_Orange_8x1_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
   '/Game/FactoryGame/Buildable/Building/Wall/Wall_Set01/Build_Wall_1a.Build_Wall_1a_C': {
     model: 'Wall_8x4_01.glb', // TODO
     color: 0xff00ff,
@@ -741,6 +747,12 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     color: 0xff00ff, // TODO update4
     paintable: Paintable.FALSE,
     powerLineOffset: { x: 30, y: 0, z: 0 } // TODO no powerpole
+  },
+  '/Game/FactoryGame/Buildable/Factory/FoundationPassthrough/Build_FoundationPassthrough_Lift.Build_FoundationPassthrough_Lift_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Buildable/Factory/FoundryMk1/Build_FoundryMk1.Build_FoundryMk1_C': {
     model: 'FoundryMk1.glb',
@@ -1588,6 +1600,18 @@ export const modelConfig: { [id: string]: ModelConfig } = {
     paintable: Paintable.FALSE
   },
   '/Game/FactoryGame/Events/Christmas/Buildings/WreathDecor/Build_WreathDecor.Build_WreathDecor_C': {
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Prototype/Buildable/Beams/Build_Beam_Painted.Build_Beam_Painted_C': {
+    // TODO update5
+    model: '',
+    color: 0xff00ff,
+    paintable: Paintable.FALSE
+  },
+  '/Game/FactoryGame/Prototype/Buildable/Beams/Build_Beam_Support.Build_Beam_Support_C': {
+    // TODO update5
     model: '',
     color: 0xff00ff,
     paintable: Paintable.FALSE
