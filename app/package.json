@@ -73,7 +73,7 @@
     "eslint-plugin-vue": "^7.20.0",
     "husky": "^4.3.8",
     "lint-staged": "^11.2.6",
-    "sass": "^1.43.4",
+    "sass": "~1.32.6",
     "sass-loader": "^10.1.1",
     "ts-loader": "^8.1.0",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
@@ -99,11 +99,13 @@
   "resolutions": {
     "yargs-parser": "20.2.4",
     "sass-loader": "10.1.1",
-    "ts-loader": "^8.1.0"
+    "ts-loader": "^8.1.0",
+    "sass": "~1.32.6"
   },
   "resolutionsComments": {
     "yargs-parser": "20.2.4 https://github.com/advisories/GHSA-p9pc-299p-vxgp",
     "sass-loader": "10.1.1 https://stackoverflow.com/a/66087132",
-    "ts-loader": "^8.1.0 https://github.com/TypeStrong/ts-loader/issues/595#issuecomment-824240989"
+    "ts-loader": "^8.1.0 https://github.com/TypeStrong/ts-loader/issues/595#issuecomment-824240989",
+    "sass": "https://github.com/vuetifyjs/vuetify/issues/13694#issuecomment-907768247"
   }
 }

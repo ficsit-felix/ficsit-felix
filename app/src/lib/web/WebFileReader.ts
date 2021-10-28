@@ -35,7 +35,7 @@ export class WebFileReader implements SaveFileReader {
           } catch (error) {
             console.error(error);
             // TODO pass stack trace
-            errorCallback(error);
+            errorCallback(error as Error);
           }
         };
         reader.readAsArrayBuffer(this.file);
@@ -59,7 +59,7 @@ export class WebFileReader implements SaveFileReader {
     } catch (error) {
       console.error(error);
       // TODO pass stack trace
-      errorCallback(error);
+      errorCallback(error as Error);
     }
   }
 }

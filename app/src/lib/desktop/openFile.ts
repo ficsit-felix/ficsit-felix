@@ -32,7 +32,7 @@ export function openFileFromFilesystem(
           callback(undefined, 50, undefined);
           callback(undefined, undefined, json);
         } catch (err) {
-          callback(err, undefined, undefined);
+          callback(err as Error, undefined, undefined);
         }
       }, 100);
     });
