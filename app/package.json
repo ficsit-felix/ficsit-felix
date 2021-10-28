@@ -34,7 +34,7 @@
     "gsap": "^3.8.0",
     "jszip": "^3.7.1",
     "satisfactory-blueprint": "^0.0.4",
-    "satisfactory-json": "0.0.61",
+    "satisfactory-json": "0.0.62",
     "stats.js": "^0.17.0",
     "streamsaver": "^2.0.5",
     "three": "0.127.0",
