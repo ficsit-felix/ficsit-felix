@@ -200,6 +200,7 @@ export function isPowerPoleWallDouble(actor: Actor) {
       '/Game/FactoryGame/Buildable/Factory/PowerPoleWallDouble/Build_PowerPoleWallDouble.Build_PowerPoleWallDouble_C'
   );
 }
+
 export function isPipeSupport(actor: Actor) {
   return (
     actor.className ===
@@ -208,39 +209,78 @@ export function isPipeSupport(actor: Actor) {
       '/Game/FactoryGame/Buildable/Factory/PipelineSupport/Build_PipelineSupport.Build_PipelineSupport_C'
   );
 }
+
 export function isLadder(actor: Actor) {
   return (
     actor.className ===
     '/Game/FactoryGame/Buildable/Building/Ladder/Build_Ladder.Build_Ladder_C'
   );
 }
+
 export function isAdjustableJumpPad(actor: Actor) {
   return (
     actor.className ===
     '/Game/FactoryGame/Buildable/Factory/JumpPad/Build_JumpPadAdjustable.Build_JumpPadAdjustable_C'
   );
 }
+
 export function isPowerSwitch(actor: Actor) {
   return (
     actor.className ===
     '/Game/FactoryGame/Buildable/Factory/PowerSwitch/Build_PowerSwitch.Build_PowerSwitch_C'
   );
 }
+
 export function isLightsControlPanel(actor: Actor) {
   return (
     actor.className ===
     '/Game/FactoryGame/Buildable/Factory/LightsControlPanel/Build_LightsControlPanel.Build_LightsControlPanel_C'
   );
 }
+
 export function isFloodlightPole(actor: Actor) {
   return (
     actor.className ===
     '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightPole.Build_FloodlightPole_C'
   );
 }
+
 export function isFloodlightWall(actor: Actor) {
   return (
     actor.className ===
     '/Game/FactoryGame/Buildable/Factory/Floodlight/Build_FloodlightWall.Build_FloodlightWall_C'
+  );
+}
+
+export function isSignPole(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Factory/SignPole/Build_SignPole.Build_SignPole_C'
+  );
+}
+export function isBeam(actor: Actor) {
+  return (
+    actor.className ===
+      '/Game/FactoryGame/Prototype/Buildable/Beams/Build_Beam_Painted.Build_Beam_Painted_C' ||
+    actor.className ===
+      '/Game/FactoryGame/Prototype/Buildable/Beams/Build_Beam.Build_Beam_C'
+  );
+}
+
+export function isPassthrough(actor: Actor) {
+  return (
+    actor.className ===
+      '/Game/FactoryGame/Buildable/Factory/FoundationPassthrough/Build_FoundationPassthrough_Hypertube.Build_FoundationPassthrough_Hypertube_C' ||
+    actor.className ===
+      '/Game/FactoryGame/Buildable/Factory/FoundationPassthrough/Build_FoundationPassthrough_Lift.Build_FoundationPassthrough_Lift_C' ||
+    actor.className ===
+      '/Game/FactoryGame/Buildable/Factory/FoundationPassthrough/Build_FoundationPassthrough_Pipe.Build_FoundationPassthrough_Pipe_C'
+  );
+}
+
+export function isConveyorPole(actor: Actor) {
+  return (
+    actor.className ===
+    '/Game/FactoryGame/Buildable/Factory/ConveyorPole/Build_ConveyorPole.Build_ConveyorPole_C'
   );
 }

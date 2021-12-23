@@ -6,11 +6,15 @@ import {
   isFloodlightPole,
   isFloodlightWall,
   isLadder,
-  isPipeSupport
+  isPipeSupport,
+  isSignPole,
+  isBeam,
+  isPassthrough,
+  isConveyorPole
 } from '@lib/graphics/entityHelper';
 import { applyRotation, applyTranslation } from '@lib/graphics/meshHelper';
 import { modelHelper } from '@lib/graphics/modelHelper';
-import { Actor, StructProperty } from 'satisfactory-json';
+import { Actor, StructProperty, ObjectProperty } from 'satisfactory-json';
 import { BoxBufferGeometry, MathUtils, Mesh, Vector3 } from 'three';
 import ColorFactory from './ColorFactory';
 import GeometryFactory from './GeometryFactory';
@@ -48,6 +52,18 @@ export default class MeshFactoy {
     }
     if (isFloodlightPole(actor) || isFloodlightWall(actor)) {
       return this.addFloodlight(actor);
+    }
+    if (isSignPole(actor)) {
+      return this.addSignPole(actor);
+    }
+    if (isBeam(actor)) {
+      return this.addBeam(actor);
+    }
+    if (isPassthrough(actor)) {
+      return this.addPassthrough(actor);
+    }
+    if (isConveyorPole(actor)) {
+      return this.addConveyorPole(actor);
     }
 
     return new Promise((resolve, reject) => {
@@ -293,6 +309,147 @@ export default class MeshFactoy {
               });
             });
         });
+    });
+  }
+
+  addSignPole(actor: Actor): Promise<MeshResult> {
+    return new Promise((resolve, reject) => {
+      const material = this.materialFactory.createMaterial(actor);
+
+      // read height from mHeight property
+      const height =
+        parseInt((getProperty(actor, 'mHeight')?.value ?? '100') + '') ?? 0;
+
+      let xysize = 10; // Small & Medium
+      const recipe = getProperty(
+        // the recipe gives a hint to xy-size
+        actor,
+        'mBuiltWithRecipe'
+      ) as ObjectProperty;
+      if (recipe !== undefined) {
+        if (recipe.value.pathName.includes('Portrait')) xysize = 21;
+        else if (recipe.value.pathName.includes('Large')) xysize = 28;
+        else if (recipe.value.pathName.includes('Huge')) xysize = 60;
+      }
+
+      const mesh = new Mesh(undefined, material);
+
+      // create support beam and position it correctly
+      const supportGeometry = new BoxBufferGeometry(xysize, xysize, height);
+      const supportMesh = new Mesh(supportGeometry);
+      supportMesh.position.z = height / 2;
+      mesh.add(supportMesh);
+
+      mesh.userData = { pathName: actor.pathName };
+
+      resolve({
+        mesh,
+        instance: undefined
+      });
+    });
+  }
+
+  addBeam(actor: Actor): Promise<MeshResult> {
+    return new Promise((resolve, reject) => {
+      modelHelper
+        .loadModel('/models/' + modelConfig[actor.className].model)
+        .then(beamGeometry => {
+          const material = this.materialFactory.createMaterial(actor);
+
+          // read length from mLength property
+          const length =
+            parseInt((getProperty(actor, 'mLength')?.value ?? '0') + '') ?? 0;
+
+          const mesh = new Mesh(undefined, material);
+
+          // move the beam geometry to the correct position
+          const beamMesh = new Mesh(beamGeometry);
+
+          beamMesh.scale.x = length / 100;
+          mesh.add(beamMesh);
+
+          mesh.userData = { pathName: actor.pathName };
+
+          resolve({
+            mesh,
+            instance: undefined
+          });
+        });
+    });
+  }
+
+  addPassthrough(actor: Actor): Promise<MeshResult> {
+    return new Promise((resolve, reject) => {
+      modelHelper
+        .loadModel('/models/' + modelConfig[actor.className].model)
+        .then(connectorGeometry => {
+          const material = this.materialFactory.createMaterial(actor);
+
+          // read thickness from mSnappedBuildingThickness property
+          const thickness =
+            parseInt(
+              (getProperty(actor, 'mSnappedBuildingThickness')?.value ?? '0') +
+                ''
+            ) ?? 0;
+
+          const mesh = new Mesh(undefined, material);
+
+          // move the geometry to the correct positions and angle it correctly
+          const topMesh = new Mesh(connectorGeometry);
+
+          topMesh.position.z = thickness / 2;
+          topMesh.quaternion.setFromAxisAngle(
+            new Vector3(0, -1, 0),
+            MathUtils.DEG2RAD * 90
+          );
+          mesh.add(topMesh);
+
+          const botMesh = new Mesh(connectorGeometry);
+
+          botMesh.position.z = thickness / -2;
+          botMesh.quaternion.setFromAxisAngle(
+            new Vector3(0, 1, 0),
+            MathUtils.DEG2RAD * 90
+          );
+          mesh.add(botMesh);
+
+          mesh.userData = { pathName: actor.pathName };
+
+          resolve({
+            mesh,
+            instance: undefined
+          });
+        });
+    });
+  }
+
+  addConveyorPole(actor: Actor): Promise<MeshResult> {
+    return new Promise((resolve, reject) => {
+      let modelFile = 'Build_ConveyorPole_C.glb';
+
+      const height =
+        parseInt((getProperty(actor, 'mHeight')?.value ?? '0') + '') ?? 0;
+      switch (height) {
+        case 300:
+          modelFile = 'Build_ConveyorPole_2.glb';
+          break;
+        case 500:
+          modelFile = 'Build_ConveyorPole_3.glb';
+          break;
+        case 700:
+          modelFile = 'Build_ConveyorPole_4.glb';
+          break;
+      }
+
+      modelHelper.loadModel('/models/' + modelFile).then(poleGeometry => {
+        const material = this.materialFactory.createMaterial(actor);
+        const mesh = new Mesh(poleGeometry, material);
+        mesh.userData = { pathName: actor.pathName };
+        resolve({
+          mesh,
+          instance: '/models/' + modelFile
+        });
+      });
     });
   }
 }
