@@ -52,7 +52,6 @@
 
 <script lang="ts">
 import Compass from '@/components/core/Compass.vue';
-import { MapType } from '@/store/settings';
 import { TransformAction } from '@/store/undo';
 import { commithash } from '@lib/commithash';
 import {
@@ -135,8 +134,6 @@ export default class ScenePanel extends Vue {
   showCustomPaints!: boolean;
   @State(state => state.settings.showModels)
   showModels!: boolean;
-  @State(state => state.settings.mapType)
-  mapType!: MapType;
   @State(state => state.settings.conveyorBeltResolution)
   conveyorBeltResolution!: number;
   @State(state => state.settings.classColors)
@@ -180,7 +177,6 @@ export default class ScenePanel extends Vue {
   transformControl!: TransformControls;
   mapIngameModel?: Group;
   mapRenderModel?: Group;
-  activeMapType = MapType.None;
   width = 100;
   height = 100;
   mode = 'translate';
@@ -296,10 +292,6 @@ export default class ScenePanel extends Vue {
     this.meshManager.rebuildConveyorBelts(this.geometryFactory);
   }
 
-  @Watch('mapType')
-  onMapType(value: MapType) {
-    this.loadMap();
-  }
   @Watch('classColors', { deep: true })
   onClassColors(value: any) {
     this.colorFactory.classColors = this.classColors;
@@ -414,9 +406,6 @@ export default class ScenePanel extends Vue {
       // box helper
       this.selectionBoundsBox = new SelectionBoundsBox(this.scene);
 
-      // load map
-      this.loadMap();
-
       /// EVENT HANDLERS ///
 
       // listen to window resize
@@ -459,48 +448,6 @@ export default class ScenePanel extends Vue {
     if (this.rotateX < -1.3) {
       // don't go invisible at very small angle to map
       this.rotateX = -1.3;
-    }
-  }
-
-  loadMap() {
-    if (this.mapType === this.activeMapType) {
-      return;
-    }
-
-    // hide old map
-    switch (this.activeMapType) {
-      case MapType.Render:
-        this.scene.remove(this.mapRenderModel);
-        break;
-      case MapType.Ingame:
-        this.scene.remove(this.mapIngameModel);
-        break;
-    }
-
-    this.activeMapType = this.mapType;
-
-    // show new map
-    switch (this.mapType) {
-      case MapType.Render:
-        if (this.mapRenderModel === undefined) {
-          modelHelper.loadGroup('/models/map_render.glb').then(model => {
-            this.mapRenderModel = model;
-            this.scene.add(this.mapRenderModel);
-          });
-        } else {
-          this.scene.add(this.mapRenderModel);
-        }
-        break;
-      case MapType.Ingame:
-        if (this.mapIngameModel === undefined) {
-          modelHelper.loadGroup('/models/map_ingame.glb').then(model => {
-            this.mapIngameModel = model;
-            this.scene.add(this.mapIngameModel);
-          });
-        } else {
-          this.scene.add(this.mapIngameModel);
-        }
-        break;
     }
   }
 

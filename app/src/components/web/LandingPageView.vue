@@ -27,9 +27,6 @@
           >{{ $t('landingPage.downloadDesktop') }}</v-btn
         >
       </p>
-      <a href="/screenshot.png">
-        <img src="/screenshot.png" />
-      </a>
       <p class="my-2 mx-4">{{ $t('landingPage.secondParagraph') }}</p>
       <v-btn
         @click="$router.push({ path: '/open/json' })"
@@ -86,14 +83,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
-
-.landingpage {
-  background: $surface url('/pipes_blurry.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 
 .landingpage {
   overflow: auto;

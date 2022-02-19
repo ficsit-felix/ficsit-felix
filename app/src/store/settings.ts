@@ -2,12 +2,6 @@ import Vue from 'vue';
 import { Module } from 'vuex';
 import { RootState } from '.';
 
-export enum MapType {
-  None,
-  Render,
-  Ingame
-}
-
 // Whenever the vue components in the editor is changed, we need to use a new layout version and reset old layout states
 enum LayoutVersion {
   Initial,
@@ -28,7 +22,6 @@ interface SettingsRootState {
   farPlane: number;
   showModels: boolean;
   showCustomPaints: boolean;
-  mapType: MapType;
   conveyorBeltResolution: number;
   editClassColors: boolean;
   classColors: { [id: string]: string };
@@ -62,7 +55,6 @@ const defaultState = () => {
     farPlane: 200000,
     showModels: true,
     showCustomPaints: true,
-    mapType: MapType.Render,
     conveyorBeltResolution: 4,
     editClassColors: false,
     classColors: {},
@@ -115,10 +107,6 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     },
     SET_SHOW_CUSTOM_PAINTS(state, payload) {
       state.showCustomPaints = payload;
-      updateLocalStorage(state);
-    },
-    SET_MAP_TYPE(state, payload) {
-      state.mapType = payload;
       updateLocalStorage(state);
     },
     SET_CONVEYOR_BELT_RESOLUTION(state, payload) {
@@ -207,9 +195,6 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setShowCustomPaints(context, payload) {
       context.commit('SET_SHOW_CUSTOM_PAINTS', payload);
-    },
-    setMapType(context, payload) {
-      context.commit('SET_MAP_TYPE', payload);
     },
     setConveyorBeltResolution(context, payload) {
       context.commit('SET_CONVEYOR_BELT_RESOLUTION', payload);

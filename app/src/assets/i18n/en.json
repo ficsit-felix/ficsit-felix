@@ -213,12 +213,6 @@
 		"farPlane": "Far Plane",
 		"farPlaneHelp": "How far away you can see objects",
 		"graphicsSectionTitle": "Graphics",
-		"mapType": {
-			"ingame": "Ingame",
-			"label": "Map Type",
-			"none": "None",
-			"render": "Render"
-		},
 		"nearPlane": "Near Plane",
 		"nearPlaneHelp": "Nearer objects are cut away",
 		"resetSettingsButton": "Reset all settings",

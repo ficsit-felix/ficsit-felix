@@ -213,12 +213,6 @@
 		"farPlane": "Hintere Clippingebene",
 		"farPlaneHelp": "Wie weit in der Ferne Objekte dargestellt werden",
 		"graphicsSectionTitle": "Grafik",
-		"mapType": {
-			"ingame": "Spiel Karte",
-			"label": "Karte",
-			"none": "Nicht anzeigen",
-			"render": "Gerenderte Karte"
-		},
 		"nearPlane": "Vordere Clippingebene",
 		"nearPlaneHelp": "Nähere Objekte sind abgeschnitten",
 		"resetSettingsButton": "Alle Einstellungen zurücksetzen",

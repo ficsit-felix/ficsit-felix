@@ -51,26 +51,6 @@
 
     <h3>{{ $t('settings.graphicsSectionTitle') }}</h3>
 
-    <v-radio-group
-      :value="mapType"
-      @change="setMapType"
-      :label="$t('settings.mapType.label')"
-      hide-details
-    >
-      <v-radio
-        :label="$t('settings.mapType.none')"
-        :value="MapType.None"
-      ></v-radio>
-      <v-radio
-        :label="$t('settings.mapType.render')"
-        :value="MapType.Render"
-      ></v-radio>
-      <v-radio
-        :label="$t('settings.mapType.ingame')"
-        :value="MapType.Ingame"
-      ></v-radio>
-    </v-radio-group>
-
     <v-checkbox
       hide-details
       :input-value="showModels"
@@ -166,7 +146,7 @@
 </template>
 
 <script>
-import { CameraType, MapType } from '@/store/settings';
+import { CameraType } from '@/store/settings';
 import copyToClipboard from '@lib/copyToClipboard';
 import { mapActions, mapState } from 'vuex';
 import LanguageSwitcher from './LanguageSwitcher.vue';
@@ -178,7 +158,6 @@ export default {
   },
   data: () => {
     return {
-      MapType,
       CameraType
     };
   },
@@ -188,7 +167,6 @@ export default {
       'farPlane',
       'showModels',
       'showCustomPaints',
-      'mapType',
       'conveyorBeltResolution',
       'classColors',
       'editClassColors',
@@ -209,7 +187,6 @@ export default {
       'setFarPlane',
       'setShowModels',
       'setShowCustomPaints',
-      'setMapType',
       'setConveyorBeltResolution',
       'setEditClassColors',
       'clearClassColors',

@@ -46,13 +46,7 @@ export default class OpenView extends Vue {
 
 <style lang="scss" scoped>
 @import '@/assets/colors.scss';
-.open {
-  background: $surface url('/pipes_blurry.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
+
 .open {
   display: flex;
   height: 100%;
