@@ -90,12 +90,6 @@
       @confirm="save()"
     ></ConfirmDialog>
 
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-    ></BugReportDialog>
-
     <!-- confirm exit dialog (desktop only) -->
     <ConfirmDialog
       v-model="showConfirmExitDesktopDialog"
@@ -130,7 +124,6 @@
 <script lang="ts">
 import {
   DIALOG_ABOUT,
-  DIALOG_BUGREPORT,
   DIALOG_CONFIRM_EXIT_DESKTOP,
   DIALOG_HELP,
   DIALOG_OPEN_JSON_WEB,
@@ -150,7 +143,6 @@ import { setTimeout } from 'timers';
 import Vue from 'vue';
 import { mapState } from 'vuex';
 import Settings from '../Settings.vue';
-import BugReportDialog from './BugReportDialog.vue';
 import ConfirmDialog from './ConfirmDialog.vue';
 import HelpDialog from './HelpDialog.vue';
 import LicensesDialog from './LicensesDialog.vue';
@@ -164,7 +156,6 @@ export default Vue.extend({
     Settings,
     ProgressBarDialog,
     ConfirmDialog,
-    BugReportDialog,
     HelpDialog
   },
   data: function() {
@@ -232,13 +223,6 @@ export default Vue.extend({
         () => (this.showSaveDesktopDialog = true)
       );
     });
-    EventBus.$on(DIALOG_BUGREPORT, (errorMessage: string) => {
-      this.closeDialogs(false, () => {
-        (this.$refs.bugReport as any).openReportWindow(
-          this.$t('savePage.error') + ' ' + errorMessage
-        );
-      });
-    });
     EventBus.$on(DIALOG_CONFIRM_EXIT_DESKTOP, () => {
       this.closeDialogs(
         this.showConfirmExitDesktopDialog,
@@ -272,7 +256,6 @@ export default Vue.extend({
     EventBus.$off(DIALOG_PROGRESS);
     EventBus.$off(DIALOG_SAVE_WEB);
     EventBus.$off(DIALOG_SAVE_DESKTOP);
-    EventBus.$off(DIALOG_BUGREPORT);
     EventBus.$off(DIALOG_CONFIRM_EXIT_DESKTOP);
     EventBus.$off(DIALOG_OPEN_WEB);
     EventBus.$off(DIALOG_OPEN_JSON_WEB);

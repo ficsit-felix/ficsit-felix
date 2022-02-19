@@ -26,7 +26,6 @@
       @set-translate="setMode('translate')"
       @set-rotate="setMode('rotate')"
       @set-scale="setMode('scale')"
-      @report-bug="reportBug()"
     />
 
     <Renderer ref="renderer" :width="width" :height="height">
@@ -48,19 +47,11 @@
       //currently disabled https://github.com/ficsit-felix/ficsit-felix/issues/86#issuecomment-512925021
     <Compass :rotateX="rotateX" :rotateZ="rotateZ"></Compass>
     -->
-
-    <BugReportDialog
-      ref="bugReport"
-      :filename="filename"
-      :uuid="uuid"
-      :defaultIncludeSave="false"
-    ></BugReportDialog>
   </div>
 </template>
 
 <script lang="ts">
 import Compass from '@/components/core/Compass.vue';
-import BugReportDialog from '@/components/core/dialogs/BugReportDialog.vue';
 import { MapType } from '@/store/settings';
 import { TransformAction } from '@/store/undo';
 import { commithash } from '@lib/commithash';
@@ -116,8 +107,7 @@ const undoNamespace = namespace('undo');
     Scene,
     Camera,
     Toolbar,
-    Compass,
-    BugReportDialog
+    Compass
   },
   provide() {
     return {
@@ -128,7 +118,6 @@ const undoNamespace = namespace('undo');
 export default class ScenePanel extends Vue {
   @Ref('scene') readonly sceneRef!: ScenePanel;
   @Ref('renderer') readonly rendererRef!: any;
-  @Ref('bugReport') readonly bugReportRef!: BugReportDialog;
 
   // state
   @State(state => state.uuid)
@@ -199,7 +188,6 @@ export default class ScenePanel extends Vue {
   commithash = commithash;
   rotateX = 0;
   rotateZ = 0;
-  bugReportVisible = false;
   selectionBoundsBox!: SelectionBoundsBox;
 
   // watchers
@@ -701,9 +689,6 @@ export default class ScenePanel extends Vue {
     if (this.experimentalFeatures) {
       this.setShiftSelect(value);
     }
-  }
-  reportBug() {
-    this.bugReportRef.openReportWindow('');
   }
 
   onDeleteObjects(payload: { actors: Actor[]; components: Component[] }) {

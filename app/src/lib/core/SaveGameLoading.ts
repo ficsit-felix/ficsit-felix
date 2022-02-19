@@ -1,8 +1,4 @@
-import {
-  DIALOG_BUGREPORT,
-  DIALOG_OPEN_TIME_MS,
-  DIALOG_PROGRESS
-} from '@lib/constants';
+import { DIALOG_OPEN_TIME_MS, DIALOG_PROGRESS } from '@lib/constants';
 import { reportContext, reportError } from '@lib/errorReporting';
 import { EventBus } from '@lib/event-bus';
 import { SaveGame } from 'satisfactory-json';
@@ -56,7 +52,8 @@ export class SaveGameLoading {
         },
         error => {
           reportError(error);
-          EventBus.$emit(DIALOG_BUGREPORT, error.message);
+          EventBus.$emit(DIALOG_PROGRESS, false);
+          alert(error.message);
         },
         saveGame => {
           // Process the loaded data for vuex

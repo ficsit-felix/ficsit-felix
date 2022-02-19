@@ -20,16 +20,6 @@
 			"row3": "The low-poly models used by FeliX were created by the respective {authors}.",
 			"title": "About"
 		},
-		"bugReport": {
-			"errorMessage": "Unable to send the bug report.",
-			"includeSave": "Include save file in bug report",
-			"includeScreenshot": "Include screenshot in bug report",
-			"send": "Send Bug Report",
-			"sentMessage": "Bug report was successfully submitted. Thank you!",
-			"title": "Submit Bug Report",
-			"userContact": "Enter E-mail if you want to be informed when the bug is fixed. (optional)",
-			"userMessage": "Describe the bug or what triggered it (optional)"
-		},
 		"color": {
 			"title": "Select color"
 		},
@@ -243,7 +233,6 @@
 	},
 	"toolbar": {
 		"local": "Local",
-		"reportBug": "Report a bug",
 		"rotate": "Rotate",
 		"scale": "Scale",
 		"translate": "Translate",
