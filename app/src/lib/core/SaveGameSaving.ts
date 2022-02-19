@@ -1,8 +1,4 @@
-import {
-  DIALOG_BUGREPORT,
-  DIALOG_OPEN_TIME_MS,
-  DIALOG_PROGRESS
-} from '@lib/constants';
+import { DIALOG_OPEN_TIME_MS, DIALOG_PROGRESS } from '@lib/constants';
 import { EventBus } from '@lib/event-bus';
 import { SaveGame } from 'satisfactory-json';
 import { reportError } from './errorReporting';
@@ -43,8 +39,8 @@ export class SaveGameSaving {
         },
         error => {
           reportError(error);
-          // open bug report window
-          EventBus.$emit(DIALOG_BUGREPORT, error.message);
+          EventBus.$emit(DIALOG_PROGRESS, false);
+          alert(error.message);
         },
         () => {
           console.timeEnd('saveFile');

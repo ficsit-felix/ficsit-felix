@@ -133,19 +133,6 @@
       {{ $t('photoMode.title') }}
     </v-tooltip>
 
-    <v-tooltip bottom>
-      <template v-slot:activator="{ on }">
-        <v-icon
-          class="bugReportIcon icn-btn"
-          v-ripple
-          v-on="on"
-          @click="$emit('report-bug')"
-          >mdi-bug</v-icon
-        >
-      </template>
-      {{ $t('toolbar.reportBug') }}
-    </v-tooltip>
-
     <PhotoModeDialog v-model="showPhotoMode" />
   </div>
 </template>
@@ -238,13 +225,6 @@ export default {
 
   a:active {
     /*background: rgba(255, 255, 255, 0.3);*/
-  }
-
-  .v-icon.bugReportIcon {
-    color: #aa4444;
-    &:hover {
-      color: #d44;
-    }
   }
 }
 .spacer {
