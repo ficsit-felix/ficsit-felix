@@ -1,7 +1,7 @@
 import {
   isModClassName,
   modelConfig,
-  Paintable
+  Paintable,
 } from '@lib/definitions/models';
 import { findActorByName } from '@lib/graphics/entityHelper';
 import { Actor, ByteProperty, StructProperty } from 'satisfactory-json';
@@ -31,7 +31,7 @@ export default class ColorFactory {
 
     this.selectedMaterial = new MeshMatcapMaterial({
       color: 0xffffff,
-      matcap: this.matcap
+      matcap: this.matcap,
     });
 
     this.setupColoredMaterials();
@@ -50,7 +50,7 @@ export default class ColorFactory {
 
       this.materials[prop] = new MeshMatcapMaterial({
         color: color,
-        matcap: this.matcap
+        matcap: this.matcap,
       });
     }
   }
@@ -75,7 +75,7 @@ export default class ColorFactory {
       new Color('#f5f09e'),
       new Color('#97978f'),
       new Color('#b048aa'),
-      new Color('#838283')
+      new Color('#838283'),
     ];
 
     // check the BuildableSubsystem -> mColorSlotsPrimary for changed colors
@@ -114,7 +114,7 @@ export default class ColorFactory {
 
       this.coloredMaterials[i] = new MeshMatcapMaterial({
         color: color,
-        matcap: this.matcap
+        matcap: this.matcap,
       });
     }
   }

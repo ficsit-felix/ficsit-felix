@@ -136,7 +136,7 @@ import {
   DIALOG_SETTINGS,
   ON_EXIT_PRESSED,
   ON_SAVE_JSON_PRESSED,
-  ON_SAVE_PRESSED
+  ON_SAVE_PRESSED,
 } from '@lib/constants';
 import { EventBus } from '@lib/event-bus';
 import { setTimeout } from 'timers';
@@ -156,9 +156,9 @@ export default Vue.extend({
     Settings,
     ProgressBarDialog,
     ConfirmDialog,
-    HelpDialog
+    HelpDialog,
   },
-  data: function() {
+  data: function () {
     return {
       showHelpDialog: false,
       showSettingsDialog: false,
@@ -170,11 +170,11 @@ export default Vue.extend({
       showConfirmExitDesktopDialog: false,
       showOpenWebDialog: false,
       showOpenJsonWebDialog: false,
-      showSaveJsonWebDialog: false
+      showSaveJsonWebDialog: false,
     };
   },
   computed: {
-    ...mapState(['filename', 'uuid'])
+    ...mapState(['filename', 'uuid']),
   },
   mounted() {
     EventBus.$on(DIALOG_HELP, () => {
@@ -316,7 +316,7 @@ export default Vue.extend({
 
     exit() {
       EventBus.$emit(ON_EXIT_PRESSED);
-    }
-  }
+    },
+  },
 });
 </script>

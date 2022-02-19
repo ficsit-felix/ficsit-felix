@@ -19,8 +19,8 @@ import { Action } from 'vuex-class';
 @VueComponent({
   components: {
     // because property drawer is recursive: https://stackoverflow.com/a/58875919
-    PropertyPropertyDrawer: () => import('../PropertyPropertyDrawer.vue')
-  }
+    PropertyPropertyDrawer: () => import('../PropertyPropertyDrawer.vue'),
+  },
 })
 export default class BoolPropertyDrawer extends Vue {
   @Prop() path!: string;
@@ -30,7 +30,7 @@ export default class BoolPropertyDrawer extends Vue {
   change(value: boolean) {
     this.updateObjectValue({
       path: this.path,
-      value: value ? 1 : 0
+      value: value ? 1 : 0,
     });
   }
 }

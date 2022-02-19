@@ -28,7 +28,7 @@ export default class TextPropertyDrawer extends Vue {
   change(value: string) {
     this.updateObjectValue({
       path: this.path + '.sourceString',
-      value: value
+      value: value,
     });
   }
 }

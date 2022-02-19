@@ -82,9 +82,9 @@ function saveDesktop(
       filePath,
       JSON.stringify(saveGame),
       {
-        encoding: 'binary'
+        encoding: 'binary',
       },
-      err => {
+      (err) => {
         if (err) {
           callback(err, undefined, undefined);
           return;
@@ -103,7 +103,7 @@ function saveDesktop(
         callback(error, undefined, undefined);
       })
 
-      .on('progress', progress => {
+      .on('progress', (progress) => {
         callback(undefined, progress, undefined);
       })
       .pipe(outStream)
@@ -155,10 +155,10 @@ function saveWeb(
     transform.pipe(new FileWriter(writer)).on('finish', () => {
       callback(undefined, undefined, true);
     });
-    transform.on('progress', progress => {
+    transform.on('progress', (progress) => {
       callback(undefined, progress, undefined);
     });
-    transform.on('error', error => {
+    transform.on('error', (error) => {
       writer.abort();
       callback(error, undefined, undefined);
     });

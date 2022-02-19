@@ -18,8 +18,8 @@ import Vector3PropertyDrawer from '../Vector3PropertyDrawer.vue';
 @VueComponent({
   components: {
     BoolPropertyDrawer,
-    Vector3PropertyDrawer
-  }
+    Vector3PropertyDrawer,
+  },
 })
 export default class BoxStructPropertyDrawer extends Vue {
   @Prop() path!: string;

@@ -23,7 +23,7 @@ export default class BoolPropertyDrawer extends Vue {
   change(value: boolean) {
     this.updateObjectValue({
       path: this.path,
-      value: value ? 1 : 0
+      value: value ? 1 : 0,
     });
   }
 }

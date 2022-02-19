@@ -39,7 +39,7 @@ export class FileHeaderReader {
           mapOptions: this.readString(),
           sessionName: this.readString(),
           playDurationSeconds: this.readInt(),
-          saveDateTime: this.transformToDate(this.readLong())
+          saveDateTime: this.transformToDate(this.readLong()),
         };
 
         if (header.saveHeaderType >= 5) {
@@ -61,7 +61,7 @@ export class FileHeaderReader {
           filename: filename,
           filepath: filepath,
           saveDateTime: new Date(0),
-          sessionName: 'error'
+          sessionName: 'error',
         });
       }
 

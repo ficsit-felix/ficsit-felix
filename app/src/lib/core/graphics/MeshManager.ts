@@ -6,7 +6,7 @@ import {
   Mesh,
   MeshMatcapMaterial,
   Object3D,
-  Scene
+  Scene,
 } from 'three';
 import ColorFactory from './ColorFactory';
 import GeometryFactory from './GeometryFactory';
@@ -78,7 +78,7 @@ export default class MeshManager {
         position: result.mesh.position,
         quat: result.mesh.quaternion,
         scale: result.mesh.scale,
-        color: (result.mesh.material as MeshMatcapMaterial).color
+        color: (result.mesh.material as MeshMatcapMaterial).color,
       });
       // store the instance index into the mesh
       result.mesh.userData.instance = result.instance;

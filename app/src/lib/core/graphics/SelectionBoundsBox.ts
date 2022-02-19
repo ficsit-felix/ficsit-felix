@@ -31,7 +31,7 @@ export class SelectionBoundsBox {
 
   setBounds(objects: Object3D[]) {
     this.box.makeEmpty();
-    objects.forEach(obj => {
+    objects.forEach((obj) => {
       this.box.expandByObject(obj);
     });
 

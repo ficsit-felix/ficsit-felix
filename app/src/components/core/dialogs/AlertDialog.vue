@@ -3,7 +3,7 @@
     width="600"
     :value="value"
     @input="
-      newValue => {
+      (newValue) => {
         this.$emit('input', newValue);
       }
     "

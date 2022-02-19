@@ -22,7 +22,7 @@ export class SaveGameSaving {
     this.vue.$store.dispatch('setProgressText', {
       title: this.vue.$t('savePage.savSubtitle'), // TODO asJson
       currentStep: this.vue.$t('savePage.processingFile'),
-      showCloseButton: false
+      showCloseButton: false,
     });
 
     EventBus.$emit(DIALOG_PROGRESS, true);
@@ -34,10 +34,10 @@ export class SaveGameSaving {
         window.data,
         filepath,
         asJson,
-        progress => {
+        (progress) => {
           this.vue.$store.dispatch('setProgress', progress);
         },
-        error => {
+        (error) => {
           reportError(error);
           EventBus.$emit(DIALOG_PROGRESS, false);
           alert(error.message);
@@ -47,7 +47,7 @@ export class SaveGameSaving {
           this.vue.$store.dispatch('setProgress', 100);
           this.vue.$store.dispatch('setProgressText', {
             currentStep: this.vue.$t('savePage.saveFinished'),
-            showCloseButton: true
+            showCloseButton: true,
           });
         }
       );

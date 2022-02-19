@@ -27,7 +27,7 @@ export class SaveGameLoading {
     this.vue.$store.dispatch('setProgressText', {
       title: this.vue.$t('openPage.subtitleSav'), // TODO asJson
       currentStep: this.vue.$t('openPage.readingFile'),
-      showCloseButton: false
+      showCloseButton: false,
     });
     this.vue.$store.dispatch('setProgress', 0);
     EventBus.$emit(DIALOG_PROGRESS, true);
@@ -47,21 +47,21 @@ export class SaveGameLoading {
       this.fileReader.readFile(
         filepath,
         asJson,
-        progress => {
+        (progress) => {
           this.vue.$store.dispatch('setProgress', progress / 2);
         },
-        error => {
+        (error) => {
           reportError(error);
           EventBus.$emit(DIALOG_PROGRESS, false);
           alert(error.message);
         },
-        saveGame => {
+        (saveGame) => {
           // Process the loaded data for vuex
           this.vue.$store.dispatch('setLoadedData', saveGame).then(() => {
             // Show the save entries in the desktop menu TODO move to desktop component?
             this.vue.$store.dispatch('setShowSaveMenuEntries', true);
             this.vue.$router.push({
-              name: 'loadEditor'
+              name: 'loadEditor',
             });
           });
         }

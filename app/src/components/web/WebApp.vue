@@ -43,7 +43,7 @@ import Dialogs from '../core/dialogs/Dialogs.vue';
 export default {
   name: 'App',
   components: {
-    Dialogs
+    Dialogs,
   },
   computed: mapState(['title']),
   mounted() {
@@ -68,7 +68,7 @@ export default {
         this.$store.state.filename.replace('.sav', '.json'),
         true
       );
-    }
-  }
+    },
+  },
 };
 </script>

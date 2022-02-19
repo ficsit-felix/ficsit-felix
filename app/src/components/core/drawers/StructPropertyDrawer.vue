@@ -60,7 +60,7 @@
           'ProjectileData',
           'TrainSimulationData',
           'ResearchData',
-          'Hotbar'
+          'Hotbar',
         ].includes(value.type)
       "
       :path="path"
@@ -109,8 +109,8 @@ import Vector3PropertyDrawer from './Vector3PropertyDrawer.vue';
     ColorStructPropertyDrawer,
     RailroadTrackPositionStructPropertyDrawer,
     StringPropertyDrawer,
-    FloatPropertyDrawer
-  }
+    FloatPropertyDrawer,
+  },
 })
 export default class StructPropertyDrawer extends Vue {
   @Prop() path!: string;

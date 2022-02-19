@@ -1,6 +1,6 @@
 import {
   applyMeshTransformToActor,
-  updateActorMeshTransform
+  updateActorMeshTransform,
 } from '@lib/graphics/meshHelper';
 import { Actor } from 'satisfactory-json';
 import { Mesh, MeshMatcapMaterial, Scene } from 'three';
@@ -39,7 +39,9 @@ export class ThreeModelMesh implements ModelMesh {
   constructor(mesh: Mesh) {
     this.mesh = mesh;
     // need to make a clone of the material as we change its color in rebuildColor()
-    this.material = (mesh.material as MeshMatcapMaterial).clone() as MeshMatcapMaterial;
+    this.material = (
+      mesh.material as MeshMatcapMaterial
+    ).clone() as MeshMatcapMaterial;
     this.mesh.material = this.material;
     for (const child of this.mesh.children) {
       if (child instanceof Mesh) {
@@ -66,7 +68,7 @@ export class ThreeModelMesh implements ModelMesh {
   rebuildGeometry(actor: Actor, geometryFactory: GeometryFactory): void {
     geometryFactory
       .createGeometry(actor)
-      .then(result => (this.mesh.geometry = result.geometry));
+      .then((result) => (this.mesh.geometry = result.geometry));
   }
 
   rebuildColor(actor: Actor, colorFactory: ColorFactory): void {
@@ -143,7 +145,7 @@ export class InstancedModelMesh implements ModelMesh {
     // TODO only rebuild once per InstancedMeshGroup
     geometryFactory
       .createGeometry(actor)
-      .then(result => this.instancedMeshGroup.setGeometry(result.geometry));
+      .then((result) => this.instancedMeshGroup.setGeometry(result.geometry));
   }
 
   rebuildColor(actor: Actor, colorFactory: ColorFactory): void {

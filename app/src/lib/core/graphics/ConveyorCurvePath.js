@@ -89,7 +89,7 @@ class ConveyorCurvePath extends CurvePath {
     return {
       tangents: tangents,
       normals: normals,
-      binormals: binormals
+      binormals: binormals,
     };
   }
 }

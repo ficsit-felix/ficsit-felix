@@ -1,4 +1,4 @@
-export default function(text: string) {
+export default function (text: string) {
   const input = document.createElement('textarea');
   input.value = text;
   document.body.appendChild(input);

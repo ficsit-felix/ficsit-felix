@@ -61,7 +61,7 @@ import {
   DIALOG_PROGRESS,
   FOCUS_SELECTED_OBJECT,
   GUI_REFRESH_TIMEOUT,
-  SCENE_RESIZE
+  SCENE_RESIZE,
 } from '@lib/constants';
 import { reportError } from '@lib/errorReporting';
 import { EventBus } from '@lib/event-bus';
@@ -79,7 +79,7 @@ import {
   Group,
   MathUtils,
   Texture,
-  Vector3
+  Vector3,
 } from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import { setTimeout } from 'timers';
@@ -87,7 +87,7 @@ import {
   Component as VueComponent,
   Ref,
   Vue,
-  Watch
+  Watch,
 } from 'vue-property-decorator';
 import {} from 'vuex';
 import { Action, namespace, State } from 'vuex-class';
@@ -106,45 +106,45 @@ const undoNamespace = namespace('undo');
     Scene,
     Camera,
     Toolbar,
-    Compass
+    Compass,
   },
   provide() {
     return {
-      playground: this
+      playground: this,
     };
-  }
+  },
 })
 export default class ScenePanel extends Vue {
   @Ref('scene') readonly sceneRef!: ScenePanel;
   @Ref('renderer') readonly rendererRef!: any;
 
   // state
-  @State(state => state.uuid)
+  @State((state) => state.uuid)
   uuid!: string;
-  @State(state => state.filename)
+  @State((state) => state.filename)
   filename!: string;
-  @State(state => state.classes)
+  @State((state) => state.classes)
   classes!: any[];
-  @State(state => state.selectedPathNames)
+  @State((state) => state.selectedPathNames)
   selectedPathNames!: string[];
-  @State(state => state.selectedActors)
+  @State((state) => state.selectedActors)
   selectedActors!: Actor[];
 
-  @State(state => state.settings.showCustomPaints)
+  @State((state) => state.settings.showCustomPaints)
   showCustomPaints!: boolean;
-  @State(state => state.settings.showModels)
+  @State((state) => state.settings.showModels)
   showModels!: boolean;
-  @State(state => state.settings.conveyorBeltResolution)
+  @State((state) => state.settings.conveyorBeltResolution)
   conveyorBeltResolution!: number;
-  @State(state => state.settings.classColors)
+  @State((state) => state.settings.classColors)
   classColors!: { [id: string]: string };
-  @State(state => state.settings.experimentalFeatures)
+  @State((state) => state.settings.experimentalFeatures)
   experimentalFeatures!: boolean;
-  @State(state => state.settings.snapping)
+  @State((state) => state.settings.snapping)
   snapping!: boolean;
-  @State(state => state.settings.translationSnap)
+  @State((state) => state.settings.translationSnap)
   translationSnap!: number;
-  @State(state => state.settings.rotationSnap)
+  @State((state) => state.settings.rotationSnap)
   rotationSnap!: number;
 
   // actions
@@ -340,7 +340,7 @@ export default class ScenePanel extends Vue {
 
       this.setProgressText({
         currentStep: this.$t('openPage.buildingWorld'),
-        showCloseButton: false
+        showCloseButton: false,
       });
       this.setProgress(50);
       this.geometryFactory = new GeometryFactory(
@@ -349,11 +349,12 @@ export default class ScenePanel extends Vue {
       );
 
       let textureLoader = new THREE.TextureLoader();
-      this.matcap = textureLoader.load('textures/matcap-white.png', function(
-        matcap
-      ) {
-        matcap.encoding = THREE.sRGBEncoding;
-      });
+      this.matcap = textureLoader.load(
+        'textures/matcap-white.png',
+        function (matcap) {
+          matcap.encoding = THREE.sRGBEncoding;
+        }
+      );
 
       this.colorFactory = new ColorFactory(
         this.matcap,
@@ -368,7 +369,7 @@ export default class ScenePanel extends Vue {
 
       this.selectedMaterial = new THREE.MeshMatcapMaterial({
         color: 0xffffff,
-        matcap: this.matcap
+        matcap: this.matcap,
       });
 
       this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
@@ -486,7 +487,7 @@ export default class ScenePanel extends Vue {
     let actor = window.data.actors[index];
     this.meshFactory
       .createMesh(actor)
-      .then(result => {
+      .then((result) => {
         updateActorMeshTransform(result.mesh, actor);
 
         let visible = true;
@@ -500,7 +501,7 @@ export default class ScenePanel extends Vue {
         // create next mesh
         this.createMeshForActor(index + 1);
       })
-      .catch(error => {
+      .catch((error) => {
         reportError(error);
         this.createMeshForActor(index + 1);
       });
@@ -646,10 +647,10 @@ export default class ScenePanel extends Vue {
 
   onCreateObjects(payload: { actors: Actor[]; components: Component[] }) {
     Promise.all(
-      payload.actors.map(actor =>
+      payload.actors.map((actor) =>
         this.meshFactory
           .createMesh(actor)
-          .then(result => {
+          .then((result) => {
             return new Promise<string | undefined>((resolve, reject) => {
               updateActorMeshTransform(result.mesh, actor);
 
@@ -666,14 +667,14 @@ export default class ScenePanel extends Vue {
               resolve(result.instance);
             });
           })
-          .catch(error => {
+          .catch((error) => {
             reportError(error);
             return new Promise<undefined>((resolve, reject) =>
               resolve(undefined)
             );
           })
       )
-    ).then(instances => {
+    ).then((instances) => {
       // Rebuild all InstancedMeshGroups where we added an instance
       const instancesUnique = new Set<string | undefined>(instances);
       for (const instance of instancesUnique) {
@@ -684,8 +685,8 @@ export default class ScenePanel extends Vue {
       // This is called when all models are added
       // select the models now
       this.$store.commit('SET_SELECTED', [
-        ...payload.actors.map(actor => actor.pathName),
-        ...payload.components.map(component => component.pathName)
+        ...payload.actors.map((actor) => actor.pathName),
+        ...payload.components.map((component) => component.pathName),
       ]);
     });
 

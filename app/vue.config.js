@@ -6,7 +6,7 @@ const webpack = require('webpack');
 module.exports = {
   // properly return 404 errors: https://stackoverflow.com/a/53772122
   devServer: {
-    historyApiFallback: false
+    historyApiFallback: false,
   },
   chainWebpack(config) {
     // To fix "No ESLint configuration found" when using yarn link https://github.com/vuejs/vue-cli/issues/2948#issuecomment-438589725
@@ -25,10 +25,10 @@ module.exports = {
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          PACKAGE_VERSION: '"' + version + '"'
-        }
-      })
-    ]
+          PACKAGE_VERSION: '"' + version + '"',
+        },
+      }),
+    ],
   },
   pluginOptions: {
     electronBuilder: {
@@ -37,36 +37,36 @@ module.exports = {
         win: {
           publisherName: 'bitowl',
           // We don't have a certificate
-          verifyUpdateCodeSignature: false
+          verifyUpdateCodeSignature: false,
         },
         publish: [
           {
             provider: 'github',
             owner: 'ficsit-felix',
-            repo: 'ficsit-felix'
-          }
+            repo: 'ficsit-felix',
+          },
         ],
         nsis: {
-          artifactName: 'FICSIT-FeliX-setup.exe'
+          artifactName: 'FICSIT-FeliX-setup.exe',
         },
         dmg: {
-          artifactName: 'FICSIT-FeliX.dmg'
+          artifactName: 'FICSIT-FeliX.dmg',
         },
         mac: {
-          target: 'dmg'
+          target: 'dmg',
         },
         linux: {
           target: 'AppImage',
           executableName: 'ficsit-felix',
           synopsis: 'Save file analyzer for Satisfactory',
-          category: 'Game'
+          category: 'Game',
         },
         appImage: {
-          artifactName: 'FICSIT-FeliX.AppImage'
-        }
+          artifactName: 'FICSIT-FeliX.AppImage',
+        },
       },
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   },
-  transpileDependencies: ['vuetify']
+  transpileDependencies: ['vuetify'],
 };

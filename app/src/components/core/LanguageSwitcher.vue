@@ -19,9 +19,9 @@ import { mapActions } from 'vuex';
 
 export default {
   name: 'LanguageSwitcher',
-  data: function() {
+  data: function () {
     return {
-      languages: ['en', 'de']
+      languages: ['en', 'de'],
     };
   },
   methods: {
@@ -31,14 +31,14 @@ export default {
         return;
       }
       // dynamically load locale
-      import(`@/assets/i18n/${lang}.json`).then(msgs => {
+      import(`@/assets/i18n/${lang}.json`).then((msgs) => {
         this.$i18n.setLocaleMessage(lang, msgs.default || msgs);
         this.$i18n.locale = lang;
         this.setLocale(lang);
         EventBus.$emit(CHANGE_LOCALE);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

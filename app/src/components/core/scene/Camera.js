@@ -15,13 +15,13 @@ export default {
   provide() {
     this.setupCamera();
     return {
-      camera: this.obj
+      camera: this.obj,
     };
   },
 
   computed: {
     ...mapState(['cameraPosition', 'cameraTarget']),
-    ...mapState('settings', ['nearPlane', 'farPlane', 'cameraType'])
+    ...mapState('settings', ['nearPlane', 'farPlane', 'cameraType']),
   },
 
   watch: {
@@ -30,7 +30,7 @@ export default {
         if (!this.obj) return;
         this.obj.lookAt(this.scene.position);
       },
-      deep: true
+      deep: true,
     },
     nearPlane(value) {
       this.obj.near = value;
@@ -48,7 +48,7 @@ export default {
       }
 
       this.setupControl(this.domElement);
-    }
+    },
   },
 
   mounted() {
@@ -181,7 +181,7 @@ export default {
     updateCameraState() {
       this.setCameraData({
         target: this.controls.target,
-        position: this.obj.position
+        position: this.obj.position,
       });
     },
     updateControls() {
@@ -207,12 +207,12 @@ export default {
         this.obj.bottom = height / -2;
         this.obj.updateProjectionMatrix();
       }
-    }
+    },
   },
 
   beforeDestroy() {
     if (this.controls) {
       this.controls.dispose();
     }
-  }
+  },
 };

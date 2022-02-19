@@ -55,7 +55,7 @@
           <StringPropertyDrawer
             v-if="
               value.valueType === 'StrProperty' ||
-                value.valueType === 'EnumByteProperty'
+              value.valueType === 'EnumByteProperty'
             "
             :path="path + '.values' + index"
             :value="value.values[index]"
@@ -82,8 +82,8 @@ import ArbitraryStructPropertyDrawer from './struct/ArbitraryStructPropertyDrawe
     ArbitraryStructPropertyDrawer,
     IntPropertyDrawer,
     ObjectPropertyDrawer,
-    StringPropertyDrawer
-  }
+    StringPropertyDrawer,
+  },
 })
 export default class MapPropertyDrawer extends Vue {
   @Prop() path!: string;

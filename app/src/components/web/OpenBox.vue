@@ -7,7 +7,7 @@
     >
       {{
         $t('openPage.saveLocation', {
-          saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames'
+          saveLocation: '%localappdata%\\FactoryGame\\Saved\\SaveGames',
         })
       }}
     </p>
@@ -58,13 +58,13 @@ import AlertDialog from '../core/dialogs/AlertDialog.vue';
 
 export default {
   components: { AlertDialog },
-  data: function() {
+  data: function () {
     return {
       isSaving: false,
       importJson: false,
       showLocationClipboardSnack: false,
       showErrorDialog: false,
-      errorText: ''
+      errorText: '',
     };
   },
   watch: {
@@ -76,8 +76,8 @@ export default {
         } else {
           this.$emit('stop-animating');
         }
-      }
-    }
+      },
+    },
   },
   mounted() {
     this.importJson = this.$route.path === '/open/json';
@@ -121,7 +121,7 @@ export default {
       if (file.name.split('.').pop() !== expected) {
         const message = this.$t('openPage.extensionError', {
           expected: expected,
-          actual: file.name.split('.').pop()
+          actual: file.name.split('.').pop(),
         });
         this.showErrorDialog = true;
         this.errorText = message;
@@ -154,8 +154,8 @@ export default {
     copySaveLocationToClipboard() {
       copyToClipboard('%localappdata%\\FactoryGame\\Saved\\SaveGames');
       this.showLocationClipboardSnack = true;
-    }
-  }
+    },
+  },
 };
 </script>
 

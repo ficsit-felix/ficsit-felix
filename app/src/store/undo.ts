@@ -18,7 +18,7 @@ export const undo: Module<UndoState, RootState> = {
   namespaced: true,
   state: {
     undoStack: [],
-    redoStack: []
+    redoStack: [],
   },
   getters: {
     undoDisabled(state) {
@@ -26,7 +26,7 @@ export const undo: Module<UndoState, RootState> = {
     },
     redoDisabled(state) {
       return state.redoStack.length == 0;
-    }
+    },
   },
   mutations: {
     ADD_ACTION(state, payload) {
@@ -40,7 +40,7 @@ export const undo: Module<UndoState, RootState> = {
     REDO_ACTION(state, action) {
       state.undoStack.push(action);
       state.redoStack.pop();
-    }
+    },
   },
   actions: {
     recordAction({ commit }, action) {
@@ -63,8 +63,8 @@ export const undo: Module<UndoState, RootState> = {
         );
         commit('REDO_ACTION', undoAction);
       }
-    }
-  }
+    },
+  },
 };
 
 export class SelectAction implements Action {
@@ -100,7 +100,7 @@ export class TransformAction implements Action {
 export class TranslateMultipleAction implements Action {
   constructor(public name: string, private translation: Vector3) {}
   undo(commit: Commit, rootState: RootState) {
-    rootState.selectedActors.forEach(actor => {
+    rootState.selectedActors.forEach((actor) => {
       Vue.set(
         actor.transform.translation,
         0,

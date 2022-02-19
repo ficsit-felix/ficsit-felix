@@ -66,14 +66,14 @@ import ConfirmDialog from '../dialogs/ConfirmDialog.vue';
 export default {
   name: 'JsonPanel',
   components: {
-    ConfirmDialog
+    ConfirmDialog,
   },
-  data: function() {
+  data: function () {
     return {
       selectedJson: '',
       jsonError: [],
       showSnackbar: false,
-      showDeleteDialog: false
+      showDeleteDialog: false,
     };
   },
   computed: {
@@ -90,7 +90,7 @@ export default {
         this.selectedPathNames.length < 1 ||
         this.selectedPathNames[0] === '---save-header---'
       );
-    }
+    },
   },
   watch: {
     selectedJsonToEdit: {
@@ -104,8 +104,8 @@ export default {
 
           this.jsonError = [];
         }
-      }
-    }
+      },
+    },
   },
 
   methods: {
@@ -144,8 +144,8 @@ export default {
       );
       console.log('blueprint', blueprint);
       copyToClipboard(JSON.stringify(blueprint));
-    }
-  }
+    },
+  },
 };
 </script>
 

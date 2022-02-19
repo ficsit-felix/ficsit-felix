@@ -33,8 +33,8 @@ import OpenBox from './OpenBox.vue';
   components: {
     Logo,
     OpenBox,
-    CenterWhiteBox
-  }
+    CenterWhiteBox,
+  },
 })
 export default class OpenView extends Vue {
   logoAnimating: boolean = false;

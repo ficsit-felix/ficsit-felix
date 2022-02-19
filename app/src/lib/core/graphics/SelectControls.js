@@ -1,18 +1,24 @@
 import { MOUSE, Raycaster } from 'three';
 
 // TODO remove the explicit playground parameter just to get the meshManager
-let SelectControls = function(scene, camera, domElement, callback, playground) {
+let SelectControls = function (
+  scene,
+  camera,
+  domElement,
+  callback,
+  playground
+) {
   this.callback = null;
   this.disabled = false;
 
-  this.bindCallback = function(callback) {
+  this.bindCallback = function (callback) {
     this.callback = callback;
   };
 
   // private
   let mouse = {
     x: 0,
-    y: 0
+    y: 0,
   };
 
   let raycaster = new Raycaster();

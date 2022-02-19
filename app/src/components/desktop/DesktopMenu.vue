@@ -108,7 +108,7 @@ import {
   DIALOG_ABOUT,
   DIALOG_CONFIRM_EXIT_DESKTOP,
   DIALOG_SAVE_DESKTOP,
-  DIALOG_SETTINGS
+  DIALOG_SETTINGS,
 } from '@lib/constants';
 import { EventBus } from '@lib/event-bus';
 import { remote } from 'electron';
@@ -126,13 +126,13 @@ interface FileList {
 
 @VueComponent({
   computed: {
-    ...mapState(['showSaveMenuEntries'])
+    ...mapState(['showSaveMenuEntries']),
   } /*,
   watch: {
     showSaveMenuEntries() {
       // update the menu
     }
-  }*/
+  }*/,
 })
 export default class DesktopMenu extends Vue {
   @Prop({ default: false }) readonly visible!: boolean;
@@ -205,10 +205,10 @@ export default class DesktopMenu extends Vue {
   }
 
   async readFileHeader(file: string, filePath: string): Promise<any> {
-    return new Promise<any>(resolve => {
+    return new Promise<any>((resolve) => {
       // READ HEADER OF SAVE FILE
       const stream = createReadStream(path.join(filePath));
-      new FileHeaderReader(file, filePath, stream, header => {
+      new FileHeaderReader(file, filePath, stream, (header) => {
         resolve(header);
       });
     });
@@ -228,7 +228,7 @@ export default class DesktopMenu extends Vue {
 
       sortedFiles.push({
         sessionName: key,
-        saves: freshFiles[key]
+        saves: freshFiles[key],
       });
     }
 
@@ -272,11 +272,11 @@ export default class DesktopMenu extends Vue {
         filters: [
           {
             name: this.$t('desktop.jsonExtension') as string,
-            extensions: ['json']
-          }
-        ]
+            extensions: ['json'],
+          },
+        ],
       })
-      .then(value => {
+      .then((value) => {
         if (value.canceled) {
           return;
         }
@@ -308,11 +308,11 @@ export default class DesktopMenu extends Vue {
         filters: [
           {
             name: this.$t('desktop.jsonExtension').toString(),
-            extensions: ['json']
-          }
-        ]
+            extensions: ['json'],
+          },
+        ],
       })
-      .then(result => {
+      .then((result) => {
         if (result.filePaths.length === 1) {
           openFileAndMoveToEditor(this, result.filePaths[0], true);
         }
@@ -328,7 +328,7 @@ export default class DesktopMenu extends Vue {
       month: 'short',
       day: 'numeric',
       hour: 'numeric',
-      minute: 'numeric'
+      minute: 'numeric',
     });
   }
 

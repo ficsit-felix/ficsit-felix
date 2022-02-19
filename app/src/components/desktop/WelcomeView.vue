@@ -10,8 +10,8 @@ import DesktopMenu from './DesktopMenu.vue';
 
 @VueComponent({
   components: {
-    DesktopMenu
-  }
+    DesktopMenu,
+  },
 })
 export default class MainScreen extends Vue {
   mounted() {
@@ -20,7 +20,7 @@ export default class MainScreen extends Vue {
 
     if (this.$store.state.settings.autoLoadSaveFile !== '') {
       this.$router.push({
-        path: 'open/auto'
+        path: 'open/auto',
       });
     }
   }
@@ -36,5 +36,4 @@ export default class MainScreen extends Vue {
   display: flex;
   flex-direction: row;
 }
-
 </style>

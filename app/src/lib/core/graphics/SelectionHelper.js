@@ -4,7 +4,7 @@
 
 import * as THREE from 'three';
 import { MOUSE } from 'three';
-let SelectionHelper = (function() {
+let SelectionHelper = (function () {
   function SelectionHelper(
     selectionBox,
     domElement,
@@ -25,7 +25,7 @@ let SelectionHelper = (function() {
 
     this.domElement.addEventListener(
       'mousedown',
-      function(event) {
+      function (event) {
         if (boxSelectControls.disabled) {
           return;
         }
@@ -41,7 +41,7 @@ let SelectionHelper = (function() {
 
     this.domElement.addEventListener(
       'mousemove',
-      function(event) {
+      function (event) {
         if (boxSelectControls.disabled) {
           return;
         }
@@ -54,7 +54,7 @@ let SelectionHelper = (function() {
 
     document.addEventListener(
       'mouseup',
-      function(event) {
+      function (event) {
         if (boxSelectControls.disabled) {
           return;
         }
@@ -67,7 +67,7 @@ let SelectionHelper = (function() {
     );
   }
 
-  SelectionHelper.prototype.onSelectStart = function(event) {
+  SelectionHelper.prototype.onSelectStart = function (event) {
     this.domElement.parentElement.appendChild(this.element);
 
     this.element.style.left = event.clientX + 'px';
@@ -79,7 +79,7 @@ let SelectionHelper = (function() {
     this.startPoint.y = event.clientY;
   };
 
-  SelectionHelper.prototype.onSelectMove = function(event) {
+  SelectionHelper.prototype.onSelectMove = function (event) {
     this.pointBottomRight.x = Math.max(this.startPoint.x, event.clientX);
     this.pointBottomRight.y = Math.max(this.startPoint.y, event.clientY);
     this.pointTopLeft.x = Math.min(this.startPoint.x, event.clientX);
@@ -93,11 +93,11 @@ let SelectionHelper = (function() {
       this.pointBottomRight.y - this.pointTopLeft.y + 'px';
   };
 
-  SelectionHelper.prototype.onSelectOver = function() {
+  SelectionHelper.prototype.onSelectOver = function () {
     this.element.parentElement.removeChild(this.element);
   };
 
-  SelectionHelper.prototype.destroy = function() {
+  SelectionHelper.prototype.destroy = function () {
     // TODO unregister event listeners
   };
 

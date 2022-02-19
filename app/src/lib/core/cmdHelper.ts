@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-window.checkMissing = function() {
+window.checkMissing = function () {
   if (window.data === undefined) {
     console.error('Need to load a save file first.');
     return;

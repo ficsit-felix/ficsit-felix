@@ -76,7 +76,7 @@ import {
   Component as VueComponent,
   Prop,
   Vue,
-  Watch
+  Watch,
 } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import { namespace, State } from 'vuex-class';
@@ -96,17 +96,17 @@ const settingsNamespace = namespace('settings');
     ObjectListPanel,
     JsonPanel,
     ClassListPanel,
-    PropertiesPanel
+    PropertiesPanel,
   },
   computed: {
-    ...mapState('settings', ['showPropertiesPanel'])
-  }
+    ...mapState('settings', ['showPropertiesPanel']),
+  },
 })
 export default class Editor extends Vue {
   @Prop({ default: !isElectron() }) showMenubar!: boolean;
-  @State(state => state.settings.layout) layout: any;
-  @State(state => state.settings.layoutSettings) layoutSettings: any;
-  @State(state => state.settings.showPropertiesPanel)
+  @State((state) => state.settings.layout) layout: any;
+  @State((state) => state.settings.layoutSettings) layoutSettings: any;
+  @State((state) => state.settings.showPropertiesPanel)
   showPropertiesPanel!: boolean;
 
   @settingsNamespace.Action('resetLayout')

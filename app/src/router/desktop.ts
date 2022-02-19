@@ -9,7 +9,7 @@ export default new Router({
     {
       path: '/',
       name: 'landingpage',
-      component: WelcomeView
+      component: WelcomeView,
     },
 
     {
@@ -20,8 +20,8 @@ export default new Router({
           /* webpackChunkName: "editor" */ '@components/views/LoadEditorView.vue'
         ),
       meta: {
-        requiresDataLoaded: true
-      }
+        requiresDataLoaded: true,
+      },
     },
     {
       path: '/editor',
@@ -31,13 +31,13 @@ export default new Router({
           /* webpackChunkName: "editor" */ '../components/desktop/EditorView.vue'
         ),
       meta: {
-        requiresDataLoaded: true
-      }
+        requiresDataLoaded: true,
+      },
     },
     {
       path: '*',
       name: '404',
-      component: WelcomeView
-    }
-  ]
+      component: WelcomeView,
+    },
+  ],
 });

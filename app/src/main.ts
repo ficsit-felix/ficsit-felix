@@ -42,17 +42,17 @@ new Vue({
   beforeCreate() {
     this.$store.commit('settings/INIT_STORE_FROM_LOCAL_DATA');
   },
-  render: h =>
+  render: (h) =>
     h(
       isElectron()
         ? require('./components/desktop/DesktopApp.vue').default
         : require('./components/web/WebApp.vue').default
-    )
+    ),
 }).$mount('#app');
 
 // Set persisted locale
 const lang = store.state.settings.locale;
-import(`@/assets/i18n/${lang}.json`).then(msgs => {
+import(`@/assets/i18n/${lang}.json`).then((msgs) => {
   i18n.setLocaleMessage(lang, msgs.default || msgs);
   i18n.locale = lang;
   EventBus.$emit(CHANGE_LOCALE);

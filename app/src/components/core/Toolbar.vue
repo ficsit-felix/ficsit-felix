@@ -146,7 +146,7 @@ import PhotoModeDialog from './dialogs/PhotoModeDialog.vue';
 export default {
   name: 'Toolbar',
   components: {
-    PhotoModeDialog
+    PhotoModeDialog,
   },
   props: ['mode', 'local'],
   computed: {
@@ -169,19 +169,19 @@ export default {
     },
     focusDisabled() {
       return this.selectedActors.length < 1;
-    }
+    },
   },
   data: () => {
     return {
-      showPhotoMode: false
+      showPhotoMode: false,
     };
   },
   methods: {
     ...mapActions('settings', ['setSnapping']),
     focusSelectedObject() {
       EventBus.$emit(FOCUS_SELECTED_OBJECT);
-    }
-  }
+    },
+  },
 };
 </script>
 

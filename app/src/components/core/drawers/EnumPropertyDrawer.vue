@@ -37,13 +37,13 @@ export default class EnumPropertyDrawer extends Vue {
   changeEnum(value: string) {
     this.updateObjectValue({
       path: this.path + '.enum',
-      value: value
+      value: value,
     });
   }
   changeValue(value: string) {
     this.updateObjectValue({
       path: this.path + '.value',
-      value: value
+      value: value,
     });
   }
 }

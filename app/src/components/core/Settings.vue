@@ -154,11 +154,11 @@ import LanguageSwitcher from './LanguageSwitcher.vue';
 export default {
   name: 'Settings',
   components: {
-    LanguageSwitcher
+    LanguageSwitcher,
   },
   data: () => {
     return {
-      CameraType
+      CameraType,
     };
   },
   computed: {
@@ -178,8 +178,8 @@ export default {
       'translationSnap',
       'rotationSnap',
       'cameraType',
-      'showPropertiesPanel'
-    ])
+      'showPropertiesPanel',
+    ]),
   },
   methods: {
     ...mapActions('settings', [
@@ -199,7 +199,7 @@ export default {
       'setRotationSnap',
       'setCameraType',
       'setShowPropertiesPanel',
-      'resetSettings'
+      'resetSettings',
     ]),
     updateNearPlane(value) {
       this.setNearPlane(value);
@@ -236,8 +236,8 @@ export default {
     },
     toggleShowDevelopSettings() {
       this.setShowDevelopSettings(!this.showDevelopSettings);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -11,8 +11,8 @@ export default new Vuetify({
       dark: {
         primary: colors.orange.lighten3, // orange 200
         secondary: colors.cyan.lighten3, // cyan 200
-        background: colors.cyan.base
-      }
-    }
-  }
+        background: colors.cyan.base,
+      },
+    },
+  },
 });

@@ -26,7 +26,7 @@ export class WebFileReader implements SaveFileReader {
             progressCallback(percentLoaded / 2);
           }
         };*/
-        reader.onload = response => {
+        reader.onload = (response) => {
           try {
             json = JSON.parse(
               Buffer.from(reader.result as string).toString('utf-8')

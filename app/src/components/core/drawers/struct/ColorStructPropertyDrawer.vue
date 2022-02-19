@@ -54,7 +54,7 @@
               value.b +
               ',' +
               value.a / 255 +
-              ')'
+              ')',
           }"
         ></div>
       </v-col>
@@ -76,28 +76,28 @@ export default class ColorStructPropertyDrawer extends Vue {
   changeR(value: string) {
     this.updateObjectValue({
       path: this.path + '.r',
-      value: parseInt(value)
+      value: parseInt(value),
     });
   }
 
   changeG(value: string) {
     this.updateObjectValue({
       path: this.path + '.g',
-      value: parseInt(value)
+      value: parseInt(value),
     });
   }
 
   changeB(value: string) {
     this.updateObjectValue({
       path: this.path + '.b',
-      value: parseInt(value)
+      value: parseInt(value),
     });
   }
 
   changeA(value: string) {
     this.updateObjectValue({
       path: this.path + '.a',
-      value: parseInt(value)
+      value: parseInt(value),
     });
   }
 }

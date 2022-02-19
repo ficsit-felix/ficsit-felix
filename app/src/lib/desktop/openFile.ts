@@ -48,7 +48,7 @@ export function openFileFromFilesystem(
       .on('progress', (progress: number) => {
         callback(undefined, progress, undefined);
       })
-      .on('error', error => {
+      .on('error', (error) => {
         callback(error, undefined, undefined);
       });
   }

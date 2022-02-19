@@ -250,7 +250,7 @@ import {
   Component as VueComponent,
   Prop,
   Vue,
-  Watch
+  Watch,
 } from 'vue-property-decorator';
 
 @VueComponent({
@@ -280,7 +280,7 @@ export default class Logo extends Vue {
           this.tl.restart();
         }
       },
-      paused: !this.animating
+      paused: !this.animating,
     });
     if (this.tl !== null) {
       const hammer = this.$refs.hammer as any;

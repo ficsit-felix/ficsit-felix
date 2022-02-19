@@ -3,7 +3,7 @@
     width="700"
     :value="value"
     @input="
-      newValue => {
+      (newValue) => {
         this.$emit('input', newValue);
       }
     "
@@ -97,7 +97,7 @@ export default class HelpDialog extends Vue {
       key(
         this.$t('keyboard.ctrl') + '+' + this.$t('keyboard.shift') + '+Z',
         this.$t('menubar.redo')
-      )
+      ),
     ];
   }
 

@@ -2,7 +2,7 @@ module.exports = {
   root: true,
 
   env: {
-    node: true
+    node: true,
   },
 
   rules: {
@@ -10,13 +10,13 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'prettier/prettier': [
       process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-      { singleQuote: true }
-    ]
+      { singleQuote: true },
+    ],
   },
 
   parserOptions: {
-    parser: '@typescript-eslint/parser'
+    parser: '@typescript-eslint/parser',
   },
 
-  extends: ['plugin:vue/essential', '@vue/prettier', '@vue/typescript']
+  extends: ['plugin:vue/essential', '@vue/prettier', '@vue/typescript'],
 };

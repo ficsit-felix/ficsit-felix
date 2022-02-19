@@ -27,7 +27,7 @@ import {
   DIALOG_SETTINGS,
   ON_EXIT_PRESSED,
   ON_SAVE_PRESSED,
-  TOGGLE_MENU
+  TOGGLE_MENU,
 } from '@lib/constants';
 import { EventBus } from '@lib/event-bus';
 import { Color, Titlebar } from 'custom-electron-titlebar';
@@ -43,16 +43,16 @@ export default {
   name: 'DesktopApp',
   components: {
     Logo,
-    Dialogs
+    Dialogs,
   },
-  data: function() {
+  data: function () {
     return {
-      logoAnimating: false
+      logoAnimating: false,
     };
   },
   computed: {
     ...mapState(['showSaveMenuEntries']),
-    ...mapGetters('undo', ['undoDisabled', 'redoDisabled'])
+    ...mapGetters('undo', ['undoDisabled', 'redoDisabled']),
   },
   watch: {
     showSaveMenuEntries() {
@@ -64,14 +64,14 @@ export default {
     },
     redoDisabled(value) {
       remote.Menu.getApplicationMenu().getMenuItemById('redo').enabled = !value;
-    }
+    },
   },
   mounted() {
     this.titlebar = new Titlebar({
       backgroundColor: Color.fromHex('#111618'),
       itemBackgroundColor: Color.fromHex('#1d2223'),
       enableMnemonics: true,
-      unfocusEffect: false // don't change the color when the window is not focussed
+      unfocusEffect: false, // don't change the color when the window is not focussed
     });
     this.titlebar.updateTitle('FICSIT - FeliX');
 
@@ -102,50 +102,50 @@ export default {
           accelerator: 'CmdOrCtrl+O',
           click: () => {
             this.openFileSelector();
-          }
+          },
         },
         {
           label: this.$t('menubar.importJson'),
           accelerator: 'CmdOrCtrl+Shift+O',
-          click: () => this.openJsonFileSelector()
-        }
+          click: () => this.openJsonFileSelector(),
+        },
       ];
       let editEntries = [];
 
       if (this.showSaveMenuEntries) {
         fileEntries = fileEntries.concat([
           {
-            type: 'separator'
+            type: 'separator',
           },
           {
             label: this.$t('menubar.save'),
             accelerator: 'CmdOrCtrl+S',
             click: () => {
               this.saveFile();
-            }
+            },
           },
           {
             label: this.$t('menubar.saveAs'),
             accelerator: 'CmdOrCtrl+Shift+S',
             click: () => {
               this.openSaveSaveSelector();
-            }
+            },
           },
           {
             label: this.$t('menubar.exportJson'),
             accelerator: 'CmdOrCtrl+E',
             click: () => {
               this.openJsonSaveSelector();
-            }
-          }
+            },
+          },
         ]);
       }
 
       fileEntries = fileEntries.concat([
         {
-          type: 'separator'
+          type: 'separator',
         },
-        { role: 'togglefullscreen' }
+        { role: 'togglefullscreen' },
       ]);
 
       if (this.showSaveMenuEntries) {
@@ -154,7 +154,7 @@ export default {
           accelerator: 'Esc',
           click: () => {
             EventBus.$emit(TOGGLE_MENU);
-          }
+          },
         });
         editEntries.push({
           id: 'undo',
@@ -163,7 +163,7 @@ export default {
           enabled: !this.undoDisabled,
           click: () => {
             this.undoLastAction();
-          }
+          },
         });
         editEntries.push({
           id: 'redo',
@@ -172,7 +172,7 @@ export default {
           enabled: !this.redoDisabled,
           click: () => {
             this.redoLastAction();
-          }
+          },
         });
       }
 
@@ -181,26 +181,26 @@ export default {
         accelerator: 'Ctrl+Q',
         click() {
           EventBus.$emit(DIALOG_CONFIRM_EXIT_DESKTOP);
-        }
+        },
       });
       editEntries.push({
         label: this.$t('menubar.settings'),
         click() {
           EventBus.$emit(DIALOG_SETTINGS);
-        }
+        },
       });
 
       menu.append(
         new remote.MenuItem({
           label: this.$t('menubar.file'),
-          submenu: fileEntries
+          submenu: fileEntries,
         })
       );
 
       menu.append(
         new remote.MenuItem({
           label: this.$t('menubar.edit'),
-          submenu: editEntries
+          submenu: editEntries,
         })
       );
       if (this.showSaveMenuEntries) {
@@ -214,8 +214,8 @@ export default {
             submenu: [
               { role: 'reload' },
               { role: 'forcereload' },
-              { role: 'toggledevtools' }
-            ]
+              { role: 'toggledevtools' },
+            ],
           })
         );
       }
@@ -229,7 +229,7 @@ export default {
               accelerator: 'F1',
               click() {
                 EventBus.$emit(DIALOG_HELP);
-              }
+              },
             },
             {
               label: this.$t('menubar.github'),
@@ -237,19 +237,19 @@ export default {
                 shell.openExternal(
                   'https://github.com/ficsit-felix/ficsit-felix'
                 );
-              }
+              },
             },
             {
               label: this.$t('menubar.openSource'),
               click() {
                 EventBus.$emit(DIALOG_OPEN_SOURCE);
-              }
+              },
             },
             {
               label: this.$t('menubar.about'),
               click() {
                 EventBus.$emit(DIALOG_ABOUT);
-              }
+              },
             } /*
             {
               type: 'separator'
@@ -262,8 +262,8 @@ export default {
                   accelerator: 'Ctrl+T'
                 }
               ]
-            }*/
-          ]
+            }*/,
+          ],
         })
       );
 
@@ -278,11 +278,11 @@ export default {
           filters: [
             {
               name: this.$t('desktop.saveExtension'),
-              extensions: ['sav']
-            }
-          ]
+              extensions: ['sav'],
+            },
+          ],
         })
-        .then(value => {
+        .then((value) => {
           if (value.filePaths.length === 1) {
             openFileAndMoveToEditor(this, value.filePaths[0], false);
           }
@@ -297,11 +297,11 @@ export default {
           filters: [
             {
               name: this.$t('desktop.jsonExtension'),
-              extensions: ['json']
-            }
-          ]
+              extensions: ['json'],
+            },
+          ],
         })
-        .then(value => {
+        .then((value) => {
           if (value.filePaths.length === 1) {
             openFileAndMoveToEditor(this, value.filePaths[0], true);
           }
@@ -317,11 +317,11 @@ export default {
           filters: [
             {
               name: this.$t('desktop.jsonExtension'),
-              extensions: ['json']
-            }
-          ]
+              extensions: ['json'],
+            },
+          ],
         })
-        .then(value => {
+        .then((value) => {
           if (value.canceled) {
             return;
           }
@@ -359,11 +359,11 @@ export default {
           filters: [
             {
               name: this.$t('desktop.saveExtension'),
-              extensions: ['sav']
-            }
-          ]
+              extensions: ['sav'],
+            },
+          ],
         })
-        .then(value => {
+        .then((value) => {
           if (value.canceled) {
             return;
           }
@@ -375,8 +375,8 @@ export default {
       // TODO evaluate why this does not close the window if the dev tools are open
       let window = remote.getCurrentWindow();
       window.close();
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

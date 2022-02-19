@@ -6,7 +6,7 @@ import {
   findComponentByName,
   indexOfActor,
   indexOfComponent,
-  refreshActorComponentDictionary
+  refreshActorComponentDictionary,
 } from '@lib/graphics/entityHelper';
 import { Actor, Component } from 'satisfactory-json';
 import { Vector3 } from 'three';
@@ -19,7 +19,7 @@ import {
   gatherValue,
   SelectAction,
   TranslateMultipleAction,
-  undo
+  undo,
 } from './undo';
 
 Vue.use(Vuex);
@@ -68,7 +68,7 @@ export interface RootState {
 export default new Vuex.Store<RootState>({
   modules: {
     settings: settingsModule,
-    undo
+    undo,
   },
   state: {
     loading: false,
@@ -92,12 +92,12 @@ export default new Vuex.Store<RootState>({
     progressText: {
       title: '',
       currentStep: '',
-      showCloseButton: false
+      showCloseButton: false,
     },
-    showSaveMenuEntries: false
+    showSaveMenuEntries: false,
   },
   getters: {
-    getNames: state => {
+    getNames: (state) => {
       if (!state.dataLoaded) {
         return [];
       }
@@ -106,7 +106,7 @@ export default new Vuex.Store<RootState>({
         return {
           // id: index,
           pathName: obj.pathName,
-          text: obj.pathName.substring(obj.pathName.indexOf('.') + 1)
+          text: obj.pathName.substring(obj.pathName.indexOf('.') + 1),
           // everything after the first .
         };
       };
@@ -114,7 +114,7 @@ export default new Vuex.Store<RootState>({
       return window.data.actors
         .map(transformation)
         .concat(window.data.components.map(transformation));
-    }
+    },
   },
   mutations: {
     SET_SELECTED(state, selectedPathNames) {
@@ -135,7 +135,7 @@ export default new Vuex.Store<RootState>({
           sessionVisibility: window.data.sessionVisibility,
           editorObjectVersion: window.data.editorObjectVersion,
           collected: window.data.collected,
-          missing: window.data.missing
+          missing: window.data.missing,
         };
         state.selectedJsonToEdit = header;
         state.selectedPathNames = selectedPathNames;
@@ -150,13 +150,12 @@ export default new Vuex.Store<RootState>({
             if (state.selectedPathNames.includes(selectedPathNames[0])) {
               // remove
               selectedPathNames = state.selectedPathNames.filter(
-                pathName => pathName !== selectedPathNames[0]
+                (pathName) => pathName !== selectedPathNames[0]
               );
             } else {
               // add
-              selectedPathNames = state.selectedPathNames.concat(
-                selectedPathNames
-              );
+              selectedPathNames =
+                state.selectedPathNames.concat(selectedPathNames);
             }
           } else {
             // Merge old and new selectedPathNames
@@ -267,9 +266,8 @@ export default new Vuex.Store<RootState>({
       } else {
         // TODO handle components as well
         if (obj.type === 1) {
-          window.data.actors[
-            indexOfActor(state.selectedActors[0].pathName)
-          ] = obj;
+          window.data.actors[indexOfActor(state.selectedActors[0].pathName)] =
+            obj;
           state.selectedActors = [obj];
         } else {
           window.data.components[
@@ -292,7 +290,7 @@ export default new Vuex.Store<RootState>({
       // This way we don't get problems when trying to delect them.
       const eventPayload = {
         actors: state.selectedActors,
-        components: state.selectedComponents
+        components: state.selectedComponents,
       };
 
       state.dataLoaded = false; // trigger recalculation of getNames
@@ -305,7 +303,7 @@ export default new Vuex.Store<RootState>({
         );
       } else if (state.selectedActors.length > 1) {
         // Because the dictionary is changed after the first element is removed, we cannot depend on it, but need to iterate over all actors
-        const pathNames = state.selectedActors.map(actor => actor.pathName);
+        const pathNames = state.selectedActors.map((actor) => actor.pathName);
         for (let i = window.data.actors.length - 1; i >= 0; i--) {
           if (pathNames.includes(window.data.actors[i].pathName)) {
             window.data.actors.splice(i, 1);
@@ -322,7 +320,7 @@ export default new Vuex.Store<RootState>({
       } else if (state.selectedComponents.length > 1) {
         // Because the dictionary is changed after the first element is removed, we cannot depend on it, but need to iterate over all components
         const pathNames = state.selectedComponents.map(
-          component => component.pathName
+          (component) => component.pathName
         );
         for (let i = window.data.components.length - 1; i >= 0; i--) {
           if (pathNames.includes(window.data.components[i].pathName)) {
@@ -403,7 +401,7 @@ export default new Vuex.Store<RootState>({
             Vue.set(state.selectedActors[0], payload.path, payload.value);*/
     },
     TRANSLATE_MULTIPLE_ACTORS(state, payload) {
-      state.selectedActors.forEach(actor => {
+      state.selectedActors.forEach((actor) => {
         Vue.set(
           actor.transform.translation,
           0,
@@ -420,7 +418,7 @@ export default new Vuex.Store<RootState>({
           actor.transform.translation[2] + payload.z
         );
       });
-    }
+    },
   },
   actions: {
     select(context, selectedPathNames) {
@@ -446,13 +444,13 @@ export default new Vuex.Store<RootState>({
 
         // set and array spread as a fast way to calculate unique class names https://stackoverflow.com/a/33121880
         const classNames = [
-          ...new Set((data.actors as Actor[]).map(actor => actor.className))
+          ...new Set((data.actors as Actor[]).map((actor) => actor.className)),
         ]
           .sort()
-          .map(name => {
+          .map((name) => {
             return {
               name,
-              visible: true
+              visible: true,
             };
           });
 
@@ -532,8 +530,8 @@ export default new Vuex.Store<RootState>({
         new TranslateMultipleAction('translate', payload.clone().negate())
       );
       context.commit('TRANSLATE_MULTIPLE_ACTORS', payload);
-    }
-  }
+    },
+  },
 });
 
 function arePathNamesSame(a: string[], b: string[]) {

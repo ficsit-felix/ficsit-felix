@@ -11,7 +11,7 @@ import {
   isPowerLine,
   isPowerPoleWallDouble,
   isPowerSwitch,
-  isRailroadTrack
+  isRailroadTrack,
 } from '@lib/graphics/entityHelper';
 import { modelHelper } from '@lib/graphics/modelHelper';
 import { Actor, ArrayProperty, ObjectProperty } from 'satisfactory-json';
@@ -24,7 +24,7 @@ import {
   Quaternion,
   Shape,
   TubeBufferGeometry,
-  Vector3
+  Vector3,
 } from 'three';
 
 interface GeometryResult {
@@ -36,7 +36,7 @@ interface GeometryResult {
 enum SplineType {
   ConveyorBelt,
   RailroadTrack,
-  Pipe
+  Pipe,
 }
 
 /**
@@ -69,7 +69,7 @@ export default class GeometryFactory {
           // 800 is size of foundations
           this.geometries['box'] = {
             geometry: this.createBoxGeometry(boxSize),
-            instance: 'box'
+            instance: 'box',
           };
         }
         resolve(this.geometries['box']);
@@ -85,14 +85,14 @@ export default class GeometryFactory {
       if (isConveyorBelt(actor)) {
         resolve({
           geometry: this.createSplineGeometry(actor, SplineType.ConveyorBelt),
-          instance: undefined
+          instance: undefined,
         });
         return;
       }
       if (isRailroadTrack(actor)) {
         resolve({
           geometry: this.createSplineGeometry(actor, SplineType.RailroadTrack),
-          instance: undefined
+          instance: undefined,
         });
         return;
       }
@@ -111,7 +111,7 @@ export default class GeometryFactory {
       if (isPipe(actor)) {
         resolve({
           geometry: this.createSplineGeometry(actor, SplineType.Pipe),
-          instance: undefined
+          instance: undefined,
         });
         return;
       }
@@ -149,10 +149,10 @@ export default class GeometryFactory {
         ) {
           modelHelper
             .loadModel('/models/' + modelConfig[className].model)
-            .then(geometry => {
+            .then((geometry) => {
               this.geometries[className] = {
                 geometry,
-                instance: '/models/' + modelConfig[className].model
+                instance: '/models/' + modelConfig[className].model,
               };
               resolve(this.geometries[className]);
             });
@@ -175,7 +175,7 @@ export default class GeometryFactory {
           }
           this.geometries[className] = {
             geometry: this.createBoxGeometry(boxSize),
-            instance: className
+            instance: className,
           };
           resolve(this.geometries[className]);
         }
@@ -290,7 +290,7 @@ export default class GeometryFactory {
       curveSegments: (splinePoints * this.conveyorBeltResolution) / 2,
       steps: splinePoints * this.conveyorBeltResolution,
       bevelEnabled: false,
-      extrudePath: extrudePath
+      extrudePath: extrudePath,
     };
 
     return new ExtrudeBufferGeometry(shape, extrudeSettings);
@@ -369,7 +369,9 @@ export default class GeometryFactory {
         sourceOffset = {
           x: -sourceOffset.x,
           y: sourceOffset.y,
-          z: isLightsControlPanel(source) ? sourceOffset.z + 30 : sourceOffset.z
+          z: isLightsControlPanel(source)
+            ? sourceOffset.z + 30
+            : sourceOffset.z,
         };
       }
 
@@ -388,7 +390,7 @@ export default class GeometryFactory {
       sourceOffset = {
         x: transformedSourceOffset.x,
         y: transformedSourceOffset.y,
-        z: transformedSourceOffset.z
+        z: transformedSourceOffset.z,
       };
     } else if (!isModClassName(source.className)) {
       console.error('No power line offset for ' + source.className);
@@ -411,7 +413,9 @@ export default class GeometryFactory {
         targetOffset = {
           x: -targetOffset.x,
           y: targetOffset.y,
-          z: isLightsControlPanel(target) ? targetOffset.z + 30 : targetOffset.z
+          z: isLightsControlPanel(target)
+            ? targetOffset.z + 30
+            : targetOffset.z,
         };
       }
 
@@ -430,7 +434,7 @@ export default class GeometryFactory {
       targetOffset = {
         x: transformedTargetOffset.x,
         y: transformedTargetOffset.y,
-        z: transformedTargetOffset.z
+        z: transformedTargetOffset.z,
       };
     } else if (!isModClassName(target.className)) {
       console.error('No power line offset for ' + target.className);
@@ -475,7 +479,7 @@ export default class GeometryFactory {
         radiusSegments,
         closed
       ),
-      instance: undefined
+      instance: undefined,
     };
   }
 

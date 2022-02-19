@@ -145,7 +145,7 @@ import {
   DIALOG_OPEN_WEB,
   DIALOG_SAVE_JSON_WEB,
   DIALOG_SAVE_WEB,
-  DIALOG_SETTINGS
+  DIALOG_SETTINGS,
 } from '@lib/constants';
 import { EventBus } from '@lib/event-bus';
 import { mapActions, mapGetters } from 'vuex';
@@ -154,15 +154,15 @@ import Logo from '../core/Logo.vue';
 export default {
   name: 'Menubar',
   components: {
-    Logo
+    Logo,
   },
-  data: function() {
+  data: function () {
     return {
-      logoAnimating: false
+      logoAnimating: false,
     };
   },
   computed: {
-    ...mapGetters('undo', ['undoDisabled', 'redoDisabled'])
+    ...mapGetters('undo', ['undoDisabled', 'redoDisabled']),
   },
   methods: {
     ...mapActions('undo', ['undoLastAction', 'redoLastAction']),
@@ -212,9 +212,9 @@ export default {
     },
     redo() {
       this.redoLastAction();
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 

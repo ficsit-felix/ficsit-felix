@@ -16,9 +16,7 @@ if (process.argv.length > 2 && process.argv[2] === 'build') {
     // GitHub Actions
     hash = process.env.GITHUB_SHA;
   } else {
-    hash = execSync('git rev-parse HEAD')
-      .toString()
-      .replace('\n', '');
+    hash = execSync('git rev-parse HEAD').toString().replace('\n', '');
   }
 
   // build licenses file
@@ -29,7 +27,7 @@ if (process.argv.length > 2 && process.argv[2] === 'build') {
   licenses += readFileSync('public/models/LICENSE');
   licenses += '-----\n\n';
   licenses += execSync('yarn licenses generate-disclaimer --silent', {
-    maxBuffer: 10000000
+    maxBuffer: 10000000,
   }).toString();
 }
 

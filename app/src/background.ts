@@ -16,8 +16,8 @@ let win: BrowserWindow | null;
 protocol.registerSchemesAsPrivileged([
   {
     scheme: 'app',
-    privileges: { secure: true, standard: true, supportFetchAPI: true }
-  }
+    privileges: { secure: true, standard: true, supportFetchAPI: true },
+  },
 ]);
 
 function createWindow() {
@@ -30,8 +30,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true, // TODO remote module is getting deprecated
-      contextIsolation: false // contextIsolation default changed to true in Electron 12
-    }
+      contextIsolation: false, // contextIsolation default changed to true in Electron 12
+    },
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -105,7 +105,7 @@ app.on('ready', async () => {
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === 'win32') {
-    process.on('message', data => {
+    process.on('message', (data) => {
       if (data === 'graceful-exit') {
         app.quit();
       }

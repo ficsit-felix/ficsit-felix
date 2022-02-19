@@ -3,7 +3,7 @@
     <div
       v-if="
         selectedPathNames.length === 1 &&
-          selectedPathNames[0] === '---save-header---'
+        selectedPathNames[0] === '---save-header---'
       "
     >
       <div class="header">___Save_Header___</div>
@@ -104,15 +104,15 @@ import Vector3PropertyDrawer from '../drawers/Vector3PropertyDrawer.vue';
     QuaternionPropertyDrawer,
     PropertyPropertyDrawer,
     BoolPropertyDrawer,
-    MultiTranslateDrawer
-  }
+    MultiTranslateDrawer,
+  },
 })
 export default class PropertiesPanel extends Vue {
-  @State(state => state.selectedActors)
+  @State((state) => state.selectedActors)
   selectedActors!: Actor[];
-  @State(state => state.selectedComponents)
+  @State((state) => state.selectedComponents)
   selectedComponents!: Component[];
-  @State(state => state.selectedPathNames)
+  @State((state) => state.selectedPathNames)
   selectedPathNames!: string[];
 
   @Action('select')

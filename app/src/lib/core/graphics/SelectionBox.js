@@ -4,7 +4,7 @@
  */
 import * as THREE from 'three';
 
-let SelectionBox = (function() {
+let SelectionBox = (function () {
   let frustum = new THREE.Frustum();
   let center = new THREE.Vector3();
 
@@ -17,7 +17,7 @@ let SelectionBox = (function() {
     this.deep = deep || Number.MAX_VALUE;
   }
 
-  SelectionBox.prototype.select = function(meshes, startPoint, endPoint) {
+  SelectionBox.prototype.select = function (meshes, startPoint, endPoint) {
     this.startPoint = startPoint || this.startPoint;
     this.endPoint = endPoint || this.endPoint;
     this.collection = [];
@@ -31,7 +31,7 @@ let SelectionBox = (function() {
     return this.collection;
   };
 
-  SelectionBox.prototype.updateFrustum = function(startPoint, endPoint) {
+  SelectionBox.prototype.updateFrustum = function (startPoint, endPoint) {
     startPoint = startPoint || this.startPoint;
     endPoint = endPoint || this.endPoint;
 
@@ -79,7 +79,7 @@ let SelectionBox = (function() {
     planes[5].normal.multiplyScalar(-1);
   };
 
-  SelectionBox.prototype.searchChildInFrustum = function(frustum, object) {
+  SelectionBox.prototype.searchChildInFrustum = function (frustum, object) {
     if (object.isMesh) {
       if (object.material !== undefined) {
         /*object.geometry.computeBoundingSphere();

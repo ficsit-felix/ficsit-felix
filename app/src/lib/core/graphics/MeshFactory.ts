@@ -6,7 +6,7 @@ import {
   isFloodlightPole,
   isFloodlightWall,
   isLadder,
-  isPipeSupport
+  isPipeSupport,
 } from '@lib/graphics/entityHelper';
 import { applyRotation, applyTranslation } from '@lib/graphics/meshHelper';
 import { modelHelper } from '@lib/graphics/modelHelper';
@@ -53,7 +53,7 @@ export default class MeshFactoy {
     return new Promise((resolve, reject) => {
       this.geometryFactory
         .createGeometry(actor)
-        .then(result => {
+        .then((result) => {
           const mesh = new Mesh(
             result.geometry,
             this.materialFactory.createMaterial(actor)
@@ -62,7 +62,7 @@ export default class MeshFactoy {
           mesh.userData = { pathName: actor.pathName };
           resolve({
             mesh,
-            instance: result.instance
+            instance: result.instance,
           });
         })
         .catch(reject);
@@ -74,10 +74,10 @@ export default class MeshFactoy {
       // add other parts to conveyor lift
       modelHelper
         .loadModel('/models/ConveyorLift_Bottom.glb')
-        .then(bottomGeometry => {
+        .then((bottomGeometry) => {
           modelHelper
             .loadModel('/models/ConveyorLift_Top.glb')
-            .then(topGeometry => {
+            .then((topGeometry) => {
               const material = this.materialFactory.createMaterial(actor);
 
               // whether the role of top and bottom are reversed does not seem to depend on the mIsReversed property, but on the sign of the z coordinate of the translation
@@ -115,13 +115,13 @@ export default class MeshFactoy {
                         elem.value.x,
                         elem.value.y,
                         elem.value.z,
-                        elem.value.w
+                        elem.value.w,
                       ]);
                     } else if (elem.name === 'Translation') {
                       applyTranslation(topMesh, [
                         elem.value.x,
                         elem.value.y,
-                        elem.value.z
+                        elem.value.z,
                       ]);
                     }
                   }
@@ -147,7 +147,7 @@ export default class MeshFactoy {
 
               resolve({
                 mesh,
-                instance: undefined
+                instance: undefined,
               });
             });
         });
@@ -158,7 +158,7 @@ export default class MeshFactoy {
     return new Promise((resolve, reject) => {
       modelHelper
         .loadModel('/models/' + modelConfig[actor.className].model)
-        .then(ringGeometry => {
+        .then((ringGeometry) => {
           const material = this.materialFactory.createMaterial(actor);
 
           // read length from mLength property and substract 100 to get length of support beam only (75 for mLength 175)
@@ -193,7 +193,7 @@ export default class MeshFactoy {
 
           resolve({
             mesh,
-            instance: undefined
+            instance: undefined,
           });
         });
     });
@@ -201,7 +201,7 @@ export default class MeshFactoy {
 
   addLadder(actor: Actor): Promise<MeshResult> {
     return new Promise((resolve, reject) => {
-      modelHelper.loadModel('/models/Ladder.glb').then(ladderGeometry => {
+      modelHelper.loadModel('/models/Ladder.glb').then((ladderGeometry) => {
         const material = this.materialFactory.createMaterial(actor);
 
         const numSegments = parseInt(
@@ -220,7 +220,7 @@ export default class MeshFactoy {
 
         resolve({
           mesh,
-          instance: undefined
+          instance: undefined,
         });
       });
     });
@@ -230,28 +230,30 @@ export default class MeshFactoy {
     return new Promise((resolve, reject) => {
       modelHelper
         .loadModel('/models/JumpPadBottom.glb')
-        .then(bottomGeometry => {
+        .then((bottomGeometry) => {
           const material = this.materialFactory.createMaterial(actor);
 
-          modelHelper.loadModel('/models/JumpPadTop.glb').then(topGeometry => {
-            const launchAngle = parseInt(
-              (getProperty(actor, 'mLaunchAngle')?.value ?? '0') + ''
-            );
+          modelHelper
+            .loadModel('/models/JumpPadTop.glb')
+            .then((topGeometry) => {
+              const launchAngle = parseInt(
+                (getProperty(actor, 'mLaunchAngle')?.value ?? '0') + ''
+              );
 
-            const mesh = new Mesh(bottomGeometry, material);
-            const topMesh = new Mesh(topGeometry);
-            topMesh.rotation.x = (90 - launchAngle) * MathUtils.DEG2RAD;
-            // move to anchor point
-            topMesh.position.set(0, -155, 70);
-            mesh.add(topMesh);
+              const mesh = new Mesh(bottomGeometry, material);
+              const topMesh = new Mesh(topGeometry);
+              topMesh.rotation.x = (90 - launchAngle) * MathUtils.DEG2RAD;
+              // move to anchor point
+              topMesh.position.set(0, -155, 70);
+              mesh.add(topMesh);
 
-            mesh.userData = { pathName: actor.pathName };
+              mesh.userData = { pathName: actor.pathName };
 
-            resolve({
-              mesh,
-              instance: undefined
+              resolve({
+                mesh,
+                instance: undefined,
+              });
             });
-          });
         });
     });
   }
@@ -260,12 +262,12 @@ export default class MeshFactoy {
     return new Promise((resolve, reject) => {
       modelHelper
         .loadModel('/models/' + modelConfig[actor.className].model)
-        .then(poleGeometry => {
+        .then((poleGeometry) => {
           const material = this.materialFactory.createMaterial(actor);
 
           modelHelper
             .loadModel('/models/FloodLight.glb')
-            .then(lightGeometry => {
+            .then((lightGeometry) => {
               const isPole = isFloodlightPole(actor);
 
               const defaultAngle = isPole ? 50 : 30;
@@ -289,7 +291,7 @@ export default class MeshFactoy {
 
               resolve({
                 mesh,
-                instance: undefined
+                instance: undefined,
               });
             });
         });

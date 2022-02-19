@@ -9,7 +9,7 @@ import { mapActions, mapState } from 'vuex';
 export default {
   props: {
     width: Number,
-    height: Number
+    height: Number,
   },
   inject: ['playground'],
 
@@ -18,19 +18,19 @@ export default {
       antialias: true,
       logarithmicDepthBuffer: true,
       // necessary for the screenshot feature of the BugReportDialog
-      preserveDrawingBuffer: true
+      preserveDrawingBuffer: true,
     });
     // Set the encoding to correctly load Textures from glTF files
     this.renderer.outputEncoding = sRGBEncoding;
 
     return {
-      renderer: this
+      renderer: this,
     };
   },
 
-  data: function() {
+  data: function () {
     return {
-      animating: true
+      animating: true,
     };
   },
 
@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     ...mapState(['selectionDisabled', 'boxSelect']),
-    ...mapState('settings', ['showFps'])
+    ...mapState('settings', ['showFps']),
   },
 
   watch: {
@@ -98,7 +98,7 @@ export default {
       } else {
         this.hideStats();
       }
-    }
+    },
   },
   methods: {
     ...mapActions(['select']),
@@ -135,7 +135,7 @@ export default {
         document.body.removeChild(this.stats.dom);
       }
       this.stats = null;
-    }
+    },
   },
 
   render(h) {
@@ -151,5 +151,5 @@ export default {
     this.renderer.dispose();
     this.hideStats();
     this.animating = false;
-  }
+  },
 };

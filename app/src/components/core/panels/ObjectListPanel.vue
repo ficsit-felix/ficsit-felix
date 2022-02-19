@@ -32,12 +32,12 @@ import ObjectListItem from '../ObjectListItem.vue';
 export default {
   name: 'ObjectListPanel',
   components: {
-    virtualList
+    virtualList,
   },
-  data: function() {
+  data: function () {
     return {
       filterTerm: '',
-      item: ObjectListItem
+      item: ObjectListItem,
     };
   },
   computed: {
@@ -48,10 +48,10 @@ export default {
         return [{ pathName: '---save-header---', text: '' }, ...this.getNames];
       }
       return this.getNames.filter(
-        obj =>
+        (obj) =>
           obj.text.toLowerCase().indexOf(this.filterTerm.toLowerCase()) > -1
       );
-    }
+    },
   },
   created() {
     EventBus.$on(FOCUS_SELECTED_OBJECT, this.focusSelectedObject);
@@ -71,8 +71,8 @@ export default {
           }
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

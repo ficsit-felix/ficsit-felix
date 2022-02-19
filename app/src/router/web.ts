@@ -9,7 +9,7 @@ export default new Router({
     {
       path: '/',
       name: 'landingpage',
-      component: LandingPageView
+      component: LandingPageView,
     },
     {
       path: '/loadeditor',
@@ -17,7 +17,7 @@ export default new Router({
       component: () =>
         import(
           /* webpackChunkName: "editor" */ '@components/views/LoadEditorView.vue'
-        )
+        ),
     },
     {
       path: '/editor',
@@ -25,8 +25,8 @@ export default new Router({
       component: () =>
         import(/* webpackChunkName: "editor" */ '@components/Editor.vue'),
       meta: {
-        requiresDataLoaded: true
-      }
+        requiresDataLoaded: true,
+      },
     },
     {
       path: '/open/*',
@@ -35,12 +35,14 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "editor" */ '@/components/web/OpenView.vue')
+        import(
+          /* webpackChunkName: "editor" */ '@/components/web/OpenView.vue'
+        ),
     },
     {
       path: '*',
       name: '404',
-      component: LandingPageView
-    }
-  ]
+      component: LandingPageView,
+    },
+  ],
 });

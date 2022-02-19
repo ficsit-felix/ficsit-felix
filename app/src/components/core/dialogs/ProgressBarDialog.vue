@@ -34,8 +34,8 @@ import { mapState } from 'vuex';
     // ProgressBar
   },
   computed: {
-    ...mapState(['progress', 'progressText'])
-  }
+    ...mapState(['progress', 'progressText']),
+  },
 })
 export default class ProgressBarDialog extends Vue {
   hideProgressDialog() {

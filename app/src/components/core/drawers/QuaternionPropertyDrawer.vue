@@ -95,7 +95,7 @@ export default class QuaternionPropertyDrawer extends Vue {
     }
     this.updateObjectValue({
       path: this.path,
-      value: newValue
+      value: newValue,
     });
   }
 }

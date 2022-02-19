@@ -54,25 +54,25 @@ export default class RailroadTrackPositionStructPropertyDrawer extends Vue {
   changeLevelName(value: string) {
     this.updateObjectValue({
       path: this.path + '.levelName',
-      value: value
+      value: value,
     });
   }
   changePathName(value: string) {
     this.updateObjectValue({
       path: this.path + '.pathName',
-      value: value
+      value: value,
     });
   }
   changeOffset(value: string) {
     this.updateObjectValue({
       path: this.path + '.offset',
-      value: parseFloat(value)
+      value: parseFloat(value),
     });
   }
   changeForward(value: string) {
     this.updateObjectValue({
       path: this.path + '.forward',
-      value: parseFloat(value)
+      value: parseFloat(value),
     });
   }
 }

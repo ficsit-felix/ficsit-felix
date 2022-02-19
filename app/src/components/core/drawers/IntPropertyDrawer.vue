@@ -24,7 +24,7 @@ export default class IntPropertyDrawer extends Vue {
   change(value: string) {
     this.updateObjectValue({
       path: this.path,
-      value: parseInt(value)
+      value: parseInt(value),
     });
   }
 }

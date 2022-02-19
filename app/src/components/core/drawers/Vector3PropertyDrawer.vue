@@ -60,21 +60,21 @@ export default class Vector3PropertyDrawer extends Vue {
   changeX(value: string) {
     this.updateObjectValue({
       path: this.path + (this.named ? '.x' : '.0'),
-      value: parseFloat(value)
+      value: parseFloat(value),
     });
   }
 
   changeY(value: string) {
     this.updateObjectValue({
       path: this.path + (this.named ? '.y' : '.1'),
-      value: parseFloat(value)
+      value: parseFloat(value),
     });
   }
 
   changeZ(value: string) {
     this.updateObjectValue({
       path: this.path + (this.named ? '.z' : '.2'),
-      value: parseFloat(value)
+      value: parseFloat(value),
     });
   }
 }

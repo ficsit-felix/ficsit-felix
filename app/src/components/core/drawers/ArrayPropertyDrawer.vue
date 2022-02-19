@@ -136,8 +136,8 @@ import TextPropertyDrawer from './TextPropertyDrawer.vue';
     StringPropertyDrawer,
     TextPropertyDrawer,
     LinearColorStructPropertyDrawer,
-    PropertyPropertyDrawer: () => import('./PropertyPropertyDrawer.vue')
-  }
+    PropertyPropertyDrawer: () => import('./PropertyPropertyDrawer.vue'),
+  },
 })
 export default class ArrayPropertyDrawer extends Vue {
   @Prop() path!: string;

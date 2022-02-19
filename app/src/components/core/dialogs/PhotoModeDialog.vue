@@ -4,7 +4,7 @@
       width="600"
       :value="value"
       @input="
-        newValue => {
+        (newValue) => {
           this.$emit('input', newValue);
         }
       "
@@ -82,7 +82,7 @@ import {
   Prop,
   Ref,
   Vue,
-  Watch
+  Watch,
 } from 'vue-property-decorator';
 import { SCENE_RESIZE } from '../../../lib/core/constants';
 import { EventBus } from '../../../lib/core/event-bus';
@@ -90,8 +90,8 @@ import Logo from '../Logo.vue';
 
 @VueComponent({
   components: {
-    Logo
-  }
+    Logo,
+  },
 })
 export default class PhotoModeDialog extends Vue {
   @Prop() value!: boolean;
@@ -243,7 +243,7 @@ export default class PhotoModeDialog extends Vue {
   copyToClipboard() {
     this.showClipboardSnack = true;
     // Use new clipboard api to copy image blob to clipboard
-    this.finalImage.toBlob(function(blob) {
+    this.finalImage.toBlob(function (blob) {
       //@ts-ignore
       const item = new ClipboardItem({ 'image/png': blob });
       //@ts-ignore

@@ -4,7 +4,7 @@
       v-bind:class="{
         selected:
           selectedPathNames.length === 1 &&
-          selectedPathNames[0] === '---save-header---'
+          selectedPathNames[0] === '---save-header---',
       }"
       @click="select(['---save-header---'])"
       class="item"
@@ -32,17 +32,17 @@ export default {
   props: {
     index: {
       type: Number,
-      default: 0
+      default: 0,
     },
     source: {
       type: Object,
       default: () => ({
-        pathName: ''
-      })
-    }
+        pathName: '',
+      }),
+    },
   },
   computed: {
-    ...mapState(['selectedPathNames'])
+    ...mapState(['selectedPathNames']),
   },
   methods: {
     ...mapActions(['select']),
@@ -53,8 +53,8 @@ export default {
       } else {
         return name.substr(0, 2);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

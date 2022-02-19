@@ -3,7 +3,7 @@
     width="600"
     :value="value"
     @input="
-      newValue => {
+      (newValue) => {
         this.$emit('input', newValue);
       }
     "
@@ -27,7 +27,7 @@ import {
   Component as VueComponent,
   Prop,
   Vue,
-  Watch
+  Watch,
 } from 'vue-property-decorator';
 
 /**

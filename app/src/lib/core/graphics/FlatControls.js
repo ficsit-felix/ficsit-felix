@@ -14,7 +14,7 @@ import {
   Spherical,
   TOUCH,
   Vector2,
-  Vector3
+  Vector3,
 } from 'three';
 
 // FlatControls are OrbitControls, but for a OrthographicCamera that shows a 2D view
@@ -26,7 +26,7 @@ import {
 //    Zoom - middle mouse, or mousewheel / touch: two-finger spread or squish
 //    Pan - right mouse, or left mouse + ctrl/meta/shiftKey, or arrow keys / touch: two-finger move
 
-var FlatControls = function(object, domElement) {
+var FlatControls = function (object, domElement) {
   if (domElement === undefined)
     console.warn(
       'THREE.FlatControls: The second parameter "domElement" is now mandatory.'
@@ -98,7 +98,7 @@ var FlatControls = function(object, domElement) {
   this.mouseButtons = {
     LEFT: MOUSE.ROTATE,
     MIDDLE: MOUSE.DOLLY,
-    RIGHT: MOUSE.PAN
+    RIGHT: MOUSE.PAN,
   };
 
   // Touch fingers
@@ -113,28 +113,28 @@ var FlatControls = function(object, domElement) {
     up: 0,
     down: 0,
     left: 0,
-    right: 0
+    right: 0,
   };
 
   //
   // public methods
   //
 
-  this.getPolarAngle = function() {
+  this.getPolarAngle = function () {
     return spherical.phi;
   };
 
-  this.getAzimuthalAngle = function() {
+  this.getAzimuthalAngle = function () {
     return spherical.theta;
   };
 
-  this.saveState = function() {
+  this.saveState = function () {
     scope.target0.copy(scope.target);
     scope.position0.copy(scope.object.position);
     scope.zoom0 = scope.object.zoom;
   };
 
-  this.reset = function() {
+  this.reset = function () {
     scope.target.copy(scope.target0);
     scope.object.position.copy(scope.position0);
     scope.object.zoom = scope.zoom0;
@@ -147,13 +147,13 @@ var FlatControls = function(object, domElement) {
     state = STATE.NONE;
   };
 
-  this.focus = function(x, y, z) {
+  this.focus = function (x, y, z) {
     scope.object.position.x = x;
     scope.object.position.y = y;
   };
 
   // this method is exposed, but perhaps it would be better if we can make it private...
-  this.update = (function() {
+  this.update = (function () {
     var offset = new Vector3();
 
     // so camera.up is the orbit axis
@@ -278,7 +278,7 @@ var FlatControls = function(object, domElement) {
     };
   })();
 
-  this.dispose = function() {
+  this.dispose = function () {
     scope.domElement.removeEventListener('contextmenu', onContextMenu, false);
     scope.domElement.removeEventListener('mousedown', onMouseDown, false);
     scope.domElement.removeEventListener('wheel', onMouseWheel, false);
@@ -314,7 +314,7 @@ var FlatControls = function(object, domElement) {
     TOUCH_ROTATE: 3,
     TOUCH_PAN: 4,
     TOUCH_DOLLY_PAN: 5,
-    TOUCH_DOLLY_ROTATE: 6
+    TOUCH_DOLLY_ROTATE: 6,
   };
 
   var state = STATE.NONE;
@@ -357,7 +357,7 @@ var FlatControls = function(object, domElement) {
     sphericalDelta.phi -= angle;
   }
 
-  var panLeft = (function() {
+  var panLeft = (function () {
     var v = new Vector3();
 
     return function panLeft(distance, objectMatrix) {
@@ -368,7 +368,7 @@ var FlatControls = function(object, domElement) {
     };
   })();
 
-  var panUp = (function() {
+  var panUp = (function () {
     var v = new Vector3();
 
     return function panUp(distance, objectMatrix) {
@@ -386,7 +386,7 @@ var FlatControls = function(object, domElement) {
   })();
 
   // deltaX and deltaY are in pixels; right and down are positive
-  var pan = (function() {
+  var pan = (function () {
     var offset = new Vector3();
 
     return function pan(deltaX, deltaY) {

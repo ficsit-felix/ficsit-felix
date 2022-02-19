@@ -63,12 +63,12 @@ export default {
   components: {
     Logo,
     LanguageSwitcher,
-    CenterWhiteBox
+    CenterWhiteBox,
   },
-  data: function() {
+  data: function () {
     return {
       logoAnimating: false,
-      commithash: commithash
+      commithash: commithash,
     };
   },
   mounted() {},
@@ -76,8 +76,8 @@ export default {
     downloadDesktop() {
       location.href =
         'https://github.com/ficsit-felix/ficsit-felix/releases/latest';
-    }
-  }
+    },
+  },
 };
 </script>
 

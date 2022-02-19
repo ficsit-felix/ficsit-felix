@@ -24,7 +24,7 @@ export default class FloatPropertyDrawer extends Vue {
   change(value: string) {
     this.updateObjectValue({
       path: this.path,
-      value: parseFloat(value)
+      value: parseFloat(value),
     });
   }
 }

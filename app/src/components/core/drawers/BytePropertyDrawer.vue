@@ -34,13 +34,13 @@ export default class BytePropertyDrawer extends Vue {
   changeEnumName(value: string) {
     this.updateObjectValue({
       path: this.path + '.enumName',
-      value: value
+      value: value,
     });
   }
   changeValue(value: string) {
     this.updateObjectValue({
       path: this.path + '.value',
-      value: parseInt(value)
+      value: parseInt(value),
     });
   }
 }

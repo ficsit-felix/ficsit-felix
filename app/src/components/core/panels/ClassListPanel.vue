@@ -55,20 +55,20 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'ClassListPanel',
   components: {
-    colorPicker
+    colorPicker,
   },
-  data: function() {
+  data: function () {
     return {
       showColorDialog: false,
       selectedClassName: '',
-      selectedColor: '#ff00ff'
+      selectedColor: '#ff00ff',
     };
   },
   computed: {
     ...mapState(['classes']),
     ...mapState('settings', ['classColors', 'editClassColors']),
-    allVisible: function() {
-      return this.classes.every(item => item.visible == true);
+    allVisible: function () {
+      return this.classes.every((item) => item.visible == true);
     },
     classColorStrings() {
       // https://stackoverflow.com/a/37796055
@@ -77,7 +77,7 @@ export default {
       }
       let result = {};
 
-      this.classes.forEach(clazz => {
+      this.classes.forEach((clazz) => {
         if (this.classColors[clazz.name] !== undefined) {
           result[clazz.name] = this.classColors[clazz.name];
           return;
@@ -89,7 +89,7 @@ export default {
         result[clazz.name] = getHexColor(modelConfig[clazz.name].color);
       });
       return result;
-    }
+    },
   },
   methods: {
     ...mapActions(['setVisibility', 'setVisibilityForAll']),
@@ -116,10 +116,10 @@ export default {
 
       this.setClassColor({
         className: this.selectedClassName,
-        color: color.hex
+        color: color.hex,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

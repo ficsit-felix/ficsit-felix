@@ -38,8 +38,8 @@ import ArbitraryStructPropertyDrawer from './ArbitraryStructPropertyDrawer.vue';
 
 @VueComponent({
   components: {
-    ArbitraryStructPropertyDrawer
-  }
+    ArbitraryStructPropertyDrawer,
+  },
 })
 export default class InventoryItemStructPropertyDrawer extends Vue {
   @Prop() path!: string;
@@ -51,19 +51,19 @@ export default class InventoryItemStructPropertyDrawer extends Vue {
   changeItemName(value: string) {
     this.updateObjectValue({
       path: this.path + '.itemName',
-      value: value
+      value: value,
     });
   }
   changeLevelName(value: string) {
     this.updateObjectValue({
       path: this.path + '.levelName',
-      value: value
+      value: value,
     });
   }
   changePathName(value: string) {
     this.updateObjectValue({
       path: this.path + '.pathName',
-      value: value
+      value: value,
     });
   }
 }

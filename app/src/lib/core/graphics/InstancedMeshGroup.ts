@@ -1,9 +1,12 @@
-import { BufferGeometry, Color, Material, Quaternion, Vector3 } from 'three';
-
-// patch the THREE instance
-import * as THREE from 'three';
-import index from '@bitowl/three-instanced-mesh';
-const ThreeInstancedMesh = index(THREE);
+import {
+  BufferGeometry,
+  Color,
+  InstancedMesh,
+  Material,
+  Matrix4,
+  Quaternion,
+  Vector3,
+} from 'three';
 
 const farAway = new Vector3(1000000000, 0, 0);
 
@@ -23,7 +26,7 @@ export interface InstancedMeshElement {
  */
 export default class InstancedMeshGroup {
   private material: Material;
-  public instancedMesh?: typeof ThreeInstancedMesh;
+  public instancedMesh?: InstancedMesh;
   private geometry: BufferGeometry;
   public nodes: InstancedMeshElement[] = [];
 
@@ -38,14 +41,11 @@ export default class InstancedMeshGroup {
     return index;
   }
 
-  public buildInstancedMesh(): typeof ThreeInstancedMesh {
-    this.instancedMesh = new ThreeInstancedMesh(
+  public buildInstancedMesh(): InstancedMesh {
+    this.instancedMesh = new InstancedMesh(
       this.geometry,
       this.material,
-      this.nodes.length, // instance count
-      true, // is it dynamic
-      true, // does it have color
-      false // uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
+      this.nodes.length // instance count
     );
 
     this.fillAttributes();
@@ -65,16 +65,19 @@ export default class InstancedMeshGroup {
     this.nodes[index].position = position;
     this.nodes[index].quat = quaternion;
     this.nodes[index].scale = scale;
+
+    // Calculate matrix for instance.
+    const matrix = new Matrix4();
+    matrix.makeRotationFromQuaternion(quaternion);
+
     if (this.nodes[index].visible) {
-      this.instancedMesh.setPositionAt(index, position);
+      matrix.setPosition(position);
     } else {
-      this.instancedMesh.setPositionAt(index, farAway);
+      matrix.setPosition(farAway);
     }
-    this.instancedMesh.setQuaternionAt(index, quaternion);
-    this.instancedMesh.setScaleAt(index, scale);
-    this.instancedMesh.needsUpdate('position');
-    this.instancedMesh.needsUpdate('quaternion');
-    this.instancedMesh.needsUpdate('scale');
+    matrix.scale(scale);
+    this.instancedMesh.setMatrixAt(index, matrix);
+    this.instancedMesh.instanceMatrix.needsUpdate = true;
   }
 
   public setVisible(index: number, visible: boolean) {
@@ -82,12 +85,15 @@ export default class InstancedMeshGroup {
       return;
     }
     this.nodes[index].visible = visible;
+    const matrix = new Matrix4();
+    this.instancedMesh.getMatrixAt(index, matrix);
     if (visible === true) {
-      this.instancedMesh.setPositionAt(index, this.nodes[index].position);
+      matrix.setPosition(this.nodes[index].position);
     } else {
-      this.instancedMesh.setPositionAt(index, farAway);
+      matrix.setPosition(farAway);
     }
-    this.instancedMesh.needsUpdate('position');
+    this.instancedMesh.setMatrixAt(index, matrix);
+    this.instancedMesh.instanceMatrix.needsUpdate = true;
   }
 
   public setGeometry(geometry: BufferGeometry) {
@@ -102,33 +108,36 @@ export default class InstancedMeshGroup {
       return;
     }
     this.instancedMesh.setColorAt(index, color);
-    this.instancedMesh.needsUpdate('colors');
+    this.instancedMesh.instanceColor!.needsUpdate = true;
   }
 
   // The InstancedMesh needs to be rebuild after the number of nodes is changed
   // This currently only supports adding new instances. While deleting the instances are only made invisible
   public rebuild() {
-    this.instancedMesh!.numInstances = this.nodes.length;
+    // FIXME with threes instancedMesh it cannot be creater than the initial count, so the instanced mesh needs to be recreated?
+    this.instancedMesh!.count = this.nodes.length;
     this.fillAttributes();
   }
 
   private fillAttributes() {
     for (let i = 0; i < this.nodes.length; i++) {
       const node = this.nodes[i];
-
-      this.instancedMesh!.setQuaternionAt(i, node.quat);
+      const matrix = new Matrix4();
+      matrix.makeRotationFromQuaternion(node.quat);
       if (node.visible === true) {
-        this.instancedMesh!.setPositionAt(i, node.position);
+        matrix.setPosition(node.position);
       } else {
-        this.instancedMesh!.setPositionAt(i, farAway);
+        matrix.setPosition(farAway);
       }
-
-      this.instancedMesh!.setScaleAt(i, node.scale);
+      matrix.scale(node.scale);
+      this.instancedMesh!.setMatrixAt(i, matrix);
       this.instancedMesh!.setColorAt(i, node.color);
     }
+    this.instancedMesh!.instanceMatrix.needsUpdate = true;
+    this.instancedMesh!.instanceColor!.needsUpdate = true;
   }
 
   public dispose() {
-    // TODO
+    this.instancedMesh?.dispose();
   }
 }

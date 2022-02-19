@@ -32,11 +32,11 @@ class ModelHelper {
     return new Promise((resolve, reject) => {
       this.loader.load(
         path,
-        gltf => {
+        (gltf) => {
           resolve(gltf.scene);
         },
         undefined, // TODO use the progress function as well?
-        error => {
+        (error) => {
           console.error(error); // TODO global error
         }
       );
@@ -47,7 +47,7 @@ class ModelHelper {
   private loadRequestedModel(path: string) {
     this.loader.load(
       path,
-      gltf => {
+      (gltf) => {
         const geometry = (gltf.scene.children[0] as Mesh)
           .geometry as BufferGeometry;
         this.loadedModels.set(path, geometry);
@@ -57,7 +57,7 @@ class ModelHelper {
         this.requestedModels.delete(path);
       },
       undefined, // TODO use the progress function as well?
-      error => {
+      (error) => {
         console.error(error); // TODO global error
       }
     );

@@ -15,8 +15,8 @@ import DesktopMenu from './DesktopMenu.vue';
 @VueComponent({
   components: {
     DesktopMenu,
-    Editor
-  }
+    Editor,
+  },
 })
 export default class EditorView extends Vue {
   private menuVisible: boolean = false;

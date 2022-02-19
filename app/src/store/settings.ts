@@ -6,13 +6,13 @@ import { RootState } from '.';
 enum LayoutVersion {
   Initial,
   AddPropertiesPanel,
-  SeparateLayoutSettings
+  SeparateLayoutSettings,
 }
 
 export enum CameraType {
   Orbit,
   Fly,
-  Flat
+  Flat,
 }
 
 const currentLayoutVersion = LayoutVersion.SeparateLayoutSettings;
@@ -71,8 +71,8 @@ const defaultState = () => {
     cameraType: CameraType.Orbit,
     showPropertiesPanel: false,
     layoutSettings: {
-      propertiesPanelEnabled: false
-    }
+      propertiesPanelEnabled: false,
+    },
   };
 };
 
@@ -172,7 +172,7 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     },
     RESET_SETTINGS(state) {
       const s = defaultState();
-      Object.keys(s).forEach(key => {
+      Object.keys(s).forEach((key) => {
         //@ts-ignore
         state[key] = s[key];
       });
@@ -181,7 +181,7 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     SET_PROPERTIES_PANEL_ENABLED(state, payload) {
       state.layoutSettings.propertiesPanelEnabled = payload;
       // no need to update local storage as this should trigger a layout change?
-    }
+    },
   },
   actions: {
     setNearPlane(context, payload) {
@@ -249,6 +249,6 @@ export const settingsModule: Module<SettingsRootState, RootState> = {
     },
     setPropertiesPanelEnabled(context, payload) {
       context.commit('SET_PROPERTIES_PANEL_ENABLED', payload);
-    }
-  }
+    },
+  },
 };

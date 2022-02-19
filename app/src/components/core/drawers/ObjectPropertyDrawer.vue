@@ -37,13 +37,13 @@ export default class ObjectPropertyDrawer extends Vue {
   changeLevelName(value: string) {
     this.updateObjectValue({
       path: this.path + '.levelName',
-      value: value
+      value: value,
     });
   }
   changePathName(value: string) {
     this.updateObjectValue({
       path: this.path + '.pathName',
-      value: value
+      value: value,
     });
   }
 }

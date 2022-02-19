@@ -22,7 +22,7 @@ function propWatcher(propsToWatch) {
     watch[prop] = {
       handler(val) {
         walkSet(this.obj, propsToWatch[prop], val);
-      }
+      },
       // this is not enough, because obj doesn't exist
       // immediate: true,
     };
@@ -41,7 +41,7 @@ const watch = propWatcher({
 
   'rotation.x': 'rotation.x',
   'rotation.y': 'rotation.y',
-  'rotation.z': 'rotation.z'
+  'rotation.z': 'rotation.z',
 });
 
 const VectorType = (v = 0) => ({
@@ -49,8 +49,8 @@ const VectorType = (v = 0) => ({
   default: () => ({
     x: v,
     y: v,
-    z: v
-  })
+    z: v,
+  }),
 });
 
 export default {
@@ -59,7 +59,7 @@ export default {
   props: {
     position: Object,
     rotation: Object,
-    scale: Object
+    scale: Object,
   },
 
   mounted() {
@@ -85,5 +85,5 @@ export default {
     return !this.$slots.default ? h() : h('div', this.$slots.default);
   },
 
-  watch
+  watch,
 };

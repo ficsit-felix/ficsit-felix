@@ -4,7 +4,7 @@
 
 import { Quaternion, Vector3, Euler, EventDispatcher } from 'three';
 
-var FlyControls = function(object, domElement) {
+var FlyControls = function (object, domElement) {
   if (domElement === undefined) {
     console.warn(
       'THREE.FlyControls: The second parameter "domElement" is now mandatory.'
@@ -38,7 +38,7 @@ var FlyControls = function(object, domElement) {
   this.mouseStatus = 0;
   this.mouseOffset = {
     x: 0,
-    y: 0
+    y: 0,
   };
 
   this.moveState = {
@@ -53,12 +53,12 @@ var FlyControls = function(object, domElement) {
     yawLeft: 0,
     yawRight: 0,
     rollLeft: 0,
-    rollRight: 0
+    rollRight: 0,
   };
   this.moveVector = new Vector3(0, 0, 0);
   this.rotationVector = new Vector3(0, 0, 0);
 
-  this.keydown = function(event) {
+  this.keydown = function (event) {
     if (event.altKey) {
       return;
     }
@@ -117,7 +117,7 @@ var FlyControls = function(object, domElement) {
     this.updateRotationVector();
   };
 
-  this.keyup = function(event) {
+  this.keyup = function (event) {
     switch (event.keyCode) {
       case 16:
         /* shift */ this.movementSpeedMultiplier = 1;
@@ -170,7 +170,7 @@ var FlyControls = function(object, domElement) {
     this.updateRotationVector();
   };
 
-  this.mousedown = function(event) {
+  this.mousedown = function (event) {
     if (this.domElement !== document) {
       this.domElement.focus();
     }
@@ -199,7 +199,7 @@ var FlyControls = function(object, domElement) {
     }
   };
 
-  this.mousemove = function(event) {
+  this.mousemove = function (event) {
     if (!this.dragToLook || this.mouseStatus > 0) {
       var container = this.getContainerDimensions();
       var halfWidth = container.size[0] / 2;
@@ -216,7 +216,7 @@ var FlyControls = function(object, domElement) {
     }
   };
 
-  this.mouseup = function(event) {
+  this.mouseup = function (event) {
     /*event.preventDefault();
     event.stopPropagation();*/
 
@@ -239,7 +239,7 @@ var FlyControls = function(object, domElement) {
     this.updateRotationVector();
   };
 
-  this.update = function(delta) {
+  this.update = function (delta) {
     if (
       this.moveVector.x === 0 &&
       this.moveVector.y === 0 &&
@@ -290,7 +290,7 @@ var FlyControls = function(object, domElement) {
     // );
   };
 
-  this.updateMovementVector = function() {
+  this.updateMovementVector = function () {
     var forward =
       this.moveState.forward || (this.autoForward && !this.moveState.back)
         ? 1
@@ -303,7 +303,7 @@ var FlyControls = function(object, domElement) {
     //console.log( 'move:', [ this.moveVector.x, this.moveVector.y, this.moveVector.z ] );
   };
 
-  this.updateRotationVector = function() {
+  this.updateRotationVector = function () {
     this.rotationVector.x = -this.moveState.pitchDown + this.moveState.pitchUp;
     this.rotationVector.z = -this.moveState.yawRight + this.moveState.yawLeft;
     //this.rotationVector.z = -this.moveState.rollRight + this.moveState.rollLeft;
@@ -311,22 +311,22 @@ var FlyControls = function(object, domElement) {
     //console.log('rotate:', [this.rotationVector.x, this.rotationVector.y, this.rotationVector.z]);
   };
 
-  this.getContainerDimensions = function() {
+  this.getContainerDimensions = function () {
     if (this.domElement != document) {
       return {
         size: [this.domElement.offsetWidth, this.domElement.offsetHeight],
-        offset: [this.domElement.offsetLeft, this.domElement.offsetTop]
+        offset: [this.domElement.offsetLeft, this.domElement.offsetTop],
       };
     } else {
       return {
         size: [window.innerWidth, window.innerHeight],
-        offset: [0, 0]
+        offset: [0, 0],
       };
     }
   };
 
   function bind(scope, fn) {
-    return function() {
+    return function () {
       fn.apply(scope, arguments);
     };
   }
@@ -335,7 +335,7 @@ var FlyControls = function(object, domElement) {
     event.preventDefault();
   }
 
-  this.focus = function(x, y, z) {
+  this.focus = function (x, y, z) {
     this.object.lookAt(x, y, z);
 
     // fix euler angle
@@ -343,7 +343,7 @@ var FlyControls = function(object, domElement) {
     this.tmpEuler.reorder('ZYX');
   };
 
-  this.dispose = function() {
+  this.dispose = function () {
     this.domElement.removeEventListener('contextmenu', contextmenu, false);
     this.domElement.removeEventListener('mousedown', _mousedown, false);
     this.domElement.removeEventListener('mousemove', _mousemove, false);

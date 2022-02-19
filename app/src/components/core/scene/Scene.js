@@ -9,12 +9,12 @@ export default {
   provide() {
     this.scene = new Scene();
     return {
-      scene: this.scene
+      scene: this.scene,
     };
   },
 
   computed: {
-    ...mapState('settings', ['farPlane'])
+    ...mapState('settings', ['farPlane']),
   },
 
   // overwrite existing mounted
@@ -26,6 +26,6 @@ export default {
   watch: {
     farPlane(value) {
       this.scene.fog = new Fog(0x111618, 0.8 * this.farPlane, this.farPlane);
-    }
-  }
+    },
+  },
 };

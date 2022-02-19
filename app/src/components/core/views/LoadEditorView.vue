@@ -7,9 +7,9 @@
 export default {
   mounted() {
     this.$router.push({
-      name: 'editor'
+      name: 'editor',
     });
-  }
+  },
 };
 </script>
 

@@ -117,8 +117,8 @@ import TextPropertyDrawer from './TextPropertyDrawer.vue';
     BytePropertyDrawer,
     MapPropertyDrawer,
     TextPropertyDrawer,
-    EnumPropertyDrawer
-  }
+    EnumPropertyDrawer,
+  },
 })
 export default class PropertyPropertyDrawer extends Vue {
   @Prop() path!: string;

@@ -2,7 +2,7 @@ import { SelectionBox } from '@lib/graphics/SelectionBox.js';
 import { SelectionHelper } from '@lib/graphics/SelectionHelper.js';
 import { MOUSE } from 'three';
 
-let BoxSelectControls = function(
+let BoxSelectControls = function (
   scene,
   camera,
   domElement,
