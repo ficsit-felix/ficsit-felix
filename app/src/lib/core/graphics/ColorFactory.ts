@@ -5,7 +5,7 @@ import {
 } from '@lib/definitions/models';
 import { findActorByName } from '@lib/graphics/entityHelper';
 import { Actor, ByteProperty, StructProperty } from 'satisfactory-json';
-import { Color, Material, MeshMatcapMaterial, Texture } from 'three';
+import { Color, Material, MeshStandardMaterial } from 'three';
 
 /**
  * Factory that creates and caches materials
@@ -14,24 +14,20 @@ export default class ColorFactory {
   classColors: { [id: string]: string };
   materials: { [id: string]: Material } = {};
   coloredMaterials: Material[] = [];
-  matcap: Texture;
   selectedMaterial: Material;
 
   // properties
   showCustomPaints: boolean;
 
   constructor(
-    matcap: Texture,
     showCustomPaints: boolean,
     classColors: { [id: string]: string }
   ) {
-    this.matcap = matcap;
     this.showCustomPaints = showCustomPaints;
     this.classColors = classColors;
 
-    this.selectedMaterial = new MeshMatcapMaterial({
+    this.selectedMaterial = new MeshStandardMaterial({
       color: 0xffffff,
-      matcap: this.matcap,
     });
 
     this.setupColoredMaterials();
@@ -48,9 +44,8 @@ export default class ColorFactory {
         color = new Color(modelConfig[prop].color);
       }
 
-      this.materials[prop] = new MeshMatcapMaterial({
+      this.materials[prop] = new MeshStandardMaterial({
         color: color,
-        matcap: this.matcap,
       });
     }
   }
@@ -112,9 +107,8 @@ export default class ColorFactory {
     for (let i = 0; i < defaultColors.length; i++) {
       const color = defaultColors[i];
 
-      this.coloredMaterials[i] = new MeshMatcapMaterial({
+      this.coloredMaterials[i] = new MeshStandardMaterial({
         color: color,
-        matcap: this.matcap,
       });
     }
   }
@@ -160,7 +154,7 @@ export default class ColorFactory {
 
   // TODO: Migrate everywhere to this method and then change it and remove the createMaterial one
   getColor(actor: Actor): Color {
-    return (this.createMaterial(actor) as MeshMatcapMaterial).color;
+    return (this.createMaterial(actor) as MeshStandardMaterial).color;
   }
 
   getSelectedMaterial(): Material {

@@ -4,7 +4,7 @@ import {
   BufferGeometry,
   Material,
   Mesh,
-  MeshMatcapMaterial,
+  MeshStandardMaterial,
   Object3D,
   Scene,
 } from 'three';
@@ -78,7 +78,7 @@ export default class MeshManager {
         position: result.mesh.position,
         quat: result.mesh.quaternion,
         scale: result.mesh.scale,
-        color: (result.mesh.material as MeshMatcapMaterial).color,
+        color: (result.mesh.material as MeshStandardMaterial).color,
       });
       // store the instance index into the mesh
       result.mesh.userData.instance = result.instance;

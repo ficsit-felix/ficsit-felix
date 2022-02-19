@@ -3,7 +3,7 @@ import {
   updateActorMeshTransform,
 } from '@lib/graphics/meshHelper';
 import { Actor } from 'satisfactory-json';
-import { Mesh, MeshMatcapMaterial, Scene } from 'three';
+import { Mesh, MeshStandardMaterial, Scene } from 'three';
 import ColorFactory from './ColorFactory';
 import GeometryFactory from './GeometryFactory';
 import InstancedMeshGroup from './InstancedMeshGroup';
@@ -35,13 +35,13 @@ export interface ModelMesh {
 
 export class ThreeModelMesh implements ModelMesh {
   private mesh: Mesh;
-  private material: MeshMatcapMaterial;
+  private material: MeshStandardMaterial;
   constructor(mesh: Mesh) {
     this.mesh = mesh;
     // need to make a clone of the material as we change its color in rebuildColor()
     this.material = (
-      mesh.material as MeshMatcapMaterial
-    ).clone() as MeshMatcapMaterial;
+      mesh.material as MeshStandardMaterial
+    ).clone() as MeshStandardMaterial;
     this.mesh.material = this.material;
     for (const child of this.mesh.children) {
       if (child instanceof Mesh) {

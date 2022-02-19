@@ -76,8 +76,10 @@ import { Actor, Component } from 'satisfactory-json';
 import * as THREE from 'three';
 import {
   Camera as ThreeCamera,
+  DirectionalLight,
   Group,
   MathUtils,
+  MeshStandardMaterial,
   Texture,
   Vector3,
 } from 'three';
@@ -166,13 +168,12 @@ export default class ScenePanel extends Vue {
   translateMultipleActors: any;
 
   // vars
-  matcap!: Texture;
   geometryFactory!: GeometryFactory;
   colorFactory!: ColorFactory;
   meshFactory!: MeshFactory;
   meshManager!: MeshManager;
   scene: any;
-  selectedMaterial!: THREE.MeshMatcapMaterial;
+  selectedMaterial!: MeshStandardMaterial;
   lastSelectedActors: Actor[] = [];
   transformControl!: TransformControls;
   mapIngameModel?: Group;
@@ -348,16 +349,7 @@ export default class ScenePanel extends Vue {
         this.conveyorBeltResolution
       );
 
-      let textureLoader = new THREE.TextureLoader();
-      this.matcap = textureLoader.load(
-        'textures/matcap-white.png',
-        function (matcap) {
-          matcap.encoding = THREE.sRGBEncoding;
-        }
-      );
-
       this.colorFactory = new ColorFactory(
-        this.matcap,
         this.showCustomPaints,
         this.classColors
       );
@@ -367,10 +359,10 @@ export default class ScenePanel extends Vue {
       );
       this.scene = this.sceneRef.scene;
 
-      this.selectedMaterial = new THREE.MeshMatcapMaterial({
-        color: 0xffffff,
-        matcap: this.matcap,
-      });
+      const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 2);
+      this.scene.add(light);
+
+      this.selectedMaterial = new MeshStandardMaterial();
 
       this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
 
