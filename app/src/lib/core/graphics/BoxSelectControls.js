@@ -20,9 +20,6 @@ let BoxSelectControls = function (
     if (scope.disabled) {
       return;
     }
-    /*for (let item of selectionBox.collection) {
-      item.material.emissive = new THREE.Color(0x000000);
-    }*/
 
     if (event.button !== MOUSE.LEFT) {
       return;
@@ -41,21 +38,12 @@ let BoxSelectControls = function (
       return;
     }
     if (scope.isDown) {
-      /*for (let i = 0; i < selectionBox.collection.length; i++) {
-        selectionBox.collection[i].material.emissive = new THREE.Color(
-          0x000000
-        );
-      }*/
       let rect = domElement.getBoundingClientRect();
       selectionBox.endPoint.set(
         ((event.clientX - rect.left) / rect.width) * 2 - 1,
         -((event.clientY - rect.top) / rect.height) * 2 + 1,
         0.5
       );
-      // let allSelected = selectionBox.select();
-      /*      for (let j = 0; j < allSelected.length; j++) { asdf
-        allSelected[j].material.emissive = new THREE.Color(0x0000ff);
-      }*/
     }
   }
 

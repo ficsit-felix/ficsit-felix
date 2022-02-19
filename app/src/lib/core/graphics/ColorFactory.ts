@@ -5,7 +5,12 @@ import {
 } from '@lib/definitions/models';
 import { findActorByName } from '@lib/graphics/entityHelper';
 import { Actor, ByteProperty, StructProperty } from 'satisfactory-json';
-import { Color, Material, MeshStandardMaterial } from 'three';
+import {
+  Color,
+  Material,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+} from 'three';
 
 /**
  * Factory that creates and caches materials
@@ -26,7 +31,7 @@ export default class ColorFactory {
     this.showCustomPaints = showCustomPaints;
     this.classColors = classColors;
 
-    this.selectedMaterial = new MeshStandardMaterial({
+    this.selectedMaterial = new MeshBasicMaterial({
       color: 0xffffff,
     });
 

@@ -19,12 +19,6 @@
           @click="$router.push({ path: '/open/sav' })"
           class="ma-2"
           >{{ $t('landingPage.openSavButton') }}</v-btn
-        >&nbsp;
-        <v-btn
-          color="secondary black--text"
-          @click="downloadDesktop()"
-          class="ma-2"
-          >{{ $t('landingPage.downloadDesktop') }}</v-btn
         >
       </p>
       <p class="my-2 mx-4">{{ $t('landingPage.secondParagraph') }}</p>
@@ -72,12 +66,7 @@ export default {
     };
   },
   mounted() {},
-  methods: {
-    downloadDesktop() {
-      location.href =
-        'https://github.com/ficsit-felix/ficsit-felix/releases/latest';
-    },
-  },
+  methods: {},
 };
 </script>
 

@@ -1,4 +1,3 @@
-import { isElectron } from '@lib/isElectron';
 import { copyFileSync, createWriteStream, existsSync, writeFile } from 'fs';
 import path, { parse } from 'path';
 import { Json2SavTransform, SaveGame } from 'satisfactory-json';
@@ -46,13 +45,8 @@ function transformFile(
   path: string,
   asJson: boolean
 ) {
-  if (isElectron()) {
-    // desktop version
-    saveDesktop(path, saveGame, callback, asJson);
-  } else {
-    // web version
-    saveWeb(path, saveGame, callback, asJson);
-  }
+  // web version
+  saveWeb(path, saveGame, callback, asJson);
 }
 
 function saveDesktop(
@@ -165,6 +159,7 @@ function saveWeb(
     transform.write(saveGame);
     transform.end();
   }
+
   /*  if (asZip) {
       let zip = new JSZip();
       zip.file(path, data, { binary: true });

@@ -70,17 +70,17 @@ import GeometryFactory from '@lib/graphics/GeometryFactory';
 import MeshFactory from '@lib/graphics/MeshFactory';
 import { updateActorMeshTransform } from '@lib/graphics/meshHelper';
 import MeshManager from '@lib/graphics/MeshManager';
-import { modelHelper } from '@lib/graphics/modelHelper';
 import { SelectionBoundsBox } from '@lib/graphics/SelectionBoundsBox';
 import { Actor, Component } from 'satisfactory-json';
-import * as THREE from 'three';
 import {
   Camera as ThreeCamera,
-  DirectionalLight,
+  Euler,
   Group,
+  HemisphereLight,
   MathUtils,
+  MeshBasicMaterial,
   MeshStandardMaterial,
-  Texture,
+  Quaternion,
   Vector3,
 } from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
@@ -173,7 +173,7 @@ export default class ScenePanel extends Vue {
   meshFactory!: MeshFactory;
   meshManager!: MeshManager;
   scene: any;
-  selectedMaterial!: MeshStandardMaterial;
+  selectedMaterial!: MeshBasicMaterial;
   lastSelectedActors: Actor[] = [];
   transformControl!: TransformControls;
   mapIngameModel?: Group;
@@ -359,10 +359,10 @@ export default class ScenePanel extends Vue {
       );
       this.scene = this.sceneRef.scene;
 
-      const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 2);
+      const light = new HemisphereLight(0xffffbb, 0x080820, 2);
       this.scene.add(light);
 
-      this.selectedMaterial = new MeshStandardMaterial();
+      this.selectedMaterial = new MeshBasicMaterial();
 
       this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
 
@@ -429,12 +429,12 @@ export default class ScenePanel extends Vue {
   updateCompass() {
     // TODO move to a onCameraChanged to only update when necessary
     const camera = this.rendererRef.camera.obj;
-    let position = new THREE.Vector3();
-    let quaternion = new THREE.Quaternion();
-    let scale = new THREE.Vector3();
+    let position = new Vector3();
+    let quaternion = new Quaternion();
+    let scale = new Vector3();
 
     camera.matrixWorldInverse.decompose(position, quaternion, scale);
-    const euler = new THREE.Euler().setFromQuaternion(quaternion);
+    const euler = new Euler().setFromQuaternion(quaternion);
 
     this.rotateX = euler.x;
     this.rotateZ = -euler.z - 3.14 / 2; // point correctly to north
@@ -608,7 +608,7 @@ export default class ScenePanel extends Vue {
     }
   }
 
-  setMode(mode: string) {
+  setMode(mode: 'translate' | 'rotate' | 'scale') {
     this.mode = mode;
     this.transformControl.mode = mode;
   }

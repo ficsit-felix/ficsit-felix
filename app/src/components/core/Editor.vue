@@ -71,7 +71,6 @@
 
 <script lang="ts">
 import { reportException } from '@/lib/core/errorReporting';
-import { isElectron } from '@lib/isElectron';
 import {
   Component as VueComponent,
   Prop,
@@ -103,7 +102,7 @@ const settingsNamespace = namespace('settings');
   },
 })
 export default class Editor extends Vue {
-  @Prop({ default: !isElectron() }) showMenubar!: boolean;
+  @Prop({ default: true }) showMenubar!: boolean;
   @State((state) => state.settings.layout) layout: any;
   @State((state) => state.settings.layoutSettings) layoutSettings: any;
   @State((state) => state.settings.showPropertiesPanel)

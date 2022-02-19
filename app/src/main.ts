@@ -1,7 +1,6 @@
 import '@lib/cmdHelper';
 import { CHANGE_LOCALE } from '@lib/constants';
 import { EventBus } from '@lib/event-bus';
-import { isElectron } from '@lib/isElectron';
 import Vue from 'vue';
 import vgl from 'vue-golden-layout';
 import Router from 'vue-router';
@@ -18,12 +17,7 @@ Vue.use(vgl);
 
 Vue.config.productionTip = false;
 
-let router: Router;
-if (isElectron()) {
-  router = require('./router/desktop').default;
-} else {
-  router = require('./router/web').default;
-}
+const router: Router = require('./router/web').default;
 
 // Redirect if data was not yet loaded
 router.beforeEach((to, from, next) => {
@@ -42,12 +36,7 @@ new Vue({
   beforeCreate() {
     this.$store.commit('settings/INIT_STORE_FROM_LOCAL_DATA');
   },
-  render: (h) =>
-    h(
-      isElectron()
-        ? require('./components/desktop/DesktopApp.vue').default
-        : require('./components/web/WebApp.vue').default
-    ),
+  render: (h) => h(require('./components/web/WebApp.vue').default),
 }).$mount('#app');
 
 // Set persisted locale
