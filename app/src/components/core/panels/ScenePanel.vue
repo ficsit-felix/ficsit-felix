@@ -364,7 +364,7 @@ export default class ScenePanel extends Vue {
 
       this.selectedMaterial = new MeshBasicMaterial();
 
-      this.meshManager = new MeshManager(this.scene, this.selectedMaterial);
+      this.meshManager = new MeshManager(this.scene, new MeshStandardMaterial());
 
       this.lastSelectedActors = [];
       this.createMeshesForActors();
