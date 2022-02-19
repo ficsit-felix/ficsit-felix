@@ -1070,10 +1070,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mdi/font@^5.9.55":
-  version "5.9.55"
-  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-5.9.55.tgz#41acd50b88073ded7095fc3029d8712b6e12f38e"
-  integrity sha512-jswRF6q3eq8NWpWiqct6q+6Fg/I7nUhrxYJfiEM8JJpap0wVJLQdbKtyS65GdlK7S7Ytnx3TTi/bmw+tBhkGmg==
+"@mdi/font@^6.5.95":
+  version "6.5.95"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-6.5.95.tgz#203922f6dd46397de9eb1f5956b85339adb6344d"
+  integrity sha512-ES5rj6J39FUkHe/b3C9SJs8bqIungYhuU7rBINTBaHOv/Ce4RCb3Gw08CZVl32W33UEkgRkzyWaIedV4at+QHg==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -5802,10 +5802,10 @@ jsbi@^3.1.4:
   resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-3.1.4.tgz#9654dd02207a66a4911b4e4bb74265bc2cbc9dd0"
   integrity sha512-52QRRFSsi9impURE8ZUbzAMCLjPm4THO7H2fcuIvaaeFTbSysvkodbQQXIVsNgq/ypDbq6dJiuGKL0vZ/i9hUg==
 
-jsbi@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-4.0.0.tgz#11ff8b6418e8d0073edcfbe9f7bdf3fca21c31c7"
-  integrity sha512-68RUMweVqu0MevPlF4cjsxTvySzvYx4rMZpH8WhoKJ9yIUd5F4/C4zcrp5ITN9j8ayd8DTH6C/2ZuoW9bsBAEw==
+jsbi@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-4.1.0.tgz#f0c25ed8881bc09891334b03a3952efaa7add337"
+  integrity sha512-384Z4keIsJtYpnVggsxaB255MZctILbxv+ihtwoWPF7KNOlYHn1LFpRnUw5qsAspUAA2+I7qzjVJxVYtHVjxNw==
 
 jsbn@~0.1.0:
   version "0.1.1"
@@ -8130,12 +8130,12 @@ satisfactory-blueprint@^0.0.4:
   dependencies:
     satisfactory-json "^0.0.53"
 
-satisfactory-json@0.0.62:
-  version "0.0.62"
-  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.62.tgz#791c3f8859ef75c8efb55b75084b555cc71cd43a"
-  integrity sha512-4B4t9QLGCa6mGU4CAsGqL4gG7IQA5lhGjfS2nxIsayvVZi5cFQvZVE/09deGmbDJO3qIrwiCvLfWCqfOP0iUBw==
+satisfactory-json@0.0.63:
+  version "0.0.63"
+  resolved "https://registry.yarnpkg.com/satisfactory-json/-/satisfactory-json-0.0.63.tgz#43b18e0cc7db4e248da650937e45246797e5bf29"
+  integrity sha512-/zJcXLARNhLqunoKSkYJvQOwylHOBgxsW8iliaQN8vRKeG8FzZBKbxWkEoJlLOmQJx4hVmUIN0jDGxy9b78xZA==
   dependencies:
-    jsbi "^4.0.0"
+    jsbi "^4.1.0"
     pako "^2.0.4"
 
 satisfactory-json@^0.0.53:

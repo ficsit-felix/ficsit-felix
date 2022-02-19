@@ -31,11 +31,11 @@ Models in `app/public/models` are distributed under the [Creative Commons Attrib
 
 ## Other useful repositories
 
-https://github.com/AnthorNet/SC-InteractiveMap
+https://github.com/AnthorNet/SC-InteractiveMap  
 Satisfactory-Calculator Interactive Map
 
-https://github.com/Goz3rr/SatisfactorySaveEditor
+https://github.com/Goz3rr/SatisfactorySaveEditor  
 Save file editor for Windows written in C#
 
-https://github.com/ficsit-felix/satisfactory-json
+https://github.com/ficsit-felix/satisfactory-json  
 Library to convert from Satisfactory save files to a JSON format and back

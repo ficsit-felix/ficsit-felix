@@ -19,7 +19,7 @@
     "gsap": "^3.8.0",
     "jszip": "^3.7.1",
     "satisfactory-blueprint": "^0.0.4",
-    "satisfactory-json": "0.0.62",
+    "satisfactory-json": "0.0.63",
     "stats.js": "^0.17.0",
     "streamsaver": "^2.0.5",
     "three": "0.137.5",
@@ -37,7 +37,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-    "@mdi/font": "^5.9.55",
+    "@mdi/font": "^6.5.95",
     "@types/node": "^16.11.6",
     "@types/node-fetch": "^2.5.10",
     "@types/three": "^0.127.1",
